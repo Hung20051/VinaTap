@@ -1,0 +1,503 @@
+/* ============================================================
+   VinaTap — Dashboard page
+   Dùng ở app/dashboard/page.js. Class được đặt tiền tố "dash-"
+   để tránh đụng tên với class ở styles/globals.css hay các
+   trang khác. Những giá trị THẬT SỰ động (width %, vị trí menu
+   portal đo bằng getBoundingClientRect...) vẫn giữ inline style
+   trong JSX — chỉ những style tĩnh mới chuyển ra đây.
+   ============================================================ */
+
+/* ─── SHELL ───────────────────────────────────────────────── */
+.dash-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ─── SIDEBAR ─────────────────────────────────────────────── */
+.dash-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #0f172a;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  transition: width 0.18s ease;
+  overflow: hidden;
+}
+.dash-sidebar.is-collapsed {
+  width: 76px;
+}
+
+.dash-sidebar__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0.75rem 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dash-sidebar.is-collapsed .dash-sidebar__top {
+  justify-content: center;
+  padding: 1.25rem 0.5rem;
+}
+
+.dash-sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.dash-sidebar__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.05rem;
+}
+
+.dash-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 0.75rem;
+}
+.dash-sidebar.is-collapsed .dash-nav {
+  padding: 1rem 0.5rem;
+}
+
+.dash-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  background: transparent;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.dash-nav__link.is-active {
+  color: #fff;
+  background: var(--primary);
+}
+.dash-sidebar.is-collapsed .dash-nav__link {
+  justify-content: center;
+  gap: 0;
+  padding: 0.75rem;
+}
+
+.dash-sidebar__footer {
+  position: relative;
+  padding: 1rem 0.75rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dash-sidebar.is-collapsed .dash-sidebar__footer {
+  padding: 0.75rem 0.5rem 1.25rem;
+}
+
+.dash-avatar-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.6rem;
+  padding: 0.4rem;
+  border-radius: var(--radius-md);
+  background: transparent;
+}
+.dash-avatar-btn.is-open {
+  background: rgba(255, 255, 255, 0.08);
+}
+.dash-sidebar.is-collapsed .dash-avatar-btn {
+  justify-content: center;
+}
+
+.dash-avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.dash-avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dash-avatar-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  text-align: left;
+}
+
+/* ─── AVATAR MENU (portal ra <body>) ─────────────────────────
+   left/bottom vẫn set inline vì phụ thuộc getBoundingClientRect()
+   lúc bấm nút — mọi thứ còn lại (màu, bo góc, đổ bóng, width) nằm
+   ở đây. Width phải khớp với hằng số MENU_WIDTH trong page.js. */
+.dash-avatar-menu {
+  position: fixed;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  width: 200px;
+  z-index: 1000;
+}
+
+.dash-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: left;
+}
+.dash-menu-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.dash-menu-item.is-danger {
+  color: #fca5a5;
+}
+.dash-menu-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── NỘI DUNG CHÍNH ─────────────────────────────────────────── */
+.dash-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.dash-header__title {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+.dash-header__subtitle {
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+.dash-header__cta {
+  padding: 0.75rem 1.5rem;
+}
+
+.dash-error {
+  background: var(--bg-danger-light);
+  color: var(--danger);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── THỐNG KÊ ────────────────────────────────────────────── */
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.dash-stat {
+  padding: 1.25rem;
+}
+.dash-stat__label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.dash-stat__value {
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-top: 0.25rem;
+}
+.dash-stat__value.is-primary {
+  color: var(--primary);
+}
+.dash-stat__progress-track {
+  margin-top: 0.6rem;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--border);
+  overflow: hidden;
+}
+.dash-stat__progress-bar {
+  height: 100%;
+  background: var(--primary);
+  border-radius: var(--radius-full);
+  /* width: đặt inline trong JSX vì phụ thuộc progressPct */
+}
+
+/* ─── BỘ SƯU TẬP ──────────────────────────────────────────── */
+.dash-section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.dash-empty {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+.dash-empty__icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.dash-empty__text {
+  margin-bottom: 1rem;
+}
+
+.dash-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.dash-card {
+  overflow: hidden;
+}
+.dash-card__thumb {
+  height: 120px;
+  background: var(--primary-light);
+  position: relative;
+}
+.dash-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dash-card__thumb-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 2.2rem;
+}
+.dash-card__body {
+  padding: 1rem;
+}
+.dash-card__title {
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+.dash-card__serial {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+.dash-card__action {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ─── MODAL (dùng chung cho Cài đặt + Tìm hiểu thêm) ─────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+/* ─── MODAL: CÀI ĐẶT ──────────────────────────────────────── */
+.settings-panel {
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  border-radius: var(--radius-lg);
+}
+
+.settings-tabs {
+  width: 180px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  padding: 1.25rem 0.75rem;
+}
+.settings-tabs__title {
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0 0.5rem;
+  margin-bottom: 1rem;
+}
+.settings-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--text-secondary);
+  background: transparent;
+}
+.settings-tab.is-active {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.settings-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+.settings-close {
+  float: right;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.settings-section h3 {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.settings-section__desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+}
+.settings-btn-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.profile-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.profile-avatar-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.profile-avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-avatar-error {
+  font-size: 0.78rem;
+  color: var(--danger);
+  margin-top: 0.4rem;
+}
+
+.profile-field {
+  margin-bottom: 1rem;
+}
+.profile-field__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.profile-field textarea {
+  resize: vertical;
+}
+.profile-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.profile-error {
+  font-size: 0.8rem;
+  color: var(--danger);
+  margin-bottom: 1rem;
+}
+
+/* ─── MODAL: TÌM HIỂU THÊM ────────────────────────────────── */
+.learnmore-panel {
+  width: 100%;
+  max-width: 480px;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+.learnmore-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+.learnmore-title {
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.learnmore-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── PHỤ TRỢ NHỎ ─────────────────────────────────────────── */
+.dash-container-inner {
+  padding: 2rem 1rem 4rem;
+}
+.dash-page-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hidden-file-input {
+  display: none;
+}
+.profile-avatar-upload-btn {
+  font-size: 0.82rem;
+}
