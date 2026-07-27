@@ -149,7 +149,13 @@ export default function DashboardPage() {
 
   const handleLogout = () => {
     clearAuth();
-    router.push("/");
+    // Dùng hard redirect (window.location) thay vì router.push (soft nav):
+    // router.push giữ nguyên Next.js Router Cache/state trong bộ nhớ, có
+    // thể khiến trang /auth hoặc / sau đó vẫn đọc lại thông tin phiên cũ
+    // trước khi kịp re-check localStorage. window.location.href buộc
+    // reload toàn bộ trang, đảm bảo trạng thái đăng nhập luôn được đọc
+    // lại sạch sẽ từ đầu.
+    window.location.href = "/";
   };
 
   // Mở/đóng menu avatar — khi mở, đo vị trí thật của nút trên viewport

@@ -59,7 +59,8 @@ export default function ProvincePage() {
 
   const handleLogout = () => {
     clearAuth();
-    setUser(null);
+    // Hard reload — lý do xem chú thích tương tự ở app/page.js
+    window.location.href = "/";
   };
 
   const categories = [

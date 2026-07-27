@@ -78,7 +78,11 @@ export default function HomePage() {
 
   const handleLogout = () => {
     clearAuth();
-    setUser(null);
+    // Hard reload thay vì chỉ setUser(null) tại chỗ — đảm bảo Next.js
+    // Router Cache không còn giữ bản render/prefetch cũ của các trang
+    // khác (vd /auth) từ lúc còn đăng nhập, tránh việc bấm "Đăng nhập"
+    // ngay sau đó bị đưa nhầm lại vào dashboard của phiên vừa thoát.
+    window.location.href = "/";
   };
 
   // Đang kiểm tra đăng nhập (và sẽ redirect nếu có) — không render gì để
