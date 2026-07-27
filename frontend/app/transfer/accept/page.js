@@ -1,17 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { isLoggedIn } from "../../../lib/auth";
 import { nfcAPI } from "../../../lib/api";
 
-export default function AcceptTransferPage() {
+// Tách riêng vì useSearchParams() bắt buộc phải nằm trong Suspense
+function AcceptTransferContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get("token");
 
-  const [status, setStatus] = useState("idle"); // idle|loading|success|error
+  const [status, setStatus] = useState("idle");
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
@@ -155,5 +156,26 @@ export default function AcceptTransferPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AcceptTransferPage() {
+  return (
+    <Suspense
+      fallback={
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div className="spinner" />
+        </div>
+      }
+    >
+      <AcceptTransferContent />
+    </Suspense>
   );
 }
