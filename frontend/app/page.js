@@ -19,7 +19,6 @@ import {
   ChevronRight,
   ChevronDown,
   CheckCircle2,
-  Quote,
   Facebook,
   Youtube,
   Music2,
@@ -174,6 +173,17 @@ export default function HomePage() {
     window.location.href = "/";
   };
 
+  // Cuộn mượt tới 1 section trong trang bằng JS + history.replaceState,
+  // thay vì để trình duyệt tự pushState theo <a href="#..."> mặc định.
+  // Nếu dùng href thường, mỗi lần bấm menu sẽ đẩy thêm 1 mục vào lịch
+  // sử trình duyệt — bấm nhiều menu rồi rời trang, nút "quay lại" phải
+  // bấm lại đúng bấy nhiêu lần mới thoát được trang, rất khó chịu.
+  const scrollToSection = (id) => (e) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    window.history.replaceState(null, "", `#${id}`);
+  };
+
   // Đang kiểm tra đăng nhập (và sẽ redirect nếu có) — không render gì để
   // tránh nháy trang landing page trước khi chuyển hướng.
   if (checkingAuth) return null;
@@ -191,11 +201,21 @@ export default function HomePage() {
           </Link>
 
           <div className="home-navbar__links">
-            <a href="#home">Trang chủ</a>
-            <a href="#about">Giới thiệu</a>
-            <a href="#gia">Các gói</a>
-            <a href="#provinces">Mới</a>
-            <a href="#faq">Hỏi đáp</a>
+            <a href="#home" onClick={scrollToSection("home")}>
+              Trang chủ
+            </a>
+            <a href="#about" onClick={scrollToSection("about")}>
+              Giới thiệu
+            </a>
+            <a href="#gia" onClick={scrollToSection("gia")}>
+              Các gói
+            </a>
+            <a href="#provinces" onClick={scrollToSection("provinces")}>
+              Mới
+            </a>
+            <a href="#faq" onClick={scrollToSection("faq")}>
+              Hỏi đáp
+            </a>
           </div>
 
           <div className="home-navbar__actions">
@@ -244,7 +264,11 @@ export default function HomePage() {
               <Link href="/activate" className="home-btn-teal">
                 Kích hoạt mảnh NFC
               </Link>
-              <a href="#provinces" className="home-btn-outline-ink">
+              <a
+                href="#provinces"
+                onClick={scrollToSection("provinces")}
+                className="home-btn-outline-ink"
+              >
                 Khám phá tỉnh thành
               </a>
             </div>
@@ -568,21 +592,6 @@ export default function HomePage() {
         </div>
       </RevealSection>
 
-      {/* ─── Trích dẫn cảm xúc ─── */}
-      <RevealSection className="home-quote">
-        <div className="container home-quote__inner">
-          <Quote size={34} strokeWidth={1.6} className="home-quote__icon" />
-          <blockquote className="home-quote__text">
-            “Chạm mảnh gỗ vào điện thoại, cả chuyến đi Đà Nẵng năm ấy hiện ra
-            trước mắt con gái tôi. Đó là lúc tôi biết món quà này khác hẳn mọi
-            món quà lưu niệm khác.”
-          </blockquote>
-          <p className="home-quote__caption">
-            Dành cho những khoảnh khắc đáng được lưu giữ
-          </p>
-        </div>
-      </RevealSection>
-
       {/* ─── Chính sách (tóm tắt) ─── */}
       <RevealSection id="chinh-sach" className="home-policy">
         <div className="container home-section--pad-sm">
@@ -675,6 +684,7 @@ export default function HomePage() {
             <div className="home-footer__socials">
               <a
                 href="#"
+                onClick={(e) => e.preventDefault()}
                 aria-label="Facebook"
                 className="home-footer__social-btn"
               >
@@ -682,6 +692,7 @@ export default function HomePage() {
               </a>
               <a
                 href="#"
+                onClick={(e) => e.preventDefault()}
                 aria-label="TikTok"
                 className="home-footer__social-btn"
               >
@@ -689,6 +700,7 @@ export default function HomePage() {
               </a>
               <a
                 href="#"
+                onClick={(e) => e.preventDefault()}
                 aria-label="YouTube"
                 className="home-footer__social-btn"
               >
