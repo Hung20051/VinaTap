@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Logo from "../../components/Logo";
 import { nfcAPI, albumAPI } from "../../../lib/api";
 import { isLoggedIn, getUser } from "../../../lib/auth";
 
@@ -121,9 +122,7 @@ export default function TapPage() {
       {/* Header */}
       <nav className="navbar">
         <div className="container navbar__inner">
-          <Link href="/" className="navbar__logo">
-            Vina<span>Tap</span> 🗺
-          </Link>
+          <Logo className="navbar__logo" />
         </div>
       </nav>
 

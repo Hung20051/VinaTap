@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Logo from "../../components/Logo";
 import { useParams } from "next/navigation";
 import { provinceAPI } from "../../../lib/api";
 import { isLoggedIn, clearAuth, getUser } from "../../../lib/auth";
@@ -114,9 +115,7 @@ export default function ProvincePage() {
     <>
       <nav className="navbar">
         <div className="container navbar__inner">
-          <Link href="/" className="navbar__logo">
-            Vina<span>Tap</span> 🗺
-          </Link>
+          <Logo className="navbar__logo" />
           <div className="navbar__links">
             {user ? (
               <>

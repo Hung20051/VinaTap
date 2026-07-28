@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Logo from "../../components/Logo";
 import { isLoggedIn } from "../../../lib/auth";
 import { nfcAPI } from "../../../lib/api";
 
@@ -43,9 +44,7 @@ function AcceptTransferContent() {
     <div style={{ minHeight: "100vh", background: "var(--bg-page)" }}>
       <nav className="navbar">
         <div className="container navbar__inner">
-          <Link href="/" className="navbar__logo">
-            Vina<span>Tap</span> 🗺
-          </Link>
+          <Logo className="navbar__logo" />
         </div>
       </nav>
 

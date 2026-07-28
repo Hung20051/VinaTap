@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Logo from "../components/Logo";
 import {
   Map,
   Smartphone,
@@ -193,12 +194,7 @@ export default function HomePage() {
       {/* ─── Navbar ─── */}
       <nav className={`home-navbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="container home-navbar__inner">
-          <Link href="/" className="home-navbar__logo">
-            <span className="home-navbar__logo-badge">
-              <Map size={17} strokeWidth={2.4} />
-            </span>
-            VinaTap
-          </Link>
+          <Logo className="home-navbar__logo" />
 
           <div className="home-navbar__links">
             <a href="#home" onClick={scrollToSection("home")}>
@@ -671,12 +667,7 @@ export default function HomePage() {
       <footer className="home-footer">
         <div className="container home-footer__grid">
           <div>
-            <div className="home-footer__brand-name">
-              <span className="home-footer__brand-icon">
-                <Map size={18} strokeWidth={2.4} />
-              </span>
-              Vina<span>Tap</span>
-            </div>
+            <Logo className="home-footer__brand-name" size={18} />
             <p className="home-footer__brand-desc">
               Bản đồ du lịch NFC Việt Nam — sưu tầm, khám phá, lưu giữ kỷ niệm
               từng chuyến đi.

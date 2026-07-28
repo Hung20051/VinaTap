@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Logo from "../../components/Logo";
 import { authAPI } from "../../lib/api";
 import { saveAuth, isLoggedIn } from "../../lib/auth";
 
@@ -263,21 +264,11 @@ export default function ForgotPasswordPage() {
           zIndex: 1,
         }}
       >
-        <Link
-          href="/"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: ".5rem",
-            color: "#fff",
-            fontWeight: 800,
-            fontSize: "1.4rem",
-            textShadow: "0 2px 6px rgba(0,0,0,.35)",
-            marginBottom: "1.5rem",
-          }}
-        >
-          VinaTap 🗺
-        </Link>
+        <Logo
+          className="auth-brand__logo"
+          size={22}
+          style={{ marginBottom: "1.5rem" }}
+        />
         <h1
           style={{
             color: "#fff",

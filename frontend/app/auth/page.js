@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Logo from "../components/Logo";
 import { useRouter } from "next/navigation";
 import { authAPI } from "../../lib/api";
 import { saveAuth, isLoggedIn } from "../../lib/auth";
@@ -217,9 +218,7 @@ export default function AuthPage() {
     <div className="auth-page">
       {/* Branding bên trái */}
       <div className="auth-brand">
-        <Link href="/" className="auth-brand__logo">
-          VinaTap 🗺
-        </Link>
+        <Logo className="auth-brand__logo" />
         <h1 className="auth-brand__title">
           Khám phá
           <br />

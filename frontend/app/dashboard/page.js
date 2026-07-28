@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import Logo from "../components/Logo";
 import { useRouter } from "next/navigation";
 import { albumAPI, nfcAPI, authAPI } from "../../lib/api";
 import {
@@ -293,11 +294,7 @@ export default function DashboardPage() {
       <aside className={`dash-sidebar ${collapsed ? "is-collapsed" : ""}`}>
         {/* Logo + nút hamburger thu/mở sidebar */}
         <div className="dash-sidebar__top">
-          {!collapsed && (
-            <Link href="/" className="dash-sidebar__logo">
-              VinaTap 🗺
-            </Link>
-          )}
+          {!collapsed && <Logo className="dash-sidebar__logo" />}
           <button
             onClick={toggleSidebar}
             aria-label={collapsed ? "Mở rộng sidebar" : "Thu gọn sidebar"}

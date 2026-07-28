@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Logo from "../components/Logo";
 import { useRouter } from "next/navigation";
 import { nfcAPI, albumAPI } from "../../lib/api";
 import { requireAuth } from "../../lib/auth";
@@ -74,9 +75,7 @@ export default function ActivatePage() {
     <>
       <nav className="navbar">
         <div className="container navbar__inner">
-          <Link href="/" className="navbar__logo">
-            Vina<span>Tap</span> 🗺
-          </Link>
+          <Logo className="navbar__logo" />
           <div className="navbar__links">
             <Link href="/dashboard">Dashboard</Link>
           </div>
