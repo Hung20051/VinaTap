@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Logo from "../../components/Logo";
+import Logo from "../../../components/Logo";
 import { useParams, useRouter } from "next/navigation";
 import { albumAPI, mediaAPI } from "../../../lib/api";
 import { getUser, isLoggedIn } from "../../../lib/auth";

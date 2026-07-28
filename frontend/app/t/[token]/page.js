@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import Logo from "../../components/Logo";
+import Logo from "../../../components/Logo";
 import { nfcAPI, albumAPI } from "../../../lib/api";
 import { isLoggedIn, getUser } from "../../../lib/auth";
 

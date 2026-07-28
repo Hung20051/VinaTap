@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Logo from "../../components/Logo";
+import Logo from "../../../components/Logo";
 import { useParams } from "next/navigation";
 import { provinceAPI } from "../../../lib/api";
 import { isLoggedIn, clearAuth, getUser } from "../../../lib/auth";

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Logo from "../components/Logo";
+import Logo from "../../components/Logo";
 import { useRouter } from "next/navigation";
 import { authAPI } from "../../lib/api";
 import { saveAuth, isLoggedIn } from "../../lib/auth";

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Logo from "../components/Logo";
+import Logo from "../../components/Logo";
 import { useRouter } from "next/navigation";
 import { nfcAPI, albumAPI } from "../../lib/api";
 import { requireAuth } from "../../lib/auth";
