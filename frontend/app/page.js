@@ -194,7 +194,7 @@ export default function HomePage() {
       {/* ─── Navbar ─── */}
       <nav className={`home-navbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="container home-navbar__inner">
-          <Logo className="home-navbar__logo" />
+          <Logo className="home-navbar__logo" size={44} />
 
           <div className="home-navbar__links">
             <a href="#home" onClick={scrollToSection("home")}>
