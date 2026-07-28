@@ -1,0 +1,230 @@
+/* ============================================================
+   VinaTap — Province page (app/province/[slug]/page.js)
+   Trước đây trang này không có file CSS riêng — toàn bộ style
+   nằm inline trong JSX. File này tách phần style TĨNH ra thành
+   class, chỉ giữ lại inline style cho phần THẬT SỰ động (ảnh nền
+   hero lấy từ province.thumbnail_url, vì URL đổi theo từng tỉnh
+   nên không thể viết thành class cố định được).
+   ============================================================ */
+
+/* ─── LOADING / NOT FOUND ─────────────────────────────────── */
+.province-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.province-notfound {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 1.5rem;
+}
+.province-notfound__icon {
+  font-size: 2.5rem;
+}
+.province-notfound__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* ─── HERO ────────────────────────────────────────────────────
+   background/color đặt inline trong JSX vì phụ thuộc
+   province.thumbnail_url (ảnh + tông màu chữ đổi theo tỉnh có/không
+   có ảnh nền). Các thuộc tính còn lại (bố cục, khoảng cách) ở đây. */
+.province-hero {
+  position: relative;
+  padding: 3.5rem 0;
+  transition: background 0.2s ease;
+}
+.province-hero__badge--overlay {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.province-hero__title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  margin-top: 0.6rem;
+}
+.province-hero__desc {
+  margin-top: 0.75rem;
+  max-width: 620px;
+}
+.province-hero__desc--overlay {
+  color: #fff;
+  opacity: 0.92;
+}
+.province-hero__desc--plain {
+  color: var(--text-secondary);
+}
+.province-hero__stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+.province-hero__cta {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.75rem;
+}
+
+/* ─── NỘI DUNG ───────────────────────────────────────────────── */
+.province-content {
+  padding: 2.5rem 1rem 4rem;
+}
+.province-section {
+  margin-bottom: 2rem;
+}
+.province-section__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.province-specialties-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ─── VIDEO GIỚI THIỆU (16:9 responsive) ──────────────────── */
+.province-video-wrap {
+  position: relative;
+  padding-top: 56.25%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.province-video-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* ─── DANH SÁCH ĐỊA DANH ──────────────────────────────────── */
+.province-landmarks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.province-landmarks-header__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.province-filter-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.province-filter-btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+}
+
+.province-empty {
+  padding: 2.5rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.province-landmark-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.province-landmark-card {
+  overflow: hidden;
+}
+.province-landmark-card__thumb {
+  height: 130px;
+  background: var(--primary-light);
+}
+.province-landmark-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.province-landmark-card__thumb-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 2rem;
+}
+.province-landmark-card__body {
+  padding: 1rem;
+}
+.province-landmark-card__badge {
+  font-size: 0.7rem;
+  margin-bottom: 0.4rem;
+}
+.province-landmark-card__name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 0.35rem 0;
+}
+.province-landmark-card__address {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.province-landmark-card__cta {
+  width: 100%;
+  justify-content: center;
+  font-size: 0.82rem;
+}
+
+/* ─── RESPONSIVE (mobile) ─────────────────────────────────────
+   Breakpoint khớp quy ước chung của project: 768px / 480px. */
+@media (max-width: 768px) {
+  .province-hero {
+    padding: 2.5rem 0;
+  }
+  .province-hero__cta {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+  }
+  .province-content {
+    padding: 1.75rem 0.85rem 3rem;
+  }
+  .province-landmarks-header {
+    align-items: flex-start;
+  }
+  .province-filter-row {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.25rem;
+  }
+  .province-filter-btn {
+    flex-shrink: 0;
+  }
+  .province-landmark-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .province-hero__stats {
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+  .province-landmark-grid {
+    grid-template-columns: 1fr;
+  }
+  .province-landmark-card__thumb {
+    height: 160px;
+  }
+}

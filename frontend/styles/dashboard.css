@@ -501,3 +501,141 @@
 .profile-avatar-upload-btn {
   font-size: 0.82rem;
 }
+
+/* ─── RESPONSIVE (mobile) ─────────────────────────────────────
+   Sidebar bình thường được thu gọn (240px -> 76px, chỉ icon) bằng
+   nút toggle trong JS (class .is-collapsed). Trên màn hình hẹp,
+   TỰ ĐỘNG áp cùng bộ style "thu gọn" đó cho .dash-sidebar dù chưa
+   bấm toggle — tái dùng luôn rule .is-collapsed sẵn có ở trên thay
+   vì viết lại, để 2 nơi không bị lệch nhau khi sau này chỉnh sửa. */
+@media (max-width: 768px) {
+  .dash-sidebar {
+    width: 76px;
+  }
+  .dash-sidebar__top {
+    justify-content: center;
+    padding: 1.25rem 0.5rem;
+  }
+  .dash-sidebar__logo span {
+    display: none;
+  }
+  .dash-nav {
+    padding: 1rem 0.5rem;
+  }
+  .dash-nav__link {
+    justify-content: center;
+    gap: 0;
+    padding: 0.75rem;
+  }
+  .dash-nav__link span:last-child {
+    display: none;
+  }
+  .dash-sidebar__footer {
+    padding: 0.75rem 0.5rem 1.25rem;
+  }
+  .dash-avatar-btn {
+    justify-content: center;
+  }
+  .dash-avatar-name {
+    display: none;
+  }
+  /* Nút thu/mở sidebar không còn cần thiết khi đã tự thu theo màn hình */
+  .dash-sidebar__toggle {
+    display: none;
+  }
+
+  .dash-container-inner {
+    padding: 1.25rem 0.85rem 3rem;
+  }
+  .dash-header {
+    align-items: flex-start;
+  }
+  .dash-header__title {
+    font-size: 1.35rem;
+  }
+  .dash-header__cta {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem 1.25rem;
+  }
+
+  .dash-stats {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+  .dash-stat {
+    padding: 1rem;
+  }
+  .dash-stat__value {
+    font-size: 1.4rem;
+  }
+
+  .dash-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.85rem;
+  }
+
+  /* Modal cài đặt: sidebar tab nằm ngang phía trên thay vì cột bên trái */
+  .settings-panel {
+    flex-direction: column;
+    max-height: 90vh;
+  }
+  .settings-tabs {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.85rem;
+    overflow-x: auto;
+  }
+  .settings-tabs__title {
+    display: none;
+  }
+  .settings-tab {
+    flex-shrink: 0;
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+  .settings-content {
+    padding: 1.1rem;
+  }
+
+  .profile-avatar-row {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash-shell {
+    min-height: 100dvh;
+  }
+  .dash-sidebar {
+    width: 60px;
+  }
+  .dash-nav__link {
+    padding: 0.6rem;
+  }
+  .dash-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .dash-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .dash-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .modal-overlay {
+    padding: 0;
+  }
+  .settings-panel {
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+  .learnmore-panel {
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+}

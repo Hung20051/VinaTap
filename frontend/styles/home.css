@@ -1126,11 +1126,72 @@
   .home-navbar__links {
     display: none;
   }
+  .home-navbar__inner {
+    padding: 0.85rem 1rem;
+  }
   .home-hero__illustration {
     height: 380px;
   }
+  .home-hero__grid {
+    padding: 2.5rem 1rem 1.5rem;
+    gap: 2rem;
+  }
+  .home-hero__cta-row {
+    flex-direction: column;
+  }
+  .home-hero__cta-row a,
+  .home-hero__cta-row button {
+    width: 100%;
+    justify-content: center;
+  }
+  .home-hero__highlight {
+    flex-direction: column;
+    text-align: center;
+  }
+  .home-about__stats {
+    flex-wrap: wrap;
+    gap: 1.5rem 2rem;
+  }
+  .home-section-title {
+    font-size: 1.7rem;
+  }
+  .home-pricing__card {
+    padding: 1.5rem;
+  }
   .home-footer__grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-feature-strip__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1.2rem 1rem;
+  }
+  .home-feature-strip__item {
+    justify-content: flex-start;
+    text-align: left;
+    font-size: 0.8rem;
+  }
+  .home-hero__illustration {
+    height: 300px;
+  }
+  .home-hero__desc {
+    max-width: 100%;
+  }
+  .home-about__stats {
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .home-about__stat-value {
+    font-size: 1.5rem;
+  }
+  .home-pricing__grid {
+    grid-template-columns: 1fr;
+  }
+  .home-navbar__logo span {
+    display: none;
   }
 }
 

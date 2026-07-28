@@ -186,3 +186,97 @@
   padding: 0.3rem 0;
   border-bottom: 1px solid var(--border);
 }
+
+/* ─── RESPONSIVE (mobile) ─────────────────────────────────────
+   Trang admin dùng nhiều nhất trên desktop, nhưng vẫn cần dùng
+   được trên điện thoại (vd duyệt nhanh 1 tỉnh mới thêm). Breakpoint
+   khớp với quy ước chung của project: 768px (tablet) / 480px (phone). */
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 1.25rem 0.85rem 3rem;
+  }
+  .admin-title {
+    font-size: 1.25rem;
+  }
+  .admin-panel {
+    padding: 1rem;
+  }
+  .admin-panel--narrow {
+    max-width: 100%;
+  }
+
+  /* Form 2 cột -> 1 cột */
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-field--w180,
+  .admin-field--w140 {
+    width: 100%;
+  }
+  .admin-form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .admin-form-actions {
+    flex-direction: column;
+  }
+  .admin-form-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Toolbar & select lọc */
+  .admin-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .admin-select-narrow {
+    max-width: 100%;
+  }
+  .admin-toolbar-end {
+    justify-content: stretch;
+  }
+  .admin-toolbar-end .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Danh sách: mỗi item xuống 1 cột, nút hành động full-width dễ bấm */
+  .admin-list-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .admin-list-item__actions {
+    justify-content: flex-end;
+  }
+
+  .admin-sticker-grid {
+    justify-content: center;
+  }
+
+  .admin-nfc-result {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-tabs {
+    gap: 0.35rem;
+  }
+  .admin-tabs .btn {
+    flex: 1 1 calc(50% - 0.35rem);
+    justify-content: center;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.6rem;
+  }
+  .admin-list-item__actions {
+    width: 100%;
+  }
+  .admin-list-item__actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .admin-sticker-card {
+    width: calc(50% - 0.5rem);
+  }
+}

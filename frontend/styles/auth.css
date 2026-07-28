@@ -478,3 +478,25 @@
   border-radius: 50%;
   animation: authSpin 0.7s linear infinite;
 }
+
+/* ─── RESPONSIVE (điện thoại nhỏ) ──────────────────────────────
+   900px trở xuống đã ẩn phần branding + căn giữa khung login ở
+   trên. Bổ sung riêng cho màn < 480px: khung/card bớt padding và
+   ô OTP giãn chữ ít lại để 6 số không bị tràn ra ngoài khung. */
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 1.25rem 1rem;
+  }
+  .auth-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 18px;
+  }
+  .auth-content {
+    min-height: 420px;
+  }
+  .auth-input--otp {
+    font-size: 1.15rem;
+    letter-spacing: 0.3rem;
+    padding: 0.8rem 0.4rem;
+  }
+}

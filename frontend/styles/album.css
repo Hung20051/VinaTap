@@ -276,3 +276,97 @@
   font-size: 0.75rem;
   padding: 0.3rem 0.6rem;
 }
+
+/* ─── RESPONSIVE (mobile) ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .album-page {
+    padding: 1.25rem 0.85rem 3rem;
+  }
+
+  /* Header: ảnh đại diện + tên tỉnh + nút hành động xuống dọc, canh giữa */
+  .album-header {
+    padding: 1.1rem;
+    flex-direction: column;
+    text-align: center;
+  }
+  .album-header__info {
+    min-width: 0;
+    width: 100%;
+  }
+  .album-title-row {
+    justify-content: center;
+  }
+  .album-header__actions {
+    align-self: stretch;
+    justify-content: center;
+  }
+  .album-edit-form__actions {
+    justify-content: center;
+  }
+
+  .album-panel {
+    padding: 1rem;
+  }
+
+  /* Cộng tác viên: tên/badge xuống dòng riêng khỏi nút hành động */
+  .album-collab-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .album-collab-actions {
+    align-self: flex-end;
+  }
+
+  .album-tag-form {
+    flex-wrap: wrap;
+  }
+  .album-tag-form__input {
+    max-width: none;
+    flex: 1 1 140px;
+  }
+
+  .album-upload-panel {
+    justify-content: center;
+    text-align: center;
+  }
+  .album-upload-panel .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Lưới ảnh: min-width nhỏ hơn để vừa màn hình hẹp */
+  .album-media-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.85rem;
+  }
+  .media-card__media {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .album-header__thumb {
+    width: 72px;
+    height: 72px;
+  }
+  .album-title {
+    font-size: 1.2rem;
+  }
+
+  /* Trên điện thoại rất nhỏ, xuống hẳn 1 cột cho dễ xem ảnh */
+  .album-media-grid {
+    grid-template-columns: 1fr;
+  }
+  .media-card__media {
+    max-height: 260px;
+  }
+
+  .media-card__caption-edit-row {
+    flex-direction: column;
+  }
+  .media-card__caption-save-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
