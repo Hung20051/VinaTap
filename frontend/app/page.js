@@ -2,9 +2,32 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import {
+  Map,
+  Smartphone,
+  ShieldCheck,
+  Sparkles,
+  Puzzle,
+  Globe,
+  Camera,
+  Gamepad2,
+  RefreshCw,
+  Lock,
+  Wrench,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  CheckCircle2,
+  Quote,
+  Facebook,
+  Youtube,
+  Music2,
+} from "lucide-react";
 import { provinceAPI } from "../lib/api";
 import { isLoggedIn, getUser, clearAuth } from "../lib/auth";
 import { useRouter } from "next/navigation";
+import { useReveal } from "../lib/useReveal";
 import "../styles/home.css";
 
 const REGION_LABEL = {
@@ -14,6 +37,61 @@ const REGION_LABEL = {
   island: "Hải đảo",
 };
 
+const FEATURE_STRIP = [
+  { icon: Smartphone, label: "Không cần cài app" },
+  { icon: Globe, label: "Hoạt động trên mọi điện thoại" },
+  { icon: ShieldCheck, label: "Album riêng tư, tự chọn công khai" },
+  { icon: Puzzle, label: "Sưu tầm đủ 34 mảnh ghép" },
+];
+
+const ABOUT_ICONS = [
+  { icon: Puzzle, label: "Vật lý" },
+  { icon: Globe, label: "Web tương tác" },
+  { icon: Camera, label: "Album AI" },
+  { icon: Gamepad2, label: "Gamification" },
+];
+
+const POLICY_ITEMS = [
+  {
+    icon: RefreshCw,
+    title: "Kích hoạt trong 1 năm",
+    desc: "Serial NFC có hiệu lực kích hoạt 12 tháng kể từ ngày mua.",
+  },
+  {
+    icon: Lock,
+    title: "Quyền riêng tư album",
+    desc: "Album mặc định công khai để xem, nhưng chỉ chủ album mới sửa/xóa được.",
+  },
+  {
+    icon: Wrench,
+    title: "Bảo hành thẻ vật lý",
+    desc: "Đổi mới miễn phí nếu chip NFC lỗi trong 30 ngày đầu.",
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    q: "Mảnh ghép NFC hoạt động ra sao?",
+    a: "Mỗi mảnh gỗ có gắn 1 chip NFC nhỏ bên trong, đại diện cho 1 tỉnh thành. Chỉ cần chạm mặt sau điện thoại vào mảnh gỗ, album của tỉnh đó sẽ mở ngay trên trình duyệt — không cần tải app, không cần quét mã.",
+  },
+  {
+    q: "Ai là người tạo album cho mảnh ghép?",
+    a: "Người đầu tiên kích hoạt (chạm hoặc nhập serial dự phòng) sẽ trở thành chủ mảnh ghép đó. Bạn có thể tự đặt tên album, viết mô tả và tải ảnh lên ngay sau khi kích hoạt.",
+  },
+  {
+    q: "Nội dung album có riêng tư không?",
+    a: "Bạn tự quyết định. Đặt album ở chế độ riêng tư thì chỉ bạn (và người bạn chia sẻ quyền xem) mới truy cập được. Đặt công khai thì bất kỳ ai chạm vào mảnh ghép cũng xem được album.",
+  },
+  {
+    q: "Tôi có thể chuyển mảnh ghép cho người khác không?",
+    a: "Có. Vào trang quản lý mảnh ghép, chọn “Chuyển nhượng”, nhập email người nhận — họ xác nhận qua email là quyền sở hữu (và toàn bộ album) sẽ chuyển sang tài khoản của họ.",
+  },
+  {
+    q: "Nếu chip NFC trên thẻ bị lỗi thì sao?",
+    a: "Mỗi thẻ đều có serial dự phòng in kèm — bạn vẫn kích hoạt và xem album bình thường bằng cách nhập serial thủ công. Nếu lỗi trong 30 ngày đầu, VinaTap đổi mới miễn phí.",
+  },
+];
+
 export default function HomePage() {
   const [provinces, setProvinces] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,6 +99,8 @@ export default function HomePage() {
   const [region, setRegion] = useState("all");
   const [user, setUser] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  const [openFaq, setOpenFaq] = useState(0);
   const router = useRouter();
 
   // Slide tự động cho "Tỉnh thành nổi bật"
@@ -41,6 +121,15 @@ export default function HomePage() {
       .then((d) => setProvinces(d.provinces))
       .catch(console.error)
       .finally(() => setLoading(false));
+  }, []);
+
+  // Đổi diện mạo navbar (nền mờ + đổ bóng) khi cuộn xuống — chỉ là
+  // hiệu ứng nhỏ, không ảnh hưởng logic.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const filtered = provinces.filter((p) => {
@@ -92,10 +181,12 @@ export default function HomePage() {
   return (
     <div className="home">
       {/* ─── Navbar ─── */}
-      <nav className="home-navbar">
+      <nav className={`home-navbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="container home-navbar__inner">
           <Link href="/" className="home-navbar__logo">
-            <span className="home-navbar__logo-badge">🗺</span>
+            <span className="home-navbar__logo-badge">
+              <Map size={17} strokeWidth={2.4} />
+            </span>
             VinaTap
           </Link>
 
@@ -104,7 +195,7 @@ export default function HomePage() {
             <a href="#about">Giới thiệu</a>
             <a href="#gia">Các gói</a>
             <a href="#provinces">Mới</a>
-            <a href="#chinh-sach">Chính sách</a>
+            <a href="#faq">Hỏi đáp</a>
           </div>
 
           <div className="home-navbar__actions">
@@ -133,11 +224,16 @@ export default function HomePage() {
       <section id="home" className="home-hero">
         <div className="container home-hero__grid">
           <div>
-            <div className="home-eyebrow">─ Khám phá Việt Nam</div>
+            <div className="home-eyebrow">
+              <span className="home-eyebrow__dash" />
+              Khám phá Việt Nam
+            </div>
             <h1 className="home-hero__title">
               Mang cả Việt Nam
               <br />
-              vào lòng bàn tay bạn
+              <span className="home-hero__title-accent">
+                vào lòng bàn tay bạn
+              </span>
             </h1>
             <p className="home-hero__desc">
               Sưu tầm 34 mảnh ghép NFC theo từng tỉnh thành, ghép thành bản đồ
@@ -154,7 +250,9 @@ export default function HomePage() {
             </div>
 
             <div className="home-hero__highlight">
-              <div className="home-hero__highlight-icon">🧩</div>
+              <div className="home-hero__highlight-icon">
+                <Puzzle size={20} strokeWidth={2.2} />
+              </div>
               <div>
                 <div className="home-hero__highlight-title">34 mảnh ghép</div>
                 <div className="home-hero__highlight-sub">
@@ -164,50 +262,83 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Minh họa: điện thoại chạm NFC mở album — vẽ bằng CSS/SVG,
-              không dùng ảnh người thật để tránh vấn đề bản quyền */}
+          {/* Minh họa: điện thoại chạm mảnh NFC mở album — signature
+              của trang: hiệu ứng sóng lan tỏa mô phỏng đúng thao tác
+              "chạm" (tap), thay vì ảnh người thật hay biểu tượng chung
+              chung. Thuần CSS/SVG, không phát sinh vấn đề bản quyền. */}
           <div className="home-hero__illustration">
             <div className="home-hero__blob" />
+
             <div className="home-hero__phone">
               <div className="home-hero__phone-screen">
-                🗺
+                <Map size={40} strokeWidth={1.6} color="var(--home-teal)" />
                 <div className="home-hero__phone-title">Album Đà Nẵng</div>
                 <div className="home-hero__phone-sub">12 ảnh · AI caption</div>
               </div>
             </div>
+
+            {/* Mảnh ghép NFC + sóng chạm */}
+            <div className="home-hero__tap-point">
+              <span className="home-hero__tap-ring" />
+              <span className="home-hero__tap-ring home-hero__tap-ring--d2" />
+              <span className="home-hero__tap-ring home-hero__tap-ring--d3" />
+              <span className="home-hero__tap-chip">
+                <Puzzle size={16} strokeWidth={2.4} />
+              </span>
+            </div>
+
             <div className="home-hero__card home-hero__card--activate">
-              <span className="home-hero__card-check">✓</span>
+              <span className="home-hero__card-check">
+                <CheckCircle2
+                  size={16}
+                  strokeWidth={2.4}
+                  color="var(--home-teal-dark)"
+                />
+              </span>
               <div>
                 <div className="home-hero__card-title">Kích hoạt NFC</div>
                 <div className="home-hero__card-sub">Chạm là mở album</div>
               </div>
             </div>
             <div className="home-hero__card home-hero__card--ai">
-              ✨ AI viết caption
+              <Sparkles size={14} strokeWidth={2.4} />
+              AI viết caption
             </div>
+          </div>
+        </div>
+
+        {/* Dải tính năng nhanh */}
+        <div className="home-feature-strip">
+          <div className="container home-feature-strip__inner">
+            {FEATURE_STRIP.map(({ icon: Icon, label }) => (
+              <div key={label} className="home-feature-strip__item">
+                <span className="home-feature-strip__icon">
+                  <Icon size={18} strokeWidth={2.2} />
+                </span>
+                <span>{label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ─── About (full-screen) ─── */}
-      <section id="about" className="home-about">
+      <RevealSection id="about" className="home-about">
         <div className="container home-about__grid">
           <div className="home-about__icons-grid">
-            {[
-              { icon: "🧩", label: "Vật lý" },
-              { icon: "🌐", label: "Web tương tác" },
-              { icon: "📸", label: "Album AI" },
-              { icon: "🎮", label: "Gamification" },
-            ].map((it) => (
-              <div key={it.label} className="home-about__icon-tile">
-                {it.icon}
-                <span className="home-about__icon-label">{it.label}</span>
+            {ABOUT_ICONS.map(({ icon: Icon, label }) => (
+              <div key={label} className="home-about__icon-tile">
+                <Icon size={26} strokeWidth={2} />
+                <span className="home-about__icon-label">{label}</span>
               </div>
             ))}
           </div>
 
           <div>
-            <div className="home-eyebrow">─ Giới thiệu</div>
+            <div className="home-eyebrow">
+              <span className="home-eyebrow__dash" />
+              Giới thiệu
+            </div>
             <h2 className="home-about__title">
               Mỗi tỉnh thành là một mảnh ghép, một câu chuyện
             </h2>
@@ -233,13 +364,17 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Pricing / Các gói (full-screen) ─── */}
-      <section id="gia" className="home-pricing">
+      <RevealSection id="gia" className="home-pricing">
         <div className="container home-section--pad-lg">
           <div className="home-section-head">
-            <div className="home-eyebrow">─ Các gói ─</div>
+            <div className="home-eyebrow home-eyebrow--center">
+              <span className="home-eyebrow__dash" />
+              Các gói
+              <span className="home-eyebrow__dash" />
+            </div>
             <h2 className="home-section-title">Chọn gói phù hợp với bạn</h2>
           </div>
 
@@ -283,13 +418,20 @@ export default function HomePage() {
                 key={tier.name}
                 className={`home-pricing__card ${tier.highlight ? "home-pricing__card--highlight" : ""}`}
               >
+                {tier.highlight && (
+                  <span className="home-pricing__badge">Phổ biến nhất</span>
+                )}
                 <div className="home-pricing__name">{tier.name}</div>
                 <div className="home-pricing__price">{tier.price}</div>
                 <p className="home-pricing__desc">{tier.desc}</p>
                 <div className="home-pricing__features">
                   {tier.features.map((f) => (
                     <div key={f} className="home-pricing__feature">
-                      <span className="home-pricing__feature-check">✓</span>
+                      <CheckCircle2
+                        size={16}
+                        strokeWidth={2.4}
+                        className="home-pricing__feature-check"
+                      />
                       {f}
                     </div>
                   ))}
@@ -301,25 +443,36 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ─── Tỉnh thành nổi bật ─── */}
-      <section id="provinces" className="home-provinces">
+      <RevealSection id="provinces" className="home-provinces">
         <div className="container home-section--pad-sm">
           <div className="home-section-head">
-            <div className="home-eyebrow">─ Mới ─</div>
+            <div className="home-eyebrow home-eyebrow--center">
+              <span className="home-eyebrow__dash" />
+              Mới
+              <span className="home-eyebrow__dash" />
+            </div>
             <h2 className="home-section-title home-section-title--md">
               Tỉnh thành nổi bật
             </h2>
           </div>
 
           <div className="home-provinces__filters">
-            <input
-              className="input home-provinces__search"
-              placeholder="🔍 Tìm tỉnh thành..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+            <div className="home-provinces__search-wrap">
+              <Search
+                size={16}
+                strokeWidth={2.2}
+                className="home-provinces__search-icon"
+              />
+              <input
+                className="input home-provinces__search"
+                placeholder="Tìm tỉnh thành..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
             {["all", "north", "central", "south", "island"].map((r) => (
               <button
                 key={r}
@@ -359,7 +512,7 @@ export default function HomePage() {
                 onClick={() => scrollProvinceTrack(-1)}
                 className="home-provinces__nav-btn home-provinces__nav-btn--prev"
               >
-                ‹
+                <ChevronLeft size={18} strokeWidth={2.4} />
               </button>
 
               {/* Track cuộn ngang, tự trượt */}
@@ -383,7 +536,7 @@ export default function HomePage() {
                           />
                         ) : (
                           <div className="home-provinces__card-thumb-placeholder">
-                            🗺
+                            <Map size={30} strokeWidth={1.8} />
                           </div>
                         )}
                         <span className="home-provinces__region-badge">
@@ -408,44 +561,49 @@ export default function HomePage() {
                 onClick={() => scrollProvinceTrack(1)}
                 className="home-provinces__nav-btn home-provinces__nav-btn--next"
               >
-                ›
+                <ChevronRight size={18} strokeWidth={2.4} />
               </button>
             </div>
           )}
         </div>
-      </section>
+      </RevealSection>
+
+      {/* ─── Trích dẫn cảm xúc ─── */}
+      <RevealSection className="home-quote">
+        <div className="container home-quote__inner">
+          <Quote size={34} strokeWidth={1.6} className="home-quote__icon" />
+          <blockquote className="home-quote__text">
+            “Chạm mảnh gỗ vào điện thoại, cả chuyến đi Đà Nẵng năm ấy hiện ra
+            trước mắt con gái tôi. Đó là lúc tôi biết món quà này khác hẳn mọi
+            món quà lưu niệm khác.”
+          </blockquote>
+          <p className="home-quote__caption">
+            Dành cho những khoảnh khắc đáng được lưu giữ
+          </p>
+        </div>
+      </RevealSection>
 
       {/* ─── Chính sách (tóm tắt) ─── */}
-      <section id="chinh-sach" className="home-policy">
+      <RevealSection id="chinh-sach" className="home-policy">
         <div className="container home-section--pad-sm">
           <div className="home-section-head">
-            <div className="home-eyebrow">─ Chính sách ─</div>
+            <div className="home-eyebrow home-eyebrow--center">
+              <span className="home-eyebrow__dash" />
+              Chính sách
+              <span className="home-eyebrow__dash" />
+            </div>
             <h2 className="home-section-title home-section-title--sm">
               Cam kết với người dùng
             </h2>
           </div>
           <div className="home-policy__grid">
-            {[
-              {
-                icon: "🔁",
-                title: "Kích hoạt trong 1 năm",
-                desc: "Serial NFC có hiệu lực kích hoạt 12 tháng kể từ ngày mua.",
-              },
-              {
-                icon: "🔒",
-                title: "Quyền riêng tư album",
-                desc: "Album mặc định công khai để xem, nhưng chỉ chủ album mới sửa/xóa được.",
-              },
-              {
-                icon: "🛠",
-                title: "Bảo hành thẻ vật lý",
-                desc: "Đổi mới miễn phí nếu chip NFC lỗi trong 30 ngày đầu.",
-              },
-            ].map((it) => (
-              <div key={it.title} className="home-policy__card">
-                <div className="home-policy__icon">{it.icon}</div>
-                <div className="home-policy__title">{it.title}</div>
-                <p className="home-policy__desc">{it.desc}</p>
+            {POLICY_ITEMS.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="home-policy__card">
+                <div className="home-policy__icon">
+                  <Icon size={20} strokeWidth={2.2} />
+                </div>
+                <div className="home-policy__title">{title}</div>
+                <p className="home-policy__desc">{desc}</p>
               </div>
             ))}
           </div>
@@ -454,30 +612,88 @@ export default function HomePage() {
             khi ra mắt chính thức.
           </p>
         </div>
-      </section>
+      </RevealSection>
+
+      {/* ─── Hỏi đáp ─── */}
+      <RevealSection id="faq" className="home-faq">
+        <div className="container home-section--pad-lg">
+          <div className="home-section-head">
+            <div className="home-eyebrow home-eyebrow--center">
+              <span className="home-eyebrow__dash" />
+              Hỏi đáp
+              <span className="home-eyebrow__dash" />
+            </div>
+            <h2 className="home-section-title home-section-title--md">
+              Những điều bạn cần biết
+            </h2>
+          </div>
+
+          <div className="home-faq__list">
+            {FAQ_ITEMS.map((item, i) => {
+              const isOpen = openFaq === i;
+              return (
+                <div
+                  key={item.q}
+                  className={`home-faq__item ${isOpen ? "is-open" : ""}`}
+                >
+                  <button
+                    className="home-faq__question"
+                    onClick={() => setOpenFaq(isOpen ? -1 : i)}
+                    aria-expanded={isOpen}
+                  >
+                    {item.q}
+                    <ChevronDown
+                      size={18}
+                      strokeWidth={2.2}
+                      className="home-faq__chevron"
+                    />
+                  </button>
+                  <div className="home-faq__answer-wrap">
+                    <p className="home-faq__answer">{item.a}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </RevealSection>
 
       {/* ─── Footer ─── */}
       <footer className="home-footer">
         <div className="container home-footer__grid">
           <div>
             <div className="home-footer__brand-name">
-              Vina<span>Tap</span> 🗺
+              <span className="home-footer__brand-icon">
+                <Map size={18} strokeWidth={2.4} />
+              </span>
+              Vina<span>Tap</span>
             </div>
             <p className="home-footer__brand-desc">
               Bản đồ du lịch NFC Việt Nam — sưu tầm, khám phá, lưu giữ kỷ niệm
               từng chuyến đi.
             </p>
             <div className="home-footer__socials">
-              {["Facebook", "TikTok", "YouTube"].map((s) => (
-                <a
-                  key={s}
-                  href="#"
-                  aria-label={s}
-                  className="home-footer__social-btn"
-                >
-                  {s[0]}
-                </a>
-              ))}
+              <a
+                href="#"
+                aria-label="Facebook"
+                className="home-footer__social-btn"
+              >
+                <Facebook size={15} strokeWidth={2.2} />
+              </a>
+              <a
+                href="#"
+                aria-label="TikTok"
+                className="home-footer__social-btn"
+              >
+                <Music2 size={15} strokeWidth={2.2} />
+              </a>
+              <a
+                href="#"
+                aria-label="YouTube"
+                className="home-footer__social-btn"
+              >
+                <Youtube size={15} strokeWidth={2.2} />
+              </a>
             </div>
           </div>
 
@@ -496,16 +712,16 @@ export default function HomePage() {
               { label: "Các gói", href: "/#gia" },
               { label: "Tỉnh thành", href: "/#provinces" },
               { label: "Giới thiệu", href: "/#about" },
-              { label: "Chính sách", href: "/#chinh-sach" },
+              { label: "Hỏi đáp", href: "/#faq" },
             ]}
           />
           <FooterCol
             title="Công ty"
             links={[
               { label: "Về VinaTap", href: "#" },
-              { label: "Câu hỏi thường gặp", href: "#" },
               { label: "Liên hệ", href: "#" },
               { label: "Điều khoản", href: "#" },
+              { label: "Chính sách", href: "/#chinh-sach" },
             ]}
           />
         </div>
@@ -516,6 +732,22 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// Bọc 1 section bằng hiệu ứng "hiện dần khi cuộn tới" — dùng chung cho
+// tất cả section trừ Hero (Hero luôn hiện ngay khi tải trang, không cần
+// hiệu ứng chờ cuộn).
+function RevealSection({ children, className = "", id }) {
+  const [ref, visible] = useReveal();
+  return (
+    <section
+      id={id}
+      ref={ref}
+      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
+    >
+      {children}
+    </section>
   );
 }
 

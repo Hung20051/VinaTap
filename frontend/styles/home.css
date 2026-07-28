@@ -1,9 +1,7 @@
 /* ============================================================
    VinaTap — Landing page (app/page.js)
-   Trang này TRƯỚC ĐÂY chưa có file CSS riêng — toàn bộ style nằm
-   inline trong JSX. File mới, class tiền tố "home-". Bảng màu
-   riêng của trang chủ (teal/cam/mực) được khai báo thành CSS
-   variable ở đây thay vì hằng số JS (TEAL/ORANGE/INK) như trước.
+   Bảng màu riêng của trang chủ (teal/cam/mực) khai báo bằng CSS
+   variable trong .home. Class tiền tố "home-".
    ============================================================ */
 
 .home {
@@ -12,6 +10,30 @@
   --home-teal-light: #ccfbf1;
   --home-orange: #e85d04;
   --home-ink: #0f172a;
+  --home-bg: #fafaf8;
+  --home-glow: rgba(13, 148, 136, 0.16);
+}
+
+/* ─── HIỆU ỨNG HIỆN DẦN KHI CUỘN ─────────────────────────────
+   Dùng cùng với hook useReveal (IntersectionObserver). Mặc định
+   ẩn nhẹ + trồi lên 24px, khi vào khung nhìn thì hiện + về vị trí. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ─── NAVBAR ──────────────────────────────────────────────── */
@@ -19,8 +41,19 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.home-navbar.is-scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom-color: #ececea;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.04);
 }
 .home-navbar__inner {
   display: flex;
@@ -31,42 +64,71 @@
 .home-navbar__logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-weight: 800;
   font-size: 1.2rem;
+  letter-spacing: -0.01em;
   color: var(--home-ink);
 }
 .home-navbar__logo-badge {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--home-teal);
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  box-shadow: 0 4px 14px var(--home-glow);
 }
 .home-navbar__links {
   display: flex;
   align-items: center;
   gap: 2rem;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #444;
+  color: #4b5563;
+}
+.home-navbar__links a {
+  position: relative;
+  padding: 0.2rem 0;
+  transition: color 0.2s ease;
+}
+.home-navbar__links a:hover {
+  color: var(--home-ink);
+}
+.home-navbar__links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -2px;
+  height: 2px;
+  background: var(--home-teal);
+  border-radius: 2px;
+  transition: right 0.25s ease;
+}
+.home-navbar__links a:hover::after {
+  right: 0;
 }
 .home-navbar__actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 .home-navbar__dashboard-link {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9rem;
+  color: var(--home-ink);
 }
 .home-navbar__logout-btn {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #666;
+  color: #6b7280;
+  transition: color 0.2s ease;
+}
+.home-navbar__logout-btn:hover {
+  color: var(--home-ink);
 }
 .home-navbar__login-btn {
   background: var(--home-teal);
@@ -75,49 +137,92 @@
   font-size: 0.9rem;
   padding: 0.65rem 1.4rem;
   border-radius: 999px;
+  box-shadow: 0 6px 18px var(--home-glow);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+.home-navbar__login-btn:hover {
+  background: var(--home-teal-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px var(--home-glow);
 }
 
 /* ─── HERO ────────────────────────────────────────────────── */
 .home-hero {
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  background: #fafaf9;
+  flex-direction: column;
+  justify-content: center;
+  background:
+    radial-gradient(
+      70% 60% at 82% 8%,
+      rgba(13, 148, 136, 0.08) 0%,
+      transparent 60%
+    ),
+    var(--home-bg);
+  position: relative;
 }
 .home-hero__grid {
+  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   align-items: center;
-  padding: 3rem 1.5rem;
+  padding: 3.5rem 1.5rem 2rem;
 }
 .home-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   color: var(--home-orange);
   font-weight: 700;
   font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
+}
+.home-eyebrow--center {
+  justify-content: center;
+}
+.home-eyebrow__dash {
+  display: inline-block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--home-orange);
+  opacity: 0.6;
 }
 .home-hero__title {
-  font-size: clamp(2.3rem, 5vw, 3.4rem);
+  font-size: clamp(2.3rem, 5vw, 3.5rem);
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.14;
+  letter-spacing: -0.02em;
   color: var(--home-ink);
 }
+.home-hero__title-accent {
+  background: linear-gradient(
+    100deg,
+    var(--home-teal) 0%,
+    var(--home-teal-dark) 55%,
+    var(--home-orange) 110%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+}
 .home-hero__desc {
-  color: #666;
-  margin-top: 1.2rem;
+  color: #5b6472;
+  margin-top: 1.3rem;
   max-width: 440px;
-  font-size: 1.02rem;
+  font-size: 1.03rem;
+  line-height: 1.6;
 }
 .home-hero__cta-row {
   display: flex;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 2.1rem;
   flex-wrap: wrap;
 }
 .home-btn-teal {
@@ -127,6 +232,16 @@
   padding: 0.9rem 1.9rem;
   border-radius: 999px;
   font-size: 0.95rem;
+  box-shadow: 0 10px 26px var(--home-glow);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+.home-btn-teal:hover {
+  background: var(--home-teal-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px var(--home-glow);
 }
 .home-btn-outline-ink {
   border: 1.5px solid #ddd;
@@ -135,33 +250,42 @@
   padding: 0.9rem 1.9rem;
   border-radius: 999px;
   font-size: 0.95rem;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.home-btn-outline-ink:hover {
+  border-color: var(--home-teal);
+  background: #fff;
 }
 .home-hero__highlight {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-top: 2.5rem;
+  gap: 0.85rem;
+  margin-top: 2.6rem;
 }
 .home-hero__highlight-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   background: var(--home-teal-light);
+  color: var(--home-teal-dark);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  flex-shrink: 0;
 }
 .home-hero__highlight-title {
   font-weight: 800;
   color: var(--home-ink);
+  font-size: 0.95rem;
 }
 .home-hero__highlight-sub {
   font-size: 0.82rem;
-  color: #888;
+  color: #8a92a0;
 }
 
-/* Minh họa điện thoại chạm NFC — thuần CSS, không dùng ảnh thật */
+/* Minh họa điện thoại chạm mảnh NFC — signature element của trang */
 .home-hero__illustration {
   position: relative;
   height: 460px;
@@ -183,10 +307,11 @@
   transform: translate(-50%, -50%);
   width: 220px;
   height: 380px;
-  background: #0f172a;
+  background: var(--home-ink);
   border-radius: 32px;
   padding: 10px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  z-index: 2;
 }
 .home-hero__phone-screen {
   width: 100%;
@@ -198,7 +323,6 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  font-size: 2.6rem;
 }
 .home-hero__phone-title {
   font-size: 0.8rem;
@@ -207,21 +331,75 @@
 }
 .home-hero__phone-sub {
   font-size: 0.65rem;
-  color: #888;
+  color: #8a92a0;
 }
+
+/* Chip mảnh ghép + sóng chạm lan tỏa — biểu diễn đúng thao tác cốt lõi
+   của sản phẩm (tap-to-open), không chỉ là hoạ tiết trang trí. */
+.home-hero__tap-point {
+  position: absolute;
+  bottom: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  z-index: 3;
+}
+.home-hero__tap-chip {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--home-orange);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(232, 93, 4, 0.45);
+}
+.home-hero__tap-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  animation: home-tap-ripple 2.4s ease-out infinite;
+}
+.home-hero__tap-ring--d2 {
+  animation-delay: 0.8s;
+}
+.home-hero__tap-ring--d3 {
+  animation-delay: 1.6s;
+}
+@keyframes home-tap-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(3.6);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__tap-ring {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 .home-hero__card {
   position: absolute;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  z-index: 2;
 }
 .home-hero__card--activate {
   left: 6px;
-  bottom: 40px;
+  bottom: 30px;
   padding: 1rem 1.2rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.7rem;
 }
 .home-hero__card-check {
   width: 30px;
@@ -231,22 +409,60 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 .home-hero__card-title {
   font-weight: 700;
   font-size: 0.85rem;
+  color: var(--home-ink);
 }
 .home-hero__card-sub {
   font-size: 0.7rem;
-  color: #888;
+  color: #8a92a0;
 }
 .home-hero__card--ai {
   right: 0;
   top: 24px;
-  padding: 0.8rem 1rem;
+  padding: 0.8rem 1.1rem;
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--home-orange);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Dải tính năng nhanh dưới hero */
+.home-feature-strip {
+  border-top: 1px solid #ececea;
+  background: rgba(255, 255, 255, 0.6);
+}
+.home-feature-strip__inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 1.6rem 1.5rem;
+}
+.home-feature-strip__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b5563;
+  text-align: center;
+}
+.home-feature-strip__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--home-teal-light);
+  color: var(--home-teal-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 /* ─── ABOUT ───────────────────────────────────────────────── */
@@ -269,20 +485,26 @@
   gap: 1rem;
 }
 .home-about__icon-tile {
-  background: #fdf1e7; /* ô lẻ (1,3) */
+  background: #fdf1e7;
+  color: var(--home-orange);
   border-radius: 24px;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  font-size: 2rem;
+  gap: 0.6rem;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.home-about__icon-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
 }
 .home-about__icon-tile:nth-child(odd) {
-  background: var(
-    --home-teal-light
-  ); /* ô chẵn theo index gốc (0,2) = lẻ theo CSS 1-based */
+  background: var(--home-teal-light);
+  color: var(--home-teal-dark);
 }
 .home-about__icon-label {
   font-size: 0.8rem;
@@ -292,27 +514,29 @@
 .home-about__title {
   font-size: 2.2rem;
   font-weight: 800;
+  letter-spacing: -0.01em;
   color: var(--home-ink);
   line-height: 1.2;
 }
 .home-about__desc {
-  color: #666;
-  margin-top: 1rem;
+  color: #5b6472;
+  margin-top: 1.1rem;
   font-size: 1rem;
+  line-height: 1.65;
 }
 .home-about__stats {
   display: flex;
   gap: 2.5rem;
-  margin-top: 2rem;
+  margin-top: 2.2rem;
 }
 .home-about__stat-value {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 800;
   color: var(--home-teal);
 }
 .home-about__stat-label {
   font-size: 0.82rem;
-  color: #888;
+  color: #8a92a0;
 }
 
 /* ─── PRICING ─────────────────────────────────────────────── */
@@ -320,15 +544,16 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: #fafaf9;
+  background: var(--home-bg);
 }
 .home-section-head {
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.75rem;
 }
 .home-section-title {
   font-size: 2.2rem;
   font-weight: 800;
+  letter-spacing: -0.01em;
   color: var(--home-ink);
 }
 .home-pricing__grid {
@@ -339,12 +564,20 @@
   margin: 0 auto;
 }
 .home-pricing__card {
+  position: relative;
   background: #fff;
   color: var(--home-ink);
   border-radius: 24px;
   padding: 2rem;
   border: 1px solid #eee;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.home-pricing__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
 }
 .home-pricing__card--highlight {
   background: var(--home-ink);
@@ -352,6 +585,23 @@
   border: none;
   transform: translateY(-12px);
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+}
+.home-pricing__card--highlight:hover {
+  transform: translateY(-16px);
+}
+.home-pricing__badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--home-orange);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
 }
 .home-pricing__name {
   font-weight: 700;
@@ -361,10 +611,11 @@
   font-size: 2.2rem;
   font-weight: 800;
   margin: 0.5rem 0;
+  letter-spacing: -0.01em;
 }
 .home-pricing__desc {
   font-size: 0.85rem;
-  color: #888;
+  color: #8a92a0;
   margin-bottom: 1.5rem;
 }
 .home-pricing__card--highlight .home-pricing__desc {
@@ -373,16 +624,18 @@
 .home-pricing__features {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.65rem;
   margin-bottom: 1.75rem;
 }
 .home-pricing__feature {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 0.88rem;
 }
 .home-pricing__feature-check {
   color: var(--home-teal);
+  flex-shrink: 0;
 }
 .home-pricing__card--highlight .home-pricing__feature-check {
   color: var(--home-teal-light);
@@ -396,9 +649,18 @@
   font-size: 0.9rem;
   background: var(--home-ink);
   color: #fff;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+.home-pricing__cta:hover {
+  transform: translateY(-1px);
 }
 .home-pricing__card--highlight .home-pricing__cta {
   background: var(--home-teal);
+}
+.home-pricing__card--highlight .home-pricing__cta:hover {
+  background: var(--home-teal-dark);
 }
 
 /* ─── TỈNH THÀNH NỔI BẬT ──────────────────────────────────── */
@@ -413,13 +675,26 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
   align-items: center;
   justify-content: center;
 }
-.home-provinces__search {
+.home-provinces__search-wrap {
+  position: relative;
   max-width: 280px;
+}
+.home-provinces__search-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+.home-provinces__search {
+  width: 100%;
   background: #fafafa;
+  padding-left: 2.4rem;
 }
 .home-provinces__region-btn {
   padding: 0.5rem 1.1rem;
@@ -429,17 +704,25 @@
   background: #fff;
   color: var(--home-ink);
   border: 1px solid #e5e5e5;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+.home-provinces__region-btn:hover {
+  border-color: var(--home-teal);
 }
 .home-provinces__region-btn.is-active {
   background: var(--home-teal);
   color: #fff;
+  border-color: var(--home-teal);
 }
 .home-provinces__loading {
   padding: 4rem 0;
   text-align: center;
 }
 .home-provinces__empty {
-  color: #888;
+  color: #8a92a0;
   text-align: center;
   padding: 3rem 0;
 }
@@ -457,9 +740,20 @@
   background: #fff;
   border: 1px solid #e5e5e5;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  font-size: 1.1rem;
   color: var(--home-ink);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+.home-provinces__nav-btn:hover {
+  background: var(--home-teal);
+  color: #fff;
+  transform: translateY(-50%) scale(1.06);
 }
 .home-provinces__nav-btn--prev {
   left: -18px;
@@ -482,14 +776,18 @@
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid #eee;
-  transition: transform 0.2s;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 .home-provinces__card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.1);
 }
 .home-provinces__card-thumb {
   height: 150px;
   background: var(--home-teal-light);
+  color: var(--home-teal-dark);
   position: relative;
 }
 .home-provinces__card-thumb img {
@@ -502,7 +800,6 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-size: 2.5rem;
 }
 .home-provinces__region-badge {
   position: absolute;
@@ -524,7 +821,7 @@
 }
 .home-provinces__card-desc {
   font-size: 0.82rem;
-  color: #888;
+  color: #8a92a0;
   margin-top: 0.3rem;
   overflow: hidden;
   display: -webkit-box;
@@ -532,9 +829,41 @@
   -webkit-box-orient: vertical;
 }
 
+/* ─── TRÍCH DẪN ───────────────────────────────────────────── */
+.home-quote {
+  background: var(--home-ink);
+  padding: 6rem 0;
+}
+.home-quote__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+.home-quote__icon {
+  color: var(--home-teal);
+  opacity: 0.7;
+  margin-bottom: 1.2rem;
+}
+.home-quote__text {
+  font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.55;
+  color: #fff;
+}
+.home-quote__caption {
+  margin-top: 1.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+}
+
 /* ─── CHÍNH SÁCH ──────────────────────────────────────────── */
 .home-policy {
-  background: #fafaf9;
+  background: var(--home-bg);
   padding: 4rem 0;
   min-height: 100vh;
   display: flex;
@@ -550,26 +879,94 @@
 .home-policy__card {
   background: #fff;
   border-radius: 20px;
-  padding: 1.75rem;
+  padding: 1.9rem;
   border: 1px solid #eee;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.home-policy__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.07);
 }
 .home-policy__icon {
-  font-size: 1.6rem;
-  margin-bottom: 0.75rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--home-teal-light);
+  color: var(--home-teal-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 .home-policy__title {
   font-weight: 700;
   margin-bottom: 0.4rem;
+  color: var(--home-ink);
 }
 .home-policy__desc {
   font-size: 0.85rem;
-  color: #888;
+  color: #8a92a0;
+  line-height: 1.55;
 }
 .home-policy__disclaimer {
   text-align: center;
   font-size: 0.78rem;
-  color: #aaa;
-  margin-top: 2rem;
+  color: #b4b9c2;
+  margin-top: 2.2rem;
+}
+
+/* ─── HỎI ĐÁP (FAQ ACCORDION) ─────────────────────────────── */
+.home-faq {
+  background: #fff;
+}
+.home-faq__list {
+  max-width: 720px;
+  margin: 0 auto;
+  border-top: 1px solid #ececea;
+}
+.home-faq__item {
+  border-bottom: 1px solid #ececea;
+}
+.home-faq__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  padding: 1.35rem 0.25rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--home-ink);
+}
+.home-faq__chevron {
+  flex-shrink: 0;
+  color: #8a92a0;
+  transition: transform 0.25s ease;
+}
+.home-faq__item.is-open .home-faq__chevron {
+  transform: rotate(180deg);
+  color: var(--home-teal);
+}
+.home-faq__answer-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.home-faq__item.is-open .home-faq__answer-wrap {
+  grid-template-rows: 1fr;
+}
+.home-faq__answer {
+  overflow: hidden;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #5b6472;
+  padding-right: 2rem;
+}
+.home-faq__item.is-open .home-faq__answer {
+  padding-bottom: 1.4rem;
 }
 
 /* ─── FOOTER ──────────────────────────────────────────────── */
@@ -584,10 +981,23 @@
   gap: 2rem;
 }
 .home-footer__brand-name {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   font-weight: 800;
   font-size: 1.3rem;
   color: #fff;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+.home-footer__brand-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--home-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 .home-footer__brand-name span {
   color: var(--home-teal-light);
@@ -595,11 +1005,12 @@
 .home-footer__brand-desc {
   font-size: 0.85rem;
   max-width: 260px;
+  line-height: 1.55;
 }
 .home-footer__socials {
   display: flex;
   gap: 0.9rem;
-  margin-top: 1.2rem;
+  margin-top: 1.3rem;
 }
 .home-footer__social-btn {
   width: 34px;
@@ -609,7 +1020,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.home-footer__social-btn:hover {
+  background: var(--home-teal);
+  border-color: var(--home-teal);
 }
 .home-footer__col-title {
   font-weight: 700;
@@ -624,6 +1041,10 @@
 }
 .home-footer__col-links a {
   font-size: 0.85rem;
+  transition: color 0.2s ease;
+}
+.home-footer__col-links a:hover {
+  color: #fff;
 }
 .home-footer__bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -635,16 +1056,32 @@
   padding: 0 1.5rem;
 }
 
-/* ─── RESPONSIVE (giữ nguyên breakpoint đã có ở globals.css cho
-     footer/hero/about — chỉ bổ sung phần landing page cần riêng) ─── */
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 900px) {
   .home-hero__grid,
   .home-about__grid {
     grid-template-columns: 1fr;
   }
+  .home-feature-strip__inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .home-footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .home-navbar__links {
+    display: none;
+  }
+  .home-hero__illustration {
+    height: 380px;
+  }
+  .home-footer__grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* ─── PHỤ TRỢ NHỎ (thay 5 inline style còn sót) ──────────────── */
+/* ─── PHỤ TRỢ NHỎ ─────────────────────────────────────────── */
 .home-section--pad-lg {
   padding: 3rem 1.5rem;
   width: 100%;
