@@ -57,6 +57,13 @@
   margin-bottom: 1.5rem;
   transition: opacity 0.2s;
 }
+.auth-brand__logo img {
+  filter: brightness(0) invert(1);
+}
+.auth-brand__logo span {
+  font-family: "Kalam", cursive;
+  font-size: xx-large;
+}
 .auth-brand__logo:hover {
   opacity: 0.85;
 }

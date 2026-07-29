@@ -10,6 +10,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="vi" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
         {/* Preload trước ảnh nền dùng chung ở /auth và /forgot-password —
             để khi user điều hướng sang các trang đó, ảnh đã có sẵn trong
             cache của browser, không phải tải lại (tránh nháy/giật do ảnh

@@ -88,7 +88,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Nếu chip NFC trên thẻ bị lỗi thì sao?",
-    a: "Mỗi thẻ đều có serial dự phòng in kèm — bạn vẫn kích hoạt và xem album bình thường bằng cách nhập serial thủ công. Nếu lỗi trong 30 ngày đầu, VinaTap đổi mới miễn phí.",
+    a: "Mỗi thẻ đều có serial dự phòng in kèm — bạn vẫn kích hoạt và xem album bình thường bằng cách nhập serial thủ công. Nếu lỗi trong 30 ngày đầu, <VinaTap> đổi mới miễn phí.",
   },
 ];
 
@@ -194,7 +194,7 @@ export default function HomePage() {
       {/* ─── Navbar ─── */}
       <nav className={`home-navbar ${scrolled ? "is-scrolled" : ""}`}>
         <div className="container home-navbar__inner">
-          <Logo className="home-navbar__logo" size={44} />
+          <Logo className="home-navbar__logo" size={65} />
 
           <div className="home-navbar__links">
             <a href="#home" onClick={scrollToSection("home")}>
@@ -667,7 +667,11 @@ export default function HomePage() {
       <footer className="home-footer">
         <div className="container home-footer__grid">
           <div>
-            <Logo className="home-footer__brand-name" size={18} />
+            <Logo
+              className="home-footer__brand-name"
+              size={65}
+              onClick={scrollToSection("home")}
+            />
             <p className="home-footer__brand-desc">
               Bản đồ du lịch NFC Việt Nam — sưu tầm, khám phá, lưu giữ kỷ niệm
               từng chuyến đi.

@@ -294,7 +294,7 @@ export default function DashboardPage() {
       <aside className={`dash-sidebar ${collapsed ? "is-collapsed" : ""}`}>
         {/* Logo + nút hamburger thu/mở sidebar */}
         <div className="dash-sidebar__top">
-          {!collapsed && <Logo className="dash-sidebar__logo" />}
+          {!collapsed && <Logo className="dash-sidebar__logo" size={50} />}
           <button
             onClick={toggleSidebar}
             aria-label={collapsed ? "Mở rộng sidebar" : "Thu gọn sidebar"}

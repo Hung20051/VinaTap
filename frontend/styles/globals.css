@@ -203,6 +203,9 @@ body {
   justify-content: space-between;
 }
 .navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--primary);
@@ -210,6 +213,8 @@ body {
 }
 .navbar__logo span {
   color: var(--text-primary);
+  font-family: "Kalam", cursive;
+  font-size: 1.5rem;
 }
 .navbar__links {
   display: flex;

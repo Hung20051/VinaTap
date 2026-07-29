@@ -52,7 +52,13 @@
   overflow: hidden;
   white-space: nowrap;
 }
-
+.dash-sidebar__logo img {
+  filter: brightness(0) invert(1);
+}
+.dash-sidebar__logo span {
+  font-family: "Kalam", cursive;
+  font-size: 1.5rem;
+}
 .dash-sidebar__toggle {
   display: flex;
   align-items: center;

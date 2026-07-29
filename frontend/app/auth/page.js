@@ -218,7 +218,7 @@ export default function AuthPage() {
     <div className="auth-page">
       {/* Branding bên trái */}
       <div className="auth-brand">
-        <Logo className="auth-brand__logo" />
+        <Logo className="auth-brand__logo" size={65} />
         <h1 className="auth-brand__title">
           Khám phá
           <br />

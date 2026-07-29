@@ -315,7 +315,7 @@ export default function AdminPage() {
     <>
       <nav className="navbar">
         <div className="container navbar__inner">
-          <Logo className="navbar__logo" />
+          <Logo className="navbar__logo" size={50} />
           <div className="navbar__links">
             <Link href="/dashboard">Dashboard</Link>
             <button

@@ -139,6 +139,15 @@
   letter-spacing: -0.01em;
   color: var(--home-ink);
 }
+/* Logo hiển thị to & nét (ảnh tải về đúng độ phân giải cần dùng, không
+   phóng to bằng CSS transform vì sẽ bị mờ/vỡ nét). Dùng margin âm theo
+   chiều dọc để bù lại phần chiều cao tăng thêm, giữ navbar không bị giãn
+   cao ra. Nếu đổi size ảnh trong Logo.jsx, chỉnh margin ở đây cho khớp:
+   margin = -(size_mới - 40) / 2 */
+.home-navbar__logo img {
+  margin: -40px 0;
+}
+
 .home-navbar__logo-badge {
   width: 32px;
   height: 32px;
@@ -149,6 +158,10 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 14px var(--home-glow);
+}
+.home-navbar__logo span {
+  font-family: "Kalam", cursive;
+  font-size: 1.7rem;
 }
 .home-navbar__links {
   display: flex;
@@ -1041,6 +1054,14 @@
   font-size: 1.3rem;
   color: #fff;
   margin-bottom: 0.85rem;
+}
+.home-footer__brand-name span {
+  color: var(--home-teal-light);
+  font-family: "Kalam", cursive;
+  font-size: 1.5rem;
+}
+.home-footer__brand-name img {
+  filter: brightness(0) invert(1);
 }
 .home-footer__brand-icon {
   width: 30px;
