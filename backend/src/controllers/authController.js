@@ -20,51 +20,14 @@ const signToken = (user) =>
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
   });
 
-// ─── REGISTER ────────────────────────────────────────────────
-// POST /api/auth/register
-// Body: { name, email, password }
-const register = async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-
-    // Validate cơ bản
-    if (!name || !email || !password)
-      return res
-        .status(400)
-        .json({ message: "Vui lòng điền đầy đủ thông tin" });
-
-    if (password.length < 6)
-      return res.status(400).json({ message: "Mật khẩu phải ít nhất 6 ký tự" });
-
-    // Kiểm tra email đã tồn tại
-    const existing = await User.findByEmail(email);
-    if (existing)
-      return res.status(409).json({ message: "Email đã được sử dụng" });
-
-    // Hash password
-    const password_hash = await bcrypt.hash(password, 12);
-
-    // Tạo user
-    const userId = await User.create({ name, email, password_hash });
-    const user = await User.findById(userId);
-
-    const token = signToken(user);
-
-    res.status(201).json({
-      message: "Đăng ký thành công",
-      token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-    });
-  } catch (err) {
-    console.error("register error:", err);
-    res.status(500).json({ message: "Lỗi server" });
-  }
-};
+// ⚠️ ĐÃ XÓA: register() bằng email/mật khẩu thuần (không OTP) — tạo user
+// ngay không xác minh email, bypass được luồng OTP bên dưới. Đăng ký giờ
+// bắt buộc đi qua requestRegisterOtp/verifyRegisterOtp.
+//
+// login() vẫn giữ nguyên: đây KHÔNG tạo tài khoản mới, chỉ xác thực một
+// tài khoản đã tồn tại (được tạo qua OTP hoặc Google) rồi cấp JWT — không
+// phải lỗ hổng, và là endpoint frontend dùng thật mỗi lần người dùng đăng
+// nhập lại.
 
 // ─── LOGIN ───────────────────────────────────────────────────
 // POST /api/auth/login
@@ -548,11 +511,9 @@ const uploadAvatar = async (req, res) => {
       return res.status(400).json({ message: "Không tìm thấy file ảnh" });
 
     if (!req.file.mimetype.startsWith("image/"))
-      return res
-        .status(400)
-        .json({
-          message: "Ảnh đại diện chỉ chấp nhận file ảnh (jpg, png, webp, gif)",
-        });
+      return res.status(400).json({
+        message: "Ảnh đại diện chỉ chấp nhận file ảnh (jpg, png, webp, gif)",
+      });
 
     const uploaded = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
@@ -583,7 +544,6 @@ const uploadAvatar = async (req, res) => {
 };
 
 module.exports = {
-  register,
   login,
   googleCallback,
   getMe,

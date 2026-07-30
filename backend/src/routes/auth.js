@@ -3,7 +3,6 @@ const passport = require("passport");
 const router = express.Router();
 
 const {
-  register,
   login,
   googleCallback,
   getMe,
@@ -18,16 +17,28 @@ const {
 const { protect } = require("../middleware/auth");
 const {
   loginLimiter,
-  registerLimiter,
   otpRequestLimiter,
   otpVerifyLimiter,
   updateProfileLimiter,
 } = require("../middleware/rateLimit");
 
-// Email / password (giữ lại — không dùng ở frontend hiện tại vì đã chuyển
-// sang luồng có OTP bên dưới, nhưng vẫn hữu ích cho test/API khác)
-router.post("/register", registerLimiter, register);
+// Đăng nhập bằng email/password — dùng thật bởi frontend (/auth) mỗi lần
+// người dùng đăng nhập. Không liên quan tới OTP (OTP chỉ áp dụng cho lúc
+// ĐĂNG KÝ và QUÊN MẬT KHẨU, không áp dụng cho mỗi lần đăng nhập).
 router.post("/login", loginLimiter, login);
+
+// ⚠️ ĐÃ TẮT: POST /register (đăng ký không qua OTP)
+// Route này tạo tài khoản tức thì chỉ cần email/password, không xác minh
+// email — hoàn toàn bỏ qua luồng OTP 2 bước bên dưới. Frontend không hề
+// gọi route này (chỉ dùng register/request-otp + verify-otp), nên đây là
+// lỗ hổng cho phép ai đó gọi thẳng API để tạo tài khoản spam/giả không
+// qua xác minh. Nếu thật sự cần 1 API tạo tài khoản không-OTP cho mục
+// đích test nội bộ, hãy thêm lại có kèm requireRole("admin") thay vì để
+// public như trước.
+//
+// const { register } = require("../controllers/authController");
+// const { registerLimiter } = require("../middleware/rateLimit");
+// router.post("/register", registerLimiter, register);
 
 // Đăng ký có xác thực OTP qua email (2 bước)
 router.post("/register/request-otp", otpRequestLimiter, requestRegisterOtp);

@@ -40,6 +40,8 @@ export const dict = {
     save: "Lưu thay đổi",
     saved: "Đã lưu",
     close: "Đóng",
+    searchMenu: "Tìm trong menu...",
+    noResults: "Không tìm thấy mục nào",
   },
   en: {
     dashboard: "Dashboard",
@@ -77,6 +79,8 @@ export const dict = {
     save: "Save changes",
     saved: "Saved",
     close: "Close",
+    searchMenu: "Search menu...",
+    noResults: "No matching items",
   },
 };
 

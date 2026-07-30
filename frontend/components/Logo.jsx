@@ -6,9 +6,10 @@ export default function Logo({
   showText = true,
   style,
   onClick,
+  href = "/",
 }) {
   return (
-    <Link href="/" className={className} style={style} onClick={onClick}>
+    <Link href={href} className={className} style={style} onClick={onClick}>
       <Image
         src="/logo.png"
         alt="VinaTap"

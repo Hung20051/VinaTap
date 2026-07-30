@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import Link from "next/link";
-import Logo from "../../components/Logo";
 import { useRouter } from "next/navigation";
+import Sidebar from "../../components/Sidebar";
+import { LayoutDashboard, KeyRound, ShieldCheck } from "lucide-react";
 import { albumAPI, nfcAPI, authAPI } from "../../lib/api";
 import {
   getUser,
@@ -14,8 +14,6 @@ import {
   isAdmin,
 } from "../../lib/auth";
 import {
-  getSidebarCollapsed,
-  setSidebarCollapsed as persistSidebarCollapsed,
   getTheme,
   setTheme as persistTheme,
   applyStoredTheme,
@@ -34,9 +32,6 @@ const REGION_LABEL = {
 
 const TOTAL_PROVINCES = 34;
 
-// Phải khớp với "width" của .dash-avatar-menu trong styles/dashboard.css
-const MENU_WIDTH = 200;
-
 export default function DashboardPage() {
   const router = useRouter();
 
@@ -46,23 +41,6 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [creatingFor, setCreatingFor] = useState(null); // nfc_card_id đang tạo album
-
-  // ─── Sidebar thu gọn / mở rộng ─────────────────────────────
-  const [collapsed, setCollapsed] = useState(false);
-
-  // ─── Menu avatar (Cài đặt / Tìm hiểu thêm / Đăng xuất) ─────
-  // Menu được render qua Portal (ra ngoài <aside>) vì <aside> có
-  // overflow:hidden để phục vụ animation thu/mở sidebar — nếu menu nằm
-  // trong đó, phần vượt quá bề rộng sidebar (đặc biệt lúc collapsed,
-  // rộng chỉ 76px) sẽ bị CẮT MẤT chữ thay vì tràn ra ngoài như dropdown
-  // bình thường. avatarMenuRef vẫn giữ để đo vị trí nút + nhận diện
-  // click "bên trong nút"; avatarMenuPanelRef nhận diện click "bên
-  // trong menu đã portal ra ngoài" — cả 2 cần cho logic đóng khi click
-  // ra ngoài bên dưới.
-  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
-  const [avatarMenuPos, setAvatarMenuPos] = useState({ left: 0, bottom: 0 });
-  const avatarMenuRef = useRef(null);
-  const avatarMenuPanelRef = useRef(null);
 
   // ─── Đổi ảnh đại diện ───────────────────────────────────────
   const avatarFileInputRef = useRef(null);
@@ -94,7 +72,6 @@ export default function DashboardPage() {
     // Đồng bộ các tuỳ chọn đã lưu ở localStorage — làm ở effect (chạy
     // sau khi mount trên client) thay vì trong useState() initializer để
     // tránh lệch nội dung giữa lần render server và lần hydrate client.
-    setCollapsed(getSidebarCollapsed());
     setLangState(getLang());
     setThemeState(applyStoredTheme());
     loadData();
@@ -117,19 +94,6 @@ export default function DashboardPage() {
       // dùng dữ liệu cache trong localStorage như trước.
     }
   };
-
-  // Đóng menu avatar khi click ra ngoài — phải kiểm tra cả nút (avatarMenuRef)
-  // lẫn panel đã portal ra <body> (avatarMenuPanelRef), vì 2 phần này giờ
-  // không còn lồng nhau trong DOM nữa.
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      const insideButton = avatarMenuRef.current?.contains(e.target);
-      const insideMenu = avatarMenuPanelRef.current?.contains(e.target);
-      if (!insideButton && !insideMenu) setAvatarMenuOpen(false);
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const loadData = async () => {
     setLoading(true);
@@ -159,38 +123,6 @@ export default function DashboardPage() {
     window.location.href = "/";
   };
 
-  // Mở/đóng menu avatar — khi mở, đo vị trí thật của nút trên viewport
-  // (getBoundingClientRect) để menu portal ra <body> render đúng ngay
-  // cạnh nút, dùng position:fixed thay vì absolute (vì đã ra khỏi cây
-  // DOM của sidebar nên không còn hưởng toạ độ tương đối theo sidebar).
-  //
-  // Menu LUÔN bung sang BÊN PHẢI của sidebar (flyout), không căn giữa
-  // theo bề rộng sidebar nữa — trước đây lúc sidebar thu gọn chỉ rộng
-  // 76px mà menu rộng 200px, căn giữa sẽ đẩy mép trái ra thành số âm,
-  // tức là lọt ra NGOÀI bên trái màn hình và bị trình duyệt cắt mất.
-  const toggleAvatarMenu = () => {
-    setAvatarMenuOpen((prev) => {
-      const next = !prev;
-      if (next && avatarMenuRef.current) {
-        const rect = avatarMenuRef.current.getBoundingClientRect();
-        const gap = 8;
-        let left = rect.right + gap; // ngay sát mép phải sidebar/nút
-        // Phòng trường hợp màn hình quá hẹp khiến menu tràn ra ngoài bên
-        // phải viewport thì kéo lùi lại cho vừa, không để mất luôn cạnh phải.
-        if (left + MENU_WIDTH > window.innerWidth - gap) {
-          left = window.innerWidth - MENU_WIDTH - gap;
-        }
-        setAvatarMenuPos({
-          left,
-          // Căn đáy menu trùng đáy nút avatar, để menu mở lên phía trên
-          // theo chiều dọc giống trước, nhưng giờ lệch hẳn sang phải.
-          bottom: window.innerHeight - rect.bottom,
-        });
-      }
-      return next;
-    });
-  };
-
   const handleAvatarFileChange = async (e) => {
     const file = e.target.files?.[0];
     e.target.value = ""; // cho phép chọn lại cùng 1 file lần nữa nếu cần
@@ -209,14 +141,6 @@ export default function DashboardPage() {
     } finally {
       setAvatarUploading(false);
     }
-  };
-
-  const toggleSidebar = () => {
-    setCollapsed((prev) => {
-      const next = !prev;
-      persistSidebarCollapsed(next);
-      return next;
-    });
   };
 
   const handleLangChange = (value) => {
@@ -288,114 +212,44 @@ export default function DashboardPage() {
     { key: "profile", label: t(lang, "settingsProfile"), icon: "👤" },
   ];
 
+  // Menu nav của customer dashboard — admin dashboard sau này sẽ tự khai
+  // báo danh sách khác (quản lý tỉnh, user, serial NFC...) và truyền vào
+  // cùng component <Sidebar>, không đụng tới file này.
+  const navItems = [
+    {
+      href: "/dashboard",
+      icon: <LayoutDashboard size={20} />,
+      label: t(lang, "dashboard"),
+    },
+    {
+      href: "/activate",
+      icon: <KeyRound size={20} />,
+      label: t(lang, "activateNfc"),
+    },
+    ...(isAdmin()
+      ? [
+          {
+            href: "/admin",
+            icon: <ShieldCheck size={20} />,
+            label: t(lang, "admin"),
+          },
+        ]
+      : []),
+  ];
+
   return (
-    <div className="dash-shell">
-      {/* Sidebar */}
-      <aside className={`dash-sidebar ${collapsed ? "is-collapsed" : ""}`}>
-        {/* Logo + nút hamburger thu/mở sidebar */}
-        <div className="dash-sidebar__top">
-          {!collapsed && <Logo className="dash-sidebar__logo" size={50} />}
-          <button
-            onClick={toggleSidebar}
-            aria-label={collapsed ? "Mở rộng sidebar" : "Thu gọn sidebar"}
-            title={collapsed ? "Mở rộng sidebar" : "Thu gọn sidebar"}
-            className="dash-sidebar__toggle"
-          >
-            ☰
-          </button>
-        </div>
-
-        <nav className="dash-nav">
-          <Link
-            href="/dashboard"
-            title={t(lang, "dashboard")}
-            className="dash-nav__link is-active"
-          >
-            <span>📊</span>
-            {!collapsed && <span>{t(lang, "dashboard")}</span>}
-          </Link>
-          <Link
-            href="/activate"
-            title={t(lang, "activateNfc")}
-            className="dash-nav__link"
-          >
-            <span>🔑</span>
-            {!collapsed && <span>{t(lang, "activateNfc")}</span>}
-          </Link>
-          {isAdmin() && (
-            <Link
-              href="/admin"
-              title={t(lang, "admin")}
-              className="dash-nav__link"
-            >
-              <span>🛠</span>
-              {!collapsed && <span>{t(lang, "admin")}</span>}
-            </Link>
-          )}
-        </nav>
-
-        {/* Avatar — click để mở menu Cài đặt / Tìm hiểu thêm / Đăng xuất.
-            Dropdown menu KHÔNG còn nằm trong div này — đã chuyển ra
-            Portal (render ngay dưới, sau </aside>) để không bị overflow:hidden
-            của <aside> cắt mất chữ khi tràn ra ngoài bề rộng sidebar. */}
-        <div ref={avatarMenuRef} className="dash-sidebar__footer">
-          <button
-            onClick={toggleAvatarMenu}
-            className={`dash-avatar-btn ${avatarMenuOpen ? "is-open" : ""}`}
-          >
-            <span className="dash-avatar-circle">
-              {user?.avatar_url ? (
-                <img src={user.avatar_url} alt="" />
-              ) : (
-                (user?.name || "?").trim().charAt(0).toUpperCase()
-              )}
-            </span>
-            {!collapsed && (
-              <span className="dash-avatar-name">
-                {user?.name || t(lang, "account")}
-              </span>
-            )}
-          </button>
-        </div>
-      </aside>
-
-      {/* Menu Cài đặt/Tìm hiểu thêm/Đăng xuất — portal ra <body>, định vị
-          bằng position:fixed theo toạ độ đã đo lúc bấm nút (toggleAvatarMenu).
-          typeof document check để tránh lỗi lúc SSR (document không tồn tại
-          trên server). left/bottom là giá trị ĐỘNG duy nhất còn giữ inline. */}
-      {avatarMenuOpen &&
-        typeof document !== "undefined" &&
-        createPortal(
-          <div
-            ref={avatarMenuPanelRef}
-            className="dash-avatar-menu"
-            style={{ left: avatarMenuPos.left, bottom: avatarMenuPos.bottom }}
-          >
-            <button
-              onClick={() => {
-                setSettingsOpen(true);
-                setAvatarMenuOpen(false);
-              }}
-              className="dash-menu-item"
-            >
-              ⚙️ {t(lang, "settings")}
-            </button>
-            <button
-              onClick={() => {
-                setLearnMoreOpen(true);
-                setAvatarMenuOpen(false);
-              }}
-              className="dash-menu-item"
-            >
-              ❓ {t(lang, "learnMore")}
-            </button>
-            <div className="dash-menu-divider" />
-            <button onClick={handleLogout} className="dash-menu-item is-danger">
-              🚪 {t(lang, "logout")}
-            </button>
-          </div>,
-          document.body,
-        )}
+    <div className="app-shell">
+      <Sidebar
+        navItems={navItems}
+        user={user}
+        lang={lang}
+        roleLabel={isAdmin() ? t(lang, "admin") : t(lang, "account")}
+        // TODO: /settings chưa có route/trang thật — cần xây trang Cài
+        // đặt riêng (dùng lại logic đổi ngôn ngữ/theme/hồ sơ đang nằm
+        // trong modal settingsOpen bên dưới). "Tìm hiểu thêm" (learnMoreOpen)
+        // cũng đang mồ côi tương tự, chưa có điểm vào từ sidebar mới.
+        onLogout={handleLogout}
+      />
 
       {/* Nội dung */}
       <div className="dash-content">
