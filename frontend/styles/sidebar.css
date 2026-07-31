@@ -134,9 +134,20 @@
   font-weight: 600;
   color: rgba(255, 255, 255, 0.65);
   background: transparent;
+  overflow: hidden;
   transition:
     background 0.15s,
     color 0.15s;
+}
+/* Chữ label menu ("Tổng quan", "Doanh thu"...) — PHẢI nowrap, nếu không
+   lúc sidebar đang giãn rộng (transition width 76px -> 240px) chữ sẽ bị
+   ngắt dòng giữa chừng ("Tổng" / "quan") rồi mới nhảy về 1 dòng khi đủ
+   chỗ, gây cảm giác giật. Với nowrap + overflow:hidden ở link cha, chữ
+   luôn nằm nguyên 1 dòng và được khung "tiết lộ" dần mượt mà thay vì
+   ngắt-rồi-ghép lại. */
+.app-nav__label {
+  white-space: nowrap;
+  overflow: hidden;
 }
 .app-nav__icon {
   display: flex;

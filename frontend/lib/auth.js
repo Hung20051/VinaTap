@@ -48,6 +48,15 @@ export const isAdmin = () => {
   return user?.role === "admin";
 };
 
+// Sau khi đăng nhập/đăng ký thành công, admin đi thẳng /admin (không có
+// dashboard sưu tầm kiểu customer — "0/34 tỉnh", "Kích hoạt NFC"... những
+// thứ đó không liên quan gì tới admin). Nhận `user` làm tham số thay vì tự
+// gọi getUser() bên trong, vì lúc gọi hàm này thường VỪA saveAuth() xong
+// (state cũ trong closure có thể chưa kịp đồng bộ) — truyền thẳng user mới
+// nhất vào để chắc chắn đọc đúng role ngay tại thời điểm đó.
+export const getPostAuthRedirect = (user) =>
+  user?.role === "admin" ? "/admin" : "/dashboard";
+
 // Redirect nếu chưa đăng nhập (dùng trong page)
 export const requireAuth = (router) => {
   if (!isLoggedIn()) {

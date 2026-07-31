@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="vi" suppressHydrationWarning>
+    <html lang="vi" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -20,11 +20,11 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap"
           rel="stylesheet"
         />
-        {/* Preload trước ảnh nền dùng chung ở /auth và /forgot-password —
-            để khi user điều hướng sang các trang đó, ảnh đã có sẵn trong
-            cache của browser, không phải tải lại (tránh nháy/giật do ảnh
-            load chậm hơn phần còn lại của trang). */}
-        <link rel="preload" as="image" href="/auth-bg.jpg" />
+        {/* Preload ảnh nền /auth và /forgot-password đã CHUYỂN sang
+            app/page.js (trang chủ) — đặt ở đây (layout gốc) từng khiến
+            ảnh bị preload trên MỌI trang kể cả /admin/revenue, nơi
+            không hề dùng tới, gây warning "preloaded but not used" ở
+            console trên toàn bộ khu vực admin. */}
         {/* Áp dụng theme (sáng/tối) đã lưu TRƯỚC khi trang render, để
             tránh hiện tượng nháy trắng rồi mới chuyển sang tối (FOUC).
             Chạy trước khi React hydrate nên phải là script thuần, không

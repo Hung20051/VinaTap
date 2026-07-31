@@ -64,6 +64,14 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!requireAuth(router)) return;
+    // Admin không dùng dashboard sưu tầm kiểu customer ("0/34 tỉnh",
+    // "Kích hoạt NFC"...) — dù đăng nhập xong đã redirect sang /admin rồi,
+    // vẫn cần chặn thêm ở đây phòng trường hợp admin tự gõ URL /dashboard,
+    // bấm nút Back, hoặc mở lại tab/bookmark cũ.
+    if (isAdmin()) {
+      router.replace("/admin");
+      return;
+    }
     const u = getUser();
     setUser(u);
     setProfileName(u?.name || "");

@@ -16,7 +16,7 @@ export default function Logo({
         width={size}
         height={size}
         priority
-        style={{ objectFit: "contain", flexShrink: 0 }}
+        style={{ objectFit: "contain", flexShrink: 0, height: "auto" }}
       />
       {showText && <span>VinaTap</span>}
     </Link>

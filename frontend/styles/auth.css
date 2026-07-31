@@ -309,6 +309,29 @@
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
 }
 
+/* Icon con mắt để hiện/ẩn mật khẩu — input cần chừa chỗ bên phải
+   (padding-right) để chữ không bị đè lên icon. */
+.auth-password-wrap {
+  position: relative;
+}
+.auth-password-wrap .auth-input {
+  padding-right: 2.75rem;
+}
+.auth-password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(15, 23, 42, 0.45);
+  transition: color 0.15s ease;
+}
+.auth-password-toggle:hover {
+  color: #0d9488;
+}
+
 .auth-input--otp {
   text-align: center;
   font-size: 1.4rem;

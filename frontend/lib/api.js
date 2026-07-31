@@ -32,8 +32,6 @@ const upload = async (endpoint, formData) => {
 
 // ─── AUTH ─────────────────────────────────────────────────────
 export const authAPI = {
-  register: (body) =>
-    request("/auth/register", { method: "POST", body: JSON.stringify(body) }),
   login: (body) =>
     request("/auth/login", { method: "POST", body: JSON.stringify(body) }),
   getMe: () => request("/auth/me"),
@@ -165,6 +163,56 @@ export const mediaAPI = {
 export const stickerAPI = {
   getAll: (category) =>
     request(`/stickers${category ? `?category=${category}` : ""}`),
+};
+
+// ─── PRODUCTS (admin — sản phẩm cho dropdown tạo đơn thủ công) ─
+export const productAPI = {
+  getAll: (includeInactive) =>
+    request(`/products${includeInactive ? "?includeInactive=1" : ""}`),
+  create: (body) =>
+    request("/products", { method: "POST", body: JSON.stringify(body) }),
+  update: (id, body) =>
+    request(`/products/${id}`, { method: "PUT", body: JSON.stringify(body) }),
+  setActive: (id, is_active) =>
+    request(`/products/${id}/active`, {
+      method: "PATCH",
+      body: JSON.stringify({ is_active }),
+    }),
+};
+
+// ─── MANUAL SALES (admin — đơn bán thủ công cho đại lý/khách lẻ) ─
+export const manualSaleAPI = {
+  getAll: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
+    ).toString();
+    return request(`/manual-sales${qs ? `?${qs}` : ""}`);
+  },
+  create: (body) =>
+    request("/manual-sales", { method: "POST", body: JSON.stringify(body) }),
+  update: (id, body) =>
+    request(`/manual-sales/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(body),
+    }),
+  delete: (id) => request(`/manual-sales/${id}`, { method: "DELETE" }),
+  getSummary: () => request("/manual-sales/summary"),
+  getDailyRevenue: (days = 30) =>
+    request(`/manual-sales/daily-revenue?days=${days}`),
+  // Không dùng hàm request() chung — đây là tải file (text/csv), không
+  // phải JSON, nên gọi fetch trực tiếp và trả về Blob cho nơi gọi tự tạo
+  // link tải xuống.
+  exportCsvUrl: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
+    ).toString();
+    return `${BASE_URL}/manual-sales/export${qs ? `?${qs}` : ""}`;
+  },
+};
+
+// ─── ADMIN STATS (tổng quan — KHÔNG phải doanh thu, xem manualSaleAPI) ─
+export const adminStatsAPI = {
+  getOverview: () => request("/admin-stats/overview"),
 };
 
 // ─── CHATBOT ──────────────────────────────────────────────────

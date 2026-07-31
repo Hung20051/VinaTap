@@ -320,47 +320,10 @@
 }
 
 /* ─── RESPONSIVE (mobile) ─────────────────────────────────────
-   Sidebar bình thường được thu gọn (240px -> 76px, chỉ icon) bằng
-   nút toggle trong JS (class .is-collapsed). Trên màn hình hẹp,
-   TỰ ĐỘNG áp cùng bộ style "thu gọn" đó cho .dash-sidebar dù chưa
-   bấm toggle — tái dùng luôn rule .is-collapsed sẵn có ở trên thay
-   vì viết lại, để 2 nơi không bị lệch nhau khi sau này chỉnh sửa. */
+   Sidebar thật giờ nằm ở components/Sidebar.jsx + styles/sidebar.css
+   (class .app-sidebar*) — phần responsive của nó tự xử lý riêng ở đó.
+   Phần dưới đây chỉ còn responsive cho NỘI DUNG dashboard. */
 @media (max-width: 768px) {
-  .dash-sidebar {
-    width: 76px;
-  }
-  .dash-sidebar__top {
-    justify-content: center;
-    padding: 1.25rem 0.5rem;
-  }
-  .dash-sidebar__logo span {
-    display: none;
-  }
-  .dash-nav {
-    padding: 1rem 0.5rem;
-  }
-  .dash-nav__link {
-    justify-content: center;
-    gap: 0;
-    padding: 0.75rem;
-  }
-  .dash-nav__link span:last-child {
-    display: none;
-  }
-  .dash-sidebar__footer {
-    padding: 0.75rem 0.5rem 1.25rem;
-  }
-  .dash-avatar-btn {
-    justify-content: center;
-  }
-  .dash-avatar-name {
-    display: none;
-  }
-  /* Nút thu/mở sidebar không còn cần thiết khi đã tự thu theo màn hình */
-  .dash-sidebar__toggle {
-    display: none;
-  }
-
   .dash-container-inner {
     padding: 1.25rem 0.85rem 3rem;
   }
@@ -425,15 +388,6 @@
 }
 
 @media (max-width: 480px) {
-  .dash-shell {
-    min-height: 100dvh;
-  }
-  .dash-sidebar {
-    width: 60px;
-  }
-  .dash-nav__link {
-    padding: 0.6rem;
-  }
   .dash-header {
     flex-direction: column;
     align-items: stretch;

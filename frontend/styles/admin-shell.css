@@ -1,0 +1,17 @@
+/* ============================================================
+   VinaTap — Khung nội dung admin (app/admin/layout.js)
+   Chỉ chứa padding/layout của vùng bên phải AdminSidebar — style
+   riêng của từng trang (AdminDashboard, AdminRevenue...) nằm ở
+   file .css riêng cùng folder với trang đó.
+   ============================================================ */
+.admin-content {
+  flex: 1;
+  min-width: 0;
+  padding: 2rem 2.5rem 4rem;
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    padding: 1.5rem 1rem 3rem;
+  }
+}

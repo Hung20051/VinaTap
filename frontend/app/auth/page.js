@@ -1,11 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import Logo from "../../components/Logo";
 import { useRouter } from "next/navigation";
 import { authAPI } from "../../lib/api";
-import { saveAuth, isLoggedIn } from "../../lib/auth";
+import {
+  saveAuth,
+  isLoggedIn,
+  getUser,
+  getPostAuthRedirect,
+} from "../../lib/auth";
 import "../../styles/auth.css";
 
 const RESEND_COOLDOWN_SECONDS = 60;
@@ -17,6 +23,7 @@ export default function AuthPage() {
   // Đăng ký chia 2 bước: 'form' (nhập thông tin) -> 'otp' (nhập mã xác thực)
   const [registerStep, setRegisterStep] = useState("form");
   const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -43,7 +50,7 @@ export default function AuthPage() {
         .getMe()
         .then((d) => {
           saveAuth(token, d.user);
-          router.replace("/dashboard");
+          router.replace(getPostAuthRedirect(d.user));
         })
         .catch(() => {
           setError("Đăng nhập Google thất bại, vui lòng thử lại");
@@ -57,7 +64,7 @@ export default function AuthPage() {
     }
 
     if (isLoggedIn()) {
-      router.replace("/dashboard");
+      router.replace(getPostAuthRedirect(getUser()));
       return;
     }
 
@@ -125,7 +132,7 @@ export default function AuthPage() {
         otp: otp.trim(),
       });
       saveAuth(data.token, data.user);
-      router.push("/dashboard");
+      router.push(getPostAuthRedirect(data.user));
     } catch (err) {
       setError(err.message || "Đã có lỗi xảy ra, vui lòng thử lại");
     } finally {
@@ -166,7 +173,7 @@ export default function AuthPage() {
           password: form.password,
         });
         saveAuth(data.token, data.user);
-        router.push("/dashboard");
+        router.push(getPostAuthRedirect(data.user));
       } catch (err) {
         setError(err.message || "Đã có lỗi xảy ra, vui lòng thử lại");
       } finally {
@@ -350,17 +357,30 @@ export default function AuthPage() {
 
                 <div className="auth-field">
                   <label className="auth-label">Mật khẩu</label>
-                  <input
-                    className="auth-input"
-                    type="password"
-                    name="password"
-                    placeholder="Ít nhất 6 ký tự"
-                    value={form.password}
-                    onChange={handleChange}
-                    autoComplete={
-                      mode === "login" ? "current-password" : "new-password"
-                    }
-                  />
+                  <div className="auth-password-wrap">
+                    <input
+                      className="auth-input"
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Ít nhất 6 ký tự"
+                      value={form.password}
+                      onChange={handleChange}
+                      autoComplete={
+                        mode === "login" ? "current-password" : "new-password"
+                      }
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      className="auth-password-toggle"
+                      aria-label={
+                        showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"
+                      }
+                      tabIndex={-1}
+                    >
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
                 </div>
 
                 {mode === "login" && (

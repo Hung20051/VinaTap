@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const CATEGORY_ICON = {
   attraction: "🏞",
@@ -38,6 +39,39 @@ export default function Map({ landmarks = [], center, zoom = 13 }) {
   const [scriptState, setScriptState] = useState("idle"); // idle | loading | ready | error
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+  // ─── Carousel cho danh sách fallback (khi chưa có Google Maps API key)
+  // Trước đây hiển thị dạng lưới cứng, dồn hết địa danh thành 1 khối dài
+  // xấu — giờ chuyển thành carousel trượt ngang, cùng pattern với carousel
+  // tỉnh thành ở trang chủ (tự trượt 3s/lần, dừng khi hover, có nút lùi/tới).
+  const trackRef = useRef(null);
+  const [autoPaused, setAutoPaused] = useState(false);
+  const showFallback = !apiKey || scriptState === "error";
+
+  useEffect(() => {
+    if (!showFallback || autoPaused || landmarks.length < 2) return;
+    const track = trackRef.current;
+    if (!track) return;
+
+    const timer = setInterval(() => {
+      if (!track) return;
+      const cardStep = 260; // 240px thẻ + 20px khoảng cách
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (track.scrollLeft >= maxScroll - 10) {
+        track.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        track.scrollBy({ left: cardStep, behavior: "smooth" });
+      }
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [showFallback, autoPaused, landmarks.length]);
+
+  const scrollTrack = (dir) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollBy({ left: dir * 260, behavior: "smooth" });
+  };
 
   const fallbackCenter =
     center && center.lat && center.lng
@@ -139,52 +173,60 @@ export default function Map({ landmarks = [], center, zoom = 13 }) {
     );
   }
 
-  // Chưa cấu hình API key -> fallback danh sách địa danh, vẫn dùng được
-  if (!apiKey || scriptState === "error") {
+  // Chưa cấu hình API key -> fallback carousel trượt ngang, vẫn dùng được
+  if (showFallback) {
     return (
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-          gap: "0.75rem",
-        }}
+        className="map-fallback-carousel"
+        onMouseEnter={() => setAutoPaused(true)}
+        onMouseLeave={() => setAutoPaused(false)}
       >
-        {landmarks.map((l) => (
-          <a
-            key={l.id}
-            href={directionsUrl(l)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card"
-            style={{ padding: "1rem", display: "block" }}
+        {landmarks.length > 1 && (
+          <button
+            aria-label="Trước"
+            onClick={() => scrollTrack(-1)}
+            className="map-fallback-carousel__nav-btn map-fallback-carousel__nav-btn--prev"
           >
-            <p style={{ fontWeight: 600, fontSize: ".9rem" }}>
-              {CATEGORY_ICON[l.category] || "📍"} {l.name}
-            </p>
-            {l.address && (
-              <p
-                style={{
-                  fontSize: ".78rem",
-                  color: "var(--text-muted)",
-                  marginTop: ".25rem",
-                }}
-              >
-                {l.address}
-              </p>
-            )}
-            <span
-              style={{
-                fontSize: ".78rem",
-                color: "var(--primary)",
-                fontWeight: 600,
-                display: "inline-block",
-                marginTop: ".4rem",
-              }}
+            <ChevronLeft size={18} strokeWidth={2.4} />
+          </button>
+        )}
+
+        <div
+          ref={trackRef}
+          className="no-scrollbar map-fallback-carousel__track"
+        >
+          {landmarks.map((l) => (
+            <a
+              key={l.id}
+              href={directionsUrl(l)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="card map-fallback-carousel__card"
             >
-              Chỉ đường →
-            </span>
-          </a>
-        ))}
+              <p className="map-fallback-carousel__card-name">
+                {CATEGORY_ICON[l.category] || "📍"} {l.name}
+              </p>
+              {l.address && (
+                <p className="map-fallback-carousel__card-address">
+                  {l.address}
+                </p>
+              )}
+              <span className="map-fallback-carousel__card-cta">
+                Chỉ đường →
+              </span>
+            </a>
+          ))}
+        </div>
+
+        {landmarks.length > 1 && (
+          <button
+            aria-label="Tiếp"
+            onClick={() => scrollTrack(1)}
+            className="map-fallback-carousel__nav-btn map-fallback-carousel__nav-btn--next"
+          >
+            <ChevronRight size={18} strokeWidth={2.4} />
+          </button>
+        )}
       </div>
     );
   }

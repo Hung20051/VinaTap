@@ -37,6 +37,7 @@ export default function ProvincePage() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [expandedLandmarks, setExpandedLandmarks] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -73,6 +74,13 @@ export default function ProvincePage() {
     activeCategory === "all"
       ? landmarks
       : landmarks.filter((l) => l.category === activeCategory);
+
+  // Chỉ hiện tối đa 3 địa danh, còn lại ẩn sau nút "+N" — bấm vào mới
+  // hiện hết, tránh dồn cả chục thẻ thành 1 khối dài như trước.
+  const hiddenLandmarkCount = Math.max(0, filteredLandmarks.length - 3);
+  const visibleLandmarks = expandedLandmarks
+    ? filteredLandmarks
+    : filteredLandmarks.slice(0, 3);
 
   let specialtiesList = [];
   if (province?.specialties) {
@@ -182,7 +190,8 @@ export default function ProvincePage() {
             <h2 className="province-section__title">🍜 Đặc sản & lễ hội</h2>
             <div className="province-specialties-list">
               {specialtiesList.map((s, i) => (
-                <span key={i} className="badge badge-primary">
+                <span key={i} className="province-specialty-chip">
+                  <span className="province-specialty-chip__dot" />
                   {s}
                 </span>
               ))}
@@ -230,7 +239,10 @@ export default function ProvincePage() {
                 <button
                   key={c}
                   className={`btn province-filter-btn ${activeCategory === c ? "btn-primary" : "btn-ghost"}`}
-                  onClick={() => setActiveCategory(c)}
+                  onClick={() => {
+                    setActiveCategory(c);
+                    setExpandedLandmarks(false);
+                  }}
                 >
                   {c === "all" ? "Tất cả" : CATEGORY_LABEL[c] || c}
                 </button>
@@ -244,7 +256,7 @@ export default function ProvincePage() {
             </div>
           ) : (
             <div className="province-landmark-grid">
-              {filteredLandmarks.map((l) => (
+              {visibleLandmarks.map((l) => (
                 <div key={l.id} className="card province-landmark-card">
                   <div className="province-landmark-card__thumb">
                     {l.thumbnail_url ? (
@@ -280,6 +292,33 @@ export default function ProvincePage() {
                   </div>
                 </div>
               ))}
+
+              {/* Còn hơn 3 địa danh mà chưa mở rộng -> hiện tile "+N" thay
+                  vì dồn hết thành 1 khối dài */}
+              {!expandedLandmarks && hiddenLandmarkCount > 0 && (
+                <button
+                  onClick={() => setExpandedLandmarks(true)}
+                  className="province-landmark-more-card"
+                >
+                  <span className="province-landmark-more-card__plus">
+                    +{hiddenLandmarkCount}
+                  </span>
+                  <span className="province-landmark-more-card__label">
+                    Tìm hiểu thêm
+                  </span>
+                </button>
+              )}
+            </div>
+          )}
+
+          {expandedLandmarks && hiddenLandmarkCount > 0 && (
+            <div className="province-landmarks-footer">
+              <button
+                onClick={() => setExpandedLandmarks(false)}
+                className="btn btn-ghost"
+              >
+                Thu gọn
+              </button>
             </div>
           )}
         </div>

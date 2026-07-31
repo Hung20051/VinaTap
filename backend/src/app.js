@@ -26,6 +26,9 @@ app.use("/api/albums", require("./routes/albums"));
 app.use("/api/media", require("./routes/media"));
 app.use("/api/stickers", require("./routes/stickers"));
 app.use("/api/chatbot", require("./routes/chatbot"));
+app.use("/api/products", require("./routes/products"));
+app.use("/api/manual-sales", require("./routes/manualSales"));
+app.use("/api/admin-stats", require("./routes/adminStats"));
 
 // --- Health check ---
 app.get("/api/health", (req, res) => {
