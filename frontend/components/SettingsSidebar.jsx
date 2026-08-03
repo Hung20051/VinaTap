@@ -1,52 +1,46 @@
 "use client";
 
-// Sidebar RIÊNG cho khu vực admin — tách hẳn khỏi components/Sidebar.jsx
-// (dùng cho customer dashboard) vì admin có menu cố định, không cần
-// truyền navItems linh hoạt theo role như Sidebar.jsx generic. Dùng lại
-// toàn bộ CSS shell (thu/mở, tooltip, avatar, logout) từ styles/sidebar.css
-// để đồng bộ giao diện, không viết lại CSS collapse/animation từ đầu.
+// Sidebar RIÊNG cho /settings/* — khác cả Sidebar.jsx (customer dashboard)
+// lẫn AdminSidebar.jsx (admin). Menu cố định 6 mục, không cần truyền
+// navItems linh hoạt vì đây không phân theo role (ai cũng vào /settings
+// thấy y hệt 6 mục này). Dùng lại toàn bộ CSS shell (thu/mở, tooltip,
+// avatar, logout) từ styles/sidebar.css để đồng bộ giao diện.
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard,
-  DollarSign,
-  CreditCard,
-  MapPin,
-  Users,
-  Images,
-  Sticker,
-  BarChart3,
-  Settings,
+  User as UserIcon,
+  KeyRound,
+  Palette,
+  LifeBuoy,
+  FileText,
+  Info,
   Search,
   LogOut,
   Menu,
+  ArrowLeft,
 } from "lucide-react";
 import Logo from "./Logo";
 import {
   getSidebarCollapsed,
   setSidebarCollapsed as persistSidebarCollapsed,
 } from "../lib/prefs";
-import "../styles/sidebar.css";
+import { clearAuth, isAdmin } from "../lib/auth";
 
-// Menu cố định — mỗi mục ứng với 1 folder trong app/admin/*. Đổi tên/route
-// ở đây là đủ, không cần sửa gì thêm.
-const ADMIN_NAV_ITEMS = [
-  { href: "/admin/dashboard", icon: LayoutDashboard, label: "Tổng quan" },
-  { href: "/admin/revenue", icon: DollarSign, label: "Doanh thu" },
-  { href: "/admin/nfc-cards", icon: CreditCard, label: "Serial NFC" },
-  { href: "/admin/provinces", icon: MapPin, label: "Tỉnh & Địa danh" },
-  { href: "/admin/users", icon: Users, label: "Người dùng" },
-  { href: "/admin/albums", icon: Images, label: "Album & Kiểm duyệt" },
-  { href: "/admin/stickers", icon: Sticker, label: "Sticker theme" },
-  { href: "/admin/analytics", icon: BarChart3, label: "Lượt truy cập" },
-  { href: "/admin/system-settings", icon: Settings, label: "Cài đặt hệ thống" },
+const SETTINGS_NAV_ITEMS = [
+  { href: "/settings/account", icon: UserIcon, label: "Tài khoản" },
+  { href: "/settings/password", icon: KeyRound, label: "Mật khẩu" },
+  { href: "/settings/appearance", icon: Palette, label: "Giao diện" },
+  { href: "/settings/support", icon: LifeBuoy, label: "Hỗ trợ" },
+  { href: "/settings/legal", icon: FileText, label: "Điều khoản & Bảo mật" },
+  { href: "/settings/about", icon: Info, label: "Về VinaTap" },
 ];
 
-export default function AdminSidebar({ user, onLogout }) {
+export default function SettingsSidebar({ user }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const [collapsed, setCollapsed] = useState(false);
   useEffect(() => {
@@ -61,21 +55,18 @@ export default function AdminSidebar({ user, onLogout }) {
     });
   };
 
-  // Tìm kiếm — lọc nhanh 9 mục theo tên, giống Sidebar.jsx customer
   const [query, setQuery] = useState("");
   const filteredItems = query.trim()
-    ? ADMIN_NAV_ITEMS.filter((item) =>
+    ? SETTINGS_NAV_ITEMS.filter((item) =>
         item.label.toLowerCase().includes(query.trim().toLowerCase()),
       )
-    : ADMIN_NAV_ITEMS;
+    : SETTINGS_NAV_ITEMS;
 
   const expandAndFocusSearch = () => {
     setCollapsed(false);
     persistSidebarCollapsed(false);
   };
 
-  // Tooltip nổi khi thu gọn — portal ra <body>, xem giải thích chi tiết ở
-  // components/Sidebar.jsx (cùng cơ chế, không lặp lại comment ở đây)
   const [tooltip, setTooltip] = useState(null);
   const showTooltip = (e, label) => {
     if (!collapsed) return;
@@ -88,16 +79,23 @@ export default function AdminSidebar({ user, onLogout }) {
   };
   const hideTooltip = () => setTooltip(null);
 
+  const handleLogout = () => {
+    clearAuth();
+    // Hard reload — lý do xem chú thích tương tự ở app/page.js
+    window.location.href = "/";
+  };
+
+  // "Quay lại" đưa về đúng dashboard theo role — admin về /admin, customer
+  // về /dashboard. Đặt trên cùng menu vì /settings là 1 khu vực tách biệt,
+  // không phải route con của dashboard/admin, nên cần lối ra rõ ràng.
+  const backHref = isAdmin() ? "/admin/dashboard" : "/dashboard";
+
   return (
     <>
       <aside className={`app-sidebar ${collapsed ? "is-collapsed" : ""}`}>
         <div className="app-sidebar__top">
           {!collapsed && (
-            <Logo
-              className="app-sidebar__logo"
-              size={32}
-              href="/admin/dashboard"
-            />
+            <Logo className="app-sidebar__logo" size={32} href={backHref} />
           )}
           <button
             onClick={toggleSidebar}
@@ -108,6 +106,18 @@ export default function AdminSidebar({ user, onLogout }) {
             <Menu size={20} />
           </button>
         </div>
+
+        <Link
+          href={backHref}
+          className="app-nav__link app-search-toggle"
+          onMouseEnter={(e) => showTooltip(e, "Quay lại")}
+          onMouseLeave={hideTooltip}
+        >
+          <span className="app-nav__icon">
+            <ArrowLeft size={18} />
+          </span>
+          {!collapsed && <span className="app-nav__label">Quay lại</span>}
+        </Link>
 
         {collapsed ? (
           <button
@@ -137,10 +147,7 @@ export default function AdminSidebar({ user, onLogout }) {
         <nav className="app-nav">
           {filteredItems.map((item) => {
             const Icon = item.icon;
-            // Active khi pathname trùng chính xác HOẶC là route con của mục
-            // này (vd /admin/provinces/123 vẫn highlight "Tỉnh & Địa danh")
-            const isActive =
-              pathname === item.href || pathname?.startsWith(item.href + "/");
+            const isActive = pathname === item.href;
             return (
               <Link
                 key={item.href}
@@ -165,30 +172,22 @@ export default function AdminSidebar({ user, onLogout }) {
 
         <div className="app-sidebar__footer">
           {!collapsed && (
-            <Link
-              href="/settings"
-              className="app-sidebar__profile"
-              onMouseEnter={(e) => showTooltip(e, "Cài đặt tài khoản")}
-              onMouseLeave={hideTooltip}
-            >
+            <div className="app-sidebar__profile" style={{ cursor: "default" }}>
               <span className="app-avatar-circle">
                 {user?.avatar_url ? (
                   <img src={user.avatar_url} alt="" />
                 ) : (
-                  (user?.name || "A").trim().charAt(0).toUpperCase()
+                  (user?.name || "?").trim().charAt(0).toUpperCase()
                 )}
               </span>
               <span className="app-sidebar__profile-text">
-                <span className="app-avatar-name">
-                  {user?.name || "Admin VinaTap"}
-                </span>
-                <span className="app-avatar-role">Quản trị</span>
+                <span className="app-avatar-name">{user?.name}</span>
+                <span className="app-avatar-role">{user?.email}</span>
               </span>
-            </Link>
+            </div>
           )}
-
           <button
-            onClick={onLogout}
+            onClick={handleLogout}
             className="app-sidebar__logout"
             aria-label="Đăng xuất"
             onMouseEnter={(e) => showTooltip(e, "Đăng xuất")}

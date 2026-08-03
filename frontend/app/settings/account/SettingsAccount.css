@@ -1,0 +1,38 @@
+/* Chỉ chứa CSS RIÊNG của trang Account — phần dùng chung (.settings-page,
+   .settings-field, .settings-error...) nằm ở styles/settings-shell.css,
+   load qua layout.js cho mọi trang settings, không phải file này. */
+.settings-account__avatar-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.settings-account__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.settings-account__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.settings-account__avatar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+}
+.settings-account__form {
+  padding: 1.5rem;
+}

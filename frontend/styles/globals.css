@@ -144,6 +144,13 @@ body {
 .btn-ghost:hover {
   background: var(--border);
 }
+.btn-danger {
+  background: #dc2626;
+  color: #fff;
+}
+.btn-danger:hover {
+  background: #b91c1c;
+}
 
 .card {
   background: var(--bg-card);

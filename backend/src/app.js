@@ -29,6 +29,7 @@ app.use("/api/chatbot", require("./routes/chatbot"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/manual-sales", require("./routes/manualSales"));
 app.use("/api/admin-stats", require("./routes/adminStats"));
+app.use("/api/users", require("./routes/users"));
 
 // --- Health check ---
 app.get("/api/health", (req, res) => {

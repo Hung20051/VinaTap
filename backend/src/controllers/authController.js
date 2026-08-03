@@ -20,6 +20,18 @@ const signToken = (user) =>
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
   });
 
+// Rút gọn user object trả ra ngoài API — loại bỏ password_hash/google_id
+// (nhạy cảm), giữ lại MỌI field còn lại (kể cả phone/address/avatar_url).
+// Trước đây login()/verifyRegisterOtp()/resetPassword() tự tay liệt kê
+// {id, name, email, role} — thiếu mất phone/address/avatar_url, khiến
+// mỗi lần đăng nhập lại (ghi đè localStorage bằng response này) avatar
+// biến mất dù DB vẫn còn nguyên, phải đợi 1 lần gọi /auth/me khác mới
+// tự khôi phục lại. Dùng chung hàm này để không lặp lại lỗi tương tự.
+const toPublicUser = (user) => {
+  const { password_hash, google_id, ...publicUser } = user;
+  return publicUser;
+};
+
 // ⚠️ ĐÃ XÓA: register() bằng email/mật khẩu thuần (không OTP) — tạo user
 // ngay không xác minh email, bypass được luồng OTP bên dưới. Đăng ký giờ
 // bắt buộc đi qua requestRegisterOtp/verifyRegisterOtp.
@@ -66,12 +78,7 @@ const login = async (req, res) => {
     res.json({
       message: "Đăng nhập thành công",
       token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      user: toPublicUser(user),
     });
   } catch (err) {
     console.error("login error:", err);
@@ -211,12 +218,7 @@ const verifyRegisterOtp = async (req, res) => {
         ? "Thiết lập mật khẩu thành công, bạn đã có thể đăng nhập bằng email lẫn Google"
         : "Đăng ký thành công",
       token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
+      user: toPublicUser(user),
     });
   } catch (err) {
     console.error("verifyRegisterOtp error:", err);
@@ -370,12 +372,7 @@ const resetPassword = async (req, res) => {
     res.json({
       message: "Đặt lại mật khẩu thành công",
       token,
-      user: {
-        id: freshUser.id,
-        name: freshUser.name,
-        email: freshUser.email,
-        role: freshUser.role,
-      },
+      user: toPublicUser(freshUser),
     });
   } catch (err) {
     console.error("resetPassword error:", err);
@@ -395,9 +392,20 @@ const googleCallback = async (req, res) => {
     let user = await User.findByGoogleId(google_id);
 
     if (!user) {
-      // Tìm theo email — nếu đã register bằng email/pass thì link Google vào
-      const byEmail = await User.findByEmail(email);
+      // Tìm theo email KHÔNG lọc status — nếu dùng findByEmail (chỉ tìm
+      // active) thì tài khoản đã bị khóa sẽ bị coi là "chưa tồn tại",
+      // rơi xuống nhánh tạo mới bên dưới và vỡ UNIQUE(email) ở DB vì
+      // email đó thật ra đã có (chỉ là đang banned).
+      const byEmail = await User.findByEmailAny(email);
+      if (byEmail && byEmail.status !== "active") {
+        // Tài khoản email này đã bị khóa — không link Google, không tạo
+        // mới đè lên, báo lỗi rõ ràng thay vì để crash ở bước INSERT.
+        return res.redirect(
+          `${process.env.FRONTEND_URL}/auth?error=account_banned`,
+        );
+      }
       if (byEmail) {
+        // Đã đăng ký bằng email/pass trước đó -> link Google vào tài khoản có sẵn
         await User.updateGoogleId(byEmail.id, google_id);
         user = await User.findById(byEmail.id);
       } else {
@@ -496,6 +504,56 @@ const updateMe = async (req, res) => {
   }
 };
 
+// ─── ĐỔI MẬT KHẨU (khi đã đăng nhập) ──────────────────────────
+// PATCH /api/auth/change-password  (cần JWT)
+// Body: { currentPassword, newPassword }
+// Khác với luồng "quên mật khẩu" (OTP qua email) — chỗ này yêu cầu nhập
+// đúng mật khẩu HIỆN TẠI, dùng khi user vẫn nhớ mật khẩu và chỉ muốn đổi.
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword)
+      return res
+        .status(400)
+        .json({ message: "Vui lòng nhập đầy đủ mật khẩu hiện tại và mới" });
+    if (newPassword.length < 6)
+      return res
+        .status(400)
+        .json({ message: "Mật khẩu mới phải ít nhất 6 ký tự" });
+
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "Không tìm thấy user" });
+
+    // Tài khoản đăng ký bằng Google thuần (chưa từng đặt mật khẩu) —
+    // không có password_hash để so sánh, phải hướng qua "Quên mật khẩu"
+    // (OTP) để ĐẶT mật khẩu lần đầu, không phải "đổi" mật khẩu đang có.
+    //
+    // LƯU Ý: User.findById() (bản trả ra ngoài API) không SELECT
+    // password_hash — phải query lại qua findByEmail() (bản đầy đủ) để
+    // có password_hash thật sự so sánh, nếu không sẽ luôn undefined và
+    // rơi vào nhánh lỗi này bất kể tài khoản có mật khẩu hay chưa.
+    const fullUser = await User.findByEmail(user.email);
+    if (!fullUser || !fullUser.password_hash)
+      return res.status(400).json({
+        message:
+          "Tài khoản này đăng nhập bằng Google, chưa có mật khẩu — dùng 'Quên mật khẩu' để đặt mật khẩu lần đầu",
+      });
+
+    const match = await bcrypt.compare(currentPassword, fullUser.password_hash);
+    if (!match)
+      return res.status(401).json({ message: "Mật khẩu hiện tại không đúng" });
+
+    const password_hash = await bcrypt.hash(newPassword, 12);
+    await User.setPassword(user.id, password_hash);
+
+    res.json({ message: "Đã đổi mật khẩu thành công" });
+  } catch (err) {
+    console.error("changePassword error:", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
 // ─── UPLOAD AVATAR ───────────────────────────────────────────
 // POST /api/auth/me/avatar  (cần JWT)
 // Form-data: file (ảnh)
@@ -548,6 +606,7 @@ module.exports = {
   googleCallback,
   getMe,
   updateMe,
+  changePassword,
   uploadAvatar,
   requestRegisterOtp,
   verifyRegisterOtp,

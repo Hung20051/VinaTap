@@ -60,7 +60,11 @@ export default function AuthPage() {
     }
 
     if (oauthError) {
-      setError("Đăng nhập Google thất bại, vui lòng thử lại");
+      setError(
+        oauthError === "account_banned"
+          ? "Tài khoản này đã bị khóa. Vui lòng liên hệ hỗ trợ."
+          : "Đăng nhập Google thất bại, vui lòng thử lại",
+      );
     }
 
     if (isLoggedIn()) {

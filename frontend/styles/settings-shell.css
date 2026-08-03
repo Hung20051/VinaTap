@@ -1,0 +1,70 @@
+/* ============================================================
+   VinaTap — Style DÙNG CHUNG cho toàn bộ /settings/*
+   Import 1 lần duy nhất ở app/settings/layout.js — mọi trang con
+   (account, password, appearance, support, legal, about) đều thấy
+   được các class này mà KHÔNG cần import chéo từ folder khác nhau,
+   giữ đúng nguyên tắc mỗi mục là 1 folder độc lập.
+   ============================================================ */
+.settings-page {
+  max-width: 640px;
+}
+.settings-page__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.settings-page__subtitle {
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.1rem;
+}
+.settings-field input,
+.settings-field textarea {
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: inherit;
+}
+.settings-field input:focus,
+.settings-field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.settings-field--readonly {
+  background: var(--bg-subtle, #f9fafb);
+  color: var(--text-muted);
+}
+.settings-field__hint {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.settings-error {
+  color: #dc2626;
+  font-size: 0.82rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.75rem;
+}
+.settings-saved {
+  color: #16a34a;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.settings-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}

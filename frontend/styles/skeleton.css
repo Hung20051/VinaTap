@@ -1,0 +1,51 @@
+/* ============================================================
+   VinaTap — Skeleton loading (app/admin/loading.js, app/settings/loading.js)
+   Next.js tự động hiện file loading.js trong lúc route đang tải —
+   import ở layout gốc (giống admin-shell.css/settings-shell.css) để
+   chắc chắn có CSS ngay cả khi F5 thẳng vào 1 trang con.
+   ============================================================ */
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton-block {
+  background: var(--border);
+  border-radius: var(--radius-md);
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.skeleton-title {
+  width: 200px;
+  height: 28px;
+  margin-bottom: 0.6rem;
+}
+.skeleton-subtitle {
+  width: 300px;
+  height: 16px;
+  margin-bottom: 1.75rem;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.skeleton-card {
+  height: 90px;
+}
+
+.skeleton-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.skeleton-row {
+  height: 52px;
+}

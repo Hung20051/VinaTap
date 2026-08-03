@@ -37,6 +37,11 @@ export const authAPI = {
   getMe: () => request("/auth/me"),
   updateMe: (body) =>
     request("/auth/me", { method: "PATCH", body: JSON.stringify(body) }),
+  changePassword: (body) =>
+    request("/auth/change-password", {
+      method: "PATCH",
+      body: JSON.stringify(body),
+    }),
   uploadAvatar: (formData) => upload("/auth/me/avatar", formData),
   googleUrl: () => `${BASE_URL}/auth/google`,
 
@@ -213,6 +218,26 @@ export const manualSaleAPI = {
 // ─── ADMIN STATS (tổng quan — KHÔNG phải doanh thu, xem manualSaleAPI) ─
 export const adminStatsAPI = {
   getOverview: () => request("/admin-stats/overview"),
+};
+
+// ─── USERS (admin — quản lý tài khoản) ─────────────────────────
+export const userAPI = {
+  getAll: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
+    ).toString();
+    return request(`/users${qs ? `?${qs}` : ""}`);
+  },
+  setStatus: (id, status) =>
+    request(`/users/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
+  setRole: (id, role) =>
+    request(`/users/${id}/role`, {
+      method: "PATCH",
+      body: JSON.stringify({ role }),
+    }),
 };
 
 // ─── CHATBOT ──────────────────────────────────────────────────

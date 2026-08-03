@@ -1,4 +1,15 @@
 import "../styles/globals.css";
+// 3 file dưới đây trước chỉ import ở app/admin/layout.js và
+// app/settings/layout.js (đều là "use client") — gây vỡ CSS khi F5/gõ
+// thẳng URL vào 1 trang con (vd /settings/password), vì Next.js App
+// Router không đảm bảo CSS import trong client-layout con được gắn vào
+// HTML trả về của hard navigation, chỉ chắc chắn có khi điều hướng bằng
+// client-side nav (bấm Link trong app). Import ở đây (layout gốc, luôn
+// nằm trong MỌI response) để chắc chắn có mặt bất kể vào bằng đường nào.
+import "../styles/admin-shell.css";
+import "../styles/sidebar.css";
+import "../styles/settings-shell.css";
+import "../styles/skeleton.css";
 
 export const metadata = {
   title: "VinaTap — Bản đồ Du lịch NFC Việt Nam",

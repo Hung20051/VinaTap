@@ -1,10 +1,24 @@
 const db = require("../config/db");
 
 const User = {
-  // Tìm user theo email
+  // Tìm user theo email — CHỈ tài khoản active. Dùng cho ĐĂNG NHẬP (email
+  // bị khóa thì coi như "không tìm thấy", không cho login).
   async findByEmail(email) {
     const [rows] = await db.execute(
       'SELECT * FROM users WHERE email = ? AND status = "active" LIMIT 1',
+      [email],
+    );
+    return rows[0] || null;
+  },
+
+  // Tìm user theo email, KHÔNG lọc status — dùng khi cần biết "email này
+  // đã từng đăng ký chưa" bất kể tài khoản đó đang active hay banned (vd
+  // googleCallback cần biết để quyết định link Google vào tài khoản cũ
+  // hay tạo mới; nếu dùng nhầm findByEmail ở trên, tài khoản banned sẽ
+  // bị coi là "chưa tồn tại" -> cố INSERT lại -> vỡ UNIQUE(email) ở DB).
+  async findByEmailAny(email) {
+    const [rows] = await db.execute(
+      "SELECT * FROM users WHERE email = ? LIMIT 1",
       [email],
     );
     return rows[0] || null;
@@ -81,6 +95,86 @@ const User = {
       password_hash,
       id,
     ]);
+  },
+
+  // ─── QUẢN LÝ USER (admin) ───────────────────────────────────
+  // Danh sách + tìm kiếm (tên/email) + đếm số thẻ NFC đã kích hoạt và số
+  // album đã tạo — dùng subquery đếm riêng thay vì JOIN trực tiếp để
+  // tránh nhân bản dòng (1 user có N thẻ + M album sẽ ra N*M dòng nếu
+  // JOIN thẳng cả 2 bảng cùng lúc).
+  // Tách logic build WHERE ra riêng — dùng chung giữa findAllForAdmin
+  // (lấy danh sách) và countForAdmin (đếm tổng, để FE biết còn trang sau
+  // hay không), tránh viết trùng điều kiện search/role ở 2 chỗ rồi lỡ
+  // sửa 1 chỗ quên chỗ kia.
+  _buildAdminWhere({ search, role }) {
+    const where = [];
+    const params = [];
+    if (search) {
+      where.push("(name LIKE ? OR email LIKE ?)");
+      params.push(`%${search}%`, `%${search}%`);
+    }
+    if (role && ["admin", "customer"].includes(role)) {
+      where.push("role = ?");
+      params.push(role);
+    }
+    return {
+      whereClause: where.length ? `WHERE ${where.join(" AND ")}` : "",
+      params,
+    };
+  },
+
+  async findAllForAdmin({ search, role, limit = 50, offset = 0 } = {}) {
+    const { whereClause, params } = this._buildAdminWhere({ search, role });
+
+    // LIMIT/OFFSET: mysql2 (execute/prepared statement) có thể báo lỗi
+    // ER_WRONG_ARGUMENTS với placeholder "?" ở LIMIT/OFFSET tùy phiên bản
+    // — đã gặp lỗi này ở ManualSale.findAll, nên áp dụng luôn cách né ở
+    // đây: ép số nguyên an toàn rồi chèn thẳng vào chuỗi SQL.
+    const safeLimit = Math.max(1, Math.min(parseInt(limit, 10) || 50, 500));
+    const safeOffset = Math.max(0, parseInt(offset, 10) || 0);
+
+    const [rows] = await db.execute(
+      `SELECT
+         u.id, u.name, u.email, u.phone, u.avatar_url, u.role, u.status, u.created_at,
+         (SELECT COUNT(*) FROM nfc_cards nc WHERE nc.owner_user_id = u.id) AS nfc_count,
+         (SELECT COUNT(*) FROM albums a WHERE a.owner_id = u.id AND a.status = 'active') AS album_count
+       FROM users u
+       ${whereClause}
+       ORDER BY u.created_at DESC
+       LIMIT ${safeLimit} OFFSET ${safeOffset}`,
+      params,
+    );
+    return rows;
+  },
+
+  // Đếm tổng số user khớp bộ lọc (KHÔNG áp LIMIT/OFFSET) — trước đây
+  // AdminUsers.jsx luôn chỉ lấy 50 user đầu tiên (mặc định limit=50) mà
+  // không có cách nào biết còn user nào bị ẩn phía sau hay không, cũng
+  // không có nút chuyển trang -> user thứ 51 trở đi không hiện được.
+  async countForAdmin({ search, role } = {}) {
+    const { whereClause, params } = this._buildAdminWhere({ search, role });
+    const [rows] = await db.execute(
+      `SELECT COUNT(*) AS total FROM users u ${whereClause}`,
+      params,
+    );
+    return rows[0].total;
+  },
+
+  // users.status giờ chỉ còn ENUM('active','banned') — "inactive" đã được
+  // xóa hẳn khỏi schema (không phải chỉ ẩn khỏi API) vì không nơi nào
+  // trong code từng gán giá trị này.
+  async setStatus(id, status) {
+    if (!["active", "banned"].includes(status)) {
+      throw new Error("status không hợp lệ");
+    }
+    await db.execute("UPDATE users SET status = ? WHERE id = ?", [status, id]);
+  },
+
+  async setRole(id, role) {
+    if (!["admin", "customer"].includes(role)) {
+      throw new Error("role không hợp lệ");
+    }
+    await db.execute("UPDATE users SET role = ? WHERE id = ?", [role, id]);
   },
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Sidebar from "../../components/Sidebar";
@@ -13,13 +13,7 @@ import {
   clearAuth,
   isAdmin,
 } from "../../lib/auth";
-import {
-  getTheme,
-  setTheme as persistTheme,
-  applyStoredTheme,
-  getLang,
-  setLang as persistLang,
-} from "../../lib/prefs";
+import { applyStoredTheme, getLang } from "../../lib/prefs";
 import { t } from "../../lib/i18n";
 import "../../styles/dashboard.css";
 
@@ -41,26 +35,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [creatingFor, setCreatingFor] = useState(null); // nfc_card_id đang tạo album
-
-  // ─── Đổi ảnh đại diện ───────────────────────────────────────
-  const avatarFileInputRef = useRef(null);
-  const [avatarUploading, setAvatarUploading] = useState(false);
-  const [avatarError, setAvatarError] = useState("");
-
-  // ─── Modal Cài đặt ──────────────────────────────────────────
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [settingsTab, setSettingsTab] = useState("language"); // language | theme | profile
   const [lang, setLangState] = useState("vi");
-  const [theme, setThemeState] = useState("light");
-  const [profileName, setProfileName] = useState("");
-  const [profilePhone, setProfilePhone] = useState("");
-  const [profileAddress, setProfileAddress] = useState("");
-  const [profileSaving, setProfileSaving] = useState(false);
-  const [profileSaved, setProfileSaved] = useState(false);
-  const [profileError, setProfileError] = useState("");
-
-  // ─── Modal Tìm hiểu thêm ────────────────────────────────────
-  const [learnMoreOpen, setLearnMoreOpen] = useState(false);
 
   useEffect(() => {
     if (!requireAuth(router)) return;
@@ -74,14 +49,11 @@ export default function DashboardPage() {
     }
     const u = getUser();
     setUser(u);
-    setProfileName(u?.name || "");
-    setProfilePhone(u?.phone || "");
-    setProfileAddress(u?.address || "");
     // Đồng bộ các tuỳ chọn đã lưu ở localStorage — làm ở effect (chạy
     // sau khi mount trên client) thay vì trong useState() initializer để
     // tránh lệch nội dung giữa lần render server và lần hydrate client.
     setLangState(getLang());
-    setThemeState(applyStoredTheme());
+    applyStoredTheme(); // chỉ áp dụng theme lên trang, không cần lưu vào state nữa
     loadData();
     // Cache localStorage có thể cũ (đăng nhập từ trước khi có phone/address,
     // hoặc hồ sơ vừa được sửa ở thiết bị khác) -> lấy bản mới nhất từ DB rồi
@@ -89,14 +61,20 @@ export default function DashboardPage() {
     refreshProfile();
   }, [router]);
 
+  // Nghe sự kiện từ updateUser() (lib/auth.js) — cùng cơ chế với
+  // settings/layout.js và admin/layout.js, xem chú thích chi tiết ở đó.
+  useEffect(() => {
+    const handleUserUpdated = (e) => setUser(e.detail);
+    window.addEventListener("vinatap:user-updated", handleUserUpdated);
+    return () =>
+      window.removeEventListener("vinatap:user-updated", handleUserUpdated);
+  }, []);
+
   const refreshProfile = async () => {
     try {
       const res = await authAPI.getMe();
       const fresh = updateUser(res.user);
       setUser(fresh);
-      setProfileName(fresh?.name || "");
-      setProfilePhone(fresh?.phone || "");
-      setProfileAddress(fresh?.address || "");
     } catch {
       // Token hết hạn/lỗi mạng -> im lặng, các phần khác của trang vẫn
       // dùng dữ liệu cache trong localStorage như trước.
@@ -131,60 +109,6 @@ export default function DashboardPage() {
     window.location.href = "/";
   };
 
-  const handleAvatarFileChange = async (e) => {
-    const file = e.target.files?.[0];
-    e.target.value = ""; // cho phép chọn lại cùng 1 file lần nữa nếu cần
-    if (!file) return;
-
-    setAvatarError("");
-    setAvatarUploading(true);
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await authAPI.uploadAvatar(formData);
-      const updated = updateUser(res.user);
-      setUser(updated);
-    } catch (err) {
-      setAvatarError(err.message || "Không upload được ảnh đại diện");
-    } finally {
-      setAvatarUploading(false);
-    }
-  };
-
-  const handleLangChange = (value) => {
-    persistLang(value);
-    setLangState(value);
-  };
-
-  const handleThemeChange = (value) => {
-    persistTheme(value);
-    setThemeState(value);
-  };
-
-  const handleSaveProfile = async () => {
-    setProfileError("");
-    setProfileSaving(true);
-    try {
-      const res = await authAPI.updateMe({
-        name: profileName.trim() || user?.name,
-        phone: profilePhone.trim(),
-        address: profileAddress.trim(),
-      });
-      // Đồng bộ lại cache localStorage với dữ liệu vừa lưu thành công ở DB
-      const updated = updateUser(res.user);
-      setUser(updated);
-      setProfileName(updated?.name || "");
-      setProfilePhone(updated?.phone || "");
-      setProfileAddress(updated?.address || "");
-      setProfileSaved(true);
-      setTimeout(() => setProfileSaved(false), 2000);
-    } catch (err) {
-      setProfileError(err.message || "Không lưu được hồ sơ");
-    } finally {
-      setProfileSaving(false);
-    }
-  };
-
   // 1 thẻ NFC active nhưng chưa có album -> cần bấm "Hoàn tất tạo album"
   const albumByCardId = new Map(albums.map((a) => [a.nfc_card_id, a]));
 
@@ -213,12 +137,6 @@ export default function DashboardPage() {
       </div>
     );
   }
-
-  const settingsTabs = [
-    { key: "language", label: t(lang, "settingsLanguage"), icon: "🌐" },
-    { key: "theme", label: t(lang, "settingsTheme"), icon: "🎨" },
-    { key: "profile", label: t(lang, "settingsProfile"), icon: "👤" },
-  ];
 
   // Menu nav của customer dashboard — admin dashboard sau này sẽ tự khai
   // báo danh sách khác (quản lý tỉnh, user, serial NFC...) và truyền vào
@@ -252,10 +170,6 @@ export default function DashboardPage() {
         user={user}
         lang={lang}
         roleLabel={isAdmin() ? t(lang, "admin") : t(lang, "account")}
-        // TODO: /settings chưa có route/trang thật — cần xây trang Cài
-        // đặt riêng (dùng lại logic đổi ngôn ngữ/theme/hồ sơ đang nằm
-        // trong modal settingsOpen bên dưới). "Tìm hiểu thêm" (learnMoreOpen)
-        // cũng đang mồ côi tương tự, chưa có điểm vào từ sidebar mới.
         onLogout={handleLogout}
       />
 
@@ -369,220 +283,6 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
-
-      {/* ─── Modal: Cài đặt ─────────────────────────────────── */}
-      {settingsOpen && (
-        <div className="modal-overlay" onClick={() => setSettingsOpen(false)}>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="card settings-panel"
-          >
-            {/* Danh sách tab */}
-            <div className="settings-tabs">
-              <h2 className="settings-tabs__title">{t(lang, "settings")}</h2>
-              {settingsTabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setSettingsTab(tab.key)}
-                  className={`settings-tab ${settingsTab === tab.key ? "is-active" : ""}`}
-                >
-                  <span>{tab.icon}</span> {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Nội dung tab */}
-            <div className="settings-content">
-              <button
-                onClick={() => setSettingsOpen(false)}
-                aria-label={t(lang, "close")}
-                className="settings-close"
-              >
-                ✕
-              </button>
-
-              {settingsTab === "language" && (
-                <div className="settings-section">
-                  <h3>{t(lang, "settingsLanguage")}</h3>
-                  <p className="settings-section__desc">
-                    {t(lang, "languageDesc")}
-                  </p>
-                  <div className="settings-btn-row">
-                    <button
-                      onClick={() => handleLangChange("vi")}
-                      className={
-                        lang === "vi" ? "btn btn-primary" : "btn btn-outline"
-                      }
-                    >
-                      🇻🇳 Tiếng Việt
-                    </button>
-                    <button
-                      onClick={() => handleLangChange("en")}
-                      className={
-                        lang === "en" ? "btn btn-primary" : "btn btn-outline"
-                      }
-                    >
-                      🇬🇧 English
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {settingsTab === "theme" && (
-                <div className="settings-section">
-                  <h3>{t(lang, "settingsTheme")}</h3>
-                  <p className="settings-section__desc">
-                    {t(lang, "themeDesc")}
-                  </p>
-                  <div className="settings-btn-row">
-                    <button
-                      onClick={() => handleThemeChange("light")}
-                      className={
-                        theme === "light"
-                          ? "btn btn-primary"
-                          : "btn btn-outline"
-                      }
-                    >
-                      ☀️ {t(lang, "themeLight")}
-                    </button>
-                    <button
-                      onClick={() => handleThemeChange("dark")}
-                      className={
-                        theme === "dark" ? "btn btn-primary" : "btn btn-outline"
-                      }
-                    >
-                      🌙 {t(lang, "themeDark")}
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {settingsTab === "profile" && (
-                <div className="settings-section">
-                  <h3>{t(lang, "settingsProfile")}</h3>
-
-                  {/* Ảnh đại diện */}
-                  <div className="profile-avatar-row">
-                    <span className="profile-avatar-circle">
-                      {user?.avatar_url ? (
-                        <img src={user.avatar_url} alt="" />
-                      ) : (
-                        (user?.name || "?").trim().charAt(0).toUpperCase()
-                      )}
-                    </span>
-                    <div>
-                      <input
-                        ref={avatarFileInputRef}
-                        type="file"
-                        accept="image/png,image/jpeg,image/webp,image/gif"
-                        onChange={handleAvatarFileChange}
-                        className="hidden-file-input"
-                      />
-                      <button
-                        type="button"
-                        className="btn btn-outline profile-avatar-upload-btn"
-                        onClick={() => avatarFileInputRef.current?.click()}
-                        disabled={avatarUploading}
-                      >
-                        {avatarUploading
-                          ? `${t(lang, "profileAvatarUploading")}…`
-                          : t(lang, "profileAvatarChange")}
-                      </button>
-                      {avatarError && (
-                        <p className="profile-avatar-error">{avatarError}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="profile-field">
-                    <label className="profile-field__label">
-                      {t(lang, "profileName")}
-                    </label>
-                    <input
-                      className="input"
-                      value={profileName}
-                      onChange={(e) => setProfileName(e.target.value)}
-                    />
-                  </div>
-                  <div className="profile-field">
-                    <label className="profile-field__label">
-                      {t(lang, "profileEmail")}
-                    </label>
-                    <input
-                      className="input"
-                      value={user?.email || ""}
-                      disabled
-                    />
-                  </div>
-                  <div className="profile-field">
-                    <label className="profile-field__label">
-                      {t(lang, "profilePhone")}
-                    </label>
-                    <input
-                      className="input"
-                      value={profilePhone}
-                      onChange={(e) => setProfilePhone(e.target.value)}
-                      placeholder={t(lang, "profilePhonePlaceholder")}
-                    />
-                  </div>
-                  <div className="profile-field">
-                    <label className="profile-field__label">
-                      {t(lang, "profileAddress")}
-                    </label>
-                    <textarea
-                      className="input"
-                      rows={2}
-                      value={profileAddress}
-                      onChange={(e) => setProfileAddress(e.target.value)}
-                      placeholder={t(lang, "profileAddressPlaceholder")}
-                    />
-                  </div>
-                  <p className="profile-note">{t(lang, "profileSaveNote")}</p>
-                  {profileError && (
-                    <p className="profile-error">{profileError}</p>
-                  )}
-                  <button
-                    onClick={handleSaveProfile}
-                    className="btn btn-primary"
-                    disabled={profileSaving}
-                  >
-                    {profileSaving
-                      ? `${t(lang, "save")}…`
-                      : profileSaved
-                        ? `✓ ${t(lang, "saved")}`
-                        : t(lang, "save")}
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ─── Modal: Tìm hiểu thêm ───────────────────────────── */}
-      {learnMoreOpen && (
-        <div className="modal-overlay" onClick={() => setLearnMoreOpen(false)}>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="card learnmore-panel"
-          >
-            <div className="learnmore-icon">🗺</div>
-            <h2 className="learnmore-title">VinaTap</h2>
-            <p className="learnmore-desc">
-              VinaTap là thẻ NFC lưu giữ kỷ niệm — mỗi thẻ gắn với 1 tỉnh thành,
-              khi chạm điện thoại vào thẻ sẽ mở album ảnh, video và lời nhắn
-              riêng của bạn. Sưu tầm đủ thẻ để hoàn thành bản đồ 34 tỉnh thành
-              Việt Nam.
-            </p>
-            <button
-              onClick={() => setLearnMoreOpen(false)}
-              className="btn btn-primary"
-            >
-              {t(lang, "close")}
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

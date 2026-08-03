@@ -32,10 +32,22 @@ export const getUser = () => {
 // quả trả về từ authAPI.updateMe()/getMe() sau khi đã lưu thật vào DB qua
 // PATCH /api/auth/me). Bản thân hàm này KHÔNG gọi API — chỉ update cache
 // phía client để UI đọc lại nhanh mà không cần gọi lại getMe().
+//
+// Sau khi ghi localStorage, bắn thêm 1 CustomEvent "vinatap:user-updated"
+// — localStorage.setItem() tự nó KHÔNG làm React re-render ở nơi khác (vd
+// Sidebar đọc user từ state riêng của layout cha, set 1 lần lúc mount).
+// Event "storage" mặc định của trình duyệt chỉ bắn ở TAB KHÁC, không bắn
+// ở chính tab đang gọi setItem — nên phải tự bắn custom event để những
+// component đang mở trong CÙNG tab (vd Sidebar) nghe được ngay lập tức.
 export const updateUser = (patch) => {
   const current = getUser() || {};
   const next = { ...current, ...patch };
   localStorage.setItem(USER_KEY, JSON.stringify(next));
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(
+      new CustomEvent("vinatap:user-updated", { detail: next }),
+    );
+  }
   return next;
 };
 

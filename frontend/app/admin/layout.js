@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminSidebar from "../../components/AdminSidebar";
 import { getUser, requireAdmin, clearAuth } from "../../lib/auth";
-import "../../styles/admin-shell.css";
+// admin-shell.css đã chuyển lên app/layout.js (layout gốc) — xem chú
+// thích ở đó để hiểu lý do (tránh vỡ CSS khi F5 thẳng vào 1 trang con).
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -19,6 +20,16 @@ export default function AdminLayout({ children }) {
     setUser(getUser());
     setChecked(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Nghe sự kiện từ updateUser() (lib/auth.js) — nếu sau này admin cũng có
+  // trang đổi avatar/tên (ví dụ AdminSettings đang là placeholder), sidebar
+  // admin sẽ tự cập nhật ngay, không cần F5. Xem chi tiết ở settings/layout.js.
+  useEffect(() => {
+    const handleUserUpdated = (e) => setUser(e.detail);
+    window.addEventListener("vinatap:user-updated", handleUserUpdated);
+    return () =>
+      window.removeEventListener("vinatap:user-updated", handleUserUpdated);
   }, []);
 
   const handleLogout = () => {

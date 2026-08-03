@@ -1,0 +1,29 @@
+.settings-about__card {
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.settings-about__version {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+.settings-about__desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.settings-about__section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+.settings-about__credit {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.settings-about__credit a {
+  color: var(--primary);
+  font-weight: 600;
+}

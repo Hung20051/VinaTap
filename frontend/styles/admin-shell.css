@@ -15,3 +15,30 @@
     padding: 1.5rem 1rem 3rem;
   }
 }
+
+/* ─── HEADER/LOADING DÙNG CHUNG CHO MỌI TRANG ADMIN ────────────
+   Trước đây nằm trong AdminDashboard.css, chỉ load khi vào /admin/
+   dashboard — nếu vào thẳng /admin/users (hay bất kỳ trang admin nào
+   khác) mà chưa từng ghé dashboard, các class này sẽ KHÔNG có style
+   (Next.js chỉ load CSS của route đang xem). Chuyển vào đây vì
+   admin-shell.css được layout.js import cho toàn bộ /admin/*. */
+.admin-dash-loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.admin-dash-error {
+  padding: 2rem;
+  text-align: center;
+  color: var(--danger, #dc2626);
+}
+.admin-dash-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.admin-dash-subtitle {
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+}

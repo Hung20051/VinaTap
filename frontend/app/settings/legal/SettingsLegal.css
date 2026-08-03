@@ -1,0 +1,28 @@
+.settings-legal__tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.settings-legal__tab {
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.settings-legal__tab.is-active {
+  background: var(--primary-light);
+  color: var(--primary-dark, var(--primary));
+}
+.settings-legal__content {
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+.settings-legal__content p {
+  margin-bottom: 1rem;
+}
+.settings-legal__content p:last-child {
+  margin-bottom: 0;
+}

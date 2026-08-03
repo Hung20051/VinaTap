@@ -194,7 +194,14 @@ function fillMissingDays(apiDaily, days) {
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
-    const key = d.toISOString().slice(0, 10);
+    // KHÔNG dùng d.toISOString() — nó quy đổi sang giờ UTC, trong khi
+    // backend tính ngày theo giờ Việt Nam (timezone: "+07:00" ở
+    // config/db.js). Vào những giờ sớm (trước 7h sáng VN), toISOString()
+    // sẽ lùi về NGÀY HÔM TRƯỚC theo UTC, làm sai khóa so khớp với dữ liệu
+    // backend trả về — khiến chart hiện "chưa có đơn" dù đơn đã tạo đúng
+    // hôm nay. Dùng getFullYear/getMonth/getDate (giờ local trình duyệt)
+    // để khớp đúng lịch Việt Nam.
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
     result.push({
       label: `${d.getDate()}/${d.getMonth() + 1}`,
       revenue: map.get(key) || 0,

@@ -7,6 +7,7 @@ const {
   googleCallback,
   getMe,
   updateMe,
+  changePassword,
   uploadAvatar,
   requestRegisterOtp,
   verifyRegisterOtp,
@@ -84,6 +85,9 @@ router.get("/me", protect, getMe);
 
 // Cập nhật hồ sơ (tên, SĐT, địa chỉ) — lưu thật vào DB, dùng cho ship thẻ NFC
 router.patch("/me", protect, updateProfileLimiter, updateMe);
+
+// Đổi mật khẩu khi đã đăng nhập (khác luồng quên mật khẩu/OTP)
+router.patch("/change-password", protect, updateProfileLimiter, changePassword);
 
 // Đổi ảnh đại diện — upload lên Cloudinary, lưu URL vào users.avatar_url
 router.post("/me/avatar", protect, updateProfileLimiter, uploadAvatar);
