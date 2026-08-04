@@ -120,7 +120,7 @@ function AcceptTransferContent() {
                 {msg}
               </p>
               <Link
-                href="/dashboard"
+                href="/customer/dashboard"
                 className="btn btn-primary"
                 style={{ justifyContent: "center", width: "100%" }}
               >

@@ -111,7 +111,7 @@ export default function HomePage() {
   // xem trang landing page nữa (landing page chỉ dành cho khách vãng lai).
   useEffect(() => {
     if (isLoggedIn()) {
-      router.replace("/dashboard");
+      router.replace("/customer/dashboard");
       return;
     }
     setUser(getUser());
@@ -229,7 +229,7 @@ export default function HomePage() {
               {user ? (
                 <>
                   <Link
-                    href="/dashboard"
+                    href="/customer/dashboard"
                     className="home-navbar__dashboard-link"
                   >
                     Dashboard
@@ -727,7 +727,7 @@ export default function HomePage() {
               links={[
                 { label: "Trang chủ", href: "/" },
                 { label: "Kích hoạt NFC", href: "/activate" },
-                { label: "Dashboard", href: "/dashboard" },
+                { label: "Dashboard", href: "/customer/dashboard" },
                 { label: "Đăng nhập", href: "/auth" },
               ]}
             />

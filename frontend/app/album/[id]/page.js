@@ -140,7 +140,7 @@ export default function AlbumPage() {
     if (!confirm("Xóa album này? Hành động không thể hoàn tác.")) return;
     try {
       await albumAPI.delete(id);
-      router.push("/dashboard");
+      router.push("/customer/dashboard");
     } catch (err) {
       showToast("error", err.message || "Không xóa được album");
     }
@@ -306,7 +306,7 @@ export default function AlbumPage() {
         <div className="container navbar__inner">
           <Logo className="navbar__logo" />
           <div className="navbar__links">
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/customer/dashboard">Dashboard</Link>
           </div>
         </div>
       </nav>

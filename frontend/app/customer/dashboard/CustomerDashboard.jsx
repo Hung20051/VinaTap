@@ -3,19 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../../components/Sidebar";
 import { LayoutDashboard, KeyRound, ShieldCheck } from "lucide-react";
-import { albumAPI, nfcAPI, authAPI } from "../../lib/api";
-import {
-  getUser,
-  updateUser,
-  requireAuth,
-  clearAuth,
-  isAdmin,
-} from "../../lib/auth";
-import { applyStoredTheme, getLang } from "../../lib/prefs";
-import { t } from "../../lib/i18n";
-import "../../styles/dashboard.css";
+import { albumAPI, nfcAPI, authAPI } from "../../../lib/api";
+import { getUser, updateUser, clearAuth, isAdmin } from "../../../lib/auth";
+import { applyStoredTheme, getLang } from "../../../lib/prefs";
+import { t } from "../../../lib/i18n";
+import "../../../styles/dashboard.css";
 
 const REGION_LABEL = {
   north: "Miền Bắc",
@@ -26,7 +20,7 @@ const REGION_LABEL = {
 
 const TOTAL_PROVINCES = 34;
 
-export default function DashboardPage() {
+export default function CustomerDashboard() {
   const router = useRouter();
 
   const [user, setUser] = useState(null);
@@ -38,15 +32,8 @@ export default function DashboardPage() {
   const [lang, setLangState] = useState("vi");
 
   useEffect(() => {
-    if (!requireAuth(router)) return;
-    // Admin không dùng dashboard sưu tầm kiểu customer ("0/34 tỉnh",
-    // "Kích hoạt NFC"...) — dù đăng nhập xong đã redirect sang /admin rồi,
-    // vẫn cần chặn thêm ở đây phòng trường hợp admin tự gõ URL /dashboard,
-    // bấm nút Back, hoặc mở lại tab/bookmark cũ.
-    if (isAdmin()) {
-      router.replace("/admin");
-      return;
-    }
+    // requireAuth() + chặn admin đã được app/customer/layout.js xử lý —
+    // tới được đây nghĩa là chắc chắn đã đăng nhập và không phải admin.
     const u = getUser();
     setUser(u);
     // Đồng bộ các tuỳ chọn đã lưu ở localStorage — làm ở effect (chạy
@@ -143,7 +130,7 @@ export default function DashboardPage() {
   // cùng component <Sidebar>, không đụng tới file này.
   const navItems = [
     {
-      href: "/dashboard",
+      href: "/customer/dashboard",
       icon: <LayoutDashboard size={20} />,
       label: t(lang, "dashboard"),
     },

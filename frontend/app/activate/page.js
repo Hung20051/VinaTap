@@ -77,7 +77,7 @@ export default function ActivatePage() {
         <div className="container navbar__inner">
           <Logo className="navbar__logo" />
           <div className="navbar__links">
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/customer/dashboard">Dashboard</Link>
           </div>
         </div>
       </nav>

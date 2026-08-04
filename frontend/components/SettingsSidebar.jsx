@@ -88,7 +88,7 @@ export default function SettingsSidebar({ user }) {
   // "Quay lại" đưa về đúng dashboard theo role — admin về /admin, customer
   // về /dashboard. Đặt trên cùng menu vì /settings là 1 khu vực tách biệt,
   // không phải route con của dashboard/admin, nên cần lối ra rõ ràng.
-  const backHref = isAdmin() ? "/admin/dashboard" : "/dashboard";
+  const backHref = isAdmin() ? "/admin/dashboard" : "/customer/dashboard";
 
   return (
     <>

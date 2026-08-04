@@ -31,7 +31,7 @@ export default function ForgotPasswordPage() {
 
   useEffect(() => {
     if (isLoggedIn()) {
-      router.replace("/dashboard");
+      router.replace("/customer/dashboard");
       return;
     }
     setChecking(false);
@@ -138,7 +138,7 @@ export default function ForgotPasswordPage() {
         newPassword,
       });
       saveAuth(data.token, data.user);
-      router.push("/dashboard");
+      router.push("/customer/dashboard");
     } catch (err) {
       setError(err.message || "Đã có lỗi xảy ra, vui lòng thử lại");
     } finally {

@@ -49,3 +49,112 @@
 .skeleton-row {
   height: 52px;
 }
+
+/* ─── Filters/search bar (Doanh thu, Người dùng...) ─────────── */
+.skeleton-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.skeleton-filter {
+  height: 38px;
+  width: 160px;
+}
+
+/* ─── Bảng (Doanh thu, Người dùng...) ───────────────────────── */
+.skeleton-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.skeleton-table-header {
+  height: 32px;
+  opacity: 0.55;
+}
+.skeleton-table-row {
+  height: 50px;
+}
+
+/* ─── Avatar tròn (Tài khoản, danh sách Người dùng) ─────────── */
+.skeleton-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+.skeleton-avatar-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* ─── Danh sách icon + nhãn (Hỗ trợ, top tỉnh hot...) ────────── */
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.skeleton-list-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.skeleton-list-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+.skeleton-list-text {
+  flex: 1;
+  height: 15px;
+}
+
+/* ─── Tabs (Điều khoản & Bảo mật) ─────────────────────────────── */
+.skeleton-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.skeleton-tab {
+  width: 110px;
+  height: 34px;
+}
+
+/* ─── Đoạn văn bản nhiều dòng (Điều khoản, Về VinaTap) ────────── */
+.skeleton-text-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.skeleton-text-line {
+  height: 14px;
+}
+.skeleton-text-line--short {
+  width: 60%;
+}
+
+/* ─── Placeholder giữa màn hình (tab "sắp ra mắt") ────────────── */
+.skeleton-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 0.75rem;
+}
+.skeleton-centered-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+}
+.skeleton-centered-title {
+  width: 160px;
+  height: 22px;
+}
+.skeleton-centered-desc {
+  width: 280px;
+  height: 14px;
+}

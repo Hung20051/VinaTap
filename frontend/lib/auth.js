@@ -67,7 +67,7 @@ export const isAdmin = () => {
 // (state cũ trong closure có thể chưa kịp đồng bộ) — truyền thẳng user mới
 // nhất vào để chắc chắn đọc đúng role ngay tại thời điểm đó.
 export const getPostAuthRedirect = (user) =>
-  user?.role === "admin" ? "/admin" : "/dashboard";
+  user?.role === "admin" ? "/admin" : "/customer/dashboard";
 
 // Redirect nếu chưa đăng nhập (dùng trong page)
 export const requireAuth = (router) => {

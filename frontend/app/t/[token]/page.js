@@ -79,7 +79,7 @@ export default function TapPage() {
       } else if (myCard?.album_id) {
         router.push(`/album/${myCard.album_id}`);
       } else {
-        router.push("/dashboard");
+        router.push("/customer/dashboard");
       }
     } catch (err) {
       setMsg(err.message || "Kích hoạt thất bại");
@@ -274,7 +274,7 @@ export default function TapPage() {
                 </Link>
               ) : (
                 <Link
-                  href="/dashboard"
+                  href="/customer/dashboard"
                   className="btn btn-primary"
                   style={{ justifyContent: "center" }}
                 >

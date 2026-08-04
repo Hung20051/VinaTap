@@ -37,7 +37,7 @@ const sendShareRequestEmail = async (
         <h2 style="color:#e85d04">🗺 VinaTap</h2>
         <p>Xin chào <b>${safe.owner}</b>,</p>
         <p><b>${safe.requester}</b> vừa gửi yêu cầu xin quyền thêm ảnh vào album <b>"${safe.album}"</b> của bạn.</p>
-        <a href="${BASE}/dashboard"
+        <a href="${BASE}/customer/dashboard"
            style="display:inline-block;padding:10px 20px;background:#e85d04;color:#fff;border-radius:6px;text-decoration:none;margin-top:12px">
           Xem và duyệt yêu cầu
         </a>
@@ -164,7 +164,7 @@ const sendTransferAcceptedEmail = async (
         <h2 style="color:#e85d04">🗺 VinaTap</h2>
         <p>Xin chào <b>${safe.owner}</b>,</p>
         <p><b>${safe.recipient}</b> đã chấp nhận nhận mảnh ghép NFC từ bạn. Chuyển nhượng hoàn tất!</p>
-        <a href="${BASE}/dashboard"
+        <a href="${BASE}/customer/dashboard"
            style="display:inline-block;padding:10px 20px;background:#e85d04;color:#fff;
                   border-radius:6px;text-decoration:none;margin-top:12px">
           Xem Dashboard

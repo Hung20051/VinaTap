@@ -127,7 +127,7 @@ export default function ProvincePage() {
           <div className="navbar__links">
             {user ? (
               <>
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/customer/dashboard">Dashboard</Link>
                 <Link href="/activate">Kích hoạt NFC</Link>
                 <button className="btn btn-outline" onClick={handleLogout}>
                   Đăng xuất

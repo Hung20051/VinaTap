@@ -108,7 +108,7 @@ export default function Sidebar({
             <Logo
               className="app-sidebar__logo"
               size={32}
-              href="/dashboard"
+              href="/customer/dashboard"
               // Trang chủ "/" tự redirect ngược về /dashboard nếu đã đăng
               // nhập (xem app/page.js) — link thẳng /dashboard ở đây để
               // tránh hiệu ứng nháy (nhảy qua / rồi bị đá lại /dashboard).
