@@ -46,7 +46,8 @@ const upload = async (endpoint, formData) => {
 // sticker) vừa nhận file vừa nhận field text trong cùng 1 request.
 const uploadPut = async (endpoint, formData) => {
   const token = getToken();
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
+  const baseUrl = getBaseUrl();
+  const res = await fetch(`${baseUrl}${endpoint}`, {
     method: "PUT",
     headers: token ? { Authorization: `Bearer ${token}` } : {},
     body: formData,
@@ -69,7 +70,7 @@ export const authAPI = {
       body: JSON.stringify(body),
     }),
   uploadAvatar: (formData) => upload("/auth/me/avatar", formData),
-  googleUrl: () => `${BASE_URL}/auth/google`,
+  googleUrl: () => `${getBaseUrl()}/auth/google`,
 
   // OTP register
   requestRegisterOtp: (body) =>
