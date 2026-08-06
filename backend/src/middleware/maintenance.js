@@ -8,7 +8,8 @@ const checkMaintenance = async (req, res, next) => {
       path.startsWith("/auth/login") ||
       path.startsWith("/auth/me") ||
       path.startsWith("/health") ||
-      path.startsWith("/system-settings")
+      path.startsWith("/system-settings") ||
+      path.startsWith("/analytics")
     ) {
       return next();
     }
