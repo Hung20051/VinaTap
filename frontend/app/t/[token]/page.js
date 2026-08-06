@@ -27,11 +27,6 @@ export default function TapPage() {
       const c = res.card;
       setCard(c);
 
-      // Ghi nhận lượt xem/quét thẻ NFC thực tế
-      analyticsAPI
-        .track(window.location.pathname, c.province_slug)
-        .catch(() => {});
-
       if (c.status === "disabled") {
         setStatus("error");
         setMsg("Thẻ này đã bị vô hiệu hóa.");

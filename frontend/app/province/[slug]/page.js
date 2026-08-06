@@ -64,8 +64,6 @@ export default function ProvincePage() {
       const res = await provinceAPI.getOne(slug);
       setProvince(res.province);
       setLandmarks(res.landmarks || []);
-      // Ghi nhận lượt xem thực tế (tự động lọc bot ở backend)
-      analyticsAPI.track(window.location.pathname, slug).catch(() => {});
     } catch (err) {
       setNotFound(true);
     } finally {
