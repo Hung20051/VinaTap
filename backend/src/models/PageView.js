@@ -50,7 +50,7 @@ const PageView = {
     return { success: true, insertId: result.insertId, deviceType, slug };
   },
 
-  // Lấy thống kê chi tiết lượt truy cập (ĐÃ CHUẨN HÓA BẢNG PV TRÁNH LỖI CỘT AMBIGUOUS)
+  // Lấy thống kê chi tiết lượt truy cập (SỬA LỖI MẢNG DESTRUCTURING 500)
   async getAnalyticsStats(timeframe = "7days") {
     await this.initTable();
 
@@ -66,13 +66,13 @@ const PageView = {
     const whereJoinPrefix = whereClause ? `${whereClause} AND` : "WHERE";
 
     const [
-      [[totalViews]],
-      [[uniqueVisitors]],
-      [[todayViews]],
-      [[botBlocked]],
-      [deviceStats],
-      [topProvinces],
-      [recentViews],
+      resTotalViews,
+      resUniqueVisitors,
+      resTodayViews,
+      resBotBlocked,
+      resDeviceStats,
+      resTopProvinces,
+      resRecentViews,
     ] = await Promise.all([
       // 1. Tổng lượt xem trang
       db.execute(`SELECT COUNT(*) AS count FROM page_views pv ${whereClause}`),
@@ -116,14 +116,22 @@ const PageView = {
       ),
     ]);
 
+    const totalViewsCount = resTotalViews?.[0]?.[0]?.count || 0;
+    const uniqueVisitorsCount = resUniqueVisitors?.[0]?.[0]?.count || 0;
+    const todayViewsCount = resTodayViews?.[0]?.[0]?.count || 0;
+    const botBlockedCount = resBotBlocked?.[0]?.[0]?.count || 0;
+    const deviceStatsRows = resDeviceStats?.[0] || [];
+    const topProvincesRows = resTopProvinces?.[0] || [];
+    const recentViewsRows = resRecentViews?.[0] || [];
+
     return {
-      total_views: Number(totalViews?.count || 0),
-      unique_visitors: Number(uniqueVisitors?.count || 0),
-      today_views: Number(todayViews?.count || 0),
-      bot_blocked_count: Number(botBlocked?.count || 0),
-      device_stats: deviceStats || [],
-      top_provinces: topProvinces || [],
-      recent_views: recentViews || [],
+      total_views: Number(totalViewsCount),
+      unique_visitors: Number(uniqueVisitorsCount),
+      today_views: Number(todayViewsCount),
+      bot_blocked_count: Number(botBlockedCount),
+      device_stats: deviceStatsRows,
+      top_provinces: topProvincesRows,
+      recent_views: recentViewsRows,
     };
   },
 };
