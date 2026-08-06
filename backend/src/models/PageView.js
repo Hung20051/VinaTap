@@ -4,6 +4,10 @@ const db = require("../config/db");
 const MOBILE_REGEX =
   /Mobile|Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i;
 
+// Regex phát hiện Bot / Crawler tự động ngầm
+const BOT_REGEX =
+  /bot|crawl|spider|slurp|facebookexternalhit|python-requests|curl|wget|selenium|puppeteer/i;
+
 const PageView = {
   async initTable() {
     try {
@@ -32,7 +36,7 @@ const PageView = {
     await this.initTable();
 
     const ua = userAgent || "";
-    const isBot = 0; // Đã tắt lọc bot — đếm 100% tất cả lượt xem
+    const isBot = BOT_REGEX.test(ua) ? 1 : 0; // Lọc bot ngầm an toàn
     const deviceType = MOBILE_REGEX.test(ua) ? "mobile" : "desktop";
 
     // Trích xuất province_slug nếu path dạng /province/:slug
@@ -50,7 +54,7 @@ const PageView = {
     return { success: true, insertId: result?.insertId, deviceType, slug };
   },
 
-  // Lấy thống kê chi tiết lượt truy cập (BẢO VỆ 100% CHỐNG LỖI 500 REJECTION)
+  // Lấy thống kê chi tiết lượt truy cập
   async getAnalyticsStats(timeframe = "7days") {
     await this.initTable();
 
@@ -67,6 +71,7 @@ const PageView = {
     let uniqueVisitorsCount = 0;
     let todayViewsCount = 0;
     let botBlockedCount = 0;
+    let nfcScansCount = 0;
     let deviceStatsRows = [];
     let topProvincesRows = [];
     let recentViewsRows = [];
@@ -101,7 +106,7 @@ const PageView = {
       console.error("PageView q3 error:", e.message);
     }
 
-    // 4. Số lượt Spam/Bot
+    // 4. Số lượt Spam/Bot đã lọc ngầm
     try {
       const [res] = await db.execute(
         `SELECT COUNT(*) AS count FROM page_views pv WHERE pv.is_bot = 1`,
@@ -111,17 +116,27 @@ const PageView = {
       console.error("PageView q4 error:", e.message);
     }
 
-    // 5. Tỷ lệ thiết bị Mobile vs Desktop
+    // 5. Số lượt quét thẻ NFC (/t/[token])
+    try {
+      const [res] = await db.execute(
+        `SELECT COUNT(*) AS count FROM page_views pv ${whereClause ? `${whereClause} AND` : "WHERE"} pv.page_path LIKE '/t/%'`,
+      );
+      nfcScansCount = res[0]?.count || 0;
+    } catch (e) {
+      console.error("PageView q5 error:", e.message);
+    }
+
+    // 6. Tỷ lệ thiết bị Mobile vs Desktop
     try {
       const [res] = await db.execute(
         `SELECT pv.device_type, COUNT(*) AS count FROM page_views pv ${whereClause} GROUP BY pv.device_type`,
       );
       deviceStatsRows = res || [];
     } catch (e) {
-      console.error("PageView q5 error:", e.message);
+      console.error("PageView q6 error:", e.message);
     }
 
-    // 6. Top các tỉnh thành được xem nhiều lượt nhất
+    // 7. Top các tỉnh thành được xem nhiều lượt nhất
     try {
       const [res] = await db.execute(
         `SELECT pv.province_slug, COUNT(*) AS view_count
@@ -133,10 +148,10 @@ const PageView = {
       );
       topProvincesRows = res || [];
     } catch (e) {
-      console.error("PageView q6 error:", e.message);
+      console.error("PageView q7 error:", e.message);
     }
 
-    // 7. Nhật ký 15 lượt xem người dùng mới nhất
+    // 8. Nhật ký 15 lượt xem người dùng mới nhất
     try {
       const [res] = await db.execute(
         `SELECT pv.id, pv.page_path, pv.province_slug, pv.ip_address, pv.device_type, pv.created_at
@@ -146,7 +161,7 @@ const PageView = {
       );
       recentViewsRows = res || [];
     } catch (e) {
-      console.error("PageView q7 error:", e.message);
+      console.error("PageView q8 error:", e.message);
     }
 
     return {
@@ -154,6 +169,7 @@ const PageView = {
       unique_visitors: Number(uniqueVisitorsCount),
       today_views: Number(todayViewsCount),
       bot_blocked_count: Number(botBlockedCount),
+      nfc_scans_count: Number(nfcScansCount),
       device_stats: deviceStatsRows,
       top_provinces: topProvincesRows,
       recent_views: recentViewsRows,

@@ -5,7 +5,7 @@ import {
   Eye,
   Users,
   Smartphone,
-  ShieldCheck,
+  Radio,
   RefreshCw,
   Clock,
   TrendingUp,
@@ -23,6 +23,7 @@ export default function AdminAnalytics() {
     unique_visitors: 0,
     today_views: 0,
     bot_blocked_count: 0,
+    nfc_scans_count: 0,
     device_stats: [],
     top_provinces: [],
     recent_views: [],
@@ -155,18 +156,18 @@ export default function AdminAnalytics() {
               </div>
             </div>
 
-            {/* Card 4: Bot Spams Blocked */}
+            {/* Card 4: Số Lượt Quét Thẻ NFC */}
             <div className="card admin-analytics-kpi-card">
               <div className="admin-analytics-kpi-icon admin-analytics-kpi-icon--purple">
-                <ShieldCheck size={22} />
+                <Radio size={22} />
               </div>
               <div className="admin-analytics-kpi-info">
-                <span className="admin-analytics-kpi-label">Số Bot Đã Lọc Bỏ</span>
+                <span className="admin-analytics-kpi-label">Lượt Quét Thẻ NFC</span>
                 <h3 className="admin-analytics-kpi-value">
-                  {stats.bot_blocked_count.toLocaleString("vi-VN")}
+                  {(stats.nfc_scans_count || 0).toLocaleString("vi-VN")}
                 </h3>
                 <span className="admin-analytics-kpi-sub text-green">
-                  🛡️ Đã tự động chặn 100%
+                  🏷️ Thẻ gỗ NFC đã được chạm
                 </span>
               </div>
             </div>
