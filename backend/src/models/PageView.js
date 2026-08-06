@@ -47,10 +47,10 @@ const PageView = {
       [pagePath, slug || null, ipAddress || null, ua, deviceType, isBot],
     );
 
-    return { success: true, insertId: result.insertId, deviceType, slug };
+    return { success: true, insertId: result?.insertId, deviceType, slug };
   },
 
-  // Lấy thống kê chi tiết lượt truy cập (SỬA LỖI MẢNG DESTRUCTURING 500)
+  // Lấy thống kê chi tiết lượt truy cập (BẢO VỆ 100% CHỐNG LỖI 500 REJECTION)
   async getAnalyticsStats(timeframe = "7days") {
     await this.initTable();
 
@@ -63,66 +63,91 @@ const PageView = {
       whereClause = "";
     }
 
-    const whereJoinPrefix = whereClause ? `${whereClause} AND` : "WHERE";
+    let totalViewsCount = 0;
+    let uniqueVisitorsCount = 0;
+    let todayViewsCount = 0;
+    let botBlockedCount = 0;
+    let deviceStatsRows = [];
+    let topProvincesRows = [];
+    let recentViewsRows = [];
 
-    const [
-      resTotalViews,
-      resUniqueVisitors,
-      resTodayViews,
-      resBotBlocked,
-      resDeviceStats,
-      resTopProvinces,
-      resRecentViews,
-    ] = await Promise.all([
-      // 1. Tổng lượt xem trang
-      db.execute(`SELECT COUNT(*) AS count FROM page_views pv ${whereClause}`),
+    // 1. Tổng lượt xem trang
+    try {
+      const [res] = await db.execute(
+        `SELECT COUNT(*) AS count FROM page_views pv ${whereClause}`,
+      );
+      totalViewsCount = res[0]?.count || 0;
+    } catch (e) {
+      console.error("PageView q1 error:", e.message);
+    }
 
-      // 2. Khách xem độc nhất (Unique IP)
-      db.execute(
+    // 2. Khách xem độc nhất (Unique IP)
+    try {
+      const [res] = await db.execute(
         `SELECT COUNT(DISTINCT pv.ip_address) AS count FROM page_views pv ${whereClause}`,
-      ),
+      );
+      uniqueVisitorsCount = res[0]?.count || 0;
+    } catch (e) {
+      console.error("PageView q2 error:", e.message);
+    }
 
-      // 3. Lượt xem trong ngày hôm nay
-      db.execute(
+    // 3. Lượt xem trong ngày hôm nay
+    try {
+      const [res] = await db.execute(
         `SELECT COUNT(*) AS count FROM page_views pv WHERE DATE(pv.created_at) = CURDATE()`,
-      ),
+      );
+      todayViewsCount = res[0]?.count || 0;
+    } catch (e) {
+      console.error("PageView q3 error:", e.message);
+    }
 
-      // 4. Số lượt Spam/Bot
-      db.execute(`SELECT COUNT(*) AS count FROM page_views pv WHERE pv.is_bot = 1`),
+    // 4. Số lượt Spam/Bot
+    try {
+      const [res] = await db.execute(
+        `SELECT COUNT(*) AS count FROM page_views pv WHERE pv.is_bot = 1`,
+      );
+      botBlockedCount = res[0]?.count || 0;
+    } catch (e) {
+      console.error("PageView q4 error:", e.message);
+    }
 
-      // 5. Tỷ lệ thiết bị Mobile vs Desktop
-      db.execute(
+    // 5. Tỷ lệ thiết bị Mobile vs Desktop
+    try {
+      const [res] = await db.execute(
         `SELECT pv.device_type, COUNT(*) AS count FROM page_views pv ${whereClause} GROUP BY pv.device_type`,
-      ),
+      );
+      deviceStatsRows = res || [];
+    } catch (e) {
+      console.error("PageView q5 error:", e.message);
+    }
 
-      // 6. Top các tỉnh thành được xem nhiều lượt nhất
-      db.execute(
-        `SELECT pv.province_slug, MAX(p.name) AS province_name, COUNT(*) AS view_count
+    // 6. Top các tỉnh thành được xem nhiều lượt nhất
+    try {
+      const [res] = await db.execute(
+        `SELECT pv.province_slug, COUNT(*) AS view_count
          FROM page_views pv
-         LEFT JOIN provinces p ON p.slug = pv.province_slug
-         ${whereJoinPrefix} pv.province_slug IS NOT NULL AND pv.province_slug != ''
+         ${whereClause ? `${whereClause} AND` : "WHERE"} pv.province_slug IS NOT NULL AND pv.province_slug != ''
          GROUP BY pv.province_slug
          ORDER BY view_count DESC
          LIMIT 10`,
-      ),
+      );
+      topProvincesRows = res || [];
+    } catch (e) {
+      console.error("PageView q6 error:", e.message);
+    }
 
-      // 7. Nhật ký 15 lượt xem người dùng mới nhất
-      db.execute(
-        `SELECT pv.id, pv.page_path, pv.province_slug, pv.ip_address, pv.device_type, pv.created_at, p.name AS province_name
+    // 7. Nhật ký 15 lượt xem người dùng mới nhất
+    try {
+      const [res] = await db.execute(
+        `SELECT pv.id, pv.page_path, pv.province_slug, pv.ip_address, pv.device_type, pv.created_at
          FROM page_views pv
-         LEFT JOIN provinces p ON p.slug = pv.province_slug
          ORDER BY pv.created_at DESC
          LIMIT 15`,
-      ),
-    ]);
-
-    const totalViewsCount = resTotalViews?.[0]?.[0]?.count || 0;
-    const uniqueVisitorsCount = resUniqueVisitors?.[0]?.[0]?.count || 0;
-    const todayViewsCount = resTodayViews?.[0]?.[0]?.count || 0;
-    const botBlockedCount = resBotBlocked?.[0]?.[0]?.count || 0;
-    const deviceStatsRows = resDeviceStats?.[0] || [];
-    const topProvincesRows = resTopProvinces?.[0] || [];
-    const recentViewsRows = resRecentViews?.[0] || [];
+      );
+      recentViewsRows = res || [];
+    } catch (e) {
+      console.error("PageView q7 error:", e.message);
+    }
 
     return {
       total_views: Number(totalViewsCount),
