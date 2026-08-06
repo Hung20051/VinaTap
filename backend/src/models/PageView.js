@@ -1,9 +1,5 @@
 const db = require("../config/db");
 
-// Regex phát hiện Bot, Web Crawler & Spam Scripts
-const BOT_REGEX =
-  /\b(googlebot|bingbot|yandexbot|duckduckbot|slurp|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora link preview|showyouhave|outbrain|pinterest|slackbot|vkShare|Wget|curl|python-requests|headlesschrome|puppeteer|selenium|bot|crawler|spider)\b/i;
-
 // Regex phát hiện thiết bị Mobile / Tablet
 const MOBILE_REGEX =
   /Mobile|Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i;
@@ -31,12 +27,12 @@ const PageView = {
     }
   },
 
-  // Ghi nhận lượt xem trang thực tế
+  // Ghi nhận lượt xem trang thực tế (ĐẾM TẤT CẢ LƯỢT XEM VÀ QUÉT THẺ)
   async track({ pagePath, provinceSlug, ipAddress, userAgent }) {
     await this.initTable();
 
     const ua = userAgent || "";
-    const isBot = BOT_REGEX.test(ua) ? 1 : 0;
+    const isBot = 0; // Đã tắt lọc bot theo yêu cầu — đếm 100% tất cả lượt xem
     const deviceType = MOBILE_REGEX.test(ua) ? "mobile" : "desktop";
 
     // Trích xuất province_slug nếu path dạng /province/:slug
@@ -54,18 +50,20 @@ const PageView = {
     return { isBot, deviceType, slug };
   },
 
-  // Lấy thống kê chi tiết lượt truy cập người dùng thực (ĐÃ LỌC BOT)
+  // Lấy thống kê chi tiết lượt truy cập (ĐẾM 100% TRAFFIC)
   async getAnalyticsStats(timeframe = "7days") {
     await this.initTable();
 
-    let timeFilter = "WHERE is_bot = 0 AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+    let timeFilter = "WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
     if (timeframe === "today") {
-      timeFilter = "WHERE is_bot = 0 AND DATE(created_at) = CURDATE()";
+      timeFilter = "WHERE DATE(created_at) = CURDATE()";
     } else if (timeframe === "30days") {
-      timeFilter = "WHERE is_bot = 0 AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+      timeFilter = "WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
     } else if (timeframe === "all") {
-      timeFilter = "WHERE is_bot = 0";
+      timeFilter = "";
     }
+
+    const whereJoinPrefix = timeFilter ? `${timeFilter} AND` : "WHERE";
 
     try {
       const [
@@ -77,7 +75,7 @@ const PageView = {
         [topProvinces],
         [recentViews],
       ] = await Promise.all([
-        // 1. Tổng lượt xem trang thực tế (không tính bot)
+        // 1. Tổng lượt xem trang
         db.execute(`SELECT COUNT(*) AS count FROM page_views ${timeFilter}`),
 
         // 2. Khách xem độc nhất (Unique IP)
@@ -87,10 +85,10 @@ const PageView = {
 
         // 3. Lượt xem trong ngày hôm nay
         db.execute(
-          `SELECT COUNT(*) AS count FROM page_views WHERE is_bot = 0 AND DATE(created_at) = CURDATE()`,
+          `SELECT COUNT(*) AS count FROM page_views WHERE DATE(created_at) = CURDATE()`,
         ),
 
-        // 4. Số lượt Spam/Bot đã chặn
+        // 4. Số lượt Spam/Bot
         db.execute(`SELECT COUNT(*) AS count FROM page_views WHERE is_bot = 1`),
 
         // 5. Tỷ lệ thiết bị Mobile vs Desktop
@@ -98,23 +96,22 @@ const PageView = {
           `SELECT device_type, COUNT(*) AS count FROM page_views ${timeFilter} GROUP BY device_type`,
         ),
 
-        // 6. Top các tỉnh thành được xem nhiều lượt nhất (Tương thích MySQL 8.0 strict mode)
+        // 6. Top các tỉnh thành được xem nhiều lượt nhất
         db.execute(
           `SELECT pv.province_slug, MAX(p.name) AS province_name, COUNT(*) AS view_count
            FROM page_views pv
            LEFT JOIN provinces p ON p.slug = pv.province_slug
-           ${timeFilter} AND pv.province_slug IS NOT NULL AND pv.province_slug != ''
+           ${whereJoinPrefix} pv.province_slug IS NOT NULL AND pv.province_slug != ''
            GROUP BY pv.province_slug
            ORDER BY view_count DESC
            LIMIT 10`,
         ),
 
-        // 7. Nhật ký 15 lượt xem người dùng thực mới nhất
+        // 7. Nhật ký 15 lượt xem người dùng mới nhất
         db.execute(
           `SELECT pv.id, pv.page_path, pv.province_slug, pv.ip_address, pv.device_type, pv.created_at, p.name AS province_name
            FROM page_views pv
            LEFT JOIN provinces p ON p.slug = pv.province_slug
-           WHERE pv.is_bot = 0
            ORDER BY pv.created_at DESC
            LIMIT 15`,
         ),
