@@ -218,11 +218,10 @@ const getAllStickers = async (req, res) => {
 // GET /api/stickers/admin
 const getAllStickersAdmin = async (req, res) => {
   try {
-    const [rows] = await db.execute(
-      `SELECT s.*, COUNT(o.id) AS usage_count
+    const [rows] = await db.query(
+      `SELECT s.*,
+              (SELECT COUNT(*) FROM media_sticker_overlays o WHERE o.sticker_id = s.id) AS usage_count
        FROM stickers s
-       LEFT JOIN media_sticker_overlays o ON o.sticker_id = s.id
-       GROUP BY s.id
        ORDER BY s.sort_order ASC, s.created_at DESC`,
     );
     const stickers = await attachCategoriesToStickers(rows);
