@@ -30,11 +30,15 @@ export default function AdminAnalytics() {
 
   useEffect(() => {
     loadStats();
+    const interval = setInterval(() => {
+      loadStats(true);
+    }, 5000);
+    return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeframe]);
 
-  const loadStats = async () => {
-    setLoading(true);
+  const loadStats = async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const res = await analyticsAPI.getStats(timeframe);
       if (res.stats) {
@@ -43,7 +47,7 @@ export default function AdminAnalytics() {
     } catch (err) {
       console.error("Lỗi tải thống kê truy cập:", err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
