@@ -27,12 +27,12 @@ const PageView = {
     }
   },
 
-  // Ghi nhận lượt xem trang thực tế (ĐẾM TẤT CẢ LƯỢT XEM VÀ QUÉT THẺ)
+  // Ghi nhận lượt xem trang thực tế
   async track({ pagePath, provinceSlug, ipAddress, userAgent }) {
     await this.initTable();
 
     const ua = userAgent || "";
-    const isBot = 0; // Đã tắt lọc bot theo yêu cầu — đếm 100% tất cả lượt xem
+    const isBot = 0; // Đã tắt lọc bot — đếm 100% tất cả lượt xem
     const deviceType = MOBILE_REGEX.test(ua) ? "mobile" : "desktop";
 
     // Trích xuất province_slug nếu path dạng /province/:slug
@@ -41,103 +41,90 @@ const PageView = {
       slug = pagePath.replace("/province/", "").split("?")[0].split("#")[0];
     }
 
-    await db.execute(
+    const [result] = await db.execute(
       `INSERT INTO page_views (page_path, province_slug, ip_address, user_agent, device_type, is_bot)
        VALUES (?, ?, ?, ?, ?, ?)`,
       [pagePath, slug || null, ipAddress || null, ua, deviceType, isBot],
     );
 
-    return { isBot, deviceType, slug };
+    return { success: true, insertId: result.insertId, deviceType, slug };
   },
 
-  // Lấy thống kê chi tiết lượt truy cập (ĐẾM 100% TRAFFIC)
+  // Lấy thống kê chi tiết lượt truy cập (ĐÃ CHUẨN HÓA BẢNG PV TRÁNH LỖI CỘT AMBIGUOUS)
   async getAnalyticsStats(timeframe = "7days") {
     await this.initTable();
 
-    let timeFilter = "WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+    let whereClause = "WHERE pv.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
     if (timeframe === "today") {
-      timeFilter = "WHERE DATE(created_at) = CURDATE()";
+      whereClause = "WHERE DATE(pv.created_at) = CURDATE()";
     } else if (timeframe === "30days") {
-      timeFilter = "WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+      whereClause = "WHERE pv.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
     } else if (timeframe === "all") {
-      timeFilter = "";
+      whereClause = "";
     }
 
-    const whereJoinPrefix = timeFilter ? `${timeFilter} AND` : "WHERE";
+    const whereJoinPrefix = whereClause ? `${whereClause} AND` : "WHERE";
 
-    try {
-      const [
-        [[totalViews]],
-        [[uniqueVisitors]],
-        [[todayViews]],
-        [[botBlocked]],
-        [deviceStats],
-        [topProvinces],
-        [recentViews],
-      ] = await Promise.all([
-        // 1. Tổng lượt xem trang
-        db.execute(`SELECT COUNT(*) AS count FROM page_views ${timeFilter}`),
+    const [
+      [[totalViews]],
+      [[uniqueVisitors]],
+      [[todayViews]],
+      [[botBlocked]],
+      [deviceStats],
+      [topProvinces],
+      [recentViews],
+    ] = await Promise.all([
+      // 1. Tổng lượt xem trang
+      db.execute(`SELECT COUNT(*) AS count FROM page_views pv ${whereClause}`),
 
-        // 2. Khách xem độc nhất (Unique IP)
-        db.execute(
-          `SELECT COUNT(DISTINCT ip_address) AS count FROM page_views ${timeFilter}`,
-        ),
+      // 2. Khách xem độc nhất (Unique IP)
+      db.execute(
+        `SELECT COUNT(DISTINCT pv.ip_address) AS count FROM page_views pv ${whereClause}`,
+      ),
 
-        // 3. Lượt xem trong ngày hôm nay
-        db.execute(
-          `SELECT COUNT(*) AS count FROM page_views WHERE DATE(created_at) = CURDATE()`,
-        ),
+      // 3. Lượt xem trong ngày hôm nay
+      db.execute(
+        `SELECT COUNT(*) AS count FROM page_views pv WHERE DATE(pv.created_at) = CURDATE()`,
+      ),
 
-        // 4. Số lượt Spam/Bot
-        db.execute(`SELECT COUNT(*) AS count FROM page_views WHERE is_bot = 1`),
+      // 4. Số lượt Spam/Bot
+      db.execute(`SELECT COUNT(*) AS count FROM page_views pv WHERE pv.is_bot = 1`),
 
-        // 5. Tỷ lệ thiết bị Mobile vs Desktop
-        db.execute(
-          `SELECT device_type, COUNT(*) AS count FROM page_views ${timeFilter} GROUP BY device_type`,
-        ),
+      // 5. Tỷ lệ thiết bị Mobile vs Desktop
+      db.execute(
+        `SELECT pv.device_type, COUNT(*) AS count FROM page_views pv ${whereClause} GROUP BY pv.device_type`,
+      ),
 
-        // 6. Top các tỉnh thành được xem nhiều lượt nhất
-        db.execute(
-          `SELECT pv.province_slug, MAX(p.name) AS province_name, COUNT(*) AS view_count
-           FROM page_views pv
-           LEFT JOIN provinces p ON p.slug = pv.province_slug
-           ${whereJoinPrefix} pv.province_slug IS NOT NULL AND pv.province_slug != ''
-           GROUP BY pv.province_slug
-           ORDER BY view_count DESC
-           LIMIT 10`,
-        ),
+      // 6. Top các tỉnh thành được xem nhiều lượt nhất
+      db.execute(
+        `SELECT pv.province_slug, MAX(p.name) AS province_name, COUNT(*) AS view_count
+         FROM page_views pv
+         LEFT JOIN provinces p ON p.slug = pv.province_slug
+         ${whereJoinPrefix} pv.province_slug IS NOT NULL AND pv.province_slug != ''
+         GROUP BY pv.province_slug
+         ORDER BY view_count DESC
+         LIMIT 10`,
+      ),
 
-        // 7. Nhật ký 15 lượt xem người dùng mới nhất
-        db.execute(
-          `SELECT pv.id, pv.page_path, pv.province_slug, pv.ip_address, pv.device_type, pv.created_at, p.name AS province_name
-           FROM page_views pv
-           LEFT JOIN provinces p ON p.slug = pv.province_slug
-           ORDER BY pv.created_at DESC
-           LIMIT 15`,
-        ),
-      ]);
+      // 7. Nhật ký 15 lượt xem người dùng mới nhất
+      db.execute(
+        `SELECT pv.id, pv.page_path, pv.province_slug, pv.ip_address, pv.device_type, pv.created_at, p.name AS province_name
+         FROM page_views pv
+         LEFT JOIN provinces p ON p.slug = pv.province_slug
+         ORDER BY pv.created_at DESC
+         LIMIT 15`,
+      ),
+    ]);
 
-      return {
-        total_views: totalViews?.count || 0,
-        unique_visitors: uniqueVisitors?.count || 0,
-        today_views: todayViews?.count || 0,
-        bot_blocked_count: botBlocked?.count || 0,
-        device_stats: deviceStats || [],
-        top_provinces: topProvinces || [],
-        recent_views: recentViews || [],
-      };
-    } catch (err) {
-      console.error("PageView getAnalyticsStats SQL error:", err.message);
-      return {
-        total_views: 0,
-        unique_visitors: 0,
-        today_views: 0,
-        bot_blocked_count: 0,
-        device_stats: [],
-        top_provinces: [],
-        recent_views: [],
-      };
-    }
+    return {
+      total_views: Number(totalViews?.count || 0),
+      unique_visitors: Number(uniqueVisitors?.count || 0),
+      today_views: Number(todayViews?.count || 0),
+      bot_blocked_count: Number(botBlocked?.count || 0),
+      device_stats: deviceStats || [],
+      top_provinces: topProvinces || [],
+      recent_views: recentViews || [],
+    };
   },
 };
 
