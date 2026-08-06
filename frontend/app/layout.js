@@ -1,3 +1,4 @@
+import TrafficTracker from "../components/TrafficTracker";
 import "../styles/globals.css";
 import "../styles/admin-shell.css";
 import "../styles/sidebar.css";
@@ -41,7 +42,10 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <TrafficTracker />
+        {children}
+      </body>
     </html>
   );
 }
