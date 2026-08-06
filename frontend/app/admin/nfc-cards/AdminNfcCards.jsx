@@ -162,11 +162,19 @@ export default function AdminNfcCards() {
     }
   };
 
+  const getAppUrl = () => {
+    if (typeof window !== "undefined" && window.location.origin) {
+      return window.location.origin;
+    }
+    return process.env.NEXT_PUBLIC_APP_URL || "https://vinatap.vercel.app";
+  };
+
   const exportCSV = () => {
     if (!cards.length) {
       showToast("Không có dữ liệu thẻ để xuất", "error");
       return;
     }
+    const baseUrl = getAppUrl();
     const headers = [
       "STT",
       "Mã Serial",
@@ -179,7 +187,7 @@ export default function AdminNfcCards() {
     const rows = cards.map((c, i) => [
       i + 1,
       c.serial_code || "",
-      c.nfc_token ? `https://vinatap.com/t/${c.nfc_token}` : "",
+      c.nfc_token ? `${baseUrl}/t/${c.nfc_token}` : "",
       c.province_name || "",
       c.status === "active" ? "Đã kích hoạt" : "Chờ phát hành",
       c.owner_email || "",
@@ -667,13 +675,13 @@ export default function AdminNfcCards() {
                 điện thoại chạm vào chip, link sẽ tự động mở ra.
               </p>
               <div className="admin-nfc-token-box">
-                <code>{`https://vinatap.com/t/${viewTokenCard.nfc_token}`}</code>
+                <code>{`${getAppUrl()}/t/${viewTokenCard.nfc_token}`}</code>
                 <button
                   type="button"
                   className="btn btn-ghost"
                   onClick={() =>
                     copyToClipboard(
-                      `https://vinatap.com/t/${viewTokenCard.nfc_token}`,
+                      `${getAppUrl()}/t/${viewTokenCard.nfc_token}`,
                       "token",
                     )
                   }
