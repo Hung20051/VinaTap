@@ -40,12 +40,14 @@ export default function AdminAnalytics() {
   const loadStats = async (silent = false) => {
     if (!silent) setLoading(true);
     try {
+      console.log(`📊 [AdminAnalytics] Đang lấy dữ liệu từ API: ${getBaseUrl()} (Timeframe: ${timeframe})`);
       const res = await analyticsAPI.getStats(timeframe);
       if (res.stats) {
+        console.log(`✅ [AdminAnalytics] Đã nạp thành công: Tổng lượt xem = ${res.stats.total_views}, Hôm nay = ${res.stats.today_views}`);
         setStats(res.stats);
       }
     } catch (err) {
-      console.error("Lỗi tải thống kê truy cập:", err);
+      console.error("❌ [AdminAnalytics] Lỗi nạp thống kê:", err?.message || err);
     } finally {
       if (!silent) setLoading(false);
     }

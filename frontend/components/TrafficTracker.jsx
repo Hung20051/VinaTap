@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { analyticsAPI } from "../lib/api";
+import { analyticsAPI, getBaseUrl } from "../lib/api";
 
 export default function TrafficTracker() {
   const pathname = usePathname();
@@ -10,9 +10,11 @@ export default function TrafficTracker() {
 
   useEffect(() => {
     // Bỏ qua trang admin không đếm vào lưu lượng khách
-    if (!pathname || pathname.startsWith("/admin")) return;
+    if (!pathname || pathname.startsWith("/admin")) {
+      console.log("ℹ️ [TrafficTracker] Bỏ qua đếm trang Admin:", pathname);
+      return;
+    }
 
-    // Cho phép đếm lại lượt xem ngay cả khi chuyển trang hoặc quét thẻ
     lastTrackedPath.current = pathname;
 
     // Trích xuất province_slug nếu path dạng /province/:slug hoặc /t/:token
@@ -21,13 +23,16 @@ export default function TrafficTracker() {
       provinceSlug = pathname.replace("/province/", "").split("?")[0].split("#")[0];
     }
 
+    const apiUrl = getBaseUrl();
+    console.log(`🚀 [TrafficTracker] Đang gửi lượt xem [${pathname}] tới API: ${apiUrl}`);
+
     analyticsAPI
       .track(pathname, provinceSlug)
       .then((res) => {
-        console.log("📈 PageView Tracked Successfully:", pathname, res);
+        console.log(`✅ [TrafficTracker] Ghi nhận lượt xem THÀNH CÔNG cho [${pathname}]:`, res);
       })
       .catch((err) => {
-        console.error("TrafficTracker error:", err);
+        console.error(`❌ [TrafficTracker] LỖI GỬI LƯỢT XEM [${pathname}]:`, err?.message || err);
       });
   }, [pathname]);
 
