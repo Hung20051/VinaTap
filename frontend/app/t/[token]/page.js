@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
-import { nfcAPI, albumAPI } from "../../../lib/api";
+import { nfcAPI, albumAPI, analyticsAPI } from "../../../lib/api";
 import { isLoggedIn, getUser } from "../../../lib/auth";
 
 export default function TapPage() {
@@ -26,6 +26,11 @@ export default function TapPage() {
       const res = await nfcAPI.tap(token);
       const c = res.card;
       setCard(c);
+
+      // Ghi nhận lượt xem/quét thẻ NFC thực tế
+      analyticsAPI
+        .track(window.location.pathname, c.province_slug)
+        .catch(() => {});
 
       if (c.status === "disabled") {
         setStatus("error");

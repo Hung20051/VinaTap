@@ -2,7 +2,7 @@ const db = require("../config/db");
 
 // Regex phát hiện Bot, Web Crawler & Spam Scripts
 const BOT_REGEX =
-  /bot|crawler|spider|crawling|googlebot|bingbot|yandexbot|duckduckbot|slurp|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora link preview|showyouhave|outbrain|pinterest|slackbot|vkShare|Wget|curl|python-requests|headlesschrome|puppeteer|selenium/i;
+  /\b(googlebot|bingbot|yandexbot|duckduckbot|slurp|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora link preview|showyouhave|outbrain|pinterest|slackbot|vkShare|Wget|curl|python-requests|headlesschrome|puppeteer|selenium|bot|crawler|spider)\b/i;
 
 // Regex phát hiện thiết bị Mobile / Tablet
 const MOBILE_REGEX =
