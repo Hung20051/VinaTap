@@ -1,4 +1,14 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+export const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (
+    typeof window !== "undefined" &&
+    (window.location.hostname.includes("vercel.app") ||
+      window.location.hostname !== "localhost")
+  ) {
+    return "https://tender-adventure-production.up.railway.app/api";
+  }
+  return "http://localhost:5000/api";
+};
 
 const getToken = () => {
   if (typeof window === "undefined") return null;
@@ -12,7 +22,8 @@ const request = async (endpoint, options = {}) => {
     ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
-  const res = await fetch(`${BASE_URL}${endpoint}`, { ...options, headers });
+  const baseUrl = getBaseUrl();
+  const res = await fetch(`${baseUrl}${endpoint}`, { ...options, headers });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message || "Lỗi không xác định");
   return data;
@@ -20,7 +31,8 @@ const request = async (endpoint, options = {}) => {
 
 const upload = async (endpoint, formData) => {
   const token = getToken();
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
+  const baseUrl = getBaseUrl();
+  const res = await fetch(`${baseUrl}${endpoint}`, {
     method: "POST",
     headers: token ? { Authorization: `Bearer ${token}` } : {},
     body: formData,
