@@ -7,12 +7,15 @@ import {
   Ban,
   ShieldOff,
   CheckCircle2,
+  Eye,
+  Phone,
 } from "lucide-react";
 import { userAPI } from "../../../lib/api";
 import { getUser } from "../../../lib/auth";
+import UserDetailModal from "./components/UserDetailModal";
 import "./AdminUsers.css";
 
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 20;
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -23,49 +26,63 @@ export default function AdminUsers() {
   const [roleFilter, setRoleFilter] = useState("");
   const [toast, setToast] = useState(null);
   const [confirmAction, setConfirmAction] = useState(null); // {type, user} | null
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const currentUser = getUser();
 
-  // Tìm real-time — không cần bấm Enter. Debounce 350ms để tránh gọi API
-  // liên tục mỗi lần gõ 1 ký tự (chỉ gọi khi người dùng ngừng gõ 1 chút).
-  // Đổi filter role thì gọi ngay lập tức (không cần debounce vì đây là
-  // click chọn, không phải gõ liên tục). Đổi search/role LUÔN reset về
-  // trang 1 — nếu đang ở trang 3 mà gõ tìm kiếm mới, kết quả trang 3 cũ
-  // rất có thể không còn tồn tại nữa với bộ lọc mới.
+  // Unified single effect with debounced search/role filter handling
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setPage(1);
-      load(search, roleFilter, 1);
-    }, 350);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, roleFilter]);
+    let isCancelled = false;
+    const timer = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const res = await userAPI.getAll({
+          search: search.trim(),
+          role: roleFilter,
+          limit: PAGE_SIZE,
+          offset: (page - 1) * PAGE_SIZE,
+        });
+        if (!isCancelled) {
+          setUsers(res.users || []);
+          setTotal(res.total || 0);
+        }
+      } catch (err) {
+        if (!isCancelled) {
+          showToast(err.message || "Lỗi tải danh sách người dùng", "error");
+        }
+      } finally {
+        if (!isCancelled) setLoading(false);
+      }
+    }, 300);
 
-  // Đổi trang — gọi ngay, không debounce (đây là click, không phải gõ chữ)
-  useEffect(() => {
-    load(search, roleFilter, page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+    return () => {
+      isCancelled = true;
+      clearTimeout(timer);
+    };
+  }, [search, roleFilter, page]);
 
-  const load = async (
-    searchValue = search,
-    roleValue = roleFilter,
-    pageValue = page,
-  ) => {
-    setLoading(true);
+  const handleSearchChange = (val) => {
+    setSearch(val);
+    setPage(1);
+  };
+
+  const handleRoleChange = (val) => {
+    setRoleFilter(val);
+    setPage(1);
+  };
+
+  const reloadData = async () => {
     try {
       const res = await userAPI.getAll({
-        search: searchValue,
-        role: roleValue,
+        search: search.trim(),
+        role: roleFilter,
         limit: PAGE_SIZE,
-        offset: (pageValue - 1) * PAGE_SIZE,
+        offset: (page - 1) * PAGE_SIZE,
       });
-      setUsers(res.users);
-      setTotal(res.total);
+      setUsers(res.users || []);
+      setTotal(res.total || 0);
     } catch (err) {
       showToast(err.message || "Lỗi tải danh sách người dùng", "error");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -74,8 +91,6 @@ export default function AdminUsers() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  // Mọi thay đổi role/status đều phải qua popup xác nhận — tránh bấm
-  // nhầm (ban nhầm khách hàng, hoặc đổi quyền admin nhầm người).
   const requestConfirm = (type, user) => setConfirmAction({ type, user });
 
   const runConfirmedAction = async () => {
@@ -96,7 +111,7 @@ export default function AdminUsers() {
         showToast(`Đã hạ ${user.name} về customer`);
       }
       setConfirmAction(null);
-      load();
+      reloadData();
     } catch (err) {
       showToast(err.message || "Lỗi cập nhật", "error");
       setConfirmAction(null);
@@ -115,32 +130,34 @@ export default function AdminUsers() {
 
   return (
     <div>
-      <h1 className="admin-dash-title">👥 Người dùng</h1>
-      <p className="admin-dash-subtitle">
-        Danh sách tài khoản đã đăng ký qua web
-      </p>
+      <div className="admin-users-sticky-header">
+        <h1 className="admin-dash-title">👥 Người dùng</h1>
+        <p className="admin-dash-subtitle">
+          Danh sách tài khoản đã đăng ký qua web
+        </p>
 
-      <div className="admin-users-filters">
-        <div className="admin-users-search">
-          <Search size={16} className="admin-users-search__icon" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Tìm theo tên hoặc email..."
-            className="admin-users-search__input"
-          />
+        <div className="admin-users-filters">
+          <div className="admin-users-search">
+            <Search size={16} className="admin-users-search__icon" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              placeholder="Tìm theo tên hoặc email..."
+              className="admin-users-search__input"
+            />
+          </div>
+
+          <select
+            value={roleFilter}
+            onChange={(e) => handleRoleChange(e.target.value)}
+            className="admin-users-role-filter"
+          >
+            <option value="">Tất cả vai trò</option>
+            <option value="admin">Admin</option>
+            <option value="customer">Customer</option>
+          </select>
         </div>
-
-        <select
-          value={roleFilter}
-          onChange={(e) => setRoleFilter(e.target.value)}
-          className="admin-users-role-filter"
-        >
-          <option value="">Tất cả vai trò</option>
-          <option value="admin">Admin</option>
-          <option value="customer">Customer</option>
-        </select>
       </div>
 
       {loading ? (
@@ -157,12 +174,13 @@ export default function AdminUsers() {
             <thead>
               <tr>
                 <th>Người dùng</th>
+                <th>Liên hệ</th>
                 <th>Vai trò</th>
                 <th>Trạng thái</th>
                 <th>Thẻ NFC</th>
                 <th>Album</th>
                 <th>Ngày đăng ký</th>
-                <th></th>
+                <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -191,6 +209,17 @@ export default function AdminUsers() {
                       </div>
                     </td>
                     <td>
+                      <div className="admin-users-contact-cell">
+                        {u.phone ? (
+                          <span className="admin-users-phone">
+                            <Phone size={12} /> {u.phone}
+                          </span>
+                        ) : (
+                          <span className="admin-users-no-phone">Chưa có SĐT</span>
+                        )}
+                      </div>
+                    </td>
+                    <td>
                       <span
                         className={`badge ${u.role === "admin" ? "badge-primary" : ""}`}
                       >
@@ -211,6 +240,15 @@ export default function AdminUsers() {
                     </td>
                     <td>
                       <div className="admin-users-actions">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedUserId(u.id)}
+                          className="admin-users-action-btn"
+                          title="Xem chi tiết hồ sơ, Thẻ NFC & Album"
+                        >
+                          <Eye size={15} />
+                        </button>
+
                         {u.role === "admin" ? (
                           <button
                             disabled={isSelf}
@@ -268,7 +306,7 @@ export default function AdminUsers() {
         </div>
       )}
 
-      {!loading && total > PAGE_SIZE && (
+      {!loading && total > 0 && (
         <div className="admin-users-pagination">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -278,8 +316,7 @@ export default function AdminUsers() {
             ← Trang trước
           </button>
           <span className="admin-users-pagination__info">
-            Trang {page} / {Math.ceil(total / PAGE_SIZE)} — tổng {total} người
-            dùng
+            Trang {page} / {Math.max(1, Math.ceil(total / PAGE_SIZE))} — tổng {total} người dùng
           </span>
           <button
             onClick={() => setPage((p) => (p * PAGE_SIZE < total ? p + 1 : p))}
@@ -289,6 +326,14 @@ export default function AdminUsers() {
             Trang sau →
           </button>
         </div>
+      )}
+
+      {selectedUserId && (
+        <UserDetailModal
+          userId={selectedUserId}
+          onClose={() => setSelectedUserId(null)}
+          showToast={showToast}
+        />
       )}
 
       {confirmAction && (

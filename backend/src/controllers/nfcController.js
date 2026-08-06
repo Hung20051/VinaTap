@@ -325,27 +325,57 @@ const createBatch = async (req, res) => {
   }
 };
 
-// ─── ADMIN: TRA CỨU (GET /api/nfc/admin/search?q=...) ────────
+// ─── ADMIN: TRA CỨU & DANH SÁCH (GET /api/nfc/admin/search) ──
 const adminSearchCards = async (req, res) => {
   try {
-    const { q } = req.query;
-    if (!q || q.trim().length < 3)
-      return res.status(400).json({ message: "Nhập ít nhất 3 ký tự" });
+    const { q, province_id, status, limit = 50, offset = 0 } = req.query;
 
-    const kw = `%${q.trim()}%`;
+    const where = [];
+    const params = [];
+
+    if (q && q.trim().length > 0) {
+      const kw = `%${q.trim()}%`;
+      where.push(
+        "(n.serial_code LIKE ? OR n.nfc_token LIKE ? OR u.email LIKE ? OR u.name LIKE ?)",
+      );
+      params.push(kw, kw, kw, kw);
+    }
+
+    if (province_id) {
+      where.push("n.province_id = ?");
+      params.push(province_id);
+    }
+
+    if (status && ["pending", "active"].includes(status)) {
+      where.push("n.status = ?");
+      params.push(status);
+    }
+
+    const whereClause = where.length ? `WHERE ${where.join(" AND ")}` : "";
+    const safeLimit = Math.max(1, Math.min(parseInt(limit, 10) || 50, 200));
+    const safeOffset = Math.max(0, parseInt(offset, 10) || 0);
+
     const [cards] = await db.execute(
-      `SELECT n.id, n.serial_code, n.nfc_token, n.status, n.activated_at,
+      `SELECT n.id, n.serial_code, n.nfc_token, n.province_id, n.status, n.activated_at, n.created_at,
               p.name AS province_name,
               u.name AS owner_name, u.email AS owner_email
        FROM nfc_cards n
        JOIN provinces p ON p.id = n.province_id
        LEFT JOIN users u ON u.id = n.owner_user_id
-       WHERE n.serial_code LIKE ? OR n.nfc_token LIKE ?
-          OR u.email LIKE ? OR u.name LIKE ?
-       ORDER BY n.created_at DESC LIMIT 20`,
-      [kw, kw, kw, kw],
+       ${whereClause}
+       ORDER BY n.created_at DESC
+       LIMIT ${safeLimit} OFFSET ${safeOffset}`,
+      params,
     );
-    res.json({ cards });
+
+    const [totalRows] = await db.execute(
+      `SELECT COUNT(*) AS total FROM nfc_cards n
+       LEFT JOIN users u ON u.id = n.owner_user_id
+       ${whereClause}`,
+      params,
+    );
+
+    res.json({ cards, total: totalRows[0]?.total || 0 });
   } catch (err) {
     console.error("adminSearchCards:", err);
     res.status(500).json({ message: "Lỗi server" });

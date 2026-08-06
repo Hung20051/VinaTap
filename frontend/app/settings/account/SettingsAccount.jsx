@@ -4,9 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { Camera } from "lucide-react";
 import { authAPI } from "../../../lib/api";
 import { getUser, updateUser } from "../../../lib/auth";
+import { getLang } from "../../../lib/prefs";
+import { t } from "../../../lib/i18n";
 import "./SettingsAccount.css";
 
 export default function SettingsAccount() {
+  const [lang, setLang] = useState("vi");
   const [user, setUser] = useState(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,16 +23,21 @@ export default function SettingsAccount() {
   const [avatarError, setAvatarError] = useState("");
 
   useEffect(() => {
+    setLang(getLang());
     const u = getUser();
     setUser(u);
     setName(u?.name || "");
     setPhone(u?.phone || "");
     setAddress(u?.address || "");
+
+    const handleLangUpdated = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
   }, []);
 
   const handleAvatarFileChange = async (e) => {
     const file = e.target.files?.[0];
-    e.target.value = ""; // cho phép chọn lại cùng 1 file lần nữa nếu cần
+    e.target.value = "";
     if (!file) return;
 
     setAvatarError("");
@@ -41,7 +49,7 @@ export default function SettingsAccount() {
       const updated = updateUser(res.user);
       setUser(updated);
     } catch (err) {
-      setAvatarError(err.message || "Không upload được ảnh đại diện");
+      setAvatarError(err.message || "Lỗi upload ảnh");
     } finally {
       setAvatarUploading(false);
     }
@@ -65,7 +73,7 @@ export default function SettingsAccount() {
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     } catch (err) {
-      setError(err.message || "Không lưu được hồ sơ");
+      setError(err.message || "Lỗi lưu hồ sơ");
     } finally {
       setSaving(false);
     }
@@ -75,11 +83,8 @@ export default function SettingsAccount() {
 
   return (
     <div className="settings-page">
-      <h1 className="settings-page__title">👤 Tài khoản</h1>
-      <p className="settings-page__subtitle">
-        Thông tin cá nhân — địa chỉ dùng để tự động điền khi đặt hàng giao thẻ
-        NFC sau này.
-      </p>
+      <h1 className="settings-page__title">{t(lang, "accountTitle")}</h1>
+      <p className="settings-page__subtitle">{t(lang, "accountSubtitle")}</p>
 
       <div className="card settings-account__avatar-card">
         <span className="settings-account__avatar">
@@ -97,7 +102,7 @@ export default function SettingsAccount() {
             className="btn btn-outline settings-account__avatar-btn"
           >
             <Camera size={15} />
-            {avatarUploading ? "Đang tải lên..." : "Đổi ảnh đại diện"}
+            {avatarUploading ? t(lang, "profileAvatarUploading") : t(lang, "profileAvatarChange")}
           </button>
           {avatarError && <p className="settings-error">{avatarError}</p>}
           <input
@@ -112,7 +117,7 @@ export default function SettingsAccount() {
 
       <form onSubmit={handleSave} className="card settings-account__form">
         <label className="settings-field">
-          <span>Tên hiển thị</span>
+          <span>{t(lang, "displayName")}</span>
           <input
             type="text"
             value={name}
@@ -121,7 +126,7 @@ export default function SettingsAccount() {
         </label>
 
         <label className="settings-field">
-          <span>Email</span>
+          <span>{t(lang, "profileEmail")}</span>
           <input
             type="email"
             value={user.email}
@@ -129,26 +134,26 @@ export default function SettingsAccount() {
             className="settings-field--readonly"
           />
           <span className="settings-field__hint">
-            Chưa hỗ trợ đổi email trong bản này
+            {t(lang, "emailReadOnlyHint")}
           </span>
         </label>
 
         <label className="settings-field">
-          <span>Số điện thoại</span>
+          <span>{t(lang, "profilePhone")}</span>
           <input
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="09xxxxxxxx"
+            placeholder={t(lang, "profilePhonePlaceholder")}
           />
         </label>
 
         <label className="settings-field">
-          <span>Địa chỉ nhận hàng</span>
+          <span>{t(lang, "profileAddress")}</span>
           <textarea
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="Dùng để tự động điền khi đặt hàng ship thẻ NFC"
+            placeholder={t(lang, "profileAddressPlaceholder")}
             rows={3}
           />
         </label>
@@ -156,9 +161,9 @@ export default function SettingsAccount() {
         {error && <p className="settings-error">{error}</p>}
 
         <div className="settings-form-footer">
-          {saved && <span className="settings-saved">✓ Đã lưu</span>}
+          {saved && <span className="settings-saved">✓ {t(lang, "savedSuccess")}</span>}
           <button type="submit" disabled={saving} className="btn btn-primary">
-            {saving ? "Đang lưu..." : "Lưu thay đổi"}
+            {saving ? t(lang, "saving") : t(lang, "saveChanges")}
           </button>
         </div>
       </form>

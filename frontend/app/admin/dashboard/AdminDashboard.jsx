@@ -19,11 +19,14 @@ import {
   Package,
 } from "lucide-react";
 import { adminStatsAPI, manualSaleAPI } from "../../../lib/api";
+import { getLang } from "../../../lib/prefs";
+import { t } from "../../../lib/i18n";
 import "./AdminDashboard.css";
 
 const formatVND = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
 
 export default function AdminDashboard() {
+  const [lang, setLang] = useState("vi");
   const [overview, setOverview] = useState(null);
   const [salesSummary, setSalesSummary] = useState(null);
   const [daily, setDaily] = useState([]);
@@ -31,15 +34,18 @@ export default function AdminDashboard() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    setLang(getLang());
     load();
+
+    const handleLangUpdated = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
   }, []);
 
   const load = async () => {
     setLoading(true);
     setError("");
     try {
-      // Gọi song song 3 API độc lập — không phụ thuộc nhau, gộp lại cho
-      // nhanh thay vì await tuần tự từng cái.
       const [overviewRes, summaryRes, dailyRes] = await Promise.all([
         adminStatsAPI.getOverview(),
         manualSaleAPI.getSummary(),
@@ -47,8 +53,6 @@ export default function AdminDashboard() {
       ]);
       setOverview(overviewRes.overview);
       setSalesSummary(summaryRes.summary);
-      // Chart cần đủ 30 ngày kể cả ngày không có đơn nào (revenue=0) —
-      // API chỉ trả về ngày có dữ liệu, nên tự điền các ngày thiếu ở đây.
       setDaily(fillMissingDays(dailyRes.daily, 30));
     } catch (err) {
       setError(err.message || "Không tải được dữ liệu tổng quan");
@@ -71,52 +75,52 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="admin-dash-title">📊 Tổng quan</h1>
-      <p className="admin-dash-subtitle">Số liệu hệ thống VinaTap</p>
+      <h1 className="admin-dash-title">{t(lang, "adminOverviewTitle")}</h1>
+      <p className="admin-dash-subtitle">{t(lang, "adminOverviewSubtitle")}</p>
 
       <div className="admin-dash-kpi-grid">
         <KpiCard
           icon={<DollarSign size={20} />}
-          label="Tổng doanh thu (offline)"
+          label={t(lang, "totalRevenueOffline")}
           value={formatVND(salesSummary?.total_revenue)}
           accent="orange"
         />
         <KpiCard
           icon={<Package size={20} />}
-          label="Số thẻ đã bán"
+          label={t(lang, "totalCardsSold")}
           value={salesSummary?.total_cards_sold ?? 0}
           accent="orange"
         />
         <KpiCard
           icon={<CreditCard size={20} />}
-          label="Serial NFC đã kích hoạt"
+          label={t(lang, "nfcActivatedCount")}
           value={`${overview?.nfc_activated ?? 0}/${overview?.nfc_total ?? 0}`}
         />
         <KpiCard
           icon={<Users size={20} />}
-          label="Tổng người dùng"
+          label={t(lang, "totalUsers")}
           value={overview?.user_total ?? 0}
-          sub={`+${overview?.user_new_7d ?? 0} trong 7 ngày qua`}
+          sub={`+${overview?.user_new_7d ?? 0} ${t(lang, "inLast7Days")}`}
         />
         <KpiCard
           icon={<Images size={20} />}
-          label="Tổng album"
+          label={t(lang, "totalAlbums")}
           value={overview?.album_total ?? 0}
-          sub={`${overview?.album_public ?? 0} album public`}
+          sub={`${overview?.album_public ?? 0} ${t(lang, "publicAlbums")}`}
         />
         <KpiCard
           icon={<Clock size={20} />}
-          label="Yêu cầu chờ duyệt"
+          label={t(lang, "pendingRequests")}
           value={overview?.pending_share_requests ?? 0}
           accent={overview?.pending_share_requests > 0 ? "warning" : undefined}
         />
       </div>
 
       <div className="card admin-dash-chart-card">
-        <h2 className="admin-dash-section-title">Doanh thu 30 ngày gần nhất</h2>
+        <h2 className="admin-dash-section-title">{t(lang, "revenue30Days")}</h2>
         {daily.every((d) => d.revenue === 0) ? (
           <p className="admin-dash-empty">
-            Chưa có đơn bán nào trong 30 ngày qua
+            {t(lang, "noSalesIn30Days")}
           </p>
         ) : (
           <ResponsiveContainer width="100%" height={280}>
@@ -151,7 +155,7 @@ export default function AdminDashboard() {
       {overview?.hot_provinces?.length > 0 && (
         <div className="card admin-dash-hot-card">
           <h2 className="admin-dash-section-title">
-            🔥 Tỉnh được kích hoạt nhiều nhất
+            🔥 {t(lang, "topProvincesActivated")}
           </h2>
           <ul className="admin-dash-hot-list">
             {overview.hot_provinces.map((p, i) => (
@@ -185,22 +189,12 @@ function KpiCard({ icon, label, value, sub, accent }) {
   );
 }
 
-// API chỉ trả về những ngày CÓ đơn bán — hàm này điền thêm các ngày
-// không có đơn nào (revenue=0) để chart vẽ đủ 1 đường liền mạch 30 ngày,
-// thay vì bị đứt quãng ở những ngày không bán được gì.
 function fillMissingDays(apiDaily, days) {
   const map = new Map(apiDaily.map((d) => [d.date, Number(d.revenue)]));
   const result = [];
   for (let i = days - 1; i >= 0; i--) {
     const d = new Date();
     d.setDate(d.getDate() - i);
-    // KHÔNG dùng d.toISOString() — nó quy đổi sang giờ UTC, trong khi
-    // backend tính ngày theo giờ Việt Nam (timezone: "+07:00" ở
-    // config/db.js). Vào những giờ sớm (trước 7h sáng VN), toISOString()
-    // sẽ lùi về NGÀY HÔM TRƯỚC theo UTC, làm sai khóa so khớp với dữ liệu
-    // backend trả về — khiến chart hiện "chưa có đơn" dù đơn đã tạo đúng
-    // hôm nay. Dùng getFullYear/getMonth/getDate (giờ local trình duyệt)
-    // để khớp đúng lịch Việt Nam.
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
     result.push({
       label: `${d.getDate()}/${d.getMonth() + 1}`,

@@ -1,9 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authAPI } from "../../../lib/api";
+import { getLang } from "../../../lib/prefs";
+import { t } from "../../../lib/i18n";
 
 export default function SettingsPassword() {
+  const [lang, setLang] = useState("vi");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -11,16 +14,23 @@ export default function SettingsPassword() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    setLang(getLang());
+    const handleLangUpdated = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     if (newPassword.length < 6) {
-      setError("Mật khẩu mới phải ít nhất 6 ký tự");
+      setError(t(lang, "newPasswordPlaceholder"));
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError("Mật khẩu xác nhận không khớp");
+      setError(t(lang, "passwordMismatch"));
       return;
     }
 
@@ -33,7 +43,7 @@ export default function SettingsPassword() {
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
     } catch (err) {
-      setError(err.message || "Không đổi được mật khẩu");
+      setError(err.message || "Lỗi đổi mật khẩu");
     } finally {
       setSaving(false);
     }
@@ -41,10 +51,9 @@ export default function SettingsPassword() {
 
   return (
     <div className="settings-page">
-      <h1 className="settings-page__title">🔑 Đổi mật khẩu</h1>
+      <h1 className="settings-page__title">{t(lang, "passwordTitle")}</h1>
       <p className="settings-page__subtitle">
-        Dùng khi bạn vẫn nhớ mật khẩu hiện tại. Quên mật khẩu thì đăng xuất rồi
-        bấm "Quên mật khẩu?" ở trang đăng nhập.
+        {t(lang, "passwordSubtitle")}
       </p>
 
       <form
@@ -53,32 +62,34 @@ export default function SettingsPassword() {
         style={{ padding: "1.5rem" }}
       >
         <label className="settings-field">
-          <span>Mật khẩu hiện tại</span>
+          <span>{t(lang, "currentPassword")}</span>
           <input
             type="password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
+            placeholder={t(lang, "currentPasswordPlaceholder")}
             required
           />
         </label>
 
         <label className="settings-field">
-          <span>Mật khẩu mới</span>
+          <span>{t(lang, "newPassword")}</span>
           <input
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="Ít nhất 6 ký tự"
+            placeholder={t(lang, "newPasswordPlaceholder")}
             required
           />
         </label>
 
         <label className="settings-field">
-          <span>Xác nhận mật khẩu mới</span>
+          <span>{t(lang, "confirmPassword")}</span>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder={t(lang, "confirmPasswordPlaceholder")}
             required
           />
         </label>
@@ -86,9 +97,9 @@ export default function SettingsPassword() {
         {error && <p className="settings-error">{error}</p>}
 
         <div className="settings-form-footer">
-          {saved && <span className="settings-saved">✓ Đã đổi mật khẩu</span>}
+          {saved && <span className="settings-saved">✓ {t(lang, "passwordSuccess")}</span>}
           <button type="submit" disabled={saving} className="btn btn-primary">
-            {saving ? "Đang lưu..." : "Đổi mật khẩu"}
+            {saving ? t(lang, "saving") : t(lang, "updatePassword")}
           </button>
         </div>
       </form>

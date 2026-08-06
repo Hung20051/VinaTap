@@ -30,6 +30,20 @@ const upload = async (endpoint, formData) => {
   return data;
 };
 
+// Giống upload() nhưng dùng PUT — cần cho các API sửa (vd đổi ảnh
+// sticker) vừa nhận file vừa nhận field text trong cùng 1 request.
+const uploadPut = async (endpoint, formData) => {
+  const token = getToken();
+  const res = await fetch(`${BASE_URL}${endpoint}`, {
+    method: "PUT",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: formData,
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Lỗi upload");
+  return data;
+};
+
 // ─── AUTH ─────────────────────────────────────────────────────
 export const authAPI = {
   login: (body) =>
@@ -79,6 +93,7 @@ export const authAPI = {
 export const provinceAPI = {
   getAll: () => request("/provinces"),
   getOne: (slug) => request(`/provinces/${slug}`),
+  getBySlug: (slug) => request(`/provinces/${slug}`),
 };
 
 // ─── NFC ──────────────────────────────────────────────────────
@@ -105,6 +120,25 @@ export const nfcAPI = {
       method: "POST",
       body: JSON.stringify({ token }),
     }),
+
+  // Admin
+  adminSearch: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
+    ).toString();
+    return request(`/nfc/admin/search${qs ? `?${qs}` : ""}`);
+  },
+  adminAssignCard: (body) =>
+    request("/nfc/admin/assign", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  createBatch: (body) =>
+    request("/nfc/batch", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  getByProvince: (provinceId) => request(`/nfc/province/${provinceId}`),
 };
 
 // ─── ALBUMS ───────────────────────────────────────────────────
@@ -168,6 +202,27 @@ export const mediaAPI = {
 export const stickerAPI = {
   getAll: (category) =>
     request(`/stickers${category ? `?category=${category}` : ""}`),
+  getCategories: () => request("/stickers/categories"),
+
+  // Admin — xem cả sticker đã ẩn + số lượt dùng
+  getAllAdmin: () => request("/stickers/admin"),
+
+  // Admin — tạo/sửa đều gửi FormData (có thể kèm file ảnh hoặc không,
+  // updateSticker phía backend chấp nhận cả 2 trường hợp)
+  create: (formData) => upload("/stickers", formData),
+  bulkCreate: (formData) => upload("/stickers/bulk", formData),
+  update: (id, formData) => uploadPut(`/stickers/${id}`, formData),
+  reorder: (ids) =>
+    request("/stickers/reorder", {
+      method: "PUT",
+      body: JSON.stringify({ ids }),
+    }),
+  setStatus: (id, status) => {
+    const formData = new FormData();
+    formData.append("status", status);
+    return uploadPut(`/stickers/${id}`, formData);
+  },
+  delete: (id) => request(`/stickers/${id}`, { method: "DELETE" }),
 };
 
 // ─── PRODUCTS (admin — sản phẩm cho dropdown tạo đơn thủ công) ─
@@ -228,6 +283,7 @@ export const userAPI = {
     ).toString();
     return request(`/users${qs ? `?${qs}` : ""}`);
   },
+  getDetail: (id) => request(`/users/${id}/detail`),
   setStatus: (id, status) =>
     request(`/users/${id}/status`, {
       method: "PATCH",

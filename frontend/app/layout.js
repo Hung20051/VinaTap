@@ -1,11 +1,5 @@
+import Script from "next/script";
 import "../styles/globals.css";
-// 3 file dưới đây trước chỉ import ở app/admin/layout.js và
-// app/settings/layout.js (đều là "use client") — gây vỡ CSS khi F5/gõ
-// thẳng URL vào 1 trang con (vd /settings/password), vì Next.js App
-// Router không đảm bảo CSS import trong client-layout con được gắn vào
-// HTML trả về của hard navigation, chỉ chắc chắn có khi điều hướng bằng
-// client-side nav (bấm Link trong app). Import ở đây (layout gốc, luôn
-// nằm trong MỌI response) để chắc chắn có mặt bất kể vào bằng đường nào.
 import "../styles/admin-shell.css";
 import "../styles/sidebar.css";
 import "../styles/settings-shell.css";
@@ -28,24 +22,12 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap"
           rel="stylesheet"
         />
-        {/* Preload ảnh nền /auth và /forgot-password đã CHUYỂN sang
-            app/page.js (trang chủ) — đặt ở đây (layout gốc) từng khiến
-            ảnh bị preload trên MỌI trang kể cả /admin/revenue, nơi
-            không hề dùng tới, gây warning "preloaded but not used" ở
-            console trên toàn bộ khu vực admin. */}
-        {/* Áp dụng theme (sáng/tối) đã lưu TRƯỚC khi trang render, để
-            tránh hiện tượng nháy trắng rồi mới chuyển sang tối (FOUC).
-            Chạy trước khi React hydrate nên phải là script thuần, không
-            thể dùng useEffect. Vì script này set data-theme trực tiếp lên
-            <html> ngoài tầm kiểm soát của React (sau khi server đã render
-            xong nhưng trước khi client hydrate), React sẽ luôn thấy lệch
-            giữa HTML server render và DOM thực tế lúc hydrate -> cần
-            suppressHydrationWarning ở thẻ <html> để tắt cảnh báo (vô hại,
-            vì đây là thay đổi có chủ đích chứ không phải lỗi state). */}
-        <script
+        <Script
+          id="theme-script"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               try {

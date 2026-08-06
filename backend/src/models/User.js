@@ -176,6 +176,27 @@ const User = {
     }
     await db.execute("UPDATE users SET role = ? WHERE id = ?", [role, id]);
   },
+
+  async getDetailForAdmin(id) {
+    const user = await this.findById(id);
+    if (!user) return null;
+
+    const [nfcCards] = await db.execute(
+      `SELECT id, serial_code, nfc_token, status, created_at FROM nfc_cards WHERE owner_user_id = ? ORDER BY created_at DESC`,
+      [id],
+    );
+
+    const [albums] = await db.execute(
+      `SELECT id, title, description, view_count, is_public, created_at FROM albums WHERE owner_id = ? AND status = 'active' ORDER BY created_at DESC`,
+      [id],
+    );
+
+    return {
+      ...user,
+      nfc_cards: nfcCards,
+      albums,
+    };
+  },
 };
 
 module.exports = User;

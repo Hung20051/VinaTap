@@ -40,6 +40,11 @@ export const getLang = () => {
 
 export const setLang = (lang) => {
   localStorage.setItem(LANG_KEY, lang);
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(
+      new CustomEvent("vinatap:lang-updated", { detail: lang }),
+    );
+  }
 };
 
 // ─── SIDEBAR THU GỌN ─────────────────────────────────────────

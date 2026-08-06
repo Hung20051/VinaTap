@@ -18,6 +18,16 @@
   min-width: 0;
 }
 
+.dash-loading-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
 .dash-header {
   display: flex;
   justify-content: space-between;

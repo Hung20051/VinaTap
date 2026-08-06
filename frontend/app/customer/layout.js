@@ -2,46 +2,79 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { requireAuth, isAdmin } from "../../lib/auth";
+import Sidebar from "../../components/Sidebar";
+import { getUser, requireAuth, isAdmin, clearAuth } from "../../lib/auth";
+import { LayoutDashboard, ShieldCheck } from "lucide-react";
+import { t } from "../../lib/i18n";
+import { getLang } from "../../lib/prefs";
 
-// Auth guard dùng chung cho MỌI trang trong app/customer/* — mirror đúng
-// pattern app/admin/layout.js và app/settings/layout.js. Chạy 1 lần ở
-// đây, các trang con (CustomerDashboard, và các trang customer thêm sau
-// này) không cần tự gọi requireAuth() nữa.
 export default function CustomerLayout({ children }) {
   const router = useRouter();
-  const [checked, setChecked] = useState(false);
+
+  const [user, setUser] = useState(() => {
+    if (typeof window !== "undefined") return getUser();
+    return null;
+  });
+
+  const [lang, setLang] = useState(() => {
+    if (typeof window !== "undefined") return getLang();
+    return "vi";
+  });
 
   useEffect(() => {
     if (!requireAuth(router)) return;
-    // Admin không dùng khu vực customer ("0/34 tỉnh", "Kích hoạt NFC"...)
-    // — dù đăng nhập xong đã redirect sang /admin rồi, vẫn cần chặn thêm
-    // ở đây phòng trường hợp admin tự gõ URL /customer/..., bấm Back,
-    // hoặc mở lại tab/bookmark cũ.
     if (isAdmin()) {
       router.replace("/admin");
       return;
     }
-    setChecked(true);
+    setUser(getUser());
+    setLang(getLang());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Chưa xác nhận xong đăng nhập -> không render gì (tránh nháy nội dung
-  // dashboard lên rồi mới bị đá ra nếu chưa đăng nhập hoặc là admin)
-  if (!checked) {
-    return (
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div className="spinner" />
-      </div>
-    );
-  }
+  useEffect(() => {
+    const handleUserUpdated = (e) => setUser(e.detail);
+    const handleLangUpdated = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:user-updated", handleUserUpdated);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => {
+      window.removeEventListener("vinatap:user-updated", handleUserUpdated);
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+    };
+  }, []);
 
-  return children;
+  const handleLogout = () => {
+    clearAuth();
+    window.location.href = "/";
+  };
+
+  const navItems = [
+    {
+      href: "/customer/dashboard",
+      icon: <LayoutDashboard size={20} />,
+      label: t(lang, "collection"),
+    },
+    ...(isAdmin()
+      ? [
+          {
+            href: "/admin",
+            icon: <ShieldCheck size={20} />,
+            label: t(lang, "admin"),
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <div className="app-shell">
+      <Sidebar
+        navItems={navItems}
+        user={user}
+        lang={lang}
+        roleLabel={isAdmin() ? t(lang, "admin") : t(lang, "account")}
+        onLogout={handleLogout}
+      />
+      <div className="admin-content">{children}</div>
+    </div>
+  );
 }

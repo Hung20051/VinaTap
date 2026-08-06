@@ -79,4 +79,18 @@ const setUserRole = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, setUserStatus, setUserRole };
+// GET /api/users/:id/detail
+const getUserDetail = async (req, res) => {
+  try {
+    const targetId = Number(req.params.id);
+    const detail = await User.getDetailForAdmin(targetId);
+    if (!detail)
+      return res.status(404).json({ message: "Không tìm thấy user" });
+    res.json(detail);
+  } catch (err) {
+    console.error("getUserDetail:", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
+module.exports = { getAllUsers, setUserStatus, setUserRole, getUserDetail };

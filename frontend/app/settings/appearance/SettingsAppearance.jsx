@@ -8,6 +8,7 @@ import {
   getLang,
   setLang as persistLang,
 } from "../../../lib/prefs";
+import { t } from "../../../lib/i18n";
 import "./SettingsAppearance.css";
 
 export default function SettingsAppearance() {
@@ -17,6 +18,10 @@ export default function SettingsAppearance() {
   useEffect(() => {
     setLangState(getLang());
     setThemeState(getTheme());
+
+    const handleLangUpdated = (e) => setLangState(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
   }, []);
 
   const handleLangChange = (value) => {
@@ -31,11 +36,14 @@ export default function SettingsAppearance() {
 
   return (
     <div className="settings-page">
-      <h1 className="settings-page__title">🎨 Giao diện</h1>
-      <p className="settings-page__subtitle">Ngôn ngữ và chủ đề hiển thị</p>
+      <h1 className="settings-page__title">{t(lang, "appearanceTitle")}</h1>
+      <p className="settings-page__subtitle">{t(lang, "appearanceSubtitle")}</p>
 
       <div className="card settings-appearance__section">
-        <h2 className="settings-appearance__section-title">Ngôn ngữ</h2>
+        <h2 className="settings-appearance__section-title">{t(lang, "settingsLanguage")}</h2>
+        <p className="settings-field__hint" style={{ marginBottom: "1rem" }}>
+          {t(lang, "languageDesc")}
+        </p>
         <div className="settings-appearance__options">
           <button
             onClick={() => handleLangChange("vi")}
@@ -55,20 +63,23 @@ export default function SettingsAppearance() {
       </div>
 
       <div className="card settings-appearance__section">
-        <h2 className="settings-appearance__section-title">Chủ đề</h2>
+        <h2 className="settings-appearance__section-title">{t(lang, "settingsTheme")}</h2>
+        <p className="settings-field__hint" style={{ marginBottom: "1rem" }}>
+          {t(lang, "themeDesc")}
+        </p>
         <div className="settings-appearance__options">
           <button
             onClick={() => handleThemeChange("light")}
             className={`settings-appearance__option ${theme === "light" ? "is-active" : ""}`}
           >
-            <Sun size={16} /> Sáng
+            <Sun size={16} /> {t(lang, "themeLight")}
             {theme === "light" && <Check size={16} />}
           </button>
           <button
             onClick={() => handleThemeChange("dark")}
             className={`settings-appearance__option ${theme === "dark" ? "is-active" : ""}`}
           >
-            <Moon size={16} /> Tối
+            <Moon size={16} /> {t(lang, "themeDark")}
             {theme === "dark" && <Check size={16} />}
           </button>
         </div>

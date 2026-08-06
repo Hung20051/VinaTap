@@ -23,29 +23,31 @@ const TOTAL_PROVINCES = 34;
 export default function CustomerDashboard() {
   const router = useRouter();
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    if (typeof window !== "undefined") return getUser();
+    return null;
+  });
   const [albums, setAlbums] = useState([]);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [creatingFor, setCreatingFor] = useState(null); // nfc_card_id đang tạo album
-  const [lang, setLangState] = useState("vi");
+  const [lang, setLangState] = useState(() => {
+    if (typeof window !== "undefined") return getLang();
+    return "vi";
+  });
 
   useEffect(() => {
-    // requireAuth() + chặn admin đã được app/customer/layout.js xử lý —
-    // tới được đây nghĩa là chắc chắn đã đăng nhập và không phải admin.
     const u = getUser();
-    setUser(u);
-    // Đồng bộ các tuỳ chọn đã lưu ở localStorage — làm ở effect (chạy
-    // sau khi mount trên client) thay vì trong useState() initializer để
-    // tránh lệch nội dung giữa lần render server và lần hydrate client.
+    if (u) setUser(u);
     setLangState(getLang());
-    applyStoredTheme(); // chỉ áp dụng theme lên trang, không cần lưu vào state nữa
+    applyStoredTheme();
     loadData();
-    // Cache localStorage có thể cũ (đăng nhập từ trước khi có phone/address,
-    // hoặc hồ sơ vừa được sửa ở thiết bị khác) -> lấy bản mới nhất từ DB rồi
-    // đồng bộ lại state + cache.
     refreshProfile();
+
+    const handleLangUpdated = (e) => setLangState(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
   }, [router]);
 
   // Nghe sự kiện từ updateUser() (lib/auth.js) — cùng cơ chế với
@@ -151,18 +153,8 @@ export default function CustomerDashboard() {
   ];
 
   return (
-    <div className="app-shell">
-      <Sidebar
-        navItems={navItems}
-        user={user}
-        lang={lang}
-        roleLabel={isAdmin() ? t(lang, "admin") : t(lang, "account")}
-        onLogout={handleLogout}
-      />
-
-      {/* Nội dung */}
-      <div className="dash-content">
-        <div className="container dash-container-inner">
+    <div className="dash-content">
+      <div className="container dash-container-inner">
           {/* Chào mừng */}
           <div className="dash-header">
             <div>
@@ -211,7 +203,11 @@ export default function CustomerDashboard() {
           {/* Bộ sưu tập */}
           <h2 className="dash-section-title">{t(lang, "myCollection")}</h2>
 
-          {cards.length === 0 ? (
+          {loading ? (
+            <div className="dash-loading-box">
+              <div className="spinner" />
+            </div>
+          ) : cards.length === 0 ? (
             <div className="card dash-empty">
               <p className="dash-empty__icon">🗺</p>
               <p className="dash-empty__text">
@@ -270,6 +266,5 @@ export default function CustomerDashboard() {
           )}
         </div>
       </div>
-    </div>
   );
 }

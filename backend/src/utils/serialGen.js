@@ -1,13 +1,21 @@
 const crypto = require("crypto");
 
-// ─── SERIAL CODE (đẹp, dễ đọc) ──────────────────────────────
-// Dùng cho: in backup, hỗ trợ khách hàng, admin tra cứu
-// VD: HAN-2025-A3F9C7B1
-// 5 byte = 10 ký tự hex (~1.1 nghìn tỷ khả năng) — đủ an toàn cho serial
+// ─── SERIAL CODE (Bảo mật cao, Không thể đoán, Dễ đọc) ──────
+// Dùng cho: in tem/thẻ backup, hỗ trợ khách hàng, cào tem kích hoạt
+// Sử dụng bộ ký tự an toàn không nhầm lẫn (bỏ 0, O, 1, I) + sinh ngẫu nhiên mã hóa
+// Ví dụ: DN-2026-X8K9-M4P7
+const CHARS = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+
 const generateSerial = (prefix = "VN") => {
   const year = new Date().getFullYear();
-  const random = crypto.randomBytes(5).toString("hex").toUpperCase();
-  return `${prefix.toUpperCase()}-${year}-${random}`;
+  const bytes = crypto.randomBytes(8);
+  let chunk1 = "";
+  let chunk2 = "";
+  for (let i = 0; i < 4; i++) {
+    chunk1 += CHARS[bytes[i] % CHARS.length];
+    chunk2 += CHARS[bytes[i + 4] % CHARS.length];
+  }
+  return `${prefix.toUpperCase()}-${year}-${chunk1}-${chunk2}`;
 };
 
 const generateBatch = (prefix, count) => {
