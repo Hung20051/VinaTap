@@ -37,18 +37,22 @@ const createSale = async (req, res) => {
     // Snapshot tên sản phẩm NGAY LÚC BÁN — nếu sau này sản phẩm bị đổi
     // tên/ẩn/xóa thì đơn cũ vẫn hiển thị đúng tên đã bán lúc đó.
     let productNameSnapshot = req.body.product_name_snapshot;
-    if (product_id) {
+    let validProductId = null;
+
+    if (product_id && !isNaN(product_id)) {
       const product = await Product.findById(product_id);
-      if (!product)
-        return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
-      productNameSnapshot = product.name;
+      if (product) {
+        validProductId = product.id;
+        if (!productNameSnapshot) productNameSnapshot = product.name;
+      }
     }
-    if (!productNameSnapshot)
+
+    if (!productNameSnapshot || !productNameSnapshot.trim())
       return res.status(400).json({ message: "Thiếu tên sản phẩm" });
 
     const sale = await ManualSale.create({
-      product_id: product_id || null,
-      product_name_snapshot: productNameSnapshot,
+      product_id: validProductId,
+      product_name_snapshot: productNameSnapshot.trim(),
       unit_price,
       quantity,
       buyer_name: buyer_name.trim(),

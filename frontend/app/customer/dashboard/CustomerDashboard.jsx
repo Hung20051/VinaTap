@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Sidebar from "../../../components/Sidebar";
 import { LayoutDashboard, KeyRound, ShieldCheck } from "lucide-react";
 import { albumAPI, nfcAPI, authAPI } from "../../../lib/api";
-import { getUser, updateUser, clearAuth, isAdmin } from "../../../lib/auth";
+import { getUser, updateUser, clearAuth, isAdmin, isLoggedIn } from "../../../lib/auth";
 import { applyStoredTheme, getLang } from "../../../lib/prefs";
 import { t } from "../../../lib/i18n";
 import "../../../styles/dashboard.css";
@@ -60,6 +60,7 @@ export default function CustomerDashboard() {
   }, []);
 
   const refreshProfile = async () => {
+    if (!isLoggedIn()) return;
     try {
       const res = await authAPI.getMe();
       const fresh = updateUser(res.user);
@@ -71,6 +72,7 @@ export default function CustomerDashboard() {
   };
 
   const loadData = async () => {
+    if (!isLoggedIn()) return;
     setLoading(true);
     setError("");
     try {

@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const OtpCode = require("../models/OtpCode");
+const SystemSetting = require("../models/SystemSetting");
 const cloudinary = require("../config/cloudinary");
 const { uploadSingle, runMiddleware } = require("../middleware/upload");
 const {
@@ -94,6 +95,13 @@ const login = async (req, res) => {
 // tránh rác tài khoản chưa xác minh email trong bảng users.
 const requestRegisterOtp = async (req, res) => {
   try {
+    const settings = await SystemSetting.getAll();
+    if (settings.allow_registration === "false") {
+      return res.status(403).json({
+        message: "Hệ thống hiện đang tạm ngưng mở đăng ký tài khoản mới!",
+      });
+    }
+
     const { name, email, password } = req.body;
 
     if (!name || !email || !password)

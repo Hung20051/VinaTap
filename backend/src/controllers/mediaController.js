@@ -6,6 +6,7 @@ const {
   runMiddleware,
 } = require("../middleware/upload");
 const db = require("../config/db");
+const SystemSetting = require("../models/SystemSetting");
 
 // ─── HELPER: upload buffer lên Cloudinary ────────────────────
 const uploadToCloudinary = (buffer, options = {}) =>
@@ -27,8 +28,13 @@ const fetchImageAsBase64 = async (url) => {
 // ─── HELPER: Gemini AI caption ───────────────────────────────
 const getAiCaption = async (imageUrl) => {
   try {
+    const settings = await SystemSetting.getAll();
+    const prompt =
+      settings.ai_caption_prompt ||
+      "Bạn là trợ lý du lịch Việt Nam. Hãy viết 1 caption ngắn gọn, cảm xúc bằng tiếng Việt (tối đa 2 câu) mô tả bức ảnh du lịch này. Chỉ trả về caption, không thêm gì khác.";
+
     const result = await visionModel.generateContent([
-      "Bạn là trợ lý du lịch Việt Nam. Hãy viết 1 caption ngắn gọn, cảm xúc bằng tiếng Việt (tối đa 2 câu) mô tả bức ảnh du lịch này. Chỉ trả về caption, không thêm gì khác.",
+      prompt,
       {
         inlineData: {
           mimeType: "image/jpeg",

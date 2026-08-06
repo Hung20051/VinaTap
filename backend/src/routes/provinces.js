@@ -7,11 +7,10 @@ const {
   createProvince,
   updateProvince,
   deleteProvince,
+  uploadFile,
+  getTts,
 } = require("../controllers/provinceController");
 
-// Landmark CRUD sống ở file riêng (landmarkController.js) — giữ tách biệt
-// khỏi provinceController để dễ mở rộng sau này (vd thêm review/rating
-// cho landmark) mà không phình to provinceController.
 const {
   createLandmark,
   updateLandmark,
@@ -21,7 +20,11 @@ const {
 const { protect } = require("../middleware/auth");
 const { requireRole } = require("../middleware/role");
 
+// Upload file ảnh/video từ máy tính lên Cloudinary
+router.post("/upload", protect, requireRole("admin"), uploadFile);
+
 // Guest xem được
+router.get("/tts/stream", getTts);
 router.get("/", getAllProvinces);
 router.get("/:slug", getProvince);
 

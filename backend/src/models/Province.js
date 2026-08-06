@@ -1,20 +1,24 @@
 const db = require("../config/db");
 
 const Province = {
-  // Lấy tất cả tỉnh (guest xem được)
-  async findAll() {
+  // Lấy tất cả tỉnh (guest xem được, admin xem được cả inactive)
+  async findAll({ includeInactive = false } = {}) {
+    const whereClause = includeInactive ? "" : "WHERE status = 'active'";
     const [rows] = await db.execute(
       `SELECT id, name, slug, region, description, thumbnail_url, youtube_url,
-              population, area_km2, specialties, lat, lng
-       FROM provinces WHERE status = 'active' ORDER BY name ASC`,
+              population, area_km2, specialties, lat, lng, status
+       FROM provinces ${whereClause} ORDER BY name ASC`,
     );
     return rows;
   },
 
   // Lấy 1 tỉnh theo slug
-  async findBySlug(slug) {
+  async findBySlug(slug, includeInactive = true) {
+    const whereClause = includeInactive
+      ? "WHERE slug = ?"
+      : "WHERE slug = ? AND status = 'active'";
     const [rows] = await db.execute(
-      `SELECT * FROM provinces WHERE slug = ? AND status = 'active' LIMIT 1`,
+      `SELECT * FROM provinces ${whereClause} LIMIT 1`,
       [slug],
     );
     return rows[0] || null;

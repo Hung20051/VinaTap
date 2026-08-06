@@ -5,7 +5,8 @@ const db = require("../config/db");
 // GET /api/provinces
 const getAllProvinces = async (req, res) => {
   try {
-    const provinces = await Province.findAll();
+    const includeInactive = req.query.include_inactive === "true";
+    const provinces = await Province.findAll({ includeInactive });
     res.json({ provinces });
   } catch (err) {
     console.error("getAllProvinces:", err);
@@ -26,7 +27,7 @@ const getProvince = async (req, res) => {
       `SELECT id, name, address, latitude, longitude, maps_place_id,
               thumbnail_url, description, category
        FROM landmarks
-       WHERE province_id = ? AND status = 'active'
+       WHERE province_id = ?
        ORDER BY category, name`,
       [province.id],
     );
@@ -108,10 +109,82 @@ const deleteProvince = async (req, res) => {
   }
 };
 
+// ─── ADMIN: UPLOAD FILE LÊN CLOUDINARY ───────────────────────
+// POST /api/provinces/upload
+const { uploadSingle, runMiddleware } = require("../middleware/upload");
+const cloudinary = require("../config/cloudinary");
+
+const uploadToCloudinary = (buffer, folder = "vinatap/provinces") =>
+  new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder, resource_type: "auto" },
+      (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      },
+    );
+    stream.end(buffer);
+  });
+
+const uploadFile = async (req, res) => {
+  try {
+    await runMiddleware(req, res, uploadSingle);
+    if (!req.file)
+      return res.status(400).json({ message: "Không tìm thấy file" });
+
+    const result = await uploadToCloudinary(req.file.buffer, "vinatap/uploads");
+    res.json({ message: "Upload file thành công", url: result.secure_url });
+  } catch (err) {
+    console.error("uploadFile error:", err);
+    res.status(500).json({ message: err.message || "Lỗi upload file" });
+  }
+};
+
+// ─── GET TTS AUDIO STREAM (PROXY) ─────────────────────────────
+// GET /api/provinces/tts?text=...
+const getTts = async (req, res) => {
+  try {
+    const text = req.query.text;
+    if (!text) return res.status(400).send("Missing text parameter");
+
+    const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
+      text,
+    )}&tl=vi&client=tw-ob`;
+
+    const fetchRes = await fetch(ttsUrl, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      },
+    });
+
+    if (!fetchRes.ok) {
+      return res.status(500).send("TTS Service Error");
+    }
+
+    const arrayBuffer = await fetchRes.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    res.set({
+      "Content-Type": "audio/mpeg",
+      "Content-Length": buffer.length,
+      "Cache-Control": "public, max-age=86400",
+      "Access-Control-Allow-Origin": "*",
+      "Cross-Origin-Resource-Policy": "cross-origin",
+    });
+    res.send(buffer);
+  } catch (err) {
+    console.error("getTts error:", err);
+    res.status(500).send(err.message);
+  }
+};
+
 module.exports = {
   getAllProvinces,
   getProvince,
   createProvince,
   updateProvince,
   deleteProvince,
+  uploadFile,
+  getTts,
 };

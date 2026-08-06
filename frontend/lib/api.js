@@ -91,9 +91,35 @@ export const authAPI = {
 
 // ─── PROVINCES ────────────────────────────────────────────────
 export const provinceAPI = {
-  getAll: () => request("/provinces"),
+  getAll: (includeInactive = false) =>
+    request(`/provinces${includeInactive ? "?include_inactive=true" : ""}`),
   getOne: (slug) => request(`/provinces/${slug}`),
   getBySlug: (slug) => request(`/provinces/${slug}`),
+  create: (data) =>
+    request("/provinces", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  update: (id, data) =>
+    request(`/provinces/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+  delete: (id) => request(`/provinces/${id}`, { method: "DELETE" }),
+  // Landmarks
+  createLandmark: (provinceId, data) =>
+    request(`/provinces/${provinceId}/landmarks`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  updateLandmark: (landmarkId, data) =>
+    request(`/provinces/landmarks/${landmarkId}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+  deleteLandmark: (landmarkId) =>
+    request(`/provinces/landmarks/${landmarkId}`, { method: "DELETE" }),
+  uploadFile: (formData) => upload("/provinces/upload", formData),
 };
 
 // ─── NFC ──────────────────────────────────────────────────────
@@ -312,4 +338,25 @@ export const chatbotAPI = {
     }),
   closeSession: (id) =>
     request(`/chatbot/sessions/${id}`, { method: "DELETE" }),
+};
+
+// ─── SYSTEM SETTINGS (admin — cài đặt hệ thống) ───────────────
+export const systemSettingAPI = {
+  get: () => request("/system-settings"),
+  update: (body) =>
+    request("/system-settings", {
+      method: "PUT",
+      body: JSON.stringify(body),
+    }),
+};
+
+// ─── ANALYTICS (admin & public traffic tracking) ──────────────
+export const analyticsAPI = {
+  track: (pagePath, provinceSlug) =>
+    request("/analytics/track", {
+      method: "POST",
+      body: JSON.stringify({ page_path: pagePath, province_slug: provinceSlug }),
+    }),
+  getStats: (timeframe = "7days") =>
+    request(`/analytics/stats?timeframe=${timeframe}`),
 };

@@ -31,8 +31,10 @@ export default function SettingsSidebar({ user }) {
 
   const [lang, setLang] = useState("vi");
   const [collapsed, setCollapsed] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     setCollapsed(getSidebarCollapsed());
     setLang(getLang());
 
@@ -154,7 +156,7 @@ export default function SettingsSidebar({ user }) {
             <div className="app-sidebar__profile-text">
               <span className="app-avatar-name">{user?.name || "User"}</span>
               <span className="app-avatar-role">
-                {isAdmin() ? "Quản trị viên" : "Tài khoản"}
+                {mounted && isAdmin() ? "Quản trị viên" : "Tài khoản"}
               </span>
             </div>
           )}

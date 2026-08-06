@@ -18,6 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize()); // không dùng session
 
+// --- Maintenance check ---
+app.use("/api", require("./middleware/maintenance"));
+
 // --- Routes ---
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/provinces", require("./routes/provinces"));
@@ -30,6 +33,8 @@ app.use("/api/products", require("./routes/products"));
 app.use("/api/manual-sales", require("./routes/manualSales"));
 app.use("/api/admin-stats", require("./routes/adminStats"));
 app.use("/api/users", require("./routes/users"));
+app.use("/api/system-settings", require("./routes/systemSettings"));
+app.use("/api/analytics", require("./routes/analytics"));
 
 // --- Health check ---
 app.get("/api/health", (req, res) => {

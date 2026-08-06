@@ -21,7 +21,10 @@ export default function CustomerLayout({ children }) {
     return "vi";
   });
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     if (!requireAuth(router)) return;
     if (isAdmin()) {
       router.replace("/admin");
@@ -54,7 +57,7 @@ export default function CustomerLayout({ children }) {
       icon: <LayoutDashboard size={20} />,
       label: t(lang, "collection"),
     },
-    ...(isAdmin()
+    ...(mounted && isAdmin()
       ? [
           {
             href: "/admin",
@@ -71,7 +74,7 @@ export default function CustomerLayout({ children }) {
         navItems={navItems}
         user={user}
         lang={lang}
-        roleLabel={isAdmin() ? t(lang, "admin") : t(lang, "account")}
+        roleLabel={mounted && isAdmin() ? t(lang, "admin") : t(lang, "account")}
         onLogout={handleLogout}
       />
       <div className="admin-content">{children}</div>

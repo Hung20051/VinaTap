@@ -32,45 +32,169 @@
   font-weight: 700;
 }
 
-/* ─── HERO ────────────────────────────────────────────────────
-   background/color đặt inline trong JSX vì phụ thuộc
-   province.thumbnail_url (ảnh + tông màu chữ đổi theo tỉnh có/không
-   có ảnh nền). Các thuộc tính còn lại (bố cục, khoảng cách) ở đây. */
-.province-hero {
+/* ─── PREMIUM HERO BANNER ───────────────────────────────────── */
+.province-hero-wrap {
+  width: 100%;
   position: relative;
-  padding: 3.5rem 0;
-  transition: background 0.2s ease;
+  overflow: hidden;
 }
-.province-hero__badge--overlay {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+
+.province-hero-banner {
+  position: relative;
+  padding: 3.5rem 0 4rem;
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
 }
-.province-hero__title {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  font-weight: 800;
-  margin-top: 0.6rem;
+
+.province-hero-banner::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(248,250,252,0.6) 100%);
+  pointer-events: none;
 }
-.province-hero__desc {
-  margin-top: 0.75rem;
-  max-width: 620px;
+
+.province-hero-inner {
+  position: relative;
+  z-index: 2;
 }
-.province-hero__desc--overlay {
-  color: #fff;
-  opacity: 0.92;
-}
-.province-hero__desc--plain {
-  color: var(--text-secondary);
-}
-.province-hero__stats {
+
+.province-hero-content {
+  max-width: 720px;
   display: flex;
-  gap: 1.5rem;
-  margin-top: 1.25rem;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
 }
-.province-hero__cta {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.75rem;
+
+.province-hero-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.province-badge-region {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fb923c;
+  background: rgba(251, 146, 60, 0.15);
+  border: 1px solid rgba(251, 146, 60, 0.35);
+  padding: 5px 14px;
+  border-radius: 99px;
+  backdrop-filter: blur(8px);
+}
+
+.province-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f97316;
+  box-shadow: 0 0 8px #f97316;
+}
+
+.province-badge-nfc {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 5px 14px;
+  border-radius: 99px;
+  backdrop-filter: blur(8px);
+}
+
+.province-hero-title {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.province-hero-desc {
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0;
+  max-width: 660px;
+}
+
+.province-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.province-stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 14px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+
+.province-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.province-btn-hero-primary {
+  padding: 0.85rem 1.8rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ff7b00 0%, #e85d04 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 8px 24px rgba(232, 93, 4, 0.35);
+  transition: all 0.2s ease;
+}
+
+.province-btn-hero-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(232, 93, 4, 0.45);
+}
+
+.province-btn-hero-secondary {
+  padding: 0.85rem 1.8rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.province-btn-hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* ─── NỘI DUNG ───────────────────────────────────────────────── */
@@ -368,4 +492,331 @@
   .province-landmark-card__thumb {
     height: 160px;
   }
+}
+
+/* ─── AUDIO PLAYER STYLES ───────────────────────────────────── */
+.province-audio-card {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
+  border: 1px solid #ffedd5;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(232, 93, 4, 0.06);
+}
+
+.province-audio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.province-audio-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.province-audio-icon-radio {
+  color: #e85d04;
+  animation: pulseRadio 2s infinite ease-in-out;
+}
+
+.province-audio-title h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.province-audio-title p {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 2px 0 0 0;
+}
+
+.province-audio-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #e85d04;
+  background: #fff3e6;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid #fed7aa;
+}
+
+.province-audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.province-audio-play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff7b00 0%, #e85d04 100%);
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(232, 93, 4, 0.3);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.province-audio-play-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 18px rgba(232, 93, 4, 0.4);
+}
+
+.province-audio-track {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.province-audio-bar-wrap {
+  width: 100%;
+  height: 8px;
+  background: #fed7aa;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.province-audio-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff7b00, #ea580c);
+  border-radius: 99px;
+  transition: width 0.3s ease;
+}
+
+.province-audio-status-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.province-audio-side-btns {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@keyframes pulseRadio {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+/* ─── UNBOXING CEREMONY MODAL ────────────────────────────────── */
+.province-unbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 9999;
+  animation: fadeIn 0.25s ease;
+}
+
+.province-unbox-modal {
+  width: 100%;
+  max-width: 440px;
+  padding: 2.25rem 1.75rem;
+  text-align: center;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid #334155;
+  color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(232, 93, 4, 0.25);
+  position: relative;
+  animation: popScale 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.province-unbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #94a3b8;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.province-unbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.province-unbox-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.province-unbox-sparkle-ring {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 93, 4, 0.4) 0%, rgba(232, 93, 4, 0) 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.province-unbox-sparkle-icon {
+  color: #fb923c;
+  filter: drop-shadow(0 0 8px #f97316);
+  animation: spinSlow 8s linear infinite;
+}
+
+.province-unbox-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fb923c;
+  background: rgba(251, 146, 60, 0.15);
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+.province-unbox-banner h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin: 0.5rem 0 0 0;
+  letter-spacing: 0.5px;
+}
+
+.province-unbox-banner h1 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ffffff 0%, #fb923c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.province-unbox-card-3d-wrap {
+  margin: 1.5rem 0;
+  perspective: 1000px;
+}
+
+.province-unbox-card-3d {
+  width: 220px;
+  height: 140px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(249, 115, 22, 0.4);
+  border: 2px solid rgba(251, 146, 60, 0.6);
+  transform: rotateY(-8deg) rotateX(6deg);
+  transition: transform 0.3s ease;
+}
+
+.province-unbox-card-3d:hover {
+  transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+}
+
+.province-unbox-card-3d img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.province-unbox-no-img {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #f97316;
+  gap: 0.5rem;
+  font-weight: 800;
+}
+
+.province-unbox-chip-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #0f172a;
+  background: #fb923c;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.province-unbox-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-25deg);
+  animation: shinePass 3s infinite;
+}
+
+.province-unbox-desc {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.province-unbox-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.province-unbox-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 0.75rem;
+  border-radius: 12px;
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shinePass {
+  0% { left: -100%; }
+  40%, 100% { left: 150%; }
+}
+
+@keyframes popScale {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }

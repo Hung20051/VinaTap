@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
-import { useParams } from "next/navigation";
-import { provinceAPI } from "../../../lib/api";
+import { useParams, useSearchParams } from "next/navigation";
+import { provinceAPI, analyticsAPI } from "../../../lib/api";
 import { isLoggedIn, clearAuth, getUser } from "../../../lib/auth";
 import Map from "../../../components/Map";
+import ProvinceAudioPlayer from "./components/ProvinceAudioPlayer";
+import ProvinceUnboxingModal from "./components/ProvinceUnboxingModal";
 import "../../../styles/province.css";
 
 const REGION_LABEL = {
@@ -31,6 +33,7 @@ const formatNumber = (n) =>
 
 export default function ProvincePage() {
   const { slug } = useParams();
+  const searchParams = useSearchParams();
 
   const [province, setProvince] = useState(null);
   const [landmarks, setLandmarks] = useState([]);
@@ -39,12 +42,20 @@ export default function ProvincePage() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [expandedLandmarks, setExpandedLandmarks] = useState(false);
   const [user, setUser] = useState(null);
+  const [showUnboxing, setShowUnboxing] = useState(false);
 
   useEffect(() => {
     setUser(getUser());
     load();
+
+    if (
+      searchParams?.get("unboxing") === "true" ||
+      searchParams?.get("claimed") === "true"
+    ) {
+      setShowUnboxing(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+  }, [slug, searchParams]);
 
   const load = async () => {
     setLoading(true);
@@ -53,6 +64,8 @@ export default function ProvincePage() {
       const res = await provinceAPI.getOne(slug);
       setProvince(res.province);
       setLandmarks(res.landmarks || []);
+      // Ghi nhận lượt xem thực tế (tự động lọc bot ở backend)
+      analyticsAPI.track(window.location.pathname, slug).catch(() => {});
     } catch (err) {
       setNotFound(true);
     } finally {
@@ -145,45 +158,67 @@ export default function ProvincePage() {
         </div>
       </nav>
 
-      {/* Hero tỉnh — background/color giữ inline vì phụ thuộc ảnh của
-          từng tỉnh (province.thumbnail_url), phần còn lại nằm ở
-          styles/province.css (.province-hero) */}
-      <section
-        className="province-hero"
-        style={{
-          background: hasImage
-            ? `linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)), url(${province.thumbnail_url}) center/cover`
-            : "linear-gradient(135deg, #fff1eb 0%, #fafafa 100%)",
-          color: hasImage ? "#fff" : "var(--text-primary)",
-        }}
-      >
-        <div className="container">
-          <span
-            className={`badge badge-primary ${hasImage ? "province-hero__badge--overlay" : ""}`}
-          >
-            {REGION_LABEL[province.region] || province.region}
-          </span>
-          <h1 className="province-hero__title">{province.name}</h1>
-          {province.description && (
-            <p
-              className={`province-hero__desc ${hasImage ? "province-hero__desc--overlay" : "province-hero__desc--plain"}`}
-            >
-              {province.description}
-            </p>
-          )}
+      {/* Premium Hero Banner */}
+      <section className="province-hero-wrap">
+        <div
+          className="province-hero-banner"
+          style={{
+            background: hasImage
+              ? `linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(30,41,59,0.75) 100%), url(${province.thumbnail_url}) center/cover`
+              : "linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #e85d04 100%)",
+          }}
+        >
+          <div className="container province-hero-inner">
+            <div className="province-hero-content">
+              <div className="province-hero-badges">
+                <span className="province-badge-region">
+                  <span className="province-badge-dot" />
+                  {REGION_LABEL[province.region] || province.region}
+                </span>
+                <span className="province-badge-nfc">⭐ NFC VinaTap 34 Tỉnh Thành</span>
+              </div>
 
-          <div className="province-hero__stats">
-            <span>👥 {formatNumber(province.population)} dân</span>
-            <span>📐 {formatNumber(province.area_km2)} km²</span>
+              <h1 className="province-hero-title">{province.name}</h1>
+
+              {province.description && (
+                <p className="province-hero-desc">{province.description}</p>
+              )}
+
+              <div className="province-hero-stats">
+                <div className="province-stat-chip">
+                  <span>👥</span> {formatNumber(province.population)} dân
+                </div>
+                <div className="province-stat-chip">
+                  <span>📐</span> {formatNumber(province.area_km2)} km²
+                </div>
+                <div className="province-stat-chip">
+                  <span>📍</span> {landmarks.length} danh thắng
+                </div>
+              </div>
+
+              <div className="province-hero-actions">
+                <Link
+                  href="/activate"
+                  className="btn btn-primary province-btn-hero-primary"
+                >
+                  🔑 Kích hoạt mảnh ghép {province.name}
+                </Link>
+                <button
+                  type="button"
+                  className="btn province-btn-hero-secondary"
+                  onClick={() => setShowUnboxing(true)}
+                >
+                  🏆 Xem Mảnh Ghép NFC 3D
+                </button>
+              </div>
+            </div>
           </div>
-
-          <Link href="/activate" className="btn btn-primary province-hero__cta">
-            🔑 Kích hoạt mảnh ghép {province.name}
-          </Link>
         </div>
       </section>
 
       <div className="container province-content">
+        {/* Audio Guide Thuyết Minh Du Lịch AI */}
+        <ProvinceAudioPlayer province={province} landmarks={landmarks} />
         {/* Đặc sản / lễ hội */}
         {specialtiesList.length > 0 && (
           <div className="province-section">
@@ -323,6 +358,14 @@ export default function ProvincePage() {
           )}
         </div>
       </div>
+
+      {/* NFC Unboxing Celebration Modal */}
+      {showUnboxing && (
+        <ProvinceUnboxingModal
+          province={province}
+          onClose={() => setShowUnboxing(false)}
+        />
+      )}
     </>
   );
 }

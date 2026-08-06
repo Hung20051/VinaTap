@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Plus, Search, Download, Trash2, X } from "lucide-react";
-import { manualSaleAPI, productAPI } from "../../../lib/api";
+import { manualSaleAPI, provinceAPI } from "@/lib/api";
 import { getToken } from "../../../lib/auth";
 import "./AdminRevenue.css";
 
@@ -38,10 +38,58 @@ export default function AdminRevenue() {
 
   const loadProducts = async () => {
     try {
-      const res = await productAPI.getAll();
-      setProducts(res.products);
-    } catch {
-      // im lặng — không chặn trang nếu lỗi tải sản phẩm, chỉ dropdown rỗng
+      const provRes = await provinceAPI.getAll(true);
+      const provList = provRes.provinces || [];
+
+      const presetCombos = [
+        {
+          id: "combo-full",
+          name: "Bộ Combo 34 Tỉnh Thành VinaTap (Full Box)",
+          default_price: 4500000,
+          category: "Combo",
+        },
+        {
+          id: "combo-10",
+          name: "Bộ Combo 10 Tỉnh Thành Du Lịch Nổi Bật",
+          default_price: 1400000,
+          category: "Combo",
+        },
+        {
+          id: "combo-north",
+          name: "Bộ Combo 5 Tỉnh Thành Miền Bắc",
+          default_price: 700000,
+          category: "Combo",
+        },
+        {
+          id: "combo-central",
+          name: "Bộ Combo 5 Tỉnh Thành Miền Trung",
+          default_price: 700000,
+          category: "Combo",
+        },
+        {
+          id: "combo-south",
+          name: "Bộ Combo 5 Tỉnh Thành Miền Nam",
+          default_price: 700000,
+          category: "Combo",
+        },
+        {
+          id: "custom-piece",
+          name: "Thẻ Mảnh Lẻ NFC Tự Chọn (150.000đ)",
+          default_price: 150000,
+          category: "Combo",
+        },
+      ];
+
+      const provincePieces = provList.map((p) => ({
+        id: `prov-${p.id}`,
+        name: `Thẻ Mảnh Lẻ NFC ${p.name}`,
+        default_price: 150000,
+        category: "Tỉnh Thành",
+      }));
+
+      setProducts([...presetCombos, ...provincePieces]);
+    } catch (err) {
+      console.error("loadProducts error:", err);
     }
   };
 
@@ -98,13 +146,14 @@ export default function AdminRevenue() {
       return showToast("Đơn giá không hợp lệ", "error");
 
     try {
+      const isNumericId = form.product_id && !isNaN(form.product_id);
       const body = {
-        product_id: form.product_id || null,
+        product_id: isNumericId ? Number(form.product_id) : null,
         product_name_snapshot: form.product_name_snapshot.trim(),
         unit_price: Number(form.unit_price),
         quantity: Number(form.quantity),
         buyer_name: form.buyer_name.trim(),
-        note: form.note.trim() || null,
+        note: form.note ? form.note.trim() : null,
       };
 
       if (editingId) {
@@ -266,17 +315,30 @@ export default function AdminRevenue() {
 
             <form onSubmit={handleSubmit} className="admin-rev-form">
               <label className="admin-rev-field">
-                <span>Sản phẩm</span>
+                <span>Sản Phẩm NFC / Combo</span>
                 <select
                   value={form.product_id}
                   onChange={(e) => handleProductChange(e.target.value)}
                 >
                   <option value="">— Nhập tên tự do bên dưới —</option>
-                  {products.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name} ({formatVND(p.default_price)})
-                    </option>
-                  ))}
+                  <optgroup label="📦 GÓI COMBO VINATAP">
+                    {products
+                      .filter((p) => p.category === "Combo")
+                      .map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name} — {formatVND(p.default_price)}
+                        </option>
+                      ))}
+                  </optgroup>
+                  <optgroup label="🗺️ 34 MẢNH LẺ NFC TỈNH THÀNH">
+                    {products
+                      .filter((p) => p.category === "Tỉnh Thành")
+                      .map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.name} — {formatVND(p.default_price)}
+                        </option>
+                      ))}
+                  </optgroup>
                 </select>
               </label>
 
