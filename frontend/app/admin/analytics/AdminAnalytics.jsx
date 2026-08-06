@@ -12,7 +12,7 @@ import {
   MapPin,
   Filter,
 } from "lucide-react";
-import { analyticsAPI } from "@/lib/api";
+import { analyticsAPI, getBaseUrl } from "../../../lib/api";
 import "./AdminAnalytics.css";
 
 export default function AdminAnalytics() {
