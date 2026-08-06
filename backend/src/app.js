@@ -13,30 +13,14 @@ const app = express();
 // tránh chặn nhầm response — CSP nên cấu hình ở tầng frontend/CDN thay vì
 // ở đây.
 app.use(helmet({ contentSecurityPolicy: false }));
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://vinatap.vercel.app",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
-
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or server-to-server)
-      if (!origin) return callback(null, true);
-      if (
-        allowedOrigins.includes(origin) ||
-        origin.endsWith(".vercel.app") ||
-        origin.includes("localhost")
-      ) {
-        return callback(null, true);
-      }
-      return callback(null, true);
-    },
+    origin: true,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
   }),
 );
-app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize()); // không dùng session
