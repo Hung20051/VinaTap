@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import { getUser, requireAuth, isAdmin, clearAuth } from "../../lib/auth";
-import { LayoutDashboard, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, ShieldCheck, ShoppingBag } from "lucide-react";
 import { t } from "../../lib/i18n";
 import { getLang } from "../../lib/prefs";
 
@@ -22,6 +23,7 @@ export default function CustomerLayout({ children }) {
   });
 
   const [mounted, setMounted] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -57,6 +59,11 @@ export default function CustomerLayout({ children }) {
       icon: <LayoutDashboard size={20} />,
       label: t(lang, "collection"),
     },
+    {
+      href: "/shop",
+      icon: <ShoppingBag size={20} />,
+      label: "Cửa Hàng Thẻ NFC",
+    },
     ...(mounted && isAdmin()
       ? [
           {
@@ -69,15 +76,21 @@ export default function CustomerLayout({ children }) {
   ];
 
   return (
-    <div className="app-shell">
+    <div className="app-shell-vertical">
+      <Header
+        isDrawerOpen={drawerOpen}
+        onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
+      />
       <Sidebar
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
         navItems={navItems}
         user={user}
         lang={lang}
         roleLabel={mounted && isAdmin() ? t(lang, "admin") : t(lang, "account")}
         onLogout={handleLogout}
       />
-      <div className="admin-content">{children}</div>
+      <main className="app-main-content">{children}</main>
     </div>
   );
 }

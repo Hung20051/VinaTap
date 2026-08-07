@@ -1,0 +1,243 @@
+/* ─── VOUCHER WALLET MODAL ─────────────────────────────────── */
+
+.voucher-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.voucher-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  color: #0f172a;
+}
+
+.voucher-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: #f1f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.voucher-modal-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.voucher-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.v-header-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(234, 88, 12, 0.15);
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.voucher-modal-header h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.voucher-toast-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.voucher-toast-banner strong {
+  font-size: 0.95rem;
+}
+
+.voucher-toast-banner p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.voucher-redeem-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.redeem-input-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.redeem-input-wrap .r-icon {
+  position: absolute;
+  left: 14px;
+  color: #ea580c;
+}
+
+.redeem-input-wrap input {
+  width: 100%;
+  padding: 10px 14px 10px 42px;
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ea580c;
+  outline: none;
+}
+
+.redeem-input-wrap input:focus {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+}
+
+.btn-redeem {
+  padding: 0 20px;
+  background: #ea580c;
+  border: none;
+  color: #ffffff;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-redeem:hover {
+  background: #c2410c;
+}
+
+/* List */
+.v-list-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #64748b;
+  margin-bottom: 1rem;
+
+}
+
+.v-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.v-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.v-card {
+  display: flex;
+  border: 1px dashed #fdba74;
+  background: #fff7ed;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.v-card-left {
+  width: 120px;
+  background: #ffedd5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-right: 1px dashed #fdba74;
+}
+
+.v-discount-badge {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ea580c;
+}
+
+.v-code-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #c2410c;
+  background: #ffffff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.v-card-right {
+  flex: 1;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.v-card-right strong {
+  font-size: 0.88rem;
+  color: #0f172a;
+}
+
+.v-card-right p {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 2px 0 6px;
+}
+
+.btn-use-voucher {
+  align-self: flex-start;
+  background: #ea580c;
+  border: none;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-use-voucher:hover {
+  background: #c2410c;
+}

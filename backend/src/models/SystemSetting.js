@@ -22,6 +22,10 @@ class SystemSetting {
         combo_34_price: "4500000",
         shipping_fee: "30000",
         free_shipping_min: "500000",
+        bank_id: "MBBANK",
+        bank_name: "MBBank (NH Quân Đội)",
+        bank_account_no: "0813607311",
+        bank_account_name: "VINATAP VIETNAM CO LTD",
         ai_caption_prompt:
           "Bạn là trợ lý du lịch Việt Nam. Hãy viết 1 caption ngắn gọn, cảm xúc bằng tiếng Việt (tối đa 2 câu) mô tả bức ảnh du lịch này. Chỉ trả về caption, không thêm gì khác.",
         maintenance_mode: "false",

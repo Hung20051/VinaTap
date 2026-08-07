@@ -314,3 +314,56 @@
   z-index: 1000;
   pointer-events: none;
 }
+
+/* ─── OFF-CANVAS SLIDE DRAWER (GITHUB STYLE) ─── */
+.app-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.app-sidebar-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: #0f172a;
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3);
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-sidebar-drawer.is-open {
+  transform: translateX(0);
+}
+
+/* ─── VERTICAL APP SHELL (GITHUB-STYLE TOP HEADER) ─── */
+.app-shell-vertical {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.app-main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 1.5rem;
+}
+
+

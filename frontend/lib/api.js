@@ -207,6 +207,38 @@ export const albumAPI = {
     }),
   revokeAccess: (id, shareId) =>
     request(`/albums/${id}/share/${shareId}`, { method: "DELETE" }),
+
+  // Admin
+  getAdminStats: () => request("/albums/admin/stats"),
+  getAdminList: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
+    ).toString();
+    return request(`/albums/admin/list${qs ? `?${qs}` : ""}`);
+  },
+  updateAdminStatus: (id, body) =>
+    request(`/albums/admin/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+    }),
+};
+
+// ─── NOTIFICATIONS ────────────────────────────────────────────
+export const notificationAPI = {
+  getMy: () => request("/notifications/my"),
+  markAsRead: (notificationId) =>
+    request("/notifications/read", {
+      method: "POST",
+      body: JSON.stringify({ notificationId }),
+    }),
+  sendAdmin: (body) =>
+    request("/notifications/admin/send", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  getAdminSentHistory: () => request("/notifications/admin/sent"),
+  deleteAdmin: (id) =>
+    request(`/notifications/admin/${id}`, { method: "DELETE" }),
 };
 
 // ─── MEDIA ────────────────────────────────────────────────────
@@ -372,4 +404,47 @@ export const analyticsAPI = {
     }),
   getStats: (timeframe = "7days") =>
     request(`/analytics/stats?timeframe=${timeframe}`),
+};
+
+// ─── ORDERS & E-COMMERCE CHECKOUT ──────────────────────────────
+export const orderAPI = {
+  create: (body) =>
+    request("/orders", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  getMyOrders: () => request("/orders/my"),
+  getAdminOrders: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
+    ).toString();
+    return request(`/orders/admin/all${qs ? `?${qs}` : ""}`);
+  },
+  updateStatus: (id, status) =>
+    request(`/orders/admin/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
+  checkStatus: (orderCode) => request(`/orders/check-status/${orderCode}`),
+};
+
+// ─── VOUCHERS & PROMOTIONS ─────────────────────────────────────
+export const voucherAPI = {
+  getMyWallet: () => request("/vouchers/my-wallet"),
+  redeemCode: (code) =>
+    request("/vouchers/redeem", {
+      method: "POST",
+      body: JSON.stringify({ code }),
+    }),
+  getAdminList: () => request("/vouchers"),
+  createAdmin: (body) =>
+    request("/vouchers", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  sendToUsers: (body) =>
+    request("/vouchers/send", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
 };

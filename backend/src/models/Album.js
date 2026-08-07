@@ -2,7 +2,6 @@ const db = require("../config/db");
 
 const Album = {
   // Tìm album theo nfc_card_id
-  // Schema v2.0: albums không còn cột province_id -> lấy tỉnh qua nfc_cards
   async findByNfcCard(nfc_card_id) {
     const [rows] = await db.execute(
       `SELECT a.*, nc.province_id, p.name AS province_name, p.slug AS province_slug,
@@ -21,7 +20,6 @@ const Album = {
   },
 
   // Tìm album theo id
-  // Schema v2.0: albums không còn cột province_id -> lấy tỉnh qua nfc_cards
   async findById(id) {
     const [rows] = await db.execute(
       `SELECT a.*, nc.province_id, p.name AS province_name, p.slug AS province_slug,
@@ -40,7 +38,6 @@ const Album = {
   },
 
   // Lấy tất cả album của 1 user
-  // Schema v2.0: albums không còn cột province_id -> lấy tỉnh qua nfc_cards
   async findByOwner(owner_id) {
     const [rows] = await db.execute(
       `SELECT a.*, p.name AS province_name, p.thumbnail_url AS province_thumbnail,
@@ -56,10 +53,6 @@ const Album = {
   },
 
   // Tạo album mới
-  // is_public mặc định = 1: ai chạm thẻ NFC vào cũng xem được album ngay,
-  // không cần đăng nhập. Chủ album có thể tự chuyển sang riêng tư sau (update()).
-  // Schema v2.0: albums không còn cột province_id (lấy tỉnh qua nfc_card_id
-  // để tránh 2 nguồn dữ liệu lệch nhau) -> không insert cột này nữa.
   async create({ nfc_card_id, owner_id, title }) {
     const [result] = await db.execute(
       `INSERT INTO albums (nfc_card_id, owner_id, title, is_public, status)
@@ -69,9 +62,7 @@ const Album = {
     return result.insertId;
   },
 
-  // Kiểm tra user có quyền SỬA album không (chủ album hoặc cộng tác viên
-  // đã được duyệt quyền 'edit'). Dùng chung cho mọi thao tác ghi:
-  // tag, sticker, media... để tránh lặp lại logic phân quyền ở nhiều nơi.
+  // Kiểm tra user có quyền SỬA album không
   async canEdit(albumId, userId) {
     const [rows] = await db.execute(
       `SELECT a.id
@@ -118,6 +109,151 @@ const Album = {
   // Xóa mềm
   async delete(id) {
     await db.execute(`UPDATE albums SET status = 'deleted' WHERE id = ?`, [id]);
+  },
+
+  // ─── ADMIN FUNCTIONS (PRIVACY-FIRST METADATA) ────────────────
+
+  // Thống kê tài nguyên & số lượng album cho Admin
+  async getAdminStats() {
+    let totalAlbumsCount = 0;
+    let privateAlbumsCount = 0;
+    let publicAlbumsCount = 0;
+    let photosCount = 0;
+    let videosCount = 0;
+
+    try {
+      const [res] = await db.execute(
+        `SELECT COUNT(*) AS count FROM albums WHERE status != 'deleted'`,
+      );
+      totalAlbumsCount = res[0]?.count || 0;
+    } catch (e) {}
+
+    try {
+      const [res] = await db.execute(
+        `SELECT COUNT(*) AS count FROM albums WHERE is_public = 0 AND status != 'deleted'`,
+      );
+      privateAlbumsCount = res[0]?.count || 0;
+    } catch (e) {}
+
+    try {
+      const [res] = await db.execute(
+        `SELECT COUNT(*) AS count FROM albums WHERE is_public = 1 AND status != 'deleted'`,
+      );
+      publicAlbumsCount = res[0]?.count || 0;
+    } catch (e) {}
+
+    try {
+      const [res] = await db.execute(
+        `SELECT COUNT(*) AS count FROM album_media WHERE media_type = 'photo' AND status = 'active'`,
+      );
+      photosCount = res[0]?.count || 0;
+    } catch (e) {}
+
+    try {
+      const [res] = await db.execute(
+        `SELECT COUNT(*) AS count FROM album_media WHERE media_type = 'video' AND status = 'active'`,
+      );
+      videosCount = res[0]?.count || 0;
+    } catch (e) {}
+
+    // Kích thước ước tính: photo ~ 2MB, video ~ 15MB
+    const estimatedBytes = photosCount * 2097152 + videosCount * 15728640;
+
+    return {
+      total_albums: Number(totalAlbumsCount),
+      private_albums: Number(privateAlbumsCount),
+      public_albums: Number(publicAlbumsCount),
+      total_photos: Number(photosCount),
+      total_videos: Number(videosCount),
+      estimated_bytes: Number(estimatedBytes),
+    };
+  },
+
+  // Lấy danh sách album cho Admin (chỉ lấy Metadata, không lấy file_url riêng tư)
+  async getAdminList({ search, status, privacy, page = 1, limit = 20 }) {
+    let whereClauses = [];
+    let params = [];
+
+    if (status && status !== "all") {
+      whereClauses.push("a.status = ?");
+      params.push(status);
+    } else {
+      whereClauses.push("a.status != 'deleted'");
+    }
+
+    if (privacy === "private") {
+      whereClauses.push("a.is_public = 0");
+    } else if (privacy === "public") {
+      whereClauses.push("a.is_public = 1");
+    }
+
+    if (search) {
+      whereClauses.push(
+        "(a.title LIKE ? OR u.name LIKE ? OR p.name LIKE ? OR nc.serial_code LIKE ?)",
+      );
+      const term = `%${search}%`;
+      params.push(term, term, term, term);
+    }
+
+    const whereSql = whereClauses.length
+      ? `WHERE ${whereClauses.join(" AND ")}`
+      : "";
+    const limitNum = Number(limit) || 20;
+    const offsetNum = (Number(page) - 1) * limitNum;
+
+    const [rows] = await db.execute(
+      `SELECT a.id, a.title, a.description, a.is_public, a.view_count, a.status, a.created_at, a.updated_at,
+              u.id AS owner_id, u.name AS owner_name, u.email AS owner_email,
+              p.id AS province_id, p.name AS province_name, p.slug AS province_slug,
+              nc.serial_code,
+              (SELECT COUNT(*) FROM album_media m WHERE m.album_id = a.id AND m.status = 'active' AND m.media_type = 'photo') AS photo_count,
+              (SELECT COUNT(*) FROM album_media m WHERE m.album_id = a.id AND m.status = 'active' AND m.media_type = 'video') AS video_count
+       FROM albums a
+       JOIN nfc_cards nc ON nc.id = a.nfc_card_id
+       JOIN provinces p  ON p.id  = nc.province_id
+       JOIN users u      ON u.id  = a.owner_id
+       ${whereSql}
+       ORDER BY a.created_at DESC
+       LIMIT ${limitNum} OFFSET ${offsetNum}`,
+      params,
+    );
+
+    const [countRows] = await db.execute(
+      `SELECT COUNT(*) AS count
+       FROM albums a
+       JOIN nfc_cards nc ON nc.id = a.nfc_card_id
+       JOIN provinces p  ON p.id  = nc.province_id
+       JOIN users u      ON u.id  = a.owner_id
+       ${whereSql}`,
+      params,
+    );
+
+    return {
+      albums: rows || [],
+      total: Number(countRows[0]?.count || 0),
+      page: Number(page),
+      limit: limitNum,
+    };
+  },
+
+  // Cập nhật trạng thái Admin (Toggle is_public hoặc status)
+  async updateAdminStatus(id, { is_public, status }) {
+    const updates = [];
+    const params = [];
+    if (is_public !== undefined) {
+      updates.push("is_public = ?");
+      params.push(is_public ? 1 : 0);
+    }
+    if (status !== undefined) {
+      updates.push("status = ?");
+      params.push(status);
+    }
+    if (!updates.length) return;
+    params.push(id);
+    await db.execute(
+      `UPDATE albums SET ${updates.join(", ")} WHERE id = ?`,
+      params,
+    );
   },
 };
 

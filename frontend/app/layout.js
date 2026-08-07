@@ -1,26 +1,16 @@
-import TrafficTracker from "../components/TrafficTracker";
 import "../styles/globals.css";
-import "../styles/admin-shell.css";
-import "../styles/sidebar.css";
-import "../styles/settings-shell.css";
-import "../styles/skeleton.css";
+import TrafficTracker from "../components/TrafficTracker";
 
 export const metadata = {
-  title: "VinaTap — Bản đồ Du lịch NFC Việt Nam",
+  title: "VinaTap — Bản Đồ Du Lịch NFC Việt Nam",
   description:
-    "Sưu tầm 34 tỉnh thành, lưu giữ kỷ niệm chuyến đi bằng công nghệ NFC",
-  icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-  },
+    "Bộ sưu tập 34 mảnh ghép tỉnh thành Việt Nam qua thẻ NFC và album ảnh kỷ niệm du lịch.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="vi" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang="vi" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

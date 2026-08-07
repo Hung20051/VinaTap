@@ -218,6 +218,41 @@ const deleteTag = async (req, res) => {
   }
 };
 
+// ─── ADMIN FUNCTIONS ─────────────────────────────────────────
+// GET /api/albums/admin/stats
+const getAdminStats = async (req, res) => {
+  try {
+    const stats = await Album.getAdminStats();
+    res.json({ stats });
+  } catch (err) {
+    console.error("getAdminStats:", err);
+    res.status(500).json({ message: "Lỗi thống kê album" });
+  }
+};
+
+// GET /api/albums/admin/list
+const getAdminList = async (req, res) => {
+  try {
+    const data = await Album.getAdminList(req.query);
+    res.json(data);
+  } catch (err) {
+    console.error("getAdminList:", err);
+    res.status(500).json({ message: "Lỗi nạp danh sách album" });
+  }
+};
+
+// PATCH /api/albums/admin/:id/status
+const updateAdminStatus = async (req, res) => {
+  try {
+    const { is_public, status } = req.body;
+    await Album.updateAdminStatus(req.params.id, { is_public, status });
+    res.json({ message: "Cập nhật trạng thái album thành công" });
+  } catch (err) {
+    console.error("updateAdminStatus:", err);
+    res.status(500).json({ message: "Lỗi cập nhật album" });
+  }
+};
+
 module.exports = {
   createAlbum,
   getAlbum,
@@ -226,4 +261,7 @@ module.exports = {
   deleteAlbum,
   createTag,
   deleteTag,
+  getAdminStats,
+  getAdminList,
+  updateAdminStatus,
 };

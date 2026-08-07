@@ -9,6 +9,9 @@ const {
   deleteAlbum,
   createTag,
   deleteTag,
+  getAdminStats,
+  getAdminList,
+  updateAdminStatus,
 } = require("../controllers/albumController");
 const {
   requestEdit,
@@ -16,8 +19,13 @@ const {
   revokeAccess,
   getCollaborators,
 } = require("../controllers/shareController");
-const { protect } = require("../middleware/auth");
+const { protect, requireAdmin } = require("../middleware/auth");
 const { optionalAuth } = require("../middleware/auth");
+
+// Admin Routes (Privacy-First Metadata)
+router.get("/admin/stats", protect, requireAdmin, getAdminStats);
+router.get("/admin/list", protect, requireAdmin, getAdminList);
+router.patch("/admin/:id/status", protect, requireAdmin, updateAdminStatus);
 
 // Albums
 router.post("/", protect, createAlbum);

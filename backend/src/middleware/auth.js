@@ -65,4 +65,13 @@ const optionalAuth = async (req, res, next) => {
   next();
 };
 
-module.exports = { protect, optionalAuth };
+const requireAdmin = (req, res, next) => {
+  if (req.user?.role !== "admin") {
+    return res
+      .status(403)
+      .json({ message: "Yêu cầu quyền Quản trị viên (Admin)" });
+  }
+  next();
+};
+
+module.exports = { protect, optionalAuth, requireAdmin };

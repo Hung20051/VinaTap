@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Header from "../../components/Header";
 import AdminSidebar from "../../components/AdminSidebar";
 import { getUser, requireAdmin, clearAuth } from "../../lib/auth";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (!requireAdmin(router)) return;
@@ -28,9 +30,18 @@ export default function AdminLayout({ children }) {
   };
 
   return (
-    <div className="app-shell">
-      <AdminSidebar user={user} onLogout={handleLogout} />
-      <div className="admin-content">{children}</div>
+    <div className="app-shell-vertical">
+      <Header
+        isDrawerOpen={drawerOpen}
+        onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
+      />
+      <AdminSidebar
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        user={user}
+        onLogout={handleLogout}
+      />
+      <main className="app-main-content">{children}</main>
     </div>
   );
 }
