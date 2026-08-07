@@ -30,6 +30,11 @@ async function runMasterDatabaseInit() {
     await PageView.initTable();
     console.log("✅ Bảng `page_views` đã sẵn sàng!");
 
+    // 6. Khởi tạo & migration bảng PRODUCTS
+    const Product = require("../models/Product");
+    await Product.initTable();
+    console.log("✅ Bảng `products` & 4 sản phẩm mẫu đã sẵn sàng!");
+
     console.log("🎉 TOÀN BỘ MYSQL DATABASE VINA TAP ĐÃ ĐƯỢC ĐỒNG BỘ 100% THÀNH CÔNG!");
     process.exit(0);
   } catch (err) {

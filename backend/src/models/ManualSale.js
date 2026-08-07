@@ -154,28 +154,44 @@ const ManualSale = {
   // Trong khi đó AdminDashboard.jsx lại so khớp bằng key rút gọn 10 ký tự
   // "2026-07-31" -> không bao giờ trùng -> map.get() luôn undefined ->
   // chart luôn hiện "chưa có đơn bán nào" dù DB có dữ liệu thật.
+  // Tổng doanh thu theo từng ngày, trong N ngày gần nhất (GỒM CẢ ONLINE SHOP & OFFLINE MANUAL SALES)
   async getDailyRevenue(days = 30) {
     const [rows] = await db.execute(
-      `SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS date,
-              SUM(total_amount) AS revenue, SUM(quantity) AS cards_sold
-       FROM manual_sales
-       WHERE status = 'active' AND created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
-       GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d')
+      `SELECT date, SUM(revenue) AS revenue, SUM(cards_sold) AS cards_sold
+       FROM (
+         SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS date, total_amount AS revenue, quantity AS cards_sold
+         FROM manual_sales
+         WHERE status = 'active' AND created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
+         
+         UNION ALL
+         
+         SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS date, total_amount AS revenue, 1 AS cards_sold
+         FROM orders
+         WHERE status IN ('paid', 'processing', 'shipping', 'completed') AND created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
+       ) combined
+       GROUP BY date
        ORDER BY date ASC`,
-      [days],
+      [days, days],
     );
     return rows;
   },
 
-  // Tổng doanh thu + số thẻ đã bán, all-time — cho KPI card ở AdminDashboard
+  // Tổng doanh thu + số thẻ đã bán, all-time (GỒM CẢ ONLINE SHOP & OFFLINE MANUAL SALES)
   async getSummary() {
     const [rows] = await db.execute(
       `SELECT
-         COALESCE(SUM(total_amount), 0) AS total_revenue,
-         COALESCE(SUM(quantity), 0)     AS total_cards_sold,
-         COUNT(*)                       AS total_orders
-       FROM manual_sales
-       WHERE status = 'active'`,
+         (
+           (SELECT COALESCE(SUM(total_amount), 0) FROM manual_sales WHERE status = 'active') +
+           (SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE status IN ('paid', 'processing', 'shipping', 'completed'))
+         ) AS total_revenue,
+         (
+           (SELECT COALESCE(SUM(quantity), 0) FROM manual_sales WHERE status = 'active') +
+           (SELECT COALESCE(SUM(1), 0) FROM orders WHERE status IN ('paid', 'processing', 'shipping', 'completed'))
+         ) AS total_cards_sold,
+         (
+           (SELECT COUNT(*) FROM manual_sales WHERE status = 'active') +
+           (SELECT COUNT(*) FROM orders WHERE status IN ('paid', 'processing', 'shipping', 'completed'))
+         ) AS total_orders`,
     );
     return rows[0];
   },
