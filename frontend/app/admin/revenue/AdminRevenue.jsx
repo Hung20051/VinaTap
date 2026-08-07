@@ -231,38 +231,46 @@ export default function AdminRevenue() {
                     </td>
                     <td>
                       {o.status === "pending" && (
-                        <span className="badge badge-warning">Chờ thanh toán</span>
+                        <span className="badge badge-warning" style={{ background: "#fef3c7", color: "#b45309", border: "1px solid #fde68a" }}>
+                          ⏳ Chờ chuyển khoản
+                        </span>
                       )}
                       {o.status === "paid" && (
-                        <span className="badge badge-success">Đã thanh toán</span>
+                        <span className="badge badge-success" style={{ background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", fontWeight: 800 }}>
+                          ✅ Đã thanh toán
+                        </span>
                       )}
                       {o.status === "shipping" && (
-                        <span className="badge badge-blue">Đang giao hàng</span>
+                        <span className="badge badge-blue">🚚 Đang giao hàng</span>
                       )}
                       {o.status === "completed" && (
-                        <span className="badge badge-purple">Hoàn tất</span>
+                        <span className="badge badge-purple">🎉 Hoàn tất</span>
                       )}
                       {o.status === "cancelled" && (
-                        <span className="badge badge-danger">Đã hủy</span>
+                        <span className="badge badge-secondary" style={{ background: "#f1f5f9", color: "#64748b", border: "1px solid #cbd5e1" }}>
+                          🚫 Đã bỏ dở
+                        </span>
                       )}
                     </td>
                     <td>
-                      <div style={{ display: "flex", gap: "6px" }}>
+                      <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
                         {o.status === "pending" && (
                           <button
-                            className="btn btn-sm btn-success"
+                            className="btn btn-sm"
+                            style={{ background: "#f8fafc", border: "1px solid #cbd5e1", color: "#475569", fontSize: "0.75rem", padding: "4px 8px" }}
                             onClick={() => handleUpdateOrderStatus(o.id, "paid")}
-                            title="Xác nhận đã nhận tiền chuyển khoản"
+                            title="Chỉ bấm khi khách chuyển tiền nhưng gõ sai nội dung"
                           >
-                            Xác nhận chuyển khoản
+                            ⚡ Duyệt tay
                           </button>
                         )}
                         {o.status === "paid" && (
                           <button
                             className="btn btn-sm btn-primary"
+                            style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}
                             onClick={() => handleUpdateOrderStatus(o.id, "shipping")}
                           >
-                            Giao Hàng
+                            🚀 Giao Hàng
                           </button>
                         )}
                         {o.status === "shipping" && (
@@ -270,7 +278,7 @@ export default function AdminRevenue() {
                             className="btn btn-sm btn-purple"
                             onClick={() => handleUpdateOrderStatus(o.id, "completed")}
                           >
-                            Hoàn Tất
+                            ✓ Hoàn Tất
                           </button>
                         )}
                       </div>
