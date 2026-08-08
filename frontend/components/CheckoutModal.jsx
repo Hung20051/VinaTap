@@ -13,7 +13,8 @@ import {
   QrCode,
   Loader2,
 } from "lucide-react";
-import { orderAPI, voucherAPI } from "../lib/api";
+import { orderAPI, voucherAPI, shippingAPI } from "../lib/api";
+import { getUser } from "../lib/auth";
 import "./CheckoutModal.css";
 
 // 🏧 CẤU HÌNH NGÂN HÀNG CỦA BẠN ĐỂ NHẬN TIỀN THANH TOÁN VIETQR
@@ -27,6 +28,7 @@ export const BANK_CONFIG = {
 export default function CheckoutModal({
   items = [],
   initialVoucher = "",
+  shippingRule = null,
   onClose,
   onSuccess,
 }) {
@@ -40,6 +42,9 @@ export default function CheckoutModal({
   const [paymentMethod, setPaymentMethod] = useState("vietqr"); // 'vietqr' | 'cod'
   const [voucherCode, setVoucherCode] = useState(initialVoucher || "");
   const [walletVouchers, setWalletVouchers] = useState([]);
+  const [shipRule, setShipRule] = useState(
+    shippingRule || { base_fee: 30000, free_shipping_threshold: 500000 },
+  );
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [createdOrder, setCreatedOrder] = useState(null);
@@ -47,11 +52,40 @@ export default function CheckoutModal({
   const [isPaymentVerified, setIsPaymentVerified] = useState(false);
 
   useEffect(() => {
+    // 👤 TỰ ĐỘNG ĐIỀN THÔNG TIN TÀI KHOẢN NẾU ĐÃ CÓ TRONG SETTING
+    const u = getUser();
+    if (u) {
+      setShippingInfo({
+        name: u.name || "",
+        phone: u.phone || "",
+        address: u.address || "",
+        note: "",
+      });
+    }
+
     voucherAPI
       .getMyWallet()
       .then((data) => setWalletVouchers(data.myVouchers || []))
       .catch(() => setWalletVouchers([]));
-  }, []);
+
+    if (shippingRule) {
+      setShipRule(shippingRule);
+    } else {
+      shippingAPI
+        .getPublic()
+        .then((res) => {
+          if (res && res.rule) {
+            setShipRule({
+              base_fee: Number(res.rule.base_fee || 30000),
+              free_shipping_threshold: Number(
+                res.rule.free_shipping_threshold || 500000,
+              ),
+            });
+          }
+        })
+        .catch(() => {});
+    }
+  }, [shippingRule]);
 
   // 🔄 AUTO POLLING KIỂM TRA CHUYỂN KHOẢN TỰ ĐỘNG TỪ VIETQR MỖI 3 GIÂY
   useEffect(() => {
@@ -89,20 +123,43 @@ export default function CheckoutModal({
   const cleanV = voucherCode.trim().toUpperCase();
 
   if (cleanV) {
-    if (cleanV.includes("SHIP") || cleanV.includes("FREESHIP")) {
-      isFreeshipVoucher = true;
-      discount = 0;
-    } else if (cleanV.includes("VINATAP2026") || cleanV.includes("20")) {
-      discount = Math.round(subtotal * 0.2);
-    } else if (cleanV.includes("50") || cleanV.includes("VIP")) {
-      discount = Math.round(subtotal * 0.5);
+    // 🎟️ Tìm Voucher chính xác trong Ví để tính tiền theo đúng Loại giảm giá (Percent / Amount / Freeship)
+    const selectedVoucher = walletVouchers.find(
+      (v) => (v.code || "").trim().toUpperCase() === cleanV,
+    );
+
+    if (selectedVoucher) {
+      if (selectedVoucher.discount_type === "freeship") {
+        isFreeshipVoucher = true;
+        discount = 0;
+      } else if (selectedVoucher.discount_type === "percent") {
+        discount = Math.round(
+          subtotal * (Number(selectedVoucher.discount_value || 0) / 100),
+        );
+        if (selectedVoucher.max_discount_amount) {
+          discount = Math.min(
+            discount,
+            Number(selectedVoucher.max_discount_amount),
+          );
+        }
+      } else if (selectedVoucher.discount_type === "amount") {
+        discount = Number(selectedVoucher.discount_value || 0);
+      }
     } else {
-      discount = 30000;
+      // Fallback cho các trường hợp đặc biệt
+      if (cleanV.includes("SHIP") || cleanV.includes("FREESHIP")) {
+        isFreeshipVoucher = true;
+        discount = 0;
+      } else if (cleanV.includes("VINATAP2026")) {
+        discount = Math.round(subtotal * 0.2);
+      }
     }
   }
 
   discount = Math.min(discount, subtotal);
-  const shippingFee = subtotal >= 500000 || isFreeshipVoucher ? 0 : 30000;
+  const baseFee = Number(shipRule?.base_fee ?? 30000);
+  const freeThreshold = Number(shipRule?.free_shipping_threshold ?? 500000);
+  const shippingFee = subtotal >= freeThreshold || isFreeshipVoucher ? 0 : baseFee;
   const totalAmount = Math.max(0, subtotal - discount + shippingFee);
 
   const handleSubmitOrder = async (e) => {
@@ -302,40 +359,35 @@ export default function CheckoutModal({
                 </div>
 
                 <div className="voucher-section">
-                  <label>Mã Giảm Giá Voucher (Trong Ví Của Bạn)</label>
-                  <div className="voucher-input-group">
-                    <Ticket size={16} className="v-icon" />
-                    <input
-                      type="text"
-                      placeholder="Nhập mã (VD: VINATAP2026)"
-                      value={voucherCode}
-                      onChange={(e) => setVoucherCode(e.target.value)}
-                    />
-                  </div>
-                  {walletVouchers.length > 0 && (
-                    <div style={{ marginTop: "6px" }}>
-                      <select
-                        style={{
-                          width: "100%",
-                          padding: "6px 10px",
-                          borderRadius: "8px",
-                          border: "1px solid #cbd5e1",
-                          fontSize: "0.82rem",
-                          color: "#0f172a",
-                        }}
-                        value={voucherCode}
-                        onChange={(e) => setVoucherCode(e.target.value)}
-                      >
-                        <option value="">
-                          -- Chọn Voucher Đã Có Trong Ví --
-                        </option>
-                        {walletVouchers.map((v) => (
-                          <option key={v.code} value={v.code}>
-                            🎟️ {v.code} ({v.title} - {v.discountText})
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                  <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
+                    <Ticket size={16} style={{ color: "#ea580c" }} /> Mã Giảm Giá Voucher (Trong Ví Của Bạn):
+                  </label>
+                  <select
+                    style={{
+                      width: "100%",
+                      padding: "10px 14px",
+                      borderRadius: "10px",
+                      border: "1px solid #cbd5e1",
+                      fontSize: "0.9rem",
+                      fontWeight: 600,
+                      color: "#0f172a",
+                      background: "#ffffff",
+                      cursor: "pointer",
+                    }}
+                    value={voucherCode}
+                    onChange={(e) => setVoucherCode(e.target.value)}
+                  >
+                    <option value="">-- Không sử dụng Voucher --</option>
+                    {walletVouchers.map((v) => (
+                      <option key={v.code} value={v.code}>
+                        🎟️ {v.code} ({v.title} - {v.discountText})
+                      </option>
+                    ))}
+                  </select>
+                  {walletVouchers.length === 0 && (
+                    <span style={{ display: "block", fontSize: "0.78rem", color: "#94a3b8", marginTop: "4px" }}>
+                      * Bạn hiện chưa có mã Voucher nào khả dụng trong Ví cá nhân.
+                    </span>
                   )}
                 </div>
 

@@ -483,15 +483,15 @@ export default function AdminRevenue() {
                     setForm({
                       ...form,
                       product_id: pid || "",
-                      product_name_snapshot: selectedP ? selectedP.name : form.product_name_snapshot,
-                      unit_price: selectedP ? selectedP.default_price : form.unit_price,
+                      product_name_snapshot: selectedP ? selectedP.name : (form.product_name_snapshot || ""),
+                      unit_price: selectedP ? (selectedP.price ?? selectedP.default_price ?? "") : (form.unit_price ?? ""),
                     });
                   }}
                 >
                   <option value="">-- Chọn sản phẩm có sẵn --</option>
                   {products.map((p) => (
                     <option key={p.id} value={p.id}>
-                      {p.name} ({formatVND(p.default_price)})
+                      {p.name} ({formatVND(p.price ?? p.default_price ?? 0)})
                     </option>
                   ))}
                 </select>
@@ -506,7 +506,7 @@ export default function AdminRevenue() {
                   required
                   placeholder="VD: Thẻ NFC Gỗ 3D Hà Nội..."
                   style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-                  value={form.product_name_snapshot}
+                  value={form.product_name_snapshot ?? ""}
                   onChange={(e) => setForm({ ...form, product_name_snapshot: e.target.value })}
                 />
               </div>
@@ -522,7 +522,7 @@ export default function AdminRevenue() {
                     min="0"
                     placeholder="VD: 150000"
                     style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-                    value={form.unit_price}
+                    value={form.unit_price ?? ""}
                     onChange={(e) => setForm({ ...form, unit_price: e.target.value })}
                   />
                 </div>
@@ -537,7 +537,7 @@ export default function AdminRevenue() {
                     min="1"
                     placeholder="1"
                     style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-                    value={form.quantity}
+                    value={form.quantity ?? ""}
                     onChange={(e) => setForm({ ...form, quantity: e.target.value })}
                   />
                 </div>
@@ -552,7 +552,7 @@ export default function AdminRevenue() {
                   required
                   placeholder="VD: Nguyễn Văn A (Đại lý Đà Nẵng)..."
                   style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-                  value={form.buyer_name}
+                  value={form.buyer_name ?? ""}
                   onChange={(e) => setForm({ ...form, buyer_name: e.target.value })}
                 />
               </div>
@@ -565,7 +565,7 @@ export default function AdminRevenue() {
                   rows={2}
                   placeholder="VD: Đã nhận tiền mặt 50% cọc..."
                   style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-                  value={form.note || ""}
+                  value={form.note ?? ""}
                   onChange={(e) => setForm({ ...form, note: e.target.value })}
                 />
               </div>

@@ -53,9 +53,11 @@ export default function NotificationBell() {
   }, []);
 
   const loadNotifications = async () => {
+    const currentUser = getUser();
+    if (!currentUser) return;
     try {
       const res = await notificationAPI.getMy();
-      if (res.notifications) {
+      if (res && res.notifications) {
         setNotifications(res.notifications);
         setUnreadCount(res.unreadCount || 0);
       }

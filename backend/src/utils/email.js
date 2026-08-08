@@ -41,7 +41,7 @@ const sendShareRequestEmail = async (
            style="display:inline-block;padding:10px 20px;background:#e85d04;color:#fff;border-radius:6px;text-decoration:none;margin-top:12px">
           Xem và duyệt yêu cầu
         </a>
-        <p style="color:#999;font-size:12px;margin-top:20px">VinaTap © 2025</p>
+        <p style="color:#999;font-size:12px;margin-top:20px">VinaTap © ${new Date().getFullYear()}</p>
       </div>`,
   });
 };
@@ -64,7 +64,7 @@ const sendShareApprovedEmail = async (
            style="display:inline-block;padding:10px 20px;background:#e85d04;color:#fff;border-radius:6px;text-decoration:none;margin-top:12px">
           Mở album
         </a>
-        <p style="color:#999;font-size:12px;margin-top:20px">VinaTap © 2025</p>
+        <p style="color:#999;font-size:12px;margin-top:20px">VinaTap © ${new Date().getFullYear()}</p>
       </div>`,
   });
 };
@@ -108,7 +108,7 @@ const sendOtpEmail = async (toEmail, { otp, purpose, minutes = 10 }) => {
         <p style="color:#999;font-size:12px;margin-top:20px">
           Nếu không phải bạn thực hiện yêu cầu này, vui lòng bỏ qua email.
         </p>
-        <p style="color:#999;font-size:12px">VinaTap © 2025</p>
+        <p style="color:#999;font-size:12px">VinaTap © ${new Date().getFullYear()}</p>
       </div>`,
   });
 };
@@ -142,7 +142,7 @@ const sendTransferRequestEmail = async (
         <p style="color:#999;font-size:11px;margin-top:24px">
           Nếu bạn không biết về yêu cầu này, hãy bỏ qua email này.
         </p>
-        <p style="color:#999;font-size:12px">VinaTap © 2025</p>
+        <p style="color:#999;font-size:12px">VinaTap © ${new Date().getFullYear()}</p>
       </div>`,
   });
 };
@@ -169,7 +169,7 @@ const sendTransferAcceptedEmail = async (
                   border-radius:6px;text-decoration:none;margin-top:12px">
           Xem Dashboard
         </a>
-        <p style="color:#999;font-size:12px;margin-top:20px">VinaTap © 2025</p>
+        <p style="color:#999;font-size:12px;margin-top:20px">VinaTap © ${new Date().getFullYear()}</p>
       </div>`,
   });
 };

@@ -97,6 +97,8 @@ const Notification = {
         query = `SELECT DISTINCT owner_user_id AS id FROM nfc_cards WHERE owner_user_id IS NOT NULL AND status = 'active'`;
       } else if (group_target === "unactivated_nfc") {
         query = `SELECT id FROM users WHERE id NOT IN (SELECT owner_user_id FROM nfc_cards WHERE owner_user_id IS NOT NULL)`;
+      } else if (group_target === "admin") {
+        query = `SELECT id FROM users WHERE role = 'admin'`;
       }
 
       if (query) {

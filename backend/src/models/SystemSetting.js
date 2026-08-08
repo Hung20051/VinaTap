@@ -12,16 +12,11 @@ class SystemSetting {
       });
       return settings;
     } catch (err) {
-      // Nếu chưa có bảng thì trả về cấu hình mặc định
       return {
         company_name: "VinaTap - Bản Đồ Du Lịch NFC Việt Nam",
         company_hotline: "1900 888 999",
         company_email: "support@vinatap.vn",
         company_address: "Số 108 Phố Huế, Quận Hai Bà Trưng, Hà Nội",
-        default_nfc_price: "150000",
-        combo_34_price: "4500000",
-        shipping_fee: "30000",
-        free_shipping_min: "500000",
         bank_id: "MBBANK",
         bank_name: "MBBank (NH Quân Đội)",
         bank_account_no: "0813607311",
@@ -35,7 +30,6 @@ class SystemSetting {
   }
 
   static async updateMany(settingsObj) {
-    // Đảm bảo bảng tồn tại
     await db.execute(`
       CREATE TABLE IF NOT EXISTS system_settings (
         setting_key   VARCHAR(100) NOT NULL PRIMARY KEY,

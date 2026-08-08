@@ -93,19 +93,19 @@ const Order = {
 
       // Tra cứu sản phẩm trong DB
       const [pRows] = await db.execute(
-        `SELECT id, name, default_price FROM products WHERE id = ? AND is_active = 1 LIMIT 1`,
+        `SELECT id, name, price FROM products WHERE id = ? AND is_active = 1 LIMIT 1`,
         [productId],
       );
 
-      let unitPrice = 150000; // Giá mặc định nếu là sản phẩm custom
+      let unitPrice = 150000;
       let productName = "Thẻ NFC Kỷ Niệm VinaTap";
 
       if (pRows && pRows.length > 0) {
-        unitPrice = Number(pRows[0].default_price);
+        unitPrice = Number(pRows[0].price);
         productName = pRows[0].name;
-      } else if (item.name && item.price) {
+      } else if (item.price !== undefined && item.price !== null && Number(item.price) > 0) {
         unitPrice = Number(item.price);
-        productName = item.name;
+        if (item.name) productName = item.name;
       }
 
       const itemTotal = unitPrice * quantity;
@@ -138,8 +138,13 @@ const Order = {
     // Giới hạn discount không vượt quá subtotal
     discountAmount = Math.min(discountAmount, calculatedSubtotal);
 
-    // Phí vận chuyển (Miễn phí ship cho đơn trên 500k hoặc dùng mã FREESHIP)
-    const shippingFee = calculatedSubtotal >= 500000 || isFreeshipVoucher ? 0 : 30000;
+    // Phí vận chuyển từ bảng shipping_rules (Miễn phí ship cho đơn >= mốc freeship, đơn thử nghiệm <= 5k, hoặc dùng mã FREESHIP)
+    const ShippingRule = require("./ShippingRule");
+    const shipRule = await ShippingRule.getRule();
+    const baseShipFee = Number(shipRule.base_fee || 30000);
+    const freeThreshold = Number(shipRule.free_shipping_threshold || 500000);
+
+    const shippingFee = calculatedSubtotal >= freeThreshold || calculatedSubtotal <= 5000 || isFreeshipVoucher ? 0 : baseShipFee;
 
     // Tổng tiền thanh toán cuối cùng
     const totalAmount = Math.max(0, calculatedSubtotal - discountAmount + shippingFee);
@@ -171,6 +176,48 @@ const Order = {
         note || null,
       ],
     );
+
+    // 🔔 BẮN THÔNG BÁO HỆ THỐNG KHI CÓ ĐƠN HÀNG MỚI (CẢ COD VÀ VIETQR)
+    try {
+      const Notification = require("./Notification");
+      const amountText = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(totalAmount);
+      const isCOD = paymentMethod === "cod";
+      const payMethodName = isCOD ? "Thanh toán COD khi nhận hàng" : "Chuyển khoản VietQR";
+
+      // 1. Gửi cho tất cả Admin hệ thống
+      await Notification.send({
+        recipient_type: "group",
+        group_target: "admin",
+        type: "system",
+        title: `🛒 Đơn Hàng Mới #${orderCode} (${isCOD ? "COD" : "VietQR"})`,
+        content: `Khách hàng ${recipientName} (${recipientPhone}) vừa đặt đơn hàng trị giá ${amountText}. Phương thức: ${payMethodName}.`,
+        link: "/admin/revenue",
+        payload: {
+          order_code: orderCode,
+          total_amount: totalAmount,
+          payment_method: paymentMethod,
+          recipient_name: recipientName,
+          recipient_phone: recipientPhone,
+        },
+        created_by: userId,
+      });
+
+      // 2. Gửi cho Khách hàng vừa đặt
+      if (userId) {
+        await Notification.send({
+          recipient_type: "user",
+          user_ids: [userId],
+          type: "feature",
+          title: `🎉 Đặt Hàng Thành Công #${orderCode}`,
+          content: `Cảm ơn bạn đã đặt hàng tại VinaTap! Đơn hàng trị giá ${amountText} (${payMethodName}). Shop sẽ sớm xử lý & giao tới: ${recipientAddress}.`,
+          link: "/customer/dashboard",
+          payload: { order_code: orderCode, total_amount: totalAmount },
+          created_by: 0,
+        });
+      }
+    } catch (notifErr) {
+      console.error("Lỗi gửi thông báo đơn hàng mới:", notifErr.message);
+    }
 
     return {
       id: result.insertId,

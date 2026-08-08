@@ -75,6 +75,7 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
     if (pathname.includes("/admin/users")) return { parent: "Admin", page: "Quản Lý Người Dùng" };
     if (pathname.includes("/admin/nfc-cards")) return { parent: "Admin", page: "Quản Lý Thẻ NFC" };
     if (pathname.includes("/admin/notifications")) return { parent: "Admin", page: "Trung Tâm Thông Báo" };
+    if (pathname.includes("/admin/products")) return { parent: "Admin", page: "Quản Lý Sản Phẩm & Phí Ship" };
     if (pathname.includes("/admin/revenue")) return { parent: "Admin", page: "Báo Cáo Doanh Thu" };
     if (pathname.includes("/admin/analytics")) return { parent: "Admin", page: "Phân Tích Lượt Truy Cập" };
     if (pathname.startsWith("/admin")) return { parent: "Admin", page: "Bảng Quản Trị" };

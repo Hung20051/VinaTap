@@ -46,12 +46,12 @@ const Voucher = {
   async getUserWallet(userId) {
     await this.initTable();
 
-    // Query các voucher đã có trong ví của user
+    // Query các voucher đã có trong ví của user (chỉ lấy voucher còn khả dụng)
     const [myRows] = await db.execute(
       `SELECT v.*, uv.status AS user_voucher_status, uv.assigned_at
        FROM user_vouchers uv
        JOIN vouchers v ON v.id = uv.voucher_id
-       WHERE uv.user_id = ? AND v.status = 'active'
+       WHERE uv.user_id = ? AND v.status = 'active' AND uv.status = 'available'
        ORDER BY uv.assigned_at DESC`,
       [userId],
     );
@@ -256,6 +256,27 @@ const Voucher = {
       throw new Error(`Mã Voucher "${cleanCode}" đã hết lượt sử dụng trên hệ thống`);
     }
 
+    // 🛑 KIỂM TRA NGƯỜI DÙNG ĐÃ TỪNG SỬ DỤNG MÃ NÀY CHƯA (CHỐNG DÙNG LẠI NHIỀU LẦN)
+    if (userId) {
+      // 1. Kiểm tra trong Ví người dùng
+      const [uvRows] = await db.execute(
+        `SELECT status FROM user_vouchers WHERE user_id = ? AND voucher_id = ? LIMIT 1`,
+        [userId, v.id],
+      );
+      if (uvRows.length > 0 && uvRows[0].status === "used") {
+        throw new Error(`Bạn đã sử dụng mã Voucher "${cleanCode}" cho đơn hàng trước đó rồi!`);
+      }
+
+      // 2. Kiểm tra trong lịch sử đơn hàng đã đặt
+      const [orderRows] = await db.execute(
+        `SELECT id FROM orders WHERE user_id = ? AND UPPER(voucher_code) = ? AND status != 'cancelled' LIMIT 1`,
+        [userId, cleanCode],
+      );
+      if (orderRows.length > 0) {
+        throw new Error(`Bạn đã sử dụng mã Voucher "${cleanCode}" cho đơn hàng trước đó rồi!`);
+      }
+    }
+
     let discountAmount = 0;
     let isFreeship = false;
 
@@ -271,13 +292,15 @@ const Voucher = {
       discountAmount = 0;
     }
 
-    // Tăng lượt sử dụng trong DB
+    // Tăng lượt sử dụng chung trên toàn hệ thống
     await db.execute(`UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?`, [v.id]);
 
-    // Đánh dấu đã dùng trong Ví người dùng nếu có
+    // Đánh dấu người dùng đã sử dụng mã này trong Ví cá nhân
     if (userId) {
       await db.execute(
-        `UPDATE user_vouchers SET status = 'used', used_at = NOW() WHERE user_id = ? AND voucher_id = ?`,
+        `INSERT INTO user_vouchers (user_id, voucher_id, status, used_at) 
+         VALUES (?, ?, 'used', NOW()) 
+         ON DUPLICATE KEY UPDATE status = 'used', used_at = NOW()`,
         [userId, v.id],
       );
     }

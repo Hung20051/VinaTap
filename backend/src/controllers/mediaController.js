@@ -233,23 +233,29 @@ const uploadMultipleMedia = async (req, res) => {
 // PUT /api/media/:id
 const updateMedia = async (req, res) => {
   try {
+    const mediaId = req.params.id;
+    const albumId = await getAlbumIdByMedia(mediaId);
+    if (!albumId) {
+      return res.status(404).json({ message: "Không tìm thấy media" });
+    }
+
+    const canEdit = await checkUploadPermission(albumId, req.user.id, req.user.role);
+    if (!canEdit) {
+      return res.status(403).json({ message: "Bạn không có quyền chỉnh sửa media trong album này" });
+    }
+
     const { caption_user, sort_order, taken_at } = req.body;
-    const [result] = await db.execute(
+    await db.execute(
       `UPDATE album_media
        SET caption_user = ?, sort_order = ?, taken_at = ?
-       WHERE id = ? AND uploader_id = ? AND status = 'active'`,
+       WHERE id = ? AND status = 'active'`,
       [
         caption_user || null,
         sort_order || 0,
         taken_at || null,
-        req.params.id,
-        req.user.id,
+        mediaId,
       ],
     );
-    if (!result.affectedRows)
-      return res
-        .status(404)
-        .json({ message: "Không tìm thấy media hoặc không có quyền" });
 
     res.json({ message: "Cập nhật thành công" });
   } catch (err) {
@@ -262,15 +268,21 @@ const updateMedia = async (req, res) => {
 // DELETE /api/media/:id
 const deleteMedia = async (req, res) => {
   try {
-    const [result] = await db.execute(
-      `UPDATE album_media SET status = 'deleted'
-       WHERE id = ? AND uploader_id = ? AND status = 'active'`,
-      [req.params.id, req.user.id],
+    const mediaId = req.params.id;
+    const albumId = await getAlbumIdByMedia(mediaId);
+    if (!albumId) {
+      return res.status(404).json({ message: "Không tìm thấy media" });
+    }
+
+    const canEdit = await checkUploadPermission(albumId, req.user.id, req.user.role);
+    if (!canEdit) {
+      return res.status(403).json({ message: "Bạn không có quyền xóa media trong album này" });
+    }
+
+    await db.execute(
+      `UPDATE album_media SET status = 'deleted' WHERE id = ? AND status = 'active'`,
+      [mediaId],
     );
-    if (!result.affectedRows)
-      return res
-        .status(404)
-        .json({ message: "Không tìm thấy media hoặc không có quyền" });
 
     res.json({ message: "Đã xóa" });
   } catch (err) {

@@ -1,19 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   Building2,
   Phone,
   Mail,
   MapPin,
-  Tag,
-  Truck,
   Sparkles,
   ShieldAlert,
   Save,
   RefreshCw,
-  Sliders,
-  CheckCircle,
+  Package,
+  ExternalLink,
 } from "lucide-react";
 import { systemSettingAPI } from "@/lib/api";
 import "./SystemSettings.css";
@@ -29,10 +28,6 @@ export default function SystemSettings() {
     company_hotline: "1900 888 999",
     company_email: "support@vinatap.vn",
     company_address: "Số 108 Phố Huế, Quận Hai Bà Trưng, Hà Nội",
-    default_nfc_price: "150000",
-    combo_34_price: "4500000",
-    shipping_fee: "30000",
-    free_shipping_min: "500000",
     ai_caption_prompt:
       "Bạn là trợ lý du lịch Việt Nam. Hãy viết 1 caption ngắn gọn, cảm xúc bằng tiếng Việt (tối đa 2 câu) mô tả bức ảnh du lịch này. Chỉ trả về caption, không thêm gì khác.",
     maintenance_mode: "false",
@@ -81,12 +76,18 @@ export default function SystemSettings() {
 
   return (
     <div className="admin-sets-container">
+      {toast && (
+        <div className={`admin-toast admin-toast--${toast.type}`}>
+          {toast.message}
+        </div>
+      )}
+
       {/* Top Header */}
       <div className="admin-sets-header">
         <div>
           <h1 className="admin-dash-title">⚙️ Cài Đặt Hệ Thống</h1>
           <p className="admin-dash-subtitle">
-            Cấu hình thông tin thương hiệu VinaTap, bảng giá NFC, trợ lý AI &amp; chế độ vận hành
+            Cấu hình thông tin thương hiệu VinaTap, trợ lý AI &amp; chế độ vận hành sàn
           </p>
         </div>
         <div className="admin-sets-actions">
@@ -99,14 +100,36 @@ export default function SystemSettings() {
             <RefreshCw size={16} /> Tải lại
           </button>
           <button
-            type="button"
+            type="submit"
+            form="system-settings-form"
             className="btn btn-primary"
-            onClick={handleSubmit}
             disabled={submitting}
           >
             <Save size={16} /> {submitting ? "Đang lưu..." : "Lưu Cài Đặt"}
           </button>
         </div>
+      </div>
+
+      {/* Banner thông báo chuyển trang Quản Lý Sản Phẩm */}
+      <div style={{ background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)", border: "1px solid #fed7aa", borderRadius: "14px", padding: "1.25rem 1.5rem", marginBottom: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <Package size={24} className="text-orange" />
+          <div>
+            <h4 style={{ margin: 0, fontSize: "1rem", fontWeight: 800, color: "#9a3412" }}>
+              Cài đặt Giá Sản Phẩm &amp; Phí Ship đã được tách biệt hẳn!
+            </h4>
+            <p style={{ margin: "2px 0 0 0", fontSize: "0.85rem", color: "#c2410c" }}>
+              Để sửa giá bán thực tế, giá gốc gạch đi hoặc phí vận chuyển toàn quốc, vui lòng sử dụng trang Quản Lý Sản Phẩm.
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/admin/products"
+          className="btn btn-primary"
+          style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700, display: "flex", alignItems: "center", gap: "6px" }}
+        >
+          Đến Trang Sản Phẩm <ExternalLink size={14} />
+        </Link>
       </div>
 
       {/* Tabs Navigation */}
@@ -117,13 +140,6 @@ export default function SystemSettings() {
           onClick={() => setActiveTab("general")}
         >
           <Building2 size={16} /> Thương Hiệu &amp; Liên Hệ
-        </button>
-        <button
-          type="button"
-          className={`admin-sets-tab ${activeTab === "pricing" ? "is-active" : ""}`}
-          onClick={() => setActiveTab("pricing")}
-        >
-          <Tag size={16} /> Giá NFC &amp; Vận Chuyển
         </button>
         <button
           type="button"
@@ -146,7 +162,7 @@ export default function SystemSettings() {
           <div className="spinner" />
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="admin-sets-content">
+        <form id="system-settings-form" onSubmit={handleSubmit} className="admin-sets-content">
           {/* TAB 1: Thương hiệu & Liên hệ */}
           {activeTab === "general" && (
             <div className="card admin-sets-card">
@@ -174,7 +190,7 @@ export default function SystemSettings() {
                 </label>
 
                 <label className="admin-sets-field">
-                  <span>Hotline Hỗ Trợ Khách Hàng *</span>
+                  <span>Hotline Hỗ Trợ *</span>
                   <div className="admin-sets-input-icon">
                     <Phone size={16} />
                     <input
@@ -189,7 +205,7 @@ export default function SystemSettings() {
                 </label>
 
                 <label className="admin-sets-field">
-                  <span>Email Liên Hệ / CSKH *</span>
+                  <span>Email CSKH *</span>
                   <div className="admin-sets-input-icon">
                     <Mail size={16} />
                     <input
@@ -203,8 +219,8 @@ export default function SystemSettings() {
                   </div>
                 </label>
 
-                <label className="admin-sets-field admin-sets-field--full">
-                  <span>Địa Chỉ Trụ Sở / Showroom *</span>
+                <label className="admin-sets-field">
+                  <span>Địa Chỉ Showroom / Trụ Sở *</span>
                   <div className="admin-sets-input-icon">
                     <MapPin size={16} />
                     <input
@@ -221,192 +237,78 @@ export default function SystemSettings() {
             </div>
           )}
 
-          {/* TAB 2: Bảng giá & Vận chuyển */}
-          {activeTab === "pricing" && (
-            <div className="card admin-sets-card">
-              <h3 className="admin-sets-card-title">
-                <Tag size={18} /> Bảng Giá Thẻ NFC Mặc Định &amp; Chính Sách Vận Chuyển
-              </h3>
-              <p className="admin-sets-card-sub">
-                Đơn giá gợi ý khi tạo đơn bán mới và chính sách vận chuyển trên toàn quốc
-              </p>
-
-              <div className="admin-sets-grid">
-                <label className="admin-sets-field">
-                  <span>Giá Thẻ Mảnh Lẻ NFC Mặc Định (VNĐ)</span>
-                  <div className="admin-sets-input-icon">
-                    <Tag size={16} />
-                    <input
-                      type="number"
-                      value={settings.default_nfc_price}
-                      onChange={(e) =>
-                        handleInputChange("default_nfc_price", e.target.value)
-                      }
-                    />
-                  </div>
-                  <span className="admin-sets-hint">
-                    Giá áp dụng cho 1 thẻ gỗ NFC mảnh lẻ đại diện cho 1 tỉnh thành.
-                  </span>
-                </label>
-
-                <label className="admin-sets-field">
-                  <span>Giá Trọn Bộ Combo 34 Tỉnh Thành (VNĐ)</span>
-                  <div className="admin-sets-input-icon">
-                    <Tag size={16} />
-                    <input
-                      type="number"
-                      value={settings.combo_34_price}
-                      onChange={(e) =>
-                        handleInputChange("combo_34_price", e.target.value)
-                      }
-                    />
-                  </div>
-                  <span className="admin-sets-hint">
-                    Giá trọn bộ 34 mảnh ghép VinaTap đóng hộp Fullbox.
-                  </span>
-                </label>
-
-                <label className="admin-sets-field">
-                  <span>Phí Vận Chuyển Chuẩn Toàn Quốc (VNĐ)</span>
-                  <div className="admin-sets-input-icon">
-                    <Truck size={16} />
-                    <input
-                      type="number"
-                      value={settings.shipping_fee}
-                      onChange={(e) =>
-                        handleInputChange("shipping_fee", e.target.value)
-                      }
-                    />
-                  </div>
-                </label>
-
-                <label className="admin-sets-field">
-                  <span>Hạn Mức Miễn Phí Vận Chuyển (Freeship)</span>
-                  <div className="admin-sets-input-icon">
-                    <Truck size={16} />
-                    <input
-                      type="number"
-                      value={settings.free_shipping_min}
-                      onChange={(e) =>
-                        handleInputChange("free_shipping_min", e.target.value)
-                      }
-                    />
-                  </div>
-                  <span className="admin-sets-hint">
-                    Đơn hàng từ giá trị này sẽ được miễn phí giao hàng.
-                  </span>
-                </label>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 3: AI Gemini Assistant */}
+          {/* TAB 2: AI Gemini */}
           {activeTab === "ai" && (
             <div className="card admin-sets-card">
               <h3 className="admin-sets-card-title">
-                <Sparkles size={18} /> Cấu Hình Trợ Lý AI Gemini Auto-Caption
+                <Sparkles size={18} /> Cấu Hình Trợ Lý AI Gemini
               </h3>
               <p className="admin-sets-card-sub">
-                Định hướng phong cách ngôn từ khi AI phân tích bức ảnh du lịch của khách hàng
+                Prompt mẫu điều khiển AI tự động gợi ý caption cảm xúc khi khách tải ảnh du lịch
               </p>
 
-              <label className="admin-sets-field admin-sets-field--full">
-                <span>Câu Lệnh Hướng Dẫn AI (System Prompt)</span>
+              <div className="admin-sets-field" style={{ marginTop: "1rem" }}>
+                <span>System Prompt gợi ý Caption du lịch *</span>
                 <textarea
-                  rows={4}
+                  rows={5}
                   value={settings.ai_caption_prompt}
                   onChange={(e) =>
                     handleInputChange("ai_caption_prompt", e.target.value)
                   }
+                  required
                 />
-                <span className="admin-sets-hint">
-                  AI sẽ dựa trên câu lệnh này để viết lời bình cảm xúc bằng tiếng Việt cho mỗi bức ảnh du lịch được tải lên.
-                </span>
-              </label>
-
-              <div className="admin-sets-status-box">
-                <CheckCircle size={18} color="#16a34a" />
-                <span>Mô hình Gemini 1.5 Flash Vision đang hoạt động bình thường trên hệ thống.</span>
               </div>
             </div>
           )}
 
-          {/* TAB 4: Trạng thái & Bảo trì */}
+          {/* TAB 3: Trạng thái & Bảo trì */}
           {activeTab === "system" && (
             <div className="card admin-sets-card">
               <h3 className="admin-sets-card-title">
-                <ShieldAlert size={18} /> Vận Hành &amp; Chế Độ Bảo Trì Hệ Thống
+                <ShieldAlert size={18} /> Chế Độ Vận Hành &amp; Bảo Trì
               </h3>
               <p className="admin-sets-card-sub">
-                Kiểm soát trạng thái truy cập ứng dụng và đăng ký tài khoản mới
+                Tạm dừng dịch vụ hoặc bật/tắt đăng ký tài khoản khách hàng mới
               </p>
 
-              <div className="admin-sets-toggle-grid">
-                <div className="admin-sets-toggle-card">
+              <div className="admin-sets-switches" style={{ marginTop: "1rem" }}>
+                <label className="admin-sets-switch-row">
                   <div>
-                    <h4>Chế Độ Bảo Trì Hệ Thống (Maintenance Mode)</h4>
-                    <p>
-                      Khi bật, toàn bộ giao diện khách hàng sẽ hiển thị thông báo đang nâng cấp. Chỉ Admin mới vào được.
-                    </p>
+                    <strong>Chế độ Bảo Trì Hệ Thống</strong>
+                    <p>Khi bật, tất cả khách hàng sẽ thấy trang thông báo bảo trì</p>
                   </div>
-                  <label className="admin-sets-switch">
-                    <input
-                      type="checkbox"
-                      checked={settings.maintenance_mode === "true"}
-                      onChange={(e) =>
-                        handleInputChange(
-                          "maintenance_mode",
-                          e.target.checked ? "true" : "false",
-                        )
-                      }
-                    />
-                    <span className="admin-sets-slider" />
-                  </label>
-                </div>
+                  <input
+                    type="checkbox"
+                    checked={settings.maintenance_mode === "true"}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "maintenance_mode",
+                        e.target.checked ? "true" : "false",
+                      )
+                    }
+                  />
+                </label>
 
-                <div className="admin-sets-toggle-card">
+                <label className="admin-sets-switch-row">
                   <div>
-                    <h4>Cho Phép Đăng Ký Tài Khoản Mới</h4>
-                    <p>
-                      Bật/Tắt tính năng tạo tài khoản mới từ trang đăng ký / đăng nhập Google.
-                    </p>
+                    <strong>Cho Phép Đăng Ký Tài Khoản Mới</strong>
+                    <p>Mở công khai form đăng ký người dùng mới trên sàn</p>
                   </div>
-                  <label className="admin-sets-switch">
-                    <input
-                      type="checkbox"
-                      checked={settings.allow_registration === "true"}
-                      onChange={(e) =>
-                        handleInputChange(
-                          "allow_registration",
-                          e.target.checked ? "true" : "false",
-                        )
-                      }
-                    />
-                    <span className="admin-sets-slider" />
-                  </label>
-                </div>
+                  <input
+                    type="checkbox"
+                    checked={settings.allow_registration === "true"}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "allow_registration",
+                        e.target.checked ? "true" : "false",
+                      )
+                    }
+                  />
+                </label>
               </div>
             </div>
           )}
-
-          {/* Form Submit Footer */}
-          <div className="admin-sets-footer">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="btn btn-primary"
-            >
-              <Save size={16} /> {submitting ? "Đang lưu..." : "Lưu Thay Đổi Cài Đặt"}
-            </button>
-          </div>
         </form>
-      )}
-
-      {/* Toast Notification */}
-      {toast && (
-        <div className={`admin-sets-toast admin-sets-toast--${toast.type}`}>
-          {toast.message}
-        </div>
       )}
     </div>
   );

@@ -6,17 +6,21 @@ const {
   createProduct,
   updateProduct,
   setProductActive,
+  deleteProduct,
 } = require("../controllers/productController");
 const { protect } = require("../middleware/auth");
 const { requireRole } = require("../middleware/role");
 
-// Toàn bộ route sản phẩm chỉ admin mới thấy — khách hàng không cần biết
-// giá vốn/danh sách sản phẩm bán sỉ cho đại lý.
+// Public route cho trang Shop lấy giá sản phẩm chuẩn từ Database
+router.get("/public", getAllProducts);
+
+// Các route bên dưới yêu cầu quyền Admin
 router.use(protect, requireRole("admin"));
 
 router.get("/", getAllProducts);
 router.post("/", createProduct);
 router.put("/:id", updateProduct);
 router.patch("/:id/active", setProductActive);
+router.delete("/:id", deleteProduct);
 
 module.exports = router;

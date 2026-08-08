@@ -15,14 +15,22 @@ const getAllProducts = async (req, res) => {
 // POST /api/products
 const createProduct = async (req, res) => {
   try {
-    const { name, default_price } = req.body;
-    if (!name || default_price === undefined)
-      return res.status(400).json({ message: "Thiếu name hoặc default_price" });
-    if (Number(default_price) < 0)
+    const { name, category, price, original_price, image, tag, description } = req.body;
+    if (!name || price === undefined)
+      return res.status(400).json({ message: "Thiếu name hoặc price" });
+    if (Number(price) < 0)
       return res.status(400).json({ message: "Giá không được âm" });
 
-    const id = await Product.create({ name, default_price });
-    res.status(201).json({ message: "Đã tạo sản phẩm", id });
+    const id = await Product.create({
+      name,
+      category: category || "single",
+      price: Number(price),
+      original_price: Number(original_price || 0),
+      image: image || "",
+      tag: tag || "",
+      description: description || "",
+    });
+    res.status(201).json({ message: "Đã tạo sản phẩm thành công!", id });
   } catch (err) {
     console.error("createProduct:", err);
     res.status(500).json({ message: "Lỗi server" });
@@ -32,26 +40,28 @@ const createProduct = async (req, res) => {
 // PUT /api/products/:id
 const updateProduct = async (req, res) => {
   try {
-    const { name, default_price } = req.body;
-    if (!name || default_price === undefined)
-      return res.status(400).json({ message: "Thiếu name hoặc default_price" });
-
     const existing = await Product.findById(req.params.id);
     if (!existing)
       return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
 
-    await Product.update(req.params.id, { name, default_price });
-    res.json({ message: "Đã cập nhật sản phẩm" });
+    const { name, category, price, original_price, image, tag, description } = req.body;
+    await Product.update(req.params.id, {
+      name: name || existing.name,
+      category: category || existing.category || "single",
+      price: price !== undefined ? Number(price) : existing.price,
+      original_price: original_price !== undefined ? Number(original_price) : existing.original_price,
+      image: image !== undefined ? image : existing.image,
+      tag: tag !== undefined ? tag : existing.tag,
+      description: description !== undefined ? description : existing.description,
+    });
+    res.json({ message: "Đã cập nhật sản phẩm thành công!" });
   } catch (err) {
     console.error("updateProduct:", err);
     res.status(500).json({ message: "Lỗi server" });
   }
 };
 
-// PATCH /api/products/:id/active  Body: { is_active: boolean }
-// Ẩn/hiện — không xóa thật, vì manual_sales cũ có thể vẫn tham chiếu tới
-// sản phẩm này (product_name_snapshot đã lưu sẵn nên không sao, nhưng vẫn
-// giữ được để bấm vào xem chi tiết sản phẩm gốc nếu cần).
+// PATCH /api/products/:id/active
 const setProductActive = async (req, res) => {
   try {
     const existing = await Product.findById(req.params.id);
@@ -59,10 +69,25 @@ const setProductActive = async (req, res) => {
       return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
 
     await Product.setActive(req.params.id, !!req.body.is_active);
-    res.json({ message: "Đã cập nhật trạng thái" });
+    res.json({ message: "Đã cập nhật trạng thái sản phẩm" });
   } catch (err) {
     console.error("setProductActive:", err);
     res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
+// DELETE /api/products/:id
+const deleteProduct = async (req, res) => {
+  try {
+    const existing = await Product.findById(req.params.id);
+    if (!existing)
+      return res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+
+    await Product.delete(req.params.id);
+    res.json({ message: "Đã xóa sản phẩm thành công!" });
+  } catch (err) {
+    console.error("deleteProduct:", err);
+    res.status(500).json({ message: "Lỗi server khi xóa sản phẩm" });
   }
 };
 
@@ -71,4 +96,5 @@ module.exports = {
   createProduct,
   updateProduct,
   setProductActive,
+  deleteProduct,
 };

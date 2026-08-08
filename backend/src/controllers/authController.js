@@ -321,12 +321,11 @@ const verifyForgotPasswordOtp = async (req, res) => {
     if (!user)
       return res.status(404).json({ message: "Không tìm thấy tài khoản" });
 
-    // resetToken riêng, KHÔNG dùng chung JWT_SECRET kiểu login token — vẫn
-    // ký bằng JWT_SECRET nhưng có purpose riêng để reset-password không
-    // thể bị nhầm/dùng thay cho token đăng nhập ở nơi khác.
+    // resetToken dùng secret key riêng biệt (JWT_SECRET + "_reset_pwd") để
+    // hoàn toàn tách biệt khỏi login token, đảm bảo không thể tráo đổi.
     const resetToken = jwt.sign(
       { email: user.email, purpose: "reset_password" },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET + "_reset_pwd",
       { expiresIn: RESET_TOKEN_TTL },
     );
 
@@ -356,7 +355,7 @@ const resetPassword = async (req, res) => {
 
     let payload;
     try {
-      payload = jwt.verify(resetToken, process.env.JWT_SECRET);
+      payload = jwt.verify(resetToken, process.env.JWT_SECRET + "_reset_pwd");
     } catch (err) {
       return res.status(400).json({
         message:

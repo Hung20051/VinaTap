@@ -18,13 +18,20 @@ import {
   X,
   Ticket,
   Bell,
+  Package,
 } from "lucide-react";
 import Logo from "./Logo";
 import { getLang } from "../lib/prefs";
 import { t } from "../lib/i18n";
 import "../styles/sidebar.css";
 
-export default function AdminSidebar({ user, onLogout, isOpen = false, onClose }) {
+export default function AdminSidebar({
+  user,
+  lang: langProp = "vi",
+  onLogout,
+  isOpen = false,
+  onClose,
+}) {
   const pathname = usePathname();
   const [lang, setLang] = useState("vi");
   const [query, setQuery] = useState("");
@@ -42,6 +49,7 @@ export default function AdminSidebar({ user, onLogout, isOpen = false, onClose }
 
   const adminNavItems = [
     { href: "/admin/dashboard", icon: LayoutDashboard, label: t(lang, "adminOverview") },
+    { href: "/admin/products", icon: Package, label: "Quản Lý Sản Phẩm" },
     { href: "/admin/revenue", icon: DollarSign, label: t(lang, "adminRevenue") },
     { href: "/admin/vouchers", icon: Ticket, label: "Quản Lý Voucher" },
     { href: "/admin/nfc-cards", icon: CreditCard, label: t(lang, "adminNfcCards") },

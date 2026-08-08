@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SettingsSidebar from "../../components/SettingsSidebar";
 import { getUser, requireAuth } from "../../lib/auth";
+import "../../styles/admin-shell.css";
+import "../../styles/settings-shell.css";
 
 export default function SettingsLayout({ children }) {
   const router = useRouter();

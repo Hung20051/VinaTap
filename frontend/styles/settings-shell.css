@@ -1,70 +1,128 @@
 /* ============================================================
-   VinaTap — Style DÙNG CHUNG cho toàn bộ /settings/*
+   VinaTap — Style DÙNG CHUNG CAO CẤP cho toàn bộ /settings/*
    Import 1 lần duy nhất ở app/settings/layout.js — mọi trang con
-   (account, password, appearance, support, legal, about) đều thấy
-   được các class này mà KHÔNG cần import chéo từ folder khác nhau,
-   giữ đúng nguyên tắc mỗi mục là 1 folder độc lập.
+   (account, password, appearance, support, legal, about) đều hiển thị mượt mà.
    ============================================================ */
+
 .settings-page {
-  max-width: 640px;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
 }
+
 .settings-page__title {
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px 0;
 }
+
 .settings-page__subtitle {
-  color: var(--text-muted);
-  margin-top: 0.25rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0 0 2rem 0;
+  line-height: 1.5;
 }
 
+/* Card Container */
+.settings-page .card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  margin-bottom: 1.75rem;
+  transition: all 0.2s ease;
+}
+
+.settings-page .card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+}
+
+/* Form Fields - Ép flex-direction column mượt mà */
 .settings-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 1.1rem;
-}
-.settings-field input,
-.settings-field textarea {
-  padding: 0.65rem 0.85rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  font-size: 0.9rem;
-  font-weight: 400;
-  font-family: inherit;
-}
-.settings-field input:focus,
-.settings-field textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-.settings-field--readonly {
-  background: var(--bg-subtle, #f9fafb);
-  color: var(--text-muted);
-}
-.settings-field__hint {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--text-muted);
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 1.5rem;
+  width: 100% !important;
 }
 
+.settings-field span {
+  display: block;
+  color: #334155;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.settings-field input,
+.settings-field textarea,
+.settings-field select {
+  width: 100% !important;
+  padding: 12px 16px !important;
+  border-radius: 12px !important;
+  border: 1px solid #cbd5e1 !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  color: #0f172a !important;
+  background: #ffffff !important;
+  font-family: inherit !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+.settings-field input:focus,
+.settings-field textarea:focus,
+.settings-field select:focus {
+  outline: none !important;
+  border-color: #ea580c !important;
+  box-shadow: 0 0 0 3.5px rgba(234, 88, 12, 0.15) !important;
+}
+
+.settings-field--readonly,
+.settings-field input:disabled {
+  background: #f8fafc !important;
+  color: #64748b !important;
+  border-color: #e2e8f0 !important;
+  cursor: not-allowed !important;
+}
+
+.settings-field__hint {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Errors and Saved indicators */
 .settings-error {
   color: #dc2626;
-  font-size: 0.82rem;
-  margin-top: -0.5rem;
-  margin-bottom: 0.75rem;
-}
-.settings-saved {
-  color: #16a34a;
   font-size: 0.85rem;
   font-weight: 600;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
 }
+
+.settings-saved {
+  color: #16a34a;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .settings-form-footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.85rem;
-  margin-top: 0.5rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed #e2e8f0;
 }

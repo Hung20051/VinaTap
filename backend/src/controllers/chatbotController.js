@@ -77,12 +77,13 @@ const sendMessage = async (req, res) => {
 
     const session = sessions[0];
 
-    // Lấy lịch sử chat để gửi context cho Gemini
-    const [history] = await db.execute(
+    // Lấy 20 tin nhắn gần nhất để gửi context cho Gemini (tránh tràn token)
+    const [rawHistory] = await db.execute(
       `SELECT role, content FROM chatbot_messages
-       WHERE session_id = ? ORDER BY sent_at ASC`,
+       WHERE session_id = ? ORDER BY sent_at DESC LIMIT 20`,
       [sessionId],
     );
+    const history = rawHistory.reverse();
 
     // Nếu album gắn với session, lấy thêm context tỉnh
     let contextPrompt = SYSTEM_PROMPT;

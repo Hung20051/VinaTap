@@ -298,6 +298,7 @@ export const stickerAPI = {
 
 // ─── PRODUCTS (admin — sản phẩm cho dropdown tạo đơn thủ công) ─
 export const productAPI = {
+  getPublic: () => request("/products/public"),
   getAll: (includeInactive) =>
     request(`/products${includeInactive ? "?includeInactive=1" : ""}`),
   create: (body) =>
@@ -309,6 +310,15 @@ export const productAPI = {
       method: "PATCH",
       body: JSON.stringify({ is_active }),
     }),
+  delete: (id) => request(`/products/${id}`, { method: "DELETE" }),
+};
+
+// ─── SHIPPING RULES (admin — phí giao hàng & freeship) ───────────
+export const shippingAPI = {
+  getPublic: () => request("/shipping/public"),
+  get: () => request("/shipping"),
+  update: (body) =>
+    request("/shipping", { method: "PUT", body: JSON.stringify(body) }),
 };
 
 // ─── MANUAL SALES (admin — đơn bán thủ công cho đại lý/khách lẻ) ─

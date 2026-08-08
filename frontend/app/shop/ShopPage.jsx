@@ -22,6 +22,7 @@ import CartModal from "../../components/CartModal";
 import { getUser, clearAuth } from "../../lib/auth";
 import { getLang } from "../../lib/prefs";
 import { t } from "../../lib/i18n";
+import { productAPI, shippingAPI, systemSettingAPI } from "@/lib/api";
 import DvdBounce from "../../components/DvdBounce";
 import "./ShopPage.css";
 
@@ -71,63 +72,44 @@ export default function ShopPage() {
   const [cartModalOpen, setCartModalOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [selectedProvince, setSelectedProvince] = useState("Hà Nội");
+  const [dbProducts, setDbProducts] = useState([]);
+  const [shippingRule, setShippingRule] = useState({ base_fee: 30000, free_shipping_threshold: 500000 });
 
   useEffect(() => {
     setUser(getUser());
     setLang(getLang());
+    
+    productAPI
+      .getPublic()
+      .then((res) => {
+        if (res && res.products) setDbProducts(res.products);
+      })
+      .catch(() => {});
+
+    shippingAPI
+      .getPublic()
+      .then((res) => {
+        if (res && res.rule) {
+          setShippingRule({
+            base_fee: Number(res.rule.base_fee || 30000),
+            free_shipping_threshold: Number(res.rule.free_shipping_threshold || 500000),
+          });
+        }
+      })
+      .catch(() => {});
   }, []);
 
-  const products = [
-    {
-      id: 1,
-      name: "Mảnh Ghép NFC Gỗ 3D — Tùy Chọn Tỉnh Thành",
-      price: 2000, // 🚨 GIÁ 2.000Đ THỬ NGHIỆM THANH TOÁN VIETQR
-      originalPrice: 180000,
-      tag: "TEST GIÁ 2.000Đ 🔥",
-      description:
-        "Mảnh ghép gỗ tự nhiên khắc chìm Laser 3D địa danh du lịch. Tích hợp chip NFC cảm ứng 1 chạm mở Album Kỷ Niệm.",
-      image:
-        "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
-      features: [
-        "Chip NFC NXP chuẩn ISO",
-        "Gỗ bách xanh tự nhiên 100%",
-        "Chống nước & chống xước",
-      ],
-      hasProvinceSelector: true,
-    },
-    {
-      id: 2,
-      name: "Combo Trọn Bộ 34 Tỉnh Thành Việt Nam (Bản Đồ Bản Quyền)",
-      price: 4500000,
-      originalPrice: 5100000,
-      tag: "TIẾT KIỆM 600K 👑",
-      description:
-        "Trọn bộ 34 mảnh ghép NFC của 34 Tỉnh Thành + Khung treo bản đồ khắc chìm chất liệu gỗ Óc Chó cao cấp.",
-      image:
-        "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=600&q=80",
-      features: [
-        "Tặng kèm khung bản đồ cao cấp",
-        "Miễn phí khắc tên gia đình/chủ sở hữu",
-        "Miễn phí vận chuyển Toàn Quốc",
-      ],
-    },
-    {
-      id: 3,
-      name: "Thẻ NFC Kim Loại VinaTap VIP Edition",
-      price: 250000,
-      originalPrice: 300000,
-      tag: "PHIÊN BẢN GIỚI HẠN ✨",
-      description:
-        "Thẻ NFC chất liệu Hợp Kim Titan xước mạ Vàng Kim Gold. Thiết kế cực kỳ sang trọng dành cho Collectors.",
-      image:
-        "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80",
-      features: [
-        "Thép Titan chống gỉ mạ Vàng",
-        "Công nghệ quét chạm siêu nhạy",
-        "Bảo hành 5 năm 1 đổi 1",
-      ],
-    },
-  ];
+  const products = dbProducts.map((p) => ({
+    id: p.id,
+    name: p.name,
+    price: Number(p.price),
+    originalPrice: Number(p.original_price || 0),
+    tag: p.tag || (Number(p.price) <= 5000 ? `TEST GIÁ ${Number(p.price).toLocaleString("vi-VN")}Đ 🔥` : "HOT SELLER 🔥"),
+    description: p.description || "Mảnh ghép NFC kỷ niệm du lịch VinaTap.",
+    image: p.image || "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
+    features: ["Chip NFC NXP chuẩn ISO", "Chống nước & chống xước", "Bảo hành chính hãng VinaTap"],
+    hasProvinceSelector: p.category === "single" || String(p.name).includes("Mảnh Ghép"),
+  }));
 
   const handleLogout = () => {
     clearAuth();
@@ -274,96 +256,107 @@ export default function ShopPage() {
         )}
 
         {/* LƯỚI SẢN PHẨM */}
-        <div className="shop-products-grid">
-          {products.map((p) => (
-            <div key={p.id} className="shop-product-card">
-              <div className="product-image-wrap">
-                <img src={p.image} alt={p.name} className="product-img" />
-                <span className="product-tag">{p.tag}</span>
-              </div>
+        {products.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "4rem 1rem", background: "#ffffff", borderRadius: "20px", border: "1px dashed #cbd5e1", margin: "2rem 0" }}>
+            <ShoppingBag size={48} style={{ color: "#94a3b8", marginBottom: "1rem" }} />
+            <h3 style={{ fontSize: "1.2rem", fontWeight: 800, color: "#334155", margin: "0 0 6px 0" }}>
+              Cửa Hàng Hiện Chưa Có Sản Phẩm Mở Bán
+            </h3>
+            <p style={{ color: "#64748b", fontSize: "0.9rem", margin: 0 }}>
+              Quản trị viên chưa thêm sản phẩm nào vào Database. Vui lòng quay lại sau!
+            </p>
+          </div>
+        ) : (
+          <div className="shop-products-grid">
+            {products.map((p) => (
+              <div key={p.id} className="shop-product-card">
+                <div className="product-image-wrap">
+                  <img src={p.image} alt={p.name} className="product-img" />
+                  <span className="product-tag">{p.tag}</span>
+                </div>
 
-              <div className="product-info">
-                <h3 className="product-name">{p.name}</h3>
-                <p className="product-desc">{p.description}</p>
+                <div className="product-info">
+                  <h3 className="product-name">{p.name}</h3>
+                  <p className="product-desc">{p.description}</p>
 
-                {/* PROVINCE SELECTOR FOR PRODUCT 1 */}
-                {p.hasProvinceSelector && (
-                  <div
-                    style={{
-                      marginBottom: "1rem",
-                      background: "#fff7ed",
-                      border: "1px solid #fdba74",
-                      padding: "8px 12px",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    <label
+                  {/* PROVINCE SELECTOR FOR PRODUCT 1 */}
+                  {p.hasProvinceSelector && (
+                    <div
                       style={{
-                        fontSize: "0.8rem",
-                        fontWeight: 700,
-                        color: "#ea580c",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                        marginBottom: "4px",
+                        marginBottom: "1rem",
+                        background: "#fff7ed",
+                        border: "1px solid #fdba74",
+                        padding: "8px 12px",
+                        borderRadius: "10px",
                       }}
                     >
-                      <MapPin size={14} /> Chọn Tỉnh Thành Muốn Mua:
-                    </label>
-                    <select
-                      value={selectedProvince}
-                      onChange={(e) => setSelectedProvince(e.target.value)}
-                      style={{
-                        width: "100%",
-                        padding: "6px 10px",
-                        borderRadius: "6px",
-                        border: "1px solid #cbd5e1",
-                        fontSize: "0.85rem",
-                        fontWeight: 700,
-                        color: "#0f172a",
-                      }}
-                    >
-                      {provinceList.map((pr) => (
-                        <option key={pr} value={pr}>
-                          Mảnh Ghép: {pr}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                      <label
+                        style={{
+                          fontSize: "0.8rem",
+                          fontWeight: 700,
+                          color: "#ea580c",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "4px",
+                          marginBottom: "4px",
+                        }}
+                      >
+                        <MapPin size={14} /> Chọn Tỉnh Thành Muốn Mua:
+                      </label>
+                      <select
+                        value={selectedProvince}
+                        onChange={(e) => setSelectedProvince(e.target.value)}
+                        style={{
+                          width: "100%",
+                          padding: "6px 10px",
+                          borderRadius: "8px",
+                          border: "1px solid #fed7aa",
+                          background: "#ffffff",
+                          fontSize: "0.88rem",
+                          fontWeight: 600,
+                          color: "#1e293b",
+                        }}
+                      >
+                        {provinceList.map((prov) => (
+                          <option key={prov} value={prov}>
+                            Mảnh Ghép: {prov}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
-                <ul className="product-features">
-                  {p.features.map((f, idx) => (
-                    <li key={idx}>
-                      <Check size={14} className="text-green" /> {f}
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="product-features">
+                    {p.features.map((feat, i) => (
+                      <li key={i}>
+                        <Check size={14} className="text-orange" /> {feat}
+                      </li>
+                    ))}
+                  </ul>
 
-                <div className="product-price-box">
-                  <div className="price-group">
-                    <span className="current-price">{formatMoney(p.price)}</span>
-                    {p.originalPrice && (
-                      <span className="original-price">
-                        {formatMoney(p.originalPrice)}
+                  <div className="product-pricing">
+                    <div className="price-wrap">
+                      <span className="current-price">
+                        {formatMoney(p.price)}
                       </span>
-                    )}
+                      {p.originalPrice > 0 && (
+                        <span className="original-price">
+                          {formatMoney(p.originalPrice)}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      className="btn-buy-now"
+                      onClick={() => addToCart(p)}
+                    >
+                      <ShoppingBag size={16} /> Mua Ngay
+                    </button>
                   </div>
-
-                  <button
-                    className="btn-add-to-cart"
-                    onClick={() => {
-                      addToCart(p);
-                      setCheckoutOpen(true);
-                    }}
-                  >
-                    <ShoppingBag size={16} /> Mua Ngay
-                  </button>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
 
       {/* MODAL CHI TIẾT GIỎ HÀNG QUẢN LÝ / XÓA SẢN PHẨM */}
@@ -393,6 +386,7 @@ export default function ShopPage() {
                 ]
           }
           initialVoucher={initialVoucherCode}
+          shippingRule={shippingRule}
           onClose={() => setCheckoutOpen(false)}
           onSuccess={() => setCart([])}
         />

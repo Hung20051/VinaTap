@@ -21,8 +21,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
   }),
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(passport.initialize()); // không dùng session
 
 // --- Maintenance check ---
@@ -45,6 +45,7 @@ app.use("/api/analytics", require("./routes/analytics"));
 app.use("/api/notifications", require("./routes/notifications"));
 app.use("/api/orders", require("./routes/orders"));
 app.use("/api/vouchers", require("./routes/vouchers"));
+app.use("/api/shipping", require("./routes/shipping"));
 
 // --- Health check ---
 app.get("/api/health", (req, res) => {
