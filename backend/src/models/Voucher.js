@@ -175,14 +175,15 @@ const Voucher = {
 
     let targetUserIds = [];
     if (targetType === "all") {
-      const [users] = await db.execute(`SELECT id FROM users WHERE status = 'active'`);
+      const [users] = await db.execute(`SELECT id FROM users WHERE status = 'active' AND role != 'admin'`);
       targetUserIds = users.map((u) => u.id);
     } else {
       targetUserIds = userIds;
     }
 
-    if (targetUserIds.length === 0) return 0;
+    if (targetUserIds.length === 0) return { count: 0, recipientIds: [] };
 
+    const recipientIds = [];
     let count = 0;
     for (const uId of targetUserIds) {
       try {
@@ -190,10 +191,11 @@ const Voucher = {
           `INSERT IGNORE INTO user_vouchers (user_id, voucher_id, status) VALUES (?, ?, 'available')`,
           [uId, voucherId],
         );
+        recipientIds.push(uId);
         count++;
       } catch (e) {}
     }
-    return count;
+    return { count, recipientIds };
   },
 
   // Format Voucher thành object JSON chuẩn cho Frontend

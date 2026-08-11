@@ -144,8 +144,11 @@ const uploadFile = async (req, res) => {
 // GET /api/provinces/tts?text=...
 const getTts = async (req, res) => {
   try {
-    const text = req.query.text;
-    if (!text) return res.status(400).send("Missing text parameter");
+    const rawText = String(req.query.text || "").trim();
+    if (!rawText) return res.status(400).send("Missing text parameter");
+
+    // Giới hạn độ dài tối đa 500 ký tự (chống spam quá tải Google TTS)
+    const text = rawText.slice(0, 500);
 
     const ttsUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
       text,

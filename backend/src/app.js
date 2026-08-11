@@ -13,17 +13,43 @@ const app = express();
 // tránh chặn nhầm response — CSP nên cấu hình ở tầng frontend/CDN thay vì
 // ở đây.
 app.use(helmet({ contentSecurityPolicy: false }));
+
+// Danh sách domain được phép gọi API (whitelist)
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((s) => s.trim())
+  : [
+      "http://localhost:3000",
+      "http://127.0.0.1:3000",
+      process.env.FRONTEND_URL,
+    ].filter(Boolean);
+
 app.use(
   cors({
-    origin: true,
+    origin: (origin, callback) => {
+      // Cho phép requests không có origin (server-to-server webhook, curl, mobile app) hoặc đang chạy môi trường dev
+      if (!origin || process.env.NODE_ENV !== "production") {
+        return callback(null, true);
+      }
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(null, false);
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
   }),
 );
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+// Giới hạn body payload an toàn ở mức 2MB (chống DoS / tràn bộ nhớ)
+// Riêng file upload ảnh/video dung lượng lớn được xử lý riêng bằng Multer
+app.use(express.json({ limit: "2mb" }));
+app.use(express.urlencoded({ limit: "2mb", extended: true }));
 app.use(passport.initialize()); // không dùng session
+
+// --- Global Rate Limiter ---
+const { globalLimiter } = require("./middleware/rateLimit");
+app.use("/api", globalLimiter);
 
 // --- Maintenance check ---
 app.use("/api", require("./middleware/maintenance"));
@@ -66,4 +92,4 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, "0.0.0.0", () => console.log(`🚀 Server running on port ${PORT}`));

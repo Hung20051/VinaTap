@@ -124,7 +124,7 @@ const Notification = {
     // Admin không nhận các thông báo quà tặng Voucher dành cho Khách Hàng
     const promoFilter = role === "admin" ? "AND n.type != 'promo'" : "";
 
-    // 1. Lấy thông báo gửi cho @ALL
+    // 1. Lấy thông báo gửi cho @ALL (nhưng CHỈ lấy những thông báo gửi TỪ LÚC USER TẠO TÀI KHOẢN trở đi)
     // 2. Lấy thông báo gửi trực tiếp qua notification_recipients
     const [rows] = await db.execute(
       `SELECT n.*,
@@ -134,10 +134,14 @@ const Notification = {
        LEFT JOIN notification_recipients rec ON rec.notification_id = n.id
        LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.user_id = ?
        LEFT JOIN users u ON u.id = n.created_by
-       WHERE (n.recipient_type = 'all' OR rec.user_id = ?) ${promoFilter}
+       JOIN users cur_u ON cur_u.id = ?
+       WHERE (
+         (n.recipient_type = 'all' AND n.created_at >= cur_u.created_at)
+         OR rec.user_id = ?
+       ) ${promoFilter}
        ORDER BY n.created_at DESC
        LIMIT 30`,
-      [userId, userId],
+      [userId, userId, userId],
     );
 
     // Tính số thông báo chưa đọc
@@ -162,8 +166,12 @@ const Notification = {
         `SELECT n.id
          FROM notifications n
          LEFT JOIN notification_recipients rec ON rec.notification_id = n.id
-         WHERE (n.recipient_type = 'all' OR rec.user_id = ?)`,
-        [userId],
+         JOIN users cur_u ON cur_u.id = ?
+         WHERE (
+           (n.recipient_type = 'all' AND n.created_at >= cur_u.created_at)
+           OR rec.user_id = ?
+         )`,
+        [userId, userId],
       );
       for (const n of allNotifs) {
         await db.execute(

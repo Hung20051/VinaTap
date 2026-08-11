@@ -105,7 +105,7 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
-// 5. Public: Kiểm tra trạng thái đơn hàng (Auto-Polling từ Frontend)
+// 5. Kiểm tra trạng thái đơn hàng (Auto-Polling từ Frontend / Tra cứu đơn)
 const checkOrderStatus = async (req, res) => {
   try {
     const { orderCode } = req.params;
@@ -113,10 +113,16 @@ const checkOrderStatus = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
     }
+
+    const isOwner = req.user && (req.user.id === order.user_id || req.user.role === "admin");
+
     res.json({
       order_code: order.order_code,
       status: order.status,
-      total_amount: order.total_amount,
+      ...(isOwner && {
+        total_amount: order.total_amount,
+        payment_method: order.payment_method,
+      }),
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -126,16 +132,51 @@ const checkOrderStatus = async (req, res) => {
 // 6. Webhook Nhận Thông Báo Chuyển Khoản Tự Động (Sepay / Casso / MBBank Webhook)
 const paymentWebhook = async (req, res) => {
   try {
+    // 🔒 1. Xác thực Webhook bằng Secret Key
+    const sepayKey = process.env.SEPAY_WEBHOOK_KEY;
+    if (sepayKey && sepayKey !== "your_sepay_webhook_api_key_here") {
+      const authHeader = req.headers["authorization"] || req.headers["x-api-key"] || "";
+      const isApikeyMatch =
+        authHeader === `Apikey ${sepayKey}` ||
+        authHeader === sepayKey ||
+        req.query.apikey === sepayKey;
+
+      if (!isApikeyMatch) {
+        return res.status(401).json({ status: "error", message: "Unauthorized Webhook Request" });
+      }
+    } else if (process.env.NODE_ENV === "production") {
+      return res.status(403).json({
+        status: "error",
+        message: "Webhook Secret Key chưa được cấu hình trên môi trường Production",
+      });
+    }
+
     const payload = req.body || {};
     const content = payload.content || payload.description || payload.transferContent || "";
 
-    // Tìm mã đơn VNTxxxxxx trong nội dung chuyển khoản
+    // 🔍 2. Tìm mã đơn VNTxxxxxx trong nội dung chuyển khoản
     const match = content.match(/VNT[A-Z0-9]{12,18}/i);
     if (!match) {
       return res.status(200).json({ status: "ignored", message: "Không tìm thấy mã đơn VNT" });
     }
 
     const orderCode = match[0].toUpperCase();
+    const order = await Order.getByCode(orderCode);
+
+    if (!order) {
+      return res.status(404).json({ status: "error", message: `Không tìm thấy đơn hàng ${orderCode}` });
+    }
+
+    // 💰 3. Kiểm tra số tiền chuyển thực tế (chống chuyển thiếu tiền)
+    const transferAmount = Number(payload.transferAmount || payload.amountIn || payload.amount || 0);
+    if (transferAmount > 0 && transferAmount < Number(order.total_amount)) {
+      return res.status(400).json({
+        status: "error",
+        message: `Số tiền chuyển (${transferAmount}đ) không đủ so với tổng giá trị đơn hàng (${order.total_amount}đ)`,
+      });
+    }
+
+    // ✅ 4. Cập nhật trạng thái đơn sang "paid"
     const result = await Order.markAsPaid(orderCode, payload);
 
     res.json({

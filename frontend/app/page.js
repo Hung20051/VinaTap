@@ -118,7 +118,7 @@ export default function HomePage() {
     setCheckingAuth(false);
     provinceAPI
       .getAll()
-      .then((d) => setProvinces(d.provinces))
+      .then((d) => setProvinces(d?.provinces || []))
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);

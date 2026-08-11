@@ -41,10 +41,12 @@ export default function AdminNfcCards() {
   const [batchCount, setBatchCount] = useState(50);
   const [batchSubmitting, setBatchSubmitting] = useState(false);
 
-  // Assign Form State
+  // Assign / Provision Form State
   const [assignSerial, setAssignSerial] = useState("");
   const [assignEmail, setAssignEmail] = useState("");
   const [assignReason, setAssignReason] = useState("");
+  const [assignAlbumTitle, setAssignAlbumTitle] = useState("");
+  const [assignAlbumDesc, setAssignAlbumDesc] = useState("");
   const [assignSubmitting, setAssignSubmitting] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
 
@@ -113,18 +115,19 @@ export default function AdminNfcCards() {
   const handleCreateBatch = async (e) => {
     e.preventDefault();
     if (!batchProvinceId) {
-      showToast("Vui lòng chọn Tỉnh thành", "error");
+      showToast("Vui lòng chọn Tỉnh Thành cho lô thẻ", "error");
       return;
     }
     setBatchSubmitting(true);
     try {
       const res = await nfcAPI.createBatch({
-        province_id: Number(batchProvinceId),
-        prefix: batchPrefix.trim().toUpperCase(),
-        count: Number(batchCount),
+        province_id: batchProvinceId,
+        prefix: batchPrefix.trim().toUpperCase() || "VNT",
+        count: parseInt(batchCount, 10) || 50,
       });
-      showToast(res.message || `Đã tạo thành công ${batchCount} thẻ NFC!`);
+      showToast(res.message || "Đã tạo lô thẻ thành công!");
       setShowBatchModal(false);
+      setBatchProvinceId("");
       loadProvincesAndStats();
       loadCards();
     } catch (err) {
@@ -136,22 +139,35 @@ export default function AdminNfcCards() {
 
   const handleAssignCard = async (e) => {
     e.preventDefault();
-    if (!assignSerial || !assignEmail) {
+    if (!assignSerial.trim() || !assignEmail.trim()) {
       showToast("Vui lòng nhập Mã Serial và Email nhận thẻ", "error");
       return;
     }
     setAssignSubmitting(true);
     try {
-      const res = await nfcAPI.adminAssignCard({
-        serial_code: assignSerial.trim(),
-        user_email: assignEmail.trim(),
-        reason: assignReason.trim(),
-      });
+      let res;
+      if (assignAlbumTitle.trim()) {
+        res = await nfcAPI.provisionCard({
+          serial_code: assignSerial.trim(),
+          owner_email: assignEmail.trim(),
+          title: assignAlbumTitle.trim(),
+          description: assignAlbumDesc.trim(),
+          reason: assignReason.trim(),
+        });
+      } else {
+        res = await nfcAPI.adminAssignCard({
+          serial_code: assignSerial.trim(),
+          user_email: assignEmail.trim(),
+          reason: assignReason.trim(),
+        });
+      }
       showToast(res.message || "Đã gán thẻ cho khách hàng thành công!");
       setShowAssignModal(false);
       setAssignSerial("");
       setAssignEmail("");
       setAssignReason("");
+      setAssignAlbumTitle("");
+      setAssignAlbumDesc("");
       setShowUserDropdown(false);
       loadProvincesAndStats();
       loadCards();
@@ -614,6 +630,26 @@ export default function AdminNfcCards() {
                   Gõ để lọc danh sách tài khoản hoặc tự nhập Email bất kỳ
                 </span>
               </div>
+
+              <label className="admin-nfc-field">
+                <span>Tên Album kỷ niệm (Tùy chọn - Tạo album sẵn trước khi giao thẻ)</span>
+                <input
+                  type="text"
+                  value={assignAlbumTitle}
+                  onChange={(e) => setAssignAlbumTitle(e.target.value)}
+                  placeholder="VD: Kỷ niệm Đà Nẵng 2026..."
+                />
+              </label>
+
+              <label className="admin-nfc-field">
+                <span>Mô tả Album (Tùy chọn)</span>
+                <input
+                  type="text"
+                  value={assignAlbumDesc}
+                  onChange={(e) => setAssignAlbumDesc(e.target.value)}
+                  placeholder="VD: Chuyến du lịch đáng nhớ cùng gia đình..."
+                />
+              </label>
 
               <label className="admin-nfc-field">
                 <span>Ghi chú / Lý do gán thủ công</span>

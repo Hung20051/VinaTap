@@ -85,6 +85,53 @@ const updateProfileLimiter = rateLimit({
   keyGenerator: (req) => (req.user ? String(req.user.id) : req.ip),
 });
 
+// 🌐 Global Rate Limiter — Chặn DDoS và lạm dụng API toàn cục
+const globalLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 phút
+  max: 120, // tối đa 120 request / IP / phút
+  message: {
+    message: "Hệ thống phát hiện quá nhiều yêu cầu từ IP của bạn. Vui lòng chờ 1 phút trước khi thử lại!",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// 🗣️ TTS Rate Limiter — Chống lạm dụng Google TTS Proxy
+const ttsLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  message: { message: "Bạn đang yêu cầu đọc âm thanh quá nhanh. Vui lòng thử lại sau ít phút!" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// 📊 Analytics Track Limiter — Chống spam ghi dữ liệu ảo vào Database
+const analyticsLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  message: { message: "Quá nhiều yêu cầu ghi nhận lượt xem" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// 🔍 Order Status Check Limiter — Chống dò quét mã đơn hàng
+const orderCheckLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 15,
+  message: { message: "Bạn đang tra cứu đơn hàng quá thường xuyên. Vui lòng chờ ít giây!" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// 🛒 Order Create Limiter — Chống spam tạo đơn liên tục
+const orderCreateLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  message: { message: "Bạn đang tạo đơn hàng quá nhanh. Vui lòng thử lại sau 1 phút!" },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 module.exports = {
   activateLimiter,
   loginLimiter,
@@ -93,4 +140,10 @@ module.exports = {
   otpRequestLimiter,
   otpVerifyLimiter,
   updateProfileLimiter,
+  globalLimiter,
+  ttsLimiter,
+  analyticsLimiter,
+  orderCheckLimiter,
+  orderCreateLimiter,
 };
+

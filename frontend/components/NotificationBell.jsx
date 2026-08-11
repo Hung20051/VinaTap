@@ -32,13 +32,35 @@ export default function NotificationBell() {
     setMounted(true);
     const u = getUser();
     setUser(u);
-    if (!u) return;
 
-    loadNotifications();
+    if (u) {
+      loadNotifications();
+    }
 
-    // Tự động làm mới mỗi 30 giây
-    const interval = setInterval(loadNotifications, 30000);
-    return () => clearInterval(interval);
+    const handleUserUpdate = (e) => {
+      const nextUser = e.detail;
+      setUser(nextUser);
+      if (nextUser) {
+        loadNotifications();
+      } else {
+        setNotifications([]);
+        setUnreadCount(0);
+      }
+    };
+
+    window.addEventListener("vinatap:user-updated", handleUserUpdate);
+
+    // Tự động làm mới mỗi 45 giây nếu đã đăng nhập
+    const interval = setInterval(() => {
+      if (getUser()) {
+        loadNotifications();
+      }
+    }, 45000);
+
+    return () => {
+      window.removeEventListener("vinatap:user-updated", handleUserUpdate);
+      clearInterval(interval);
+    };
   }, []);
 
   // Đóng khi click ngoài
@@ -255,7 +277,11 @@ export default function NotificationBell() {
                         {/* LINK ACTION */}
                         {n.link && (
                           <a
-                            href={n.link}
+                            href={
+                              n.link.startsWith("/admin") && user?.role !== "admin"
+                                ? "/customer/orders"
+                                : n.link
+                            }
                             className="notif-item-link"
                             onClick={(e) => e.stopPropagation()}
                           >

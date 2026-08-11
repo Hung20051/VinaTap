@@ -31,9 +31,10 @@ export default function AdminAnalytics() {
 
   useEffect(() => {
     loadStats();
+    // Làm mới tự động mỗi 60 giây (thay vì 5s gây quá tải Database)
     const interval = setInterval(() => {
       loadStats(true);
-    }, 5000);
+    }, 60000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeframe]);

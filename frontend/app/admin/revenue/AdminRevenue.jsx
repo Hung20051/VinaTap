@@ -177,6 +177,29 @@ export default function AdminRevenue() {
     }
   };
 
+  const handleExportCsv = async () => {
+    try {
+      const url = manualSaleAPI.exportCsvUrl({ search });
+      const token = getToken();
+      const res = await fetch(url, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (!res.ok) throw new Error("Không thể tải file CSV");
+      const blob = await res.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = `VinaTap_DoanhThu_${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(blobUrl);
+      showToast("Đã xuất file CSV doanh thu thành công", "success");
+    } catch (err) {
+      showToast(err.message || "Lỗi khi xuất file CSV", "error");
+    }
+  };
+
   return (
     <div className="admin-rev-container">
       {toast && (
@@ -194,6 +217,13 @@ export default function AdminRevenue() {
         </div>
 
         <div className="admin-rev-header__actions">
+          <button
+            className="btn btn-outline"
+            onClick={handleExportCsv}
+            style={{ display: "flex", alignItems: "center", gap: "6px" }}
+          >
+            <Download size={16} /> Xuất CSV Doanh Thu
+          </button>
           <button className="btn btn-primary" onClick={openCreateForm} style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}>
             <Plus size={16} /> Tạo Đơn Thủ Công / Đại Lý
           </button>

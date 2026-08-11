@@ -346,7 +346,7 @@ const adminSearchCards = async (req, res) => {
       params.push(province_id);
     }
 
-    if (status && ["pending", "active"].includes(status)) {
+    if (status && ["pending", "active", "disabled"].includes(status)) {
       where.push("n.status = ?");
       params.push(status);
     }

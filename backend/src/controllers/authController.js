@@ -15,6 +15,8 @@ const {
 } = require("../utils/otp");
 const { sendOtpEmail } = require("../utils/email");
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 // Tạo JWT token
 const signToken = (user) =>
   jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
@@ -29,8 +31,9 @@ const signToken = (user) =>
 // biến mất dù DB vẫn còn nguyên, phải đợi 1 lần gọi /auth/me khác mới
 // tự khôi phục lại. Dùng chung hàm này để không lặp lại lỗi tương tự.
 const toPublicUser = (user) => {
-  const { password_hash, google_id, ...publicUser } = user;
-  return publicUser;
+  if (!user) return null;
+  const { password_hash, google_id, ...publicData } = user;
+  return publicData;
 };
 
 // ⚠️ ĐÃ XÓA: register() bằng email/mật khẩu thuần (không OTP) — tạo user
@@ -108,6 +111,9 @@ const requestRegisterOtp = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Vui lòng điền đầy đủ thông tin" });
+
+    if (!EMAIL_REGEX.test(email))
+      return res.status(400).json({ message: "Định dạng email không hợp lệ" });
 
     if (password.length < 6)
       return res.status(400).json({ message: "Mật khẩu phải ít nhất 6 ký tự" });
@@ -241,6 +247,9 @@ const requestForgotPasswordOtp = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) return res.status(400).json({ message: "Vui lòng nhập email" });
+
+    if (!EMAIL_REGEX.test(email))
+      return res.status(400).json({ message: "Định dạng email không hợp lệ" });
 
     const user = await User.findByEmail(email);
 

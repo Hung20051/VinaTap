@@ -1,12 +1,21 @@
 export const getBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
-  if (
-    typeof window !== "undefined" &&
-    (window.location.hostname.includes("vercel.app") ||
-      window.location.hostname !== "localhost")
-  ) {
-    return "https://tender-adventure-production.up.railway.app/api";
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    // Khi chạy local (localhost, 127.0.0.1 hoặc IP mạng LAN)
+    if (
+      host === "localhost" ||
+      host === "127.0.0.1" ||
+      host.startsWith("192.168.") ||
+      host.startsWith("10.") ||
+      host.endsWith(".local")
+    ) {
+      return `http://${host}:5000/api`;
+    }
+    if (host.includes("vercel.app")) {
+      return "https://tender-adventure-production.up.railway.app/api";
+    }
   }
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
   return "http://localhost:5000/api";
 };
 
@@ -23,8 +32,20 @@ const request = async (endpoint, options = {}) => {
     ...options.headers,
   };
   const baseUrl = getBaseUrl();
-  const res = await fetch(`${baseUrl}${endpoint}`, { ...options, headers });
-  const data = await res.json();
+  let res;
+  try {
+    res = await fetch(`${baseUrl}${endpoint}`, { ...options, headers });
+  } catch (netErr) {
+    console.error(`Fetch error at ${baseUrl}${endpoint}:`, netErr);
+    throw new Error(`Không thể kết nối đến máy chủ Backend (${baseUrl}). Vui lòng đảm bảo Backend đang chạy.`);
+  }
+
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = { message: res.statusText || "Lỗi máy chủ phản hồi không đúng định dạng" };
+  }
   if (!res.ok) throw new Error(data.message || "Lỗi không xác định");
   return data;
 };
@@ -32,12 +53,24 @@ const request = async (endpoint, options = {}) => {
 const upload = async (endpoint, formData) => {
   const token = getToken();
   const baseUrl = getBaseUrl();
-  const res = await fetch(`${baseUrl}${endpoint}`, {
-    method: "POST",
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-    body: formData,
-  });
-  const data = await res.json();
+  let res;
+  try {
+    res = await fetch(`${baseUrl}${endpoint}`, {
+      method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    });
+  } catch (netErr) {
+    console.error(`Upload fetch error at ${baseUrl}${endpoint}:`, netErr);
+    throw new Error(`Không thể kết nối đến máy chủ Backend (${baseUrl}).`);
+  }
+
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = { message: res.statusText || "Lỗi upload" };
+  }
   if (!res.ok) throw new Error(data.message || "Lỗi upload");
   return data;
 };
@@ -47,12 +80,24 @@ const upload = async (endpoint, formData) => {
 const uploadPut = async (endpoint, formData) => {
   const token = getToken();
   const baseUrl = getBaseUrl();
-  const res = await fetch(`${baseUrl}${endpoint}`, {
-    method: "PUT",
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-    body: formData,
-  });
-  const data = await res.json();
+  let res;
+  try {
+    res = await fetch(`${baseUrl}${endpoint}`, {
+      method: "PUT",
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    });
+  } catch (netErr) {
+    console.error(`UploadPut fetch error at ${baseUrl}${endpoint}:`, netErr);
+    throw new Error(`Không thể kết nối đến máy chủ Backend (${baseUrl}).`);
+  }
+
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = { message: res.statusText || "Lỗi upload" };
+  }
   if (!res.ok) throw new Error(data.message || "Lỗi upload");
   return data;
 };
@@ -169,6 +214,11 @@ export const nfcAPI = {
   },
   adminAssignCard: (body) =>
     request("/nfc/admin/assign", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  provisionCard: (body) =>
+    request("/nfc/admin/provision", {
       method: "POST",
       body: JSON.stringify(body),
     }),
@@ -347,7 +397,7 @@ export const manualSaleAPI = {
     const qs = new URLSearchParams(
       Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
     ).toString();
-    return `${BASE_URL}/manual-sales/export${qs ? `?${qs}` : ""}`;
+    return `${getBaseUrl()}/manual-sales/export${qs ? `?${qs}` : ""}`;
   },
 };
 

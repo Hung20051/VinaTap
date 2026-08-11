@@ -19,7 +19,7 @@ import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import CheckoutModal from "../../components/CheckoutModal";
 import CartModal from "../../components/CartModal";
-import { getUser, clearAuth } from "../../lib/auth";
+import { getUser, clearAuth, isAdmin } from "../../lib/auth";
 import { getLang } from "../../lib/prefs";
 import { t } from "../../lib/i18n";
 import { productAPI, shippingAPI, systemSettingAPI } from "@/lib/api";
@@ -118,15 +118,29 @@ export default function ShopPage() {
 
   const navItems = [
     {
-      href: "/shop",
-      icon: <ShoppingBag size={20} />,
-      label: "Cửa hàng",
-    },
-    {
       href: "/customer/dashboard",
       icon: <LayoutDashboard size={20} />,
       label: t(lang, "collection"),
     },
+    {
+      href: "/customer/orders",
+      icon: <ShoppingBag size={20} />,
+      label: "Đơn Hàng Của Tôi",
+    },
+    {
+      href: "/shop",
+      icon: <ShoppingBag size={20} />,
+      label: "Cửa Hàng Thẻ NFC",
+    },
+    ...(typeof window !== "undefined" && isAdmin()
+      ? [
+          {
+            href: "/admin",
+            icon: <ShieldCheck size={20} />,
+            label: t(lang, "admin"),
+          },
+        ]
+      : []),
   ];
 
   const addToCart = (product) => {

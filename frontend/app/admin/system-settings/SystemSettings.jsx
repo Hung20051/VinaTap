@@ -13,6 +13,7 @@ import {
   RefreshCw,
   Package,
   ExternalLink,
+  CreditCard,
 } from "lucide-react";
 import { systemSettingAPI } from "@/lib/api";
 import "./SystemSettings.css";
@@ -28,6 +29,10 @@ export default function SystemSettings() {
     company_hotline: "1900 888 999",
     company_email: "support@vinatap.vn",
     company_address: "Số 108 Phố Huế, Quận Hai Bà Trưng, Hà Nội",
+    bank_id: "MBBANK",
+    bank_name: "MBBank (NH Quân Đội)",
+    bank_account_no: "0813607311",
+    bank_account_name: "VINATAP VIETNAM CO LTD",
     ai_caption_prompt:
       "Bạn là trợ lý du lịch Việt Nam. Hãy viết 1 caption ngắn gọn, cảm xúc bằng tiếng Việt (tối đa 2 câu) mô tả bức ảnh du lịch này. Chỉ trả về caption, không thêm gì khác.",
     maintenance_mode: "false",
@@ -87,7 +92,7 @@ export default function SystemSettings() {
         <div>
           <h1 className="admin-dash-title">⚙️ Cài Đặt Hệ Thống</h1>
           <p className="admin-dash-subtitle">
-            Cấu hình thông tin thương hiệu VinaTap, trợ lý AI &amp; chế độ vận hành sàn
+            Cấu hình thông tin thương hiệu VinaTap, tài khoản VietQR, trợ lý AI &amp; chế độ vận hành sàn
           </p>
         </div>
         <div className="admin-sets-actions">
@@ -140,6 +145,13 @@ export default function SystemSettings() {
           onClick={() => setActiveTab("general")}
         >
           <Building2 size={16} /> Thương Hiệu &amp; Liên Hệ
+        </button>
+        <button
+          type="button"
+          className={`admin-sets-tab ${activeTab === "bank" ? "is-active" : ""}`}
+          onClick={() => setActiveTab("bank")}
+        >
+          <CreditCard size={16} /> Tài Khoản Ngân Hàng (VietQR)
         </button>
         <button
           type="button"
@@ -229,6 +241,87 @@ export default function SystemSettings() {
                       onChange={(e) =>
                         handleInputChange("company_address", e.target.value)
                       }
+                      required
+                    />
+                  </div>
+                </label>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: Ngân hàng & VietQR */}
+          {activeTab === "bank" && (
+            <div className="card admin-sets-card">
+              <h3 className="admin-sets-card-title">
+                <CreditCard size={18} /> Cấu Hình Tài Khoản Nhận Thanh Toán VietQR
+              </h3>
+              <p className="admin-sets-card-sub">
+                Mã QR và thông tin tài khoản này sẽ tự động xuất hiện trên màn hình thanh toán của khách hàng
+              </p>
+
+              <div className="admin-sets-grid" style={{ marginTop: "1rem" }}>
+                <label className="admin-sets-field">
+                  <span>Mã Ngân Hàng (VietQR Bank ID) *</span>
+                  <div className="admin-sets-input-icon">
+                    <CreditCard size={16} />
+                    <input
+                      type="text"
+                      value={settings.bank_id}
+                      onChange={(e) =>
+                        handleInputChange("bank_id", e.target.value.toUpperCase())
+                      }
+                      placeholder="VD: MBBANK, VCB, TCB, VPB, ACB, CTG..."
+                      required
+                    />
+                  </div>
+                  <span style={{ fontSize: "0.75rem", color: "#64748b", marginTop: "4px" }}>
+                    Mã chuẩn VietQR (MBBANK, VCB, TCB, VPB, ACB, CTG, BIDV, STB, TPB...)
+                  </span>
+                </label>
+
+                <label className="admin-sets-field">
+                  <span>Tên Ngân Hàng Hiển Thị *</span>
+                  <div className="admin-sets-input-icon">
+                    <CreditCard size={16} />
+                    <input
+                      type="text"
+                      value={settings.bank_name}
+                      onChange={(e) =>
+                        handleInputChange("bank_name", e.target.value)
+                      }
+                      placeholder="VD: MBBank (NH Quân Đội)"
+                      required
+                    />
+                  </div>
+                </label>
+
+                <label className="admin-sets-field">
+                  <span>Số Tài Khoản Nhận Tiền *</span>
+                  <div className="admin-sets-input-icon">
+                    <CreditCard size={16} />
+                    <input
+                      type="text"
+                      value={settings.bank_account_no}
+                      onChange={(e) =>
+                        handleInputChange("bank_account_no", e.target.value)
+                      }
+                      placeholder="VD: 0813607311"
+                      required
+                    />
+                  </div>
+                </label>
+
+                <label className="admin-sets-field">
+                  <span>Tên Chủ Tài Khoản (In hoa không dấu) *</span>
+                  <div className="admin-sets-input-icon">
+                    <Building2 size={16} />
+                    <input
+                      type="text"
+                      value={settings.bank_account_name}
+                      onChange={(e) =>
+                        handleInputChange("bank_account_name", e.target.value.toUpperCase())
+                      }
+                      placeholder="VD: VINATAP VIETNAM CO LTD"
                       required
                     />
                   </div>

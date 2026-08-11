@@ -13,16 +13,16 @@ import {
   QrCode,
   Loader2,
 } from "lucide-react";
-import { orderAPI, voucherAPI, shippingAPI } from "../lib/api";
+import { orderAPI, voucherAPI, shippingAPI, systemSettingAPI } from "../lib/api";
 import { getUser } from "../lib/auth";
 import "./CheckoutModal.css";
 
-// 🏧 CẤU HÌNH NGÂN HÀNG CỦA BẠN ĐỂ NHẬN TIỀN THANH TOÁN VIETQR
+// 🏧 CẤU HÌNH NGÂN HÀNG MẶC ĐỊNH DỰ PHÒNG (Sẽ tự động cập nhật từ Cài đặt hệ thống nếu có)
 export const BANK_CONFIG = {
   bankId: "MBBANK", // Mã NH: MBBANK, VCB, TCB, VPB, ACB, CTG, BIDV, STB, TPB...
   bankName: "MBBank (NH Quân Đội)", // Tên ngân hàng hiển thị
-  accountNo: "0813607311", // 👉 SỐ TÀI KHOẢN CỦA BẠN
-  accountName: "VINATAP VIETNAM CO LTD", // 👉 TÊN CHỦ TÀI KHOẢN CỦA BẠN
+  accountNo: "0813607311", // 👉 SỐ TÀI KHOẢN
+  accountName: "VINATAP VIETNAM CO LTD", // 👉 TÊN CHỦ TÀI KHOẢN
 };
 
 export default function CheckoutModal({
@@ -45,11 +45,14 @@ export default function CheckoutModal({
   const [shipRule, setShipRule] = useState(
     shippingRule || { base_fee: 30000, free_shipping_threshold: 500000 },
   );
+  const [bankConfig, setBankConfig] = useState(BANK_CONFIG);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [createdOrder, setCreatedOrder] = useState(null);
   const [copiedText, setCopiedText] = useState(null);
   const [isPaymentVerified, setIsPaymentVerified] = useState(false);
+  const [pollingTimedOut, setPollingTimedOut] = useState(false);
+  const [checkingManual, setCheckingManual] = useState(false);
 
   useEffect(() => {
     // 👤 TỰ ĐỘNG ĐIỀN THÔNG TIN TÀI KHOẢN NẾU ĐÃ CÓ TRONG SETTING
@@ -62,6 +65,22 @@ export default function CheckoutModal({
         note: "",
       });
     }
+
+    // 🏧 LẤY CẤU HÌNH NGÂN HÀNG MỚI NHẤT TỪ HỆ THỐNG
+    systemSettingAPI
+      .get()
+      .then((res) => {
+        if (res && res.settings) {
+          const s = res.settings;
+          setBankConfig({
+            bankId: s.bank_id || BANK_CONFIG.bankId,
+            bankName: s.bank_name || BANK_CONFIG.bankName,
+            accountNo: s.bank_account_no || BANK_CONFIG.accountNo,
+            accountName: s.bank_account_name || BANK_CONFIG.accountName,
+          });
+        }
+      })
+      .catch(() => {});
 
     voucherAPI
       .getMyWallet()
@@ -87,11 +106,21 @@ export default function CheckoutModal({
     }
   }, [shippingRule]);
 
-  // 🔄 AUTO POLLING KIỂM TRA CHUYỂN KHOẢN TỰ ĐỘNG TỪ VIETQR MỖI 3 GIÂY
+  // 🔄 AUTO POLLING KIỂM TRA CHUYỂN KHOẢN TỰ ĐỘNG TỪ VIETQR (Tối đa 5 phút ~ 100 lần)
   useEffect(() => {
     if (!createdOrder || createdOrder.payment_method !== "vietqr" || isPaymentVerified) return;
 
+    let pollCount = 0;
+    const maxPolls = 100; // 5 phút
+
     const interval = setInterval(async () => {
+      pollCount += 1;
+      if (pollCount >= maxPolls) {
+        setPollingTimedOut(true);
+        clearInterval(interval);
+        return;
+      }
+
       try {
         const res = await orderAPI.checkStatus(createdOrder.order_code);
         if (res && (res.status === "paid" || res.status === "processing" || res.status === "completed")) {
@@ -111,6 +140,27 @@ export default function CheckoutModal({
 
     return () => clearInterval(interval);
   }, [createdOrder, isPaymentVerified]);
+
+  const handleManualRecheck = async () => {
+    if (!createdOrder || checkingManual) return;
+    setCheckingManual(true);
+    try {
+      const res = await orderAPI.checkStatus(createdOrder.order_code);
+      if (res && (res.status === "paid" || res.status === "processing" || res.status === "completed")) {
+        setIsPaymentVerified(true);
+        setTimeout(() => {
+          if (onSuccess) onSuccess();
+          onClose();
+        }, 2500);
+      } else {
+        alert("Hệ thống chưa ghi nhận thanh toán. Nếu bạn đã chuyển khoản, vui lòng chờ 1-2 phút rồi kiểm tra lại!");
+      }
+    } catch (err) {
+      alert("Không thể kiểm tra trạng thái đơn hàng: " + (err.message || "Lỗi kết nối"));
+    } finally {
+      setCheckingManual(false);
+    }
+  };
 
   // Tính nhẩm xem trước tổng tiền ở Frontend (Backend vẫn sẽ kiểm tra lại 100%)
   const subtotal = items.reduce(
@@ -144,14 +194,6 @@ export default function CheckoutModal({
         }
       } else if (selectedVoucher.discount_type === "amount") {
         discount = Number(selectedVoucher.discount_value || 0);
-      }
-    } else {
-      // Fallback cho các trường hợp đặc biệt
-      if (cleanV.includes("SHIP") || cleanV.includes("FREESHIP")) {
-        isFreeshipVoucher = true;
-        discount = 0;
-      } else if (cleanV.includes("VINATAP2026")) {
-        discount = Math.round(subtotal * 0.2);
       }
     }
   }
@@ -455,7 +497,7 @@ export default function CheckoutModal({
 
                   <div className="qr-image-wrap">
                     <img
-                      src={`https://img.vietqr.io/image/${BANK_CONFIG.bankId}-${BANK_CONFIG.accountNo}-compact2.png?amount=${createdOrder.total_amount}&addInfo=${createdOrder.order_code}&accountName=${encodeURIComponent(BANK_CONFIG.accountName)}`}
+                      src={`https://img.vietqr.io/image/${bankConfig.bankId}-${bankConfig.accountNo}-compact2.png?amount=${createdOrder.total_amount}&addInfo=${createdOrder.order_code}&accountName=${encodeURIComponent(bankConfig.accountName)}`}
                       alt="Mã QR Chuyển Khoản VinaTap"
                       className="vietqr-img"
                     />
@@ -466,16 +508,16 @@ export default function CheckoutModal({
                   <div className="bank-info-card">
                     <div className="bank-info-row">
                       <span className="label">Ngân hàng:</span>
-                      <strong>{BANK_CONFIG.bankName}</strong>
+                      <strong>{bankConfig.bankName}</strong>
                     </div>
                     <div className="bank-info-row">
                       <span className="label">Số tài khoản:</span>
                       <div className="copy-wrap">
-                        <strong>{BANK_CONFIG.accountNo}</strong>
+                        <strong>{bankConfig.accountNo}</strong>
                         <button
                           type="button"
                           onClick={() =>
-                            copyToClipboard(BANK_CONFIG.accountNo, "stk")
+                            copyToClipboard(bankConfig.accountNo, "stk")
                           }
                         >
                           {copiedText === "stk" ? (
@@ -488,7 +530,7 @@ export default function CheckoutModal({
                     </div>
                     <div className="bank-info-row">
                       <span className="label">Chủ tài khoản:</span>
-                      <strong>{BANK_CONFIG.accountName}</strong>
+                      <strong>{bankConfig.accountName}</strong>
                     </div>
                     <div className="bank-info-row">
                       <span className="label">Số tiền:</span>
@@ -521,6 +563,30 @@ export default function CheckoutModal({
                       <div className="payment-verified-banner">
                         <CheckCircle size={22} className="verified-icon" />
                         <span>🎉 CHUYỂN KHOẢN THÀNH CÔNG!</span>
+                      </div>
+                    ) : pollingTimedOut ? (
+                      <div className="payment-timeout-box" style={{ textAlign: "center", marginTop: "10px" }}>
+                        <p style={{ fontSize: "0.85rem", color: "#64748b", marginBottom: "8px" }}>
+                          Đã tạm dừng tự động kiểm tra để tiết kiệm dữ liệu.
+                        </p>
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={handleManualRecheck}
+                          disabled={checkingManual}
+                          style={{
+                            background: "#0284c7",
+                            color: "#fff",
+                            padding: "8px 16px",
+                            borderRadius: "8px",
+                            fontWeight: 600,
+                            fontSize: "0.85rem",
+                            border: "none",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {checkingManual ? "Đang kiểm tra..." : "🔄 Kiểm tra lại trạng thái"}
+                        </button>
                       </div>
                     ) : (
                       <div className="payment-waiting-banner">

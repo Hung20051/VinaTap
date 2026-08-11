@@ -19,12 +19,13 @@ const {
 
 const { protect } = require("../middleware/auth");
 const { requireRole } = require("../middleware/role");
+const { ttsLimiter } = require("../middleware/rateLimit");
 
 // Upload file ảnh/video từ máy tính lên Cloudinary
 router.post("/upload", protect, requireRole("admin"), uploadFile);
 
 // Guest xem được
-router.get("/tts/stream", getTts);
+router.get("/tts/stream", ttsLimiter, getTts);
 router.get("/", getAllProvinces);
 router.get("/:slug", getProvince);
 

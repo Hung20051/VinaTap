@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -20,6 +20,7 @@ import {
   Sticker,
   FolderPlus,
   ShoppingBag,
+  Package,
 } from "lucide-react";
 import Logo from "./Logo";
 import NotificationBell from "./NotificationBell";
@@ -37,6 +38,9 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [voucherWalletOpen, setVoucherWalletOpen] = useState(false);
 
+  const quickAddRef = useRef(null);
+  const userMenuRef = useRef(null);
+
   useEffect(() => {
     setUser(getUser());
     setUserAdmin(isAdmin());
@@ -45,8 +49,21 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
       setUserAdmin(isAdmin());
     };
     window.addEventListener("vinatap:user-updated", handleUserUpdated);
-    return () =>
+
+    const handleClickOutside = (e) => {
+      if (quickAddRef.current && !quickAddRef.current.contains(e.target)) {
+        setQuickAddOpen(false);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setUserDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
       window.removeEventListener("vinatap:user-updated", handleUserUpdated);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleGlobalSearch = (e) => {
@@ -134,7 +151,7 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
       <div className="header-region-right">
         {/* Admin Quick Action Button ➕ */}
         {userAdmin && (
-          <div className="header-quick-action-wrap">
+          <div className="header-quick-action-wrap" ref={quickAddRef}>
             <button
               className="btn-quick-action"
               onClick={() => setQuickAddOpen(!quickAddOpen)}
@@ -211,7 +228,7 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
 
         {/* User Profile Badge Dropdown 👤 */}
         {user && (
-          <div className="header-user-menu-wrap">
+          <div className="header-user-menu-wrap" ref={userMenuRef}>
             <button
               className="header-user-badge-btn"
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
@@ -254,6 +271,13 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
                       onClick={() => setUserDropdownOpen(false)}
                     >
                       <User size={16} /> Bộ Sưu Tập Của Tôi
+                    </Link>
+                    <Link
+                      href="/customer/orders"
+                      className="dropdown-item"
+                      onClick={() => setUserDropdownOpen(false)}
+                    >
+                      <Package size={16} /> Đơn Hàng Của Tôi
                     </Link>
                     <Link
                       href="/shop"

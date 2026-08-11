@@ -39,6 +39,12 @@ const createAlbum = async (req, res) => {
 
     res.status(201).json({ message: "Tạo album thành công", album });
   } catch (err) {
+    if (err.code === "ER_DUP_ENTRY") {
+      const existing = await Album.findByNfcCard(req.body.nfc_card_id);
+      return res
+        .status(409)
+        .json({ message: "Album đã tồn tại cho thẻ này", album: existing });
+    }
     console.error("createAlbum:", err);
     res.status(500).json({ message: "Lỗi server" });
   }

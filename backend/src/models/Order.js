@@ -210,7 +210,7 @@ const Order = {
           type: "feature",
           title: `🎉 Đặt Hàng Thành Công #${orderCode}`,
           content: `Cảm ơn bạn đã đặt hàng tại VinaTap! Đơn hàng trị giá ${amountText} (${payMethodName}). Shop sẽ sớm xử lý & giao tới: ${recipientAddress}.`,
-          link: "/customer/dashboard",
+          link: "/customer/orders",
           payload: { order_code: orderCode, total_amount: totalAmount },
           created_by: 0,
         });
@@ -341,30 +341,33 @@ const Order = {
     const Notification = require("./Notification");
     const amountText = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(order.total_amount);
 
-    // 1. Gửi thông báo hệ thống cho tất cả (Admin sẽ thấy qua type: system) 🔔
+    // 1. Gửi thông báo hệ thống CHỈ CHO ADMIN (không gửi cho @all) 🔔
     try {
       await Notification.send({
-        recipient_type: "all",
+        recipient_type: "group",
+        group_target: "admin",
         type: "system",
-        title: `💰 Đơn Hàng Mới Thanh Toán: ${cleanCode}`,
-        content: `Khách hàng ${order.recipient_name} (${order.recipient_phone}) vừa chuyển khoản thành công ${amountText} cho đơn ${cleanCode}.`,
-        link: "/admin/dashboard",
-        created_by: 0,
+        title: `💰 Đơn Hàng Đã Thanh Toán: #${cleanCode}`,
+        content: `Khách hàng ${order.recipient_name} (${order.recipient_phone}) vừa chuyển khoản thành công ${amountText} cho đơn #${cleanCode}.`,
+        link: "/admin/revenue",
+        payload: { order_code: cleanCode, total_amount: order.total_amount },
+        created_by: order.user_id || 0,
       });
     } catch (e) {
       console.error("Lỗi gửi thông báo admin khi thanh toán:", e.message);
     }
 
-    // 2. Gửi thông báo cho Khách hàng (nếu có tài khoản) 🔔
+    // 2. Gửi thông báo riêng cho Khách hàng đã mua 🔔
     if (order.user_id) {
       try {
         await Notification.send({
           recipient_type: "user",
           user_ids: [order.user_id],
           type: "promo",
-          title: `🎉 Thanh Toán Thành Công Đơn ${cleanCode}`,
-          content: `VinaTap đã xác nhận thanh toán ${amountText} cho đơn hàng ${cleanCode}. Đơn hàng đang được đóng gói giao tới bạn!`,
-          link: "/customer/dashboard",
+          title: `🎉 Thanh Toán Thành Công Đơn #${cleanCode}`,
+          content: `VinaTap đã xác nhận thanh toán ${amountText} cho đơn hàng #${cleanCode}. Đơn hàng đang được chuẩn bị & đóng gói giao tới bạn!`,
+          link: "/customer/orders",
+          payload: { order_code: cleanCode, total_amount: order.total_amount },
           created_by: 0,
         });
       } catch (e) {

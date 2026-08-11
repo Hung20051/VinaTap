@@ -60,6 +60,11 @@ export default function CustomerLayout({ children }) {
       label: t(lang, "collection"),
     },
     {
+      href: "/customer/orders",
+      icon: <ShoppingBag size={20} />,
+      label: "Đơn Hàng Của Tôi",
+    },
+    {
       href: "/shop",
       icon: <ShoppingBag size={20} />,
       label: "Cửa Hàng Thẻ NFC",

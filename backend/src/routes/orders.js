@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { protect, requireAdmin } = require("../middleware/auth");
+const { protect, requireAdmin, optionalAuth } = require("../middleware/auth");
+const { orderCheckLimiter, orderCreateLimiter } = require("../middleware/rateLimit");
 const {
   createOrder,
   getMyOrders,
@@ -11,11 +12,11 @@ const {
 } = require("../controllers/orderController");
 
 // Public & Webhook Routes
-router.get("/check-status/:orderCode", checkOrderStatus);
+router.get("/check-status/:orderCode", optionalAuth, orderCheckLimiter, checkOrderStatus);
 router.post("/payment-webhook", paymentWebhook);
 
 // Customer Routes (Yêu cầu đăng nhập)
-router.post("/", protect, createOrder);
+router.post("/", protect, orderCreateLimiter, createOrder);
 router.get("/my", protect, getMyOrders);
 
 // Admin Routes (Yêu cầu quyền Admin)

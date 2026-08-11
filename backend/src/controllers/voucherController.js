@@ -58,13 +58,13 @@ exports.sendVoucherToUsers = async (req, res) => {
       return res.status(400).json({ message: "Thiếu mã Voucher cần tặng" });
     }
 
-    const count = await Voucher.sendToUsers(voucherId, targetType, userIds);
+    const { count, recipientIds } = await Voucher.sendToUsers(voucherId, targetType, userIds);
 
-    // Tự động bắn thông báo cho khách hàng nhận được quà
-    if (sendNotification && count > 0) {
+    // Tự động bắn thông báo cho đúng các khách hàng nhận được quà
+    if (sendNotification && recipientIds && recipientIds.length > 0) {
       await Notification.send({
-        recipient_type: targetType === "all" ? "all" : "users",
-        user_ids: targetType === "all" ? [] : userIds,
+        recipient_type: "users",
+        user_ids: recipientIds,
         type: "promo",
         title: "🎁 Bạn Nhận Được Voucher Quà Tặng Mới!",
         content: `Chúc mừng bạn! VinaTap vừa tặng bạn 1 Voucher ưu đãi mới vào Ví Voucher. Mở Ví xem ngay!`,
