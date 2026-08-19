@@ -7,8 +7,8 @@ import {
   setTheme as persistTheme,
   getLang,
   setLang as persistLang,
-} from "../../../lib/prefs";
-import { t } from "../../../lib/i18n";
+} from "@/lib/prefs";
+import { t } from "@/lib/i18n";
 import "./SettingsAppearance.css";
 
 export default function SettingsAppearance() {

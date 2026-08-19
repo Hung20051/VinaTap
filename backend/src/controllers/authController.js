@@ -453,7 +453,7 @@ const getMe = async (req, res) => {
     if (!user)
       return res.status(404).json({ message: "Không tìm thấy tài khoản" });
 
-    res.json({ user });
+    res.json({ user: toPublicUser(user) });
   } catch (err) {
     console.error("getMe error:", err);
     res.status(500).json({ message: "Lỗi server" });
@@ -513,7 +513,7 @@ const updateMe = async (req, res) => {
     await User.updateProfile(req.user.id, patch);
     const user = await User.findById(req.user.id);
 
-    res.json({ message: "Cập nhật hồ sơ thành công", user });
+    res.json({ message: "Cập nhật hồ sơ thành công", user: toPublicUser(user) });
   } catch (err) {
     console.error("updateMe error:", err);
     res.status(500).json({ message: "Lỗi server" });
@@ -608,7 +608,7 @@ const uploadAvatar = async (req, res) => {
     await User.updateProfile(req.user.id, { avatar_url: uploaded.secure_url });
     const user = await User.findById(req.user.id);
 
-    res.json({ message: "Cập nhật ảnh đại diện thành công", user });
+    res.json({ message: "Cập nhật ảnh đại diện thành công", user: toPublicUser(user) });
   } catch (err) {
     console.error("uploadAvatar error:", err);
     res

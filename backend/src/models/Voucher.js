@@ -44,7 +44,6 @@ const Voucher = {
 
   // 🛍️ Lấy danh sách Voucher trong Ví người dùng (+ Voucher công khai chưa lưu)
   async getUserWallet(userId) {
-    await this.initTable();
 
     // Query các voucher đã có trong ví của user (chỉ lấy voucher còn khả dụng)
     const [myRows] = await db.execute(
@@ -78,7 +77,6 @@ const Voucher = {
 
   // 🎟️ Đổi / Lưu mã voucher vào Ví cá nhân
   async redeemCode(userId, code) {
-    await this.initTable();
     const cleanCode = (code || "").trim().toUpperCase();
 
     const [vouchers] = await db.execute(
@@ -123,7 +121,6 @@ const Voucher = {
 
   // 👑 Admin lấy danh sách toàn bộ Voucher
   async getAllAdmin() {
-    await this.initTable();
     const [rows] = await db.execute(
       `SELECT v.*, 
         (SELECT COUNT(*) FROM user_vouchers WHERE voucher_id = v.id) AS total_assigned
@@ -135,7 +132,6 @@ const Voucher = {
 
   // 👑 Admin tạo Voucher mới
   async createAdmin(data) {
-    await this.initTable();
     const cleanCode = data.code.trim().toUpperCase();
 
     if (data.expires_at) {
@@ -171,8 +167,6 @@ const Voucher = {
 
   // 👑 Admin tặng Voucher cho danh sách User
   async sendToUsers(voucherId, targetType, userIds = []) {
-    await this.initTable();
-
     let targetUserIds = [];
     if (targetType === "all") {
       const [users] = await db.execute(`SELECT id FROM users WHERE status = 'active' AND role != 'admin'`);
@@ -187,12 +181,14 @@ const Voucher = {
     let count = 0;
     for (const uId of targetUserIds) {
       try {
-        await db.execute(
+        const [res] = await db.execute(
           `INSERT IGNORE INTO user_vouchers (user_id, voucher_id, status) VALUES (?, ?, 'available')`,
           [uId, voucherId],
         );
-        recipientIds.push(uId);
-        count++;
+        if (res.affectedRows > 0) {
+          recipientIds.push(uId);
+          count++;
+        }
       } catch (e) {}
     }
     return { count, recipientIds };
@@ -222,9 +218,9 @@ const Voucher = {
     };
   },
 
-  // 🛍️ Kiểm tra & áp dụng Voucher từ Database khi đặt hàng
-  async validateAndApplyOrderVoucher({ userId, code, subtotal }) {
-    await this.initTable();
+  // 🛍️ CHỈ KIỂM TRA Voucher (Không tự động tăng used_count)
+  // Dùng khi tạo đơn hàng để validate trước khi mở DB Transaction
+  async validateOrderVoucherOnly({ userId, code, subtotal }) {
     const cleanCode = (code || "").trim().toUpperCase();
     if (!cleanCode) {
       return { discountAmount: 0, isFreeship: false, voucher: null };
@@ -258,9 +254,7 @@ const Voucher = {
       throw new Error(`Mã Voucher "${cleanCode}" đã hết lượt sử dụng trên hệ thống`);
     }
 
-    // 🛑 KIỂM TRA NGƯỜI DÙNG ĐÃ TỪNG SỬ DỤNG MÃ NÀY CHƯA (CHỐNG DÙNG LẠI NHIỀU LẦN)
     if (userId) {
-      // 1. Kiểm tra trong Ví người dùng
       const [uvRows] = await db.execute(
         `SELECT status FROM user_vouchers WHERE user_id = ? AND voucher_id = ? LIMIT 1`,
         [userId, v.id],
@@ -269,9 +263,13 @@ const Voucher = {
         throw new Error(`Bạn đã sử dụng mã Voucher "${cleanCode}" cho đơn hàng trước đó rồi!`);
       }
 
-      // 2. Kiểm tra trong lịch sử đơn hàng đã đặt
+      // Chỉ chặn nếu người dùng đã có đơn hàng ĐÃ MUA THỰC SỰ dùng voucher này
+      // (paid, processing, shipping, completed, hoặc COD pending)
       const [orderRows] = await db.execute(
-        `SELECT id FROM orders WHERE user_id = ? AND UPPER(voucher_code) = ? AND status != 'cancelled' LIMIT 1`,
+        `SELECT id FROM orders 
+         WHERE user_id = ? AND UPPER(voucher_code) = ? 
+           AND (status IN ('paid', 'processing', 'shipping', 'completed') OR (payment_method = 'cod' AND status != 'cancelled'))
+         LIMIT 1`,
         [userId, cleanCode],
       );
       if (orderRows.length > 0) {
@@ -294,21 +292,12 @@ const Voucher = {
       discountAmount = 0;
     }
 
-    // Tăng lượt sử dụng chung trên toàn hệ thống
-    await db.execute(`UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?`, [v.id]);
-
-    // Đánh dấu người dùng đã sử dụng mã này trong Ví cá nhân
-    if (userId) {
-      await db.execute(
-        `INSERT INTO user_vouchers (user_id, voucher_id, status, used_at) 
-         VALUES (?, ?, 'used', NOW()) 
-         ON DUPLICATE KEY UPDATE status = 'used', used_at = NOW()`,
-        [userId, v.id],
-      );
-    }
-
     return { discountAmount, isFreeship, voucher: v };
   },
+
+  // ⚠️ ĐÃ XÓA: validateAndApplyOrderVoucher() — tăng used_count NGOÀI transaction.
+  // Order.create() đã thay bằng validateOrderVoucherOnly() + tăng count TRONG
+  // transaction để đảm bảo atomicity. Không dùng hàm này nữa.
 };
 
 module.exports = Voucher;

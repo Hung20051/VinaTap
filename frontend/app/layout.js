@@ -1,5 +1,6 @@
-import "../styles/globals.css";
-import TrafficTracker from "../components/TrafficTracker";
+import "@/styles/globals.css";
+import TrafficTracker from "@/components/layout/TrafficTracker";
+import Script from "next/script";
 
 export const metadata = {
   title: "VinaTap — Bản Đồ Du Lịch NFC Việt Nam",
@@ -21,7 +22,9 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap"
           rel="stylesheet"
         />
-        <script
+        <Script
+          id="theme-initializer"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               try {

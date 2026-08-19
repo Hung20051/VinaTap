@@ -1,7 +1,6 @@
 /* ============================================================
    VinaTap — Style DÙNG CHUNG CAO CẤP cho toàn bộ /settings/*
-   Import 1 lần duy nhất ở app/settings/layout.js — mọi trang con
-   (account, password, appearance, support, legal, about) đều hiển thị mượt mà.
+   Hỗ trợ Dark Mode & Light Mode bằng CSS Variables chuẩn mực
    ============================================================ */
 
 .settings-page {
@@ -13,24 +12,24 @@
 .settings-page__title {
   font-size: 1.75rem;
   font-weight: 900;
-  color: #0f172a;
+  color: var(--text-primary, #0f172a);
   letter-spacing: -0.02em;
   margin: 0 0 6px 0;
 }
 
 .settings-page__subtitle {
   font-size: 0.95rem;
-  color: #64748b;
+  color: var(--text-secondary, #64748b);
   margin: 0 0 2rem 0;
   line-height: 1.5;
 }
 
 /* Card Container */
 .settings-page .card {
-  background: #ffffff;
+  background: var(--bg-card, #ffffff);
   border-radius: 20px;
   padding: 2rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border, #e2e8f0);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
   margin-bottom: 1.75rem;
   transition: all 0.2s ease;
@@ -40,21 +39,21 @@
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
 }
 
-/* Form Fields - Ép flex-direction column mượt mà */
+/* Form Fields */
 .settings-field {
   display: flex !important;
   flex-direction: column !important;
   gap: 8px !important;
   font-size: 0.88rem;
   font-weight: 700;
-  color: #334155;
+  color: var(--text-primary, #334155);
   margin-bottom: 1.5rem;
   width: 100% !important;
 }
 
 .settings-field span {
   display: block;
-  color: #334155;
+  color: var(--text-primary, #334155);
   font-size: 0.88rem;
   font-weight: 700;
 }
@@ -65,11 +64,11 @@
   width: 100% !important;
   padding: 12px 16px !important;
   border-radius: 12px !important;
-  border: 1px solid #cbd5e1 !important;
+  border: 1px solid var(--border, #cbd5e1) !important;
   font-size: 0.95rem !important;
   font-weight: 500 !important;
-  color: #0f172a !important;
-  background: #ffffff !important;
+  color: var(--text-primary, #0f172a) !important;
+  background: var(--bg-card, #ffffff) !important;
   font-family: inherit !important;
   transition: all 0.2s ease !important;
   box-sizing: border-box !important;
@@ -85,16 +84,16 @@
 
 .settings-field--readonly,
 .settings-field input:disabled {
-  background: #f8fafc !important;
-  color: #64748b !important;
-  border-color: #e2e8f0 !important;
+  background: var(--bg-page, #f8fafc) !important;
+  color: var(--text-muted, #64748b) !important;
+  border-color: var(--border, #e2e8f0) !important;
   cursor: not-allowed !important;
 }
 
 .settings-field__hint {
   font-size: 0.8rem;
   font-weight: 500;
-  color: #64748b;
+  color: var(--text-secondary, #64748b);
   margin-top: 4px;
   display: block;
 }
@@ -124,5 +123,5 @@
   gap: 1rem;
   margin-top: 1.5rem;
   padding-top: 1.25rem;
-  border-top: 1px dashed #e2e8f0;
+  border-top: 1px dashed var(--border, #e2e8f0);
 }

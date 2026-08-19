@@ -29,6 +29,14 @@ export const dict = {
     noResults: "Không tìm thấy mục nào",
     backToApp: "Quay lại ứng dụng",
     backToAdmin: "Quay lại Quản trị",
+    shop: "Cửa Hàng",
+    myOrders: "Đơn Hàng Của Tôi",
+    accountSettings: "Cài Đặt Tài Khoản",
+    adminPortal: "Trang Quản Trị Admin",
+    nfcStore: "Cửa Hàng Thẻ NFC",
+    vouchers: "Ví Voucher",
+    quickAdd: "Tạo Nhanh",
+    searchPlaceholder: "Tìm kiếm...",
 
     // ─── ADMIN NAV ───
     adminOverview: "Tổng quan",
@@ -149,6 +157,14 @@ export const dict = {
     noResults: "No matching items",
     backToApp: "Back to App",
     backToAdmin: "Back to Admin",
+    shop: "Store",
+    myOrders: "My Orders",
+    accountSettings: "Account Settings",
+    adminPortal: "Admin Portal",
+    nfcStore: "NFC Card Store",
+    vouchers: "Vouchers",
+    quickAdd: "Quick Create",
+    searchPlaceholder: "Search...",
 
     // ─── ADMIN NAV ───
     adminOverview: "Overview",

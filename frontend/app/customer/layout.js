@@ -2,26 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import { getUser, requireAuth, isAdmin, clearAuth } from "../../lib/auth";
-import { LayoutDashboard, ShieldCheck, ShoppingBag } from "lucide-react";
-import { t } from "../../lib/i18n";
-import { getLang } from "../../lib/prefs";
+import Header from "@/components/layout/Header";
+import Sidebar from "@/components/layout/Sidebar";
+import { getUser, getToken, saveAuth, requireAuth, isAdmin, clearAuth } from "@/lib/auth";
+import { authAPI } from "@/lib/api";
+import { LayoutDashboard, ShoppingBag } from "lucide-react";
+import { t } from "@/lib/i18n";
+import { getLang } from "@/lib/prefs";
 
 export default function CustomerLayout({ children }) {
   const router = useRouter();
 
-  const [user, setUser] = useState(() => {
-    if (typeof window !== "undefined") return getUser();
-    return null;
-  });
-
-  const [lang, setLang] = useState(() => {
-    if (typeof window !== "undefined") return getLang();
-    return "vi";
-  });
-
+  const [user, setUser] = useState(null);
+  const [lang, setLang] = useState("vi");
   const [mounted, setMounted] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -34,6 +27,20 @@ export default function CustomerLayout({ children }) {
     }
     setUser(getUser());
     setLang(getLang());
+
+    // Verify token còn hợp lệ & sync dữ liệu user mới nhất từ server
+    authAPI.getMe()
+      .then((res) => {
+        if (res?.user) {
+          setUser(res.user);
+          saveAuth(getToken(), res.user);
+        }
+      })
+      .catch(() => {
+        // Token hết hạn hoặc user bị ban → đăng xuất
+        clearAuth();
+        router.push("/auth");
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,15 +76,6 @@ export default function CustomerLayout({ children }) {
       icon: <ShoppingBag size={20} />,
       label: "Cửa Hàng Thẻ NFC",
     },
-    ...(mounted && isAdmin()
-      ? [
-          {
-            href: "/admin",
-            icon: <ShieldCheck size={20} />,
-            label: t(lang, "admin"),
-          },
-        ]
-      : []),
   ];
 
   return (

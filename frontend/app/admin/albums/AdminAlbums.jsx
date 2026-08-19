@@ -21,7 +21,7 @@ import {
   Film,
   Image as ImageIcon,
 } from "lucide-react";
-import { albumAPI } from "../../../lib/api";
+import { albumAPI } from "@/lib/api";
 import "./AdminAlbums.css";
 
 export default function AdminAlbums() {

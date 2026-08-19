@@ -26,7 +26,6 @@ const Product = {
   // Lấy tất cả sản phẩm — mặc định chỉ lấy is_active=1 (cho dropdown tạo
   // đơn mới), truyền includeInactive=true để lấy hết
   async findAll(includeInactive = false) {
-    await this.initTable();
     const where = includeInactive ? "" : "WHERE is_active = 1";
     const [rows] = await db.execute(
       `SELECT id, name, category, price, original_price, image, tag, description, is_active, created_at
@@ -37,7 +36,6 @@ const Product = {
   },
 
   async findById(id) {
-    await this.initTable();
     const [rows] = await db.execute(
       `SELECT * FROM products WHERE id = ? LIMIT 1`,
       [id],
@@ -54,7 +52,6 @@ const Product = {
     tag,
     description,
   }) {
-    await this.initTable();
     const [result] = await db.execute(
       `INSERT INTO products (name, category, price, original_price, image, tag, description, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, 1)`,
       [
@@ -74,7 +71,6 @@ const Product = {
     id,
     { name, category, price, original_price, image, tag, description },
   ) {
-    await this.initTable();
     await db.execute(
       `UPDATE products SET name = ?, category = ?, price = ?, original_price = ?, image = ?, tag = ?, description = ? WHERE id = ?`,
       [name, category, price, original_price, image, tag, description, id],
@@ -82,7 +78,6 @@ const Product = {
   },
 
   async setActive(id, isActive) {
-    await this.initTable();
     await db.execute(`UPDATE products SET is_active = ? WHERE id = ?`, [
       isActive ? 1 : 0,
       id,
@@ -90,7 +85,6 @@ const Product = {
   },
 
   async delete(id) {
-    await this.initTable();
     await db.execute(`DELETE FROM products WHERE id = ?`, [id]);
   },
 };

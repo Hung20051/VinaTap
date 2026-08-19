@@ -33,7 +33,6 @@ const PageView = {
 
   // Ghi nhận lượt xem trang thực tế
   async track({ pagePath, provinceSlug, ipAddress, userAgent }) {
-    await this.initTable();
 
     const ua = userAgent || "";
     const isBot = BOT_REGEX.test(ua) ? 1 : 0; // Lọc bot ngầm an toàn
@@ -56,7 +55,6 @@ const PageView = {
 
   // Lấy thống kê chi tiết lượt truy cập
   async getAnalyticsStats(timeframe = "7days") {
-    await this.initTable();
 
     let whereClause = "WHERE pv.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
     if (timeframe === "today") {

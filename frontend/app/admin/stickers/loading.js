@@ -2,7 +2,7 @@ import {
   SkeletonHeader,
   SkeletonFilters,
   SkeletonKpiGrid,
-} from "../../../components/PageSkeleton";
+} from "@/components/ui/PageSkeleton";
 
 // Đổi từ SkeletonCentered (lúc trang còn là AdminComingSoon) sang dạng
 // lưới — trang giờ đã có nội dung thật (lưới sticker theo category).

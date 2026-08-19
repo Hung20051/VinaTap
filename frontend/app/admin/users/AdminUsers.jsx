@@ -10,8 +10,8 @@ import {
   Eye,
   Phone,
 } from "lucide-react";
-import { userAPI } from "../../../lib/api";
-import { getUser } from "../../../lib/auth";
+import { userAPI } from "@/lib/api";
+import { getUser } from "@/lib/auth";
 import UserDetailModal from "./components/UserDetailModal";
 import "./AdminUsers.css";
 

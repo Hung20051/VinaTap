@@ -17,7 +17,7 @@ import {
   Edit2,
 } from "lucide-react";
 import { manualSaleAPI, orderAPI, productAPI } from "@/lib/api";
-import { getToken } from "../../../lib/auth";
+import { getToken } from "@/lib/auth";
 import "./AdminRevenue.css";
 
 const formatVND = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
@@ -29,6 +29,7 @@ export default function AdminRevenue() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("active"); // 'active' | 'pending' | 'paid' | 'shipping' | 'completed' | 'cancelled' | 'all'
   const [toast, setToast] = useState(null);
 
   const [formOpen, setFormOpen] = useState(false);
@@ -246,16 +247,44 @@ export default function AdminRevenue() {
         </button>
       </div>
 
-      <form className="admin-rev-search" onSubmit={handleSearchSubmit}>
-        <Search size={16} className="admin-rev-search__icon" />
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Tìm theo mã đơn, số điện thoại hoặc tên người mua..."
-          className="admin-rev-search__input"
-        />
-      </form>
+      <div style={{ display: "flex", gap: "12px", marginBottom: "1.25rem", alignItems: "center" }}>
+        <form className="admin-rev-search" onSubmit={handleSearchSubmit} style={{ flex: 1, margin: 0 }}>
+          <Search size={16} className="admin-rev-search__icon" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Tìm theo mã đơn, số điện thoại hoặc tên người mua..."
+            className="admin-rev-search__input"
+          />
+        </form>
+
+        {activeTab === "online" && (
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            style={{
+              padding: "10px 14px",
+              borderRadius: "10px",
+              border: "1px solid #cbd5e1",
+              fontSize: "0.88rem",
+              fontWeight: 600,
+              color: "#0f172a",
+              background: "#ffffff",
+              cursor: "pointer",
+              height: "42px",
+            }}
+          >
+            <option value="active">✨ Đơn đang xử lý (Ẩn đơn hủy/quá hạn)</option>
+            <option value="pending">⏳ Đơn chờ chuyển khoản (VietQR / COD)</option>
+            <option value="paid">✅ Đã thanh toán</option>
+            <option value="shipping">🚚 Đang giao hàng</option>
+            <option value="completed">🎉 Đã hoàn tất</option>
+            <option value="cancelled">🚫 Đơn đã hủy / Quá hạn 24h</option>
+            <option value="all">🌐 Tất cả đơn (Bao gồm đơn đã hủy)</option>
+          </select>
+        )}
+      </div>
 
       {loading ? (
         <div className="admin-dash-loading">
@@ -263,26 +292,33 @@ export default function AdminRevenue() {
         </div>
       ) : activeTab === "online" ? (
         /* DANH SÁCH ĐƠN SHOP ONLINE (VIETQR / COD) */
-        onlineOrders.length === 0 ? (
-          <div className="card admin-rev-empty">
-            Chưa có đơn hàng Shop Online nào được đặt.
-          </div>
-        ) : (
-          <div className="card admin-rev-table-wrap">
-            <table className="admin-rev-table">
-              <thead>
-                <tr>
-                  <th>Mã Đơn</th>
-                  <th>Khách Hàng</th>
-                  <th>SĐT / Địa Chỉ</th>
-                  <th>PTTT</th>
-                  <th>Tổng Tiền</th>
-                  <th>Trạng Thái</th>
-                  <th>Thao Tác Admin</th>
-                </tr>
-              </thead>
-              <tbody>
-                {onlineOrders.map((o) => (
+        (() => {
+          const displayOnlineOrders = onlineOrders.filter((o) => {
+            if (statusFilter === "all") return true;
+            if (statusFilter === "active") return o.status !== "cancelled";
+            return o.status === statusFilter;
+          });
+
+          return displayOnlineOrders.length === 0 ? (
+            <div className="card admin-rev-empty">
+              Chưa có đơn hàng Shop Online nào khớp với bộ lọc.
+            </div>
+          ) : (
+            <div className="card admin-rev-table-wrap">
+              <table className="admin-rev-table">
+                <thead>
+                  <tr>
+                    <th>Mã Đơn</th>
+                    <th>Khách Hàng</th>
+                    <th>SĐT / Địa Chỉ</th>
+                    <th>PTTT</th>
+                    <th>Tổng Tiền</th>
+                    <th>Trạng Thái</th>
+                    <th>Thao Tác Admin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {displayOnlineOrders.map((o) => (
                   <tr key={o.id}>
                     <td>
                       <code style={{ fontWeight: 800, color: "#0284c7" }}>
@@ -334,9 +370,15 @@ export default function AdminRevenue() {
                     </td>
                     <td>
                       {o.status === "pending" && (
-                        <span className="badge badge-warning" style={{ background: "#fef3c7", color: "#b45309", border: "1px solid #fde68a" }}>
-                          ⏳ Chờ chuyển khoản
-                        </span>
+                        o.payment_method === "cod" ? (
+                          <span className="badge badge-warning" style={{ background: "#fff7ed", color: "#c2410c", border: "1px solid #ffedd5" }}>
+                            📦 Đơn COD mới
+                          </span>
+                        ) : (
+                          <span className="badge badge-warning" style={{ background: "#fef3c7", color: "#b45309", border: "1px solid #fde68a" }}>
+                            ⏳ Chờ CK VietQR
+                          </span>
+                        )
                       )}
                       {o.status === "paid" && (
                         <span className="badge badge-success" style={{ background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", fontWeight: 800 }}>
@@ -357,14 +399,23 @@ export default function AdminRevenue() {
                     </td>
                     <td>
                       <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-                        {o.status === "pending" && (
+                        {o.status === "pending" && o.payment_method === "vietqr" && (
                           <button
                             className="btn btn-sm"
                             style={{ background: "#f8fafc", border: "1px solid #cbd5e1", color: "#475569", fontSize: "0.75rem", padding: "4px 8px" }}
                             onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "paid")}
                             title="Chỉ bấm khi khách chuyển tiền nhưng gõ sai nội dung"
                           >
-                            ⚡ Duyệt tay
+                            ⚡ Duyệt tay CK
+                          </button>
+                        )}
+                        {o.status === "pending" && o.payment_method === "cod" && (
+                          <button
+                            className="btn btn-sm btn-primary"
+                            style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}
+                            onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "shipping")}
+                          >
+                            🚀 Duyệt & Giao
                           </button>
                         )}
                         {o.status === "paid" && (
@@ -391,7 +442,8 @@ export default function AdminRevenue() {
               </tbody>
             </table>
           </div>
-        )
+        );
+      })()
       ) : (
         /* DANH SÁCH ĐƠN THỦ CÔNG */
         sales.length === 0 ? (

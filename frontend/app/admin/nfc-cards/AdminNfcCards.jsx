@@ -15,7 +15,7 @@ import {
   HelpCircle,
   ChevronDown,
 } from "lucide-react";
-import { nfcAPI, provinceAPI, adminStatsAPI, userAPI } from "../../../lib/api";
+import { nfcAPI, provinceAPI, adminStatsAPI, userAPI } from "@/lib/api";
 import "./AdminNfcCards.css";
 
 export default function AdminNfcCards() {

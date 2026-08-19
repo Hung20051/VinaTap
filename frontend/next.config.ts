@@ -12,6 +12,23 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" }, // Google avatar
     ],
   },
+
+  // Tự động redirect nếu ai đó truy cập /customer/settings về /settings cấp 1
+  async redirects() {
+    return [
+      {
+        source: "/customer/settings",
+        destination: "/settings",
+        permanent: true,
+      },
+      {
+        source: "/customer/settings/:path*",
+        destination: "/settings/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   // Cho phép gọi API backend từ server component nếu cần sau này
   async rewrites() {
     return [

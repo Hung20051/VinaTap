@@ -1,4 +1,4 @@
-import { SkeletonHeader, SkeletonList } from "../../../components/PageSkeleton";
+import { SkeletonHeader, SkeletonList } from "@/components/ui/PageSkeleton";
 
 export default function SupportLoading() {
   return (

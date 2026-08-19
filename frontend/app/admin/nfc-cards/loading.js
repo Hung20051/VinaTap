@@ -2,7 +2,7 @@ import {
   SkeletonHeader,
   SkeletonKpiGrid,
   SkeletonTable,
-} from "../../../components/PageSkeleton";
+} from "@/components/ui/PageSkeleton";
 
 export default function NfcCardsLoading() {
   return (

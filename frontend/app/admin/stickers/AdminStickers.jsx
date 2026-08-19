@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Plus, UploadCloud, Search, Filter } from "lucide-react";
-import { stickerAPI } from "../../../lib/api";
+import { stickerAPI } from "@/lib/api";
 import StickerOfTheDay from "./components/StickerOfTheDay";
 import StickerGroup from "./components/StickerGroup";
 import CategorySelect from "./components/CategorySelect";

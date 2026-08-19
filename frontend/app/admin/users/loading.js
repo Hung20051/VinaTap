@@ -2,7 +2,7 @@ import {
   SkeletonHeader,
   SkeletonFilters,
   SkeletonTable,
-} from "../../../components/PageSkeleton";
+} from "@/components/ui/PageSkeleton";
 
 export default function UsersLoading() {
   return (

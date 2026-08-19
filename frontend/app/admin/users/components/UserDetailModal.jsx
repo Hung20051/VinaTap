@@ -10,7 +10,7 @@ import {
   CreditCard,
   FolderArchive,
 } from "lucide-react";
-import { userAPI } from "../../../../lib/api";
+import { userAPI } from "@/lib/api";
 
 export default function UserDetailModal({ userId, onClose, showToast }) {
   const [detail, setDetail] = useState(null);

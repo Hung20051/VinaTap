@@ -161,7 +161,7 @@ const initiateTransfer = async (req, res) => {
 
     // Không chuyển cho chính mình
     const [self] = await db.execute(
-      `SELECT id FROM users WHERE email = ? AND id = ?`,
+      `SELECT id FROM users WHERE LOWER(email) = LOWER(?) AND id = ?`,
       [email, req.user.id],
     );
     if (self.length)
@@ -224,7 +224,7 @@ const acceptTransfer = async (req, res) => {
     const [me] = await db.execute(`SELECT email FROM users WHERE id = ?`, [
       req.user.id,
     ]);
-    if (!me.length || me[0].email !== tr.to_email)
+    if (!me.length || me[0].email.toLowerCase() !== tr.to_email.toLowerCase())
       return res
         .status(403)
         .json({ message: "Link này không dành cho tài khoản của bạn" });

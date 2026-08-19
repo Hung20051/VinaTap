@@ -1,8 +1,17 @@
 const db = require("../config/db");
 
+let _settingsCache = null;
+let _cacheTimestamp = 0;
+const CACHE_TTL_MS = 30 * 1000; // 30 giây
+
 class SystemSetting {
   static async getAll() {
     try {
+      const now = Date.now();
+      if (_settingsCache && now - _cacheTimestamp < CACHE_TTL_MS) {
+        return _settingsCache;
+      }
+
       const [rows] = await db.execute(
         `SELECT setting_key, setting_value FROM system_settings`,
       );
@@ -10,6 +19,10 @@ class SystemSetting {
       rows.forEach((r) => {
         settings[r.setting_key] = r.setting_value;
       });
+
+      _settingsCache = settings;
+      _cacheTimestamp = now;
+
       return settings;
     } catch (err) {
       return {
@@ -46,6 +59,10 @@ class SystemSetting {
         [key, String(value), String(value)],
       );
     }
+
+    _settingsCache = null;
+    _cacheTimestamp = 0;
+
     return true;
   }
 }

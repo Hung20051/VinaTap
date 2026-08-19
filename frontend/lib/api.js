@@ -1,4 +1,8 @@
 export const getBaseUrl = () => {
+  // Ưu tiên env var — trên Vercel/production, set NEXT_PUBLIC_API_URL để trỏ
+  // tới backend thật (vd Railway). Không hardcode URL production trong source.
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+
   if (typeof window !== "undefined") {
     const host = window.location.hostname;
     // Khi chạy local (localhost, 127.0.0.1 hoặc IP mạng LAN)
@@ -11,11 +15,15 @@ export const getBaseUrl = () => {
     ) {
       return `http://${host}:5000/api`;
     }
-    if (host.includes("vercel.app")) {
-      return "https://tender-adventure-production.up.railway.app/api";
-    }
   }
-  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+
+  // Trên production SSR (server-side), thiếu env var sẽ fail — cảnh báo sớm
+  if (typeof window === "undefined" && process.env.NODE_ENV === "production") {
+    console.warn(
+      "⚠️ [VinaTap] NEXT_PUBLIC_API_URL chưa được set! API calls server-side sẽ fail trên production.",
+    );
+  }
+
   return "http://localhost:5000/api";
 };
 

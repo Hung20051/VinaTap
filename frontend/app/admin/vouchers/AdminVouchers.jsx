@@ -16,7 +16,7 @@ import {
   Bell,
   X,
 } from "lucide-react";
-import { voucherAPI } from "../../../lib/api";
+import { voucherAPI } from "@/lib/api";
 import "./AdminVouchers.css";
 
 export default function AdminVouchers() {

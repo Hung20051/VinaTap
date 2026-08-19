@@ -17,9 +17,14 @@ import {
   X,
 } from "lucide-react";
 import { orderAPI, systemSettingAPI } from "@/lib/api";
-import { getUser } from "@/lib/auth";
-import { BANK_CONFIG } from "@/components/CheckoutModal";
 import "./CustomerOrders.css";
+
+const EMPTY_BANK_CONFIG = {
+  bankId: "",
+  bankName: "",
+  accountNo: "",
+  accountName: "",
+};
 
 export default function CustomerOrders() {
   const [orders, setOrders] = useState([]);
@@ -27,7 +32,7 @@ export default function CustomerOrders() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [selectedOrderForQr, setSelectedOrderForQr] = useState(null);
   const [copiedMemo, setCopiedMemo] = useState(false);
-  const [bankConfig, setBankConfig] = useState(BANK_CONFIG);
+  const [bankConfig, setBankConfig] = useState(EMPTY_BANK_CONFIG);
 
   useEffect(() => {
     loadOrders();
@@ -37,10 +42,10 @@ export default function CustomerOrders() {
         if (res && res.settings) {
           const s = res.settings;
           setBankConfig({
-            bankId: s.bank_id || BANK_CONFIG.bankId,
-            bankName: s.bank_name || BANK_CONFIG.bankName,
-            accountNo: s.bank_account_no || BANK_CONFIG.accountNo,
-            accountName: s.bank_account_name || BANK_CONFIG.accountName,
+            bankId: s.bank_id || "",
+            bankName: s.bank_name || "",
+            accountNo: s.bank_account_no || "",
+            accountName: s.bank_account_name || "",
           });
         }
       })
@@ -60,11 +65,11 @@ export default function CustomerOrders() {
   };
 
   // 🎯 Chỉ hiển thị những đơn hàng ĐÃ MUA THỰC SỰ:
-  // 1. Đơn VietQR đã thanh toán thành công, đang giao, hoặc hoàn tất
-  // 2. Đơn COD nhận hàng thanh toán tiền mặt (Đang chuẩn bị hàng, đang giao, hoàn tất)
-  // ❌ Tự động ẩn các đơn VietQR chưa chuyển tiền bị bỏ quên
+  // 1. Đơn VietQR đã thanh toán thành công (paid, shipping, completed, processing)
+  // 2. Đơn COD nhận hàng thanh toán tiền mặt (pending, paid, shipping, completed)
+  // ❌ Tự động ẩn các đơn VietQR pending chưa chuyển tiền (người dùng đóng popup/reload) để rác danh sách
   const validPurchasedOrders = orders.filter((o) => {
-    if (["paid", "shipping", "completed"].includes(o.status)) {
+    if (["paid", "processing", "shipping", "completed"].includes(o.status)) {
       return true;
     }
     if (o.payment_method === "cod" && o.status !== "cancelled") {
@@ -76,7 +81,7 @@ export default function CustomerOrders() {
   const filteredOrders = validPurchasedOrders.filter((o) => {
     if (filterStatus === "all") return true;
     if (filterStatus === "processing") {
-      return o.status === "paid" || (o.payment_method === "cod" && o.status === "pending");
+      return o.status === "paid" || o.status === "processing" || (o.payment_method === "cod" && o.status === "pending");
     }
     return o.status === filterStatus;
   });
@@ -131,8 +136,21 @@ export default function CustomerOrders() {
     }
   };
 
-  const copyMemo = (code) => {
-    navigator.clipboard.writeText(code);
+  const copyMemo = async (code) => {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch {
+      // Fallback cho HTTP hoặc trình duyệt không hỗ trợ Clipboard API
+      const textarea = document.createElement("textarea");
+      textarea.value = code;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try { document.execCommand("copy"); } catch {}
+      document.body.removeChild(textarea);
+    }
     setCopiedMemo(true);
     setTimeout(() => setCopiedMemo(false), 2000);
   };
@@ -173,7 +191,7 @@ export default function CustomerOrders() {
           className={`cust-tab-btn ${filterStatus === "processing" ? "active" : ""}`}
           onClick={() => setFilterStatus("processing")}
         >
-          ✅ Đã thanh toán / Chuẩn bị ({validPurchasedOrders.filter((o) => o.status === "paid" || (o.payment_method === "cod" && o.status === "pending")).length})
+          ✅ Đã thanh toán / Chuẩn bị ({validPurchasedOrders.filter((o) => o.status === "paid" || o.status === "processing" || (o.payment_method === "cod" && o.status === "pending")).length})
         </button>
         <button
           className={`cust-tab-btn ${filterStatus === "shipping" ? "active" : ""}`}
@@ -209,7 +227,7 @@ export default function CustomerOrders() {
       ) : (
         <div className="cust-orders-list">
           {filteredOrders.map((order) => {
-            const items = order.items || [];
+            const items = order.items || order.items_json || [];
             return (
               <div key={order.id} className="cust-order-card">
                 <div className="cust-order-top">

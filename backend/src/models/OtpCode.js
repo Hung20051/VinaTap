@@ -1,13 +1,13 @@
 const db = require("../config/db");
 
 const OtpCode = {
-  // Xoá các mã OTP cũ (chưa dùng) của cùng email + purpose trước khi tạo
-  // mã mới — tránh việc 1 email có nhiều mã cùng hợp lệ song song.
+  // Vô hiệu hóa các mã OTP cũ (chưa dùng) của cùng email + purpose trước khi
+  // tạo mã mới — giữ record để audit trail thay vì xóa hẳn (DELETE).
   async invalidateByEmailPurpose(email, purpose) {
-    await db.execute("DELETE FROM otp_codes WHERE email = ? AND purpose = ?", [
-      email,
-      purpose,
-    ]);
+    await db.execute(
+      "UPDATE otp_codes SET consumed_at = NOW() WHERE email = ? AND purpose = ? AND consumed_at IS NULL",
+      [email, purpose],
+    );
   },
 
   async create({ email, purpose, otp_hash, payload, expires_at }) {

@@ -86,6 +86,9 @@ const OTP_COPY = {
 };
 
 const sendOtpEmail = async (toEmail, { otp, purpose, minutes = 10 }) => {
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`🔑 [OTP DEBUG] Email: ${toEmail} | Purpose: ${purpose} | Code: ${otp}`);
+  }
   const copy = OTP_COPY[purpose] || OTP_COPY.register;
   await transporter.sendMail({
     from: `"VinaTap" <${process.env.EMAIL_USER}>`,

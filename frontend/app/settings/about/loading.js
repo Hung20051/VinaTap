@@ -1,7 +1,7 @@
 import {
   SkeletonHeader,
   SkeletonTextLines,
-} from "../../../components/PageSkeleton";
+} from "@/components/ui/PageSkeleton";
 
 export default function AboutLoading() {
   return (

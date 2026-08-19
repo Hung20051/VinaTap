@@ -115,28 +115,6 @@ export default function SystemSettings() {
         </div>
       </div>
 
-      {/* Banner thông báo chuyển trang Quản Lý Sản Phẩm */}
-      <div style={{ background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)", border: "1px solid #fed7aa", borderRadius: "14px", padding: "1.25rem 1.5rem", marginBottom: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <Package size={24} className="text-orange" />
-          <div>
-            <h4 style={{ margin: 0, fontSize: "1rem", fontWeight: 800, color: "#9a3412" }}>
-              Cài đặt Giá Sản Phẩm &amp; Phí Ship đã được tách biệt hẳn!
-            </h4>
-            <p style={{ margin: "2px 0 0 0", fontSize: "0.85rem", color: "#c2410c" }}>
-              Để sửa giá bán thực tế, giá gốc gạch đi hoặc phí vận chuyển toàn quốc, vui lòng sử dụng trang Quản Lý Sản Phẩm.
-            </p>
-          </div>
-        </div>
-        <Link
-          href="/admin/products"
-          className="btn btn-primary"
-          style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700, display: "flex", alignItems: "center", gap: "6px" }}
-        >
-          Đến Trang Sản Phẩm <ExternalLink size={14} />
-        </Link>
-      </div>
-
       {/* Tabs Navigation */}
       <div className="admin-sets-tabs">
         <button

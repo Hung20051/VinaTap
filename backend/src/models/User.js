@@ -4,22 +4,20 @@ const User = {
   // Tìm user theo email — CHỈ tài khoản active. Dùng cho ĐĂNG NHẬP (email
   // bị khóa thì coi như "không tìm thấy", không cho login).
   async findByEmail(email) {
+    const cleanEmail = (email || "").trim().toLowerCase();
     const [rows] = await db.execute(
-      'SELECT * FROM users WHERE email = ? AND status = "active" LIMIT 1',
-      [email],
+      'SELECT * FROM users WHERE LOWER(email) = ? AND status = "active" LIMIT 1',
+      [cleanEmail],
     );
     return rows[0] || null;
   },
 
-  // Tìm user theo email, KHÔNG lọc status — dùng khi cần biết "email này
-  // đã từng đăng ký chưa" bất kể tài khoản đó đang active hay banned (vd
-  // googleCallback cần biết để quyết định link Google vào tài khoản cũ
-  // hay tạo mới; nếu dùng nhầm findByEmail ở trên, tài khoản banned sẽ
-  // bị coi là "chưa tồn tại" -> cố INSERT lại -> vỡ UNIQUE(email) ở DB).
+  // Tìm user theo email, KHÔNG lọc status
   async findByEmailAny(email) {
+    const cleanEmail = (email || "").trim().toLowerCase();
     const [rows] = await db.execute(
-      "SELECT * FROM users WHERE email = ? LIMIT 1",
-      [email],
+      "SELECT * FROM users WHERE LOWER(email) = ? LIMIT 1",
+      [cleanEmail],
     );
     return rows[0] || null;
   },
@@ -47,18 +45,20 @@ const User = {
 
   // Tạo user mới (email/pass)
   async create({ name, email, password_hash }) {
+    const cleanEmail = (email || "").trim().toLowerCase();
     const [result] = await db.execute(
       'INSERT INTO users (name, email, password_hash, role, status) VALUES (?, ?, ?, "customer", "active")',
-      [name, email, password_hash],
+      [name, cleanEmail, password_hash],
     );
     return result.insertId;
   },
 
   // Tạo user mới (Google OAuth)
   async createWithGoogle({ name, email, google_id }) {
+    const cleanEmail = (email || "").trim().toLowerCase();
     const [result] = await db.execute(
       'INSERT INTO users (name, email, google_id, role, status) VALUES (?, ?, ?, "customer", "active")',
-      [name, email, google_id],
+      [name, cleanEmail, google_id],
     );
     return result.insertId;
   },

@@ -2,7 +2,7 @@ import {
   SkeletonHeader,
   SkeletonTabs,
   SkeletonTextLines,
-} from "../../../components/PageSkeleton";
+} from "@/components/ui/PageSkeleton";
 
 export default function LegalLoading() {
   return (

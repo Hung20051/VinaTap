@@ -1,7 +1,7 @@
 import {
   SkeletonHeader,
   SkeletonOptionsGrid,
-} from "../../../components/PageSkeleton";
+} from "@/components/ui/PageSkeleton";
 
 export default function AppearanceLoading() {
   return (

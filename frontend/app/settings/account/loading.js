@@ -1,7 +1,7 @@
 import {
   SkeletonHeader,
   SkeletonAvatarForm,
-} from "../../../components/PageSkeleton";
+} from "@/components/ui/PageSkeleton";
 
 export default function AccountLoading() {
   return (

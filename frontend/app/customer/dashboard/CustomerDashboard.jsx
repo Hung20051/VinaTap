@@ -3,13 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Sidebar from "../../../components/Sidebar";
+import Sidebar from "@/components/layout/Sidebar";
 import { LayoutDashboard, KeyRound, ShieldCheck } from "lucide-react";
-import { albumAPI, nfcAPI, authAPI } from "../../../lib/api";
-import { getUser, updateUser, clearAuth, isAdmin, isLoggedIn } from "../../../lib/auth";
-import { applyStoredTheme, getLang } from "../../../lib/prefs";
-import { t } from "../../../lib/i18n";
-import "../../../styles/dashboard.css";
+import { albumAPI, nfcAPI, authAPI } from "@/lib/api";
+import { getUser, updateUser, clearAuth, isAdmin, isLoggedIn } from "@/lib/auth";
+import { applyStoredTheme, getLang } from "@/lib/prefs";
+import { t } from "@/lib/i18n";
+import "@/styles/dashboard.css";
 
 const REGION_LABEL = {
   north: "Miền Bắc",

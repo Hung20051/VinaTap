@@ -18,9 +18,9 @@ import {
   DollarSign,
   Package,
 } from "lucide-react";
-import { adminStatsAPI, manualSaleAPI } from "../../../lib/api";
-import { getLang } from "../../../lib/prefs";
-import { t } from "../../../lib/i18n";
+import { adminStatsAPI, manualSaleAPI } from "@/lib/api";
+import { getLang } from "@/lib/prefs";
+import { t } from "@/lib/i18n";
 import "./AdminDashboard.css";
 
 const formatVND = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";

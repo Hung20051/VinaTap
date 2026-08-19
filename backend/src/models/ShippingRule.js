@@ -26,13 +26,11 @@ const ShippingRule = {
   },
 
   async getRule() {
-    await this.initTable();
     const [rows] = await db.execute(`SELECT * FROM shipping_rules WHERE is_active = 1 LIMIT 1`);
     return rows[0] || { base_fee: 30000, free_shipping_threshold: 500000 };
   },
 
   async updateRule({ base_fee, free_shipping_threshold }) {
-    await this.initTable();
     const [rows] = await db.execute(`SELECT id FROM shipping_rules LIMIT 1`);
     if (rows.length > 0) {
       await db.execute(

@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Camera } from "lucide-react";
-import { authAPI } from "../../../lib/api";
-import { getUser, updateUser } from "../../../lib/auth";
-import { getLang } from "../../../lib/prefs";
-import { t } from "../../../lib/i18n";
+import { authAPI } from "@/lib/api";
+import { getUser, updateUser } from "@/lib/auth";
+import { getLang } from "@/lib/prefs";
+import { t } from "@/lib/i18n";
 import "./SettingsAccount.css";
 
 export default function SettingsAccount() {

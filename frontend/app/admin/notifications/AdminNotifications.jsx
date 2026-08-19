@@ -21,7 +21,7 @@ import {
   Globe,
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { notificationAPI, userAPI, voucherAPI } from "../../../lib/api";
+import { notificationAPI, userAPI, voucherAPI } from "@/lib/api";
 import "./AdminNotifications.css";
 
 export default function AdminNotifications() {

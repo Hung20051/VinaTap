@@ -2,6 +2,17 @@ const Album = require("../models/Album");
 const NfcCard = require("../models/NfcCard");
 const db = require("../config/db");
 
+// ── Throttle view count: mỗi IP + album chỉ tính 1 view / 5 phút ──
+const recentViews = new Map();
+const VIEW_COOLDOWN = 5 * 60 * 1000;
+
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, ts] of recentViews.entries()) {
+    if (now - ts > VIEW_COOLDOWN) recentViews.delete(key);
+  }
+}, 10 * 60 * 1000);
+
 // ─── TẠO ALBUM SAU KHI KÍCH HOẠT NFC ────────────────────────
 // POST /api/albums
 // Body: { nfc_card_id }
@@ -113,7 +124,14 @@ const getAlbum = async (req, res) => {
       [album.id],
     );
 
-    await Album.incrementView(album.id);
+    // Chỉ tăng lượt xem nếu KHÔNG PHẢI chính chủ sở hữu album xem
+    if (!req.user || req.user.id !== album.owner_id) {
+      const viewKey = `${req.ip}_${album.id}`;
+      if (!recentViews.has(viewKey) || Date.now() - recentViews.get(viewKey) > VIEW_COOLDOWN) {
+        recentViews.set(viewKey, Date.now());
+        await Album.incrementView(album.id);
+      }
+    }
 
     res.json({ album, media, tags });
   } catch (err) {
@@ -142,10 +160,19 @@ const updateAlbum = async (req, res) => {
     if (!album)
       return res.status(404).json({ message: "Không tìm thấy album" });
 
-    if (album.owner_id !== req.user.id)
+    if (album.owner_id !== req.user.id && req.user.role !== "admin")
       return res.status(403).json({ message: "Chỉ chủ album mới được sửa" });
 
-    await Album.update(req.params.id, req.body);
+    // Whitelist chỉ cho phép sửa các trường an toàn trong bảng albums
+    const { title, description, is_public, theme_sticker_id, cover_photo_id } = req.body;
+    const safeData = {};
+    if (title !== undefined) safeData.title = title;
+    if (description !== undefined) safeData.description = description;
+    if (is_public !== undefined) safeData.is_public = is_public;
+    if (theme_sticker_id !== undefined) safeData.theme_sticker_id = theme_sticker_id;
+    if (cover_photo_id !== undefined) safeData.cover_photo_id = cover_photo_id;
+
+    await Album.update(req.params.id, safeData);
     const updated = await Album.findById(req.params.id);
     res.json({ message: "Cập nhật thành công", album: updated });
   } catch (err) {
@@ -162,8 +189,8 @@ const deleteAlbum = async (req, res) => {
     if (!album)
       return res.status(404).json({ message: "Không tìm thấy album" });
 
-    if (album.owner_id !== req.user.id)
-      return res.status(403).json({ message: "Chỉ chủ album mới được xóa" });
+    if (album.owner_id !== req.user.id && req.user.role !== "admin")
+      return res.status(403).json({ message: "Không có quyền xóa album này" });
 
     await Album.delete(req.params.id);
     res.json({ message: "Đã xóa album" });

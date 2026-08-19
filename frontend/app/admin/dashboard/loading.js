@@ -2,7 +2,7 @@ import {
   SkeletonHeader,
   SkeletonKpiGrid,
   SkeletonList,
-} from "../../../components/PageSkeleton";
+} from "@/components/ui/PageSkeleton";
 
 export default function DashboardLoading() {
   return (

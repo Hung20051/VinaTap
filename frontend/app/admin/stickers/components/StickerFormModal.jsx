@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { X, ImagePlus } from "lucide-react";
-import { stickerAPI } from "../../../../lib/api";
+import { stickerAPI } from "@/lib/api";
 
 // Modal tạo/sửa 1 sticker — dùng chung cho cả 2 trường hợp, phân biệt
 // bằng prop `editing` (null = đang tạo mới, có giá trị = đang sửa).

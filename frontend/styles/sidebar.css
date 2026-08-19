@@ -260,17 +260,19 @@
   object-fit: cover;
 }
 
-.app-avatar-name {
+.app-avatar-name,
+.app-sidebar__user-name {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #fff;
+  color: #ffffff !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.app-avatar-role {
+.app-avatar-role,
+.app-sidebar__user-role {
   font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6) !important;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

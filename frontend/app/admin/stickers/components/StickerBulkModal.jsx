@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { X, UploadCloud } from "lucide-react";
-import { stickerAPI } from "../../../../lib/api";
+import { stickerAPI } from "@/lib/api";
 import { filenameToName } from "./stickerUtils";
 
 const MAX_FILES = 10; // khớp giới hạn multer ở backend (uploadImagesOnly)

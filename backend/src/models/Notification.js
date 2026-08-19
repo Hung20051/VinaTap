@@ -56,7 +56,6 @@ const Notification = {
     link,
     created_by,
   }) {
-    await this.initTable();
 
     const [result] = await db.execute(
       `INSERT INTO notifications (recipient_type, group_target, type, title, content, payload, link, created_by)
@@ -76,13 +75,14 @@ const Notification = {
     const notificationId = result.insertId;
 
     // Nếu chọn đối tượng cụ thể (users hoặc user) hoặc nhóm người dùng
+    // FIX #8: Batch INSERT thay vì N queries riêng lẻ (O(1) thay vì O(N))
     if (recipient_type === "users" && Array.isArray(user_ids) && user_ids.length > 0) {
-      for (const uid of user_ids) {
-        await db.execute(
-          `INSERT IGNORE INTO notification_recipients (notification_id, user_id) VALUES (?, ?)`,
-          [notificationId, uid],
-        );
-      }
+      const placeholders = user_ids.map(() => "(?, ?)").join(", ");
+      const values = user_ids.flatMap((uid) => [notificationId, uid]);
+      await db.execute(
+        `INSERT IGNORE INTO notification_recipients (notification_id, user_id) VALUES ${placeholders}`,
+        values,
+      );
     } else if (recipient_type === "user" && user_ids) {
       const uid = Array.isArray(user_ids) ? user_ids[0] : user_ids;
       await db.execute(
@@ -103,13 +103,14 @@ const Notification = {
 
       if (query) {
         const [targetUsers] = await db.execute(query);
-        for (const u of targetUsers) {
-          if (u.id) {
-            await db.execute(
-              `INSERT IGNORE INTO notification_recipients (notification_id, user_id) VALUES (?, ?)`,
-              [notificationId, u.id],
-            );
-          }
+        const validUsers = targetUsers.filter((u) => u.id);
+        if (validUsers.length > 0) {
+          const placeholders = validUsers.map(() => "(?, ?)").join(", ");
+          const values = validUsers.flatMap((u) => [notificationId, u.id]);
+          await db.execute(
+            `INSERT IGNORE INTO notification_recipients (notification_id, user_id) VALUES ${placeholders}`,
+            values,
+          );
         }
       }
     }
@@ -119,7 +120,6 @@ const Notification = {
 
   // Customer & Admin lấy danh sách thông báo dành cho mình
   async getForUser(userId, role) {
-    await this.initTable();
 
     // Admin không nhận các thông báo quà tặng Voucher dành cho Khách Hàng
     const promoFilter = role === "admin" ? "AND n.type != 'promo'" : "";
@@ -128,8 +128,8 @@ const Notification = {
     // 2. Lấy thông báo gửi trực tiếp qua notification_recipients
     const [rows] = await db.execute(
       `SELECT n.*,
-              (CASE WHEN nr.read_at IS NOT NULL THEN 1 ELSE 0 END) AS is_read,
-              u.name AS sender_name
+              MAX(CASE WHEN nr.read_at IS NOT NULL THEN 1 ELSE 0 END) AS is_read,
+              MAX(u.name) AS sender_name
        FROM notifications n
        LEFT JOIN notification_recipients rec ON rec.notification_id = n.id
        LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.user_id = ?
@@ -139,6 +139,7 @@ const Notification = {
          (n.recipient_type = 'all' AND n.created_at >= cur_u.created_at)
          OR rec.user_id = ?
        ) ${promoFilter}
+       GROUP BY n.id
        ORDER BY n.created_at DESC
        LIMIT 30`,
       [userId, userId, userId],
@@ -158,7 +159,6 @@ const Notification = {
 
   // Đánh dấu đã đọc
   async markAsRead(notificationId, userId) {
-    await this.initTable();
 
     if (notificationId === "all") {
       // Đánh dấu tất cả là đã đọc cho user này
@@ -191,7 +191,6 @@ const Notification = {
 
   // Admin xem lịch sử thông báo đã gửi
   async getAdminSentHistory() {
-    await this.initTable();
 
     const [rows] = await db.execute(
       `SELECT n.*, u.name AS sender_name,
@@ -208,11 +207,21 @@ const Notification = {
     }));
   },
 
-  // Xóa thông báo
+  // Xóa thông báo (có transaction tránh orphan data)
   async delete(id) {
-    await db.execute(`DELETE FROM notifications WHERE id = ?`, [id]);
-    await db.execute(`DELETE FROM notification_recipients WHERE notification_id = ?`, [id]);
-    await db.execute(`DELETE FROM notification_reads WHERE notification_id = ?`, [id]);
+    const conn = await db.getConnection();
+    try {
+      await conn.beginTransaction();
+      await conn.execute(`DELETE FROM notification_reads WHERE notification_id = ?`, [id]);
+      await conn.execute(`DELETE FROM notification_recipients WHERE notification_id = ?`, [id]);
+      await conn.execute(`DELETE FROM notifications WHERE id = ?`, [id]);
+      await conn.commit();
+    } catch (err) {
+      await conn.rollback();
+      throw err;
+    } finally {
+      conn.release();
+    }
     return { success: true };
   },
 };

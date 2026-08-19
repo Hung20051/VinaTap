@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { authAPI } from "../../../lib/api";
-import { getLang } from "../../../lib/prefs";
-import { t } from "../../../lib/i18n";
+import { authAPI } from "@/lib/api";
+import { getLang } from "@/lib/prefs";
+import { t } from "@/lib/i18n";
 
 export default function SettingsPassword() {
   const [lang, setLang] = useState("vi");

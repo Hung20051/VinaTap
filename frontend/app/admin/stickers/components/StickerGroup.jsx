@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { stickerAPI } from "../../../../lib/api";
+import { stickerAPI } from "@/lib/api";
 import StickerCard from "./StickerCard";
 
 // 1 khối category (kiểu bảng chọn emoji Discord/Slack) — tự quản lý

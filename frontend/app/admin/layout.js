@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "../../components/Header";
-import AdminSidebar from "../../components/AdminSidebar";
-import { getUser, requireAdmin, clearAuth } from "../../lib/auth";
+import Header from "@/components/layout/Header";
+import AdminSidebar from "@/components/layout/AdminSidebar";
+import { getUser, requireAdmin, clearAuth } from "@/lib/auth";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();

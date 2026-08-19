@@ -1,4 +1,4 @@
-import { SkeletonHeader, SkeletonForm } from "../../../components/PageSkeleton";
+import { SkeletonHeader, SkeletonForm } from "@/components/ui/PageSkeleton";
 
 export default function PasswordLoading() {
   return (
