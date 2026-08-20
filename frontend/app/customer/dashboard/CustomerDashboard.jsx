@@ -418,10 +418,12 @@ export default function CustomerDashboard() {
               </p>
               <div className="empty-actions">
                 <Link href="/customer/activate" className="btn-passport-action is-primary">
-                  <Plus size={16} /> Kích Hoạt Ngay
+                  <Plus size={16} />
+                  <span>Kích Hoạt Ngay</span>
                 </Link>
                 <Link href="/shop" className="btn-passport-action is-secondary">
-                  <ShoppingBag size={16} /> Mua Thẻ Mới
+                  <ShoppingBag size={16} />
+                  <span>Mua Thẻ Mới</span>
                 </Link>
               </div>
             </div>
