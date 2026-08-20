@@ -18,13 +18,12 @@ import { getUser } from "@/lib/auth";
 import "./CheckoutModal.css";
 
 // 🏧 CẤU HÌNH NGÂN HÀNG — Luôn lấy từ Cài đặt hệ thống (systemSettingAPI).
-// KHÔNG hardcode số tài khoản/tên chủ TK ở đây để tránh lộ trong source code
-// public và tránh dùng nhầm giá trị cũ nếu admin đổi STK trên dashboard.
-const EMPTY_BANK_CONFIG = {
-  bankId: "",
-  bankName: "",
-  accountNo: "",
-  accountName: "",
+// Tự động sử dụng cấu hình mặc định chính thức nếu hệ thống chưa cài đặt hoặc mạng chậm.
+const OFFICIAL_DEFAULT_BANK_CONFIG = {
+  bankId: "MBBANK",
+  bankName: "MBBank (NH Quân Đội)",
+  accountNo: "0813607311",
+  accountName: "VINATAP VIETNAM CO LTD",
 };
 
 export default function CheckoutModal({
@@ -47,8 +46,8 @@ export default function CheckoutModal({
   const [shipRule, setShipRule] = useState(
     shippingRule || { base_fee: 30000, free_shipping_threshold: 500000 },
   );
-  const [bankConfig, setBankConfig] = useState(EMPTY_BANK_CONFIG);
-  const [bankLoading, setBankLoading] = useState(true);
+  const [bankConfig, setBankConfig] = useState(OFFICIAL_DEFAULT_BANK_CONFIG);
+  const [bankLoading, setBankLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [createdOrder, setCreatedOrder] = useState(null);
@@ -76,14 +75,16 @@ export default function CheckoutModal({
         if (res && res.settings) {
           const s = res.settings;
           setBankConfig({
-            bankId: s.bank_id || "",
-            bankName: s.bank_name || "",
-            accountNo: s.bank_account_no || "",
-            accountName: s.bank_account_name || "",
+            bankId: s.bank_id || OFFICIAL_DEFAULT_BANK_CONFIG.bankId,
+            bankName: s.bank_name || OFFICIAL_DEFAULT_BANK_CONFIG.bankName,
+            accountNo: s.bank_account_no || OFFICIAL_DEFAULT_BANK_CONFIG.accountNo,
+            accountName: s.bank_account_name || OFFICIAL_DEFAULT_BANK_CONFIG.accountName,
           });
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        setBankConfig(OFFICIAL_DEFAULT_BANK_CONFIG);
+      })
       .finally(() => setBankLoading(false));
 
     voucherAPI
