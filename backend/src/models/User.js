@@ -6,7 +6,7 @@ const User = {
   async findByEmail(email) {
     const cleanEmail = (email || "").trim().toLowerCase();
     const [rows] = await db.execute(
-      'SELECT * FROM users WHERE LOWER(email) = ? AND status = "active" LIMIT 1',
+      "SELECT * FROM users WHERE LOWER(email) = ? AND status = 'active' LIMIT 1",
       [cleanEmail],
     );
     return rows[0] || null;
@@ -37,7 +37,7 @@ const User = {
   // Tìm user theo google_id
   async findByGoogleId(googleId) {
     const [rows] = await db.execute(
-      'SELECT * FROM users WHERE google_id = ? AND status = "active" LIMIT 1',
+      "SELECT * FROM users WHERE google_id = ? AND status = 'active' LIMIT 1",
       [googleId],
     );
     return rows[0] || null;
@@ -47,7 +47,7 @@ const User = {
   async create({ name, email, password_hash }) {
     const cleanEmail = (email || "").trim().toLowerCase();
     const [result] = await db.execute(
-      'INSERT INTO users (name, email, password_hash, role, status) VALUES (?, ?, ?, "customer", "active")',
+      "INSERT INTO users (name, email, password_hash, role, status) VALUES (?, ?, ?, 'customer', 'active')",
       [name, cleanEmail, password_hash],
     );
     return result.insertId;
@@ -57,7 +57,7 @@ const User = {
   async createWithGoogle({ name, email, google_id }) {
     const cleanEmail = (email || "").trim().toLowerCase();
     const [result] = await db.execute(
-      'INSERT INTO users (name, email, google_id, role, status) VALUES (?, ?, ?, "customer", "active")',
+      "INSERT INTO users (name, email, google_id, role, status) VALUES (?, ?, ?, 'customer', 'active')",
       [name, cleanEmail, google_id],
     );
     return result.insertId;
