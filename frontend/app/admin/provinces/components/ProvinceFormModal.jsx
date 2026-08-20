@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Upload, Globe } from "lucide-react";
+import { X, Upload, Globe, Image as ImageIcon, Video, MapPin, Sparkles, Check, Trash2 } from "lucide-react";
 import {
   REGIONS,
   generateSlug,
@@ -14,6 +14,8 @@ export default function ProvinceFormModal({
   onSaved,
   showToast,
 }) {
+  const [activeTab, setActiveTab] = useState("info"); // "info" | "media" | "geo"
+
   const [form, setForm] = useState({
     name: editingProvince?.name || "",
     slug: editingProvince?.slug || "",
@@ -100,53 +102,44 @@ export default function ProvinceFormModal({
       return;
     }
 
-    provinceTimeoutRef.current = setTimeout(() => {
-      fetchProvinceSuggestions(query);
-    }, 320);
-  };
+    provinceTimeoutRef.current = setTimeout(async () => {
+      setIsSearchingPlaces(true);
+      try {
+        const queryWithCountry = `${query.trim()}, Vietnam`;
+        const data = await queryNominatim(queryWithCountry);
 
-  const fetchProvinceSuggestions = async (query) => {
-    setIsSearchingPlaces(true);
-    try {
-      const searchQuery = `${query.trim()}, Việt Nam`;
-      const data = await queryNominatim(searchQuery);
-      const items = (data || []).map((item) => {
-        const cleanName = item.name || query;
-        const itemLat = Number(item.lat).toFixed(6);
-        const itemLng = Number(item.lon).toFixed(6);
-        const detectedReg = detectRegion(cleanName, item.display_name, itemLat);
-        return {
-          name: cleanName,
-          slug: generateSlug(cleanName),
-          region: detectedReg,
-          lat: itemLat,
-          lng: itemLng,
-          displayName: item.display_name,
-        };
-      });
-      setProvinceSuggestions(items);
-      setShowSuggestionsDropdown(items.length > 0);
-    } catch (err) {
-      console.error("Province suggestions error:", err);
-    } finally {
-      setIsSearchingPlaces(false);
-    }
+        const items = data.map((item) => {
+          const region = detectRegion(item.display_name, item.name);
+          return {
+            name: item.name || query,
+            displayName: item.display_name,
+            lat: Number(item.lat).toFixed(6),
+            lng: Number(item.lon).toFixed(6),
+            region: region,
+          };
+        });
+
+        setProvinceSuggestions(items);
+        setShowSuggestionsDropdown(items.length > 0);
+      } catch (err) {
+        console.error("Fetch province suggestions error:", err);
+      } finally {
+        setIsSearchingPlaces(false);
+      }
+    }, 400);
   };
 
   const handleSelectProvinceSuggestion = (sug) => {
     setForm((prev) => ({
       ...prev,
       name: sug.name,
-      slug: sug.slug,
-      region: sug.region,
-      lat: sug.lat,
-      lng: sug.lng,
+      slug: editingProvince ? prev.slug : generateSlug(sug.name),
+      region: sug.region || prev.region,
+      lat: sug.lat || prev.lat,
+      lng: sug.lng || prev.lng,
     }));
     setProvinceSuggestions([]);
     setShowSuggestionsDropdown(false);
-    showToast(
-      `📍 Đã tự động điền Tên, Slug, Vùng miền & Tọa độ của "${sug.name}"!`,
-    );
   };
 
   const handleSubmit = async (e) => {
@@ -190,12 +183,18 @@ export default function ProvinceFormModal({
         className="card admin-prov-modal"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Modal Header */}
         <div className="admin-prov-modal__header">
-          <h3>
-            {editingProvince
-              ? `✏️ Chỉnh Sửa Tỉnh: ${editingProvince.name}`
-              : "➕ Thêm Tỉnh Mới Vào Hệ Thống"}
-          </h3>
+          <div>
+            <h3>
+              {editingProvince
+                ? `✏️ Chỉnh Sửa: ${editingProvince.name}`
+                : "➕ Thêm Tỉnh Thành Mới"}
+            </h3>
+            <p className="admin-prov-modal__sub">
+              Cập nhật thông tin bản đồ số, ảnh bìa mảnh ghép và đặc sản
+            </p>
+          </div>
           <button
             type="button"
             className="admin-prov-modal__close"
@@ -205,385 +204,435 @@ export default function ProvinceFormModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="admin-prov-form-grid">
-            <label
-              className="admin-prov-field"
-              style={{ position: "relative" }}
-              ref={provinceAutocompleteRef}
-            >
-              <span>Tên Tỉnh / Thành Phố * (Gõ để gợi ý tự động 📍)</span>
-              <div className="admin-prov-input-with-spinner">
+        {/* Studio Segmented Navigation Tabs */}
+        <div className="admin-prov-nav-tabs">
+          <button
+            type="button"
+            className={`admin-prov-nav-tab ${activeTab === "info" ? "is-active" : ""}`}
+            onClick={() => setActiveTab("info")}
+          >
+            <Sparkles size={14} /> Thông Tin Chính
+          </button>
+          <button
+            type="button"
+            className={`admin-prov-nav-tab ${activeTab === "media" ? "is-active" : ""}`}
+            onClick={() => setActiveTab("media")}
+          >
+            <ImageIcon size={14} /> Ảnh & Video
+          </button>
+          <button
+            type="button"
+            className={`admin-prov-nav-tab ${activeTab === "geo" ? "is-active" : ""}`}
+            onClick={() => setActiveTab("geo")}
+          >
+            <MapPin size={14} /> Thống Kê & GPS
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="admin-prov-modal-form">
+          {/* TAB 1: THÔNG TIN CHÍNH */}
+          {activeTab === "info" && (
+            <div className="admin-prov-tab-pane">
+              <div className="admin-prov-form-grid">
+                <label
+                  className="admin-prov-field"
+                  style={{ position: "relative" }}
+                  ref={provinceAutocompleteRef}
+                >
+                  <span>Tên Tỉnh / Thành Phố *</span>
+                  <div className="admin-prov-input-with-spinner">
+                    <input
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => handleProvinceNameChange(e.target.value)}
+                      onFocus={() => {
+                        if (provinceSuggestions.length > 0)
+                          setShowSuggestionsDropdown(true);
+                      }}
+                      placeholder="VD: Hà Nội, Đà Nẵng..."
+                      required
+                      autoComplete="off"
+                    />
+                    {isSearchingPlaces && (
+                      <span className="admin-prov-spinner-sm" />
+                    )}
+                  </div>
+
+                  {/* Dropdown Suggestions */}
+                  {showSuggestionsDropdown && provinceSuggestions.length > 0 && (
+                    <div className="admin-prov-autocomplete-dropdown">
+                      <div className="admin-prov-autocomplete-head">
+                        📍 Gợi ý Tỉnh / Thành Phố:
+                      </div>
+                      {provinceSuggestions.map((sug, idx) => (
+                        <div
+                          key={idx}
+                          className="admin-prov-autocomplete-item"
+                          onClick={() => handleSelectProvinceSuggestion(sug)}
+                        >
+                          <Globe
+                            size={16}
+                            className="admin-prov-autocomplete-icon"
+                          />
+                          <div className="admin-prov-autocomplete-info">
+                            <div className="admin-prov-autocomplete-title">
+                              {sug.name} ({REGIONS[sug.region]?.label || sug.region})
+                            </div>
+                            <div className="admin-prov-autocomplete-addr">
+                              {sug.displayName}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </label>
+
+                <label className="admin-prov-field">
+                  <span>Mã Slug (URL) *</span>
+                  <input
+                    type="text"
+                    value={form.slug}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        slug: e.target.value,
+                      }))
+                    }
+                    placeholder="VD: ha-noi"
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="admin-prov-form-grid">
+                <label className="admin-prov-field">
+                  <span>Vùng Miền *</span>
+                  <select
+                    value={form.region}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        region: e.target.value,
+                      }))
+                    }
+                    required
+                  >
+                    <option value="north">Miền Bắc</option>
+                    <option value="central">Miền Trung</option>
+                    <option value="south">Miền Nam</option>
+                    <option value="island">Hải Đảo</option>
+                  </select>
+                </label>
+
+                <label className="admin-prov-field">
+                  <span>Trạng Thái Mở Bán *</span>
+                  <select
+                    value={form.status}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        status: e.target.value,
+                      }))
+                    }
+                  >
+                    <option value="active">🟢 Đang mở bán (Active)</option>
+                    <option value="inactive">🔴 Tạm ẩn (Hết hàng)</option>
+                  </select>
+                </label>
+              </div>
+
+              <label className="admin-prov-field">
+                <span>Món Ăn / Đặc Sản Nổi Tiếng</span>
                 <input
                   type="text"
-                  value={form.name}
-                  onChange={(e) => handleProvinceNameChange(e.target.value)}
-                  onFocus={() => {
-                    if (provinceSuggestions.length > 0)
-                      setShowSuggestionsDropdown(true);
-                  }}
-                  placeholder="VD: Trường Sa, Đà Nẵng, Côn Đảo..."
-                  required
-                  autoComplete="off"
+                  value={form.specialties}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      specialties: e.target.value,
+                    }))
+                  }
+                  placeholder="VD: Phở Hà Nội, Bún Chả, Cốm Làng Vòng..."
                 />
-                {isSearchingPlaces && (
-                  <span className="admin-prov-spinner-sm" />
+              </label>
+
+              <label className="admin-prov-field">
+                <span>Mô Tả Ngắn Giới Thiệu</span>
+                <textarea
+                  rows={3}
+                  value={form.description}
+                  onChange={(e) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
+                  placeholder="Giới thiệu đôi nét về lịch sử, văn hóa, danh lam thắng cảnh..."
+                />
+              </label>
+            </div>
+          )}
+
+          {/* TAB 2: ẢNH BÌA & VIDEO */}
+          {activeTab === "media" && (
+            <div className="admin-prov-tab-pane">
+              {/* Box Ảnh Bìa */}
+              <div className="admin-prov-media-card">
+                <div className="admin-prov-mode-header">
+                  <span className="admin-prov-media-title">🖼️ Ảnh Bìa Mảnh Ghép / Thumbnail:</span>
+                  <div className="admin-prov-mode-tabs">
+                    <button
+                      type="button"
+                      className={`admin-prov-tab-btn ${imageMode === "file" ? "is-active" : ""}`}
+                      onClick={() => setImageMode("file")}
+                    >
+                      Tải file
+                    </button>
+                    <button
+                      type="button"
+                      className={`admin-prov-tab-btn ${imageMode === "url" ? "is-active" : ""}`}
+                      onClick={() => setImageMode("url")}
+                    >
+                      Dán Link
+                    </button>
+                  </div>
+                </div>
+
+                {imageMode === "file" ? (
+                  <div className="admin-prov-upload-box">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="province-img-file"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) handleFileUpload(file, "thumbnail_url");
+                      }}
+                    />
+                    <label
+                      htmlFor="province-img-file"
+                      className="admin-prov-dropzone"
+                    >
+                      {uploadingImage ? (
+                        <div className="admin-prov-uploading">
+                          <div
+                            className="spinner"
+                            style={{ width: 16, height: 16 }}
+                          />
+                          <span>Đang tải ảnh lên Cloudinary...</span>
+                        </div>
+                      ) : (
+                        <div className="admin-prov-dropzone-text">
+                          <Upload size={18} />
+                          <span>Bấm để chọn file ảnh (JPG, PNG, WebP)</span>
+                        </div>
+                      )}
+                    </label>
+                  </div>
+                ) : (
+                  <input
+                    type="url"
+                    value={form.thumbnail_url}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        thumbnail_url: e.target.value,
+                      }))
+                    }
+                    placeholder="https://res.cloudinary.com/..."
+                    className="admin-prov-url-input"
+                  />
+                )}
+
+                {/* Preview Thumbnail */}
+                {form.thumbnail_url && (
+                  <div className="admin-prov-preview-thumb-card">
+                    <img
+                      src={form.thumbnail_url}
+                      alt="Thumbnail Preview"
+                      className="admin-prov-preview-img-display"
+                    />
+                    <div className="admin-prov-preview-meta">
+                      <span className="admin-prov-preview-ok">✓ Đã có ảnh bìa</span>
+                      <button
+                        type="button"
+                        className="admin-prov-thumb-remove-btn"
+                        onClick={() =>
+                          setForm((prev) => ({ ...prev, thumbnail_url: "" }))
+                        }
+                        title="Xóa ảnh"
+                      >
+                        <Trash2 size={13} /> Xóa ảnh
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
 
-              {/* Dropdown Suggestions */}
-              {showSuggestionsDropdown && provinceSuggestions.length > 0 && (
-                <div className="admin-prov-autocomplete-dropdown">
-                  <div className="admin-prov-autocomplete-head">
-                    📍 Gợi ý Tỉnh / Thành Phố:
-                  </div>
-                  {provinceSuggestions.map((sug, idx) => (
-                    <div
-                      key={idx}
-                      className="admin-prov-autocomplete-item"
-                      onClick={() => handleSelectProvinceSuggestion(sug)}
+              {/* Box Video Giới Thiệu */}
+              <div className="admin-prov-media-card">
+                <div className="admin-prov-mode-header">
+                  <span className="admin-prov-media-title">🎬 Video Giới Thiệu (YouTube):</span>
+                  <div className="admin-prov-mode-tabs">
+                    <button
+                      type="button"
+                      className={`admin-prov-tab-btn ${videoMode === "url" ? "is-active" : ""}`}
+                      onClick={() => setVideoMode("url")}
                     >
-                      <Globe
-                        size={16}
-                        className="admin-prov-autocomplete-icon"
-                      />
-                      <div className="admin-prov-autocomplete-info">
-                        <div className="admin-prov-autocomplete-title">
-                          {sug.name} ({REGIONS[sug.region]?.label || sug.region}
-                          )
-                        </div>
-                        <div className="admin-prov-autocomplete-addr">
-                          {sug.displayName}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                      Link YouTube
+                    </button>
+                    <button
+                      type="button"
+                      className={`admin-prov-tab-btn ${videoMode === "file" ? "is-active" : ""}`}
+                      onClick={() => setVideoMode("file")}
+                    >
+                      Tải MP4
+                    </button>
+                  </div>
                 </div>
-              )}
-            </label>
 
-            <label className="admin-prov-field">
-              <span>Mã Slug (URL) *</span>
-              <input
-                type="text"
-                value={form.slug}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    slug: e.target.value,
-                  }))
-                }
-                placeholder="VD: da-nang"
-                required
-              />
-            </label>
-
-            <label className="admin-prov-field">
-              <span>Vùng Miền *</span>
-              <select
-                value={form.region}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    region: e.target.value,
-                  }))
-                }
-                required
-              >
-                <option value="north">Miền Bắc</option>
-                <option value="central">Miền Trung</option>
-                <option value="south">Miền Nam</option>
-                <option value="island">Hải Đảo</option>
-              </select>
-            </label>
-
-            <label className="admin-prov-field">
-              <span>Trạng Thái Mở Bán *</span>
-              <select
-                value={form.status}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    status: e.target.value,
-                  }))
-                }
-              >
-                <option value="active">Đang mở bán (Active)</option>
-                <option value="inactive">Tạm ẩn (Hết hàng / Pending)</option>
-              </select>
-            </label>
-          </div>
-
-          {/* Dual Mode Thumbnail Upload */}
-          <div className="admin-prov-field">
-            <div className="admin-prov-mode-header">
-              <span>Ảnh Đại Diện / Thumbnail Tỉnh Thành:</span>
-              <div className="admin-prov-mode-tabs">
-                <button
-                  type="button"
-                  className={`admin-prov-tab-btn ${imageMode === "file" ? "is-active" : ""}`}
-                  onClick={() => setImageMode("file")}
-                >
-                  📁 Tải từ máy tính
-                </button>
-                <button
-                  type="button"
-                  className={`admin-prov-tab-btn ${imageMode === "url" ? "is-active" : ""}`}
-                  onClick={() => setImageMode("url")}
-                >
-                  🔗 Dán Link URL
-                </button>
+                {videoMode === "file" ? (
+                  <div className="admin-prov-upload-box">
+                    <input
+                      type="file"
+                      accept="video/*"
+                      id="province-video-file"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) handleFileUpload(file, "youtube_url");
+                      }}
+                    />
+                    <label
+                      htmlFor="province-video-file"
+                      className="admin-prov-dropzone"
+                    >
+                      {uploadingVideo ? (
+                        <div className="admin-prov-uploading">
+                          <div
+                            className="spinner"
+                            style={{ width: 16, height: 16 }}
+                          />
+                          <span>Đang tải video lên Cloudinary...</span>
+                        </div>
+                      ) : (
+                        <div className="admin-prov-dropzone-text">
+                          <Upload size={18} />
+                          <span>Bấm để chọn file video (MP4, MOV)</span>
+                        </div>
+                      )}
+                    </label>
+                  </div>
+                ) : (
+                  <input
+                    type="url"
+                    value={form.youtube_url}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        youtube_url: e.target.value,
+                      }))
+                    }
+                    placeholder="VD: https://www.youtube.com/watch?v=..."
+                    className="admin-prov-url-input"
+                  />
+                )}
               </div>
             </div>
+          )}
 
-            {imageMode === "file" ? (
-              <div className="admin-prov-upload-box">
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="province-img-file"
-                  style={{ display: "none" }}
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) handleFileUpload(file, "thumbnail_url");
-                  }}
-                />
-                <label
-                  htmlFor="province-img-file"
-                  className="admin-prov-dropzone"
-                >
-                  {uploadingImage ? (
-                    <div className="admin-prov-uploading">
-                      <div
-                        className="spinner"
-                        style={{ width: 16, height: 16 }}
-                      />
-                      <span>Đang tải ảnh lên Cloudinary...</span>
-                    </div>
-                  ) : (
-                    <div className="admin-prov-dropzone-text">
-                      <Upload size={18} />
-                      <span>
-                        Bấm để chọn file ảnh từ máy tính (JPG, PNG, WebP)
-                      </span>
-                    </div>
-                  )}
+          {/* TAB 3: THỐNG KÊ & GPS */}
+          {activeTab === "geo" && (
+            <div className="admin-prov-tab-pane">
+              <div className="admin-prov-form-grid">
+                <label className="admin-prov-field">
+                  <span>Dân Số (Người)</span>
+                  <input
+                    type="number"
+                    value={form.population}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        population: e.target.value,
+                      }))
+                    }
+                    placeholder="VD: 8500000"
+                  />
+                </label>
+
+                <label className="admin-prov-field">
+                  <span>Diện Tích (km²)</span>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={form.area_km2}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        area_km2: e.target.value,
+                      }))
+                    }
+                    placeholder="VD: 3358.6"
+                  />
                 </label>
               </div>
-            ) : (
-              <input
-                type="url"
-                value={form.thumbnail_url}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    thumbnail_url: e.target.value,
-                  }))
-                }
-                placeholder="Dán đường dẫn ảnh: https://res.cloudinary.com/..."
-              />
-            )}
 
-            {/* Preview Thumbnail */}
-            {form.thumbnail_url && (
-              <div className="admin-prov-preview-thumb-wrap">
-                <img
-                  src={form.thumbnail_url}
-                  alt="Thumbnail Preview"
-                  className="admin-prov-preview-thumb"
-                />
-                <button
-                  type="button"
-                  className="admin-prov-thumb-remove"
-                  onClick={() =>
-                    setForm((prev) => ({ ...prev, thumbnail_url: "" }))
-                  }
-                  title="Xóa ảnh"
-                >
-                  <X size={14} /> Xóa ảnh
-                </button>
-              </div>
-            )}
-          </div>
+              <div className="admin-prov-form-grid">
+                <label className="admin-prov-field">
+                  <span>Vĩ Độ GPS (Latitude)</span>
+                  <input
+                    type="number"
+                    step="0.000001"
+                    value={form.lat}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        lat: e.target.value,
+                      }))
+                    }
+                    placeholder="VD: 21.028511"
+                  />
+                </label>
 
-          {/* Dual Mode Video Upload */}
-          <div className="admin-prov-field">
-            <div className="admin-prov-mode-header">
-              <span>Video Giới Thiệu Tỉnh Thành:</span>
-              <div className="admin-prov-mode-tabs">
-                <button
-                  type="button"
-                  className={`admin-prov-tab-btn ${videoMode === "url" ? "is-active" : ""}`}
-                  onClick={() => setVideoMode("url")}
-                >
-                  🔗 Link YouTube
-                </button>
-                <button
-                  type="button"
-                  className={`admin-prov-tab-btn ${videoMode === "file" ? "is-active" : ""}`}
-                  onClick={() => setVideoMode("file")}
-                >
-                  📁 Tải video từ máy tính
-                </button>
+                <label className="admin-prov-field">
+                  <span>Kinh Độ GPS (Longitude)</span>
+                  <input
+                    type="number"
+                    step="0.000001"
+                    value={form.lng}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        lng: e.target.value,
+                      }))
+                    }
+                    placeholder="VD: 105.854444"
+                  />
+                </label>
               </div>
+              <p className="admin-prov-geo-hint">
+                💡 <em>Mẹo: Tọa độ GPS giúp hệ thống hiển thị bản đồ số và chỉ đường chính xác khi khách hàng quét thẻ NFC.</em>
+              </p>
             </div>
+          )}
 
-            {videoMode === "file" ? (
-              <div className="admin-prov-upload-box">
-                <input
-                  type="file"
-                  accept="video/*"
-                  id="province-video-file"
-                  style={{ display: "none" }}
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) handleFileUpload(file, "youtube_url");
-                  }}
-                />
-                <label
-                  htmlFor="province-video-file"
-                  className="admin-prov-dropzone"
-                >
-                  {uploadingVideo ? (
-                    <div className="admin-prov-uploading">
-                      <div
-                        className="spinner"
-                        style={{ width: 16, height: 16 }}
-                      />
-                      <span>Đang tải video lên Cloudinary...</span>
-                    </div>
-                  ) : (
-                    <div className="admin-prov-dropzone-text">
-                      <Upload size={18} />
-                      <span>Bấm để chọn file video từ máy tính (MP4, MOV)</span>
-                    </div>
-                  )}
-                </label>
-              </div>
-            ) : (
-              <input
-                type="url"
-                value={form.youtube_url}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    youtube_url: e.target.value,
-                  }))
-                }
-                placeholder="https://youtu.be/... hoặc https://www.youtube.com/watch?v=..."
-              />
-            )}
-          </div>
-
-          <label className="admin-prov-field">
-            <span>Mô Tả Ngắn Tỉnh Thành</span>
-            <textarea
-              rows={3}
-              value={form.description}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  description: e.target.value,
-                }))
-              }
-              placeholder="Giới thiệu vẻ đẹp, vị trí địa lý của tỉnh thành..."
-            />
-          </label>
-
-          <label className="admin-prov-field">
-            <span>Món Ăn / Đặc Sản Nổi Tiếng</span>
-            <input
-              type="text"
-              value={form.specialties}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  specialties: e.target.value,
-                }))
-              }
-              placeholder="VD: Mì Quảng, Bún mắm nêm, Bánh tráng cuốn thịt heo"
-            />
-          </label>
-
-          <div className="admin-prov-form-grid">
-            <label className="admin-prov-field">
-              <span>Dân Số (Người)</span>
-              <input
-                type="number"
-                value={form.population}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    population: e.target.value,
-                  }))
-                }
-                placeholder="VD: 1200000"
-              />
-            </label>
-
-            <label className="admin-prov-field">
-              <span>Diện Tích (km²)</span>
-              <input
-                type="number"
-                step="0.01"
-                value={form.area_km2}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    area_km2: e.target.value,
-                  }))
-                }
-                placeholder="VD: 1284.73"
-              />
-            </label>
-
-            <label className="admin-prov-field">
-              <span>Tọa Độ Vĩ Độ (Latitude)</span>
-              <input
-                type="number"
-                step="0.000001"
-                value={form.lat}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    lat: e.target.value,
-                  }))
-                }
-                placeholder="VD: 16.0471"
-              />
-            </label>
-
-            <label className="admin-prov-field">
-              <span>Tọa Độ Kinh Độ (Longitude)</span>
-              <input
-                type="number"
-                step="0.000001"
-                value={form.lng}
-                onChange={(e) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    lng: e.target.value,
-                  }))
-                }
-                placeholder="VD: 108.2068"
-              />
-            </label>
-          </div>
-
+          {/* Modal Footer */}
           <div className="admin-prov-modal__footer">
-            <button type="button" className="btn btn-ghost" onClick={onClose}>
-              Hủy
+            <button type="button" className="btn btn-ghost-prov" onClick={onClose}>
+              Đóng
             </button>
             <button
               type="submit"
               disabled={formSubmitting}
-              className="btn btn-primary"
+              className="btn btn-submit-prov"
             >
               {formSubmitting
                 ? "Đang lưu..."
                 : editingProvince
-                  ? "Lưu Thay Đổi"
-                  : "Tạo Tỉnh Mới"}
+                  ? "✓ Lưu Thay Đổi"
+                  : "✓ Tạo Tỉnh Mới"}
             </button>
           </div>
         </form>

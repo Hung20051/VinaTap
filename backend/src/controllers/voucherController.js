@@ -81,3 +81,16 @@ exports.sendVoucherToUsers = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// 👑 Admin: Xóa Voucher khỏi hệ thống
+exports.deleteVoucher = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Voucher.deleteAdmin(id);
+    res.json({ success: true, message: "Đã xóa voucher thành công!" });
+  } catch (err) {
+    console.error("deleteVoucher error:", err);
+    res.status(500).json({ message: err.message || "Lỗi xóa voucher" });
+  }
+};
+

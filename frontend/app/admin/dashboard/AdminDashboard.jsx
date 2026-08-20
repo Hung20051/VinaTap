@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   LineChart,
   Line,
@@ -32,6 +32,29 @@ export default function AdminDashboard() {
   const [daily, setDaily] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const sliderRef = useRef(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
+
+  const handleMouseDown = (e) => {
+    if (!sliderRef.current) return;
+    setIsDown(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeftState(sliderRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
+
+  const handleMouseMove = (e) => {
+    if (!isDown || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    sliderRef.current.scrollLeft = scrollLeftState - walk;
+  };
 
   useEffect(() => {
     setLang(getLang());
@@ -78,7 +101,14 @@ export default function AdminDashboard() {
       <h1 className="admin-dash-title">{t(lang, "adminOverviewTitle")}</h1>
       <p className="admin-dash-subtitle">{t(lang, "adminOverviewSubtitle")}</p>
 
-      <div className="admin-dash-kpi-grid">
+      <div
+        className={`admin-dash-kpi-grid ${isDown ? "is-dragging" : ""}`}
+        ref={sliderRef}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+      >
         <KpiCard
           icon={<DollarSign size={20} />}
           label={t(lang, "totalRevenueOffline")}

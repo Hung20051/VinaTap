@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import { getUser, requireAuth, clearAuth } from "@/lib/auth";
@@ -19,6 +20,7 @@ import "@/styles/settings-shell.css";
 
 export default function SettingsLayout({ children }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState(null);
   const [lang, setLang] = useState("vi");
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -49,32 +51,32 @@ export default function SettingsLayout({ children }) {
   const navItems = [
     {
       href: "/settings/account",
-      icon: <UserIcon size={20} />,
+      icon: <UserIcon size={16} />,
       label: t(lang, "account"),
     },
     {
       href: "/settings/password",
-      icon: <KeyRound size={20} />,
+      icon: <KeyRound size={16} />,
       label: t(lang, "password"),
     },
     {
       href: "/settings/appearance",
-      icon: <Palette size={20} />,
+      icon: <Palette size={16} />,
       label: t(lang, "appearance"),
     },
     {
       href: "/settings/support",
-      icon: <LifeBuoy size={20} />,
+      icon: <LifeBuoy size={16} />,
       label: t(lang, "support"),
     },
     {
       href: "/settings/legal",
-      icon: <FileText size={20} />,
+      icon: <FileText size={16} />,
       label: t(lang, "legal"),
     },
     {
       href: "/settings/about",
-      icon: <Info size={20} />,
+      icon: <Info size={16} />,
       label: t(lang, "about"),
     },
   ];

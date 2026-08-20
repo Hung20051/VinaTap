@@ -6,22 +6,69 @@
 .settings-page {
   max-width: 860px;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem;
+  padding: 1.5rem 1.25rem;
+}
+
+/* ─── QUICK SETTINGS TABS CAROUSEL (IOS SEGMENTED) ──────────── */
+.settings-quick-tabs-wrap {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+}
+
+.settings-quick-tabs-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.settings-quick-tabs {
+  display: flex;
+  gap: 4px;
+  width: max-content;
+}
+
+.settings-quick-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 14px;
+  color: #64748b;
+  text-decoration: none;
+  border-radius: 9px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.settings-quick-tab:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.settings-quick-tab.is-active {
+  color: #ea580c;
+  background: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .settings-page__title {
-  font-size: 1.75rem;
+  font-size: 1.45rem;
   font-weight: 900;
   color: var(--text-primary, #0f172a);
   letter-spacing: -0.02em;
-  margin: 0 0 6px 0;
+  margin: 0 0 4px 0;
 }
 
 .settings-page__subtitle {
-  font-size: 0.95rem;
+  font-size: 0.86rem;
   color: var(--text-secondary, #64748b);
-  margin: 0 0 2rem 0;
-  line-height: 1.5;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.45;
 }
 
 /* Card Container */
@@ -124,4 +171,22 @@
   margin-top: 1.5rem;
   padding-top: 1.25rem;
   border-top: 1px dashed var(--border, #e2e8f0);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   📱 MOBILE RESPONSIVE (@media max-width: 768px)
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 0;
+  }
+
+  .settings-quick-tabs-wrap {
+    margin-bottom: 0.85rem;
+  }
+
+  .settings-quick-tab {
+    padding: 6px 12px;
+    font-size: 0.76rem;
+  }
 }

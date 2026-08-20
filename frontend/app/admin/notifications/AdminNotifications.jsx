@@ -29,6 +29,7 @@ export default function AdminNotifications() {
   const initialType = searchParams.get("type");
   const initialVoucherId = searchParams.get("voucherId");
 
+  const [activeTab, setActiveTab] = useState("compose"); // compose | history (for mobile)
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [dbVouchers, setDbVouchers] = useState([]);
@@ -256,21 +257,45 @@ export default function AdminNotifications() {
       {/* Top Header */}
       <div className="admin-notif-header">
         <div>
-          <h1 className="admin-notif-title">📢 Trung Tâm Gửi Thông Báo</h1>
+          <h1 className="admin-notif-title">
+            <span className="title-desktop">📢 Trung Tâm Gửi Thông Báo</span>
+            <span className="title-mobile">📢 Gửi Thông Báo</span>
+          </h1>
           <p className="admin-notif-subtitle">
-            Phát tin tức, thông báo bảo trì &amp; tặng Voucher tới Khách Hàng và
-            toàn hệ thống (@ALL)
+            Phát tin tức, thông báo bảo trì &amp; tặng Voucher tới Khách Hàng và toàn hệ thống (@ALL)
           </p>
         </div>
-        <button className="admin-notif-btn-refresh" onClick={loadHistory}>
-          <RefreshCw size={16} /> Tải lại lịch sử
+        <button
+          className="admin-notif-btn-refresh"
+          onClick={loadHistory}
+          title="Tải lại lịch sử thông báo"
+        >
+          <RefreshCw size={15} /> <span className="btn-refresh-text">Tải lại lịch sử</span>
+        </button>
+      </div>
+
+      {/* Mobile Segmented Tab Switcher */}
+      <div className="admin-notif-mobile-tabs">
+        <button
+          type="button"
+          className={`notif-mobile-tab-btn ${activeTab === "compose" ? "active" : ""}`}
+          onClick={() => setActiveTab("compose")}
+        >
+          <Send size={15} /> Soạn Thông Báo
+        </button>
+        <button
+          type="button"
+          className={`notif-mobile-tab-btn ${activeTab === "history" ? "active" : ""}`}
+          onClick={() => setActiveTab("history")}
+        >
+          <Clock size={15} /> Lịch Sử ({history.length})
         </button>
       </div>
 
       {/* Main Grid Layout */}
       <div className="admin-notif-main-grid">
         {/* Left Form Column */}
-        <div className="card admin-notif-form-card">
+        <div className={`card admin-notif-form-card admin-notif-col-compose ${activeTab === "compose" ? "active-mobile" : ""}`}>
           <h3 className="form-card-title">
             <Send size={18} className="text-blue" /> Soạn Thông Báo Mới
           </h3>
@@ -523,10 +548,9 @@ export default function AdminNotifications() {
         </div>
 
         {/* Right History Audit Column */}
-        <div className="card admin-notif-history-card">
+        <div className={`card admin-notif-history-card admin-notif-col-history ${activeTab === "history" ? "active-mobile" : ""}`}>
           <h3 className="history-card-title">
-            <Clock size={18} className="text-purple" /> Lịch Sử Thông Báo Đã
-            Gửi
+            <Clock size={18} className="text-purple" /> Lịch Sử Thông Báo Đã Gửi
           </h3>
 
           <div className="history-list">

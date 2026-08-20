@@ -45,15 +45,20 @@ const request = async (endpoint, options = {}) => {
     res = await fetch(`${baseUrl}${endpoint}`, { ...options, headers });
   } catch (netErr) {
     console.error(`Fetch error at ${baseUrl}${endpoint}:`, netErr);
-    throw new Error(`Không thể kết nối đến máy chủ Backend (${baseUrl}). Vui lòng đảm bảo Backend đang chạy.`);
+    throw new Error(
+      `Không thể kết nối đến máy chủ Backend (${baseUrl}). Vui lòng đảm bảo Backend đang chạy.`,
+    );
   }
 
   let data;
   try {
     data = await res.json();
   } catch {
-    data = { message: res.statusText || "Lỗi máy chủ phản hồi không đúng định dạng" };
+    data = {
+      message: res.statusText || "Lỗi máy chủ phản hồi không đúng định dạng",
+    };
   }
+
   if (!res.ok) throw new Error(data.message || "Lỗi không xác định");
   return data;
 };
@@ -79,6 +84,7 @@ const upload = async (endpoint, formData) => {
   } catch {
     data = { message: res.statusText || "Lỗi upload" };
   }
+
   if (!res.ok) throw new Error(data.message || "Lỗi upload");
   return data;
 };
@@ -96,7 +102,7 @@ const uploadPut = async (endpoint, formData) => {
       body: formData,
     });
   } catch (netErr) {
-    console.error(`UploadPut fetch error at ${baseUrl}${endpoint}:`, netErr);
+    console.error(`Upload PUT fetch error at ${baseUrl}${endpoint}:`, netErr);
     throw new Error(`Không thể kết nối đến máy chủ Backend (${baseUrl}).`);
   }
 
@@ -305,6 +311,11 @@ export const mediaAPI = {
   uploadMultiple: (formData) => upload("/media/upload-multiple", formData),
   update: (id, body) =>
     request(`/media/${id}`, { method: "PUT", body: JSON.stringify(body) }),
+  updateCaption: (id, caption_user) =>
+    request(`/media/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ caption_user }),
+    }),
   delete: (id) => request(`/media/${id}`, { method: "DELETE" }),
   addSticker: (id, body) =>
     request(`/media/${id}/stickers`, {
@@ -514,5 +525,9 @@ export const voucherAPI = {
     request("/vouchers/send", {
       method: "POST",
       body: JSON.stringify(body),
+    }),
+  deleteAdmin: (id) =>
+    request(`/vouchers/${id}`, {
+      method: "DELETE",
     }),
 };

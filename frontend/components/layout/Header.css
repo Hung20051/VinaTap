@@ -1,23 +1,25 @@
-/* ─── LINEAR / GITHUB 3-REGION GLOBAL TOP HEADER ──────────── */
+/* ─── LINEAR / GITHUB GLOBAL TOP HEADER ──────────── */
 
 .linear-top-header {
   position: sticky;
   top: 0;
   z-index: 999;
+  width: 100%;
   height: 60px;
   background: #0f172a;
   border-bottom: 1px solid #1e293b;
-  display: grid;
-  grid-template-columns: 300px 1fr 300px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0 1.25rem;
   color: #ffffff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 640px) {
   .linear-top-header {
-    grid-template-columns: auto 1fr auto;
+    padding: 0 0.75rem;
+    height: 56px;
   }
 }
 
@@ -26,14 +28,15 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .header-btn-hamburger {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: #ffffff;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -49,12 +52,33 @@
 }
 
 .header-logo-brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  line-height: 1;
 }
 
 .header-logo-brand img {
   filter: brightness(0) invert(1);
+  width: 26px !important;
+  height: 26px !important;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+.header-logo-brand span {
+  font-weight: 800;
+  font-size: 1.12rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1;
 }
 
 .header-breadcrumb-divider {
@@ -93,51 +117,13 @@
   }
 }
 
-/* CENTER REGION: GLOBAL SEARCH */
-.header-region-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.header-global-search-form {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  display: flex;
-  align-items: center;
-}
-
-.header-global-search-form .search-icon {
-  position: absolute;
-  left: 14px;
-  color: #94a3b8;
-}
-
-.global-search-input {
-  width: 100%;
-  padding: 8px 16px 8px 40px;
-  background: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 0.85rem;
-  transition: all 0.2s ease;
-}
-
-.global-search-input:focus {
-  outline: none;
-  background: #0f172a;
-  border-color: #0284c7;
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
-}
-
 /* RIGHT REGION: QUICK ACTIONS & USER BADGE */
 .header-region-right {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 /* Quick Action Button ➕ */
@@ -245,6 +231,7 @@
 /* User Badge Dropdown 👤 */
 .header-user-menu-wrap {
   position: relative;
+  flex-shrink: 0;
 }
 
 .header-user-badge-btn {
@@ -277,6 +264,7 @@
   font-weight: 700;
   font-size: 0.85rem;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .header-avatar-circle img {
@@ -296,6 +284,41 @@
 
 .chevron-icon {
   color: #94a3b8;
+}
+
+/* RESPONSIVE HEADER ADAPTATION */
+@media (max-width: 640px) {
+  .linear-top-header {
+    padding: 0 0.65rem;
+  }
+  .header-region-left {
+    gap: 8px;
+  }
+  .header-region-right {
+    gap: 6px;
+  }
+  .header-breadcrumb,
+  .header-breadcrumb-divider {
+    display: none !important;
+  }
+  .btn-header-voucher,
+  .btn-header-shop {
+    display: none !important; /* On mobile, hide shop & voucher from header to keep logo & avatar crisp and non-overlapping */
+  }
+  .header-user-name {
+    display: none !important;
+  }
+  .header-user-badge-btn {
+    padding: 2px !important;
+    background: transparent !important;
+    border: none !important;
+  }
+  .header-user-badge-btn .chevron-icon {
+    display: none !important;
+  }
+  .header-logo-brand span {
+    font-size: 1.05rem;
+  }
 }
 
 .header-user-dropdown {

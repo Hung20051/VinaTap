@@ -1,4 +1,5 @@
 require("dotenv").config();
+// VinaTap Backend Server
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -38,6 +39,7 @@ app.use(
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
+    exposedHeaders: ["x-new-token"],
   }),
 );
 

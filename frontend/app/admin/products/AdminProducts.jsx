@@ -43,10 +43,13 @@ export default function AdminProducts() {
   // Popup xác nhận hành động
   const [confirmDialog, setConfirmDialog] = useState(null);
 
+  const [shipEditOpen, setShipEditOpen] = useState(false);
+
   // Form modal state
   const [formOpen, setFormOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyForm());
+  const [showUrlInput, setShowUrlInput] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -236,80 +239,97 @@ export default function AdminProducts() {
       {/* Header */}
       <div className="admin-prod-header">
         <div>
-          <h1 className="admin-dash-title">📦 Quản Lý Sản Phẩm &amp; Phí Vận Chuyển</h1>
+          <h1 className="admin-dash-title">📦 Quản Lý Sản Phẩm</h1>
           <p className="admin-dash-subtitle">
-            Quản lý bảng giá thực tế, giá gốc gạch đi, ảnh sản phẩm 34 tỉnh thành &amp; chính sách freeship
+            Bảng giá, ảnh sản phẩm 34 tỉnh thành &amp; chính sách freeship
           </p>
         </div>
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button className="btn btn-ghost" onClick={loadData} disabled={loading}>
-            <RefreshCw size={16} /> Tải lại
+        <div className="admin-prod-header__actions">
+          <button className="btn btn-ghost admin-prod-btn-reload" onClick={loadData} disabled={loading}>
+            <RefreshCw size={15} /> <span>Tải lại</span>
           </button>
           <button
-            className="btn btn-primary"
+            className="btn btn-primary admin-prod-btn-create"
             onClick={openCreateForm}
-            style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}
           >
-            <Plus size={16} /> Thêm Sản Phẩm Mới
+            <Plus size={16} /> <span>Thêm Sản Phẩm</span>
           </button>
         </div>
       </div>
 
-      {/* 🚚 Card Cấu Hình Vận Chuyển */}
-      <div className="admin-prod-shipping-card">
-        <h3 className="admin-prod-shipping-title">
-          <Truck size={20} className="text-orange" /> Cấu Hình Phí Vận Chuyển Toàn Quốc
-        </h3>
-        <p className="admin-prod-shipping-sub">
-          Mức phí ship mặc định và hạn mức được tự động Miễn Phí Vận Chuyển khi khách mua hàng
-        </p>
-
-        <form onSubmit={handleSaveShipping} className="admin-prod-shipping-grid">
-          <div>
-            <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-              Phí Vận Chuyển Chuẩn (VNĐ): *
-            </label>
-            <input
-              type="number"
-              required
-              min="0"
-              style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-              value={shipping.base_fee}
-              onChange={(e) => setShipping({ ...shipping, base_fee: e.target.value })}
-            />
+      {/* 🚚 COMPACT SHIPPING CONFIG WIDGET */}
+      <div className="admin-prod-ship-widget">
+        <div className="admin-prod-ship-widget__info">
+          <div className="admin-prod-ship-widget__icon">
+            <Truck size={20} />
           </div>
-
-          <div>
-            <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-              Hạn Mức Miễn Phí Ship - Freeship (VNĐ): *
-            </label>
-            <input
-              type="number"
-              required
-              min="0"
-              style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-              value={shipping.free_shipping_threshold}
-              onChange={(e) => setShipping({ ...shipping, free_shipping_threshold: e.target.value })}
-            />
+          <div className="admin-prod-ship-widget__text">
+            <span className="admin-prod-ship-widget__title">Chính sách Phí Vận Chuyển:</span>
+            <div className="admin-prod-ship-widget__badges">
+              <span className="ship-badge ship-badge--fee">
+                Phí ship: <strong>{formatVND(shipping.base_fee)}</strong>
+              </span>
+              <span className="ship-badge ship-badge--free">
+                Freeship từ: <strong>{formatVND(shipping.free_shipping_threshold)}</strong>
+              </span>
+            </div>
           </div>
+        </div>
 
-          <div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={savingShip}
-              style={{ padding: "10px 24px", borderRadius: "10px", fontWeight: 700 }}
-            >
-              <Save size={16} /> {savingShip ? "Đang lưu..." : "Lưu Phí Ship"}
-            </button>
-          </div>
-        </form>
+        <button
+          type="button"
+          className="btn btn-sm btn-outline admin-prod-ship-widget__btn"
+          onClick={() => setShipEditOpen(!shipEditOpen)}
+        >
+          {shipEditOpen ? <X size={14} /> : <Edit2 size={14} />}
+          <span>{shipEditOpen ? "Đóng" : "Chỉnh sửa"}</span>
+        </button>
       </div>
 
-      {/* 📦 Lưới Danh Sách Sản Phẩm */}
-      <h3 style={{ fontSize: "1.2rem", fontWeight: 800, color: "#0f172a", marginBottom: "0.5rem" }}>
-        Danh Mục Sản Phẩm Đang Có Trong Hệ Thống ({products.length})
-      </h3>
+      {/* Expandable Shipping Edit Form */}
+      {shipEditOpen && (
+        <div className="admin-prod-shipping-card">
+          <h3 className="admin-prod-shipping-title">
+            <Truck size={18} className="text-orange" /> Cập Nhật Phí Vận Chuyển Toàn Quốc
+          </h3>
+          <form onSubmit={handleSaveShipping} className="admin-prod-shipping-grid">
+            <div className="admin-prod-shipping-field">
+              <label className="admin-prod-shipping-label">Phí Vận Chuyển Chuẩn (VNĐ): *</label>
+              <input
+                type="number"
+                required
+                min="0"
+                className="admin-prod-shipping-input"
+                value={shipping.base_fee}
+                onChange={(e) => setShipping({ ...shipping, base_fee: e.target.value })}
+              />
+            </div>
+            <div className="admin-prod-shipping-field">
+              <label className="admin-prod-shipping-label">Hạn Mức Freeship (VNĐ): *</label>
+              <input
+                type="number"
+                required
+                min="0"
+                className="admin-prod-shipping-input"
+                value={shipping.free_shipping_threshold}
+                onChange={(e) => setShipping({ ...shipping, free_shipping_threshold: e.target.value })}
+              />
+            </div>
+            <div className="admin-prod-shipping-action">
+              <button type="submit" className="btn btn-primary admin-prod-btn-save-ship" disabled={savingShip}>
+                <Save size={15} /> <span>{savingShip ? "Đang lưu..." : "Lưu Phí Ship"}</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* 📦 Header Danh Sách Sản Phẩm */}
+      <div className="admin-prod-list-header">
+        <h3 className="admin-prod-list-title">
+          Danh Mục Sản Phẩm ({products.length})
+        </h3>
+      </div>
 
       {loading ? (
         <div className="admin-dash-loading">
@@ -317,144 +337,216 @@ export default function AdminProducts() {
         </div>
       ) : products.length === 0 ? (
         <div className="admin-prod-empty">
-          <p>Chưa có sản phẩm nào. Bấm nút <strong>"+ Thêm Sản Phẩm Mới"</strong> ở góc trên để tạo sản phẩm đầu tiên!</p>
+          <p>Chưa có sản phẩm nào. Bấm nút <strong>"+ Thêm Sản Phẩm"</strong> ở góc trên để tạo sản phẩm đầu tiên!</p>
         </div>
       ) : (
-        <div className="admin-prod-grid">
-          {products.map((p) => (
-            <div key={p.id} className="admin-prod-card">
-              <div className="admin-prod-card-img-wrap">
-                <img
-                  src={
-                    p.image ||
-                    "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80"
-                  }
-                  alt={p.name}
-                  className="admin-prod-card-img"
-                />
-                {p.tag && <span className="admin-prod-card-tag">{p.tag}</span>}
-                <span
-                  className={`admin-prod-card-status ${
-                    p.is_active
-                      ? "admin-prod-card-status--active"
-                      : "admin-prod-card-status--inactive"
-                  }`}
-                >
-                  {p.is_active ? "Đang mở bán" : "Đã tạm ẩn"}
-                </span>
-              </div>
-
-              <div className="admin-prod-card-body">
-                <h4 className="admin-prod-card-title">{p.name}</h4>
-                <p className="admin-prod-card-desc">{p.description || "Chưa có mô tả"}</p>
-
-                <div className="admin-prod-card-prices">
-                  <span className="admin-prod-card-price">{formatVND(p.price)}</span>
-                  {p.original_price > 0 && (
-                    <span className="admin-prod-card-original">
-                      {formatVND(p.original_price)}
-                    </span>
-                  )}
+        <>
+          {/* 💻 DESKTOP & TABLET PRODUCT GRID */}
+          <div className="admin-prod-grid">
+            {products.map((p) => (
+              <div key={p.id} className="admin-prod-card">
+                <div className="admin-prod-card-img-wrap">
+                  <img
+                    src={
+                      p.image ||
+                      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80"
+                    }
+                    alt={p.name}
+                    className="admin-prod-card-img"
+                  />
+                  {p.tag && <span className="admin-prod-card-tag">{p.tag}</span>}
+                  <span
+                    className={`admin-prod-card-status ${
+                      p.is_active
+                        ? "admin-prod-card-status--active"
+                        : "admin-prod-card-status--inactive"
+                    }`}
+                  >
+                    {p.is_active ? "Đang mở bán" : "Đã tạm ẩn"}
+                  </span>
                 </div>
 
-                <div className="admin-prod-card-actions">
-                  <button
-                    type="button"
-                    className="btn btn-sm"
-                    style={{ flex: 1, background: "#eff6ff", color: "#1d4ed8", border: "1px solid #93c5fd", fontWeight: 700 }}
-                    onClick={() => openEditForm(p)}
-                  >
-                    <Edit2 size={14} /> Sửa giá &amp; thông tin
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn btn-sm ${p.is_active ? "btn-secondary" : "btn-primary"}`}
-                    onClick={() => handleToggleActive(p)}
-                    title={p.is_active ? "Bấm để tạm ẩn sản phẩm" : "Bấm để hiển thị lại sản phẩm"}
-                  >
-                    {p.is_active ? <XCircle size={14} /> : <CheckCircle size={14} />}
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-sm text-danger"
-                    onClick={() => handleDeleteProduct(p)}
-                    title="Xóa sản phẩm"
-                  >
-                    <Trash2 size={14} />
-                  </button>
+                <div className="admin-prod-card-body">
+                  <h4 className="admin-prod-card-title">{p.name}</h4>
+                  <p className="admin-prod-card-desc">{p.description || "Chưa có mô tả"}</p>
+
+                  <div className="admin-prod-card-prices">
+                    <span className="admin-prod-card-price">{formatVND(p.price)}</span>
+                    {p.original_price > 0 && (
+                      <span className="admin-prod-card-original">
+                        {formatVND(p.original_price)}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="admin-prod-card-actions">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-edit-prod"
+                      onClick={() => openEditForm(p)}
+                    >
+                      <Edit2 size={14} /> Sửa thông tin
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn btn-sm ${p.is_active ? "btn-secondary" : "btn-primary"}`}
+                      onClick={() => handleToggleActive(p)}
+                      title={p.is_active ? "Bấm để tạm ẩn sản phẩm" : "Bấm để hiển thị lại sản phẩm"}
+                    >
+                      {p.is_active ? <XCircle size={14} /> : <CheckCircle size={14} />}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm text-danger"
+                      onClick={() => handleDeleteProduct(p)}
+                      title="Xóa sản phẩm"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+
+          {/* 📱 MOBILE HORIZONTAL PRODUCT CARDS (E-COMMERCE ROWS) */}
+          <div className="admin-prod-cards-mobile">
+            {products.map((p) => (
+              <div key={p.id} className="admin-prod-row-card">
+                <div className="admin-prod-row-thumb-wrap">
+                  <img
+                    src={
+                      p.image ||
+                      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80"
+                    }
+                    alt={p.name}
+                    className="admin-prod-row-thumb"
+                  />
+                  <span className={`admin-prod-row-status ${p.is_active ? "status--active" : "status--inactive"}`}>
+                    {p.is_active ? "Đang bán" : "Tạm ẩn"}
+                  </span>
+                </div>
+
+                <div className="admin-prod-row-content">
+                  <div className="admin-prod-row-header">
+                    <h4 className="admin-prod-row-title">{p.name}</h4>
+                    {p.tag && <span className="admin-prod-row-tag">{p.tag}</span>}
+                  </div>
+
+                  <div className="admin-prod-row-prices">
+                    <strong className="admin-prod-row-price">{formatVND(p.price)}</strong>
+                    {p.original_price > 0 && (
+                      <span className="admin-prod-row-original">{formatVND(p.original_price)}</span>
+                    )}
+                  </div>
+
+                  <div className="admin-prod-row-actions">
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline admin-prod-row-btn-edit"
+                      onClick={() => openEditForm(p)}
+                    >
+                      <Edit2 size={13} /> <span>Sửa</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn btn-sm ${p.is_active ? "btn-secondary" : "btn-primary"}`}
+                      onClick={() => handleToggleActive(p)}
+                      title={p.is_active ? "Tạm ẩn" : "Mở bán"}
+                    >
+                      {p.is_active ? <XCircle size={13} /> : <CheckCircle size={13} />}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm text-danger"
+                      onClick={() => handleDeleteProduct(p)}
+                      title="Xóa"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
-      {/* 📝 MODAL TẠO / SỬA SẢN PHẨM */}
+      {/* 📝 MODAL TẠO / SỬA SẢN PHẨM (BALANCED SHOPIFY STYLE) */}
       {formOpen && (
-        <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(15, 23, 42, 0.75)", zIndex: 99999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1.5rem", backdropFilter: "blur(4px)" }}>
-          <div className="card" style={{ maxWidth: "600px", width: "100%", background: "#ffffff", borderRadius: "18px", padding: "2rem", boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)", maxHeight: "90vh", overflowY: "auto" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-              <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 800, color: "#0f172a" }}>
+        <div className="admin-prod-modal-overlay" onClick={() => setFormOpen(false)}>
+          <div className="admin-prod-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-prod-modal-handle-bar" />
+            <div className="admin-prod-modal-header">
+              <h3 className="admin-prod-modal-title">
                 {editingId ? "✏️ Chỉnh Sửa Sản Phẩm" : "➕ Thêm Sản Phẩm Mới"}
               </h3>
-              <button type="button" onClick={() => setFormOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#64748b" }}>
-                <X size={20} />
+              <button
+                type="button"
+                className="admin-prod-modal-close"
+                onClick={() => setFormOpen(false)}
+                title="Đóng"
+              >
+                <X size={18} />
               </button>
             </div>
 
-            <form onSubmit={handleFormSubmit}>
-              <div style={{ marginBottom: "1rem" }}>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                  Tên sản phẩm: *
-                </label>
+            <form onSubmit={handleFormSubmit} className="admin-prod-modal-form">
+              {/* 🖼️ KHUNG ẢNH STUDIO 100PX */}
+              <div className="admin-prod-photo-section">
+                {form.image ? (
+                  <div className="admin-prod-photo-card">
+                    <div className="admin-prod-photo-stage">
+                      <img src={form.image} alt="Sản phẩm" className="admin-prod-photo-img" />
+                    </div>
+                    <div className="admin-prod-photo-actions">
+                      <label htmlFor="prod-image-file-input" className="btn btn-sm btn-outline prod-photo-btn">
+                        <Upload size={12} /> <span>{uploadingImage ? "Đang tải..." : "Thay ảnh"}</span>
+                      </label>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-ghost text-danger prod-photo-btn"
+                        onClick={() => setForm({ ...form, image: "" })}
+                      >
+                        <Trash2 size={12} /> Xóa
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label htmlFor="prod-image-file-input" className="admin-prod-photo-empty">
+                    <Upload size={20} />
+                    <span className="photo-empty-text">{uploadingImage ? "Đang tải ảnh..." : "Chạm để tải ảnh từ máy tính"}</span>
+                  </label>
+                )}
+
+                <input
+                  id="prod-image-file-input"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageFileUpload}
+                  style={{ display: "none" }}
+                />
+              </div>
+
+              {/* TÊN SẢN PHẨM */}
+              <div className="admin-prod-form-field">
+                <label className="admin-prod-form-label">Tên sản phẩm: *</label>
                 <input
                   type="text"
                   required
-                  placeholder="VD: Mảnh Ghép NFC Gỗ 3D — Hà Nội..."
-                  style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                  placeholder="VD: Mảnh Ghép NFC Gỗ 3D — Hà Nội"
+                  className="admin-prod-form-input prod-name-input"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "1rem" }}>
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                    Giá bán thực tế (VNĐ): *
-                  </label>
-                  <input
-                    type="number"
-                    required
-                    min="0"
-                    placeholder="VD: 150000 hoặc 2000"
-                    style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-                    value={form.price}
-                    onChange={(e) => setForm({ ...form, price: e.target.value })}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                    Giá gốc gạch đi (VNĐ):
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    placeholder="VD: 180000"
-                    style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-                    value={form.original_price}
-                    onChange={(e) => setForm({ ...form, original_price: e.target.value })}
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "1rem" }}>
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                    Phân loại sản phẩm:
-                  </label>
+              {/* PHÂN LOẠI & HUY HIỆU */}
+              <div className="admin-prod-form-row">
+                <div className="admin-prod-form-field">
+                  <label className="admin-prod-form-label">Phân loại:</label>
                   <select
-                    style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                    className="admin-prod-form-select"
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                   >
@@ -464,106 +556,85 @@ export default function AdminProducts() {
                   </select>
                 </div>
 
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                    Huy hiệu / Tag nổi bật:
-                  </label>
+                <div className="admin-prod-form-field">
+                  <label className="admin-prod-form-label">Huy hiệu / Tag:</label>
                   <input
                     type="text"
-                    placeholder="VD: TEST GIÁ 2K 🔥, HOT SELLER 🔥..."
-                    style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                    placeholder="VD: SIÊU ƯU ĐÃI 🔥"
+                    className="admin-prod-form-input"
                     value={form.tag}
                     onChange={(e) => setForm({ ...form, tag: e.target.value })}
                   />
                 </div>
               </div>
 
-              <div style={{ marginBottom: "1rem" }}>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                  Hình Ảnh Sản Phẩm:
-                </label>
-                
-                {/* Xem trước ảnh (Live Image Preview) */}
-                {form.image && (
-                  <div style={{ position: "relative", marginBottom: "10px", width: "100%", height: "150px", borderRadius: "12px", overflow: "hidden", border: "1px solid #cbd5e1", background: "#f8fafc" }}>
-                    <img src={form.image} alt="Xem trước sản phẩm" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    <button
-                      type="button"
-                      onClick={() => setForm({ ...form, image: "" })}
-                      style={{ position: "absolute", top: "8px", right: "8px", background: "rgba(225, 29, 72, 0.9)", color: "#ffffff", border: "none", borderRadius: "50%", width: "28px", height: "28px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 6px rgba(0,0,0,0.2)" }}
-                      title="Xóa ảnh"
-                    >
-                      <X size={16} />
-                    </button>
+              {/* GIÁ BÁN & GIÁ GỐC */}
+              <div className="admin-prod-form-row">
+                <div className="admin-prod-form-field">
+                  <label className="admin-prod-form-label">Giá bán thực tế: *</label>
+                  <div className="input-with-currency">
+                    <input
+                      type="number"
+                      required
+                      min="0"
+                      placeholder="150000"
+                      className="admin-prod-form-input price-input"
+                      value={form.price}
+                      onChange={(e) => setForm({ ...form, price: e.target.value })}
+                    />
+                    <span className="currency-tag">VNĐ</span>
                   </div>
-                )}
+                </div>
 
-                <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                  <label
-                    htmlFor="prod-image-file-input"
-                    style={{
-                      padding: "10px 16px",
-                      borderRadius: "10px",
-                      background: "#eff6ff",
-                      color: "#1d4ed8",
-                      border: "1px dashed #3b82f6",
-                      fontSize: "0.88rem",
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    <Upload size={16} /> {uploadingImage ? "Đang tải lên Cloudinary..." : "Tải Ảnh Từ Máy Tính"}
-                  </label>
-                  <input
-                    id="prod-image-file-input"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageFileUpload}
-                    style={{ display: "none" }}
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Hoặc dán URL ảnh (https://...)"
-                    style={{ flex: 1, padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.88rem" }}
-                    value={form.image}
-                    onChange={(e) => setForm({ ...form, image: e.target.value })}
-                  />
+                <div className="admin-prod-form-field">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <label className="admin-prod-form-label">Giá gốc niêm yết:</label>
+                    {Number(form.original_price) > Number(form.price) && Number(form.original_price) > 0 && (
+                      <span className="discount-pill">
+                        -{Math.round(((Number(form.original_price) - Number(form.price)) / Number(form.original_price)) * 100)}%
+                      </span>
+                    )}
+                  </div>
+                  <div className="input-with-currency">
+                    <input
+                      type="number"
+                      min="0"
+                      placeholder="180000"
+                      className="admin-prod-form-input"
+                      value={form.original_price}
+                      onChange={(e) => setForm({ ...form, original_price: e.target.value })}
+                    />
+                    <span className="currency-tag">VNĐ</span>
+                  </div>
                 </div>
               </div>
 
-              <div style={{ marginBottom: "1.5rem" }}>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                  Mô tả sản phẩm:
-                </label>
+              {/* MÔ TẢ */}
+              <div className="admin-prod-form-field">
+                <label className="admin-prod-form-label">Mô tả sản phẩm:</label>
                 <textarea
-                  rows={3}
-                  placeholder="Mô tả chi tiết sản phẩm gỗ bách xanh, chip NFC..."
-                  style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                  rows={2}
+                  placeholder="Mô tả chất liệu gỗ bách xanh, chip NFC..."
+                  className="admin-prod-form-textarea"
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                 />
               </div>
 
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+              {/* FOOTER NÚT HÀNH ĐỘNG */}
+              <div className="admin-prod-modal-footer">
                 <button
                   type="button"
-                  className="btn"
+                  className="btn btn-outline admin-prod-btn-cancel"
                   onClick={() => setFormOpen(false)}
-                  style={{ padding: "10px 20px", borderRadius: "10px", background: "#f1f5f9", color: "#475569", fontWeight: 600, border: "1px solid #cbd5e1", cursor: "pointer" }}
                 >
                   Hủy bỏ
                 </button>
                 <button
                   type="submit"
-                  className="btn btn-primary"
-                  style={{ padding: "10px 24px", borderRadius: "10px", background: "#ea580c", color: "#ffffff", fontWeight: 700, border: "none", cursor: "pointer" }}
+                  className="btn btn-primary admin-prod-btn-submit"
                 >
-                  {editingId ? "Lưu Cập Nhật" : "Tạo Sản Phẩm 🚀"}
+                  {editingId ? "Lưu Cập Nhật 🚀" : "Tạo Sản Phẩm 🚀"}
                 </button>
               </div>
             </form>

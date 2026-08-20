@@ -130,15 +130,15 @@ export default function AdminAlbums() {
 
   return (
     <div className="admin-albums-wrap">
-      {/* Top Header */}
+      {/* Header */}
       <div className="admin-albums-header">
         <div>
           <h1 className="admin-albums-title">
-            🖼️ Quản Lý Album &amp; Kiểm Duyệt
+            <span className="title-desktop">🖼️ Quản Lý Album &amp; Kiểm Duyệt</span>
+            <span className="title-mobile">🖼️ Quản Lý Album</span>
           </h1>
           <p className="admin-albums-subtitle">
-            Hệ thống quản trị Metadata &amp; Kiểm duyệt an toàn — Bảo mật
-            quyền riêng tư 🔒
+            Hệ thống quản trị Metadata &amp; Kiểm duyệt an toàn — Bảo mật quyền riêng tư 🔒
           </p>
         </div>
         <button
@@ -147,102 +147,107 @@ export default function AdminAlbums() {
             loadStats();
             loadAlbums();
           }}
+          title="Tải lại dữ liệu"
         >
-          <RefreshCw size={16} /> Tải lại
+          <RefreshCw size={15} /> <span className="btn-refresh-text">Tải lại</span>
         </button>
       </div>
 
-      {/* KPI Resource Cards */}
-      <div className="admin-albums-kpi-grid">
-        {/* Card 1: Total Albums */}
-        <div className="card admin-albums-kpi-card">
-          <div className="admin-albums-kpi-icon admin-albums-kpi-icon--blue">
-            <Folder size={22} />
+      {/* KPI Resource Cards Carousel */}
+      <div className="admin-albums-kpis-carousel">
+        <div className="admin-albums-kpi-grid">
+          {/* Card 1: Total Albums */}
+          <div className="card admin-albums-kpi-card">
+            <div className="admin-albums-kpi-icon admin-albums-kpi-icon--blue">
+              <Folder size={20} />
+            </div>
+            <div className="admin-albums-kpi-info">
+              <span className="admin-albums-kpi-label">Tổng Số Album</span>
+              <h3 className="admin-albums-kpi-value">
+                {stats.total_albums.toLocaleString("vi-VN")}
+              </h3>
+              <span className="admin-albums-kpi-sub">Kỷ niệm đã tạo</span>
+            </div>
           </div>
-          <div className="admin-albums-kpi-info">
-            <span className="admin-albums-kpi-label">Tổng Số Album</span>
-            <h3 className="admin-albums-kpi-value">
-              {stats.total_albums.toLocaleString("vi-VN")}
-            </h3>
-            <span className="admin-albums-kpi-sub">Kỷ niệm đã được tạo</span>
-          </div>
-        </div>
 
-        {/* Card 2: Private Albums */}
-        <div className="card admin-albums-kpi-card">
-          <div className="admin-albums-kpi-icon admin-albums-kpi-icon--purple">
-            <Lock size={22} />
+          {/* Card 2: Private Albums */}
+          <div className="card admin-albums-kpi-card">
+            <div className="admin-albums-kpi-icon admin-albums-kpi-icon--purple">
+              <Lock size={20} />
+            </div>
+            <div className="admin-albums-kpi-info">
+              <span className="admin-albums-kpi-label">Album Riêng Tư</span>
+              <h3 className="admin-albums-kpi-value">
+                {stats.private_albums.toLocaleString("vi-VN")}
+              </h3>
+              <span className="admin-albums-kpi-sub text-green">
+                🔒 Khóa 100%
+              </span>
+            </div>
           </div>
-          <div className="admin-albums-kpi-info">
-            <span className="admin-albums-kpi-label">Album Riêng Tư</span>
-            <h3 className="admin-albums-kpi-value">
-              {stats.private_albums.toLocaleString("vi-VN")}
-            </h3>
-            <span className="admin-albums-kpi-sub text-green">
-              🔒 Bỏ qua xem ảnh — Khóa 100%
-            </span>
-          </div>
-        </div>
 
-        {/* Card 3: Public Albums */}
-        <div className="card admin-albums-kpi-card">
-          <div className="admin-albums-kpi-icon admin-albums-kpi-icon--orange">
-            <Globe size={22} />
+          {/* Card 3: Public Albums */}
+          <div className="card admin-albums-kpi-card">
+            <div className="admin-albums-kpi-icon admin-albums-kpi-icon--orange">
+              <Globe size={20} />
+            </div>
+            <div className="admin-albums-kpi-info">
+              <span className="admin-albums-kpi-label">Album Công Khai</span>
+              <h3 className="admin-albums-kpi-value">
+                {stats.public_albums.toLocaleString("vi-VN")}
+              </h3>
+              <span className="admin-albums-kpi-sub">
+                🌐 Bản đồ cộng đồng
+              </span>
+            </div>
           </div>
-          <div className="admin-albums-kpi-info">
-            <span className="admin-albums-kpi-label">Album Công Khai</span>
-            <h3 className="admin-albums-kpi-value">
-              {stats.public_albums.toLocaleString("vi-VN")}
-            </h3>
-            <span className="admin-albums-kpi-sub">
-              🌐 Chia sẻ bản đồ cộng đồng
-            </span>
-          </div>
-        </div>
 
-        {/* Card 4: Storage Used */}
-        <div className="card admin-albums-kpi-card">
-          <div className="admin-albums-kpi-icon admin-albums-kpi-icon--green">
-            <HardDrive size={22} />
-          </div>
-          <div className="admin-albums-kpi-info">
-            <span className="admin-albums-kpi-label">Dung Lượng Đã Dùng</span>
-            <h3 className="admin-albums-kpi-value">
-              {formatStorage(stats.estimated_bytes)}
-            </h3>
-            <span className="admin-albums-kpi-sub">
-              🖼️ {stats.total_photos} ảnh • 🎥 {stats.total_videos} video
-            </span>
+          {/* Card 4: Storage Used */}
+          <div className="card admin-albums-kpi-card">
+            <div className="admin-albums-kpi-icon admin-albums-kpi-icon--green">
+              <HardDrive size={20} />
+            </div>
+            <div className="admin-albums-kpi-info">
+              <span className="admin-albums-kpi-label">Dung Lượng Đã Dùng</span>
+              <h3 className="admin-albums-kpi-value">
+                {formatStorage(stats.estimated_bytes)}
+              </h3>
+              <span className="admin-albums-kpi-sub">
+                🖼️ {stats.total_photos} ảnh • 🎥 {stats.total_videos} video
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="admin-albums-tabs">
-        <button
-          className={`admin-albums-tab-btn ${activeTab === "management" ? "active" : ""}`}
-          onClick={() => {
-            setActiveTab("management");
-            setPage(1);
-          }}
-        >
-          <Folder size={18} /> 📁 Quản Lý Metadata Album
-        </button>
-        <button
-          className={`admin-albums-tab-btn ${activeTab === "moderation" ? "active" : ""}`}
-          onClick={() => {
-            setActiveTab("moderation");
-            setPage(1);
-          }}
-        >
-          <ShieldCheck size={18} /> 🚩 Hàng Đợi Kiểm Duyệt Public
-        </button>
-        <button
-          className={`admin-albums-tab-btn ${activeTab === "storage" ? "active" : ""}`}
-          onClick={() => setActiveTab("storage")}
-        >
-          <HardDrive size={18} /> 💾 Phân Tích Dung Lượng &amp; Hạ Tầng
-        </button>
+      {/* Navigation Tabs Carousel */}
+      <div className="admin-albums-tabs-carousel">
+        <div className="admin-albums-tabs">
+          <button
+            className={`admin-albums-tab-btn ${activeTab === "management" ? "active" : ""}`}
+            onClick={() => {
+              setActiveTab("management");
+              setPage(1);
+            }}
+          >
+            <Folder size={16} /> 📁 Quản Lý Metadata
+          </button>
+          <button
+            className={`admin-albums-tab-btn ${activeTab === "moderation" ? "active" : ""}`}
+            onClick={() => {
+              setActiveTab("moderation");
+              setPage(1);
+            }}
+          >
+            <ShieldCheck size={16} /> 🚩 Kiểm Duyệt Public
+          </button>
+          <button
+            className={`admin-albums-tab-btn ${activeTab === "storage" ? "active" : ""}`}
+            onClick={() => setActiveTab("storage")}
+          >
+            <HardDrive size={16} /> 💾 Dung Lượng &amp; Hạ Tầng
+          </button>
+        </div>
       </div>
 
       {/* TAB 1: ALBUM MANAGEMENT METADATA */}
@@ -254,22 +259,21 @@ export default function AdminAlbums() {
               onSubmit={handleSearchSubmit}
               className="admin-albums-search-form"
             >
-              <Search size={16} className="search-icon" />
+              <Search size={15} className="search-icon" />
               <input
                 type="text"
-                placeholder="Tìm theo tên album, tỉnh thành, serial NFC, chủ thẻ..."
+                placeholder="Tìm theo tên album, tỉnh thành, serial, chủ thẻ..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="admin-albums-search-input"
               />
               <button type="submit" className="admin-albums-btn-search">
-                Tìm kiếm
+                Tìm
               </button>
             </form>
 
             <div className="admin-albums-filters">
               <div className="filter-group">
-                <Filter size={14} />
                 <select
                   value={privacyFilter}
                   onChange={(e) => {
@@ -299,7 +303,7 @@ export default function AdminAlbums() {
             </div>
           </div>
 
-          {/* Album List Table */}
+          {/* Album List Table / Cards */}
           {loading ? (
             <div className="admin-dash-loading">
               <div className="spinner" />
@@ -310,122 +314,207 @@ export default function AdminAlbums() {
               <p>Không tìm thấy Album nào phù hợp bộ lọc.</p>
             </div>
           ) : (
-            <div className="table-responsive">
-              <table className="admin-albums-table">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Album &amp; Tỉnh Thành</th>
-                    <th>Chủ Sở Hữu</th>
-                    <th>Thẻ NFC Serial</th>
-                    <th>Media / Dung lượng</th>
-                    <th>Quyền Riêng Tư</th>
-                    <th>Trạng Thái</th>
-                    <th>Hành Động</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {albums.map((album) => {
-                    const estimatedMb = (
-                      ((album.photo_count || 0) * 2 +
-                        (album.video_count || 0) * 15)
-                    ).toFixed(1);
-                    return (
-                      <tr key={album.id}>
-                        <td>#{album.id}</td>
-                        <td>
-                          <div className="admin-album-cell">
-                            <span className="admin-album-cell-title">
-                              {album.title || `Album #${album.id}`}
+            <>
+              {/* 🖥️ Desktop Table View */}
+              <div className="table-responsive admin-albums-desktop-table">
+                <table className="admin-albums-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Album &amp; Tỉnh Thành</th>
+                      <th>Chủ Sở Hữu</th>
+                      <th>Thẻ NFC Serial</th>
+                      <th>Media / Dung lượng</th>
+                      <th>Quyền Riêng Tư</th>
+                      <th>Trạng Thái</th>
+                      <th>Hành Động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {albums.map((album) => {
+                      const estimatedMb = (
+                        ((album.photo_count || 0) * 2 +
+                          (album.video_count || 0) * 15)
+                      ).toFixed(1);
+                      return (
+                        <tr key={album.id}>
+                          <td>#{album.id}</td>
+                          <td>
+                            <div className="admin-album-cell">
+                              <span className="admin-album-cell-title">
+                                {album.title || `Album #${album.id}`}
+                              </span>
+                              <span className="admin-album-cell-sub">
+                                <MapPin size={12} /> {album.province_name}
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="admin-album-user-cell">
+                              <span>{album.owner_name}</span>
+                              <span className="text-muted text-sm">
+                                {album.owner_email}
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            <span className="badge-serial">
+                              {album.serial_code}
                             </span>
-                            <span className="admin-album-cell-sub">
-                              <MapPin size={12} /> {album.province_name}
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="admin-album-user-cell">
-                            <span>{album.owner_name}</span>
-                            <span className="text-muted text-sm">
-                              {album.owner_email}
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          <span className="badge-serial">
-                            {album.serial_code}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="admin-album-media-cell">
-                            <span>
-                              <ImageIcon size={12} /> {album.photo_count || 0}{" "}
-                              ảnh • <Film size={12} /> {album.video_count || 0}{" "}
-                              video
-                            </span>
-                            <span className="text-muted text-sm">
-                              ~{estimatedMb} MB
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          {album.is_public ? (
-                            <span className="badge-privacy badge-privacy--public">
-                              <Globe size={12} /> Public 🌐
-                            </span>
-                          ) : (
-                            <span className="badge-privacy badge-privacy--private">
-                              <Lock size={12} /> Private 🔒
-                            </span>
-                          )}
-                        </td>
-                        <td>
-                          {album.status === "active" ? (
-                            <span className="status-badge active">
-                              Hoạt động
-                            </span>
-                          ) : (
-                            <span className="status-badge banned">Tạm ẩn</span>
-                          )}
-                        </td>
-                        <td>
-                          <div className="admin-albums-actions">
-                            <button
-                              className="btn-action btn-action--view"
-                              title="Xem Metadata Chi Tiết"
-                              onClick={() => setSelectedAlbum(album)}
-                            >
-                              <FileText size={15} />
-                            </button>
-                            {album.status === "active" ? (
-                              <button
-                                className="btn-action btn-action--lock"
-                                title="Tạm Khóa Album Vi Phạm"
-                                onClick={() =>
-                                  handleToggleStatus(album, "archived")
-                                }
-                              >
-                                <XCircle size={15} />
-                              </button>
+                          </td>
+                          <td>
+                            <div className="admin-album-media-cell">
+                              <span>
+                                <ImageIcon size={12} /> {album.photo_count || 0}{" "}
+                                ảnh • <Film size={12} /> {album.video_count || 0}{" "}
+                                video
+                              </span>
+                              <span className="text-muted text-sm">
+                                ~{estimatedMb} MB
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            {album.is_public ? (
+                              <span className="badge-privacy badge-privacy--public">
+                                <Globe size={12} /> Public 🌐
+                              </span>
                             ) : (
-                              <button
-                                className="btn-action btn-action--unlock"
-                                title="Mở Khóa Album"
-                                onClick={() =>
-                                  handleToggleStatus(album, "active")
-                                }
-                              >
-                                <CheckCircle size={15} />
-                              </button>
+                              <span className="badge-privacy badge-privacy--private">
+                                <Lock size={12} /> Private 🔒
+                              </span>
                             )}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                          </td>
+                          <td>
+                            {album.status === "active" ? (
+                              <span className="status-badge active">
+                                Hoạt động
+                              </span>
+                            ) : (
+                              <span className="status-badge banned">Tạm ẩn</span>
+                            )}
+                          </td>
+                          <td>
+                            <div className="admin-albums-actions">
+                              <button
+                                className="btn-action btn-action--view"
+                                title="Xem Metadata Chi Tiết"
+                                onClick={() => setSelectedAlbum(album)}
+                              >
+                                <FileText size={15} />
+                              </button>
+                              {album.status === "active" ? (
+                                <button
+                                  className="btn-action btn-action--lock"
+                                  title="Tạm Khóa Album Vi Phạm"
+                                  onClick={() =>
+                                    handleToggleStatus(album, "archived")
+                                  }
+                                >
+                                  <XCircle size={15} />
+                                </button>
+                              ) : (
+                                <button
+                                  className="btn-action btn-action--unlock"
+                                  title="Mở Khóa Album"
+                                  onClick={() =>
+                                    handleToggleStatus(album, "active")
+                                  }
+                                >
+                                  <CheckCircle size={15} />
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* 📱 Mobile Cards View */}
+              <div className="admin-albums-mobile-cards">
+                {albums.map((album) => {
+                  const estimatedMb = (
+                    ((album.photo_count || 0) * 2 +
+                      (album.video_count || 0) * 15)
+                  ).toFixed(1);
+                  return (
+                    <div key={album.id} className="admin-album-m-card">
+                      {/* Top Row: Title + Privacy Badge */}
+                      <div className="album-m-row-top">
+                        <div className="album-m-title-wrap">
+                          <span className="album-m-id">#{album.id}</span>
+                          <span className="album-m-title">
+                            {album.title || `Album #${album.id}`}
+                          </span>
+                        </div>
+                        {album.is_public ? (
+                          <span className="badge-privacy badge-privacy--public">
+                            <Globe size={11} /> Public
+                          </span>
+                        ) : (
+                          <span className="badge-privacy badge-privacy--private">
+                            <Lock size={11} /> Private
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Info Row: Province & Serial & Media */}
+                      <div className="album-m-row-info">
+                        <span className="album-m-prov">📍 {album.province_name}</span>
+                        <span className="album-m-sep">•</span>
+                        <span className="album-m-media">
+                          🖼️ {album.photo_count || 0} • 🎥 {album.video_count || 0} (~{estimatedMb}MB)
+                        </span>
+                      </div>
+
+                      {/* Owner Row */}
+                      <div className="album-m-row-owner">
+                        <span className="album-m-owner-label">Chủ thẻ:</span>
+                        <span className="album-m-owner-val">
+                          <strong>{album.owner_name}</strong> {album.owner_email ? `(${album.owner_email})` : ""}
+                        </span>
+                      </div>
+
+                      {/* Bottom Row: Status + Actions */}
+                      <div className="album-m-row-bottom">
+                        <span className={`status-badge ${album.status === "active" ? "active" : "banned"}`}>
+                          {album.status === "active" ? "Hoạt động" : "Tạm ẩn"}
+                        </span>
+                        <div className="album-m-actions">
+                          <button
+                            className="btn-action btn-action--view"
+                            title="Xem Metadata"
+                            onClick={() => setSelectedAlbum(album)}
+                          >
+                            <FileText size={14} /> Chi tiết
+                          </button>
+                          {album.status === "active" ? (
+                            <button
+                              className="btn-action btn-action--lock"
+                              title="Tạm Khóa Album"
+                              onClick={() => handleToggleStatus(album, "archived")}
+                            >
+                              <XCircle size={14} /> Khóa
+                            </button>
+                          ) : (
+                            <button
+                              className="btn-action btn-action--unlock"
+                              title="Mở Khóa"
+                              onClick={() => handleToggleStatus(album, "active")}
+                            >
+                              <CheckCircle size={14} /> Mở
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
           )}
         </div>
       )}

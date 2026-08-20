@@ -1,15 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Lock, Eye, EyeOff, CheckCircle2, ShieldCheck, KeyRound } from "lucide-react";
 import { authAPI } from "@/lib/api";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
+import "../account/SettingsAccount.css";
 
 export default function SettingsPassword() {
   const [lang, setLang] = useState("vi");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
@@ -26,11 +31,11 @@ export default function SettingsPassword() {
     setError("");
 
     if (newPassword.length < 6) {
-      setError(t(lang, "newPasswordPlaceholder"));
+      setError("Mật khẩu mới phải có ít nhất 6 ký tự");
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError(t(lang, "passwordMismatch"));
+      setError("Mật khẩu xác nhận không khớp");
       return;
     }
 
@@ -41,7 +46,7 @@ export default function SettingsPassword() {
       setNewPassword("");
       setConfirmPassword("");
       setSaved(true);
-      setTimeout(() => setSaved(false), 2500);
+      setTimeout(() => setSaved(false), 3000);
     } catch (err) {
       setError(err.message || "Lỗi đổi mật khẩu");
     } finally {
@@ -50,56 +55,147 @@ export default function SettingsPassword() {
   };
 
   return (
-    <div className="settings-page">
-      <h1 className="settings-page__title">{t(lang, "passwordTitle")}</h1>
-      <p className="settings-page__subtitle">
-        {t(lang, "passwordSubtitle")}
-      </p>
+    <div className="settings-acc-container">
+      {/* Top Header */}
+      <div className="settings-acc-header">
+        <h1 className="settings-acc-title">
+          <span className="title-desktop">🔒 Đổi Mật Khẩu Đăng Nhập</span>
+          <span className="title-mobile">🔒 Đổi Mật Khẩu</span>
+        </h1>
+        <p className="settings-acc-subtitle">
+          Cập nhật mật khẩu định kỳ để bảo vệ tài khoản và bộ sưu tập thẻ của bạn
+        </p>
+      </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="card"
-        style={{ padding: "1.5rem" }}
-      >
-        <label className="settings-field">
-          <span>{t(lang, "currentPassword")}</span>
-          <input
-            type="password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            placeholder={t(lang, "currentPasswordPlaceholder")}
-            required
-          />
-        </label>
+      <form onSubmit={handleSubmit} className="card settings-acc-form-card">
+        <h3 className="settings-acc-form-title">
+          <KeyRound size={18} /> Thiết Lập Mật Khẩu Mới
+        </h3>
 
-        <label className="settings-field">
-          <span>{t(lang, "newPassword")}</span>
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            placeholder={t(lang, "newPasswordPlaceholder")}
-            required
-          />
-        </label>
+        <div className="settings-acc-form-grid">
+          {/* Mật khẩu hiện tại */}
+          <div className="settings-acc-field settings-acc-field--full">
+            <label className="settings-acc-label">
+              <Lock size={14} /> Mật Khẩu Hiện Tại *
+            </label>
+            <div style={{ position: "relative" }}>
+              <input
+                type={showCurrent ? "text" : "password"}
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Nhập mật khẩu hiện tại của bạn..."
+                className="settings-acc-input"
+                style={{ paddingRight: "40px" }}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowCurrent(!showCurrent)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  color: "#94a3b8",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {showCurrent ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </div>
 
-        <label className="settings-field">
-          <span>{t(lang, "confirmPassword")}</span>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder={t(lang, "confirmPasswordPlaceholder")}
-            required
-          />
-        </label>
+          {/* Mật khẩu mới */}
+          <div className="settings-acc-field">
+            <label className="settings-acc-label">
+              <Lock size={14} /> Mật Khẩu Mới (ít nhất 6 ký tự) *
+            </label>
+            <div style={{ position: "relative" }}>
+              <input
+                type={showNew ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Nhập mật khẩu mới..."
+                className="settings-acc-input"
+                style={{ paddingRight: "40px" }}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowNew(!showNew)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  color: "#94a3b8",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {showNew ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </div>
 
-        {error && <p className="settings-error">{error}</p>}
+          {/* Xác nhận mật khẩu mới */}
+          <div className="settings-acc-field">
+            <label className="settings-acc-label">
+              <ShieldCheck size={14} /> Xác Nhận Mật Khẩu Mới *
+            </label>
+            <div style={{ position: "relative" }}>
+              <input
+                type={showConfirm ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Nhập lại mật khẩu mới..."
+                className="settings-acc-input"
+                style={{ paddingRight: "40px" }}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirm(!showConfirm)}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  color: "#94a3b8",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </div>
+        </div>
 
-        <div className="settings-form-footer">
-          {saved && <span className="settings-saved">✓ {t(lang, "passwordSuccess")}</span>}
-          <button type="submit" disabled={saving} className="btn btn-primary">
-            {saving ? t(lang, "saving") : t(lang, "updatePassword")}
+        {error && <p className="settings-acc-error">{error}</p>}
+
+        <div className="settings-acc-footer">
+          {saved && (
+            <span className="settings-acc-saved">
+              <CheckCircle2 size={16} /> Đã đổi mật khẩu thành công!
+            </span>
+          )}
+          <button
+            type="submit"
+            disabled={saving}
+            className="btn settings-acc-btn-submit"
+          >
+            {saving ? "Đang xử lý..." : "Cập Nhật Mật Khẩu"}
           </button>
         </div>
       </form>

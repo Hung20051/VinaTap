@@ -112,7 +112,12 @@ export default function CheckoutModal({
 
   // 🔄 AUTO POLLING KIỂM TRA CHUYỂN KHOẢN TỰ ĐỘNG TỪ VIETQR (Tối đa 5 phút ~ 100 lần)
   useEffect(() => {
-    if (!createdOrder || createdOrder.payment_method !== "vietqr" || isPaymentVerified) return;
+    if (
+      !createdOrder ||
+      createdOrder.payment_method !== "vietqr" ||
+      isPaymentVerified
+    )
+      return;
 
     let pollCount = 0;
     const maxPolls = 100; // 5 phút
@@ -127,7 +132,12 @@ export default function CheckoutModal({
 
       try {
         const res = await orderAPI.checkStatus(createdOrder.order_code);
-        if (res && (res.status === "paid" || res.status === "processing" || res.status === "completed")) {
+        if (
+          res &&
+          (res.status === "paid" ||
+            res.status === "processing" ||
+            res.status === "completed")
+        ) {
           setIsPaymentVerified(true);
           clearInterval(interval);
 
@@ -138,9 +148,9 @@ export default function CheckoutModal({
           }, 2500);
         }
       } catch (err) {
-        console.error("Auto polling status error:", err);
+        // Bỏ qua lỗi tạm thời khi polling (như mạng chập chờn hoặc rate limit)
       }
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [createdOrder, isPaymentVerified]);
@@ -150,17 +160,27 @@ export default function CheckoutModal({
     setCheckingManual(true);
     try {
       const res = await orderAPI.checkStatus(createdOrder.order_code);
-      if (res && (res.status === "paid" || res.status === "processing" || res.status === "completed")) {
+      if (
+        res &&
+        (res.status === "paid" ||
+          res.status === "processing" ||
+          res.status === "completed")
+      ) {
         setIsPaymentVerified(true);
         setTimeout(() => {
           if (onSuccess) onSuccess();
           onClose();
         }, 2500);
       } else {
-        alert("Hệ thống chưa ghi nhận thanh toán. Nếu bạn đã chuyển khoản, vui lòng chờ 1-2 phút rồi kiểm tra lại!");
+        alert(
+          "Hệ thống chưa ghi nhận thanh toán. Nếu bạn đã chuyển khoản, vui lòng chờ 1-2 phút rồi kiểm tra lại!",
+        );
       }
     } catch (err) {
-      alert("Không thể kiểm tra trạng thái đơn hàng: " + (err.message || "Lỗi kết nối"));
+      alert(
+        "Không thể kiểm tra trạng thái đơn hàng: " +
+          (err.message || "Lỗi kết nối"),
+      );
     } finally {
       setCheckingManual(false);
     }
@@ -205,7 +225,8 @@ export default function CheckoutModal({
   discount = Math.min(discount, subtotal);
   const baseFee = Number(shipRule?.base_fee ?? 30000);
   const freeThreshold = Number(shipRule?.free_shipping_threshold ?? 500000);
-  const shippingFee = subtotal >= freeThreshold || isFreeshipVoucher ? 0 : baseFee;
+  const shippingFee =
+    subtotal >= freeThreshold || isFreeshipVoucher ? 0 : baseFee;
   const totalAmount = Math.max(0, subtotal - discount + shippingFee);
 
   const handleSubmitOrder = async (e) => {
@@ -272,7 +293,6 @@ export default function CheckoutModal({
     setCopiedText(key);
     setTimeout(() => setCopiedText(null), 2000);
   };
-
   const formatMoney = (amount) =>
     new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -290,65 +310,74 @@ export default function CheckoutModal({
           /* FORM ĐẶT HÀNG */
           <div className="checkout-form-body">
             <div className="checkout-header">
-              <h3>🛍️ Thanh Toán Đơn Hàng VinaTap</h3>
-              <p className="text-muted">
-                Điền thông tin nhận thẻ NFC — Bảo mật 100% 🔒
-              </p>
+              <div className="checkout-badge-row">
+                <span className="checkout-items-chip">
+                  📦 {items.length} sản phẩm ({formatMoney(subtotal)})
+                </span>
+              </div>
+              <h3 className="checkout-title">Xác Nhận &amp; Thanh Toán</h3>
             </div>
 
             {errorMsg && (
               <div className="checkout-error-banner">
-                <AlertCircle size={18} />
+                <AlertCircle size={17} />
                 <span>{errorMsg}</span>
               </div>
             )}
 
             {paymentMethod === "vietqr" && !bankLoading && !bankConfig.accountNo && (
-              <div className="checkout-error-banner" style={{ background: "#fff7ed", borderColor: "#fed7aa", color: "#c2410c" }}>
-                <AlertCircle size={18} />
-                <span>Thông tin ngân hàng chưa được cập nhật. Vui lòng chọn Thanh toán COD khi nhận hàng!</span>
+              <div className="checkout-error-banner is-warn">
+                <AlertCircle size={17} />
+                <span>Hệ thống VietQR đang bảo trì. Vui lòng chọn COD!</span>
               </div>
             )}
 
             <form onSubmit={handleSubmitOrder} className="checkout-grid">
               {/* CỘT TRÁI: THÔNG TIN GIAO HÀNG */}
               <div className="checkout-col">
-                <h4 className="section-title">1. Thông Tin Nhận Thẻ NFC</h4>
+                <div className="checkout-section-hdr">
+                  <span className="step-num">1</span>
+                  <h4 className="section-title">Địa Chỉ Nhận Hàng</h4>
+                </div>
+
+                <div className="form-row-2col">
+                  <div className="form-group">
+                    <label className="form-label">Họ và Tên *</label>
+                    <input
+                      type="text"
+                      placeholder="Nguyễn Văn An"
+                      value={shippingInfo.name}
+                      onChange={(e) =>
+                        setShippingInfo({ ...shippingInfo, name: e.target.value })
+                      }
+                      className="form-input"
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Số Điện Thoại *</label>
+                    <input
+                      type="tel"
+                      placeholder="0912 345 678"
+                      value={shippingInfo.phone}
+                      onChange={(e) =>
+                        setShippingInfo({
+                          ...shippingInfo,
+                          phone: e.target.value,
+                        })
+                      }
+                      className="form-input"
+                      required
+                    />
+                  </div>
+                </div>
 
                 <div className="form-group">
-                  <label>Họ và Tên người nhận *</label>
+                  <label className="form-label">Địa Chỉ Chi Tiết *</label>
                   <input
                     type="text"
-                    placeholder="Ví dụ: Nguyễn Văn A"
-                    value={shippingInfo.name}
-                    onChange={(e) =>
-                      setShippingInfo({ ...shippingInfo, name: e.target.value })
-                    }
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Số Điện Thoại di động *</label>
-                  <input
-                    type="tel"
-                    placeholder="Ví dụ: 0988888888"
-                    value={shippingInfo.phone}
-                    onChange={(e) =>
-                      setShippingInfo({
-                        ...shippingInfo,
-                        phone: e.target.value,
-                      })
-                    }
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Địa Chỉ Nhận Hàng Cụ Thể *</label>
-                  <textarea
-                    rows={2}
-                    placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành..."
+                    placeholder="Số nhà, tên đường, phường/xã, quận/huyện..."
                     value={shippingInfo.address}
                     onChange={(e) =>
                       setShippingInfo({
@@ -356,26 +385,31 @@ export default function CheckoutModal({
                         address: e.target.value,
                       })
                     }
+                    className="form-input"
                     required
                   />
                 </div>
 
                 <div className="form-group">
-                  <label>Ghi Chú Đơn Hàng (Nếu có)</label>
+                  <label className="form-label">Ghi Chú Giao Hàng (Tùy chọn)</label>
                   <input
                     type="text"
-                    placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao..."
+                    placeholder="Ví dụ: Giao giờ hành chính, gọi trước..."
                     value={shippingInfo.note}
                     onChange={(e) =>
                       setShippingInfo({ ...shippingInfo, note: e.target.value })
                     }
+                    className="form-input"
                   />
                 </div>
               </div>
 
               {/* CỘT PHẢI: PTTT & XÁC NHẬN GIÁ */}
               <div className="checkout-col">
-                <h4 className="section-title">2. Phương Thức Thanh Toán</h4>
+                <div className="checkout-section-hdr">
+                  <span className="step-num">2</span>
+                  <h4 className="section-title">Hình Thức Thanh Toán</h4>
+                </div>
 
                 <div className="payment-method-selector">
                   <label
@@ -389,11 +423,13 @@ export default function CheckoutModal({
                       onChange={() => setPaymentMethod("vietqr")}
                     />
                     <div className="pm-icon icon-qr">
-                      <QrCode size={20} />
+                      <QrCode size={18} />
                     </div>
                     <div className="pm-text">
-                      <strong>Quét Mã VietQR Chuyển Khoản</strong>
-                      <span>Tự động điền số tiền & nội dung VNT-...</span>
+                      <div className="pm-title-row">
+                        <strong>Quét VietQR</strong>
+                      </div>
+                      <span className="pm-sub">Khớp tiền tự động</span>
                     </div>
                   </label>
 
@@ -408,31 +444,23 @@ export default function CheckoutModal({
                       onChange={() => setPaymentMethod("cod")}
                     />
                     <div className="pm-icon icon-cod">
-                      <Truck size={20} />
+                      <Truck size={18} />
                     </div>
                     <div className="pm-text">
-                      <strong>COD — Thanh Toán Khi Nhận Hàng</strong>
-                      <span>Thanh toán tiền mặt cho shipper</span>
+                      <div className="pm-title-row">
+                        <strong>Thanh toán COD</strong>
+                      </div>
+                      <span className="pm-sub">Tiền mặt khi nhận</span>
                     </div>
                   </label>
                 </div>
 
                 <div className="voucher-section">
-                  <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                    <Ticket size={16} style={{ color: "#ea580c" }} /> Mã Giảm Giá Voucher (Trong Ví Của Bạn):
+                  <label className="voucher-lbl">
+                    <Ticket size={14} /> Mã Voucher Ví Của Bạn:
                   </label>
                   <select
-                    style={{
-                      width: "100%",
-                      padding: "10px 14px",
-                      borderRadius: "10px",
-                      border: "1px solid #cbd5e1",
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
-                      color: "#0f172a",
-                      background: "#ffffff",
-                      cursor: "pointer",
-                    }}
+                    className="voucher-select"
                     value={voucherCode}
                     onChange={(e) => setVoucherCode(e.target.value)}
                   >
@@ -443,11 +471,6 @@ export default function CheckoutModal({
                       </option>
                     ))}
                   </select>
-                  {walletVouchers.length === 0 && (
-                    <span style={{ display: "block", fontSize: "0.78rem", color: "#94a3b8", marginTop: "4px" }}>
-                      * Bạn hiện chưa có mã Voucher nào khả dụng trong Ví cá nhân.
-                    </span>
-                  )}
                 </div>
 
                 {/* BẢNG TÍNH TIỀN */}
@@ -473,7 +496,7 @@ export default function CheckoutModal({
                     </span>
                   </div>
                   <div className="price-row total-row">
-                    <span>TỔNG THÀNH TIỀN:</span>
+                    <span>TỔNG THANH TOÁN:</span>
                     <strong className="final-price">
                       {formatMoney(totalAmount)}
                     </strong>
@@ -483,11 +506,21 @@ export default function CheckoutModal({
                 <button
                   type="submit"
                   className="btn-submit-order"
-                  disabled={submitting || (paymentMethod === "vietqr" && (bankLoading || !bankConfig.accountNo))}
+                  disabled={
+                    submitting ||
+                    (paymentMethod === "vietqr" && (bankLoading || !bankConfig.accountNo))
+                  }
                 >
-                  {submitting
-                    ? "Đang Khởi Tạo Đơn Hàng..."
-                    : "XÁC NHẬN ĐẶT HÀNG 🚀"}
+                  {submitting ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" /> Đang Tạo Đơn Hàng...
+                    </>
+                  ) : (
+                    <>
+                      <span>Xác Nhận Đặt Hàng</span>
+                      <strong>{formatMoney(totalAmount)} ➔</strong>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -502,7 +535,6 @@ export default function CheckoutModal({
                 Mã đơn hàng của bạn: <code>{createdOrder.order_code}</code>
               </p>
             </div>
-
 
             {createdOrder.payment_method === "vietqr" ? (
               <div className="vietqr-payment-box">
@@ -582,8 +614,17 @@ export default function CheckoutModal({
                         <span>🎉 CHUYỂN KHOẢN THÀNH CÔNG!</span>
                       </div>
                     ) : pollingTimedOut ? (
-                      <div className="payment-timeout-box" style={{ textAlign: "center", marginTop: "10px" }}>
-                        <p style={{ fontSize: "0.85rem", color: "#64748b", marginBottom: "8px" }}>
+                      <div
+                        className="payment-timeout-box"
+                        style={{ textAlign: "center", marginTop: "10px" }}
+                      >
+                        <p
+                          style={{
+                            fontSize: "0.85rem",
+                            color: "#64748b",
+                            marginBottom: "8px",
+                          }}
+                        >
                           Đã tạm dừng tự động kiểm tra để tiết kiệm dữ liệu.
                         </p>
                         <button
@@ -602,7 +643,9 @@ export default function CheckoutModal({
                             cursor: "pointer",
                           }}
                         >
-                          {checkingManual ? "Đang kiểm tra..." : "🔄 Kiểm tra lại trạng thái"}
+                          {checkingManual
+                            ? "Đang kiểm tra..."
+                            : "🔄 Kiểm tra lại trạng thái"}
                         </button>
                       </div>
                     ) : (

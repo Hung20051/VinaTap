@@ -28,17 +28,7 @@ export const getUser = () => {
   }
 };
 
-// Đồng bộ lại cache localStorage với dữ liệu user mới nhất (thường là kết
-// quả trả về từ authAPI.updateMe()/getMe() sau khi đã lưu thật vào DB qua
-// PATCH /api/auth/me). Bản thân hàm này KHÔNG gọi API — chỉ update cache
-// phía client để UI đọc lại nhanh mà không cần gọi lại getMe().
-//
-// Sau khi ghi localStorage, bắn thêm 1 CustomEvent "vinatap:user-updated"
-// — localStorage.setItem() tự nó KHÔNG làm React re-render ở nơi khác (vd
-// Sidebar đọc user từ state riêng của layout cha, set 1 lần lúc mount).
-// Event "storage" mặc định của trình duyệt chỉ bắn ở TAB KHÁC, không bắn
-// ở chính tab đang gọi setItem — nên phải tự bắn custom event để những
-// component đang mở trong CÙNG tab (vd Sidebar) nghe được ngay lập tức.
+// Đồng bộ lại cache localStorage với dữ liệu user mới nhất
 export const updateUser = (patch) => {
   const current = getUser() || {};
   const next = { ...current, ...patch };
@@ -60,12 +50,7 @@ export const isAdmin = () => {
   return user?.role === "admin";
 };
 
-// Sau khi đăng nhập/đăng ký thành công, admin đi thẳng /admin (không có
-// dashboard sưu tầm kiểu customer — "0/34 tỉnh", "Kích hoạt NFC"... những
-// thứ đó không liên quan gì tới admin). Nhận `user` làm tham số thay vì tự
-// gọi getUser() bên trong, vì lúc gọi hàm này thường VỪA saveAuth() xong
-// (state cũ trong closure có thể chưa kịp đồng bộ) — truyền thẳng user mới
-// nhất vào để chắc chắn đọc đúng role ngay tại thời điểm đó.
+// Sau khi đăng nhập/đăng ký thành công, admin đi thẳng /admin
 export const getPostAuthRedirect = (user) =>
   user?.role === "admin" ? "/admin" : "/customer/dashboard";
 

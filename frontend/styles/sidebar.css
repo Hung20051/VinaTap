@@ -143,20 +143,109 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 1rem 0.75rem;
+  padding: 0.75rem 0.75rem;
 }
 .app-sidebar.is-collapsed .app-nav {
   padding: 1rem 0.5rem;
+}
+
+/* ─── ACCORDION FOLDER MENU STYLES (COLLAPSIBLE) ─── */
+.app-nav--accordion {
+  padding: 0.5rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.app-accordion-group {
+  border-radius: 10px;
+  transition: all 0.15s ease;
+}
+
+.app-accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.app-accordion-header:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.app-accordion-group.is-expanded > .app-accordion-header {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.app-accordion-group.has-active > .app-accordion-header {
+  color: #ffffff;
+}
+
+.app-accordion-header__left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.app-accordion-header__icon {
+  color: var(--primary, #e85d04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-accordion-chevron {
+  color: rgba(255, 255, 255, 0.45);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-accordion-chevron.rotate-180 {
+  transform: rotate(180deg);
+  color: #ffffff;
+}
+
+.app-accordion-body {
+  margin-top: 0.25rem;
+  margin-left: 1.15rem;
+  margin-bottom: 0.4rem;
+  padding-left: 0.65rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  animation: accordionFade 0.2s ease;
+}
+
+@keyframes accordionFade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .app-nav__link {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius-md);
-  font-size: 0.92rem;
+  gap: 0.65rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md, 8px);
+  font-size: 0.83rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.65);
   background: transparent;
@@ -317,17 +406,18 @@
   pointer-events: none;
 }
 
-/* ─── OFF-CANVAS SLIDE DRAWER (GITHUB STYLE) ─── */
+/* ─── OFF-CANVAS SLIDE DRAWER (GITHUB / MOBILE APP STYLE) ─── */
 .app-drawer-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(4px);
   z-index: 10000;
   animation: fadeIn 0.2s ease;
+  touch-action: none;
 }
 
 @keyframes fadeIn {
@@ -339,19 +429,68 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 280px;
+  width: 275px;
+  max-width: 82vw;
   height: 100vh;
+  height: 100dvh;
   background: #0f172a;
-  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.4);
   z-index: 10001;
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
 }
 
 .app-sidebar-drawer.is-open {
   transform: translateX(0);
+}
+
+.app-sidebar-drawer .app-sidebar__top {
+  flex-shrink: 0;
+  padding: 1rem 0.75rem 0.85rem 1rem;
+}
+
+.app-sidebar-drawer .app-search {
+  flex-shrink: 0;
+  margin: 0.15rem 0.75rem 0.5rem;
+}
+
+.app-sidebar-drawer .app-nav {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.4rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.app-sidebar-drawer .app-nav::-webkit-scrollbar {
+  width: 4px;
+}
+.app-sidebar-drawer .app-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.app-sidebar-drawer .app-nav__link {
+  padding: 0.55rem 0.75rem;
+  font-size: 0.85rem;
+  gap: 0.65rem;
+  border-radius: 8px;
+}
+
+.app-sidebar-drawer .app-sidebar__footer {
+  flex-shrink: 0;
+  background: #0b1120;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.75rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* ─── VERTICAL APP SHELL (GITHUB-STYLE TOP HEADER) ─── */
@@ -359,13 +498,21 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
   background: #f8fafc;
+  position: relative;
 }
 
 .app-main-content {
   flex: 1;
   min-width: 0;
   padding: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .app-main-content {
+    padding: 0.85rem 0.75rem 1.5rem;
+  }
 }
 
 

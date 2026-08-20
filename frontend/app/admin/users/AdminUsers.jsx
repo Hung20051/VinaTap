@@ -128,22 +128,88 @@ export default function AdminUsers() {
       `Hạ "${u.name}" xuống quyền Customer? Người này sẽ mất quyền truy cập trang quản trị.`,
   };
 
-  return (
-    <div>
-      <div className="admin-users-sticky-header">
-        <h1 className="admin-dash-title">👥 Người dùng</h1>
-        <p className="admin-dash-subtitle">
-          Danh sách tài khoản đã đăng ký qua web
-        </p>
+  // Tính nhanh KPI
+  const adminCount = users.filter((u) => u.role === "admin").length;
+  const customerCount = users.filter((u) => u.role === "customer").length;
+  const activeCount = users.filter((u) => u.status === "active").length;
 
+  return (
+    <div className="admin-users-wrap">
+      {/* Header */}
+      <div className="admin-users-sticky-header">
+        <div className="admin-users-header">
+          <div>
+            <h1 className="admin-users-title">
+              <span className="title-desktop">👥 Quản Lý Người Dùng</span>
+              <span className="title-mobile">👥 Người Dùng</span>
+            </h1>
+            <p className="admin-users-subtitle">
+              Danh sách tài khoản hệ thống, phân quyền Admin &amp; bảo mật
+            </p>
+          </div>
+          <div className="admin-users-header-badge">
+            <span>Tổng: <strong>{total}</strong> tài khoản</span>
+          </div>
+        </div>
+
+        {/* KPI Carousel */}
+        <div className="admin-users-kpis-carousel">
+          <div className="admin-users-kpi-grid">
+            <div className="card admin-users-kpi-card">
+              <div className="admin-users-kpi-icon admin-users-kpi-icon--blue">
+                👥
+              </div>
+              <div className="admin-users-kpi-info">
+                <span className="admin-users-kpi-label">Tổng Tài Khoản</span>
+                <h3 className="admin-users-kpi-value">{total}</h3>
+                <span className="admin-users-kpi-sub">Đã đăng ký</span>
+              </div>
+            </div>
+
+            <div className="card admin-users-kpi-card">
+              <div className="admin-users-kpi-icon admin-users-kpi-icon--green">
+                🛍️
+              </div>
+              <div className="admin-users-kpi-info">
+                <span className="admin-users-kpi-label">Khách Hàng</span>
+                <h3 className="admin-users-kpi-value">{customerCount}</h3>
+                <span className="admin-users-kpi-sub">Customer</span>
+              </div>
+            </div>
+
+            <div className="card admin-users-kpi-card">
+              <div className="admin-users-kpi-icon admin-users-kpi-icon--orange">
+                🛡️
+              </div>
+              <div className="admin-users-kpi-info">
+                <span className="admin-users-kpi-label">Quản Trị Viên</span>
+                <h3 className="admin-users-kpi-value">{adminCount}</h3>
+                <span className="admin-users-kpi-sub">Admin toàn quyền</span>
+              </div>
+            </div>
+
+            <div className="card admin-users-kpi-card">
+              <div className="admin-users-kpi-icon admin-users-kpi-icon--purple">
+                🟢
+              </div>
+              <div className="admin-users-kpi-info">
+                <span className="admin-users-kpi-label">Đang Hoạt Động</span>
+                <h3 className="admin-users-kpi-value">{activeCount}</h3>
+                <span className="admin-users-kpi-sub">Khả dụng</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters */}
         <div className="admin-users-filters">
           <div className="admin-users-search">
-            <Search size={16} className="admin-users-search__icon" />
+            <Search size={15} className="admin-users-search__icon" />
             <input
               type="text"
               value={search}
               onChange={(e) => handleSearchChange(e.target.value)}
-              placeholder="Tìm theo tên hoặc email..."
+              placeholder="Tìm theo tên, email hoặc SĐT..."
               className="admin-users-search__input"
             />
           </div>
@@ -154,8 +220,8 @@ export default function AdminUsers() {
             className="admin-users-role-filter"
           >
             <option value="">Tất cả vai trò</option>
-            <option value="admin">Admin</option>
-            <option value="customer">Customer</option>
+            <option value="admin">Quản trị viên (Admin)</option>
+            <option value="customer">Khách hàng (Customer)</option>
           </select>
         </div>
       </div>
@@ -166,144 +232,255 @@ export default function AdminUsers() {
         </div>
       ) : users.length === 0 ? (
         <div className="card admin-users-empty">
-          {search ? "Không tìm thấy user nào khớp" : "Chưa có người dùng nào"}
+          {search ? "Không tìm thấy user nào khớp bộ lọc" : "Chưa có người dùng nào"}
         </div>
       ) : (
-        <div className="card admin-users-table-wrap">
-          <table className="admin-users-table">
-            <thead>
-              <tr>
-                <th>Người dùng</th>
-                <th>Liên hệ</th>
-                <th>Vai trò</th>
-                <th>Trạng thái</th>
-                <th>Thẻ NFC</th>
-                <th>Album</th>
-                <th>Ngày đăng ký</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((u) => {
-                const isSelf = currentUser?.id === u.id;
-                return (
-                  <tr key={u.id}>
-                    <td>
-                      <div className="admin-users-identity">
-                        <span className="admin-users-avatar">
-                          {u.avatar_url ? (
-                            <img src={u.avatar_url} alt="" />
-                          ) : (
-                            u.name.trim().charAt(0).toUpperCase()
-                          )}
-                        </span>
-                        <div>
-                          <p className="admin-users-name">
-                            {u.name}{" "}
-                            {isSelf && (
-                              <span className="admin-users-you-tag">(bạn)</span>
+        <>
+          {/* 🖥️ Desktop Table View */}
+          <div className="card admin-users-table-wrap admin-users-desktop-table">
+            <table className="admin-users-table">
+              <thead>
+                <tr>
+                  <th>Người dùng</th>
+                  <th>Liên hệ</th>
+                  <th>Vai trò</th>
+                  <th>Trạng thái</th>
+                  <th>Thẻ NFC</th>
+                  <th>Album</th>
+                  <th>Ngày đăng ký</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((u) => {
+                  const isSelf = currentUser?.id === u.id;
+                  return (
+                    <tr key={u.id}>
+                      <td>
+                        <div className="admin-users-identity">
+                          <span className="admin-users-avatar">
+                            {u.avatar_url ? (
+                              <img src={u.avatar_url} alt="" />
+                            ) : (
+                              u.name.trim().charAt(0).toUpperCase()
                             )}
-                          </p>
-                          <p className="admin-users-email">{u.email}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="admin-users-contact-cell">
-                        {u.phone ? (
-                          <span className="admin-users-phone">
-                            <Phone size={12} /> {u.phone}
                           </span>
+                          <div>
+                            <p className="admin-users-name">
+                              {u.name}{" "}
+                              {isSelf && (
+                                <span className="admin-users-you-tag">(bạn)</span>
+                              )}
+                            </p>
+                            <p className="admin-users-email">{u.email}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="admin-users-contact-cell">
+                          {u.phone ? (
+                            <span className="admin-users-phone">
+                              <Phone size={12} /> {u.phone}
+                            </span>
+                          ) : (
+                            <span className="admin-users-no-phone">Chưa có SĐT</span>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <span
+                          className={`badge ${u.role === "admin" ? "badge-primary" : "badge-customer"}`}
+                        >
+                          {u.role === "admin" ? "Admin 🛡️" : "Customer"}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          className={`admin-users-status admin-users-status--${u.status === "banned" ? "banned" : "active"}`}
+                        >
+                          {u.status === "banned" ? "Đã khóa" : "Hoạt động"}
+                        </span>
+                      </td>
+                      <td><strong>{u.nfc_count}</strong></td>
+                      <td><strong>{u.album_count}</strong></td>
+                      <td>
+                        {new Date(u.created_at).toLocaleDateString("vi-VN")}
+                      </td>
+                      <td>
+                        <div className="admin-users-actions">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedUserId(u.id)}
+                            className="admin-users-action-btn"
+                            title="Xem chi tiết hồ sơ, Thẻ NFC & Album"
+                          >
+                            <Eye size={15} />
+                          </button>
+
+                          {u.role === "admin" ? (
+                            <button
+                              disabled={isSelf}
+                              onClick={() => requestConfirm("demote", u)}
+                              className="admin-users-action-btn"
+                              title={
+                                isSelf
+                                  ? "Không thể tự đổi quyền chính mình"
+                                  : "Hạ về Customer"
+                              }
+                            >
+                              <ShieldOff size={15} />
+                            </button>
+                          ) : (
+                            <button
+                              disabled={isSelf}
+                              onClick={() => requestConfirm("promote", u)}
+                              className="admin-users-action-btn"
+                              title="Nâng lên Admin"
+                            >
+                              <ShieldCheck size={15} />
+                            </button>
+                          )}
+
+                          {u.status === "banned" ? (
+                            <button
+                              disabled={isSelf}
+                              onClick={() => requestConfirm("unban", u)}
+                              className="admin-users-action-btn admin-users-action-btn--success"
+                              title="Mở khóa"
+                            >
+                              <CheckCircle2 size={15} />
+                            </button>
+                          ) : (
+                            <button
+                              disabled={isSelf}
+                              onClick={() => requestConfirm("ban", u)}
+                              className="admin-users-action-btn admin-users-action-btn--danger"
+                              title={
+                                isSelf
+                                  ? "Không thể tự khóa tài khoản đang đăng nhập"
+                                  : "Khóa tài khoản"
+                              }
+                            >
+                              <Ban size={15} />
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 📱 Mobile User Cards View */}
+          <div className="admin-users-mobile-cards">
+            {users.map((u) => {
+              const isSelf = currentUser?.id === u.id;
+              return (
+                <div key={u.id} className="admin-user-m-card">
+                  {/* Top Row: Avatar + Name + Badges */}
+                  <div className="user-m-top">
+                    <div className="user-m-identity">
+                      <span className="admin-users-avatar">
+                        {u.avatar_url ? (
+                          <img src={u.avatar_url} alt="" />
                         ) : (
-                          <span className="admin-users-no-phone">Chưa có SĐT</span>
+                          u.name.trim().charAt(0).toUpperCase()
                         )}
+                      </span>
+                      <div className="user-m-names">
+                        <span className="user-m-name">
+                          {u.name} {isSelf && <span className="admin-users-you-tag">(bạn)</span>}
+                        </span>
+                        <span className="user-m-email">{u.email}</span>
                       </div>
-                    </td>
-                    <td>
-                      <span
-                        className={`badge ${u.role === "admin" ? "badge-primary" : ""}`}
-                      >
+                    </div>
+                    <div className="user-m-badges">
+                      <span className={`badge ${u.role === "admin" ? "badge-primary" : "badge-customer"}`}>
                         {u.role === "admin" ? "Admin" : "Customer"}
                       </span>
-                    </td>
-                    <td>
-                      <span
-                        className={`admin-users-status admin-users-status--${u.status === "banned" ? "banned" : "active"}`}
-                      >
+                    </div>
+                  </div>
+
+                  {/* Middle Row: Phone & Stats */}
+                  <div className="user-m-mid">
+                    <span className="user-m-stat">
+                      {u.phone ? `📱 ${u.phone}` : "Chưa có SĐT"}
+                    </span>
+                    <span className="user-m-sep">•</span>
+                    <span className="user-m-stat">💳 {u.nfc_count} NFC</span>
+                    <span className="user-m-sep">•</span>
+                    <span className="user-m-stat">🖼️ {u.album_count} Album</span>
+                  </div>
+
+                  {/* Bottom Row: Status + Actions */}
+                  <div className="user-m-bottom">
+                    <div className="user-m-date-status">
+                      <span className={`admin-users-status admin-users-status--${u.status === "banned" ? "banned" : "active"}`}>
                         {u.status === "banned" ? "Đã khóa" : "Hoạt động"}
                       </span>
-                    </td>
-                    <td>{u.nfc_count}</td>
-                    <td>{u.album_count}</td>
-                    <td>
-                      {new Date(u.created_at).toLocaleDateString("vi-VN")}
-                    </td>
-                    <td>
-                      <div className="admin-users-actions">
+                      <span className="user-m-date">
+                        ĐK: {new Date(u.created_at).toLocaleDateString("vi-VN")}
+                      </span>
+                    </div>
+
+                    <div className="user-m-actions">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedUserId(u.id)}
+                        className="admin-users-action-btn"
+                        title="Xem chi tiết"
+                      >
+                        <Eye size={15} />
+                      </button>
+
+                      {u.role === "admin" ? (
                         <button
-                          type="button"
-                          onClick={() => setSelectedUserId(u.id)}
+                          disabled={isSelf}
+                          onClick={() => requestConfirm("demote", u)}
                           className="admin-users-action-btn"
-                          title="Xem chi tiết hồ sơ, Thẻ NFC & Album"
+                          title="Hạ về Customer"
                         >
-                          <Eye size={15} />
+                          <ShieldOff size={15} />
                         </button>
+                      ) : (
+                        <button
+                          disabled={isSelf}
+                          onClick={() => requestConfirm("promote", u)}
+                          className="admin-users-action-btn"
+                          title="Nâng lên Admin"
+                        >
+                          <ShieldCheck size={15} />
+                        </button>
+                      )}
 
-                        {u.role === "admin" ? (
-                          <button
-                            disabled={isSelf}
-                            onClick={() => requestConfirm("demote", u)}
-                            className="admin-users-action-btn"
-                            title={
-                              isSelf
-                                ? "Không thể tự đổi quyền chính mình"
-                                : "Hạ về Customer"
-                            }
-                          >
-                            <ShieldOff size={15} />
-                          </button>
-                        ) : (
-                          <button
-                            disabled={isSelf}
-                            onClick={() => requestConfirm("promote", u)}
-                            className="admin-users-action-btn"
-                            title="Nâng lên Admin"
-                          >
-                            <ShieldCheck size={15} />
-                          </button>
-                        )}
-
-                        {u.status === "banned" ? (
-                          <button
-                            disabled={isSelf}
-                            onClick={() => requestConfirm("unban", u)}
-                            className="admin-users-action-btn admin-users-action-btn--success"
-                            title="Mở khóa"
-                          >
-                            <CheckCircle2 size={15} />
-                          </button>
-                        ) : (
-                          <button
-                            disabled={isSelf}
-                            onClick={() => requestConfirm("ban", u)}
-                            className="admin-users-action-btn admin-users-action-btn--danger"
-                            title={
-                              isSelf
-                                ? "Không thể tự khóa tài khoản đang đăng nhập"
-                                : "Khóa tài khoản"
-                            }
-                          >
-                            <Ban size={15} />
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                      {u.status === "banned" ? (
+                        <button
+                          disabled={isSelf}
+                          onClick={() => requestConfirm("unban", u)}
+                          className="admin-users-action-btn admin-users-action-btn--success"
+                          title="Mở khóa"
+                        >
+                          <CheckCircle2 size={15} />
+                        </button>
+                      ) : (
+                        <button
+                          disabled={isSelf}
+                          onClick={() => requestConfirm("ban", u)}
+                          className="admin-users-action-btn admin-users-action-btn--danger"
+                          title="Khóa"
+                        >
+                          <Ban size={15} />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </>
       )}
 
       {!loading && total > 0 && (

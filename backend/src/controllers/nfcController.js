@@ -297,12 +297,42 @@ const cancelTransfer = async (req, res) => {
 // POST /api/nfc/batch
 const createBatch = async (req, res) => {
   try {
-    const { province_id, prefix, count } = req.body;
+    let { province_id, product_id, prefix, count } = req.body;
+
+    // Nếu truyền product_id thay vì province_id -> tìm hoặc tạo province tương ứng
+    if (product_id && !province_id) {
+      const [prodRows] = await db.execute(`SELECT * FROM products WHERE id = ? LIMIT 1`, [product_id]);
+      if (prodRows.length > 0) {
+        const prod = prodRows[0];
+        // Tìm tỉnh theo tên tương đồng
+        const [provRows] = await db.execute(
+          `SELECT id FROM provinces WHERE name LIKE ? OR ? LIKE CONCAT('%', name, '%') LIMIT 1`,
+          [`%${prod.name}%`, prod.name]
+        );
+        if (provRows.length > 0) {
+          province_id = provRows[0].id;
+        } else {
+          // Tự động tạo bản ghi tỉnh thành tương ứng cho sản phẩm
+          const rawName = prod.name.replace(/^(Mảnh ghép NFC 3D\s*[-–:]*|Mảnh\s*[-–:]*)/i, "").trim() || prod.name;
+          const slug = rawName
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+          const [insProv] = await db.execute(
+            `INSERT INTO provinces (name, slug, region, description, status) VALUES (?, ?, 'south', ?, 'active')`,
+            [rawName, slug, `Khám phá văn hóa & địa danh ${rawName}`]
+          );
+          province_id = insProv.insertId;
+        }
+      }
+    }
 
     if (!province_id || !prefix || !count)
       return res
         .status(400)
-        .json({ message: "Thiếu province_id, prefix hoặc count" });
+        .json({ message: "Thiếu thông tin sản phẩm/tỉnh thành, prefix hoặc count" });
 
     if (count > 500)
       return res.status(400).json({ message: "Tối đa 500 serial mỗi lần" });
@@ -316,7 +346,7 @@ const createBatch = async (req, res) => {
     await NfcCard.createBatch(serials);
 
     res.status(201).json({
-      message: `Tạo ${count} serial thành công`,
+      message: `Tạo ${count} serial cho sản phẩm thành công!`,
       sample: serials.slice(0, 5).map((s) => s.serial_code),
     });
   } catch (err) {

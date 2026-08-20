@@ -37,47 +37,59 @@ export default function CartModal({ cart = [], onUpdateQuantity, onRemoveItem, o
           <>
             <div className="cart-items-list">
               {cart.map((item, idx) => (
-                <div key={idx} className="cart-item-row">
-                  <img src={item.image} alt={item.name} className="cart-item-img" />
+                <div key={idx} className="cart-item-card">
+                  <div className="cart-item-img-wrap">
+                    <img src={item.image} alt={item.name} className="cart-item-img" />
+                  </div>
                   
-                  <div className="cart-item-info">
-                    <strong className="cart-item-name">{item.name}</strong>
-                    {item.selectedProvince && (
-                      <span className="cart-item-province">
-                        📍 Tỉnh thành: <strong>{item.selectedProvince}</strong>
-                      </span>
-                    )}
-                    <span className="cart-item-price">{formatMoney(item.price)}</span>
-                  </div>
+                  <div className="cart-item-main">
+                    <div className="cart-item-top">
+                      <div className="cart-item-name-box">
+                        <h4 className="cart-item-name">{item.name}</h4>
+                        {item.selectedProvince && (
+                          <span className="cart-item-province">
+                            📍 {item.selectedProvince}
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        className="btn-trash"
+                        onClick={() => onRemoveItem(idx)}
+                        title="Xóa khỏi giỏ"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
 
-                  <div className="cart-qty-controls">
-                    <button
-                      type="button"
-                      onClick={() => onUpdateQuantity(idx, -1)}
-                      className="btn-qty"
-                    >
-                      <Minus size={14} />
-                    </button>
-                    <span className="qty-num">{item.quantity}</span>
-                    <button
-                      type="button"
-                      onClick={() => onUpdateQuantity(idx, 1)}
-                      className="btn-qty"
-                    >
-                      <Plus size={14} />
-                    </button>
-                  </div>
+                    <div className="cart-item-bottom">
+                      <div className="cart-item-price-wrap">
+                        <span className="cart-item-unit-price">{formatMoney(item.price * item.quantity)}</span>
+                        {item.quantity > 1 && (
+                          <span className="cart-item-sub-price">({formatMoney(item.price)}/sp)</span>
+                        )}
+                      </div>
 
-                  <div className="cart-item-total">
-                    <strong>{formatMoney(item.price * item.quantity)}</strong>
-                    <button
-                      type="button"
-                      className="btn-trash"
-                      onClick={() => onRemoveItem(idx)}
-                      title="Xóa khỏi giỏ"
-                    >
-                      <Trash2 size={16} />
-                    </button>
+                      <div className="cart-qty-controls">
+                        <button
+                          type="button"
+                          onClick={() => onUpdateQuantity(idx, -1)}
+                          className="btn-qty"
+                          title="Giảm 1"
+                        >
+                          <Minus size={13} />
+                        </button>
+                        <span className="qty-num">{item.quantity}</span>
+                        <button
+                          type="button"
+                          onClick={() => onUpdateQuantity(idx, 1)}
+                          className="btn-qty"
+                          title="Tăng 1"
+                        >
+                          <Plus size={13} />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -85,23 +97,25 @@ export default function CartModal({ cart = [], onUpdateQuantity, onRemoveItem, o
 
             <div className="cart-modal-footer">
               <button className="btn-clear-all" onClick={onClearCart}>
-                <Trash2 size={15} /> Xóa Tất Cả
+                <Trash2 size={14} /> Xóa tất cả
               </button>
 
               <div className="cart-footer-right">
                 <div className="cart-total-text">
-                  <span>Tổng cộng:</span>
-                  <strong>{formatMoney(subtotal)}</strong>
+                  <span className="cart-total-lbl">Tổng cộng:</span>
+                  <strong className="cart-total-val">{formatMoney(subtotal)}</strong>
                 </div>
 
                 <button
+                  type="button"
                   className="btn-cart-checkout"
                   onClick={() => {
                     onClose();
                     onCheckout();
                   }}
                 >
-                  Thanh Toán Ngay <ArrowRight size={16} />
+                  <span>Thanh Toán</span>
+                  <ArrowRight size={16} />
                 </button>
               </div>
             </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/components/layout/Header";
+import CustomerHeader from "@/components/layout/CustomerHeader";
 import Sidebar from "@/components/layout/Sidebar";
 import { getUser, getToken, saveAuth, requireAuth, isAdmin, clearAuth } from "@/lib/auth";
 import { authAPI } from "@/lib/api";
@@ -22,7 +22,7 @@ export default function CustomerLayout({ children }) {
     setMounted(true);
     if (!requireAuth(router)) return;
     if (isAdmin()) {
-      router.replace("/admin");
+      router.replace("/admin/dashboard");
       return;
     }
     setUser(getUser());
@@ -78,9 +78,17 @@ export default function CustomerLayout({ children }) {
     },
   ];
 
+  if (mounted && isAdmin()) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="spinner" />
+      </div>
+    );
+  }
+
   return (
     <div className="app-shell-vertical">
-      <Header
+      <CustomerHeader
         isDrawerOpen={drawerOpen}
         onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
       />

@@ -15,12 +15,13 @@ import {
   HelpCircle,
   ChevronDown,
 } from "lucide-react";
-import { nfcAPI, provinceAPI, adminStatsAPI, userAPI } from "@/lib/api";
+import { nfcAPI, provinceAPI, adminStatsAPI, userAPI, productAPI } from "@/lib/api";
 import "./AdminNfcCards.css";
 
 export default function AdminNfcCards() {
   const [cards, setCards] = useState([]);
   const [provinces, setProvinces] = useState([]);
+  const [products, setProducts] = useState([]);
   const [users, setUsers] = useState([]);
   const [stats, setStats] = useState({ total: 0, active: 0, pending: 0 });
   const [loading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ export default function AdminNfcCards() {
   const [viewTokenCard, setViewTokenCard] = useState(null);
 
   // Batch Form State
-  const [batchProvinceId, setBatchProvinceId] = useState("");
+  const [batchProductId, setBatchProductId] = useState("");
   const [batchPrefix, setBatchPrefix] = useState("VNT");
   const [batchCount, setBatchCount] = useState(50);
   const [batchSubmitting, setBatchSubmitting] = useState(false);
@@ -63,13 +64,15 @@ export default function AdminNfcCards() {
 
   const loadProvincesAndStats = async () => {
     try {
-      const [provRes, overviewRes, userRes] = await Promise.all([
+      const [provRes, overviewRes, userRes, prodRes] = await Promise.all([
         provinceAPI.getAll(),
         adminStatsAPI.getOverview(),
         userAPI.getAll({ limit: 200 }),
+        productAPI.getAll(true),
       ]);
       setProvinces(provRes.provinces || []);
       setUsers(userRes.users || []);
+      setProducts(prodRes.products || (Array.isArray(prodRes) ? prodRes : []));
       if (overviewRes.overview) {
         const ov = overviewRes.overview;
         setStats({
@@ -114,20 +117,20 @@ export default function AdminNfcCards() {
 
   const handleCreateBatch = async (e) => {
     e.preventDefault();
-    if (!batchProvinceId) {
-      showToast("Vui lòng chọn Tỉnh Thành cho lô thẻ", "error");
+    if (!batchProductId) {
+      showToast("Vui lòng chọn Sản Phẩm cần tạo lô thẻ", "error");
       return;
     }
     setBatchSubmitting(true);
     try {
       const res = await nfcAPI.createBatch({
-        province_id: batchProvinceId,
+        product_id: batchProductId,
         prefix: batchPrefix.trim().toUpperCase() || "VNT",
         count: parseInt(batchCount, 10) || 50,
       });
       showToast(res.message || "Đã tạo lô thẻ thành công!");
       setShowBatchModal(false);
-      setBatchProvinceId("");
+      setBatchProductId("");
       loadProvincesAndStats();
       loadCards();
     } catch (err) {
@@ -240,99 +243,118 @@ export default function AdminNfcCards() {
   });
 
   return (
-    <div>
+    <div className="admin-nfc-shell">
       <div className="admin-nfc-sticky-header">
         <div className="admin-nfc-header">
-          <div>
-            <h1 className="admin-dash-title">🎫 Serial NFC & Nạp Chip</h1>
+          <div className="admin-nfc-header-title-wrap">
+            <h1 className="admin-dash-title">
+              <span className="title-desktop">🎫 Serial NFC & Nạp Chip</span>
+              <span className="title-mobile">🎫 Thẻ NFC</span>
+            </h1>
             <p className="admin-dash-subtitle">
               Quản lý danh sách Serial, khởi tạo lô thẻ in và gán thẻ khách hàng
             </p>
           </div>
           <div className="admin-nfc-header__actions">
             <button
-              className="btn btn-outline"
+              className="btn btn-outline btn-export-csv"
               onClick={exportCSV}
               title="Tải file CSV danh sách mã để gửi xưởng in & nạp chip"
             >
-              <Download size={16} /> Xuất File Nạp Chip
+              <Download size={15} /> <span className="btn-text-desktop">Xuất File Nạp Chip</span>
             </button>
             <button
-              className="btn btn-ghost"
+              className="btn btn-ghost btn-assign-header"
               onClick={() => {
                 setShowAssignModal(true);
                 setShowUserDropdown(false);
               }}
+              title="Gán thẻ cho khách hàng"
             >
-              <UserPlus size={16} /> Gán thẻ cho khách
+              <UserPlus size={15} /> <span className="btn-text-desktop">Gán thẻ</span>
             </button>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary btn-create-batch"
               onClick={() => setShowBatchModal(true)}
+              title="Tạo lô thẻ mới"
             >
-              <Plus size={16} /> Tạo Lô Thẻ Mới
+              <Plus size={16} /> <span className="btn-text-desktop">Tạo Lô Thẻ Mới</span><span className="btn-text-mobile">Tạo Lô</span>
             </button>
           </div>
         </div>
 
-        {/* Top KPIs */}
-        <div className="admin-nfc-kpis">
-          <div className="admin-nfc-kpi-card">
-            <span className="admin-nfc-kpi-label">Tổng Serial NFC</span>
-            <span className="admin-nfc-kpi-value">{stats.total}</span>
-          </div>
-          <div className="admin-nfc-kpi-card admin-nfc-kpi-card--active">
-            <span className="admin-nfc-kpi-label">Đã Kích Hoạt</span>
-            <span className="admin-nfc-kpi-value">{stats.active}</span>
-          </div>
-          <div className="admin-nfc-kpi-card admin-nfc-kpi-card--pending">
-            <span className="admin-nfc-kpi-label">Chờ Phát Hành (Pending)</span>
-            <span className="admin-nfc-kpi-value">{stats.pending}</span>
+        {/* Top KPIs Carousel */}
+        <div className="admin-nfc-kpis-carousel">
+          <div className="admin-nfc-kpis">
+            <div className="admin-nfc-kpi-card">
+              <span className="admin-nfc-kpi-label">Tổng Serial NFC</span>
+              <span className="admin-nfc-kpi-value">{stats.total}</span>
+            </div>
+            <div className="admin-nfc-kpi-card admin-nfc-kpi-card--active">
+              <span className="admin-nfc-kpi-label">Đã Kích Hoạt</span>
+              <span className="admin-nfc-kpi-value text-green">{stats.active}</span>
+            </div>
+            <div className="admin-nfc-kpi-card admin-nfc-kpi-card--pending">
+              <span className="admin-nfc-kpi-label">Chờ Phát Hành</span>
+              <span className="admin-nfc-kpi-value text-orange">{stats.pending}</span>
+            </div>
           </div>
         </div>
 
         {/* Search & Filter bar */}
         <div className="admin-nfc-filters">
           <div className="admin-nfc-search">
-            <Search size={16} />
+            <Search size={15} />
             <input
               type="text"
-              placeholder="Tra cứu Mã Serial, Token hoặc Email người nhận..."
+              placeholder="Tra cứu Serial, Token, Email..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
+            {search && (
+              <button
+                type="button"
+                className="search-clear-btn"
+                onClick={() => setSearch("")}
+                title="Xóa tìm kiếm"
+              >
+                <X size={13} />
+              </button>
+            )}
           </div>
 
-          <select
-            value={selectedProvince}
-            onChange={(e) => setSelectedProvince(e.target.value)}
-            className="admin-nfc-select"
-          >
-            <option value="">Tất cả Tỉnh Thành (34 Tỉnh)</option>
-            {provinces.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name} ({p.region})
-              </option>
-            ))}
-          </select>
+          <div className="admin-nfc-selects-row">
+            <select
+              value={selectedProvince}
+              onChange={(e) => setSelectedProvince(e.target.value)}
+              className="admin-nfc-select"
+            >
+              <option value="">Tất cả Sản Phẩm ({products.length} SP)</option>
+              {products.map((p) => (
+                <option key={p.id} value={p.name}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
 
-          <select
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-            className="admin-nfc-select"
-          >
-            <option value="">Tất cả trạng thái</option>
-            <option value="pending">Chờ phát hành (Pending)</option>
-            <option value="active">Đã kích hoạt (Active)</option>
-          </select>
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="admin-nfc-select"
+            >
+              <option value="">Tất cả trạng thái</option>
+              <option value="pending">Chờ phát hành</option>
+              <option value="active">Đã kích hoạt</option>
+            </select>
 
-          <button
-            className="btn btn-ghost"
-            onClick={loadCards}
-            title="Tải lại danh sách"
-          >
-            <RefreshCw size={15} />
-          </button>
+            <button
+              className="btn btn-ghost btn-reload-nfc"
+              onClick={loadCards}
+              title="Tải lại danh sách"
+            >
+              <RefreshCw size={14} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -345,103 +367,185 @@ export default function AdminNfcCards() {
           Chưa có thẻ NFC nào phù hợp bộ lọc
         </div>
       ) : (
-        <div className="card admin-nfc-table-wrap">
-          <table className="admin-nfc-table">
-            <thead>
-              <tr>
-                <th>Mã Serial NFC</th>
-                <th>Tỉnh Thành</th>
-                <th>Trạng Thái</th>
-                <th>Chủ Sở Hữu</th>
-                <th>Ngày Kích Hoạt</th>
-                <th>Hành Động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cards.map((c) => (
-                <tr key={c.id}>
-                  <td>
-                    <div className="admin-nfc-serial-cell">
-                      <CreditCard size={15} className="admin-nfc-serial-icon" />
-                      <span className="admin-nfc-serial-code">
-                        {c.serial_code}
-                      </span>
-                      <button
-                        type="button"
-                        className="admin-nfc-icon-btn"
-                        onClick={() => copyToClipboard(c.serial_code, c.id)}
-                        title="Sao chép mã Serial"
-                      >
-                        {copiedId === c.id ? (
-                          <Check size={14} color="#16a34a" />
-                        ) : (
-                          <Copy size={14} />
-                        )}
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <span className="admin-nfc-province">
-                      {c.province_name || "Chưa gán tỉnh"}
-                    </span>
-                  </td>
-                  <td>
-                    <span
-                      className={`admin-nfc-status admin-nfc-status--${c.status === "active" ? "active" : "pending"}`}
-                    >
-                      {c.status === "active" ? "Đã kích hoạt" : "Chờ phát hành"}
-                    </span>
-                  </td>
-                  <td>
-                    {c.owner_name || c.owner_email ? (
-                      <div>
-                        <p className="admin-nfc-owner-name">{c.owner_name}</p>
-                        <p className="admin-nfc-owner-email">
-                          {c.owner_email}
-                        </p>
-                      </div>
-                    ) : (
-                      <span className="admin-nfc-no-owner">Chưa có chủ</span>
-                    )}
-                  </td>
-                  <td>
-                    {c.activated_at
-                      ? new Date(c.activated_at).toLocaleDateString("vi-VN")
-                      : "—"}
-                  </td>
-                  <td>
-                    <div className="admin-nfc-actions">
-                      {c.nfc_token && (
-                        <button
-                          type="button"
-                          className="admin-nfc-action-btn"
-                          onClick={() => setViewTokenCard(c)}
-                          title="Xem Link Chip NFC & Mã QR"
-                        >
-                          <Eye size={15} />
-                        </button>
-                      )}
-                      {c.status !== "active" && (
-                        <button
-                          type="button"
-                          className="admin-nfc-action-btn admin-nfc-action-btn--primary"
-                          onClick={() => {
-                            setAssignSerial(c.serial_code);
-                            setShowAssignModal(true);
-                            setShowUserDropdown(false);
-                          }}
-                          title="Gán thẻ này cho khách hàng"
-                        >
-                          <UserPlus size={15} />
-                        </button>
-                      )}
-                    </div>
-                  </td>
+        <>
+          {/* 💻 BẢNG DỮ LIỆU DESKTOP */}
+          <div className="card admin-nfc-table-wrap">
+            <table className="admin-nfc-table">
+              <thead>
+                <tr>
+                  <th>Mã Serial NFC</th>
+                  <th>Tỉnh Thành</th>
+                  <th>Trạng Thái</th>
+                  <th>Chủ Sở Hữu</th>
+                  <th>Ngày Kích Hoạt</th>
+                  <th>Hành Động</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {cards.map((c) => (
+                  <tr key={c.id}>
+                    <td>
+                      <div className="admin-nfc-serial-cell">
+                        <CreditCard size={15} className="admin-nfc-serial-icon" />
+                        <span className="admin-nfc-serial-code">
+                          {c.serial_code}
+                        </span>
+                        <button
+                          type="button"
+                          className="admin-nfc-icon-btn"
+                          onClick={() => copyToClipboard(c.serial_code, c.id)}
+                          title="Sao chép mã Serial"
+                        >
+                          {copiedId === c.id ? (
+                            <Check size={14} color="#16a34a" />
+                          ) : (
+                            <Copy size={14} />
+                          )}
+                        </button>
+                      </div>
+                    </td>
+                    <td>
+                      <span className="admin-nfc-province">
+                        {c.province_name || "Chưa gán tỉnh"}
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        className={`admin-nfc-status admin-nfc-status--${c.status === "active" ? "active" : "pending"}`}
+                      >
+                        {c.status === "active" ? "Đã kích hoạt" : "Chờ phát hành"}
+                      </span>
+                    </td>
+                    <td>
+                      {c.owner_name || c.owner_email ? (
+                        <div>
+                          <p className="admin-nfc-owner-name">{c.owner_name}</p>
+                          <p className="admin-nfc-owner-email">
+                            {c.owner_email}
+                          </p>
+                        </div>
+                      ) : (
+                        <span className="admin-nfc-no-owner">Chưa có chủ</span>
+                      )}
+                    </td>
+                    <td>
+                      {c.activated_at
+                        ? new Date(c.activated_at).toLocaleDateString("vi-VN")
+                        : "—"}
+                    </td>
+                    <td>
+                      <div className="admin-nfc-actions">
+                        {c.nfc_token && (
+                          <button
+                            type="button"
+                            className="admin-nfc-action-btn"
+                            onClick={() => setViewTokenCard(c)}
+                            title="Xem Link Chip NFC & Mã QR"
+                          >
+                            <Eye size={15} />
+                          </button>
+                        )}
+                        {c.status !== "active" && (
+                          <button
+                            type="button"
+                            className="admin-nfc-action-btn admin-nfc-action-btn--primary"
+                            onClick={() => {
+                              setAssignSerial(c.serial_code);
+                              setShowAssignModal(true);
+                              setShowUserDropdown(false);
+                            }}
+                            title="Gán thẻ này cho khách hàng"
+                          >
+                            <UserPlus size={15} />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 📱 THẺ NFC MOBILE CARDS (MODERN MOBILE VIEW) */}
+          <div className="admin-nfc-cards-mobile">
+            {cards.map((c) => (
+              <div key={c.id} className="admin-nfc-mobile-card">
+                {/* Dòng 1: Serial + Copy + Status Badge */}
+                <div className="nfc-m-row-top">
+                  <div className="nfc-m-serial-wrap">
+                    <CreditCard size={14} className="nfc-m-icon" />
+                    <code className="nfc-m-serial">{c.serial_code}</code>
+                    <button
+                      type="button"
+                      className="nfc-m-copy-btn"
+                      onClick={() => copyToClipboard(c.serial_code, c.id)}
+                      title="Sao chép mã Serial"
+                    >
+                      {copiedId === c.id ? (
+                        <Check size={13} color="#16a34a" />
+                      ) : (
+                        <Copy size={13} />
+                      )}
+                    </button>
+                  </div>
+                  <span
+                    className={`admin-nfc-status admin-nfc-status--${c.status === "active" ? "active" : "pending"}`}
+                  >
+                    {c.status === "active" ? "Đã kích hoạt" : "Chờ phát hành"}
+                  </span>
+                </div>
+
+                {/* Dòng 2: Tỉnh Thành & Ngày kích hoạt */}
+                <div className="nfc-m-row-info">
+                  <span className="nfc-m-prov">📍 {c.province_name || "Chưa gán tỉnh"}</span>
+                  <span className="nfc-m-sep">•</span>
+                  <span className="nfc-m-date">
+                    {c.activated_at ? `Kích hoạt: ${new Date(c.activated_at).toLocaleDateString("vi-VN")}` : "Chưa kích hoạt"}
+                  </span>
+                </div>
+
+                {/* Dòng 3: Chủ Sở Hữu */}
+                <div className="nfc-m-row-owner">
+                  <span className="nfc-m-owner-label">Chủ thẻ:</span>
+                  {c.owner_name || c.owner_email ? (
+                    <span className="nfc-m-owner-val">
+                      <strong>{c.owner_name}</strong> {c.owner_email ? `(${c.owner_email})` : ""}
+                    </span>
+                  ) : (
+                    <span className="nfc-m-owner-none">Chưa có chủ sở hữu</span>
+                  )}
+                </div>
+
+                {/* Dòng 4: Quick Action Buttons */}
+                <div className="nfc-m-row-actions">
+                  {c.nfc_token && (
+                    <button
+                      type="button"
+                      className="nfc-m-btn-view"
+                      onClick={() => setViewTokenCard(c)}
+                    >
+                      <Eye size={13} /> <span>Xem Token & QR</span>
+                    </button>
+                  )}
+                  {c.status !== "active" && (
+                    <button
+                      type="button"
+                      className="nfc-m-btn-assign"
+                      onClick={() => {
+                        setAssignSerial(c.serial_code);
+                        setShowAssignModal(true);
+                        setShowUserDropdown(false);
+                      }}
+                    >
+                      <UserPlus size={13} /> <span>Gán Thẻ</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
       {/* Modal 1: Batch Generator */}
@@ -466,27 +570,40 @@ export default function AdminNfcCards() {
             </div>
             <form onSubmit={handleCreateBatch}>
               <label className="admin-nfc-field">
-                <span>Tỉnh Thành Mảnh Ghép</span>
+                <span>Sản Phẩm Cần Nạp Chip *</span>
                 <select
-                  value={batchProvinceId}
+                  value={batchProductId}
                   onChange={(e) => {
-                    setBatchProvinceId(e.target.value);
-                    const found = provinces.find(
+                    setBatchProductId(e.target.value);
+                    const found = products.find(
                       (p) => String(p.id) === e.target.value,
                     );
-                    if (found && found.slug) {
-                      setBatchPrefix(found.slug.toUpperCase().slice(0, 4));
+                    if (found) {
+                      const clean = found.name
+                        .replace(/^(Mảnh ghép NFC 3D\s*[-–:]*|Mảnh\s*[-–:]*)/i, "")
+                        .trim();
+                      const pfx = clean
+                        .toLowerCase()
+                        .normalize("NFD")
+                        .replace(/[\u0300-\u036f]/g, "")
+                        .replace(/[^a-z0-9]+/g, "")
+                        .slice(0, 4)
+                        .toUpperCase();
+                      setBatchPrefix(pfx || "VNT");
                     }
                   }}
                   required
                 >
-                  <option value="">-- Chọn Tỉnh Thành --</option>
-                  {provinces.map((p) => (
+                  <option value="">-- Chọn Sản Phẩm Đang Bán --</option>
+                  {products.map((p) => (
                     <option key={p.id} value={p.id}>
-                      {p.name} ({p.region})
+                      {p.name} ({new Intl.NumberFormat("vi-VN").format(p.price)}đ)
                     </option>
                   ))}
                 </select>
+                <span className="admin-nfc-field__hint">
+                  Mã Serial và link Token chip NFC sinh ra sẽ liên kết với sản phẩm này.
+                </span>
               </label>
 
               <label className="admin-nfc-field">

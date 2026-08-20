@@ -7,6 +7,7 @@ const {
   getAllVouchers,
   createVoucher,
   sendVoucherToUsers,
+  deleteVoucher,
 } = require("../controllers/voucherController");
 
 // Customer routes
@@ -17,5 +18,6 @@ router.post("/redeem", protect, redeemCode);
 router.get("/", protect, requireAdmin, getAllVouchers);
 router.post("/", protect, requireAdmin, createVoucher);
 router.post("/send", protect, requireAdmin, sendVoucherToUsers);
+router.delete("/:id", protect, requireAdmin, deleteVoucher);
 
 module.exports = router;

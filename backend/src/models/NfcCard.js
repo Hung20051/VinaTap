@@ -29,7 +29,8 @@ const NfcCard = {
   async findByOwner(user_id) {
     const [rows] = await db.execute(
       `SELECT n.id, n.serial_code, n.nfc_token, n.status, n.activated_at,
-              p.name AS province_name, p.slug AS province_slug, p.thumbnail_url,
+              n.province_id,
+              p.name AS province_name, p.slug AS province_slug, p.thumbnail_url, p.region,
               (SELECT id FROM albums
                WHERE nfc_card_id = n.id AND status = 'active' LIMIT 1) AS album_id
        FROM nfc_cards n

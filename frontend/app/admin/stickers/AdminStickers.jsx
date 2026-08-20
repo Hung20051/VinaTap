@@ -110,40 +110,31 @@ export default function AdminStickers() {
   };
 
   return (
-    <div>
+    <div className="admin-stickers-wrap">
       <div className="admin-stickers-sticky-header">
         <div className="admin-stickers-header">
           <div>
-            <h1 className="admin-dash-title">🎨 Sticker theme</h1>
-            <p className="admin-dash-subtitle">
-              Sticker dùng chung cho mọi album — quản lý ảnh, danh mục và thứ tự
-              hiển thị
+            <h1 className="admin-stickers-title">
+              <span className="title-desktop">🎨 Quản Lý Sticker Theme</span>
+              <span className="title-mobile">🎨 Sticker Theme</span>
+            </h1>
+            <p className="admin-stickers-subtitle">
+              Sticker trang trí album — quản lý ảnh, danh mục và độ ưu tiên hiển thị
             </p>
           </div>
           <div className="admin-stickers-header__actions">
-            <button className="btn btn-outline" onClick={() => setModal("bulk")}>
-              <UploadCloud size={16} /> Thêm nhiều
+            <button className="btn-bulk-stickers" onClick={() => setModal("bulk")}>
+              <UploadCloud size={15} /> Thêm nhiều
             </button>
-            <button className="btn btn-primary" onClick={() => setModal("new")}>
-              <Plus size={16} /> Thêm sticker
+            <button className="btn-add-sticker" onClick={() => setModal("new")}>
+              <Plus size={15} /> Thêm sticker
             </button>
           </div>
         </div>
 
-        <div
-          className="admin-stickers-filters"
-          style={{
-            display: "flex",
-            gap: "12px",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <div
-            className="admin-stickers-search"
-            style={{ flex: 1, minWidth: "220px" }}
-          >
-            <Search size={16} />
+        <div className="admin-stickers-filters">
+          <div className="admin-stickers-search">
+            <Search size={15} />
             <input
               type="text"
               placeholder="Tìm sticker theo tên..."

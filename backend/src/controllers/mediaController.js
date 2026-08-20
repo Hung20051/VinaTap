@@ -88,15 +88,16 @@ const getAlbumIdByOverlay = async (overlayId) => {
   return rows[0]?.album_id || null;
 };
 
-// ─── UPLOAD 1 FILE ───────────────────────────────────────────
+// ─── UPLOAD 1 FILE HOẶC NHIỀU FILE ───────────────────────────
 // POST /api/media/upload
-// Form-data: file, album_id, taken_at (optional)
+// Form-data: file (hoặc files), album_id, taken_at (optional)
 const uploadMedia = async (req, res) => {
   try {
     await runMiddleware(req, res, uploadSingle);
 
-    if (!req.file)
-      return res.status(400).json({ message: "Không tìm thấy file" });
+    const file = req.file || req.files?.[0];
+    if (!file)
+      return res.status(400).json({ message: "Không tìm thấy file tải lên" });
 
     const { album_id, taken_at } = req.body;
     if (!album_id) return res.status(400).json({ message: "Thiếu album_id" });
@@ -106,10 +107,10 @@ const uploadMedia = async (req, res) => {
         .status(403)
         .json({ message: "Bạn không có quyền upload vào album này" });
 
-    const isVideo = req.file.mimetype.startsWith("video/");
+    const isVideo = file.mimetype.startsWith("video/");
     const resourceType = isVideo ? "video" : "image";
 
-    const uploaded = await uploadToCloudinary(req.file.buffer, {
+    const uploaded = await uploadToCloudinary(file.buffer, {
       folder: `vinatap/albums/${album_id}`,
       resource_type: resourceType,
     });
@@ -142,15 +143,19 @@ const uploadMedia = async (req, res) => {
       ],
     );
 
+    const mediaObj = {
+      id: result.insertId,
+      file_url: uploaded.secure_url,
+      thumbnail_url,
+      media_type: isVideo ? "video" : "photo",
+      caption_ai,
+      created_at: new Date().toISOString(),
+    };
+
     res.status(201).json({
       message: "Upload thành công",
-      media: {
-        id: result.insertId,
-        file_url: uploaded.secure_url,
-        thumbnail_url,
-        media_type: isVideo ? "video" : "photo",
-        caption_ai,
-      },
+      media: mediaObj,
+      items: [mediaObj],
     });
   } catch (err) {
     console.error("uploadMedia:", err);
@@ -215,13 +220,17 @@ const uploadMultipleMedia = async (req, res) => {
       results.push({
         id: result.insertId,
         file_url: uploaded.secure_url,
+        thumbnail_url,
+        media_type: isVideo ? "video" : "photo",
         caption_ai,
+        created_at: new Date().toISOString(),
       });
     }
 
     res.status(201).json({
       message: `Upload ${results.length} file thành công`,
       media: results,
+      items: results,
     });
   } catch (err) {
     console.error("uploadMultipleMedia:", err);
@@ -245,17 +254,29 @@ const updateMedia = async (req, res) => {
     }
 
     const { caption_user, sort_order, taken_at } = req.body;
-    await db.execute(
-      `UPDATE album_media
-       SET caption_user = ?, sort_order = ?, taken_at = ?
-       WHERE id = ? AND status = 'active'`,
-      [
-        caption_user || null,
-        sort_order || 0,
-        taken_at || null,
-        mediaId,
-      ],
-    );
+    const updates = [];
+    const params = [];
+
+    if (caption_user !== undefined) {
+      updates.push("caption_user = ?");
+      params.push(caption_user || null);
+    }
+    if (sort_order !== undefined) {
+      updates.push("sort_order = ?");
+      params.push(sort_order);
+    }
+    if (taken_at !== undefined) {
+      updates.push("taken_at = ?");
+      params.push(taken_at || null);
+    }
+
+    if (updates.length > 0) {
+      params.push(mediaId);
+      await db.execute(
+        `UPDATE album_media SET ${updates.join(", ")} WHERE id = ? AND status = 'active'`,
+        params,
+      );
+    }
 
     res.json({ message: "Cập nhật thành công" });
   } catch (err) {

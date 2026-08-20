@@ -88,7 +88,13 @@ const updateProfileLimiter = rateLimit({
 // 🌐 Global Rate Limiter — Chặn DDoS và lạm dụng API toàn cục
 const globalLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 phút
-  max: 120, // tối đa 120 request / IP / phút
+  max: 600, // tối đa 600 request / IP / phút trong production
+  skip: (req) => {
+    // Không chặn môi trường dev hoặc localhost / Responsively đa màn hình
+    if (process.env.NODE_ENV !== "production") return true;
+    const ip = req.ip || "";
+    return ip === "127.0.0.1" || ip === "::1" || ip.includes("127.0.0.1");
+  },
   message: {
     message: "Hệ thống phát hiện quá nhiều yêu cầu từ IP của bạn. Vui lòng chờ 1 phút trước khi thử lại!",
   },
@@ -114,10 +120,10 @@ const analyticsLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// 🔍 Order Status Check Limiter — Chống dò quét mã đơn hàng
+// 🔍 Order Status Check Limiter — Hỗ trợ auto polling trạng thái chuyển khoản VietQR mượt mà
 const orderCheckLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 15,
+  max: 60,
   message: { message: "Bạn đang tra cứu đơn hàng quá thường xuyên. Vui lòng chờ ít giây!" },
   standardHeaders: true,
   legacyHeaders: false,

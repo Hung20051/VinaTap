@@ -7,11 +7,7 @@ import {
 } from "./provinceConstants";
 import { provinceAPI } from "@/lib/api";
 
-export default function LandmarkManagerModal({
-  province,
-  onClose,
-  showToast,
-}) {
+export default function LandmarkManagerModal({ province, onClose, showToast }) {
   const [landmarksList, setLandmarksList] = useState([]);
   const [landmarkLoading, setLandmarkLoading] = useState(true);
 
@@ -117,7 +113,11 @@ export default function LandmarkManagerModal({
         if (item.address) {
           if (item.address.road || item.address.pedestrian)
             addrParts.push(item.address.road || item.address.pedestrian);
-          if (item.address.village || item.address.suburb || item.address.quarter)
+          if (
+            item.address.village ||
+            item.address.suburb ||
+            item.address.quarter
+          )
             addrParts.push(
               item.address.village ||
                 item.address.suburb ||
@@ -263,11 +263,11 @@ export default function LandmarkManagerModal({
         {/* List + Add Form */}
         <div className="admin-prov-landmarks-wrap">
           <div className="admin-prov-landmarks-head">
-            <h4>Danh Sách Địa Danh ({landmarksList.length})</h4>
+            <h4>Danh Sách Điểm Đến ({landmarksList.length})</h4>
             {!showAddLandmarkForm && (
               <button
                 type="button"
-                className="btn btn-primary btn-sm"
+                className="btn btn-add-landmark"
                 onClick={() => {
                   setEditingLandmark(null);
                   setPlaceSuggestions([]);
@@ -284,7 +284,7 @@ export default function LandmarkManagerModal({
                   setShowAddLandmarkForm(true);
                 }}
               >
-                <Plus size={14} /> Thêm Điểm Du Lịch
+                <Plus size={15} /> Thêm Điểm Đến
               </button>
             )}
           </div>
@@ -293,32 +293,43 @@ export default function LandmarkManagerModal({
           {showAddLandmarkForm && (
             <form
               onSubmit={handleSaveLandmark}
-              className="admin-prov-landmark-form card"
+              className="admin-prov-landmark-form"
             >
-              <h5>
-                {editingLandmark
-                  ? `✏️ Sửa Địa Danh: ${editingLandmark.name}`
-                  : "➕ Thêm Địa Danh Mới"}
-              </h5>
+              <div className="admin-prov-landmark-form-head">
+                <h5>
+                  {editingLandmark
+                    ? `✏️ Sửa Địa Danh: ${editingLandmark.name}`
+                    : "➕ Thêm Điểm Đến Mới"}
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close-subform"
+                  onClick={() => {
+                    setShowAddLandmarkForm(false);
+                    setEditingLandmark(null);
+                  }}
+                >
+                  <X size={15} />
+                </button>
+              </div>
+
               <div className="admin-prov-form-grid">
                 <label
                   className="admin-prov-field"
                   style={{ position: "relative" }}
                   ref={autocompleteRef}
                 >
-                  <span>Tên Địa Danh * (Gõ để gợi ý tự động 📍)</span>
+                  <span>Tên Địa Danh * (Gợi ý tự động 📍)</span>
                   <div className="admin-prov-input-with-spinner">
                     <input
                       type="text"
                       value={landmarkForm.name}
-                      onChange={(e) =>
-                        handleLandmarkNameChange(e.target.value)
-                      }
+                      onChange={(e) => handleLandmarkNameChange(e.target.value)}
                       onFocus={() => {
                         if (placeSuggestions.length > 0)
                           setShowSuggestionsDropdown(true);
                       }}
-                      placeholder="VD: Chùa Linh Ứng, Cầu Rồng, Hồ Tây..."
+                      placeholder="VD: Chùa Linh Ứng, Cầu Rồng..."
                       required
                       autoComplete="off"
                     />
@@ -380,7 +391,7 @@ export default function LandmarkManagerModal({
               </div>
 
               <label className="admin-prov-field">
-                <span>Địa Chỉ Chi Tiết (Tự động điền khi chọn gợi ý)</span>
+                <span>Địa Chỉ Chi Tiết</span>
                 <input
                   type="text"
                   value={landmarkForm.address}
@@ -430,7 +441,7 @@ export default function LandmarkManagerModal({
               <div className="admin-prov-modal__footer">
                 <button
                   type="button"
-                  className="btn btn-ghost btn-sm"
+                  className="btn btn-ghost-prov"
                   onClick={() => {
                     setShowAddLandmarkForm(false);
                     setEditingLandmark(null);
@@ -441,13 +452,13 @@ export default function LandmarkManagerModal({
                 <button
                   type="submit"
                   disabled={landmarkSubmitting}
-                  className="btn btn-primary btn-sm"
+                  className="btn btn-submit-prov"
                 >
                   {landmarkSubmitting
                     ? "Đang lưu..."
                     : editingLandmark
-                      ? "Cập Nhật"
-                      : "Thêm Ngay"}
+                      ? "✓ Cập Nhật"
+                      : "✓ Thêm Ngay"}
                 </button>
               </div>
             </form>
@@ -459,16 +470,31 @@ export default function LandmarkManagerModal({
               <div className="spinner" />
             </div>
           ) : landmarksList.length === 0 ? (
-            <div className="admin-prov-empty-sm">
-              Chưa có địa danh nào cho tỉnh này. Hãy bấm "+ Thêm Điểm Du Lịch" để
-              tạo điểm đầu tiên.
+            <div className="admin-prov-empty-landmarks">
+              <div className="empty-landmark-icon">📍</div>
+              <h5>Chưa có điểm du lịch nào</h5>
+              <p>
+                Thêm các danh lam thắng cảnh, di tích lịch sử hoặc ẩm thực đặc
+                sắc để khách khám phá khi quét chip NFC.
+              </p>
+              {!showAddLandmarkForm && (
+                <button
+                  type="button"
+                  className="btn btn-submit-prov"
+                  onClick={() => {
+                    setEditingLandmark(null);
+                    setShowAddLandmarkForm(true);
+                  }}
+                >
+                  <Plus size={14} /> Thêm Điểm Đầu Tiên
+                </button>
+              )}
             </div>
           ) : (
             <div className="admin-prov-landmark-list">
               {landmarksList.map((lm) => {
                 const catInfo =
-                  LANDMARK_CATEGORIES[lm.category] ||
-                  LANDMARK_CATEGORIES.other;
+                  LANDMARK_CATEGORIES[lm.category] || LANDMARK_CATEGORIES.other;
                 const IconComp = catInfo.icon;
                 return (
                   <div key={lm.id} className="admin-prov-landmark-item">

@@ -2,30 +2,25 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   Menu,
   X,
-  User,
   Settings,
   LogOut,
   ChevronDown,
-  ShoppingBag,
-  Package,
   ShieldCheck,
 } from "lucide-react";
 import Logo from "./Logo";
 import NotificationBell from "@/components/layout/NotificationBell";
-import { getUser, isAdmin, clearAuth } from "@/lib/auth";
+import { getUser, clearAuth } from "@/lib/auth";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
 import "./Header.css";
 
-export default function Header({ onToggleDrawer, isDrawerOpen }) {
-  const router = useRouter();
+export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
   const pathname = usePathname();
   const [user, setUser] = useState(null);
-  const [userAdmin, setUserAdmin] = useState(false);
   const [lang, setLang] = useState("vi");
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
@@ -33,17 +28,10 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
 
   useEffect(() => {
     setUser(getUser());
-    setUserAdmin(isAdmin());
     setLang(getLang());
 
-    const handleUserUpdated = (e) => {
-      setUser(e.detail);
-      setUserAdmin(isAdmin());
-    };
-
-    const handleLangUpdated = (e) => {
-      setLang(e.detail);
-    };
+    const handleUserUpdated = (e) => setUser(e.detail);
+    const handleLangUpdated = (e) => setLang(e.detail);
 
     window.addEventListener("vinatap:user-updated", handleUserUpdated);
     window.addEventListener("vinatap:lang-updated", handleLangUpdated);
@@ -79,20 +67,9 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
     if (pathname.includes("/admin/products")) return { parent: "Admin", page: "Products & Shipping" };
     if (pathname.includes("/admin/revenue")) return { parent: "Admin", page: t(lang, "adminRevenue") };
     if (pathname.includes("/admin/analytics")) return { parent: "Admin", page: t(lang, "adminAnalytics") };
-    if (pathname.startsWith("/admin")) return { parent: "Admin", page: t(lang, "adminRole") };
-    if (pathname.includes("/customer/dashboard")) return { parent: t(lang, "greeting"), page: t(lang, "myCollection") };
-    if (pathname.includes("/settings")) return { parent: "VinaTap", page: t(lang, "accountSettings") };
+    if (pathname.includes("/admin/vouchers")) return { parent: "Admin", page: "Mã Giảm Giá" };
 
-    return { parent: "VinaTap", page: "Trang Chủ" };
-  };
-
-  const handleLogoClick = (e) => {
-    e.preventDefault();
-    if (isAdmin()) {
-      router.push("/admin/dashboard");
-    } else {
-      router.push("/customer/dashboard");
-    }
+    return { parent: "Admin", page: t(lang, "adminRole") };
   };
 
   const breadcrumb = getBreadcrumb();
@@ -111,8 +88,7 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
 
         <Logo
           className="header-logo-brand"
-          href={userAdmin ? "/admin/dashboard" : "/customer/dashboard"}
-          onClick={handleLogoClick}
+          href="/admin/dashboard"
         />
 
         <div className="header-breadcrumb-divider">/</div>
@@ -136,11 +112,11 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
                 {user.avatar_url ? (
                   <img src={user.avatar_url} alt={user.name} />
                 ) : (
-                  <span>{user.name?.[0]?.toUpperCase() || "U"}</span>
+                  <span>{user.name?.[0]?.toUpperCase() || "A"}</span>
                 )}
               </div>
               <span className="header-user-name">
-                {userAdmin ? "Admin" : user.name}
+                {user.name || "Admin"}
               </span>
               <ChevronDown size={14} className="chevron-icon" />
             </button>
@@ -150,57 +126,29 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
                 <div className="dropdown-user-info">
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 2 }}>
                     <strong>{user.name}</strong>
-                    {userAdmin && (
-                      <span style={{
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        padding: "1px 6px",
-                        borderRadius: 4,
-                        background: "rgba(239, 68, 68, 0.12)",
-                        color: "#dc2626",
-                      }}>
-                        ADMIN
-                      </span>
-                    )}
+                    <span style={{
+                      fontSize: "0.68rem",
+                      fontWeight: 700,
+                      padding: "1px 6px",
+                      borderRadius: 4,
+                      background: "rgba(239, 68, 68, 0.12)",
+                      color: "#dc2626",
+                    }}>
+                      ADMIN
+                    </span>
                   </div>
                   <span className="text-muted">{user.email}</span>
                 </div>
 
                 <div className="dropdown-divider" />
 
-                {userAdmin ? (
-                  <Link
-                    href="/admin/dashboard"
-                    className="dropdown-item"
-                    onClick={() => setUserDropdownOpen(false)}
-                  >
-                    <ShieldCheck size={16} /> Bảng Quản Trị
-                  </Link>
-                ) : (
-                  <>
-                    <Link
-                      href="/customer/dashboard"
-                      className="dropdown-item"
-                      onClick={() => setUserDropdownOpen(false)}
-                    >
-                      <User size={16} /> {t(lang, "myCollection")}
-                    </Link>
-                    <Link
-                      href="/customer/orders"
-                      className="dropdown-item"
-                      onClick={() => setUserDropdownOpen(false)}
-                    >
-                      <Package size={16} /> {t(lang, "myOrders")}
-                    </Link>
-                    <Link
-                      href="/shop"
-                      className="dropdown-item"
-                      onClick={() => setUserDropdownOpen(false)}
-                    >
-                      <ShoppingBag size={16} /> {t(lang, "nfcStore")}
-                    </Link>
-                  </>
-                )}
+                <Link
+                  href="/admin/dashboard"
+                  className="dropdown-item"
+                  onClick={() => setUserDropdownOpen(false)}
+                >
+                  <ShieldCheck size={16} /> Bảng Quản Trị
+                </Link>
 
                 <Link
                   href="/settings/account"

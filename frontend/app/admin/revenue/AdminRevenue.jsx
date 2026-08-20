@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Plus,
   Search,
@@ -15,17 +15,22 @@ import {
   CreditCard,
   Eye,
   Edit2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { manualSaleAPI, orderAPI, productAPI } from "@/lib/api";
 import { getToken } from "@/lib/auth";
 import "./AdminRevenue.css";
 
 const formatVND = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
+const PAGE_SIZE = 20;
 
 export default function AdminRevenue() {
   const [activeTab, setActiveTab] = useState("online"); // 'online' | 'manual'
   const [sales, setSales] = useState([]);
   const [onlineOrders, setOnlineOrders] = useState([]);
+  const [totalOnlineOrders, setTotalOnlineOrders] = useState(0);
+  const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -46,16 +51,26 @@ export default function AdminRevenue() {
       .catch(() => {});
   }, []);
 
+  // Tự động tìm kiếm Real-time (Debounce 300ms) mỗi khi gõ
   useEffect(() => {
-    loadData();
-  }, [activeTab]);
+    const timer = setTimeout(() => {
+      loadData(search, page, statusFilter);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, activeTab, page, statusFilter]);
 
-  const loadData = async (searchValue = search) => {
+  const loadData = async (searchValue = search, pageNum = page, filterStatus = statusFilter) => {
     setLoading(true);
     try {
       if (activeTab === "online") {
-        const res = await orderAPI.getAdminOrders({ search: searchValue });
+        const res = await orderAPI.getAdminOrders({
+          search: searchValue,
+          status: filterStatus,
+          limit: PAGE_SIZE,
+          offset: (pageNum - 1) * PAGE_SIZE,
+        });
         setOnlineOrders(res.orders || []);
+        setTotalOnlineOrders(res.total || (res.orders || []).length);
       } else {
         const res = await manualSaleAPI.getAll({ search: searchValue });
         setSales(res.sales || []);
@@ -65,6 +80,26 @@ export default function AdminRevenue() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const handleTabChange = (newTab) => {
+    setActiveTab(newTab);
+    setPage(1);
+  };
+
+  const handleStatusFilterChange = (newStatus) => {
+    setStatusFilter(newStatus);
+    setPage(1);
+  };
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const requestUpdateOrderStatus = (orderId, orderCode, newStatus) => {
@@ -210,80 +245,95 @@ export default function AdminRevenue() {
       )}
 
       <div className="admin-rev-header">
-        <div>
-          <h1 className="admin-dash-title">💰 Quản Lý Doanh Thu & Đơn Hàng</h1>
+        <div className="admin-rev-header__title-group">
+          <h1 className="admin-dash-title">💰 Quản Lý Doanh Thu</h1>
           <p className="admin-dash-subtitle">
-            Theo dõi đơn hàng Shop Online VietQR & Đơn bán bán buôn đại lý
+            Theo dõi đơn hàng Shop Online VietQR & Đơn bán buôn đại lý
           </p>
         </div>
 
         <div className="admin-rev-header__actions">
           <button
-            className="btn btn-outline"
+            className="btn btn-outline admin-rev-btn-csv"
             onClick={handleExportCsv}
-            style={{ display: "flex", alignItems: "center", gap: "6px" }}
+            title="Xuất danh sách ra file CSV"
           >
-            <Download size={16} /> Xuất CSV Doanh Thu
+            <Download size={14} /> <span className="btn-label-desktop">Xuất CSV</span>
           </button>
-          <button className="btn btn-primary" onClick={openCreateForm} style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}>
-            <Plus size={16} /> Tạo Đơn Thủ Công / Đại Lý
+          <button
+            className="btn btn-primary admin-rev-btn-create"
+            onClick={openCreateForm}
+            title="Tạo đơn hàng mới"
+          >
+            <Plus size={14} /> <span>Tạo Đơn</span>
           </button>
         </div>
       </div>
 
-      {/* TAB SELECTOR */}
-      <div className="admin-tab-nav" style={{ display: "flex", gap: "12px", marginBottom: "1.5rem" }}>
-        <button
-          className={`btn ${activeTab === "online" ? "btn-primary" : "btn-outline"}`}
-          onClick={() => setActiveTab("online")}
-        >
-          <ShoppingBag size={16} /> Đơn Hàng Shop Online (VietQR / COD)
-        </button>
-        <button
-          className={`btn ${activeTab === "manual" ? "btn-primary" : "btn-outline"}`}
-          onClick={() => setActiveTab("manual")}
-        >
-          <CreditCard size={16} /> Đơn Bán Bán Buôn Thủ Công
-        </button>
-      </div>
-
-      <div style={{ display: "flex", gap: "12px", marginBottom: "1.25rem", alignItems: "center" }}>
-        <form className="admin-rev-search" onSubmit={handleSearchSubmit} style={{ flex: 1, margin: 0 }}>
-          <Search size={16} className="admin-rev-search__icon" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Tìm theo mã đơn, số điện thoại hoặc tên người mua..."
-            className="admin-rev-search__input"
-          />
-        </form>
-
-        {activeTab === "online" && (
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            style={{
-              padding: "10px 14px",
-              borderRadius: "10px",
-              border: "1px solid #cbd5e1",
-              fontSize: "0.88rem",
-              fontWeight: 600,
-              color: "#0f172a",
-              background: "#ffffff",
-              cursor: "pointer",
-              height: "42px",
-            }}
+      {/* STICKY CONTROLS (TABS + SEARCH + FILTER) */}
+      <div className="admin-rev-sticky-controls">
+        {/* TAB SELECTOR */}
+        <div className="admin-tab-nav">
+          <button
+            className={`btn admin-tab-btn ${activeTab === "online" ? "btn-primary" : "btn-outline"}`}
+            onClick={() => handleTabChange("online")}
           >
-            <option value="active">✨ Đơn đang xử lý (Ẩn đơn hủy/quá hạn)</option>
-            <option value="pending">⏳ Đơn chờ chuyển khoản (VietQR / COD)</option>
-            <option value="paid">✅ Đã thanh toán</option>
-            <option value="shipping">🚚 Đang giao hàng</option>
-            <option value="completed">🎉 Đã hoàn tất</option>
-            <option value="cancelled">🚫 Đơn đã hủy / Quá hạn 24h</option>
-            <option value="all">🌐 Tất cả đơn (Bao gồm đơn đã hủy)</option>
-          </select>
-        )}
+            <ShoppingBag size={14} />
+            <span className="tab-label-desktop">Đơn Hàng Shop Online (VietQR / COD)</span>
+            <span className="tab-label-mobile">Shop Online</span>
+          </button>
+          <button
+            className={`btn admin-tab-btn ${activeTab === "manual" ? "btn-primary" : "btn-outline"}`}
+            onClick={() => handleTabChange("manual")}
+          >
+            <CreditCard size={14} />
+            <span className="tab-label-desktop">Đơn Bán Buôn Thủ Công</span>
+            <span className="tab-label-mobile">Bán Buôn</span>
+          </button>
+        </div>
+
+        {/* SEARCH & FILTER */}
+        <div className="admin-rev-filter-wrap">
+          <div className="admin-rev-search">
+            <Search size={16} className="admin-rev-search__icon" />
+            <input
+              type="text"
+              value={search}
+              onChange={handleSearchChange}
+              placeholder="Tìm theo mã đơn, SĐT hoặc tên người mua..."
+              className="admin-rev-search__input"
+            />
+            {search && (
+              <button
+                type="button"
+                className="admin-rev-search__clear"
+                onClick={() => {
+                  setSearch("");
+                  setPage(1);
+                }}
+                title="Xóa tìm kiếm"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          {activeTab === "online" && (
+            <select
+              value={statusFilter}
+              onChange={(e) => handleStatusFilterChange(e.target.value)}
+              className="admin-rev-status-select"
+            >
+              <option value="active">⚡ Đơn cần xử lý (COD mới & VietQR đã thanh toán)</option>
+              <option value="pending_qr">⏳ Chờ chuyển khoản (VietQR chưa thanh toán)</option>
+              <option value="paid">✅ Đã thanh toán (Chờ đóng gói)</option>
+              <option value="shipping">🚚 Đang giao hàng</option>
+              <option value="completed">🎉 Đã hoàn tất</option>
+              <option value="cancelled">🚫 Đã hủy / Hết hạn 30p</option>
+              <option value="all">🌐 Tất cả đơn hàng</option>
+            </select>
+          )}
+        </div>
       </div>
 
       {loading ? (
@@ -304,124 +354,236 @@ export default function AdminRevenue() {
               Chưa có đơn hàng Shop Online nào khớp với bộ lọc.
             </div>
           ) : (
-            <div className="card admin-rev-table-wrap">
-              <table className="admin-rev-table">
-                <thead>
-                  <tr>
-                    <th>Mã Đơn</th>
-                    <th>Khách Hàng</th>
-                    <th>SĐT / Địa Chỉ</th>
-                    <th>PTTT</th>
-                    <th>Tổng Tiền</th>
-                    <th>Trạng Thái</th>
-                    <th>Thao Tác Admin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {displayOnlineOrders.map((o) => (
-                  <tr key={o.id}>
-                    <td>
-                      <code style={{ fontWeight: 800, color: "#0284c7" }}>
-                        {o.order_code}
-                      </code>
-                      <br />
-                      <small className="text-muted">
-                        {new Date(o.created_at).toLocaleDateString("vi-VN", {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </small>
-                    </td>
-                    <td>
-                      <strong>{o.recipient_name}</strong>
-                      <br />
-                      <small className="text-muted">{o.user_email || "N/A"}</small>
-                    </td>
-                    <td>
-                      <span style={{ fontWeight: 700 }}>{o.recipient_phone}</span>
-                      <br />
-                      <small style={{ fontSize: "0.78rem", color: "#64748b" }}>
-                        {o.recipient_address}
-                      </small>
-                    </td>
-                    <td>
-                      {o.payment_method === "vietqr" ? (
-                        <span className="badge badge-blue">
-                          <QrCode size={12} /> VietQR
-                        </span>
-                      ) : (
-                        <span className="badge badge-orange">
-                          <Truck size={12} /> COD
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      <strong style={{ color: "#ea580c" }}>
-                        {formatVND(o.total_amount)}
-                      </strong>
-                      {o.discount_amount > 0 && (
-                        <>
+            <>
+              {/* DESKTOP TABLE VIEW */}
+              <div className="card admin-rev-table-wrap">
+                <table className="admin-rev-table">
+                  <thead>
+                    <tr>
+                      <th>Mã Đơn</th>
+                      <th>Khách Hàng</th>
+                      <th>SĐT / Địa Chỉ</th>
+                      <th>PTTT</th>
+                      <th>Tổng Tiền</th>
+                      <th>Trạng Thái</th>
+                      <th>Thao Tác Admin</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayOnlineOrders.map((o) => (
+                      <tr key={o.id}>
+                        <td>
+                          <code style={{ fontWeight: 800, color: "#0284c7" }}>
+                            {o.order_code}
+                          </code>
                           <br />
-                          <small className="text-green">
-                            Voucher: -{formatVND(o.discount_amount)}
+                          <small className="text-muted">
+                            {new Date(o.created_at).toLocaleDateString("vi-VN", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
                           </small>
-                        </>
-                      )}
-                    </td>
-                    <td>
-                      {o.status === "pending" && (
-                        o.payment_method === "cod" ? (
-                          <span className="badge badge-warning" style={{ background: "#fff7ed", color: "#c2410c", border: "1px solid #ffedd5" }}>
-                            📦 Đơn COD mới
+                        </td>
+                        <td>
+                          <strong>{o.recipient_name}</strong>
+                          <br />
+                          <small className="text-muted">{o.user_email || "N/A"}</small>
+                        </td>
+                        <td>
+                          <span style={{ fontWeight: 700 }}>{o.recipient_phone}</span>
+                          <br />
+                          <small style={{ fontSize: "0.78rem", color: "#64748b" }}>
+                            {o.recipient_address}
+                          </small>
+                        </td>
+                        <td>
+                          {o.payment_method === "vietqr" ? (
+                            <span className="badge badge-blue">
+                              <QrCode size={12} /> VietQR
+                            </span>
+                          ) : (
+                            <span className="badge badge-orange">
+                              <Truck size={12} /> COD
+                            </span>
+                          )}
+                        </td>
+                        <td>
+                          <strong style={{ color: "#ea580c" }}>
+                            {formatVND(o.total_amount)}
+                          </strong>
+                          {o.discount_amount > 0 && (
+                            <>
+                              <br />
+                              <small className="text-green">
+                                Voucher: -{formatVND(o.discount_amount)}
+                              </small>
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          {o.status === "pending" && (
+                            o.payment_method === "cod" ? (
+                              <span className="badge badge-warning" style={{ background: "#fff7ed", color: "#c2410c", border: "1px solid #ffedd5" }}>
+                                📦 Đơn COD mới
+                              </span>
+                            ) : (
+                              <span className="badge badge-warning" style={{ background: "#fef3c7", color: "#b45309", border: "1px solid #fde68a" }}>
+                                ⏳ Chờ CK VietQR
+                              </span>
+                            )
+                          )}
+                          {o.status === "paid" && (
+                            <span className="badge badge-success" style={{ background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", fontWeight: 800 }}>
+                              ✅ Đã thanh toán
+                            </span>
+                          )}
+                          {o.status === "shipping" && (
+                            <span className="badge badge-blue">🚚 Đang giao hàng</span>
+                          )}
+                          {o.status === "completed" && (
+                            <span className="badge badge-purple">🎉 Hoàn tất</span>
+                          )}
+                          {o.status === "cancelled" && (
+                            <span className="badge badge-secondary" style={{ background: "#f1f5f9", color: "#64748b", border: "1px solid #cbd5e1" }}>
+                              🚫 Đã bỏ dở
+                            </span>
+                          )}
+                        </td>
+                        <td>
+                          <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                            {o.status === "pending" && o.payment_method === "vietqr" && (
+                              <button
+                                className="btn btn-sm"
+                                style={{ background: "#f8fafc", border: "1px solid #cbd5e1", color: "#475569", fontSize: "0.75rem", padding: "4px 8px" }}
+                                onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "paid")}
+                                title="Chỉ bấm khi khách chuyển tiền nhưng gõ sai nội dung"
+                              >
+                                ⚡ Duyệt tay CK
+                              </button>
+                            )}
+                            {o.status === "pending" && o.payment_method === "cod" && (
+                              <button
+                                className="btn btn-sm btn-primary"
+                                style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}
+                                onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "shipping")}
+                              >
+                                🚀 Duyệt & Giao
+                              </button>
+                            )}
+                            {o.status === "paid" && (
+                              <button
+                                className="btn btn-sm btn-primary"
+                                style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}
+                                onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "shipping")}
+                              >
+                                🚀 Giao Hàng
+                              </button>
+                            )}
+                            {o.status === "shipping" && (
+                              <button
+                                className="btn btn-sm btn-purple"
+                                onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "completed")}
+                              >
+                                ✓ Hoàn Tất
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* 📱 MOBILE ORDER CARDS VIEW */}
+              <div className="admin-rev-cards-mobile">
+                {displayOnlineOrders.map((o) => (
+                  <div key={o.id} className="admin-order-card">
+                    <div className="order-card-header">
+                      <div>
+                        <span className="order-card-code">{o.order_code}</span>
+                        <div className="order-card-time">
+                          {new Date(o.created_at).toLocaleDateString("vi-VN", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            day: "2-digit",
+                            month: "2-digit",
+                          })}
+                        </div>
+                      </div>
+                      <div>
+                        {o.status === "pending" && (
+                          o.payment_method === "cod" ? (
+                            <span className="badge badge-warning" style={{ background: "#fff7ed", color: "#c2410c", border: "1px solid #ffedd5" }}>
+                              📦 Đơn COD mới
+                            </span>
+                          ) : (
+                            <span className="badge badge-warning" style={{ background: "#fef3c7", color: "#b45309", border: "1px solid #fde68a" }}>
+                              ⏳ Chờ CK
+                            </span>
+                          )
+                        )}
+                        {o.status === "paid" && (
+                          <span className="badge badge-success" style={{ background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", fontWeight: 800 }}>
+                            ✅ Đã thanh toán
                           </span>
-                        ) : (
-                          <span className="badge badge-warning" style={{ background: "#fef3c7", color: "#b45309", border: "1px solid #fde68a" }}>
-                            ⏳ Chờ CK VietQR
+                        )}
+                        {o.status === "shipping" && (
+                          <span className="badge badge-blue">🚚 Đang giao</span>
+                        )}
+                        {o.status === "completed" && (
+                          <span className="badge badge-purple">🎉 Hoàn tất</span>
+                        )}
+                        {o.status === "cancelled" && (
+                          <span className="badge badge-secondary" style={{ background: "#f1f5f9", color: "#64748b" }}>
+                            🚫 Đã hủy
                           </span>
-                        )
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="order-card-body">
+                      <div className="order-card-customer">
+                        <span className="customer-name">👤 {o.recipient_name}</span>
+                        <span className="customer-phone">📞 {o.recipient_phone}</span>
+                      </div>
+                      {o.recipient_address && (
+                        <div className="order-card-address">
+                          📍 {o.recipient_address}
+                        </div>
                       )}
-                      {o.status === "paid" && (
-                        <span className="badge badge-success" style={{ background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", fontWeight: 800 }}>
-                          ✅ Đã thanh toán
+                    </div>
+
+                    <div className="order-card-footer">
+                      <div className="order-card-price-wrap">
+                        <span className="payment-tag">
+                          {o.payment_method === "vietqr" ? "💳 VietQR" : "🚚 COD"}
                         </span>
-                      )}
-                      {o.status === "shipping" && (
-                        <span className="badge badge-blue">🚚 Đang giao hàng</span>
-                      )}
-                      {o.status === "completed" && (
-                        <span className="badge badge-purple">🎉 Hoàn tất</span>
-                      )}
-                      {o.status === "cancelled" && (
-                        <span className="badge badge-secondary" style={{ background: "#f1f5f9", color: "#64748b", border: "1px solid #cbd5e1" }}>
-                          🚫 Đã bỏ dở
-                        </span>
-                      )}
-                    </td>
-                    <td>
-                      <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                        <strong className="order-card-total">{formatVND(o.total_amount)}</strong>
+                      </div>
+
+                      <div className="order-card-actions">
                         {o.status === "pending" && o.payment_method === "vietqr" && (
                           <button
-                            className="btn btn-sm"
-                            style={{ background: "#f8fafc", border: "1px solid #cbd5e1", color: "#475569", fontSize: "0.75rem", padding: "4px 8px" }}
+                            className="btn btn-sm btn-outline"
                             onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "paid")}
-                            title="Chỉ bấm khi khách chuyển tiền nhưng gõ sai nội dung"
                           >
-                            ⚡ Duyệt tay CK
+                            ⚡ Duyệt tay
                           </button>
                         )}
                         {o.status === "pending" && o.payment_method === "cod" && (
                           <button
                             className="btn btn-sm btn-primary"
-                            style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}
+                            style={{ background: "#ea580c", borderColor: "#ea580c" }}
                             onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "shipping")}
                           >
-                            🚀 Duyệt & Giao
+                            🚀 Giao Hàng
                           </button>
                         )}
                         {o.status === "paid" && (
                           <button
                             className="btn btn-sm btn-primary"
-                            style={{ background: "#ea580c", borderColor: "#ea580c", fontWeight: 700 }}
+                            style={{ background: "#ea580c", borderColor: "#ea580c" }}
                             onClick={() => requestUpdateOrderStatus(o.id, o.order_code, "shipping")}
                           >
                             🚀 Giao Hàng
@@ -436,73 +598,180 @@ export default function AdminRevenue() {
                           </button>
                         )}
                       </div>
-                    </td>
-                  </tr>
+                    </div>
+                  </div>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        );
-      })()
+              </div>
+              {/* PHÂN TRANG (ONLINE ORDERS) */}
+              {Math.ceil(totalOnlineOrders / PAGE_SIZE) > 1 && (
+                <div className="admin-pagination">
+                  <button
+                    type="button"
+                    className="btn btn-outline admin-pagination-btn"
+                    disabled={page <= 1}
+                    onClick={() => handlePageChange(page - 1)}
+                  >
+                    <ChevronLeft size={15} /> <span>Trang trước</span>
+                  </button>
+
+                  <div className="admin-pagination-info">
+                    <span className="pagination-current">Trang {page} / {Math.ceil(totalOnlineOrders / PAGE_SIZE)}</span>
+                    <span className="pagination-total">({totalOnlineOrders} đơn hàng)</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline admin-pagination-btn"
+                    disabled={page >= Math.ceil(totalOnlineOrders / PAGE_SIZE)}
+                    onClick={() => handlePageChange(page + 1)}
+                  >
+                    <span>Trang sau</span> <ChevronRight size={15} />
+                  </button>
+                </div>
+              )}
+            </>
+          );
+        })()
       ) : (
         /* DANH SÁCH ĐƠN THỦ CÔNG */
         sales.length === 0 ? (
           <div className="card admin-rev-empty">Chưa có đơn bán thủ công nào</div>
         ) : (
-          <div className="card admin-rev-table-wrap">
-            <table className="admin-rev-table">
-              <thead>
-                <tr>
-                  <th>Mã đơn</th>
-                  <th>Sản phẩm</th>
-                  <th>SL</th>
-                  <th>Đơn giá</th>
-                  <th>Thành tiền</th>
-                  <th>Người mua</th>
-                  <th>Ngày tạo</th>
-                  <th>Thao tác</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sales.map((s) => (
-                  <tr key={s.id}>
-                    <td>
-                      <code>{s.sale_code}</code>
-                    </td>
-                    <td>{s.product_name_snapshot}</td>
-                    <td>{s.quantity}</td>
-                    <td>{formatVND(s.unit_price)}</td>
-                    <td>
-                      <strong>{formatVND(s.total_amount)}</strong>
-                    </td>
-                    <td>{s.buyer_name}</td>
-                    <td>
-                      {new Date(s.created_at).toLocaleDateString("vi-VN")}
-                    </td>
-                    <td>
-                      <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-                        <button
-                          className="btn btn-sm"
-                          style={{ background: "#eff6ff", color: "#1d4ed8", border: "1px solid #93c5fd", fontSize: "0.75rem", padding: "4px 10px", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px" }}
-                          onClick={() => openEditForm(s)}
-                          title="Xem chi tiết & Chỉnh sửa đơn bán thủ công"
-                        >
-                          <Eye size={13} /> Xem / Sửa
-                        </button>
-                        <button
-                          className="btn-icon text-danger"
-                          onClick={() => handleDeleteManual(s.id)}
-                          title="Xóa/Ẩn đơn"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
+          <>
+            {/* DESKTOP TABLE VIEW */}
+            <div className="card admin-rev-table-wrap">
+              <table className="admin-rev-table">
+                <thead>
+                  <tr>
+                    <th>Mã đơn</th>
+                    <th>Sản phẩm</th>
+                    <th>SL</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                    <th>Người mua</th>
+                    <th>Ngày tạo</th>
+                    <th>Thao tác</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {sales.map((s) => (
+                    <tr key={s.id}>
+                      <td>
+                        <code>{s.sale_code}</code>
+                      </td>
+                      <td>{s.product_name_snapshot}</td>
+                      <td>{s.quantity}</td>
+                      <td>{formatVND(s.unit_price)}</td>
+                      <td>
+                        <strong>{formatVND(s.total_amount)}</strong>
+                      </td>
+                      <td>{s.buyer_name}</td>
+                      <td>
+                        {new Date(s.created_at).toLocaleDateString("vi-VN")}
+                      </td>
+                      <td>
+                        <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                          <button
+                            className="btn btn-sm"
+                            style={{ background: "#eff6ff", color: "#1d4ed8", border: "1px solid #93c5fd", fontSize: "0.75rem", padding: "4px 10px", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px" }}
+                            onClick={() => openEditForm(s)}
+                            title="Xem chi tiết & Chỉnh sửa đơn bán thủ công"
+                          >
+                            <Eye size={13} /> Xem / Sửa
+                          </button>
+                          <button
+                            className="btn-icon text-danger"
+                            onClick={() => handleDeleteManual(s.id)}
+                            title="Xóa/Ẩn đơn"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* 📱 MOBILE CARDS VIEW (MANUAL SALES) */}
+            <div className="admin-rev-cards-mobile">
+              {sales.map((s) => (
+                <div key={s.id} className="admin-order-card">
+                  <div className="order-card-header">
+                    <div>
+                      <span className="order-card-code">{s.sale_code}</span>
+                      <div className="order-card-time">
+                        {new Date(s.created_at).toLocaleDateString("vi-VN")}
+                      </div>
+                    </div>
+                    <strong className="order-card-total">{formatVND(s.total_amount)}</strong>
+                  </div>
+
+                  <div className="order-card-body">
+                    <div className="order-card-product">
+                      📦 <strong>{s.product_name_snapshot}</strong> × {s.quantity}
+                    </div>
+                    <div className="order-card-customer">
+                      👤 Người mua: <strong>{s.buyer_name}</strong>
+                    </div>
+                    {s.note && (
+                      <div className="order-card-address">
+                        📝 Ghi chú: {s.note}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="order-card-footer" style={{ justifyContent: "flex-end" }}>
+                    <div className="order-card-actions">
+                      <button
+                        className="btn btn-sm btn-outline"
+                        style={{ display: "flex", alignItems: "center", gap: "4px" }}
+                        onClick={() => openEditForm(s)}
+                      >
+                        <Eye size={14} /> Xem / Sửa
+                      </button>
+                      <button
+                        className="btn-icon text-danger"
+                        onClick={() => handleDeleteManual(s.id)}
+                        title="Xóa"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* PHÂN TRANG (MANUAL SALES) */}
+            {Math.ceil(sales.length / PAGE_SIZE) > 1 && (
+              <div className="admin-pagination">
+                <button
+                  type="button"
+                  className="btn btn-outline admin-pagination-btn"
+                  disabled={page <= 1}
+                  onClick={() => handlePageChange(page - 1)}
+                >
+                  <ChevronLeft size={15} /> <span>Trang trước</span>
+                </button>
+
+                <div className="admin-pagination-info">
+                  <span className="pagination-current">Trang {page} / {Math.ceil(sales.length / PAGE_SIZE)}</span>
+                  <span className="pagination-total">({sales.length} đơn)</span>
+                </div>
+
+                <button
+                  type="button"
+                  className="btn btn-outline admin-pagination-btn"
+                  disabled={page >= Math.ceil(sales.length / PAGE_SIZE)}
+                  onClick={() => handlePageChange(page + 1)}
+                >
+                  <span>Trang sau</span> <ChevronRight size={15} />
+                </button>
+              </div>
+            )}
+          </>
         )
       )}
 
@@ -540,24 +809,30 @@ export default function AdminRevenue() {
 
       {/* 📝 MODAL TẠO / SỬA ĐƠN BÁN THỦ CÔNG */}
       {formOpen && (
-        <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(15, 23, 42, 0.75)", zIndex: 99999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1.5rem", backdropFilter: "blur(4px)" }}>
-          <div className="card" style={{ maxWidth: "540px", width: "100%", background: "#ffffff", borderRadius: "18px", padding: "2rem", boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-              <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: 800, color: "#0f172a" }}>
-                {editingId ? "✏️ Chỉnh Sửa Đơn Thủ Công" : "➕ Tạo Đơn Bán Thủ Công / Đại Lý"}
+        <div className="admin-rev-modal-overlay" onClick={() => setFormOpen(false)}>
+          <div className="admin-rev-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="admin-rev-modal-handle-bar" />
+            <div className="admin-rev-modal-header">
+              <h3 className="admin-rev-modal-title">
+                {editingId ? "✏️ Sửa Đơn Bán Buôn" : "➕ Tạo Đơn Bán Buôn / Đại Lý"}
               </h3>
-              <button type="button" onClick={() => setFormOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "#64748b" }}>
-                <X size={20} />
+              <button
+                type="button"
+                className="admin-rev-modal-close"
+                onClick={() => setFormOpen(false)}
+                title="Đóng"
+              >
+                <X size={18} />
               </button>
             </div>
 
-            <form onSubmit={handleFormSubmit}>
-              <div style={{ marginBottom: "1rem" }}>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                  Chọn sản phẩm mẫu (hoặc nhập tên tùy chỉnh):
+            <form onSubmit={handleFormSubmit} className="admin-rev-modal-form">
+              <div className="admin-rev-form-field">
+                <label className="admin-rev-form-label">
+                  Sản phẩm mẫu có sẵn:
                 </label>
                 <select
-                  style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                  className="admin-rev-form-select"
                   value={form.product_id || ""}
                   onChange={(e) => {
                     const pid = e.target.value;
@@ -570,7 +845,7 @@ export default function AdminRevenue() {
                     });
                   }}
                 >
-                  <option value="">-- Chọn sản phẩm có sẵn --</option>
+                  <option value="">-- Chọn sản phẩm mẫu --</option>
                   {products.map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.name} ({formatVND(p.price ?? p.default_price ?? 0)})
@@ -579,38 +854,41 @@ export default function AdminRevenue() {
                 </select>
               </div>
 
-              <div style={{ marginBottom: "1rem" }}>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                  Tên sản phẩm (Snapshot): *
+              <div className="admin-rev-form-field">
+                <label className="admin-rev-form-label">
+                  Tên sản phẩm ghi nhận: *
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="VD: Thẻ NFC Gỗ 3D Hà Nội..."
-                  style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                  placeholder="VD: Mảnh Ghép NFC Gỗ 3D — Hà Nội"
+                  className="admin-rev-form-input prod-name-input"
                   value={form.product_name_snapshot ?? ""}
                   onChange={(e) => setForm({ ...form, product_name_snapshot: e.target.value })}
                 />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "1rem" }}>
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
-                    Đơn giá (VNĐ): *
+              <div className="admin-rev-form-row">
+                <div className="admin-rev-form-field">
+                  <label className="admin-rev-form-label">
+                    Đơn giá: *
                   </label>
-                  <input
-                    type="number"
-                    required
-                    min="0"
-                    placeholder="VD: 150000"
-                    style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
-                    value={form.unit_price ?? ""}
-                    onChange={(e) => setForm({ ...form, unit_price: e.target.value })}
-                  />
+                  <div className="input-with-currency">
+                    <input
+                      type="number"
+                      required
+                      min="0"
+                      placeholder="150000"
+                      className="admin-rev-form-input price-input"
+                      value={form.unit_price ?? ""}
+                      onChange={(e) => setForm({ ...form, unit_price: e.target.value })}
+                    />
+                    <span className="currency-tag">VNĐ</span>
+                  </div>
                 </div>
 
-                <div>
-                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
+                <div className="admin-rev-form-field">
+                  <label className="admin-rev-form-label">
                     Số lượng: *
                   </label>
                   <input
@@ -618,55 +896,61 @@ export default function AdminRevenue() {
                     required
                     min="1"
                     placeholder="1"
-                    style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                    className="admin-rev-form-input"
                     value={form.quantity ?? ""}
                     onChange={(e) => setForm({ ...form, quantity: e.target.value })}
                   />
                 </div>
               </div>
 
-              <div style={{ marginBottom: "1rem" }}>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
+              {/* TỔNG TIỀN TẠM TÍNH */}
+              {Number(form.unit_price) > 0 && Number(form.quantity) > 0 && (
+                <div className="admin-rev-calc-badge">
+                  <span>💰 Thành tiền:</span>
+                  <strong>{formatVND(Number(form.unit_price) * Number(form.quantity))}</strong>
+                </div>
+              )}
+
+              <div className="admin-rev-form-field">
+                <label className="admin-rev-form-label">
                   Tên người mua / Đại lý: *
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="VD: Nguyễn Văn A (Đại lý Đà Nẵng)..."
-                  style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                  placeholder="VD: Nguyễn Văn A (Đại lý Đà Nẵng)"
+                  className="admin-rev-form-input"
                   value={form.buyer_name ?? ""}
                   onChange={(e) => setForm({ ...form, buyer_name: e.target.value })}
                 />
               </div>
 
-              <div style={{ marginBottom: "1.5rem" }}>
-                <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, color: "#334155", marginBottom: "6px" }}>
+              <div className="admin-rev-form-field">
+                <label className="admin-rev-form-label">
                   Ghi chú đơn hàng:
                 </label>
                 <textarea
                   rows={2}
-                  placeholder="VD: Đã nhận tiền mặt 50% cọc..."
-                  style={{ width: "100%", padding: "10px 14px", borderRadius: "10px", border: "1px solid #cbd5e1", fontSize: "0.95rem" }}
+                  placeholder="VD: Đã thanh toán tiền mặt 50% cọc..."
+                  className="admin-rev-form-textarea"
                   value={form.note ?? ""}
                   onChange={(e) => setForm({ ...form, note: e.target.value })}
                 />
               </div>
 
-              <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+              <div className="admin-rev-modal-footer">
                 <button
                   type="button"
-                  className="btn"
+                  className="btn btn-outline admin-rev-btn-cancel"
                   onClick={() => setFormOpen(false)}
-                  style={{ padding: "10px 20px", borderRadius: "10px", background: "#f1f5f9", color: "#475569", fontWeight: 600, border: "1px solid #cbd5e1", cursor: "pointer" }}
                 >
                   Hủy bỏ
                 </button>
                 <button
                   type="submit"
-                  className="btn btn-primary"
-                  style={{ padding: "10px 24px", borderRadius: "10px", background: "#ea580c", color: "#ffffff", fontWeight: 700, border: "none", cursor: "pointer" }}
+                  className="btn btn-primary admin-rev-btn-submit"
                 >
-                  {editingId ? "Lưu Cập Nhật" : "Tạo Đơn Ngay 🚀"}
+                  {editingId ? "Lưu Cập Nhật 🚀" : "Tạo Đơn Ngay 🚀"}
                 </button>
               </div>
             </form>

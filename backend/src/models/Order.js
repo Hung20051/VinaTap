@@ -86,6 +86,28 @@ const Order = {
       throw new Error("Giỏ hàng không được để trống");
     }
 
+    // 🛡️ CHỐNG SPAM ĐƠN HÀNG (COD & VIETQR):
+    // 1. Chống Spam COD: Giới hạn tối đa 3 đơn COD đang chờ xử lý
+    if (paymentMethod === "cod") {
+      const [pendingCodRows] = await db.execute(
+        `SELECT COUNT(*) AS count FROM orders WHERE (user_id = ? OR recipient_phone = ?) AND payment_method = 'cod' AND status IN ('pending', 'processing')`,
+        [userId, recipientPhone],
+      );
+      if (pendingCodRows && pendingCodRows[0] && pendingCodRows[0].count >= 3) {
+        throw new Error(
+          "Bạn đang có 3 đơn hàng COD đang chờ xử lý. Vui lòng đợi cửa hàng giao các đơn hiện tại trước khi đặt thêm!",
+        );
+      }
+    }
+
+    // 2. Chống Rác VietQR: Tự động hủy các đơn VietQR pending cũ chưa thanh toán của user này
+    if (paymentMethod === "vietqr" && userId) {
+      await db.execute(
+        `UPDATE orders SET status = 'cancelled', updated_at = NOW() WHERE user_id = ? AND payment_method = 'vietqr' AND status = 'pending'`,
+        [userId],
+      );
+    }
+
     // 2. BACKEND TRUY VẤN GIÁ SẢN PHẨM TỪ DATABASE (Zero client trust)
     let calculatedSubtotal = 0;
     const verifiedItems = [];
@@ -234,51 +256,52 @@ const Order = {
 
       await conn.commit();
 
-      // 🔔 BẮN THÔNG BÁO HỆ THỐNG KHI CÓ ĐƠN HÀNG MỚI (CẢ COD VÀ VIETQR)
-      try {
-        const Notification = require("./Notification");
-        const amountText = new Intl.NumberFormat("vi-VN", {
-          style: "currency",
-          currency: "VND",
-        }).format(totalAmount);
-        const isCOD = paymentMethod === "cod";
-        const payMethodName = isCOD
-          ? "Thanh toán COD khi nhận hàng"
-          : "Chuyển khoản VietQR";
+      // 🔔 BẮN THÔNG BÁO HỆ THỐNG:
+      // - Chỉ bắn thông báo ngay khi tạo đơn với COD (đã xác nhận đặt hàng thành công)
+      // - Với VietQR, chỉ bắn thông báo khi khách thực sự quét QR thanh toán thành công (trong markAsPaidByWebhookOrAdmin)
+      //   để tránh spam thông báo nếu khách tắt popup QR hoặc tạo đơn nháp.
+      if (paymentMethod === "cod") {
+        try {
+          const Notification = require("./Notification");
+          const amountText = new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(totalAmount);
 
-        // 1. Gửi cho tất cả Admin hệ thống
-        await Notification.send({
-          recipient_type: "group",
-          group_target: "admin",
-          type: "system",
-          title: `🛒 Đơn Hàng Mới #${orderCode} (${isCOD ? "COD" : "VietQR"})`,
-          content: `Khách hàng ${recipientName} (${recipientPhone}) vừa đặt đơn hàng trị giá ${amountText}. Phương thức: ${payMethodName}.`,
-          link: "/admin/revenue",
-          payload: {
-            order_code: orderCode,
-            total_amount: totalAmount,
-            payment_method: paymentMethod,
-            recipient_name: recipientName,
-            recipient_phone: recipientPhone,
-          },
-          created_by: userId,
-        });
-
-        // 2. Gửi cho Khách hàng vừa đặt
-        if (userId) {
+          // 1. Gửi cho Admin hệ thống
           await Notification.send({
-            recipient_type: "user",
-            user_ids: [userId],
-            type: "feature",
-            title: `🎉 Đặt Hàng Thành Công #${orderCode}`,
-            content: `Cảm ơn bạn đã đặt hàng tại VinaTap! Đơn hàng trị giá ${amountText} (${payMethodName}). Shop sẽ sớm xử lý & giao tới: ${recipientAddress}.`,
-            link: "/customer/orders",
-            payload: { order_code: orderCode, total_amount: totalAmount },
-            created_by: 0,
+            recipient_type: "group",
+            group_target: "admin",
+            type: "system",
+            title: `🛒 Đơn Hàng COD Mới #${orderCode}`,
+            content: `Khách hàng ${recipientName} (${recipientPhone}) vừa đặt đơn hàng COD trị giá ${amountText}. Giao tới: ${recipientAddress}.`,
+            link: "/admin/revenue",
+            payload: {
+              order_code: orderCode,
+              total_amount: totalAmount,
+              payment_method: "cod",
+              recipient_name: recipientName,
+              recipient_phone: recipientPhone,
+            },
+            created_by: userId,
           });
+
+          // 2. Gửi cho Khách hàng vừa đặt
+          if (userId) {
+            await Notification.send({
+              recipient_type: "user",
+              user_ids: [userId],
+              type: "feature",
+              title: `🎉 Đặt Hàng COD Thành Công #${orderCode}`,
+              content: `Cảm ơn bạn đã đặt hàng tại VinaTap! Đơn hàng COD trị giá ${amountText} đang được xử lý và sẽ sớm giao tới bạn.`,
+              link: "/customer/orders",
+              payload: { order_code: orderCode, total_amount: totalAmount },
+              created_by: 0,
+            });
+          }
+        } catch (notifErr) {
+          console.error("Lỗi gửi thông báo đơn hàng COD mới:", notifErr.message);
         }
-      } catch (notifErr) {
-        console.error("Lỗi gửi thông báo đơn hàng mới:", notifErr.message);
       }
 
       return {
@@ -377,8 +400,23 @@ const Order = {
     });
   },
 
+  // Tự động hủy các đơn VietQR pending quá 30 phút chưa thanh toán
+  async cleanExpiredPendingOrders() {
+    try {
+      await db.execute(
+        `UPDATE orders SET status = 'cancelled', updated_at = NOW()
+         WHERE payment_method = 'vietqr' AND status = 'pending' AND created_at < NOW() - INTERVAL 30 MINUTE`,
+      );
+    } catch (e) {
+      console.warn("cleanExpiredPendingOrders warning:", e.message);
+    }
+  },
+
   // Admin lấy toàn bộ đơn hàng
-  async getAllAdmin({ search, status, limit = 50, offset = 0 } = {}) {
+  async getAllAdmin({ search, status = "active", limit = 50, offset = 0 } = {}) {
+    // Dọn dẹp đơn pending quá hạn trước khi query
+    await this.cleanExpiredPendingOrders();
+
     let whereClause = [];
     let params = [];
 
@@ -390,7 +428,15 @@ const Order = {
       params.push(searchParam, searchParam, searchParam);
     }
 
-    if (status) {
+    if (status === "active") {
+      // Đơn thực tế cần xử lý: COD (mới/đang xử lý) + VietQR đã thanh toán
+      whereClause.push(
+        `((o.payment_method = 'cod' AND o.status IN ('pending', 'processing')) OR (o.status IN ('paid', 'processing', 'shipping')))`,
+      );
+    } else if (status === "pending_qr") {
+      // Chỉ xem đơn VietQR đang chờ khách quét mã
+      whereClause.push(`(o.payment_method = 'vietqr' AND o.status = 'pending')`);
+    } else if (status && status !== "all") {
       whereClause.push(`o.status = ?`);
       params.push(status);
     }

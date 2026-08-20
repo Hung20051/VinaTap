@@ -26,6 +26,10 @@ import {
   UserPlus,
   Smile,
   Layers,
+  Calendar,
+  Camera,
+  Play,
+  Heart,
 } from "lucide-react";
 import { albumAPI, mediaAPI } from "@/lib/api";
 import { getUser, isLoggedIn } from "@/lib/auth";
@@ -47,11 +51,13 @@ export default function AlbumPage() {
 
   const [uploading, setUploading] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all"); // 'all' | 'image' | 'video'
+  const [selectedTagFilter, setSelectedTagFilter] = useState(null);
 
   const [editingInfo, setEditingInfo] = useState(false);
   const [infoForm, setInfoForm] = useState({ title: "", description: "" });
   const [savingInfo, setSavingInfo] = useState(false);
 
+  const [showTagModal, setShowTagModal] = useState(false);
   const [newTag, setNewTag] = useState({ label: "", color: "#ea580c" });
   const [addingTag, setAddingTag] = useState(false);
 
@@ -59,7 +65,7 @@ export default function AlbumPage() {
   const [requestingEdit, setRequestingEdit] = useState(false);
 
   // Lightbox State
-  const [lightboxItem, setLightboxItem] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   const isOwner = !!(user && album && user.id === album.owner_id);
 
@@ -205,6 +211,7 @@ export default function AlbumPage() {
       const res = await albumAPI.createTag(id, newTag);
       setTags([res.tag, ...tags]);
       setNewTag({ label: "", color: "#ea580c" });
+      setShowTagModal(false);
       showToast("success", "Đã thêm tag mới!");
     } catch (err) {
       showToast("error", err.message || "Lỗi tạo tag");
@@ -217,6 +224,7 @@ export default function AlbumPage() {
     try {
       await albumAPI.deleteTag(id, tagId);
       setTags(tags.filter((t) => t.id !== tagId));
+      if (selectedTagFilter === tagId) setSelectedTagFilter(null);
       showToast("success", "Đã xóa tag");
     } catch (err) {
       showToast("error", err.message || "Lỗi xóa tag");
@@ -237,11 +245,21 @@ export default function AlbumPage() {
     try {
       const formData = new FormData();
       formData.append("album_id", id);
-      files.forEach((f) => formData.append("files", f));
 
-      const res = await mediaAPI.upload(formData);
-      setMedia([...(res.items || []), ...media]);
-      showToast("success", `Đã tải lên ${files.length} tệp thành công!`);
+      let res;
+      if (files.length === 1) {
+        formData.append("file", files[0]);
+        res = await mediaAPI.upload(formData);
+      } else {
+        files.forEach((f) => formData.append("files", f));
+        res = await mediaAPI.uploadMultiple(formData);
+      }
+
+      const newItems =
+        res.items ||
+        (res.media ? (Array.isArray(res.media) ? res.media : [res.media]) : []);
+      setMedia((prev) => [...newItems, ...prev]);
+      showToast("success", `Đã lưu ${files.length} khoảnh khắc vào Album!`);
     } catch (err) {
       showToast("error", err.message || "Lỗi tải tệp lên");
     } finally {
@@ -268,9 +286,9 @@ export default function AlbumPage() {
           m.id === mediaId ? { ...m, caption_user: caption } : m,
         ),
       );
-      showToast("success", "Đã lưu caption!");
+      showToast("success", "Đã lưu ghi chú!");
     } catch (err) {
-      showToast("error", err.message || "Lỗi lưu caption");
+      showToast("error", err.message || "Lỗi lưu ghi chú");
     }
   };
 
@@ -316,7 +334,7 @@ export default function AlbumPage() {
       <div className="album-error-state">
         <span className="album-error-icon">🔒</span>
         <h2 className="album-error-title">{loadError.message}</h2>
-        <Link href="/" className="album-action-btn album-action-btn--primary">
+        <Link href="/" className="album-btn album-btn--primary">
           <ChevronLeft size={16} /> Về Trang Chủ VinaTap
         </Link>
       </div>
@@ -331,93 +349,104 @@ export default function AlbumPage() {
   );
 
   const filteredMedia = media.filter((m) => {
-    if (activeFilter === "image") return m.media_type === "image";
-    if (activeFilter === "video") return m.media_type === "video";
+    if (activeFilter === "image" && m.media_type !== "image") return false;
+    if (activeFilter === "video" && m.media_type !== "video") return false;
+    if (selectedTagFilter) {
+      const tagObj = tags.find((t) => t.id === selectedTagFilter);
+      if (tagObj) {
+        const itemTags = (m.tags || "").split(",").filter(Boolean);
+        if (!itemTags.includes(tagObj.label)) return false;
+      }
+    }
     return true;
   });
 
   const presetColors = ["#ea580c", "#16a34a", "#2563eb", "#9333ea", "#e11d48"];
 
+  const currentLightboxItem =
+    lightboxIndex !== null ? filteredMedia[lightboxIndex] : null;
+
   return (
-    <>
+    <div className="album-app-shell">
       {/* Toast Alert */}
       {toast && (
-        <div
-          style={{
-            position: "fixed",
-            top: "20px",
-            right: "20px",
-            zIndex: 99999,
-            padding: "12px 20px",
-            borderRadius: "14px",
-            background: toast.type === "error" ? "#ef4444" : "#10b981",
-            color: "#ffffff",
-            fontWeight: 700,
-            fontSize: "0.9rem",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.2)",
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-          }}
-        >
+        <div className={`album-toast album-toast--${toast.type}`}>
           {toast.type === "error" ? <X size={18} /> : <Check size={18} />}
-          {toast.text}
+          <span>{toast.text}</span>
         </div>
       )}
 
-      {/* Header bar */}
-      <header
-        style={{
-          background: "#ffffff",
-          borderBottom: "1px solid #e2e8f0",
-          padding: "12px 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          zIndex: 100,
-          boxShadow: "0 2px 10px rgba(0,0,0,0.02)",
-        }}
-      >
-        <Logo href="/" />
-        <Link
-          href="/customer/dashboard"
-          className="album-action-btn"
-          style={{ fontSize: "0.85rem" }}
-        >
-          <ChevronLeft size={16} /> Trang Cá Nhân Dashboard
-        </Link>
+      {/* Top Floating Glass Navigation */}
+      <header className="album-nav-glass">
+        <div className="album-nav-inner">
+          <div className="album-nav-left">
+            <Link href="/customer/dashboard" className="album-back-link">
+              <ChevronLeft size={18} />
+              <span>Dashboard</span>
+            </Link>
+            <div className="album-nav-divider" />
+            <Logo href="/" />
+          </div>
+
+          <div className="album-nav-right">
+            <button
+              className="album-icon-btn"
+              onClick={handleShareLink}
+              title="Chia sẻ Album"
+            >
+              <Share2 size={16} />
+              <span className="btn-text-desktop">Chia sẻ</span>
+            </button>
+
+            {isOwner && (
+              <button
+                className="album-icon-btn album-icon-btn--primary"
+                onClick={handlePickFiles}
+                disabled={uploading}
+              >
+                <Camera size={16} />
+                <span>{uploading ? "Đang tải..." : "Thêm ảnh"}</span>
+              </button>
+            )}
+          </div>
+        </div>
       </header>
 
-      <div className="album-page">
-        {/* HERO BANNER CARD */}
-        <div className="album-hero-card">
-          <div className="album-hero-banner"></div>
-          <div className="album-hero-content">
-            <div className="album-hero-thumb-wrap">
-              <div className="album-hero-thumb">
+      {/* ─── 1. HERO COVER & STORY INTRO (Apple Photos Style) ───── */}
+      <section className="album-hero-section">
+        <div className="album-hero-backdrop">
+          <div className="album-hero-ambient" />
+        </div>
+
+        <div className="album-hero-container">
+          <div className="album-hero-card">
+            {/* Province Map Piece 3D Badge */}
+            <div className="album-hero-badge-wrap">
+              <div className="album-nfc-piece-card">
                 {album.province_thumbnail ? (
                   <img
                     src={album.province_thumbnail}
                     alt={album.province_name}
+                    className="album-piece-img"
                   />
                 ) : (
-                  <div className="album-hero-thumb-placeholder">🗺️</div>
+                  <div className="album-piece-placeholder">🗺️</div>
                 )}
               </div>
             </div>
 
-            <div className="album-hero-details">
+            {/* Album Titles & Meta */}
+            <div className="album-hero-meta">
               {editingInfo ? (
-                <div className="album-edit-form">
+                <div className="album-inline-edit-box">
                   <input
                     type="text"
                     value={infoForm.title}
                     onChange={(e) =>
                       setInfoForm({ ...infoForm, title: e.target.value })
                     }
-                    placeholder="Tên Album..."
+                    placeholder="Tên Album kỷ niệm..."
+                    className="album-edit-input"
                   />
                   <textarea
                     rows={2}
@@ -425,18 +454,19 @@ export default function AlbumPage() {
                     onChange={(e) =>
                       setInfoForm({ ...infoForm, description: e.target.value })
                     }
-                    placeholder="Mô tả chuyến đi..."
+                    placeholder="Mô tả cảm xúc, chuyến đi..."
+                    className="album-edit-textarea"
                   />
-                  <div style={{ display: "flex", gap: "8px" }}>
+                  <div className="album-edit-actions">
                     <button
-                      className="album-action-btn album-action-btn--primary"
+                      className="album-btn album-btn--primary album-btn--sm"
                       onClick={handleSaveInfo}
                       disabled={savingInfo}
                     >
-                      <Check size={16} /> {savingInfo ? "Đang lưu..." : "Lưu Thay Đổi"}
+                      <Check size={14} /> {savingInfo ? "Đang lưu..." : "Lưu Thay Đổi"}
                     </button>
                     <button
-                      className="album-action-btn"
+                      className="album-btn album-btn--ghost album-btn--sm"
                       onClick={() => setEditingInfo(false)}
                     >
                       Hủy
@@ -445,134 +475,175 @@ export default function AlbumPage() {
                 </div>
               ) : (
                 <>
-                  <div className="album-title-row">
-                    <h1 className="album-title">
-                      {album.title || album.province_name}
-                    </h1>
-                    <span className="album-badge-pill album-badge-province">
+                  <div className="album-badge-pills-row">
+                    <span className="album-pill album-pill--province">
                       <Globe size={13} /> {album.province_name}
                     </span>
                     <span
-                      className={`album-badge-pill ${album.is_public ? "album-badge-public" : "album-badge-private"}`}
+                      className={`album-pill ${album.is_public ? "album-pill--public" : "album-pill--private"}`}
                     >
                       {album.is_public ? (
                         <>
-                          <Unlock size={13} /> Công Khai
+                          <Unlock size={12} /> Công Khai
                         </>
                       ) : (
                         <>
-                          <Lock size={13} /> Riêng Tư
+                          <Lock size={12} /> Riêng Tư
                         </>
                       )}
                     </span>
                   </div>
-                  {album.description && (
-                    <p className="album-desc">{album.description}</p>
+
+                  <h1 className="album-hero-title">
+                    {album.title || album.province_name}
+                  </h1>
+
+                  {album.description ? (
+                    <p className="album-hero-quote">"{album.description}"</p>
+                  ) : (
+                    <p className="album-hero-empty-desc">
+                      Hành trình chạm thẻ NFC và lưu giữ những kỷ niệm quý giá tại {album.province_name}.
+                    </p>
                   )}
-                  <div className="album-meta-row">
-                    <span className="album-meta-item">
-                      <Smile size={15} className="text-orange" /> Chủ Album:{" "}
-                      <strong>{album.owner_name}</strong>
+
+                  <div className="album-meta-stats-row">
+                    <span className="album-meta-tag">
+                      <Smile size={14} /> Chủ Album: <strong>{album.owner_name}</strong>
                     </span>
-                    <span className="album-meta-item">
-                      <Eye size={15} /> {album.view_count || 0} Lượt Xem
+                    <span className="album-meta-tag">
+                      <Camera size={14} /> {media.length} Khoảnh khắc
+                    </span>
+                    <span className="album-meta-tag">
+                      <Eye size={14} /> {album.view_count || 0} Lượt xem
                     </span>
                   </div>
                 </>
               )}
-            </div>
 
-            {/* Action Buttons */}
-            <div className="album-hero-actions">
-              <button
-                className="album-action-btn"
-                onClick={handleShareLink}
-                title="Chia sẻ liên kết"
-              >
-                <Share2 size={16} /> Chia Sẻ
-              </button>
-              {isOwner && !editingInfo && (
-                <>
+              {/* Owner Action Buttons */}
+              <div className="album-hero-actions-bar">
+                {isOwner && !editingInfo && (
+                  <>
+                    <button
+                      className="album-pill-btn"
+                      onClick={() => setEditingInfo(true)}
+                    >
+                      <Edit3 size={14} /> Sửa Tên
+                    </button>
+                    <button
+                      className="album-pill-btn"
+                      onClick={handleTogglePublic}
+                    >
+                      {album.is_public ? (
+                        <>
+                          <Lock size={14} /> Ẩn Riêng Tư
+                        </>
+                      ) : (
+                        <>
+                          <Globe size={14} /> Công Khai
+                        </>
+                      )}
+                    </button>
+                    <button
+                      className="album-pill-btn album-pill-btn--danger"
+                      onClick={handleDeleteAlbum}
+                    >
+                      <Trash2 size={14} /> Xóa Album
+                    </button>
+                  </>
+                )}
+
+                {!isOwner && isLoggedIn() && (
                   <button
-                    className="album-action-btn"
-                    onClick={() => setEditingInfo(true)}
+                    className="album-pill-btn album-pill-btn--primary"
+                    onClick={handleRequestEdit}
+                    disabled={requestingEdit}
                   >
-                    <Edit3 size={16} /> Sửa
+                    <UserPlus size={14} />{" "}
+                    {requestingEdit ? "Đang gửi..." : "Xin Quyền Đóng Góp"}
                   </button>
-                  <button
-                    className="album-action-btn"
-                    onClick={handleTogglePublic}
-                  >
-                    {album.is_public ? (
-                      <>
-                        <Lock size={16} /> Ẩn Album
-                      </>
-                    ) : (
-                      <>
-                        <Globe size={16} /> Công Khai
-                      </>
-                    )}
-                  </button>
-                  <button
-                    className="album-action-btn album-action-btn--danger"
-                    onClick={handleDeleteAlbum}
-                  >
-                    <Trash2 size={16} /> Xóa
-                  </button>
-                </>
-              )}
-              {!isOwner && isLoggedIn() && (
-                <button
-                  className="album-action-btn album-action-btn--primary"
-                  onClick={handleRequestEdit}
-                  disabled={requestingEdit}
-                >
-                  <UserPlus size={16} />{" "}
-                  {requestingEdit ? "Đang gửi..." : "Xin Quyền Đóng Góp"}
-                </button>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* CỘNG TÁC VIÊN (CHỈ CHỦ ALBUM) */}
-        {isOwner && collaborators && collaborators.length > 0 && (
-          <div className="album-panel-card">
-            <div className="album-panel-header">
-              <h2 className="album-panel-title">
-                <UserCheck size={20} style={{ color: "#2563eb" }} /> Cộng Tác
-                Viên Đóng Góp Ảnh
-              </h2>
-            </div>
-            {pendingRequests.length > 0 && (
-              <div style={{ marginBottom: "1rem" }}>
-                {pendingRequests.map((c) => (
-                  <div
-                    key={c.id}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "10px",
-                      background: "#f8fafc",
-                      borderRadius: "12px",
-                      marginBottom: "6px",
+      {/* ─── 2. TAGS & STORIES FILTER BAR ───────────────────────── */}
+      <section className="album-tags-section">
+        <div className="album-tags-container">
+          <div className="album-tags-scroll">
+            <button
+              className={`album-story-tag ${selectedTagFilter === null ? "active" : ""}`}
+              onClick={() => setSelectedTagFilter(null)}
+            >
+              <span>✨ Tất Cả</span>
+            </button>
+
+            {tags.map((t) => (
+              <span
+                key={t.id}
+                className={`album-story-tag ${selectedTagFilter === t.id ? "active" : ""}`}
+                style={{
+                  "--tag-color": t.color || "#ea580c",
+                }}
+                onClick={() =>
+                  setSelectedTagFilter(selectedTagFilter === t.id ? null : t.id)
+                }
+              >
+                <span>#{t.label}</span>
+                {isOwner && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteTag(t.id);
                     }}
+                    className="album-story-tag-del"
+                    title="Xóa tag"
                   >
-                    <span style={{ fontSize: "0.9rem", fontWeight: 600 }}>
-                      <b>{c.name}</b> ({c.email}) muốn tham gia đóng góp
+                    ✕
+                  </button>
+                )}
+              </span>
+            ))}
+
+            {isOwner && (
+              <button
+                className="album-story-tag album-story-tag--add"
+                onClick={() => setShowTagModal(true)}
+              >
+                <Plus size={13} /> Thêm Tag
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── 3. COLLABORATOR REQUESTS (CHỈ CHỦ ALBUM) ───────────── */}
+      {isOwner && collaborators && collaborators.length > 0 && (
+        <section className="album-collab-section">
+          <div className="album-collab-card">
+            <div className="album-collab-header">
+              <UserCheck size={18} style={{ color: "#2563eb" }} />
+              <h3>Cộng Tác Viên Đóng Góp ({collaborators.length})</h3>
+            </div>
+
+            {pendingRequests.length > 0 && (
+              <div className="album-collab-pending-list">
+                {pendingRequests.map((c) => (
+                  <div key={c.id} className="album-collab-item">
+                    <span>
+                      <b>{c.name}</b> ({c.email}) muốn cùng đăng ảnh
                     </span>
-                    <div style={{ display: "flex", gap: "6px" }}>
+                    <div className="album-collab-btns">
                       <button
-                        className="album-action-btn album-action-btn--primary"
-                        style={{ padding: "6px 12px", fontSize: "0.8rem" }}
+                        className="album-btn album-btn--primary album-btn--xs"
                         onClick={() => handleReviewRequest(c.id, "approve")}
                       >
-                        <Check size={14} /> Duyệt
+                        <Check size={13} /> Duyệt
                       </button>
                       <button
-                        className="album-action-btn"
-                        style={{ padding: "6px 12px", fontSize: "0.8rem" }}
+                        className="album-btn album-btn--ghost album-btn--xs"
                         onClick={() => handleReviewRequest(c.id, "reject")}
                       >
                         Từ chối
@@ -582,153 +653,49 @@ export default function AlbumPage() {
                 ))}
               </div>
             )}
+
             {approvedCollaborators.map((c) => (
-              <div
-                key={c.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "8px 0",
-                }}
-              >
-                <span style={{ fontSize: "0.9rem" }}>
-                  {c.name} (Đã duyệt)
-                </span>
+              <div key={c.id} className="album-collab-approved-row">
+                <span>👤 {c.name} ({c.email})</span>
                 <button
-                  className="album-action-btn album-action-btn--danger"
-                  style={{ padding: "4px 10px", fontSize: "0.78rem" }}
+                  className="album-btn-text-del"
                   onClick={() => handleRevoke(c.id)}
                 >
-                  Thu hồi
+                  Thu hồi quyền
                 </button>
               </div>
             ))}
           </div>
-        )}
+        </section>
+      )}
 
-        {/* TAG CHUYẾN ĐI PANEL */}
-        <div className="album-panel-card">
-          <div className="album-panel-header">
-            <h2 className="album-panel-title">
-              <TagIcon size={20} style={{ color: "#ea580c" }} /> Tag Kỷ Niệm
-              Chuyến Đi
-            </h2>
-          </div>
-
-          <div className="album-tag-list">
-            {tags.map((t) => (
-              <span
-                key={t.id}
-                className="album-tag-chip"
-                style={{
-                  background: (t.color || "#ea580c") + "18",
-                  color: t.color || "#ea580c",
-                  border: `1px solid ${(t.color || "#ea580c")}44`,
-                }}
-              >
-                #{t.label}
-                <button
-                  onClick={() => handleDeleteTag(t.id)}
-                  className="album-tag-chip__remove"
-                  title="Xóa tag"
-                >
-                  ✕
-                </button>
-              </span>
-            ))}
-            {tags.length === 0 && (
-              <span
-                style={{
-                  fontSize: "0.88rem",
-                  color: "#94a3b8",
-                  fontStyle: "italic",
-                }}
-              >
-                Chưa có tag nào — thêm tag để dễ dàng lọc kỷ niệm theo chủ đề
-                (VD: Tết 2026, Cùng gia đình, Ẩm thực...)
-              </span>
-            )}
-          </div>
-
-          {/* Form thêm Tag */}
-          <form onSubmit={handleCreateTag} className="album-tag-form">
-            <div className="album-tag-input-wrap">
-              <input
-                className="album-tag-input"
-                placeholder="Tên tag mới..."
-                value={newTag.label}
-                onChange={(e) =>
-                  setNewTag({ ...newTag, label: e.target.value })
-                }
-              />
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              {presetColors.map((color) => (
-                <div
-                  key={color}
-                  onClick={() => setNewTag({ ...newTag, color })}
-                  style={{
-                    width: "24px",
-                    height: "24px",
-                    borderRadius: "50%",
-                    background: color,
-                    cursor: "pointer",
-                    border:
-                      newTag.color === color
-                        ? "2px solid #0f172a"
-                        : "2px solid transparent",
-                  }}
-                />
-              ))}
-              <input
-                type="color"
-                value={newTag.color}
-                onChange={(e) =>
-                  setNewTag({ ...newTag, color: e.target.value })
-                }
-                className="album-tag-color-picker"
-                title="Tự chọn màu"
-              />
-            </div>
+      {/* ─── 4. MEDIA GALLERY & FILTER TABS ─────────────────────── */}
+      <main className="album-gallery-section">
+        <div className="album-gallery-header">
+          <div className="album-media-type-tabs">
             <button
-              className="album-action-btn album-action-btn--primary"
-              disabled={addingTag}
-              type="submit"
+              className={`album-type-tab ${activeFilter === "all" ? "active" : ""}`}
+              onClick={() => setActiveFilter("all")}
             >
-              <Plus size={16} /> {addingTag ? "Đang thêm..." : "Thêm Tag"}
+              <Layers size={15} /> Tất Cả ({media.length})
             </button>
-          </form>
-        </div>
-
-        {/* UPLOAD BANNER */}
-        <div className="album-upload-card">
-          <div>
-            <h3
-              style={{
-                fontSize: "1.2rem",
-                fontWeight: 900,
-                color: "#0f172a",
-                margin: "0 0 4px 0",
-              }}
+            <button
+              className={`album-type-tab ${activeFilter === "image" ? "active" : ""}`}
+              onClick={() => setActiveFilter("image")}
             >
-              📸 Thư Viện Kỷ Niệm ({media.length} tệp)
-            </h3>
-            <p
-              style={{
-                fontSize: "0.88rem",
-                color: "#64748b",
-                margin: 0,
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-              }}
+              <ImageIcon size={15} /> Ảnh (
+              {media.filter((m) => m.media_type === "image").length})
+            </button>
+            <button
+              className={`album-type-tab ${activeFilter === "video" ? "active" : ""}`}
+              onClick={() => setActiveFilter("video")}
             >
-              <Sparkles size={15} style={{ color: "#ea580c" }} /> Trí tuệ nhân
-              tạo AI sẽ tự động phân tích & viết Caption độc đáo cho ảnh của bạn.
-            </p>
+              <VideoIcon size={15} /> Video (
+              {media.filter((m) => m.media_type === "video").length})
+            </button>
           </div>
-          <div>
+
+          <div className="album-gallery-actions">
             <input
               ref={fileInputRef}
               type="file"
@@ -737,125 +704,199 @@ export default function AlbumPage() {
               style={{ display: "none" }}
               onChange={handleFilesSelected}
             />
-            <button
-              className="album-upload-btn-lg"
-              onClick={handlePickFiles}
-              disabled={uploading}
-            >
-              <UploadCloud size={20} />
-              {uploading ? "Đang Tải Lên..." : "⬆ Tải Ảnh / Video Lên"}
-            </button>
+            {isOwner && (
+              <button
+                className="album-btn-upload-cta"
+                onClick={handlePickFiles}
+                disabled={uploading}
+              >
+                <UploadCloud size={17} />
+                <span>{uploading ? "Đang tải ảnh..." : "Tải Kỷ Niệm Lên"}</span>
+              </button>
+            )}
           </div>
         </div>
 
-        {/* FILTER TABS & MEDIA GRID */}
-        {media.length > 0 && (
-          <div className="album-filter-tabs">
-            <button
-              className={`album-filter-btn ${activeFilter === "all" ? "active" : ""}`}
-              onClick={() => setActiveFilter("all")}
-            >
-              <Layers size={14} style={{ display: "inline", marginRight: "4px" }} /> Tất Cả ({media.length})
-            </button>
-            <button
-              className={`album-filter-btn ${activeFilter === "image" ? "active" : ""}`}
-              onClick={() => setActiveFilter("image")}
-            >
-              <ImageIcon size={14} style={{ display: "inline", marginRight: "4px" }} /> Ảnh ({media.filter((m) => m.media_type === "image").length})
-            </button>
-            <button
-              className={`album-filter-btn ${activeFilter === "video" ? "active" : ""}`}
-              onClick={() => setActiveFilter("video")}
-            >
-              <VideoIcon size={14} style={{ display: "inline", marginRight: "4px" }} /> Video ({media.filter((m) => m.media_type === "video").length})
-            </button>
-          </div>
-        )}
-
+        {/* GALLERY GRID */}
         {filteredMedia.length === 0 ? (
-          <div
-            style={{
-              padding: "4rem 2rem",
-              textAlign: "center",
-              background: "#ffffff",
-              borderRadius: "20px",
-              border: "1px solid #e2e8f0",
-              color: "#64748b",
-            }}
-          >
-            <ImageIcon size={48} style={{ color: "#cbd5e1", marginBottom: "1rem" }} />
-            <p style={{ fontSize: "1.05rem", fontWeight: 700, margin: 0 }}>
-              Chưa có ảnh hoặc video nào trong mục này.
+          <div className="album-empty-state">
+            <div className="album-empty-icon-wrap">
+              <Camera size={38} />
+            </div>
+            <h3>Chưa Có Khoảnh Khắc Nào</h3>
+            <p>
+              Chạm thẻ NFC hoặc tải lên những bức ảnh & video đầu tiên của chuyến đi {album.province_name}!
             </p>
-            <p style={{ fontSize: "0.88rem", color: "#94a3b8", marginTop: "4px" }}>
-              Hãy bấm nút tải lên để lưu giữ những khoảnh khắc tuyệt vời! 📷
-            </p>
+            {isOwner && (
+              <button
+                className="album-btn album-btn--primary album-btn--lg"
+                onClick={handlePickFiles}
+                disabled={uploading}
+              >
+                <UploadCloud size={18} />
+                <span>{uploading ? "Đang xử lý..." : "Tải Lên Khoảnh Khắc Đầu Tiên"}</span>
+              </button>
+            )}
           </div>
         ) : (
-          <div className="album-media-grid">
-            {filteredMedia.map((m) => (
+          <div className="album-masonry-grid">
+            {filteredMedia.map((m, idx) => (
               <MediaCard
                 key={m.id}
                 item={m}
                 tags={tags}
+                isOwner={isOwner}
                 onDelete={() => handleDeleteMedia(m.id)}
                 onSaveCaption={(caption) => handleSaveCaption(m.id, caption)}
                 onToggleTag={(tagId, isTagged) =>
                   handleToggleTagOnMedia(m, tagId, isTagged)
                 }
-                onOpenLightbox={() => setLightboxItem(m)}
+                onOpenLightbox={() => setLightboxIndex(idx)}
               />
             ))}
           </div>
         )}
-      </div>
+      </main>
 
-      {/* FULLSCREEN LIGHTBOX MODAL */}
-      {lightboxItem && (
+      {/* ─── 5. FULLSCREEN CINEMATIC LIGHTBOX ───────────────────── */}
+      {currentLightboxItem && (
         <div
           className="album-lightbox-overlay"
-          onClick={() => setLightboxItem(null)}
+          onClick={() => setLightboxIndex(null)}
         >
           <button
             className="album-lightbox-close"
-            onClick={() => setLightboxItem(null)}
+            onClick={() => setLightboxIndex(null)}
           >
-            <X size={24} />
+            <X size={22} />
           </button>
+
           <div
-            className="album-lightbox-content"
+            className="album-lightbox-card"
             onClick={(e) => e.stopPropagation()}
           >
-            {lightboxItem.media_type === "video" ? (
-              <video
-                src={lightboxItem.file_url}
-                controls
-                autoPlay
-                className="album-lightbox-media"
-              />
-            ) : (
-              <img
-                src={lightboxItem.file_url}
-                alt=""
-                className="album-lightbox-media"
-              />
-            )}
-            {(lightboxItem.caption_user || lightboxItem.caption_ai) && (
-              <p className="album-lightbox-caption">
-                {lightboxItem.caption_user || lightboxItem.caption_ai}
-              </p>
-            )}
+            <div className="album-lightbox-media-wrap">
+              {currentLightboxItem.media_type === "video" ? (
+                <video
+                  src={currentLightboxItem.file_url}
+                  controls
+                  autoPlay
+                  className="album-lightbox-video"
+                />
+              ) : (
+                <img
+                  src={currentLightboxItem.file_url}
+                  alt=""
+                  className="album-lightbox-img"
+                />
+              )}
+            </div>
+
+            <div className="album-lightbox-info-bar">
+              <div className="album-lightbox-caption-text">
+                <Sparkles size={16} style={{ color: "#ea580c", flexShrink: 0 }} />
+                <span>
+                  {currentLightboxItem.caption_user ||
+                    currentLightboxItem.caption_ai ||
+                    "Khoảnh khắc kỷ niệm VinaTap"}
+                </span>
+              </div>
+              <span className="album-lightbox-date">
+                {currentLightboxItem.created_at
+                  ? new Date(currentLightboxItem.created_at).toLocaleDateString(
+                      "vi-VN",
+                    )
+                  : ""}
+              </span>
+            </div>
           </div>
         </div>
       )}
-    </>
+
+      {/* ─── 6. MODAL THÊM TAG MỚI ─────────────────────────────── */}
+      {showTagModal && (
+        <div
+          className="album-modal-backdrop"
+          onClick={() => setShowTagModal(false)}
+        >
+          <div
+            className="album-modal-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="album-modal-header">
+              <h3>🏷️ Thêm Tag Kỷ Niệm Mới</h3>
+              <button
+                className="album-modal-close"
+                onClick={() => setShowTagModal(false)}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateTag} className="album-tag-modal-form">
+              <label className="album-form-label">Tên Tag (Chủ đề):</label>
+              <input
+                type="text"
+                className="album-form-input"
+                placeholder="Ví dụ: Tết 2026, Ẩm thực, Gia đình..."
+                value={newTag.label}
+                onChange={(e) =>
+                  setNewTag({ ...newTag, label: e.target.value })
+                }
+                autoFocus
+                required
+              />
+
+              <label className="album-form-label">Chọn Màu Nhận Diện:</label>
+              <div className="album-color-preset-row">
+                {presetColors.map((color) => (
+                  <div
+                    key={color}
+                    onClick={() => setNewTag({ ...newTag, color })}
+                    className={`album-color-dot ${newTag.color === color ? "active" : ""}`}
+                    style={{ background: color }}
+                  />
+                ))}
+                <input
+                  type="color"
+                  value={newTag.color}
+                  onChange={(e) =>
+                    setNewTag({ ...newTag, color: e.target.value })
+                  }
+                  className="album-custom-color-input"
+                  title="Tự chọn màu"
+                />
+              </div>
+
+              <div className="album-modal-actions">
+                <button
+                  type="button"
+                  className="album-btn album-btn--ghost"
+                  onClick={() => setShowTagModal(false)}
+                >
+                  Hủy
+                </button>
+                <button
+                  type="submit"
+                  className="album-btn album-btn--primary"
+                  disabled={addingTag || !newTag.label.trim()}
+                >
+                  <Plus size={16} /> {addingTag ? "Đang thêm..." : "Tạo Tag Mới"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
-// ─── Component: 1 ô ảnh/video trong lưới ─────────────────────
+// ─── Component: Media Card Gallery Item ───────────────────────
 function MediaCard({
   item,
   tags,
+  isOwner,
   onDelete,
   onSaveCaption,
   onToggleTag,
@@ -870,56 +911,49 @@ function MediaCard({
   const mediaTags = (item.tags || "").split(",").filter(Boolean);
 
   return (
-    <div className="media-card">
-      <div className="media-card__media-wrap" onClick={onOpenLightbox}>
+    <div className="album-media-item">
+      <div className="album-media-visual" onClick={onOpenLightbox}>
         {item.media_type === "video" ? (
           <>
             <video
               src={item.file_url}
               poster={item.thumbnail_url}
               preload="metadata"
-              className="media-card__media media-card__media--video"
+              className="album-media-file"
             />
-            <span className="media-card__badge-type">
-              <VideoIcon size={12} /> Video
-            </span>
+            <div className="album-play-icon-badge">
+              <Play size={18} fill="#ffffff" color="#ffffff" />
+            </div>
           </>
         ) : (
-          <>
-            <img
-              src={item.thumbnail_url || item.file_url}
-              alt={caption}
-              loading="lazy"
-              className="media-card__media media-card__media--image"
-            />
-            <span className="media-card__badge-type">
-              <ImageIcon size={12} /> Ảnh
-            </span>
-          </>
+          <img
+            src={item.thumbnail_url || item.file_url}
+            alt={caption}
+            loading="lazy"
+            className="album-media-file"
+          />
         )}
-        <div className="media-card__overlay-btn">
-          <Maximize2 size={24} />
+
+        {/* Hover Action Overlay */}
+        <div className="album-media-hover-overlay">
+          <div className="album-hover-zoom-btn">
+            <Maximize2 size={18} />
+          </div>
         </div>
       </div>
 
-      <div className="media-card__body">
+      {/* Caption & Tag Row */}
+      <div className="album-media-details">
         {editingCaption ? (
-          <div style={{ display: "flex", gap: "6px" }}>
+          <div className="album-edit-caption-row">
             <input
-              style={{
-                width: "100%",
-                padding: "6px 10px",
-                borderRadius: "8px",
-                border: "1px solid #cbd5e1",
-                fontSize: "0.85rem",
-              }}
+              className="album-caption-input"
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
               autoFocus
             />
             <button
-              className="album-action-btn album-action-btn--primary"
-              style={{ padding: "6px 10px" }}
+              className="album-btn-save-cap"
               onClick={() => {
                 onSaveCaption(caption);
                 setEditingCaption(false);
@@ -930,67 +964,52 @@ function MediaCard({
           </div>
         ) : (
           <p
-            className="media-card__caption-text"
-            onClick={() => setEditingCaption(true)}
-            title="Bấm để chỉnh sửa caption"
+            className="album-caption-text"
+            onClick={() => isOwner && setEditingCaption(true)}
+            title={isOwner ? "Bấm để sửa ghi chú" : ""}
           >
-            <Sparkles size={14} style={{ color: "#ea580c", flexShrink: 0, marginTop: "2px" }} />
-            {caption || (
-              <span className="media-card__caption-placeholder">
-                Thêm caption cho ảnh này...
-              </span>
-            )}
+            <Sparkles size={13} className="album-sparkle-icon" />
+            <span>
+              {caption || (
+                <em className="album-caption-empty">
+                  {isOwner ? "+ Thêm ghi chú..." : "Khoảnh khắc kỷ niệm"}
+                </em>
+              )}
+            </span>
           </p>
         )}
 
-        <div className="media-card__tags-row">
+        {/* Tags Row */}
+        <div className="album-card-tags-row">
           {mediaTags.map((label) => (
-            <span key={label} className="media-card__tag-badge">
+            <span key={label} className="album-card-tag-pill">
               #{label}
             </span>
           ))}
-          <button
-            onClick={() => setShowTagPicker((v) => !v)}
-            className="media-card__add-tag-btn"
-          >
-            + Tag
-          </button>
+
+          {isOwner && (
+            <button
+              onClick={() => setShowTagPicker((v) => !v)}
+              className="album-card-add-tag-btn"
+            >
+              + Tag
+            </button>
+          )}
         </div>
 
-        {showTagPicker && (
-          <div
-            style={{
-              padding: "8px",
-              background: "#f8fafc",
-              borderRadius: "10px",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "4px",
-              border: "1px solid #e2e8f0",
-            }}
-          >
+        {/* Tag Selection Popup */}
+        {showTagPicker && isOwner && (
+          <div className="album-tag-picker-popover">
             {tags.length === 0 && (
-              <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>
-                Album chưa có tag nào
-              </span>
+              <span className="album-no-tag-hint">Chưa có tag nào</span>
             )}
             {tags.map((t) => {
               const isTagged = mediaTags.includes(t.label);
               return (
                 <button
                   key={t.id}
-                  style={{
-                    padding: "4px 8px",
-                    borderRadius: "8px",
-                    border: "none",
-                    fontSize: "0.75rem",
-                    fontWeight: 700,
-                    background: isTagged
-                      ? t.color || "#ea580c"
-                      : "#e2e8f0",
-                    color: isTagged ? "#ffffff" : "#475569",
-                    cursor: "pointer",
-                  }}
+                  className={`album-tag-picker-chip ${isTagged ? "active" : ""}`}
+                  style={{ "--chip-color": t.color || "#ea580c" }}
                   onClick={() => onToggleTag(t.id, isTagged)}
                 >
                   {t.label}
@@ -1000,17 +1019,23 @@ function MediaCard({
           </div>
         )}
 
-        <div className="media-card__footer">
-          <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>
-            {item.created_at ? new Date(item.created_at).toLocaleDateString("vi-VN") : ""}
+        {/* Footer Meta: Date & Delete */}
+        <div className="album-card-footer">
+          <span className="album-card-date">
+            {item.created_at
+              ? new Date(item.created_at).toLocaleDateString("vi-VN")
+              : ""}
           </span>
-          <button
-            className="media-card__delete-btn"
-            onClick={onDelete}
-            title="Xóa tệp"
-          >
-            <Trash2 size={15} />
-          </button>
+
+          {isOwner && (
+            <button
+              className="album-card-delete-btn"
+              onClick={onDelete}
+              title="Xóa tệp"
+            >
+              <Trash2 size={14} />
+            </button>
+          )}
         </div>
       </div>
     </div>

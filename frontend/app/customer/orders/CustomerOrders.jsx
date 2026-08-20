@@ -157,72 +157,110 @@ export default function CustomerOrders() {
 
   return (
     <div className="cust-orders-wrap">
+      {/* ─── 1. PAGE HEADER ────────────────────────────────────────── */}
       <div className="cust-orders-header">
-        <div>
-          <h1 className="cust-orders-title">🛍️ Đơn Hàng Của Tôi</h1>
+        <div className="cust-orders-title-group">
+          <div className="cust-orders-tag-row">
+            <span className="cust-orders-chip">📦 Quản lý mua sắm</span>
+          </div>
+          <h1 className="cust-orders-title">Đơn Hàng Của Tôi</h1>
           <p className="cust-orders-subtitle">
-            Danh sách các đơn hàng thẻ NFC VinaTap bạn đã mua và tình trạng giao hàng
+            Theo dõi trạng thái giao nhận và lịch sử mua thẻ NFC di sản VinaTap
           </p>
         </div>
-        <div style={{ display: "flex", gap: "10px" }}>
+
+        <div className="cust-orders-header-actions">
           <button
-            className="btn btn-outline"
+            type="button"
+            className="btn-order-hdr is-refresh"
             onClick={loadOrders}
             disabled={loading}
-            style={{ display: "flex", alignItems: "center", gap: "6px" }}
           >
-            <RefreshCw size={15} className={loading ? "spin-icon" : ""} /> Làm mới
+            <RefreshCw size={15} className={loading ? "spin-icon" : ""} />
+            <span>Làm mới</span>
           </button>
-          <Link href="/shop" className="btn btn-primary" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <ShoppingBag size={15} /> Mua Thêm Thẻ
+          <Link href="/shop" className="btn-order-hdr is-shop">
+            <ShoppingBag size={15} />
+            <span>Mua Thêm Thẻ</span>
           </Link>
         </div>
       </div>
 
-      {/* STATUS TABS */}
-      <div className="cust-orders-tabs">
+      {/* ─── 2. STATUS FILTER PILLS ─────────────────────────────────── */}
+      <div className="cust-orders-tabs-carousel">
         <button
-          className={`cust-tab-btn ${filterStatus === "all" ? "active" : ""}`}
+          type="button"
+          className={`cust-tab-pill ${filterStatus === "all" ? "is-active" : ""}`}
           onClick={() => setFilterStatus("all")}
         >
-          Tất cả đơn đã mua ({validPurchasedOrders.length})
+          <span>✨ Tất cả</span>
+          <span className="tab-count-badge">{validPurchasedOrders.length}</span>
         </button>
+
         <button
-          className={`cust-tab-btn ${filterStatus === "processing" ? "active" : ""}`}
+          type="button"
+          className={`cust-tab-pill ${filterStatus === "processing" ? "is-active" : ""}`}
           onClick={() => setFilterStatus("processing")}
         >
-          ✅ Đã thanh toán / Chuẩn bị ({validPurchasedOrders.filter((o) => o.status === "paid" || o.status === "processing" || (o.payment_method === "cod" && o.status === "pending")).length})
+          <span>📦 Đang chuẩn bị</span>
+          <span className="tab-count-badge">
+            {validPurchasedOrders.filter((o) => o.status === "paid" || o.status === "processing" || (o.payment_method === "cod" && o.status === "pending")).length}
+          </span>
         </button>
+
         <button
-          className={`cust-tab-btn ${filterStatus === "shipping" ? "active" : ""}`}
+          type="button"
+          className={`cust-tab-pill ${filterStatus === "shipping" ? "is-active" : ""}`}
           onClick={() => setFilterStatus("shipping")}
         >
-          🚚 Đang giao ({validPurchasedOrders.filter((o) => o.status === "shipping").length})
+          <span>🚚 Đang giao hàng</span>
+          <span className="tab-count-badge">
+            {validPurchasedOrders.filter((o) => o.status === "shipping").length}
+          </span>
         </button>
+
         <button
-          className={`cust-tab-btn ${filterStatus === "completed" ? "active" : ""}`}
+          type="button"
+          className={`cust-tab-pill ${filterStatus === "completed" ? "is-active" : ""}`}
           onClick={() => setFilterStatus("completed")}
         >
-          🎉 Hoàn tất ({validPurchasedOrders.filter((o) => o.status === "completed").length})
+          <span>🎉 Đã hoàn tất</span>
+          <span className="tab-count-badge">
+            {validPurchasedOrders.filter((o) => o.status === "completed").length}
+          </span>
         </button>
       </div>
 
+      {/* ─── 3. ORDERS LIST / EMPTY STATE ──────────────────────────── */}
       {loading ? (
-        <div style={{ textAlign: "center", padding: "4rem" }}>
-          <div className="spinner" style={{ margin: "0 auto 1rem" }} />
-          <p className="text-muted">Đang tải lịch sử mua hàng...</p>
+        <div className="cust-orders-loading">
+          <div className="cust-spinner" />
+          <p>Đang tải lịch sử đơn hàng...</p>
         </div>
       ) : filteredOrders.length === 0 ? (
-        <div className="cust-orders-empty">
-          <Package size={48} style={{ color: "#94a3b8" }} />
-          <p>
+        <div className="cust-orders-empty-box">
+          <div className="empty-pkg-icon-wrap">
+            <Package size={52} />
+          </div>
+          <h2 className="empty-pkg-title">
             {filterStatus === "all"
-              ? "Bạn chưa có đơn hàng nào đã mua thành công."
-              : "Không có đơn hàng nào ở trạng thái này."}
+              ? "Bạn chưa có đơn hàng nào"
+              : "Không có đơn hàng nào ở mục này"}
+          </h2>
+          <p className="empty-pkg-desc">
+            {filterStatus === "all"
+              ? "Khám phá ngay bộ sưu tập 34 thẻ NFC gỗ di sản độc bản và các ưu đãi đặc quyền từ VinaTap!"
+              : "Thử chuyển qua bộ lọc khác hoặc kiểm tra lại lịch sử mua sắm của bạn."}
           </p>
-          <Link href="/shop" className="btn btn-primary">
-            Khám Phá Cửa Hàng Thẻ NFC 🚀
-          </Link>
+          <div className="empty-pkg-actions">
+            <Link href="/shop" className="btn-empty-cta is-primary">
+              <ShoppingBag size={16} />
+              <span>Khám Phá Cửa Hàng Thẻ NFC →</span>
+            </Link>
+            <Link href="/customer/dashboard" className="btn-empty-cta is-secondary">
+              <span>Về Trang Bộ Sưu Tập</span>
+            </Link>
+          </div>
         </div>
       ) : (
         <div className="cust-orders-list">

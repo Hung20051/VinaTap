@@ -304,3 +304,100 @@
   font-size: 0.76rem;
   color: #94a3b8;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   📱 MOBILE & TABLET RESPONSIVE (IPHONE SE, SAMSUNG, IPAD...)
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .admin-analytics-container {
+    padding: 0;
+    gap: 1rem;
+  }
+
+  .admin-analytics-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .admin-analytics-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .admin-analytics-timeframe {
+    flex: 1;
+    justify-content: space-between;
+    padding: 0.45rem 0.75rem;
+  }
+
+  .admin-analytics-select {
+    width: 100%;
+  }
+
+  .admin-analytics-btn-reload {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.82rem;
+    padding: 0.45rem 0.85rem;
+  }
+
+  /* 🌟 4 THẺ KPI BIẾN THÀNH 1 HÀNG VUỐT SLIDE NGANG (CAROUSEL) */
+  .admin-analytics-kpi-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.75rem;
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-x;
+  }
+
+  .admin-analytics-kpi-grid.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  .admin-analytics-kpi-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .admin-analytics-kpi-card {
+    flex: 0 0 80%;
+    max-width: 300px;
+    scroll-snap-align: start;
+    padding: 1rem;
+    border-radius: 12px;
+    user-select: none;
+  }
+
+  .admin-analytics-kpi-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .admin-analytics-kpi-value {
+    font-size: 1.25rem;
+  }
+
+  /* Layout 2 cột xếp dọc trên Mobile */
+  .admin-analytics-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .admin-analytics-card {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+}

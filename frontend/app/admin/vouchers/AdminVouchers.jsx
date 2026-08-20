@@ -15,15 +15,25 @@ import {
   Users,
   Bell,
   X,
+  Trash2,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  Sparkles,
 } from "lucide-react";
 import { voucherAPI } from "@/lib/api";
 import "./AdminVouchers.css";
+
+const PAGE_SIZE = 8;
 
 export default function AdminVouchers() {
   const router = useRouter();
   const [vouchers, setVouchers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [page, setPage] = useState(1);
+
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [sendModalOpen, setSendModalOpen] = useState(false);
   const [selectedVoucher, setSelectedVoucher] = useState(null);
@@ -48,6 +58,11 @@ export default function AdminVouchers() {
   const [targetUserIds, setTargetUserIds] = useState("");
   const [sending, setSending] = useState(false);
 
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3500);
+  };
+
   const fetchVouchers = async () => {
     setLoading(true);
     try {
@@ -55,6 +70,7 @@ export default function AdminVouchers() {
       setVouchers(data || []);
     } catch (err) {
       console.error("Fetch admin vouchers error:", err);
+      showToast("Không thể tải danh sách voucher", "error");
     } finally {
       setLoading(false);
     }
@@ -82,7 +98,7 @@ export default function AdminVouchers() {
         expires_at: formData.is_permanent ? null : formData.expires_at,
       };
       await voucherAPI.createAdmin(payload);
-      setToast("🎉 Đã tạo Mã Voucher mới thành công!");
+      showToast("🎉 Đã tạo Mã Voucher mới thành công!");
       setCreateModalOpen(false);
       setFormData({
         code: "",
@@ -99,6 +115,19 @@ export default function AdminVouchers() {
       fetchVouchers();
     } catch (err) {
       alert(err.message || "Lỗi tạo Voucher");
+    }
+  };
+
+  const handleDeleteVoucher = async (v) => {
+    if (!confirm(`Bạn có chắc chắn muốn xóa vĩnh viễn Voucher [${v.code}] không?\nKhách hàng đã lưu mã này sẽ bị gỡ bỏ.`)) {
+      return;
+    }
+    try {
+      await voucherAPI.deleteAdmin(v.id);
+      showToast(`🗑️ Đã xóa Voucher "${v.code}" thành công!`);
+      fetchVouchers();
+    } catch (err) {
+      alert(err.message || "Lỗi khi xóa Voucher");
     }
   };
 
@@ -120,7 +149,7 @@ export default function AdminVouchers() {
         sendNotification: true,
       });
 
-      setToast(`🎁 Đã tặng thành công cho ${res.count} khách hàng!`);
+      showToast(`🎁 Đã tặng thành công cho ${res.count} khách hàng!`);
       setSendModalOpen(false);
       fetchVouchers();
     } catch (err) {
@@ -130,151 +159,270 @@ export default function AdminVouchers() {
     }
   };
 
-  const filteredVouchers = vouchers.filter(
-    (v) =>
-      v.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      v.title.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  // Filter & Search Logic
+  const filteredVouchers = vouchers.filter((v) => {
+    // 1. Search Query
+    const q = searchQuery.toLowerCase().trim();
+    const matchSearch =
+      !q ||
+      v.code.toLowerCase().includes(q) ||
+      v.title.toLowerCase().includes(q) ||
+      (v.description && v.description.toLowerCase().includes(q));
+
+    if (!matchSearch) return false;
+
+    // 2. Type / Status Filter
+    if (typeFilter === "all") return true;
+    if (typeFilter === "percent") return v.discount_type === "percent";
+    if (typeFilter === "amount") return v.discount_type === "amount";
+    if (typeFilter === "freeship") return v.discount_type === "freeship";
+    if (typeFilter === "active") return !v.isExpired;
+    if (typeFilter === "expired") return v.isExpired;
+
+    return true;
+  });
+
+  // Pagination Slice
+  const totalPages = Math.ceil(filteredVouchers.length / PAGE_SIZE) || 1;
+  const currentPage = Math.min(page, totalPages);
+  const pagedVouchers = filteredVouchers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const formatMoney = (amount) =>
     new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount);
 
   return (
     <div className="admin-vouchers-shell">
+      {/* ─── APP BAR HEADER ──────────────────────────── */}
       <div className="admin-header-row">
-        <div>
-          <h1 className="admin-page-title">🎟️ Quản Lý Voucher & Mã Khuyến Mãi</h1>
+        <div className="admin-header-title-wrap">
+          <h1 className="admin-page-title">🎟️ Quản Lý Voucher</h1>
           <p className="admin-page-subtitle">
-            Tạo mã chiết khấu, cài đặt ngày hết hạn, tặng trực tiếp vào Ví khách hàng & bắn Thông báo 🔔
+            Cài đặt mã ưu đãi, điều kiện áp dụng & tặng vào ví khách hàng
           </p>
         </div>
 
         <div className="admin-action-btns">
-          <button className="btn-refresh" onClick={fetchVouchers}>
-            <RefreshCw size={16} /> Làm mới
+          <button className="btn-refresh" onClick={fetchVouchers} title="Làm mới">
+            <RefreshCw size={15} /> <span className="btn-label-desktop">Làm mới</span>
           </button>
           <button className="btn-create-voucher" onClick={() => setCreateModalOpen(true)}>
-            <Plus size={18} /> Tạo Voucher Mới
+            <Plus size={16} /> <span>Tạo Voucher</span>
           </button>
         </div>
       </div>
 
       {toast && (
-        <div className="toast-success-banner">
-          <CheckCircle size={18} /> {toast}
+        <div className={`toast-banner toast-${toast.type}`}>
+          <CheckCircle size={17} /> {toast.message}
         </div>
       )}
 
-      {/* FILTER SEARCH BAR */}
-      <div className="vouchers-filter-bar">
+      {/* ─── STICKY CONTROLS (SEARCH + TYPE FILTER CHIPS) ─── */}
+      <div className="vouchers-sticky-controls">
         <div className="search-input-wrap">
-          <Search size={18} className="search-icon" />
+          <Search size={16} className="search-icon" />
           <input
             type="text"
-            placeholder="Tìm kiếm mã Voucher (VD: VINATAP2026, FREESHIP)..."
+            placeholder="Tìm theo mã code hoặc tên ưu đãi..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setPage(1);
+            }}
           />
+          {searchQuery && (
+            <button
+              type="button"
+              className="search-clear-btn"
+              onClick={() => {
+                setSearchQuery("");
+                setPage(1);
+              }}
+              title="Xóa tìm kiếm"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
+
+        {/* 🏷️ DẢI CHIP LỌC VUỐT CHẠM (HORIZONTAL FILTER TABS) */}
+        <div className="voucher-filter-chips">
+          <button
+            className={`filter-chip ${typeFilter === "all" ? "active" : ""}`}
+            onClick={() => {
+              setTypeFilter("all");
+              setPage(1);
+            }}
+          >
+            Tất cả ({vouchers.length})
+          </button>
+          <button
+            className={`filter-chip ${typeFilter === "percent" ? "active" : ""}`}
+            onClick={() => {
+              setTypeFilter("percent");
+              setPage(1);
+            }}
+          >
+            % Giảm giá
+          </button>
+          <button
+            className={`filter-chip ${typeFilter === "amount" ? "active" : ""}`}
+            onClick={() => {
+              setTypeFilter("amount");
+              setPage(1);
+            }}
+          >
+            ₫ Giảm tiền
+          </button>
+          <button
+            className={`filter-chip ${typeFilter === "freeship" ? "active" : ""}`}
+            onClick={() => {
+              setTypeFilter("freeship");
+              setPage(1);
+            }}
+          >
+            🚚 FreeShip
+          </button>
+          <button
+            className={`filter-chip ${typeFilter === "active" ? "active" : ""}`}
+            onClick={() => {
+              setTypeFilter("active");
+              setPage(1);
+            }}
+          >
+            ✨ Hiệu lực
+          </button>
+          <button
+            className={`filter-chip ${typeFilter === "expired" ? "active" : ""}`}
+            onClick={() => {
+              setTypeFilter("expired");
+              setPage(1);
+            }}
+          >
+            ⏰ Hết hạn
+          </button>
         </div>
       </div>
 
-      {/* BẢNG DANH SÁCH VOUCHER */}
-      <div className="vouchers-table-card">
+      {/* 🎟️ DANH SÁCH VOUCHER (LUXURY COUPON GRID - DESKTOP & MOBILE) */}
+      <div className="vouchers-grid-container">
         {loading ? (
           <div className="table-loading">Đang tải danh sách Voucher từ Database...</div>
+        ) : pagedVouchers.length === 0 ? (
+          <div className="table-empty">Không tìm thấy mã Voucher nào khớp với bộ lọc.</div>
         ) : (
-          <table className="vouchers-table">
-            <thead>
-              <tr>
-                <th>Mã Voucher</th>
-                <th>Tên Ưu Đãi</th>
-                <th>Loại Giảm Giá</th>
-                <th>Giá Trị</th>
-                <th>Hạn Sử Dụng</th>
-                <th>Đơn Tối Thiểu</th>
-                <th>Đã Tặng</th>
-                <th>Thao Tác</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredVouchers.length === 0 ? (
-                <tr>
-                  <td colSpan="8" className="table-empty">
-                    Chưa có mã Voucher nào trong Database. Hãy bấm "Tạo Voucher Mới"!
-                  </td>
-                </tr>
-              ) : (
-                filteredVouchers.map((v) => (
-                  <tr key={v.id}>
-                    <td>
-                      <code className="v-code-badge">{v.code}</code>
-                    </td>
-                    <td>
-                      <strong>{v.title}</strong>
-                      {v.description && <p className="v-desc-sub">{v.description}</p>}
-                    </td>
-                    <td>
-                      <span className={`type-tag type-${v.discount_type}`}>
-                        {v.discount_type === "percent"
-                          ? "Giảm %"
-                          : v.discount_type === "amount"
-                          ? "Giảm tiền ₫"
-                          : "Free Ship"}
+          <div className="vouchers-lux-grid">
+            {pagedVouchers.map((v) => (
+              <div key={v.id} className={`voucher-lux-card type-${v.discount_type}`}>
+                {/* Cuống vé bên trái với lỗ khoét vé coupon */}
+                <div className="v-lux-left">
+                  <div className="v-lux-notch top-notch" />
+                  <div className="v-lux-notch bottom-notch" />
+                  <div className="v-lux-val-group">
+                    <span className="v-lux-val-main">
+                      {v.discount_type === "percent"
+                        ? `${Math.round(v.discount_value)}%`
+                        : v.discount_type === "amount"
+                        ? `${Number(v.discount_value) >= 1000 ? `${Math.round(Number(v.discount_value) / 1000)}k` : formatMoney(v.discount_value)}`
+                        : "FREE"}
+                    </span>
+                    <span className="v-lux-val-sub">
+                      {v.discount_type === "freeship" ? "FREESHIP" : "GIẢM GIÁ"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Thân vé bên phải */}
+                <div className="v-lux-right">
+                  <div className="v-lux-top-row">
+                    <div className="v-lux-code-tag">
+                      <Ticket size={11} />
+                      <span>{v.code}</span>
+                    </div>
+                    {v.isPermanent ? (
+                      <span className="v-lux-pill v-pill-green">♾️ Vĩnh viễn</span>
+                    ) : v.isExpired ? (
+                      <span className="v-lux-pill v-pill-red">⏰ Hết hạn</span>
+                    ) : (
+                      <span className="v-lux-pill v-pill-blue">
+                        <Clock size={10} /> {new Date(v.expires_at).toLocaleDateString("vi-VN")}
                       </span>
-                    </td>
-                    <td>
-                      <strong className="text-orange">{v.discountText}</strong>
-                    </td>
-                    <td>
-                      {v.isPermanent ? (
-                        <span className="badge badge-green">♾️ Vĩnh viễn</span>
-                      ) : v.isExpired ? (
-                        <span className="badge badge-red">⏰ Hết hạn</span>
-                      ) : (
-                        <span className="badge badge-blue">
-                          <Clock size={12} /> {new Date(v.expires_at).toLocaleDateString("vi-VN")}
-                        </span>
-                      )}
-                    </td>
-                    <td>{v.min_order_amount > 0 ? formatMoney(v.min_order_amount) : "Không giới hạn"}</td>
-                    <td>
-                      <span className="user-count-badge">
-                        <Users size={14} /> {v.total_assigned || 0} ví
-                      </span>
-                    </td>
-                    <td>
-                      {v.isExpired ? (
-                        <span className="badge badge-red" style={{ padding: "6px 10px" }}>
-                          🛑 Đã hết hạn
-                        </span>
-                      ) : (
+                    )}
+                  </div>
+
+                  <div className="v-lux-title">{v.title}</div>
+                  {v.description && <div className="v-lux-desc">{v.description}</div>}
+
+                  <div className="v-lux-footer-row">
+                    <div className="v-lux-condition">
+                      <span>Đơn từ: <strong>{v.min_order_amount > 0 ? formatMoney(v.min_order_amount) : "0đ"}</strong></span>
+                      <span className="v-lux-dot">•</span>
+                      <span><Users size={11} /> <strong>{v.total_assigned || 0}</strong> ví</span>
+                    </div>
+
+                    <div className="v-lux-actions">
+                      {!v.isExpired && (
                         <button
-                          className="btn-send-gift"
+                          className="btn-lux-gift"
                           onClick={() => {
                             router.push(`/admin/notifications?type=promo&voucherId=${v.id}`);
                           }}
-                          title="Tặng Voucher qua Trung Tâm Thông Báo"
+                          title="Tặng Voucher cho khách qua thông báo"
                         >
-                          <Gift size={15} /> Tặng Khách
+                          <Gift size={12} /> <span>Tặng</span>
                         </button>
                       )}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                      <button
+                        className="btn-lux-delete"
+                        onClick={() => handleDeleteVoucher(v)}
+                        title="Xóa voucher"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
 
-      {/* MODAL TẠO VOUCHER MỚI */}
+      {/* 📄 PHÂN TRANG (PAGINATION) - TRÁNH NGỘP */}
+      {totalPages > 1 && (
+        <div className="vouchers-pagination">
+          <button
+            className="pagination-btn"
+            disabled={currentPage <= 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          >
+            <ChevronLeft size={15} /> Trang trước
+          </button>
+          <span className="pagination-info">
+            Trang <strong>{currentPage}</strong> / {totalPages}
+          </span>
+          <button
+            className="pagination-btn"
+            disabled={currentPage >= totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
+            Trang sau <ChevronRight size={15} />
+          </button>
+        </div>
+      )}
+
+      {/* 📝 MODAL TẠO VOUCHER MỚI (BALANCED BOTTOM SHEET) */}
       {createModalOpen && (
         <div className="admin-modal-overlay" onClick={() => setCreateModalOpen(false)}>
           <div className="admin-modal-card" onClick={(e) => e.stopPropagation()}>
-            <button className="admin-modal-close" onClick={() => setCreateModalOpen(false)}>
-              <X size={20} />
-            </button>
-            <h3>🎟️ Tạo Mã Voucher Khuyến Mãi Mới</h3>
+            <div className="modal-handle-bar" />
+            <div className="modal-header-row">
+              <h3>🎟️ Tạo Mã Voucher Khuyến Mãi</h3>
+              <button className="admin-modal-close" onClick={() => setCreateModalOpen(false)}>
+                <X size={18} />
+              </button>
+            </div>
+
             <form onSubmit={handleCreateVoucher} className="voucher-form">
               <div className="form-row">
                 <div className="form-group">
@@ -284,15 +432,15 @@ export default function AdminVouchers() {
                     required
                     placeholder="VD: VINATAP2026, FREESHIP50K"
                     value={formData.code}
-                    onChange={(e) => setFormData({ ...formData, code: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Tên Chương Trình Ưu Đãi *</label>
+                  <label>Tên Chương Trình *</label>
                   <input
                     type="text"
                     required
-                    placeholder="VD: Voucher Tri Ân Khách Hàng VIP"
+                    placeholder="VD: Ưu Đãi Lần Đầu"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   />
@@ -306,9 +454,9 @@ export default function AdminVouchers() {
                     value={formData.discount_type}
                     onChange={(e) => setFormData({ ...formData, discount_type: e.target.value })}
                   >
-                    <option value="percent">Giảm Theo Phần Trăm (%)</option>
+                    <option value="percent">Giảm Phần Trăm (%)</option>
                     <option value="amount">Giảm Tiền Cố Định (VNĐ)</option>
-                    <option value="freeship">Miễn Phí Vận Chuyển (Free Ship)</option>
+                    <option value="freeship">Miễn Phí Vận Chuyển (FreeShip)</option>
                   </select>
                 </div>
 
@@ -317,7 +465,7 @@ export default function AdminVouchers() {
                   <input
                     type="number"
                     required
-                    placeholder="VD: 20 (cho 20%) hoặc 50000 (cho 50k)"
+                    placeholder="VD: 20 (cho 20%) hoặc 50000"
                     value={formData.discount_value}
                     onChange={(e) => setFormData({ ...formData, discount_value: parseFloat(e.target.value) || 0 })}
                   />
@@ -337,26 +485,26 @@ export default function AdminVouchers() {
 
                 <div className="form-group">
                   <label>Hạn Sử Dụng</label>
-                  <div style={{ display: "flex", gap: "10px", alignItems: "center", marginTop: "6px" }}>
-                    <label style={{ fontSize: "0.85rem", cursor: "pointer" }}>
+                  <div style={{ display: "flex", gap: "8px", alignItems: "center", height: "36px" }}>
+                    <label style={{ fontSize: "0.82rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
                       <input
                         type="checkbox"
                         checked={formData.is_permanent}
                         onChange={(e) => setFormData({ ...formData, is_permanent: e.target.checked })}
                       />{" "}
-                      Vĩnh Viễn (Không Hết Hạn)
+                      Vĩnh Viễn
                     </label>
+                    {!formData.is_permanent && (
+                      <input
+                        type="date"
+                        required
+                        min={new Date().toISOString().split("T")[0]}
+                        style={{ flex: 1, padding: "5px 8px" }}
+                        value={formData.expires_at}
+                        onChange={(e) => setFormData({ ...formData, expires_at: e.target.value })}
+                      />
+                    )}
                   </div>
-                  {!formData.is_permanent && (
-                    <input
-                      type="date"
-                      required
-                      min={new Date().toISOString().split("T")[0]}
-                      style={{ marginTop: "8px" }}
-                      value={formData.expires_at}
-                      onChange={(e) => setFormData({ ...formData, expires_at: e.target.value })}
-                    />
-                  )}
                 </div>
               </div>
 
@@ -370,49 +518,14 @@ export default function AdminVouchers() {
                 />
               </div>
 
-              <button type="submit" className="btn-submit-create">
-                <Plus size={16} /> Tạo Mã Voucher
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL TẶNG VOUCHER */}
-      {sendModalOpen && selectedVoucher && (
-        <div className="admin-modal-overlay" onClick={() => setSendModalOpen(false)}>
-          <div className="admin-modal-card" onClick={(e) => e.stopPropagation()}>
-            <button className="admin-modal-close" onClick={() => setSendModalOpen(false)}>
-              <X size={20} />
-            </button>
-            <h3>🎁 Tặng Voucher: {selectedVoucher.code}</h3>
-            <p className="text-muted">Voucher sẽ được lưu thẳng vào Ví cá nhân & tự động gửi Thông báo 🔔 cho khách hàng.</p>
-
-            <form onSubmit={handleSendVoucher} className="voucher-form">
-              <div className="form-group">
-                <label>Đối Tượng Nhận Quà</label>
-                <select value={sendTarget} onChange={(e) => setSendTarget(e.target.value)}>
-                  <option value="all">🌐 Tất Cả Khách Hàng Trên Hệ Thống</option>
-                  <option value="users">👤 Khách Hàng Cụ Thể (Nhập ID)</option>
-                </select>
+              <div className="modal-footer-row">
+                <button type="button" className="btn-cancel" onClick={() => setCreateModalOpen(false)}>
+                  Hủy bỏ
+                </button>
+                <button type="submit" className="btn-submit-create">
+                  <Plus size={16} /> Tạo Voucher Mới
+                </button>
               </div>
-
-              {sendTarget === "users" && (
-                <div className="form-group">
-                  <label>ID Người Nhận (Cách nhau bằng dấu phẩy)</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="VD: 1, 5, 12"
-                    value={targetUserIds}
-                    onChange={(e) => setTargetUserIds(e.target.value)}
-                  />
-                </div>
-              )}
-
-              <button type="submit" className="btn-submit-send" disabled={sending}>
-                <Send size={16} /> {sending ? "Đang gửi quà..." : "Xác Nhận Tặng Voucher"}
-              </button>
             </form>
           </div>
         </div>

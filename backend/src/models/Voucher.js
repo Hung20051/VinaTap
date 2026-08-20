@@ -165,6 +165,23 @@ const Voucher = {
     return { id: result.insertId, ...data, code: cleanCode };
   },
 
+  // 👑 Admin xóa Voucher (xóa cả user_vouchers liên kết)
+  async deleteAdmin(id) {
+    const conn = await db.getConnection();
+    try {
+      await conn.beginTransaction();
+      await conn.execute(`DELETE FROM user_vouchers WHERE voucher_id = ?`, [id]);
+      await conn.execute(`DELETE FROM vouchers WHERE id = ?`, [id]);
+      await conn.commit();
+      return true;
+    } catch (err) {
+      await conn.rollback();
+      throw err;
+    } finally {
+      conn.release();
+    }
+  },
+
   // 👑 Admin tặng Voucher cho danh sách User
   async sendToUsers(voucherId, targetType, userIds = []) {
     let targetUserIds = [];

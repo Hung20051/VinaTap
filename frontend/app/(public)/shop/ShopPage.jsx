@@ -14,8 +14,10 @@ import {
   ArrowRight,
   MapPin,
   LayoutDashboard,
+  Zap,
+  Search,
 } from "lucide-react";
-import Header from "@/components/layout/Header";
+import CustomerHeader from "@/components/layout/CustomerHeader";
 import Sidebar from "@/components/layout/Sidebar";
 import CheckoutModal from "@/components/modals/CheckoutModal";
 import CartModal from "@/components/modals/CartModal";
@@ -23,43 +25,7 @@ import { getUser, clearAuth, isAdmin } from "@/lib/auth";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
 import { productAPI, shippingAPI, systemSettingAPI } from "@/lib/api";
-import DvdBounce from "@/components/ui/DvdBounce";
 import "./ShopPage.css";
-
-const provinceList = [
-  "Hà Nội",
-  "TP. Hồ Chí Minh",
-  "Đà Nẵng",
-  "Lào Cai (Sapa)",
-  "Hà Giang",
-  "Quảng Ninh (Hạ Long)",
-  "Ninh Bình",
-  "Thừa Thiên Huế",
-  "Quảng Nam (Hội An)",
-  "Lâm Đồng (Đà Lạt)",
-  "Khánh Hòa (Nha Trang)",
-  "Bình Thuận (Phan Thiết)",
-  "Bà Rịa - Vũng Tàu",
-  "Cần Thơ",
-  "Kiên Giang (Phú Quốc)",
-  "An Giang",
-  "Bắc Ninh",
-  "Cao Bằng",
-  "Điện Biên",
-  "Hải Phòng",
-  "Hà Tĩnh",
-  "Hòa Bình",
-  "Lạng Sơn",
-  "Nghệ An",
-  "Phú Thọ",
-  "Quảng Bình",
-  "Quảng Ngãi",
-  "Quảng Trị",
-  "Thái Nguyên",
-  "Thanh Hóa",
-  "Tuyên Quang",
-  "Yên Bái",
-];
 
 export default function ShopPage() {
   const searchParams = useSearchParams();
@@ -71,7 +37,6 @@ export default function ShopPage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cartModalOpen, setCartModalOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [selectedProvince, setSelectedProvince] = useState("Hà Nội");
   const [dbProducts, setDbProducts] = useState([]);
   const [shippingRule, setShippingRule] = useState({ base_fee: 30000, free_shipping_threshold: 500000 });
 
@@ -108,7 +73,6 @@ export default function ShopPage() {
     description: p.description || "Mảnh ghép NFC kỷ niệm du lịch VinaTap.",
     image: p.image || "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
     features: ["Chip NFC NXP chuẩn ISO", "Chống nước & chống xước", "Bảo hành chính hãng VinaTap"],
-    hasProvinceSelector: p.category === "single" || String(p.name).includes("Mảnh Ghép"),
   }));
 
   const handleLogout = () => {
@@ -132,12 +96,12 @@ export default function ShopPage() {
       icon: <ShoppingBag size={20} />,
       label: "Cửa Hàng Thẻ NFC",
     },
-    ...(typeof window !== "undefined" && isAdmin()
+    ...(user?.role === "admin"
       ? [
           {
             href: "/admin",
             icon: <ShieldCheck size={20} />,
-            label: t(lang, "admin"),
+            label: "Trang Quản Trị Admin",
           },
         ]
       : []),
@@ -146,20 +110,11 @@ export default function ShopPage() {
   const addToCart = (product) => {
     const itemToAdd = {
       ...product,
-      name: product.hasProvinceSelector
-        ? `${product.name} (${selectedProvince})`
-        : product.name,
-      selectedProvince: product.hasProvinceSelector ? selectedProvince : null,
       quantity: 1,
     };
 
     setCart((prev) => {
-      const existingIdx = prev.findIndex(
-        (item) =>
-          item.id === product.id &&
-          item.selectedProvince === itemToAdd.selectedProvince,
-      );
-
+      const existingIdx = prev.findIndex((item) => item.id === product.id);
       if (existingIdx >= 0) {
         return prev.map((item, idx) =>
           idx === existingIdx
@@ -201,10 +156,19 @@ export default function ShopPage() {
       amount,
     );
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredProducts = products.filter((p) => {
+    if (!searchQuery.trim()) return true;
+    return (
+      p.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+      p.description.toLowerCase().includes(searchQuery.toLowerCase().trim())
+    );
+  });
+
   return (
     <div className="shop-page-shell">
-      <DvdBounce />
-      <Header
+      <CustomerHeader
         isDrawerOpen={drawerOpen}
         onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
       />
@@ -218,152 +182,106 @@ export default function ShopPage() {
         onLogout={handleLogout}
       />
 
-      <div className="shop-hero">
-        <div className="shop-hero-content">
-          <span className="shop-badge">🏆 CỬA HÀNG CHÍNH HÃNG VINATAP</span>
-          <h1 className="shop-title">Bộ Sưu Tập Thẻ NFC 34 Tỉnh Thành Việt Nam</h1>
-          <p className="shop-subtitle">
-            Chạm thẻ NFC để mở ngay Album Ảnh & Kỷ Niệm Chuyến Đi — Lưu giữ hành
-            trình chinh phục quê hương!
-          </p>
+      {/* ─── 1. MODERN STORE HEADER (Không còn khối đen cồng kềnh) ─── */}
+      <div className="shop-modern-header">
+        <div className="shop-header-inner">
+          <div className="shop-title-area">
+            <div className="shop-brand-chip">
+              <Sparkles size={13} />
+              <span>CỬA HÀNG THẺ NFC DI SẢN CHÍNH HÃNG</span>
+            </div>
+            <h1 className="shop-main-title">
+              Sở Hữu Mảnh Ghép <span>34 Tỉnh Thành</span>
+            </h1>
+            <p className="shop-main-desc">
+              Chạm thẻ NFC để mở khóa album ảnh kỷ niệm và lưu giữ trọn vẹn từng khoảnh khắc du lịch của bạn.
+            </p>
+          </div>
 
-          <div className="shop-hero-trust">
-            <div className="trust-item">
-              <ShieldCheck size={18} className="text-orange" />
-              <span>Bảo hành 1 đổi 1 trong 12 tháng</span>
+          <div className="shop-controls-bar">
+            <div className="shop-search-field">
+              <Search size={16} className="shop-search-icon" />
+              <input
+                type="text"
+                placeholder="Tìm kiếm mảnh ghép tỉnh thành..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="shop-search-input"
+              />
             </div>
-            <div className="trust-item">
-              <Truck size={18} className="text-orange" />
-              <span>Giao hàng Hỏa Tốc Toàn Quốc</span>
-            </div>
-            <div className="trust-item">
-              <RotateCcw size={18} className="text-orange" />
-              <span>Miễn phí đổi trả trong 7 ngày</span>
-            </div>
+
+            {totalCartCount > 0 && (
+              <button
+                type="button"
+                className="shop-quick-cart-btn"
+                onClick={() => setCartModalOpen(true)}
+              >
+                <ShoppingCart size={17} />
+                <span>Giỏ hàng: <strong>{totalCartCount}</strong> ({formatMoney(cartSubtotal)})</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
 
+      {/* ─── 2. MAIN PRODUCTS SHOWCASE ─────────────────────────────── */}
       <main className="shop-container">
-        {/* THANH GIỎ HÀNG NỔI NẾU CÓ SẢN PHẨM */}
-        {totalCartCount > 0 && (
-          <div className="shop-cart-floating-bar">
-            <div
-              className="cart-bar-left"
-              style={{ cursor: "pointer" }}
-              onClick={() => setCartModalOpen(true)}
-              title="Xem & Quản Lý Giỏ Hàng"
-            >
-              <ShoppingCart size={20} />
-              <span>
-                Giỏ hàng: <strong>{totalCartCount} sản phẩm</strong> (
-                {formatMoney(cartSubtotal)})
-              </span>
-            </div>
-            <button
-              className="btn-checkout-floating"
-              onClick={() => setCheckoutOpen(true)}
-            >
-              Thanh Toán Ngay <ArrowRight size={16} />
-            </button>
-          </div>
-        )}
-
-        {/* LƯỚI SẢN PHẨM */}
-        {products.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "4rem 1rem", background: "#ffffff", borderRadius: "20px", border: "1px dashed #cbd5e1", margin: "2rem 0" }}>
-            <ShoppingBag size={48} style={{ color: "#94a3b8", marginBottom: "1rem" }} />
-            <h3 style={{ fontSize: "1.2rem", fontWeight: 800, color: "#334155", margin: "0 0 6px 0" }}>
-              Cửa Hàng Hiện Chưa Có Sản Phẩm Mở Bán
-            </h3>
-            <p style={{ color: "#64748b", fontSize: "0.9rem", margin: 0 }}>
-              Quản trị viên chưa thêm sản phẩm nào vào Database. Vui lòng quay lại sau!
-            </p>
+        {filteredProducts.length === 0 ? (
+          <div className="shop-empty-products">
+            <ShoppingBag size={44} className="empty-icon" />
+            <h3>Không tìm thấy sản phẩm nào</h3>
+            <p>Thử tìm kiếm với từ khóa khác hoặc quay lại xem tất cả sản phẩm.</p>
+            {searchQuery && (
+              <button
+                type="button"
+                className="btn-reset-shop-search"
+                onClick={() => setSearchQuery("")}
+              >
+                Xem tất cả sản phẩm
+              </button>
+            )}
           </div>
         ) : (
           <div className="shop-products-grid">
-            {products.map((p) => (
-              <div key={p.id} className="shop-product-card">
-                <div className="product-image-wrap">
-                  <img src={p.image} alt={p.name} className="product-img" />
-                  <span className="product-tag">{p.tag}</span>
+            {filteredProducts.map((p) => (
+              <div key={p.id} className="shopee-card">
+                <div className="shopee-img-wrap">
+                  <img src={p.image} alt={p.name} className="shopee-img" loading="lazy" />
+                  <span className="shopee-tag-badge">{p.tag}</span>
                 </div>
 
-                <div className="product-info">
-                  <h3 className="product-name">{p.name}</h3>
-                  <p className="product-desc">{p.description}</p>
-
-                  {/* PROVINCE SELECTOR FOR PRODUCT 1 */}
-                  {p.hasProvinceSelector && (
-                    <div
-                      style={{
-                        marginBottom: "1rem",
-                        background: "#fff7ed",
-                        border: "1px solid #fdba74",
-                        padding: "8px 12px",
-                        borderRadius: "10px",
-                      }}
-                    >
-                      <label
-                        style={{
-                          fontSize: "0.8rem",
-                          fontWeight: 700,
-                          color: "#ea580c",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "4px",
-                          marginBottom: "4px",
-                        }}
-                      >
-                        <MapPin size={14} /> Chọn Tỉnh Thành Muốn Mua:
-                      </label>
-                      <select
-                        value={selectedProvince}
-                        onChange={(e) => setSelectedProvince(e.target.value)}
-                        style={{
-                          width: "100%",
-                          padding: "6px 10px",
-                          borderRadius: "8px",
-                          border: "1px solid #fed7aa",
-                          background: "#ffffff",
-                          fontSize: "0.88rem",
-                          fontWeight: 600,
-                          color: "#1e293b",
-                        }}
-                      >
-                        {provinceList.map((prov) => (
-                          <option key={prov} value={prov}>
-                            Mảnh Ghép: {prov}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                <div className="shopee-card-body">
+                  <h3 className="shopee-title" title={p.name}>{p.name}</h3>
+                  {p.description && (
+                    <p className="shopee-desc" title={p.description}>{p.description}</p>
                   )}
 
-                  <ul className="product-features">
-                    {p.features.map((feat, i) => (
-                      <li key={i}>
-                        <Check size={14} className="text-orange" /> {feat}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="shopee-price-row">
+                    <span className="shopee-price-main">{formatMoney(p.price)}</span>
+                    {p.originalPrice > 0 && (
+                      <span className="shopee-price-del">{formatMoney(p.originalPrice)}</span>
+                    )}
+                  </div>
 
-                  <div className="product-pricing">
-                    <div className="price-wrap">
-                      <span className="current-price">
-                        {formatMoney(p.price)}
-                      </span>
-                      {p.originalPrice > 0 && (
-                        <span className="original-price">
-                          {formatMoney(p.originalPrice)}
-                        </span>
-                      )}
-                    </div>
+                  <div className="shopee-actions">
                     <button
-                      className="btn-buy-now"
+                      type="button"
+                      className="btn-shopee-cart"
                       onClick={() => addToCart(p)}
+                      title="Thêm vào giỏ hàng"
                     >
-                      <ShoppingBag size={16} /> Mua Ngay
+                      <ShoppingCart size={15} />
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-shopee-buy"
+                      onClick={() => {
+                        addToCart(p);
+                        setCheckoutOpen(true);
+                      }}
+                    >
+                      <span>Mua Ngay</span>
+                      <Zap size={14} />
                     </button>
                   </div>
                 </div>
@@ -388,19 +306,7 @@ export default function ShopPage() {
       {/* MODAL CHECKOUT VỚI THÔNG TIN VOUCHER & VIETQR */}
       {checkoutOpen && (
         <CheckoutModal
-          items={
-            cart.length > 0
-              ? cart
-              : products && products.length > 0
-              ? [
-                  {
-                    ...products[0],
-                    name: `${products[0].name} (${selectedProvince})`,
-                    selectedProvince,
-                  },
-                ]
-              : []
-          }
+          items={cart.length > 0 ? cart : (products && products.length > 0 ? [products[0]] : [])}
           initialVoucher={initialVoucherCode}
           shippingRule={shippingRule}
           onClose={() => setCheckoutOpen(false)}

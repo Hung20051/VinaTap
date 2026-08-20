@@ -168,21 +168,34 @@ export default function NotificationBell() {
         </button>
 
         {open && (
-          <div className="notif-dropdown-popover">
-            <div className="notif-popover-header">
-              <div className="notif-header-title">
-                <Bell size={18} className="text-blue" />
-                <h4>Thông Báo VinaTap</h4>
+          <>
+            <div className="notif-backdrop-overlay" onClick={() => setOpen(false)} />
+            <div className="notif-dropdown-popover">
+              <div className="notif-sheet-handle" />
+              <div className="notif-popover-header">
+                <div className="notif-header-title">
+                  <Bell size={18} className="text-blue" />
+                  <h4>Thông Báo VinaTap</h4>
+                </div>
+                <div className="notif-header-actions">
+                  {unreadCount > 0 && (
+                    <button
+                      className="notif-btn-readall"
+                      onClick={() => handleMarkAsRead("all")}
+                    >
+                      <CheckCheck size={14} /> Đọc tất cả
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className="notif-btn-close"
+                    onClick={() => setOpen(false)}
+                    title="Đóng"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
               </div>
-              {unreadCount > 0 && (
-                <button
-                  className="notif-btn-readall"
-                  onClick={() => handleMarkAsRead("all")}
-                >
-                  <CheckCheck size={14} /> Đọc tất cả
-                </button>
-              )}
-            </div>
 
             <div className="notif-popover-body">
               {notifications.length === 0 ? (
@@ -301,8 +314,9 @@ export default function NotificationBell() {
               )}
             </div>
           </div>
-        )}
-      </div>
-    </>
-  );
+        </>
+      )}
+    </div>
+  </>
+);
 }

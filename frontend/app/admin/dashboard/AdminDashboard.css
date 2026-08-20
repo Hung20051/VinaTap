@@ -1,8 +1,26 @@
+/* ─── ADMIN DASHBOARD CSS (DESKTOP NGUYÊN BẢN - MOBILE SLIDER & RESPONSIVE) ──────────── */
+
+.admin-dash-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.admin-dash-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted, #64748b);
+  margin-top: 0.35rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 📊 KPI GRID — DESKTOP: Grid nhiều cột */
 .admin-dash-kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 
 .admin-kpi-card {
@@ -10,89 +28,192 @@
   align-items: flex-start;
   gap: 0.85rem;
   padding: 1.25rem;
+  border-radius: var(--radius-lg, 14px);
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
+
 .admin-kpi-card__icon {
   width: 40px;
   height: 40px;
   flex-shrink: 0;
-  border-radius: var(--radius-md);
-  background: var(--primary-light);
-  color: var(--primary);
+  border-radius: var(--radius-md, 10px);
+  background: var(--primary-light, #fff1eb);
+  color: var(--primary, #e85d04);
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .admin-kpi-card--orange .admin-kpi-card__icon {
-  background: var(--primary);
-  color: #fff;
+  background: var(--primary, #e85d04);
+  color: #ffffff;
 }
+
 .admin-kpi-card--warning .admin-kpi-card__icon {
   background: #fef3c7;
   color: #b45309;
 }
+
 .admin-kpi-card__label {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--text-muted, #64748b);
   font-weight: 600;
+  margin: 0;
 }
+
 .admin-kpi-card__value {
   font-size: 1.4rem;
   font-weight: 800;
-  margin-top: 0.15rem;
-}
-.admin-kpi-card__sub {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  margin-top: 0.15rem;
+  color: #0f172a;
+  margin-top: 0.2rem;
+  letter-spacing: -0.02em;
 }
 
+.admin-kpi-card__sub {
+  font-size: 0.72rem;
+  color: var(--text-muted, #94a3b8);
+  margin-top: 0.2rem;
+}
+
+/* 📈 CHART & TOP PROVINCES CARDS */
 .admin-dash-chart-card {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+  border-radius: var(--radius-lg, 14px);
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
+
 .admin-dash-section-title {
   font-size: 1rem;
   font-weight: 700;
+  color: #0f172a;
   margin-bottom: 1rem;
 }
+
 .admin-dash-empty {
   padding: 2.5rem;
   text-align: center;
-  color: var(--text-muted);
+  color: var(--text-muted, #94a3b8);
 }
 
 .admin-dash-hot-card {
   padding: 1.5rem;
+  border-radius: var(--radius-lg, 14px);
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
+
 .admin-dash-hot-list {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
+
 .admin-dash-hot-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  border-radius: var(--radius-md);
-  background: var(--bg-subtle, #f9fafb);
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md, 8px);
+  background: var(--bg-subtle, #f8fafc);
+  border: 1px solid #f1f5f9;
 }
+
 .admin-dash-hot-rank {
   font-weight: 800;
-  color: var(--primary);
+  color: var(--primary, #e85d04);
   width: 28px;
+  font-size: 0.88rem;
 }
+
 .admin-dash-hot-name {
   flex: 1;
   font-weight: 600;
-}
-.admin-dash-hot-count {
-  font-size: 0.82rem;
-  color: var(--text-muted);
+  font-size: 0.88rem;
+  color: #1e293b;
 }
 
-@media (max-width: 480px) {
+.admin-dash-hot-count {
+  font-size: 0.82rem;
+  color: var(--text-muted, #64748b);
+  background: #ffffff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   📱 MOBILE & TABLET RESPONSIVE (IPHONE SE, SAMSUNG, IPAD...)
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .admin-dash-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .admin-dash-subtitle {
+    font-size: 0.76rem;
+    margin-top: 0.15rem;
+    margin-bottom: 0.85rem;
+  }
+
+  /* 🌟 CARDS TRỞ THÀNH 1 HÀNG VUỐT SLIDE NGANG (CAROUSEL) */
   .admin-dash-kpi-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.75rem;
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.15rem;
+    scrollbar-width: none; /* Ẩn thanh cuộn mặc định */
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-x;
+  }
+
+  .admin-dash-kpi-grid.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  .admin-dash-kpi-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .admin-kpi-card {
+    flex: 0 0 82%;
+    max-width: 310px;
+    scroll-snap-align: start;
+    padding: 1rem;
+    border-radius: 12px;
+    user-select: none;
+  }
+
+  .admin-kpi-card__icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .admin-kpi-card__value {
+    font-size: 1.25rem;
+  }
+
+  .admin-dash-chart-card,
+  .admin-dash-hot-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 12px;
   }
 }

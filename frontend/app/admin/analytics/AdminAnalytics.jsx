@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Eye,
   Users,
@@ -29,9 +29,32 @@ export default function AdminAnalytics() {
     recent_views: [],
   });
 
+  const sliderRef = useRef(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
+
+  const handleMouseDown = (e) => {
+    if (!sliderRef.current) return;
+    setIsDown(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeftState(sliderRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
+
+  const handleMouseMove = (e) => {
+    if (!isDown || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    sliderRef.current.scrollLeft = scrollLeftState - walk;
+  };
+
   useEffect(() => {
     loadStats();
-    // Làm mới tự động mỗi 60 giây (thay vì 5s gây quá tải Database)
+    // Làm mới tự động mỗi 60 giây
     const interval = setInterval(() => {
       loadStats(true);
     }, 60000);
@@ -68,16 +91,16 @@ export default function AdminAnalytics() {
       {/* Header */}
       <div className="admin-analytics-header">
         <div>
-          <h1 className="admin-dash-title">📈 Thống Kê Truy Cập Người Dùng Thực</h1>
+          <h1 className="admin-dash-title">📈 Thống Kê Truy Cập</h1>
           <p className="admin-dash-subtitle">
-            Đo lường chi tiết lượt xem trang, khách truy cập độc nhất &amp; tự động lọc bỏ Bot/Crawler
+            Đo lường lượt xem trang, khách truy cập thực &amp; tự động lọc bỏ Bot/Crawler
           </p>
         </div>
 
         <div className="admin-analytics-actions">
           {/* Timeframe Filter */}
           <div className="admin-analytics-timeframe">
-            <Filter size={15} />
+            <Filter size={14} />
             <select
               value={timeframe}
               onChange={(e) => setTimeframe(e.target.value)}
@@ -92,11 +115,11 @@ export default function AdminAnalytics() {
 
           <button
             type="button"
-            className="btn btn-ghost"
-            onClick={loadStats}
+            className="btn btn-ghost admin-analytics-btn-reload"
+            onClick={() => loadStats(false)}
             disabled={loading}
           >
-            <RefreshCw size={16} /> Tải lại
+            <RefreshCw size={15} /> <span>Tải lại</span>
           </button>
         </div>
       </div>
@@ -107,8 +130,15 @@ export default function AdminAnalytics() {
         </div>
       ) : (
         <>
-          {/* KPI Metrics Summary Grid */}
-          <div className="admin-analytics-kpi-grid">
+          {/* KPI Metrics Summary Grid (Slide Carousel on Mobile) */}
+          <div
+            className={`admin-analytics-kpi-grid ${isDown ? "is-dragging" : ""}`}
+            ref={sliderRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+          >
             {/* Card 1: Tổng Lượt Xem Thực */}
             <div className="card admin-analytics-kpi-card">
               <div className="admin-analytics-kpi-icon admin-analytics-kpi-icon--blue">

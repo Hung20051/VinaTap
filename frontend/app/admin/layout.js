@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/components/layout/Header";
+import AdminHeader from "@/components/layout/AdminHeader";
 import AdminSidebar from "@/components/layout/AdminSidebar";
 import { getUser, requireAdmin, clearAuth } from "@/lib/auth";
 
@@ -10,10 +10,12 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
     if (!requireAdmin(router)) return;
     setUser(getUser());
+    setAuthorized(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -29,9 +31,31 @@ export default function AdminLayout({ children }) {
     window.location.href = "/";
   };
 
+  if (!authorized) {
+    return (
+      <div className="app-shell-vertical">
+        <AdminHeader
+          isDrawerOpen={false}
+          onToggleDrawer={() => {}}
+        />
+        <main
+          className="app-main-content"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "60vh",
+          }}
+        >
+          <div className="spinner" />
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app-shell-vertical">
-      <Header
+      <AdminHeader
         isDrawerOpen={drawerOpen}
         onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
       />

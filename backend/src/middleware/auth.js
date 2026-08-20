@@ -14,6 +14,11 @@ const getFreshUser = async (id) => {
   return rows[0] || null;
 };
 
+const signToken = (user) =>
+  jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+  });
+
 // Bắt buộc phải có JWT hợp lệ VÀ tài khoản còn active
 const protect = async (req, res, next) => {
   try {
@@ -35,8 +40,10 @@ const protect = async (req, res, next) => {
         .json({ message: "Tài khoản đã bị khóa hoặc vô hiệu hóa" });
 
     req.user = { id: user.id, role: user.role }; // role lấy mới nhất từ DB, không tin theo token cũ
+
     next();
   } catch (err) {
+    console.error("[AUTH PROTECT ERROR]:", err.name, err.message);
     return res
       .status(401)
       .json({ message: "Token không hợp lệ hoặc đã hết hạn" });
