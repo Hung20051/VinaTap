@@ -68,32 +68,40 @@ export default function AdminNotifications() {
   useEffect(() => {
     loadHistory();
     loadUsers();
-    loadDbVouchers();
   }, []);
+
+  useEffect(() => {
+    loadDbVouchers();
+  }, [searchParams]);
 
   const loadDbVouchers = async () => {
     try {
       const data = await voucherAPI.getAdminList();
-      // 🛑 CHỈ LẤY MÃ CÒN HẠN SỬ DỤNG VÀ DANG ACTIVE
-      const activeVouchers = (data || []).filter((v) => !v.isExpired && v.status === "active");
-      setDbVouchers(activeVouchers);
+      const allVouchers = data || [];
+      // Ưu tiên các mã còn hoạt động
+      const activeVouchers = allVouchers.filter((v) => !v.isExpired && v.status === "active");
+      const listToUse = activeVouchers.length > 0 ? activeVouchers : allVouchers;
+      setDbVouchers(listToUse);
 
-      if (activeVouchers.length > 0) {
-        let targetVoucher = activeVouchers[0];
-        if (initialVoucherId) {
-          const found = activeVouchers.find((v) => String(v.id) === String(initialVoucherId));
+      const qType = searchParams.get("type") || initialType;
+      const qVoucherId = searchParams.get("voucherId") || initialVoucherId;
+
+      if (listToUse.length > 0) {
+        let targetVoucher = listToUse[0];
+        if (qVoucherId) {
+          const found = allVouchers.find((v) => String(v.id) === String(qVoucherId));
           if (found) targetVoucher = found;
         }
 
         setSelectedVoucherId(targetVoucher.id);
         setVoucherCode(targetVoucher.code);
-        setDiscountAmount(targetVoucher.discountText);
+        setDiscountAmount(targetVoucher.discountText || `Giảm ${targetVoucher.discount_value}%`);
 
-        if (initialType === "promo" || initialVoucherId) {
+        if (qType === "promo" || qVoucherId) {
           setNotifType("promo");
-          setTitle(`[QUÀ TẶNG THÀNH VIÊN] Tặng Bạn Voucher ${targetVoucher.discountText}`);
+          setTitle(`[QUÀ TẶNG THÀNH VIÊN] Tặng Bạn Voucher ${targetVoucher.discountText || targetVoucher.title}`);
           setContent(
-            `Chúc mừng bạn! VinaTap vừa tặng bạn Voucher ${targetVoucher.code} (${targetVoucher.discountText}). Vào Ví xem ngay!`,
+            `Chúc mừng bạn! VinaTap vừa tặng bạn Voucher ${targetVoucher.code} (${targetVoucher.discountText || targetVoucher.title}). Mã ưu đãi đã được lưu sẵn trong Ví của bạn, hãy sử dụng ngay khi mua sắm nhé!`,
           );
           setLink("/shop");
         }
@@ -113,10 +121,23 @@ export default function AdminNotifications() {
       );
       setLink("/");
     } else if (type === "promo") {
-      setTitle("[QUÀ TẶNG THÀNH VIÊN] Tặng Bạn Voucher Giảm 20%");
-      setContent(
-        "Nhập ngay mã Voucher VINATAP2026 khi thanh toán để nhận ngay ưu đãi 20% cho tất cả đơn hàng!",
-      );
+      const curVoucher =
+        dbVouchers.find((v) => String(v.id) === String(selectedVoucherId)) ||
+        dbVouchers[0];
+      if (curVoucher) {
+        setSelectedVoucherId(curVoucher.id);
+        setVoucherCode(curVoucher.code);
+        setDiscountAmount(curVoucher.discountText || `Giảm ${curVoucher.discount_value}%`);
+        setTitle(`[QUÀ TẶNG THÀNH VIÊN] Tặng Bạn Voucher ${curVoucher.discountText || curVoucher.title}`);
+        setContent(
+          `Chúc mừng bạn! VinaTap vừa tặng bạn Voucher ${curVoucher.code} (${curVoucher.discountText || curVoucher.title}). Mã ưu đãi đã được lưu sẵn trong Ví của bạn, hãy sử dụng ngay khi mua sắm nhé!`,
+        );
+      } else {
+        setTitle("[QUÀ TẶNG THÀNH VIÊN] Tặng Bạn Voucher Ưu Đãi");
+        setContent(
+          "Chúc mừng bạn! VinaTap gửi tặng bạn mã Voucher ưu đãi mua sắm. Vào Ví voucher để kiểm tra ngay!",
+        );
+      }
       setLink("/shop");
     } else if (type === "feature") {
       setTitle("[TÍNH NĂNG MỚI] Trải Nghiệm Giao Diện Mới");

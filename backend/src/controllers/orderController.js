@@ -238,12 +238,10 @@ const paymentWebhook = async (req, res) => {
     const order = await Order.getByCode(orderCode);
 
     if (!order) {
-      return res
-        .status(404)
-        .json({
-          status: "error",
-          message: `Không tìm thấy đơn hàng ${orderCode}`,
-        });
+      return res.status(404).json({
+        status: "error",
+        message: `Không tìm thấy đơn hàng ${orderCode}`,
+      });
     }
 
     // 💰 3. Kiểm tra số tiền chuyển thực tế (chống chuyển thiếu tiền)
