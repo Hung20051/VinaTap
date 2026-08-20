@@ -19,9 +19,14 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Tạo JWT token
 const signToken = (user) =>
-  jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || "7d",
-  });
+  jwt.sign(
+    { id: user.id, role: user.role },
+    process.env.JWT_SECRET ||
+      "f9a87d6c5b4a3e2f109887766554433221100f9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e",
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+    },
+  );
 
 // Rút gọn user object trả ra ngoài API — loại bỏ password_hash/google_id
 // (nhạy cảm), giữ lại MỌI field còn lại (kể cả phone/address/avatar_url).
