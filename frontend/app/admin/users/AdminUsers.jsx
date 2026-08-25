@@ -13,6 +13,7 @@ import {
 import { userAPI } from "@/lib/api";
 import { getUser } from "@/lib/auth";
 import UserDetailModal from "./components/UserDetailModal";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminUsers.css";
 
 const PAGE_SIZE = 20;
@@ -227,8 +228,8 @@ export default function AdminUsers() {
       </div>
 
       {loading ? (
-        <div className="admin-dash-loading">
-          <div className="spinner" />
+        <div className="card admin-users-table-wrap" style={{ padding: "2.5rem 1rem" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang tải danh sách người dùng..." subtext="Đang kết nối cơ sở dữ liệu VinaTap" />
         </div>
       ) : users.length === 0 ? (
         <div className="card admin-users-empty">

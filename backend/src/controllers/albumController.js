@@ -1,15 +1,20 @@
 const Album = require("../models/Album");
 const NfcCard = require("../models/NfcCard");
 const db = require("../config/db");
+const { emitToAlbum } = require("../config/socket");
 
 // ── Throttle view count: mỗi IP + album chỉ tính 1 view / 5 phút ──
 const recentViews = new Map();
 const VIEW_COOLDOWN = 5 * 60 * 1000;
+const MAX_VIEWS_MAP_SIZE = 10000;
 
 setInterval(() => {
   const now = Date.now();
   for (const [key, ts] of recentViews.entries()) {
     if (now - ts > VIEW_COOLDOWN) recentViews.delete(key);
+  }
+  if (recentViews.size > MAX_VIEWS_MAP_SIZE) {
+    recentViews.clear();
   }
 }, 10 * 60 * 1000);
 
@@ -36,24 +41,25 @@ const createAlbum = async (req, res) => {
 
     // Kiểm tra album đã tồn tại chưa (1 NFC = 1 album)
     const existing = await Album.findByNfcCard(nfc_card_id);
-    if (existing)
+    if (existing) {
       return res
-        .status(409)
+        .status(200)
         .json({ message: "Album đã tồn tại cho thẻ này", album: existing });
+    }
 
-    const id = await Album.create({
+    const { id: newAlbumId } = await Album.create({
       nfc_card_id,
       owner_id: req.user.id,
       title: req.body.title,
     });
-    const album = await Album.findById(id);
+    const album = await Album.findById(newAlbumId);
 
     res.status(201).json({ message: "Tạo album thành công", album });
   } catch (err) {
     if (err.code === "ER_DUP_ENTRY") {
       const existing = await Album.findByNfcCard(req.body.nfc_card_id);
       return res
-        .status(409)
+        .status(200)
         .json({ message: "Album đã tồn tại cho thẻ này", album: existing });
     }
     console.error("createAlbum:", err);
@@ -68,6 +74,18 @@ const getAlbum = async (req, res) => {
     const album = await Album.findById(req.params.id);
     if (!album)
       return res.status(404).json({ message: "Không tìm thấy album" });
+
+    // Nếu album đang bị tạm khóa (archived) thì CHỈ chủ sở hữu hoặc admin mới xem được
+    if (album.status === "archived") {
+      const isOwnerOrAdmin = req.user && (album.owner_id === req.user.id || req.user.role === "admin");
+      if (!isOwnerOrAdmin) {
+        return res.status(403).json({
+          message: `Album này đang bị tạm khóa bởi Quản trị viên${album.locked_reason ? ` (${album.locked_reason})` : ""}.`,
+          is_locked: true,
+          locked_reason: album.locked_reason,
+        });
+      }
+    }
 
     // Nếu album private thì chỉ owner hoặc cộng tác viên mới xem được
     if (!album.is_public) {
@@ -124,6 +142,30 @@ const getAlbum = async (req, res) => {
       [album.id],
     );
 
+    // Tính quyền của người dùng hiện tại đối với album này
+    let user_role = "guest"; // 'owner' | 'admin' | 'collaborator' | 'pending_collaborator' | 'guest'
+    if (req.user) {
+      if (req.user.id === album.owner_id) {
+        user_role = "owner";
+      } else if (req.user.role === "admin") {
+        user_role = "admin";
+      } else {
+        const [shares] = await db.execute(
+          `SELECT * FROM album_shares WHERE album_id = ? AND user_id = ?`,
+          [album.id, req.user.id],
+        );
+        if (shares.length) {
+          if (shares[0].status === "approved") {
+            user_role = "collaborator";
+          } else if (shares[0].status === "pending") {
+            user_role = "pending_collaborator";
+          }
+        }
+      }
+    }
+
+    const can_edit = ["owner", "admin", "collaborator"].includes(user_role);
+
     // Chỉ tăng lượt xem nếu KHÔNG PHẢI chính chủ sở hữu album xem
     if (!req.user || req.user.id !== album.owner_id) {
       const viewKey = `${req.ip}_${album.id}`;
@@ -133,7 +175,15 @@ const getAlbum = async (req, res) => {
       }
     }
 
-    res.json({ album, media, tags });
+    res.json({
+      album: {
+        ...album,
+        user_role,
+        can_edit,
+      },
+      media,
+      tags,
+    });
   } catch (err) {
     console.error("getAlbum:", err);
     res.status(500).json({ message: "Lỗi server" });
@@ -163,6 +213,12 @@ const updateAlbum = async (req, res) => {
     if (album.owner_id !== req.user.id && req.user.role !== "admin")
       return res.status(403).json({ message: "Chỉ chủ album mới được sửa" });
 
+    if (album.status === "archived" && req.user.role !== "admin") {
+      return res.status(403).json({
+        message: "Album này đang bị Quản trị viên tạm khóa, không thể chỉnh sửa nội dung.",
+      });
+    }
+
     // Whitelist chỉ cho phép sửa các trường an toàn trong bảng albums
     const { title, description, is_public, theme_sticker_id, cover_photo_id } = req.body;
     const safeData = {};
@@ -174,6 +230,7 @@ const updateAlbum = async (req, res) => {
 
     await Album.update(req.params.id, safeData);
     const updated = await Album.findById(req.params.id);
+    emitToAlbum(album.id, album.share_code, "album_updated", { album: updated });
     res.json({ message: "Cập nhật thành công", album: updated });
   } catch (err) {
     console.error("updateAlbum:", err);
@@ -193,6 +250,7 @@ const deleteAlbum = async (req, res) => {
       return res.status(403).json({ message: "Không có quyền xóa album này" });
 
     await Album.delete(req.params.id);
+    emitToAlbum(album.id, album.share_code, "album_deleted", { albumId: album.id });
     res.json({ message: "Đã xóa album" });
   } catch (err) {
     console.error("deleteAlbum:", err);
@@ -208,7 +266,10 @@ const createTag = async (req, res) => {
     const { label, color } = req.body;
     if (!label) return res.status(400).json({ message: "Thiếu tên tag" });
 
-    const canEdit = await Album.canEdit(req.params.id, req.user.id);
+    const album = await Album.findById(req.params.id);
+    if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
+
+    const canEdit = await Album.canEdit(album.id, req.user.id);
     if (!canEdit)
       return res
         .status(403)
@@ -216,13 +277,19 @@ const createTag = async (req, res) => {
 
     const [result] = await db.execute(
       `INSERT INTO photo_tags (album_id, label, color) VALUES (?, ?, ?)`,
-      [req.params.id, label, color || null],
+      [album.id, label, color || null],
     );
-    res.status(201).json({
-      message: "Thêm tag thành công",
+    const newTag = {
       id: result.insertId,
+      album_id: album.id,
       label,
       color,
+    };
+    emitToAlbum(album.id, album.share_code, "tag_created", { tag: newTag });
+    res.status(201).json({
+      message: "Thêm tag thành công",
+      tag: newTag,
+      ...newTag,
     });
   } catch (err) {
     console.error("createTag:", err);
@@ -234,7 +301,10 @@ const createTag = async (req, res) => {
 // DELETE /api/albums/:id/tags/:tagId
 const deleteTag = async (req, res) => {
   try {
-    const canEdit = await Album.canEdit(req.params.id, req.user.id);
+    const album = await Album.findById(req.params.id);
+    if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
+
+    const canEdit = await Album.canEdit(album.id, req.user.id);
     if (!canEdit)
       return res
         .status(403)
@@ -242,8 +312,11 @@ const deleteTag = async (req, res) => {
 
     await db.execute(`DELETE FROM photo_tags WHERE id = ? AND album_id = ?`, [
       req.params.tagId,
-      req.params.id,
+      album.id,
     ]);
+    emitToAlbum(album.id, album.share_code, "tag_deleted", {
+      tagId: Number(req.params.tagId),
+    });
     res.json({ message: "Đã xóa tag" });
   } catch (err) {
     console.error("deleteTag:", err);
@@ -274,11 +347,92 @@ const getAdminList = async (req, res) => {
   }
 };
 
+// GET /api/albums/admin/reports
+const getAdminReports = async (req, res) => {
+  try {
+    const data = await Album.getAdminReports(req.query);
+    res.json(data);
+  } catch (err) {
+    console.error("getAdminReports:", err);
+    res.status(500).json({ message: "Lỗi nạp danh sách báo cáo" });
+  }
+};
+
+// POST /api/albums/admin/reports/:id/resolve
+const resolveReport = async (req, res) => {
+  try {
+    const reportId = req.params.id;
+    const { action, admin_notes, locked_reason } = req.body; // action: 'lock' | 'dismiss'
+    
+    const [reports] = await db.execute(`SELECT * FROM album_reports WHERE id = ?`, [reportId]);
+    if (!reports.length) return res.status(404).json({ message: "Không tìm thấy báo cáo" });
+
+    const report = reports[0];
+
+    if (action === "lock") {
+      await Album.updateAdminStatus(report.album_id, {
+        status: "archived",
+        locked_reason: locked_reason || report.reason || "Nội dung vi phạm chính sách cộng đồng",
+      });
+      await db.execute(
+        `UPDATE album_reports SET status = 'resolved', admin_notes = ? WHERE id = ?`,
+        [admin_notes || "Đã khóa album", reportId],
+      );
+    } else {
+      await db.execute(
+        `UPDATE album_reports SET status = 'dismissed', admin_notes = ? WHERE id = ?`,
+        [admin_notes || "Báo cáo không chính xác / Đã bỏ qua", reportId],
+      );
+    }
+
+    res.json({ message: action === "lock" ? "Đã khóa album và xử lý báo cáo" : "Đã bỏ qua báo cáo" });
+  } catch (err) {
+    console.error("resolveReport:", err);
+    res.status(500).json({ message: "Lỗi xử lý báo cáo" });
+  }
+};
+
+// POST /api/albums/:id/report
+const reportAlbum = async (req, res) => {
+  try {
+    const albumId = req.params.id;
+    const { reason, description, email } = req.body;
+    if (!reason) return res.status(400).json({ message: "Vui lòng chọn lý do báo cáo" });
+
+    const album = await Album.findById(albumId);
+    if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
+
+    await db.execute(
+      `INSERT INTO album_reports (album_id, reporter_user_id, reporter_email, reason, description, status)
+       VALUES (?, ?, ?, ?, ?, 'pending')`,
+      [
+        album.id,
+        req.user?.id || null,
+        email || req.user?.email || null,
+        reason,
+        description || null,
+      ],
+    );
+
+    res.status(201).json({ message: "Cảm ơn bạn đã gửi báo cáo. Quản trị viên sẽ kiểm tra và xử lý." });
+  } catch (err) {
+    console.error("reportAlbum:", err);
+    res.status(500).json({ message: "Lỗi khi gửi báo cáo" });
+  }
+};
+
 // PATCH /api/albums/admin/:id/status
 const updateAdminStatus = async (req, res) => {
   try {
-    const { is_public, status } = req.body;
-    await Album.updateAdminStatus(req.params.id, { is_public, status });
+    const { is_public, status, locked_reason } = req.body;
+    const ALLOWED_STATUSES = ["active", "archived", "deleted"];
+    if (status !== undefined && !ALLOWED_STATUSES.includes(status)) {
+      return res.status(400).json({
+        message: "Trạng thái không hợp lệ (chỉ chấp nhận: active, archived, deleted)",
+      });
+    }
+
+    await Album.updateAdminStatus(req.params.id, { is_public, status, locked_reason });
     res.json({ message: "Cập nhật trạng thái album thành công" });
   } catch (err) {
     console.error("updateAdminStatus:", err);
@@ -296,5 +450,8 @@ module.exports = {
   deleteTag,
   getAdminStats,
   getAdminList,
+  getAdminReports,
+  resolveReport,
+  reportAlbum,
   updateAdminStatus,
 };

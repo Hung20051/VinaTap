@@ -205,7 +205,8 @@ export const nfcAPI = {
     }),
   myCards: () => request("/nfc/my-cards"),
 
-  // Chuyển nhượng
+  // Chuyển nhượng & Nhận quà
+  getPendingTransfers: () => request("/nfc/transfers/pending"),
   initiateTransfer: (cardId, body) =>
     request(`/nfc/${cardId}/transfer`, {
       method: "POST",
@@ -213,10 +214,15 @@ export const nfcAPI = {
     }),
   cancelTransfer: (cardId) =>
     request(`/nfc/${cardId}/transfer`, { method: "DELETE" }),
-  acceptTransfer: (token) =>
+  acceptTransfer: (data) =>
     request("/nfc/transfer/accept", {
       method: "POST",
-      body: JSON.stringify({ token }),
+      body: JSON.stringify(typeof data === "string" ? { token: data } : data),
+    }),
+  rejectTransfer: (data) =>
+    request("/nfc/transfers/reject", {
+      method: "POST",
+      body: JSON.stringify(typeof data === "number" || typeof data === "string" ? { transfer_id: data } : data),
     }),
 
   // Admin
@@ -263,14 +269,30 @@ export const albumAPI = {
 
   requestEdit: (id) =>
     request(`/albums/${id}/share/request`, { method: "POST" }),
+  requestCollaborator: (id) =>
+    request(`/albums/${id}/share/request`, { method: "POST" }),
   getCollaborators: (id) => request(`/albums/${id}/share`),
   reviewRequest: (id, shareId, action) =>
     request(`/albums/${id}/share/${shareId}`, {
       method: "PUT",
       body: JSON.stringify({ action }),
     }),
+  reviewCollaborator: (id, shareId, status) =>
+    request(`/albums/${id}/share/${shareId}`, {
+      method: "PUT",
+      body: JSON.stringify({ action: status }),
+    }),
   revokeAccess: (id, shareId) =>
     request(`/albums/${id}/share/${shareId}`, { method: "DELETE" }),
+  revokeCollaborator: (id, shareId) =>
+    request(`/albums/${id}/share/${shareId}`, { method: "DELETE" }),
+
+  // Báo cáo vi phạm
+  report: (id, body) =>
+    request(`/albums/${id}/report`, {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
 
   // Admin
   getAdminStats: () => request("/albums/admin/stats"),
@@ -280,6 +302,17 @@ export const albumAPI = {
     ).toString();
     return request(`/albums/admin/list${qs ? `?${qs}` : ""}`);
   },
+  getAdminReports: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
+    ).toString();
+    return request(`/albums/admin/reports${qs ? `?${qs}` : ""}`);
+  },
+  resolveReport: (id, body) =>
+    request(`/albums/admin/reports/${id}/resolve`, {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
   updateAdminStatus: (id, body) =>
     request(`/albums/admin/${id}/status`, {
       method: "PATCH",
@@ -330,6 +363,11 @@ export const mediaAPI = {
   deleteSticker: (overlayId) =>
     request(`/media/stickers/${overlayId}`, { method: "DELETE" }),
   addTag: (id, tag_id) =>
+    request(`/media/${id}/tags`, {
+      method: "POST",
+      body: JSON.stringify({ tag_id }),
+    }),
+  attachTag: (id, tag_id) =>
     request(`/media/${id}/tags`, {
       method: "POST",
       body: JSON.stringify({ tag_id }),

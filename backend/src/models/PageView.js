@@ -9,28 +9,6 @@ const BOT_REGEX =
   /bot|crawl|spider|slurp|facebookexternalhit|python-requests|curl|wget|selenium|puppeteer/i;
 
 const PageView = {
-  async initTable() {
-    try {
-      await db.execute(`
-        CREATE TABLE IF NOT EXISTS page_views (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          page_path VARCHAR(255) NOT NULL,
-          province_slug VARCHAR(100) NULL,
-          ip_address VARCHAR(45) NULL,
-          user_agent TEXT NULL,
-          device_type VARCHAR(20) DEFAULT 'desktop',
-          is_bot TINYINT(1) DEFAULT 0,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          INDEX idx_created_at (created_at),
-          INDEX idx_is_bot (is_bot),
-          INDEX idx_province_slug (province_slug)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `);
-    } catch (err) {
-      console.error("PageView initTable error:", err.message);
-    }
-  },
-
   // Ghi nhận lượt xem trang thực tế
   async track({ pagePath, provinceSlug, ipAddress, userAgent }) {
 

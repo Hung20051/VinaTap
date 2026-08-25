@@ -2,53 +2,6 @@ const db = require("../config/db");
 const crypto = require("crypto");
 
 const Order = {
-  // Khởi tạo bảng orders nếu chưa tồn tại
-  async initTable() {
-    await db.execute(`
-      CREATE TABLE IF NOT EXISTS orders (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        order_code VARCHAR(50) NOT NULL UNIQUE,
-        user_id INT NOT NULL,
-        recipient_name VARCHAR(100) NOT NULL,
-        recipient_phone VARCHAR(20) NOT NULL,
-        recipient_address TEXT NOT NULL,
-        payment_method ENUM('vietqr', 'cod') NOT NULL DEFAULT 'vietqr',
-        items_json JSON NOT NULL,
-        subtotal DECIMAL(12,2) NOT NULL DEFAULT 0,
-        discount_amount DECIMAL(12,2) NOT NULL DEFAULT 0,
-        shipping_fee DECIMAL(12,2) NOT NULL DEFAULT 30000,
-        total_amount DECIMAL(12,2) NOT NULL DEFAULT 0,
-        voucher_code VARCHAR(50) DEFAULT NULL,
-        status ENUM('pending', 'paid', 'processing', 'shipping', 'completed', 'cancelled') NOT NULL DEFAULT 'pending',
-        note TEXT DEFAULT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    `);
-
-    // Tự động bổ sung các cột nếu bảng orders đã tồn tại từ trước
-    const safeAddColumns = [
-      `ALTER TABLE orders ADD COLUMN recipient_name VARCHAR(100) NOT NULL DEFAULT ''`,
-      `ALTER TABLE orders ADD COLUMN recipient_phone VARCHAR(20) NOT NULL DEFAULT ''`,
-      `ALTER TABLE orders ADD COLUMN recipient_address TEXT NOT NULL`,
-      `ALTER TABLE orders ADD COLUMN items_json JSON NOT NULL`,
-      `ALTER TABLE orders ADD COLUMN subtotal DECIMAL(12,2) NOT NULL DEFAULT 0`,
-      `ALTER TABLE orders ADD COLUMN discount_amount DECIMAL(12,2) NOT NULL DEFAULT 0`,
-      `ALTER TABLE orders ADD COLUMN shipping_fee DECIMAL(12,2) NOT NULL DEFAULT 30000`,
-      `ALTER TABLE orders ADD COLUMN voucher_code VARCHAR(50) DEFAULT NULL`,
-      `ALTER TABLE orders ADD COLUMN payment_method ENUM('vietqr', 'cod') NOT NULL DEFAULT 'vietqr'`,
-    ];
-
-    for (const sql of safeAddColumns) {
-      try {
-        await db.execute(sql);
-      } catch (e) {
-        // Cột đã tồn tại ➔ bỏ qua lỗi ER_DUP_FIELDNAME
-      }
-    }
-  },
-
   // 🔒 BACKEND ZERO CLIENT TRUST CALCULATIONS & VALIDATION
   async create({
     userId,
@@ -58,9 +11,6 @@ const Order = {
     paymentMethod = "vietqr",
     note = "",
   }) {
-    // Bảng orders đã được init 1 lần khi server start (app.js) — không cần
-    // gọi initTable() mỗi request nữa.
-
     // 1. Validate người nhận
     const recipientName = (shippingInfo.name || "").trim();
     const recipientPhone = (shippingInfo.phone || "").trim();
@@ -400,23 +350,13 @@ const Order = {
     });
   },
 
-  // Tự động hủy các đơn VietQR pending quá 30 phút chưa thanh toán
+  // Tự động hủy các đơn VietQR pending quá hạn kèm hoàn trả voucher
   async cleanExpiredPendingOrders() {
-    try {
-      await db.execute(
-        `UPDATE orders SET status = 'cancelled', updated_at = NOW()
-         WHERE payment_method = 'vietqr' AND status = 'pending' AND created_at < NOW() - INTERVAL 30 MINUTE`,
-      );
-    } catch (e) {
-      console.warn("cleanExpiredPendingOrders warning:", e.message);
-    }
+    await this.autoCancelExpiredOrders();
   },
 
   // Admin lấy toàn bộ đơn hàng
   async getAllAdmin({ search, status = "active", limit = 50, offset = 0 } = {}) {
-    // Dọn dẹp đơn pending quá hạn trước khi query
-    await this.cleanExpiredPendingOrders();
-
     let whereClause = [];
     let params = [];
 
@@ -444,13 +384,16 @@ const Order = {
     const whereStr =
       whereClause.length > 0 ? `WHERE ${whereClause.join(" AND ")}` : "";
 
+    const safeLimit = Math.max(1, Math.min(parseInt(limit, 10) || 50, 100));
+    const safeOffset = Math.max(0, parseInt(offset, 10) || 0);
+
     const [rows] = await db.execute(
       `SELECT o.*, u.name AS user_name, u.email AS user_email
        FROM orders o
        LEFT JOIN users u ON u.id = o.user_id
        ${whereStr}
        ORDER BY o.created_at DESC
-       LIMIT ${Number(limit)} OFFSET ${Number(offset)}`,
+       LIMIT ${safeLimit} OFFSET ${safeOffset}`,
       params,
     );
 

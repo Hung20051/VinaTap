@@ -6,6 +6,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import { isLoggedIn } from "@/lib/auth";
 import { nfcAPI } from "@/lib/api";
+import "./TransferAccept.css";
 
 // Tách riêng vì useSearchParams() bắt buộc phải nằm trong Suspense
 function AcceptTransferContent() {
@@ -41,114 +42,69 @@ function AcceptTransferContent() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-page)" }}>
+    <div className="transfer-page-wrapper">
       <nav className="navbar">
         <div className="container navbar__inner">
           <Logo className="navbar__logo" />
         </div>
       </nav>
 
-      <div style={{ maxWidth: 440, margin: "4rem auto", padding: "0 1rem" }}>
-        <div className="card" style={{ padding: "2rem", textAlign: "center" }}>
+      <div className="transfer-content-box">
+        <div className="transfer-card">
           {status === "idle" && (
             <>
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🎁</div>
-              <h1
-                style={{
-                  fontSize: "1.4rem",
-                  fontWeight: 800,
-                  marginBottom: ".75rem",
-                }}
-              >
-                Nhận mảnh ghép NFC
-              </h1>
-              <p
-                style={{
-                  color: "var(--text-secondary)",
-                  marginBottom: "1.5rem",
-                  fontSize: ".9rem",
-                }}
-              >
+              <div className="transfer-icon">🎁</div>
+              <h1 className="transfer-title">Nhận Mảnh Ghép NFC</h1>
+              <p className="transfer-desc">
                 Có người muốn tặng bạn một mảnh ghép VinaTap. Bấm xác nhận để
                 nhận thẻ về tài khoản của bạn.
               </p>
               <button
-                className="btn btn-primary"
-                style={{
-                  width: "100%",
-                  justifyContent: "center",
-                  fontSize: "1rem",
-                  padding: ".8rem",
-                }}
+                className="transfer-btn-primary"
                 onClick={handleAccept}
               >
-                ✅ Xác nhận nhận thẻ
+                ✅ Xác Nhận Nhận Thẻ Ngay
               </button>
-              <Link
-                href="/"
-                style={{
-                  display: "block",
-                  marginTop: "1rem",
-                  color: "var(--text-secondary)",
-                  fontSize: ".85rem",
-                }}
-              >
-                Từ chối
+              <Link href="/" className="transfer-link-reject">
+                Từ chối và quay lại
               </Link>
             </>
           )}
 
           {status === "loading" && (
-            <>
-              <div className="spinner" style={{ margin: "2rem auto" }} />
-              <p style={{ color: "var(--text-secondary)" }}>Đang xử lý...</p>
-            </>
+            <div className="transfer-spinner-box">
+              <div className="spinner" />
+              <p className="transfer-desc" style={{ marginTop: "1rem" }}>
+                Đang xử lý nhận thẻ...
+              </p>
+            </div>
           )}
 
           {status === "success" && (
             <>
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🎉</div>
-              <h2 style={{ fontWeight: 700, marginBottom: ".5rem" }}>
-                Nhận thẻ thành công!
+              <div className="transfer-icon">🎉</div>
+              <h2 className="transfer-title" style={{ color: "#16a34a" }}>
+                Nhận Thẻ Thành Công!
               </h2>
-              <p
-                style={{
-                  color: "var(--text-secondary)",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                {msg}
-              </p>
+              <p className="transfer-desc">{msg}</p>
               <Link
                 href="/customer/dashboard"
-                className="btn btn-primary"
-                style={{ justifyContent: "center", width: "100%" }}
+                className="transfer-btn-primary"
               >
-                Xem Dashboard
+                Xem Bộ Sưu Tập Tại Dashboard
               </Link>
             </>
           )}
 
           {status === "error" && (
             <>
-              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>❌</div>
-              <h2 style={{ fontWeight: 700, marginBottom: ".5rem" }}>
-                Không thể nhận thẻ
+              <div className="transfer-icon">❌</div>
+              <h2 className="transfer-title" style={{ color: "#dc2626" }}>
+                Không Thể Nhận Thẻ
               </h2>
-              <p
-                style={{
-                  color: "var(--text-secondary)",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                {msg}
-              </p>
-              <Link
-                href="/"
-                className="btn btn-outline"
-                style={{ justifyContent: "center" }}
-              >
-                Về trang chủ
+              <p className="transfer-desc">{msg}</p>
+              <Link href="/" className="transfer-btn-primary">
+                Về Trang Chủ
               </Link>
             </>
           )}
@@ -162,14 +118,7 @@ export default function AcceptTransferPage() {
   return (
     <Suspense
       fallback={
-        <div
-          style={{
-            minHeight: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <div className="transfer-page-wrapper" style={{ alignItems: "center", justifyContent: "center" }}>
           <div className="spinner" />
         </div>
       }

@@ -17,6 +17,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { productAPI, shippingAPI, provinceAPI } from "@/lib/api";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminProducts.css";
 
 const emptyForm = () => ({
@@ -332,8 +333,8 @@ export default function AdminProducts() {
       </div>
 
       {loading ? (
-        <div className="admin-dash-loading">
-          <div className="spinner" />
+        <div style={{ padding: "3rem 1rem", background: "#fff", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang tải danh mục sản phẩm..." subtext="Đang đồng bộ giá và phí vận chuyển" />
         </div>
       ) : products.length === 0 ? (
         <div className="admin-prod-empty">

@@ -1,47 +1,6 @@
 const db = require("../config/db");
 
 const Voucher = {
-  async initTable() {
-    try {
-      await db.execute(`
-        CREATE TABLE IF NOT EXISTS vouchers (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          code VARCHAR(50) NOT NULL UNIQUE,
-          title VARCHAR(200) NOT NULL,
-          description TEXT NULL,
-          discount_type ENUM('percent', 'amount', 'freeship') NOT NULL DEFAULT 'percent',
-          discount_value DECIMAL(12,2) NOT NULL DEFAULT 0,
-          min_order_amount DECIMAL(12,2) NOT NULL DEFAULT 0,
-          max_discount_amount DECIMAL(12,2) NULL,
-          usage_limit INT NULL,
-          used_count INT NOT NULL DEFAULT 0,
-          expires_at DATETIME NULL,
-          status ENUM('active', 'disabled') NOT NULL DEFAULT 'active',
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          INDEX idx_voucher_code (code),
-          INDEX idx_voucher_status (status)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `);
-
-      await db.execute(`
-        CREATE TABLE IF NOT EXISTS user_vouchers (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          user_id INT NOT NULL,
-          voucher_id INT NOT NULL,
-          status ENUM('available', 'used', 'expired') NOT NULL DEFAULT 'available',
-          assigned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          used_at DATETIME NULL,
-          UNIQUE KEY uq_user_voucher (user_id, voucher_id),
-          INDEX idx_user_voucher_user (user_id),
-          INDEX idx_user_voucher_status (status)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `);
-    } catch (err) {
-      console.error("Voucher initTable error:", err.message);
-    }
-  },
-
   // 🛍️ Lấy danh sách Voucher trong Ví người dùng (+ Voucher công khai chưa lưu)
   async getUserWallet(userId) {
 

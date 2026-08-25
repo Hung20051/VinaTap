@@ -1,28 +1,6 @@
 const db = require("../config/db");
 
 const Product = {
-  // Khởi tạo bảng products
-  async initTable() {
-    try {
-      await db.execute(`
-        CREATE TABLE IF NOT EXISTS products (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          name VARCHAR(255) NOT NULL,
-          category VARCHAR(50) DEFAULT 'single',
-          price DECIMAL(12,2) NOT NULL DEFAULT 0,
-          original_price DECIMAL(12,2) DEFAULT 0,
-          image TEXT,
-          tag VARCHAR(100),
-          description TEXT,
-          is_active TINYINT(1) NOT NULL DEFAULT 1,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `);
-    } catch (err) {
-      console.error("Product initTable error:", err.message);
-    }
-  },
-
   // Lấy tất cả sản phẩm — mặc định chỉ lấy is_active=1 (cho dropdown tạo
   // đơn mới), truyền includeInactive=true để lấy hết
   async findAll(includeInactive = false) {

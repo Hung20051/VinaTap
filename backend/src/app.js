@@ -97,29 +97,16 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Khởi tạo tất cả bảng DB 1 LẦN DUY NHẤT khi server start — thay vì gọi
-// initTable() trong mỗi request (trước đây mỗi API call đều chạy
-// CREATE TABLE IF NOT EXISTS + ALTER TABLE trùng lặp, tốn performance).
-const initAllTables = async () => {
-  try {
-    await require("./models/Order").initTable();
-    await require("./models/Notification").initTable();
-    await require("./models/Voucher").initTable();
-    await require("./models/ShippingRule").initTable();
-    await require("./models/Product").initTable();
-    await require("./models/PageView").initTable();
-    console.log("✅ Database tables initialized");
-  } catch (err) {
-    console.error("❌ Database init error:", err.message);
-    // Không exit — các bảng có thể đã tồn tại từ lần deploy trước
-  }
-};
+const http = require("http");
+const { initSocket } = require("./config/socket");
 
-initAllTables().then(() => {
-  // Cron: tự động hủy đơn VietQR pending quá 24h & hoàn trả voucher (mỗi 10 phút)
-  const Order = require("./models/Order");
-  Order.autoCancelExpiredOrders(); // chạy 1 lần ngay khi start
-  setInterval(() => Order.autoCancelExpiredOrders(), 10 * 60 * 1000);
+const server = http.createServer(app);
+initSocket(server);
 
-  app.listen(PORT, "0.0.0.0", () => console.log(`🚀 Server running on port ${PORT}`));
-});
+// Cron: tự động hủy đơn VietQR pending quá 24h & hoàn trả voucher (mỗi 10 phút)
+const Order = require("./models/Order");
+Order.autoCancelExpiredOrders(); // chạy 1 lần ngay khi start
+setInterval(() => Order.autoCancelExpiredOrders(), 10 * 60 * 1000);
+
+server.listen(PORT, "0.0.0.0", () => console.log(`🚀 Server running on port ${PORT}`));
+

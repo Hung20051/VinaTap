@@ -22,6 +22,7 @@ import {
   Globe,
   Maximize2,
   ChevronLeft,
+  ChevronRight,
   UserCheck,
   UserPlus,
   Smile,
@@ -29,10 +30,17 @@ import {
   Calendar,
   Camera,
   Play,
+  Pause,
   Heart,
+  Flag,
+  Stamp,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
+import StickerCanvas from "@/components/ui/StickerCanvas";
 import { albumAPI, mediaAPI } from "@/lib/api";
 import { getUser, isLoggedIn } from "@/lib/auth";
+import { getSocket, joinAlbumRoom, leaveAlbumRoom } from "@/lib/socket";
 import "@/styles/album.css";
 
 export default function AlbumPage() {
@@ -64,10 +72,23 @@ export default function AlbumPage() {
   const [collaborators, setCollaborators] = useState(null);
   const [requestingEdit, setRequestingEdit] = useState(false);
 
+  // Report Modal State
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportReason, setReportReason] = useState("Hình ảnh phản cảm / 18+");
+  const [reportDesc, setReportDesc] = useState("");
+  const [submittingReport, setSubmittingReport] = useState(false);
+
   // Lightbox State
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
+  // Sticker Canvas & Story Slideshow State
+  const [stickerEditingItem, setStickerEditingItem] = useState(null);
+  const [storyModeIndex, setStoryModeIndex] = useState(null);
+
   const isOwner = !!(user && album && user.id === album.owner_id);
+  const isCollaborator = album?.user_role === "collaborator";
+  const isPendingCollaborator = album?.user_role === "pending_collaborator";
+  const canEdit = isOwner || isCollaborator || !!album?.can_edit;
 
   useEffect(() => {
     loadAlbum();
@@ -78,6 +99,94 @@ export default function AlbumPage() {
     if (isOwner) loadCollaborators();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOwner, album?.id]);
+
+  // ─── REAL-TIME SYNC (SOCKET.IO) ──────────────────────────────
+  useEffect(() => {
+    if (!album?.id) return;
+
+    joinAlbumRoom(album.id);
+    if (album.share_code) joinAlbumRoom(album.share_code);
+
+    const socket = getSocket();
+    if (!socket) return;
+
+    // 📸 Có ảnh/video mới được tải lên
+    const handleMediaAdded = ({ items, uploaderName }) => {
+      setMedia((prev) => {
+        const existingIds = new Set(prev.map((m) => m.id));
+        const newUniqueItems = (items || []).filter(
+          (it) => !existingIds.has(it.id),
+        );
+        return [...newUniqueItems, ...prev];
+      });
+      showToast(
+        "success",
+        `📸 ${uploaderName || "Cộng tác viên"} vừa thêm ${(items || []).length} khoảnh khắc mới!`,
+      );
+    };
+
+    // 🗑️ Có ảnh bị xóa
+    const handleMediaDeleted = ({ mediaId }) => {
+      setMedia((prev) => prev.filter((m) => m.id !== mediaId));
+    };
+
+    // ✏️ Có ảnh được sửa caption
+    const handleMediaUpdated = ({ mediaId, caption_user }) => {
+      setMedia((prev) =>
+        prev.map((m) => (m.id === mediaId ? { ...m, caption_user } : m)),
+      );
+    };
+
+    // 🏷️ Tag mới được tạo
+    const handleTagCreated = ({ tag }) => {
+      setTags((prev) => {
+        if (prev.some((t) => t.id === tag.id)) return prev;
+        return [tag, ...prev];
+      });
+    };
+
+    // ✕ Tag bị xóa
+    const handleTagDeleted = ({ tagId }) => {
+      setTags((prev) => prev.filter((t) => t.id !== tagId));
+    };
+
+    // 📝 Thông tin album thay đổi
+    const handleAlbumUpdated = ({ album: updatedAlbum }) => {
+      if (updatedAlbum) {
+        setAlbum((prev) => ({ ...prev, ...updatedAlbum }));
+      }
+    };
+
+    // 🤝 Quyền cộng tác viên thay đổi
+    const handleCollaboratorEvent = () => {
+      loadAlbum();
+      if (isOwner) loadCollaborators();
+    };
+
+    socket.on("media_added", handleMediaAdded);
+    socket.on("media_deleted", handleMediaDeleted);
+    socket.on("media_updated", handleMediaUpdated);
+    socket.on("tag_created", handleTagCreated);
+    socket.on("tag_deleted", handleTagDeleted);
+    socket.on("album_updated", handleAlbumUpdated);
+    socket.on("collaborator_requested", handleCollaboratorEvent);
+    socket.on("collaborator_reviewed", handleCollaboratorEvent);
+    socket.on("collaborator_revoked", handleCollaboratorEvent);
+
+    return () => {
+      leaveAlbumRoom(album.id);
+      if (album.share_code) leaveAlbumRoom(album.share_code);
+      socket.off("media_added", handleMediaAdded);
+      socket.off("media_deleted", handleMediaDeleted);
+      socket.off("media_updated", handleMediaUpdated);
+      socket.off("tag_created", handleTagCreated);
+      socket.off("tag_deleted", handleTagDeleted);
+      socket.off("album_updated", handleAlbumUpdated);
+      socket.off("collaborator_requested", handleCollaboratorEvent);
+      socket.off("collaborator_reviewed", handleCollaboratorEvent);
+      socket.off("collaborator_revoked", handleCollaboratorEvent);
+    };
+  }, [album?.id, album?.share_code, isOwner]);
 
   const showToast = (type, text) => {
     setToast({ type, text });
@@ -90,7 +199,10 @@ export default function AlbumPage() {
     try {
       const res = await albumAPI.getOne(id);
       setAlbum(res.album);
-      setMedia(res.media || []);
+      const uniqueMedia = (res.media || []).filter(
+        (m, idx, arr) => arr.findIndex((x) => x.id === m.id) === idx,
+      );
+      setMedia(uniqueMedia);
       setTags(res.tags || []);
       setInfoForm({
         title: res.album.title || "",
@@ -113,9 +225,12 @@ export default function AlbumPage() {
   };
 
   const handleShareLink = () => {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url);
-    showToast("success", "Đã sao chép đường dẫn Album!");
+    const slug = album?.share_code || album?.id || id;
+    const url = `${window.location.origin}/album/${slug}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+      showToast("success", "Đã sao chép liên kết Album bí mật!");
+    }
   };
 
   const handleSaveInfo = async () => {
@@ -138,8 +253,9 @@ export default function AlbumPage() {
 
   const handleTogglePublic = async () => {
     const nextPublic = album.is_public ? 0 : 1;
+    const albumTargetId = album?.share_code || album?.id || id;
     try {
-      await albumAPI.update(id, { is_public: nextPublic });
+      await albumAPI.update(albumTargetId, { is_public: nextPublic });
       setAlbum({ ...album, is_public: nextPublic });
       showToast(
         "success",
@@ -157,8 +273,9 @@ export default function AlbumPage() {
       )
     )
       return;
+    const albumTargetId = album?.share_code || album?.id || id;
     try {
-      await albumAPI.delete(id);
+      await albumAPI.delete(albumTargetId);
       showToast("success", "Đã xóa Album thành công");
       router.push("/customer/dashboard");
     } catch (err) {
@@ -168,8 +285,9 @@ export default function AlbumPage() {
 
   const handleRequestEdit = async () => {
     setRequestingEdit(true);
+    const albumTargetId = album?.share_code || album?.id || id;
     try {
-      await albumAPI.requestCollaborator(id);
+      await albumAPI.requestCollaborator(albumTargetId);
       showToast("success", "Đã gửi yêu cầu đóng góp ảnh cho chủ Album!");
     } catch (err) {
       showToast("error", err.message || "Lỗi gửi yêu cầu");
@@ -179,8 +297,9 @@ export default function AlbumPage() {
   };
 
   const handleReviewRequest = async (collabId, status) => {
+    const albumTargetId = album?.share_code || album?.id || id;
     try {
-      await albumAPI.reviewCollaborator(id, collabId, status);
+      await albumAPI.reviewCollaborator(albumTargetId, collabId, status);
       showToast(
         "success",
         status === "approve" ? "Đã duyệt cộng tác viên!" : "Đã từ chối",
@@ -193,8 +312,9 @@ export default function AlbumPage() {
 
   const handleRevoke = async (collabId) => {
     if (!confirm("Thu hồi quyền đóng góp của người này?")) return;
+    const albumTargetId = album?.share_code || album?.id || id;
     try {
-      await albumAPI.revokeCollaborator(id, collabId);
+      await albumAPI.revokeCollaborator(albumTargetId, collabId);
       showToast("success", "Đã thu hồi quyền");
       loadCollaborators();
     } catch (err) {
@@ -207,9 +327,16 @@ export default function AlbumPage() {
     e.preventDefault();
     if (!newTag.label.trim()) return;
     setAddingTag(true);
+    const albumTargetId = album?.share_code || album?.id || id;
     try {
-      const res = await albumAPI.createTag(id, newTag);
-      setTags([res.tag, ...tags]);
+      const res = await albumAPI.createTag(albumTargetId, newTag);
+      const createdTag = res.tag || (res.id ? res : null);
+      if (createdTag) {
+        setTags((prev) => {
+          if (prev.some((t) => t && t.id === createdTag.id)) return prev;
+          return [createdTag, ...prev.filter(Boolean)];
+        });
+      }
       setNewTag({ label: "", color: "#ea580c" });
       setShowTagModal(false);
       showToast("success", "Đã thêm tag mới!");
@@ -221,8 +348,9 @@ export default function AlbumPage() {
   };
 
   const handleDeleteTag = async (tagId) => {
+    const albumTargetId = album?.share_code || album?.id || id;
     try {
-      await albumAPI.deleteTag(id, tagId);
+      await albumAPI.deleteTag(albumTargetId, tagId);
       setTags(tags.filter((t) => t.id !== tagId));
       if (selectedTagFilter === tagId) setSelectedTagFilter(null);
       showToast("success", "Đã xóa tag");
@@ -244,7 +372,8 @@ export default function AlbumPage() {
     setUploading(true);
     try {
       const formData = new FormData();
-      formData.append("album_id", id);
+      const albumTargetId = album?.share_code || album?.id || id;
+      formData.append("album_id", albumTargetId);
 
       let res;
       if (files.length === 1) {
@@ -258,7 +387,11 @@ export default function AlbumPage() {
       const newItems =
         res.items ||
         (res.media ? (Array.isArray(res.media) ? res.media : [res.media]) : []);
-      setMedia((prev) => [...newItems, ...prev]);
+      setMedia((prev) => {
+        const existingIds = new Set(prev.map((m) => m.id));
+        const uniqueToAdd = newItems.filter((it) => it?.id && !existingIds.has(it.id));
+        return [...uniqueToAdd, ...prev];
+      });
       showToast("success", `Đã lưu ${files.length} khoảnh khắc vào Album!`);
     } catch (err) {
       showToast("error", err.message || "Lỗi tải tệp lên");
@@ -320,6 +453,25 @@ export default function AlbumPage() {
     }
   };
 
+  const handleSendReport = async (e) => {
+    e.preventDefault();
+    if (!reportReason) return;
+    setSubmittingReport(true);
+    try {
+      const res = await albumAPI.report(album.id, {
+        reason: reportReason,
+        description: reportDesc.trim(),
+      });
+      showToast("success", res.message || "Đã gửi báo cáo vi phạm thành công!");
+      setShowReportModal(false);
+      setReportDesc("");
+    } catch (err) {
+      showToast("error", err.message || "Lỗi khi gửi báo cáo");
+    } finally {
+      setSubmittingReport(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="album-page-loading">
@@ -331,10 +483,56 @@ export default function AlbumPage() {
 
   if (loadError) {
     return (
-      <div className="album-error-state">
-        <span className="album-error-icon">🔒</span>
-        <h2 className="album-error-title">{loadError.message}</h2>
-        <Link href="/" className="album-btn album-btn--primary">
+      <div
+        className="album-error-state"
+        style={{
+          maxWidth: 520,
+          margin: "6rem auto",
+          textAlign: "center",
+          padding: "2.5rem 2rem",
+          background: "#ffffff",
+          borderRadius: "24px",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.06)",
+          border: "1.5px solid #fee2e2",
+        }}
+      >
+        <div
+          style={{
+            width: "64px",
+            height: "64px",
+            borderRadius: "50%",
+            background: "#fee2e2",
+            color: "#dc2626",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "1.8rem",
+            margin: "0 auto 1.25rem",
+          }}
+        >
+          🔒
+        </div>
+        <h2 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#1e293b", marginBottom: "0.5rem" }}>
+          Không Thể Truy Cập Album
+        </h2>
+        <p style={{ fontSize: "0.92rem", color: "#64748b", lineHeight: 1.6, marginBottom: "1.75rem" }}>
+          {loadError.message}
+        </p>
+        <Link
+          href="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "0.75rem 1.5rem",
+            borderRadius: "12px",
+            background: "#ea580c",
+            color: "#ffffff",
+            textDecoration: "none",
+            fontWeight: 700,
+            fontSize: "0.9rem",
+          }}
+        >
           <ChevronLeft size={16} /> Về Trang Chủ VinaTap
         </Link>
       </div>
@@ -349,8 +547,10 @@ export default function AlbumPage() {
   );
 
   const filteredMedia = media.filter((m) => {
-    if (activeFilter === "image" && m.media_type !== "image") return false;
-    if (activeFilter === "video" && m.media_type !== "video") return false;
+    const isVideo = m.media_type === "video";
+    const isPhoto = m.media_type === "photo" || m.media_type === "image" || !isVideo;
+    if (activeFilter === "image" && !isPhoto) return false;
+    if (activeFilter === "video" && !isVideo) return false;
     if (selectedTagFilter) {
       const tagObj = tags.find((t) => t.id === selectedTagFilter);
       if (tagObj) {
@@ -398,19 +598,67 @@ export default function AlbumPage() {
               <span className="btn-text-desktop">Chia sẻ</span>
             </button>
 
-            {isOwner && (
+            {(isOwner || isCollaborator) && album.status === "active" && (
               <button
                 className="album-icon-btn album-icon-btn--primary"
                 onClick={handlePickFiles}
                 disabled={uploading}
+                title="Thêm ảnh"
               >
                 <Camera size={16} />
-                <span>{uploading ? "Đang tải..." : "Thêm ảnh"}</span>
+                <span className="btn-text-desktop">{uploading ? "Đang tải..." : "Thêm ảnh"}</span>
               </button>
             )}
           </div>
         </div>
       </header>
+
+      {/* ⚠️ Locked Notice Banner */}
+      {album?.status === "archived" && (
+        <div
+          style={{
+            background: "linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%)",
+            border: "2px solid #fca5a5",
+            borderRadius: "16px",
+            padding: "1.25rem 1.5rem",
+            margin: "1.5rem auto",
+            maxWidth: "1100px",
+            color: "#991b1b",
+            boxShadow: "0 10px 25px -5px rgba(220, 38, 38, 0.1)",
+            display: "flex",
+            alignItems: "flex-start",
+            gap: "1rem",
+          }}
+        >
+          <div
+            style={{
+              background: "#dc2626",
+              color: "#fff",
+              borderRadius: "50%",
+              width: "36px",
+              height: "36px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+              fontSize: "1.1rem",
+            }}
+          >
+            🔒
+          </div>
+          <div>
+            <h3 style={{ margin: "0 0 0.35rem 0", fontSize: "1.1rem", fontWeight: 800, color: "#b91c1c" }}>
+              Album Này Đang Bị Tạm Khóa Bởi Quản Trị Viên
+            </h3>
+            <p style={{ margin: "0 0 0.4rem 0", fontSize: "0.9rem", color: "#7f1d1d", lineHeight: 1.5 }}>
+              <strong>Lý do khóa:</strong> {album.locked_reason || "Nội dung vi phạm chính sách cộng đồng hoặc thuần phong mỹ tục"}.
+            </p>
+            <p style={{ margin: 0, fontSize: "0.82rem", color: "#991b1b" }}>
+              Album đã được tạm ẩn khỏi bản đồ du lịch công cộng. Nếu bạn cho rằng đây là sự nhầm lẫn, vui lòng liên hệ bộ phận CSKH để được hỗ trợ mở khóa.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* ─── 1. HERO COVER & STORY INTRO (Apple Photos Style) ───── */}
       <section className="album-hero-section">
@@ -454,44 +702,40 @@ export default function AlbumPage() {
                     onChange={(e) =>
                       setInfoForm({ ...infoForm, description: e.target.value })
                     }
-                    placeholder="Mô tả cảm xúc, chuyến đi..."
+                    placeholder="Viết vài dòng kỷ niệm về chuyến đi này..."
                     className="album-edit-textarea"
                   />
-                  <div className="album-edit-actions">
+                  <div className="album-edit-btn-row">
                     <button
-                      className="album-btn album-btn--primary album-btn--sm"
+                      className="album-pill-btn album-pill-btn--primary"
                       onClick={handleSaveInfo}
                       disabled={savingInfo}
                     >
-                      <Check size={14} /> {savingInfo ? "Đang lưu..." : "Lưu Thay Đổi"}
+                      <Check size={14} /> {savingInfo ? "Đang lưu..." : "Lưu"}
                     </button>
                     <button
-                      className="album-btn album-btn--ghost album-btn--sm"
+                      className="album-pill-btn"
                       onClick={() => setEditingInfo(false)}
                     >
-                      Hủy
+                      <X size={14} /> Hủy
                     </button>
                   </div>
                 </div>
               ) : (
                 <>
-                  <div className="album-badge-pills-row">
-                    <span className="album-pill album-pill--province">
-                      <Globe size={13} /> {album.province_name}
+                  <div className="album-meta-badge-row">
+                    <span className="album-meta-badge album-meta-badge--province">
+                      📍 {album.province_name}
                     </span>
-                    <span
-                      className={`album-pill ${album.is_public ? "album-pill--public" : "album-pill--private"}`}
-                    >
-                      {album.is_public ? (
-                        <>
-                          <Unlock size={12} /> Công Khai
-                        </>
-                      ) : (
-                        <>
-                          <Lock size={12} /> Riêng Tư
-                        </>
-                      )}
-                    </span>
+                    {album.is_public ? (
+                      <span className="album-meta-badge album-meta-badge--public">
+                        <Globe size={12} /> Công Khai
+                      </span>
+                    ) : (
+                      <span className="album-meta-badge album-meta-badge--private">
+                        <Lock size={12} /> Riêng Tư
+                      </span>
+                    )}
                   </div>
 
                   <h1 className="album-hero-title">
@@ -520,30 +764,34 @@ export default function AlbumPage() {
                 </>
               )}
 
-              {/* Owner Action Buttons */}
+              {/* Owner & Collaborator Action Buttons */}
               <div className="album-hero-actions-bar">
-                {isOwner && !editingInfo && (
+                {isOwner && (
                   <>
-                    <button
-                      className="album-pill-btn"
-                      onClick={() => setEditingInfo(true)}
-                    >
-                      <Edit3 size={14} /> Sửa Tên
-                    </button>
-                    <button
-                      className="album-pill-btn"
-                      onClick={handleTogglePublic}
-                    >
-                      {album.is_public ? (
-                        <>
-                          <Lock size={14} /> Ẩn Riêng Tư
-                        </>
-                      ) : (
-                        <>
-                          <Globe size={14} /> Công Khai
-                        </>
-                      )}
-                    </button>
+                    {album.status === "active" && !editingInfo && (
+                      <>
+                        <button
+                          className="album-pill-btn"
+                          onClick={() => setEditingInfo(true)}
+                        >
+                          <Edit3 size={14} /> Sửa Tên
+                        </button>
+                        <button
+                          className="album-pill-btn"
+                          onClick={handleTogglePublic}
+                        >
+                          {album.is_public ? (
+                            <>
+                              <Lock size={14} /> Ẩn Riêng Tư
+                            </>
+                          ) : (
+                            <>
+                              <Globe size={14} /> Công Khai
+                            </>
+                          )}
+                        </button>
+                      </>
+                    )}
                     <button
                       className="album-pill-btn album-pill-btn--danger"
                       onClick={handleDeleteAlbum}
@@ -553,7 +801,45 @@ export default function AlbumPage() {
                   </>
                 )}
 
-                {!isOwner && isLoggedIn() && (
+                {!isOwner && isCollaborator && (
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      background: "rgba(22, 163, 74, 0.12)",
+                      color: "#16a34a",
+                      padding: "0.55rem 1.1rem",
+                      borderRadius: "999px",
+                      fontWeight: 700,
+                      fontSize: "0.85rem",
+                      border: "1px solid rgba(22, 163, 74, 0.3)",
+                    }}
+                  >
+                    <UserCheck size={16} /> Bạn là Cộng Tác Viên
+                  </div>
+                )}
+
+                {!isOwner && isPendingCollaborator && (
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      background: "rgba(234, 88, 12, 0.12)",
+                      color: "#ea580c",
+                      padding: "0.55rem 1.1rem",
+                      borderRadius: "999px",
+                      fontWeight: 700,
+                      fontSize: "0.85rem",
+                      border: "1px solid rgba(234, 88, 12, 0.3)",
+                    }}
+                  >
+                    ⏳ Đang Chờ Chủ Album Duyệt
+                  </div>
+                )}
+
+                {!isOwner && !isCollaborator && !isPendingCollaborator && album.status === "active" && isLoggedIn() && (
                   <button
                     className="album-pill-btn album-pill-btn--primary"
                     onClick={handleRequestEdit}
@@ -561,6 +847,18 @@ export default function AlbumPage() {
                   >
                     <UserPlus size={14} />{" "}
                     {requestingEdit ? "Đang gửi..." : "Xin Quyền Đóng Góp"}
+                  </button>
+                )}
+
+                {!isOwner && album.status === "active" && (
+                  <button
+                    type="button"
+                    className="album-pill-btn"
+                    style={{ color: "#ef4444", borderColor: "#fca5a5" }}
+                    onClick={() => setShowReportModal(true)}
+                    title="Báo cáo nội dung vi phạm"
+                  >
+                    <Flag size={14} /> Báo Cáo
                   </button>
                 )}
               </div>
@@ -572,7 +870,14 @@ export default function AlbumPage() {
       {/* ─── 2. TAGS & STORIES FILTER BAR ───────────────────────── */}
       <section className="album-tags-section">
         <div className="album-tags-container">
-          <div className="album-tags-scroll">
+          <div
+            className="album-tags-scroll"
+            onWheel={(e) => {
+              if (e.deltaY !== 0) {
+                e.currentTarget.scrollLeft += e.deltaY;
+              }
+            }}
+          >
             <button
               className={`album-story-tag ${selectedTagFilter === null ? "active" : ""}`}
               onClick={() => setSelectedTagFilter(null)}
@@ -580,23 +885,23 @@ export default function AlbumPage() {
               <span>✨ Tất Cả</span>
             </button>
 
-            {tags.map((t) => (
+            {tags.filter(Boolean).map((t) => (
               <span
-                key={t.id}
-                className={`album-story-tag ${selectedTagFilter === t.id ? "active" : ""}`}
+                key={t?.id}
+                className={`album-story-tag ${selectedTagFilter === t?.id ? "active" : ""}`}
                 style={{
-                  "--tag-color": t.color || "#ea580c",
+                  "--tag-color": t?.color || "#ea580c",
                 }}
                 onClick={() =>
-                  setSelectedTagFilter(selectedTagFilter === t.id ? null : t.id)
+                  setSelectedTagFilter(selectedTagFilter === t?.id ? null : t?.id)
                 }
               >
-                <span>#{t.label}</span>
+                <span>#{t?.label}</span>
                 {isOwner && (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDeleteTag(t.id);
+                      handleDeleteTag(t?.id);
                     }}
                     className="album-story-tag-del"
                     title="Xóa tag"
@@ -607,7 +912,7 @@ export default function AlbumPage() {
               </span>
             ))}
 
-            {isOwner && (
+            {(isOwner || isCollaborator) && album.status === "active" && (
               <button
                 className="album-story-tag album-story-tag--add"
                 onClick={() => setShowTagModal(true)}
@@ -616,16 +921,34 @@ export default function AlbumPage() {
               </button>
             )}
           </div>
+
+          {filteredMedia.length > 0 && (
+            <div className="album-tags-action-side">
+              <button
+                className="album-story-tag album-story-tag--play"
+                onClick={() => setStoryModeIndex(0)}
+                title="Trình chiếu Story hành trình"
+              >
+                <Play size={13} fill="currentColor" />
+                <span>
+                  Trình Chiếu Story{" "}
+                  {selectedTagFilter
+                    ? `(#${tags.find((t) => t?.id === selectedTagFilter)?.label || ""})`
+                    : ""}
+                </span>
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
       {/* ─── 3. COLLABORATOR REQUESTS (CHỈ CHỦ ALBUM) ───────────── */}
-      {isOwner && collaborators && collaborators.length > 0 && (
+      {isOwner && (pendingRequests.length > 0 || approvedCollaborators.length > 0) && (
         <section className="album-collab-section">
           <div className="album-collab-card">
             <div className="album-collab-header">
               <UserCheck size={18} style={{ color: "#2563eb" }} />
-              <h3>Cộng Tác Viên Đóng Góp ({collaborators.length})</h3>
+              <h3>Cộng Tác Viên Đóng Góp ({approvedCollaborators.length + pendingRequests.length})</h3>
             </div>
 
             {pendingRequests.length > 0 && (
@@ -684,7 +1007,15 @@ export default function AlbumPage() {
               onClick={() => setActiveFilter("image")}
             >
               <ImageIcon size={15} /> Ảnh (
-              {media.filter((m) => m.media_type === "image").length})
+              {
+                media.filter(
+                  (m) =>
+                    m.media_type === "photo" ||
+                    m.media_type === "image" ||
+                    m.media_type !== "video",
+                ).length
+              }
+              )
             </button>
             <button
               className={`album-type-tab ${activeFilter === "video" ? "active" : ""}`}
@@ -704,7 +1035,7 @@ export default function AlbumPage() {
               style={{ display: "none" }}
               onChange={handleFilesSelected}
             />
-            {isOwner && (
+            {(isOwner || isCollaborator) && album.status === "active" && (
               <button
                 className="album-btn-upload-cta"
                 onClick={handlePickFiles}
@@ -727,7 +1058,7 @@ export default function AlbumPage() {
             <p>
               Chạm thẻ NFC hoặc tải lên những bức ảnh & video đầu tiên của chuyến đi {album.province_name}!
             </p>
-            {isOwner && (
+            {(isOwner || isCollaborator) && album.status === "active" && (
               <button
                 className="album-btn album-btn--primary album-btn--lg"
                 onClick={handlePickFiles}
@@ -742,16 +1073,19 @@ export default function AlbumPage() {
           <div className="album-masonry-grid">
             {filteredMedia.map((m, idx) => (
               <MediaCard
-                key={m.id}
+                key={m.id ? `media-${m.id}` : `media-idx-${idx}`}
                 item={m}
                 tags={tags}
                 isOwner={isOwner}
+                canEdit={canEdit && album.status === "active"}
+                canDelete={isOwner || (user && user.id === m.uploader_id)}
                 onDelete={() => handleDeleteMedia(m.id)}
                 onSaveCaption={(caption) => handleSaveCaption(m.id, caption)}
                 onToggleTag={(tagId, isTagged) =>
                   handleToggleTagOnMedia(m, tagId, isTagged)
                 }
                 onOpenLightbox={() => setLightboxIndex(idx)}
+                onOpenSticker={(it) => setStickerEditingItem(it)}
               />
             ))}
           </div>
@@ -775,7 +1109,7 @@ export default function AlbumPage() {
             className="album-lightbox-card"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="album-lightbox-media-wrap">
+            <div className="album-lightbox-media-wrap" style={{ position: "relative" }}>
               {currentLightboxItem.media_type === "video" ? (
                 <video
                   src={currentLightboxItem.file_url}
@@ -784,61 +1118,135 @@ export default function AlbumPage() {
                   className="album-lightbox-video"
                 />
               ) : (
-                <img
-                  src={currentLightboxItem.file_url}
-                  alt=""
-                  className="album-lightbox-img"
-                />
+                <div style={{ position: "relative", display: "inline-block", maxWidth: "100%", maxHeight: "72vh" }}>
+                  <img
+                    src={currentLightboxItem.file_url}
+                    alt=""
+                    className="album-lightbox-img"
+                  />
+                  {/* Sticker overlays inside lightbox */}
+                  {(Array.isArray(currentLightboxItem.stickers)
+                    ? currentLightboxItem.stickers
+                    : (() => {
+                        try {
+                          return JSON.parse(currentLightboxItem.stickers || "[]");
+                        } catch (e) {
+                          return [];
+                        }
+                      })()
+                  ).map((ov, sIdx) => (
+                    <img
+                      key={ov.id || sIdx}
+                      src={ov.image_url}
+                      alt=""
+                      className="album-card-sticker-overlay"
+                      style={{
+                        left: `${ov.pos_x}%`,
+                        top: `${ov.pos_y}%`,
+                        transform: `translate(-50%, -50%) rotate(${ov.rotation_deg || 0}deg) scale(${ov.scale || 1})`,
+                        zIndex: ov.z_index || 5,
+                      }}
+                    />
+                  ))}
+                </div>
               )}
             </div>
 
             <div className="album-lightbox-info-bar">
-              <div className="album-lightbox-caption-text">
-                <Sparkles size={16} style={{ color: "#ea580c", flexShrink: 0 }} />
-                <span>
+              <div className="album-lightbox-caption">
+                <h4>
                   {currentLightboxItem.caption_user ||
                     currentLightboxItem.caption_ai ||
-                    "Khoảnh khắc kỷ niệm VinaTap"}
-                </span>
+                    "Khoảnh khắc kỷ niệm"}
+                </h4>
+                {currentLightboxItem.tags && (
+                  <div className="album-lightbox-tags">
+                    {currentLightboxItem.tags.split(",").map((t) => (
+                      <span key={t} className="album-lightbox-tag-chip">
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
-              <span className="album-lightbox-date">
-                {currentLightboxItem.created_at
-                  ? new Date(currentLightboxItem.created_at).toLocaleDateString(
-                      "vi-VN",
-                    )
-                  : ""}
-              </span>
+
+              <div className="album-lightbox-actions" style={{ display: "flex", gap: "8px" }}>
+                {canEdit && currentLightboxItem.media_type !== "video" && (
+                  <button
+                    className="album-lightbox-action-btn"
+                    onClick={() => {
+                      setStickerEditingItem(currentLightboxItem);
+                      setLightboxIndex(null);
+                    }}
+                    title="Dán Con Dấu / Sticker Du Lịch"
+                  >
+                    <Stamp size={16} />
+                  </button>
+                )}
+                <a
+                  href={currentLightboxItem.file_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="album-lightbox-action-btn"
+                  title="Mở gốc"
+                >
+                  <Maximize2 size={16} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* ─── 6. MODAL THÊM TAG MỚI ─────────────────────────────── */}
+      {/* ─── 6. STICKER CANVAS MODAL ─────────────────────────────── */}
+      {stickerEditingItem && (
+        <StickerCanvas
+          mediaItem={stickerEditingItem}
+          onClose={() => setStickerEditingItem(null)}
+          onSaved={() => {
+            setStickerEditingItem(null);
+            loadAlbum();
+          }}
+        />
+      )}
+
+      {/* ─── 7. IMMERSIVE STORY SLIDESHOW VIEWER ──────────────────── */}
+      {storyModeIndex !== null && (
+        <StoryViewer
+          items={filteredMedia}
+          initialIndex={storyModeIndex}
+          albumName={album?.title || album?.province_name}
+          ownerName={album?.owner_name}
+          provinceThumb={album?.province_thumbnail}
+          onClose={() => setStoryModeIndex(null)}
+        />
+      )}
+
+      {/* ─── 6. CREATE TAG MODAL ─────────────────────────────────── */}
       {showTagModal && (
         <div
-          className="album-modal-backdrop"
+          className="album-modal-overlay"
           onClick={() => setShowTagModal(false)}
         >
-          <div
-            className="album-modal-card"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="album-modal-card" onClick={(e) => e.stopPropagation()}>
             <div className="album-modal-header">
-              <h3>🏷️ Thêm Tag Kỷ Niệm Mới</h3>
+              <h3>
+                <TagIcon size={18} /> Tạo Tag / Chủ Đề Kỷ Niệm
+              </h3>
               <button
                 className="album-modal-close"
                 onClick={() => setShowTagModal(false)}
               >
-                <X size={18} />
+                ✕
               </button>
             </div>
 
-            <form onSubmit={handleCreateTag} className="album-tag-modal-form">
-              <label className="album-form-label">Tên Tag (Chủ đề):</label>
+            <form onSubmit={handleCreateTag} className="album-modal-form">
+              <label className="album-form-label">Tên Tag (Ví dụ: Ăn Uống, Check-in...):</label>
               <input
                 type="text"
+                placeholder="Nhập tên tag..."
                 className="album-form-input"
-                placeholder="Ví dụ: Tết 2026, Ẩm thực, Gia đình..."
                 value={newTag.label}
                 onChange={(e) =>
                   setNewTag({ ...newTag, label: e.target.value })
@@ -888,6 +1296,200 @@ export default function AlbumPage() {
           </div>
         </div>
       )}
+
+      {/* Modal Báo Cáo Vi Phạm */}
+      {showReportModal && (
+        <div
+          className="album-modal-overlay"
+          onClick={() => setShowReportModal(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 99999,
+            background: "rgba(0,0,0,0.6)",
+            backdropFilter: "blur(4px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+          }}
+        >
+          <div
+            className="card"
+            style={{
+              width: "100%",
+              maxWidth: 440,
+              padding: "1.75rem",
+              borderRadius: 20,
+              background: "#ffffff",
+              boxShadow: "0 20px 40px rgba(0,0,0,0.25)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "1rem",
+              }}
+            >
+              <h3
+                style={{
+                  margin: 0,
+                  fontWeight: 800,
+                  fontSize: "1.15rem",
+                  color: "#dc2626",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <Flag size={18} /> Báo Cáo Album Vi Phạm
+              </h3>
+              <button
+                type="button"
+                onClick={() => setShowReportModal(false)}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "1.25rem",
+                  cursor: "pointer",
+                  color: "#94a3b8",
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <p
+              style={{
+                fontSize: "0.85rem",
+                color: "#64748b",
+                lineHeight: 1.5,
+                marginBottom: "1.25rem",
+              }}
+            >
+              Nếu bạn nhận thấy Album này chứa nội dung đồi trụy, spam, lừa đảo,
+              phản cảm hoặc vi phạm bản quyền, vui lòng gửi báo cáo để Ban Quản
+              Trị VinaTap xử lý.
+            </p>
+
+            <form
+              onSubmit={handleSendReport}
+              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+            >
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "0.82rem",
+                    fontWeight: 700,
+                    color: "#334155",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  Lý do báo cáo *
+                </label>
+                <select
+                  value={reportReason}
+                  onChange={(e) => setReportReason(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "0.65rem 0.85rem",
+                    borderRadius: "10px",
+                    border: "1px solid #cbd5e1",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  <option value="Hình ảnh phản cảm / 18+">
+                    Hình ảnh phản cảm / 18+
+                  </option>
+                  <option value="Spam / Quảng cáo trái phép">
+                    Spam / Quảng cáo trái phép
+                  </option>
+                  <option value="Ngôn từ thù địch / Xúc phạm">
+                    Ngôn từ thù địch / Xúc phạm
+                  </option>
+                  <option value="Vi phạm bản quyền hình ảnh">
+                    Vi phạm bản quyền hình ảnh
+                  </option>
+                  <option value="Khác">Lý do khác...</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "0.82rem",
+                    fontWeight: 700,
+                    color: "#334155",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  Mô tả chi tiết (Tùy chọn)
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="Ví dụ: Ảnh số 2 có nội dung không phù hợp..."
+                  value={reportDesc}
+                  onChange={(e) => setReportDesc(e.target.value)}
+                  style={{
+                    width: "100%",
+                    padding: "0.65rem 0.85rem",
+                    borderRadius: "10px",
+                    border: "1px solid #cbd5e1",
+                    fontSize: "0.88rem",
+                    resize: "vertical",
+                  }}
+                />
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.6rem",
+                  marginTop: "0.5rem",
+                }}
+              >
+                <button
+                  type="submit"
+                  disabled={submittingReport}
+                  style={{
+                    flex: 1,
+                    padding: "0.75rem",
+                    borderRadius: "12px",
+                    background: "#dc2626",
+                    color: "#fff",
+                    border: "none",
+                    fontWeight: 800,
+                    cursor: "pointer",
+                  }}
+                >
+                  {submittingReport ? "Đang gửi báo cáo..." : "Gửi Báo Cáo"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowReportModal(false)}
+                  style={{
+                    padding: "0.75rem 1.25rem",
+                    borderRadius: "12px",
+                    background: "#f1f5f9",
+                    color: "#475569",
+                    border: "none",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  Hủy
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -897,10 +1499,13 @@ function MediaCard({
   item,
   tags,
   isOwner,
+  canEdit,
+  canDelete,
   onDelete,
   onSaveCaption,
   onToggleTag,
   onOpenLightbox,
+  onOpenSticker,
 }) {
   const [caption, setCaption] = useState(
     item.caption_user || item.caption_ai || "",
@@ -910,9 +1515,24 @@ function MediaCard({
 
   const mediaTags = (item.tags || "").split(",").filter(Boolean);
 
+  const stickerList = Array.isArray(item.stickers)
+    ? item.stickers
+    : (() => {
+        try {
+          return JSON.parse(item.stickers || "[]");
+        } catch (e) {
+          return [];
+        }
+      })();
+
   return (
     <div className="album-media-item">
-      <div className="album-media-visual" onClick={onOpenLightbox}>
+      {/* Media Thumbnail Container */}
+      <div
+        className="album-media-visual"
+        onClick={onOpenLightbox}
+        style={{ position: "relative" }}
+      >
         {item.media_type === "video" ? (
           <>
             <video
@@ -934,6 +1554,22 @@ function MediaCard({
           />
         )}
 
+        {/* Sticker overlays rendered on thumbnail */}
+        {stickerList.map((ov, sIdx) => (
+          <img
+            key={ov.id || sIdx}
+            src={ov.image_url}
+            alt=""
+            className="album-card-sticker-overlay"
+            style={{
+              left: `${ov.pos_x}%`,
+              top: `${ov.pos_y}%`,
+              transform: `translate(-50%, -50%) rotate(${ov.rotation_deg || 0}deg) scale(${ov.scale || 1})`,
+              zIndex: ov.z_index || 5,
+            }}
+          />
+        ))}
+
         {/* Hover Action Overlay */}
         <div className="album-media-hover-overlay">
           <div className="album-hover-zoom-btn">
@@ -943,18 +1579,21 @@ function MediaCard({
       </div>
 
       {/* Caption & Tag Row */}
-      <div className="album-media-details">
+      <div className="album-media-details" onClick={(e) => e.stopPropagation()}>
         {editingCaption ? (
-          <div className="album-edit-caption-row">
+          <div className="album-edit-caption-row" onClick={(e) => e.stopPropagation()}>
             <input
               className="album-caption-input"
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
+              onClick={(e) => e.stopPropagation()}
               autoFocus
             />
             <button
+              type="button"
               className="album-btn-save-cap"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 onSaveCaption(caption);
                 setEditingCaption(false);
               }}
@@ -965,41 +1604,62 @@ function MediaCard({
         ) : (
           <p
             className="album-caption-text"
-            onClick={() => isOwner && setEditingCaption(true)}
-            title={isOwner ? "Bấm để sửa ghi chú" : ""}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (canEdit) setEditingCaption(true);
+            }}
+            title={canEdit ? "Bấm để sửa ghi chú" : ""}
           >
             <Sparkles size={13} className="album-sparkle-icon" />
             <span>
               {caption || (
                 <em className="album-caption-empty">
-                  {isOwner ? "+ Thêm ghi chú..." : "Khoảnh khắc kỷ niệm"}
+                  {canEdit ? "+ Thêm ghi chú..." : "Khoảnh khắc kỷ niệm"}
                 </em>
               )}
             </span>
           </p>
         )}
 
-        {/* Tags Row */}
-        <div className="album-card-tags-row">
+        {/* Tags & Stamp Actions Row */}
+        <div className="album-card-tags-row" onClick={(e) => e.stopPropagation()}>
           {mediaTags.map((label) => (
             <span key={label} className="album-card-tag-pill">
               #{label}
             </span>
           ))}
 
-          {isOwner && (
+          {canEdit && (
             <button
-              onClick={() => setShowTagPicker((v) => !v)}
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowTagPicker((v) => !v);
+              }}
               className="album-card-add-tag-btn"
             >
               + Tag
             </button>
           )}
+
+          {canEdit && item.media_type !== "video" && (
+            <button
+              type="button"
+              className="album-card-stamp-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenSticker?.(item);
+              }}
+              title="Dán Con Dấu / Sticker du lịch"
+            >
+              <Stamp size={12} /> Dán Sticker
+            </button>
+          )}
         </div>
 
         {/* Tag Selection Popup */}
-        {showTagPicker && isOwner && (
-          <div className="album-tag-picker-popover">
+        {showTagPicker && canEdit && (
+          <div className="album-tag-picker-popover" onClick={(e) => e.stopPropagation()}>
             {tags.length === 0 && (
               <span className="album-no-tag-hint">Chưa có tag nào</span>
             )}
@@ -1008,9 +1668,13 @@ function MediaCard({
               return (
                 <button
                   key={t.id}
+                  type="button"
                   className={`album-tag-picker-chip ${isTagged ? "active" : ""}`}
                   style={{ "--chip-color": t.color || "#ea580c" }}
-                  onClick={() => onToggleTag(t.id, isTagged)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleTag(t.id, isTagged);
+                  }}
                 >
                   {t.label}
                 </button>
@@ -1020,21 +1684,321 @@ function MediaCard({
         )}
 
         {/* Footer Meta: Date & Delete */}
-        <div className="album-card-footer">
+        <div className="album-card-footer" onClick={(e) => e.stopPropagation()}>
           <span className="album-card-date">
             {item.created_at
               ? new Date(item.created_at).toLocaleDateString("vi-VN")
               : ""}
           </span>
 
-          {isOwner && (
+          {canDelete && (
             <button
+              type="button"
               className="album-card-delete-btn"
-              onClick={onDelete}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
               title="Xóa tệp"
             >
               <Trash2 size={14} />
             </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Component: Immersive Fullscreen Story Slideshow ──────────
+function StoryViewer({
+  items = [],
+  initialIndex = 0,
+  albumName = "",
+  ownerName = "",
+  provinceThumb = "",
+  onClose,
+}) {
+  const [index, setIndex] = useState(initialIndex);
+  const [progress, setProgress] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+
+  const videoRef = useRef(null);
+  const PHOTO_DURATION = 5000; // 5 giây cho ảnh
+  const currentItem = items[index];
+  const isVideo = currentItem?.media_type === "video";
+
+  // Bộ đếm thời gian cho Ảnh (5s)
+  useEffect(() => {
+    if (isVideo) return;
+    if (isPaused) return;
+
+    setProgress(0);
+    const start = Date.now();
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - start;
+      const pct = Math.min(100, (elapsed / PHOTO_DURATION) * 100);
+      setProgress(pct);
+
+      if (elapsed >= PHOTO_DURATION) {
+        clearInterval(interval);
+        handleNext();
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [index, isPaused, isVideo, items.length]);
+
+  // Điều khiển Video Tạm dừng / Tiếp tục theo trạng thái Hold hoặc nút Pause
+  useEffect(() => {
+    if (!isVideo || !videoRef.current) return;
+    if (isPaused) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play().catch(() => {});
+    }
+  }, [isPaused, isVideo]);
+
+  // Cập nhật thanh tiến trình Story theo thời gian thực tế của Video
+  const handleVideoTimeUpdate = () => {
+    if (!videoRef.current) return;
+    const v = videoRef.current;
+    if (v.duration > 0) {
+      const pct = (v.currentTime / v.duration) * 100;
+      setProgress(Math.min(100, pct));
+    }
+  };
+
+  // Khi Video phát xong -> tự động chuyển sang slide Story tiếp theo
+  const handleVideoEnded = () => {
+    setProgress(100);
+    handleNext();
+  };
+
+  const handleNext = () => {
+    setProgress(0);
+    if (index < items.length - 1) {
+      setIndex((prev) => prev + 1);
+    } else {
+      onClose?.();
+    }
+  };
+
+  const handlePrev = () => {
+    setProgress(0);
+    if (index > 0) {
+      setIndex((prev) => prev - 1);
+    }
+  };
+
+  // Phím tắt điều hướng bàn phím
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose?.();
+      if (e.key === "ArrowRight" || e.key === " ") handleNext();
+      if (e.key === "ArrowLeft") handlePrev();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [index, items.length]);
+
+  if (!currentItem) return null;
+
+  const currentStickers = Array.isArray(currentItem.stickers)
+    ? currentItem.stickers
+    : (() => {
+        try {
+          return JSON.parse(currentItem.stickers || "[]");
+        } catch (e) {
+          return [];
+        }
+      })();
+
+  const currentTags = (currentItem.tags || "").split(",").filter(Boolean);
+
+  return (
+    <div className="album-story-viewer-overlay">
+      <div
+        className="album-story-container"
+        onMouseDown={() => setIsPaused(true)}
+        onMouseUp={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+      >
+        {/* Story Progress Segments */}
+        <div className="album-story-progress-bar-row">
+          {items.map((it, idx) => (
+            <div key={it.id || idx} className="album-story-progress-track">
+              <div
+                className="album-story-progress-fill"
+                style={{
+                  width:
+                    idx < index
+                      ? "100%"
+                      : idx === index
+                        ? `${progress}%`
+                        : "0%",
+                }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Story Header */}
+        <div className="album-story-header">
+          <div className="album-story-user-info">
+            {provinceThumb ? (
+              <img
+                src={provinceThumb}
+                alt=""
+                className="album-story-avatar"
+              />
+            ) : (
+              <div
+                className="album-story-avatar"
+                style={{
+                  background: "#ea580c",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#fff",
+                  fontSize: "1.1rem",
+                }}
+              >
+                🗺️
+              </div>
+            )}
+            <div className="album-story-meta">
+              <h4>{albumName}</h4>
+              <span>
+                {ownerName ? `Bởi ${ownerName}` : "Kỷ niệm VinaTap"} •{" "}
+                {index + 1}/{items.length}
+                {isVideo && " • 🎬 Video"}
+              </span>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            {/* Nút Bật/Tắt Âm Thanh khi đang chiếu Video */}
+            {isVideo && (
+              <button
+                className="album-story-close-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMuted((m) => {
+                    const next = !m;
+                    if (videoRef.current) videoRef.current.muted = next;
+                    return next;
+                  });
+                }}
+                title={isMuted ? "Bật âm thanh" : "Tắt tiếng"}
+              >
+                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              </button>
+            )}
+
+            <button
+              className="album-story-close-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsPaused((p) => !p);
+              }}
+              title={isPaused ? "Tiếp tục" : "Tạm dừng"}
+            >
+              {isPaused ? <Play size={16} /> : <Pause size={16} />}
+            </button>
+
+            <button
+              className="album-story-close-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose?.();
+              }}
+              title="Đóng Story"
+            >
+              <X size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Story Content & Tap Zones */}
+        <div className="album-story-content">
+          {isVideo ? (
+            <video
+              ref={videoRef}
+              key={currentItem.file_url}
+              src={currentItem.file_url}
+              autoPlay
+              playsInline
+              muted={isMuted}
+              onTimeUpdate={handleVideoTimeUpdate}
+              onEnded={handleVideoEnded}
+              className="album-story-media"
+            />
+          ) : (
+            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+              <img
+                src={currentItem.file_url}
+                alt=""
+                className="album-story-media"
+              />
+              {/* Sticker overlays inside story */}
+              {currentStickers.map((ov, sIdx) => (
+                <img
+                  key={ov.id || sIdx}
+                  src={ov.image_url}
+                  alt=""
+                  className="album-card-sticker-overlay"
+                  style={{
+                    left: `${ov.pos_x}%`,
+                    top: `${ov.pos_y}%`,
+                    transform: `translate(-50%, -50%) rotate(${ov.rotation_deg || 0}deg) scale(${ov.scale || 1})`,
+                    zIndex: ov.z_index || 5,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Tap Zones for Next & Prev */}
+          <div className="album-story-tap-zone">
+            <div
+              className="album-story-tap-prev"
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePrev();
+              }}
+            />
+            <div
+              className="album-story-tap-next"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNext();
+              }}
+            />
+          </div>
+
+          {/* Bottom Story Caption & Tags */}
+          {(currentItem.caption_user ||
+            currentItem.caption_ai ||
+            currentTags.length > 0) && (
+            <div className="album-story-caption-overlay">
+              {(currentItem.caption_user || currentItem.caption_ai) && (
+                <p className="album-story-caption-text">
+                  ✨ {currentItem.caption_user || currentItem.caption_ai}
+                </p>
+              )}
+              {currentTags.length > 0 && (
+                <div className="album-story-tags-row">
+                  {currentTags.map((t) => (
+                    <span key={t} className="album-story-tag-pill">
+                      #{t}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>

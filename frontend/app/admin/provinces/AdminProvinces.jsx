@@ -9,6 +9,7 @@ import ProvinceCard from "./components/ProvinceCard";
 import ProvinceFormModal from "./components/ProvinceFormModal";
 import LandmarkManagerModal from "./components/LandmarkManagerModal";
 import ProvincePreviewModal from "./components/ProvincePreviewModal";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminProvinces.css";
 
 export default function AdminProvinces() {
@@ -118,8 +119,8 @@ export default function AdminProvinces() {
 
       {/* Main Province Grid Cards */}
       {loading ? (
-        <div className="admin-dash-loading">
-          <div className="spinner" />
+        <div style={{ padding: "3rem 1rem", background: "#fff", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang tải danh sách 63 tỉnh thành..." subtext="Đang lấy dữ liệu danh lam và toạ độ bản đồ" />
         </div>
       ) : filteredProvinces.length === 0 ? (
         <div className="card admin-prov-empty">

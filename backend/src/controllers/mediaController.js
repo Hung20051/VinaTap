@@ -7,6 +7,8 @@ const {
 } = require("../middleware/upload");
 const db = require("../config/db");
 const SystemSetting = require("../models/SystemSetting");
+const Album = require("../models/Album");
+const { emitToAlbum } = require("../config/socket");
 
 // ─── HELPER: upload buffer lên Cloudinary ────────────────────
 const uploadToCloudinary = (buffer, options = {}) =>
@@ -52,18 +54,33 @@ const getAiCaption = async (imageUrl) => {
 // ─── HELPER: kiểm tra quyền upload vào album ─────────────────
 // Admin luôn được phép — dùng để chuẩn bị nội dung sẵn cho khách
 // (xem provisionCard ở nfcController.js) trước khi giao/ghi thẻ NFC.
-const checkUploadPermission = async (album_id, user_id, role) => {
-  if (role === "admin") return true;
+const checkUploadPermission = async (albumIdentifier, user_id, role) => {
+  const isNumeric = /^\d+$/.test(String(albumIdentifier));
 
-  const [rows] = await db.execute(
-    `SELECT a.id FROM albums a
-     LEFT JOIN album_shares s
-       ON s.album_id = a.id AND s.user_id = ? AND s.status = 'approved' AND s.permission = 'edit'
-     WHERE a.id = ? AND a.status = 'active'
-       AND (a.owner_id = ? OR s.id IS NOT NULL)`,
-    [user_id, album_id, user_id],
-  );
-  return rows.length > 0;
+  if (role === "admin") {
+    const query = isNumeric
+      ? `SELECT a.id, a.share_code, a.owner_id FROM albums a WHERE a.id = ? AND a.status != 'deleted' LIMIT 1`
+      : `SELECT a.id, a.share_code, a.owner_id FROM albums a WHERE a.share_code = ? AND a.status != 'deleted' LIMIT 1`;
+    const [rows] = await db.execute(query, [albumIdentifier]);
+    return rows[0] || null;
+  }
+
+  const query = isNumeric
+    ? `SELECT a.id, a.share_code, a.owner_id FROM albums a
+       LEFT JOIN album_shares s
+         ON s.album_id = a.id AND s.user_id = ? AND s.status = 'approved' AND s.permission = 'edit'
+       WHERE a.id = ? AND a.status = 'active'
+         AND (a.owner_id = ? OR s.id IS NOT NULL)
+       LIMIT 1`
+    : `SELECT a.id, a.share_code, a.owner_id FROM albums a
+       LEFT JOIN album_shares s
+         ON s.album_id = a.id AND s.user_id = ? AND s.status = 'approved' AND s.permission = 'edit'
+       WHERE a.share_code = ? AND a.status = 'active'
+         AND (a.owner_id = ? OR s.id IS NOT NULL)
+       LIMIT 1`;
+
+  const [rows] = await db.execute(query, [user_id, albumIdentifier, user_id]);
+  return rows[0] || null;
 };
 
 // ─── HELPER: lấy album_id từ 1 media_id — dùng để kiểm tra quyền
@@ -102,16 +119,19 @@ const uploadMedia = async (req, res) => {
     const { album_id, taken_at } = req.body;
     if (!album_id) return res.status(400).json({ message: "Thiếu album_id" });
 
-    if (!(await checkUploadPermission(album_id, req.user.id, req.user.role)))
+    const targetAlbum = await checkUploadPermission(album_id, req.user.id, req.user.role);
+    if (!targetAlbum)
       return res
         .status(403)
         .json({ message: "Bạn không có quyền upload vào album này" });
+
+    const numericAlbumId = targetAlbum.id;
 
     const isVideo = file.mimetype.startsWith("video/");
     const resourceType = isVideo ? "video" : "image";
 
     const uploaded = await uploadToCloudinary(file.buffer, {
-      folder: `vinatap/albums/${album_id}`,
+      folder: `vinatap/albums/${numericAlbumId}`,
       resource_type: resourceType,
     });
 
@@ -132,7 +152,7 @@ const uploadMedia = async (req, res) => {
           duration_sec, caption_ai, taken_at, status)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'active')`,
       [
-        album_id,
+        numericAlbumId,
         req.user.id,
         isVideo ? "video" : "photo",
         uploaded.secure_url,
@@ -145,12 +165,19 @@ const uploadMedia = async (req, res) => {
 
     const mediaObj = {
       id: result.insertId,
+      album_id: numericAlbumId,
       file_url: uploaded.secure_url,
       thumbnail_url,
       media_type: isVideo ? "video" : "photo",
       caption_ai,
       created_at: new Date().toISOString(),
+      uploader_id: req.user.id,
     };
+
+    emitToAlbum(numericAlbumId, targetAlbum.share_code, "media_added", {
+      items: [mediaObj],
+      uploaderName: req.user.name || "Cộng tác viên",
+    });
 
     res.status(201).json({
       message: "Upload thành công",
@@ -175,16 +202,19 @@ const uploadMultipleMedia = async (req, res) => {
     const { album_id } = req.body;
     if (!album_id) return res.status(400).json({ message: "Thiếu album_id" });
 
-    if (!(await checkUploadPermission(album_id, req.user.id, req.user.role)))
+    const targetAlbum = await checkUploadPermission(album_id, req.user.id, req.user.role);
+    if (!targetAlbum)
       return res
         .status(403)
         .json({ message: "Bạn không có quyền upload vào album này" });
+
+    const numericAlbumId = targetAlbum.id;
 
     const results = [];
     for (const file of req.files) {
       const isVideo = file.mimetype.startsWith("video/");
       const uploaded = await uploadToCloudinary(file.buffer, {
-        folder: `vinatap/albums/${album_id}`,
+        folder: `vinatap/albums/${numericAlbumId}`,
         resource_type: isVideo ? "video" : "image",
       });
 
@@ -207,7 +237,7 @@ const uploadMultipleMedia = async (req, res) => {
             duration_sec, caption_ai, status)
          VALUES (?, ?, ?, ?, ?, ?, ?, 'active')`,
         [
-          album_id,
+          numericAlbumId,
           req.user.id,
           isVideo ? "video" : "photo",
           uploaded.secure_url,
@@ -219,13 +249,20 @@ const uploadMultipleMedia = async (req, res) => {
 
       results.push({
         id: result.insertId,
+        album_id: numericAlbumId,
         file_url: uploaded.secure_url,
         thumbnail_url,
         media_type: isVideo ? "video" : "photo",
         caption_ai,
         created_at: new Date().toISOString(),
+        uploader_id: req.user.id,
       });
     }
+
+    emitToAlbum(numericAlbumId, targetAlbum.share_code, "media_added", {
+      items: results,
+      uploaderName: req.user.name || "Cộng tác viên",
+    });
 
     res.status(201).json({
       message: `Upload ${results.length} file thành công`,
@@ -278,6 +315,12 @@ const updateMedia = async (req, res) => {
       );
     }
 
+    const album = await Album.findById(albumId);
+    emitToAlbum(albumId, album?.share_code, "media_updated", {
+      mediaId: Number(mediaId),
+      caption_user,
+    });
+
     res.json({ message: "Cập nhật thành công" });
   } catch (err) {
     console.error("updateMedia:", err);
@@ -304,6 +347,11 @@ const deleteMedia = async (req, res) => {
       `UPDATE album_media SET status = 'deleted' WHERE id = ? AND status = 'active'`,
       [mediaId],
     );
+
+    const album = await Album.findById(albumId);
+    emitToAlbum(albumId, album?.share_code, "media_deleted", {
+      mediaId: Number(mediaId),
+    });
 
     res.json({ message: "Đã xóa" });
   } catch (err) {

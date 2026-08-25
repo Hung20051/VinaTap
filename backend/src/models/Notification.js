@@ -1,49 +1,6 @@
 const db = require("../config/db");
 
 const Notification = {
-  async initTable() {
-    try {
-      await db.execute(`
-        CREATE TABLE IF NOT EXISTS notifications (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          recipient_type ENUM('all', 'group', 'users', 'user') NOT NULL DEFAULT 'all',
-          group_target VARCHAR(50) NULL,
-          type ENUM('system', 'promo', 'feature', 'custom') NOT NULL DEFAULT 'custom',
-          title VARCHAR(200) NOT NULL,
-          content TEXT NOT NULL,
-          payload JSON NULL,
-          link VARCHAR(255) NULL,
-          created_by INT NOT NULL,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          INDEX idx_recipient_type (recipient_type),
-          INDEX idx_type (type),
-          INDEX idx_created_at (created_at)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `);
-
-      await db.execute(`
-        CREATE TABLE IF NOT EXISTS notification_recipients (
-          notification_id INT NOT NULL,
-          user_id INT NOT NULL,
-          PRIMARY KEY (notification_id, user_id),
-          INDEX idx_user_id (user_id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `);
-
-      await db.execute(`
-        CREATE TABLE IF NOT EXISTS notification_reads (
-          notification_id INT NOT NULL,
-          user_id INT NOT NULL,
-          read_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-          PRIMARY KEY (notification_id, user_id),
-          INDEX idx_read_user (user_id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-      `);
-    } catch (err) {
-      console.error("Notification initTable error:", err.message);
-    }
-  },
-
   // Admin gửi thông báo (Đa dạng đối tượng & Form động)
   async send({
     recipient_type,

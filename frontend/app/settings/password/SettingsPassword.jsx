@@ -74,35 +74,24 @@ export default function SettingsPassword() {
 
         <div className="settings-acc-form-grid">
           {/* Mật khẩu hiện tại */}
-          <div className="settings-acc-field settings-acc-field--full">
+          <div className="settings-acc-field">
             <label className="settings-acc-label">
               <Lock size={14} /> Mật Khẩu Hiện Tại *
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="settings-password-input-wrapper">
               <input
                 type={showCurrent ? "text" : "password"}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="Nhập mật khẩu hiện tại của bạn..."
+                placeholder="Nhập mật khẩu hiện tại..."
                 className="settings-acc-input"
-                style={{ paddingRight: "40px" }}
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowCurrent(!showCurrent)}
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "transparent",
-                  border: "none",
-                  color: "#94a3b8",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
+                className="settings-password-toggle-btn"
+                title={showCurrent ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
               >
                 {showCurrent ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -114,31 +103,20 @@ export default function SettingsPassword() {
             <label className="settings-acc-label">
               <Lock size={14} /> Mật Khẩu Mới (ít nhất 6 ký tự) *
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="settings-password-input-wrapper">
               <input
                 type={showNew ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Nhập mật khẩu mới..."
                 className="settings-acc-input"
-                style={{ paddingRight: "40px" }}
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "transparent",
-                  border: "none",
-                  color: "#94a3b8",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
+                className="settings-password-toggle-btn"
+                title={showNew ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
               >
                 {showNew ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -150,31 +128,20 @@ export default function SettingsPassword() {
             <label className="settings-acc-label">
               <ShieldCheck size={14} /> Xác Nhận Mật Khẩu Mới *
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="settings-password-input-wrapper">
               <input
                 type={showConfirm ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Nhập lại mật khẩu mới..."
                 className="settings-acc-input"
-                style={{ paddingRight: "40px" }}
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  background: "transparent",
-                  border: "none",
-                  color: "#94a3b8",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
+                className="settings-password-toggle-btn"
+                title={showConfirm ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
               >
                 {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>

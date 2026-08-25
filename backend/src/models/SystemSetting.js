@@ -27,14 +27,6 @@ class SystemSetting {
         return _settingsCache;
       }
 
-      await db.execute(`
-        CREATE TABLE IF NOT EXISTS system_settings (
-          setting_key   VARCHAR(100) NOT NULL PRIMARY KEY,
-          setting_value TEXT         NOT NULL,
-          updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-      `);
-
       const [rows] = await db.execute(
         `SELECT setting_key, setting_value FROM system_settings`,
       );
@@ -55,14 +47,6 @@ class SystemSetting {
   }
 
   static async updateMany(settingsObj) {
-    await db.execute(`
-      CREATE TABLE IF NOT EXISTS system_settings (
-        setting_key   VARCHAR(100) NOT NULL PRIMARY KEY,
-        setting_value TEXT         NOT NULL,
-        updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-    `);
-
     for (const [key, value] of Object.entries(settingsObj)) {
       await db.execute(
         `INSERT INTO system_settings (setting_key, setting_value)

@@ -1,13 +1,8 @@
 "use client";
 
-// Route "/admin" chỉ để redirect sang "/admin/dashboard" — nội dung thật
-// đã tách sang app/admin/dashboard/ (theo cấu trúc feature-folder mới).
-// Toàn bộ 864 dòng logic cũ (CRUD tỉnh/địa danh, upload sticker, tạo
-// serial NFC hàng loạt) đã được backup, sẽ di dời dần sang
-// app/admin/provinces/, app/admin/nfc-cards/, app/admin/stickers/.
-
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import DinoLoader from "@/components/ui/DinoLoader";
 
 export default function AdminIndexPage() {
   const router = useRouter();
@@ -25,7 +20,7 @@ export default function AdminIndexPage() {
         justifyContent: "center",
       }}
     >
-      <div className="spinner" />
+      <DinoLoader fullScreen={false} size={220} text="Đang chuyển hướng vào Bảng Quản Trị..." subtext="Vui lòng chờ trong giây lát" />
     </div>
   );
 }

@@ -105,14 +105,14 @@ const activateSerial = async (req, res) => {
     const card = await NfcCard.findBySerial(serial_code);
     if (!card) return res.status(404).json({ message: "Serial không tồn tại" });
 
-    if (card.status === "active")
-      return res.status(409).json({ message: "Serial này đã được kích hoạt" });
+    if (card.owner_user_id)
+      return res.status(409).json({ message: "Serial này đã được kích hoạt và có người sở hữu" });
 
     if (card.status === "disabled")
-      return res.status(403).json({ message: "Serial bị vô hiệu hóa" });
+      return res.status(403).json({ message: "Serial này đã bị vô hiệu hóa" });
 
     const ok = await NfcCard.activate(serial_code, req.user.id);
-    if (!ok) return res.status(400).json({ message: "Kích hoạt thất bại" });
+    if (!ok) return res.status(400).json({ message: "Kích hoạt thất bại hoặc thẻ đã được kích hoạt" });
 
     const updated = await NfcCard.findBySerial(serial_code);
     res.json({
@@ -143,150 +143,292 @@ const getMyCards = async (req, res) => {
   }
 };
 
+// ─── GET PENDING TRANSFERS FOR CURRENT USER (GET /api/nfc/transfers/pending) ───
+const getPendingTransfers = async (req, res) => {
+  try {
+    const [user] = await db.execute(`SELECT email FROM users WHERE id = ?`, [req.user.id]);
+    if (!user.length) return res.status(404).json({ message: "Người dùng không tồn tại" });
+
+    const userEmail = user[0].email.toLowerCase().trim();
+
+    const [transfers] = await db.execute(
+      `SELECT 
+         ct.id,
+         ct.nfc_card_id,
+         ct.token,
+         ct.status,
+         ct.note,
+         ct.created_at,
+         ct.expires_at,
+         n.serial_code,
+         p.id AS province_id,
+         p.name AS province_name,
+         p.region AS province_region,
+         p.thumbnail_url,
+         u.name AS sender_name,
+         u.email AS sender_email,
+         u.avatar_url AS sender_avatar
+       FROM card_transfers ct
+       JOIN nfc_cards n ON n.id = ct.nfc_card_id
+       JOIN provinces p ON p.id = n.province_id
+       JOIN users u ON u.id = ct.from_user_id
+       WHERE LOWER(ct.to_email) = LOWER(?)
+         AND ct.status = 'pending'
+         AND ct.expires_at > NOW()
+         AND n.status = 'active'
+       ORDER BY ct.created_at DESC`,
+      [userEmail],
+    );
+
+    res.json({ transfers });
+  } catch (err) {
+    console.error("getPendingTransfers:", err);
+    res.status(500).json({ message: "Lỗi server khi lấy danh sách quà tặng" });
+  }
+};
+
+// ─── REJECT TRANSFER (POST /api/nfc/transfers/reject) ───────────
+const rejectTransfer = async (req, res) => {
+  try {
+    const { transfer_id, token } = req.body;
+    const [user] = await db.execute(`SELECT email FROM users WHERE id = ?`, [req.user.id]);
+    if (!user.length) return res.status(404).json({ message: "Người dùng không tồn tại" });
+
+    const userEmail = user[0].email.toLowerCase().trim();
+
+    let query = `UPDATE card_transfers SET status = 'rejected' WHERE status = 'pending' AND LOWER(to_email) = LOWER(?) AND `;
+    const params = [userEmail];
+    if (transfer_id) {
+      query += `id = ?`;
+      params.push(transfer_id);
+    } else if (token) {
+      query += `token = ?`;
+      params.push(token);
+    } else {
+      return res.status(400).json({ message: "Thiếu transfer_id hoặc token" });
+    }
+
+    const [result] = await db.execute(query, params);
+    if (result.affectedRows === 0) {
+      return res.status(400).json({ message: "Lời mời không tồn tại hoặc đã được xử lý" });
+    }
+
+    res.json({ message: "Đã từ chối nhận thẻ thành công" });
+  } catch (err) {
+    console.error("rejectTransfer:", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
 // ─── INITIATE TRANSFER (POST /api/nfc/:id/transfer) ──────────
 const initiateTransfer = async (req, res) => {
+  let conn = null;
   try {
+    const cardId = req.params.id;
     const { email, note } = req.body;
-    if (!email)
+    if (!email || !email.trim()) {
       return res.status(400).json({ message: "Thiếu email người nhận" });
+    }
 
-    const [cards] = await db.execute(
-      `SELECT n.*, p.name AS province_name FROM nfc_cards n
-       JOIN provinces p ON p.id = n.province_id
-       WHERE n.id = ? AND n.owner_user_id = ? AND n.status = 'active'`,
-      [req.params.id, req.user.id],
-    );
-    if (!cards.length)
-      return res.status(403).json({ message: "Thẻ không thuộc về bạn" });
+    const targetEmail = email.trim().toLowerCase();
 
     // Không chuyển cho chính mình
     const [self] = await db.execute(
-      `SELECT id FROM users WHERE LOWER(email) = LOWER(?) AND id = ?`,
-      [email, req.user.id],
+      `SELECT id, email FROM users WHERE id = ?`,
+      [req.user.id],
     );
-    if (self.length)
-      return res
-        .status(400)
-        .json({ message: "Không thể chuyển cho chính mình" });
+    if (self.length && self[0].email.toLowerCase() === targetEmail) {
+      return res.status(400).json({ message: "Bạn không thể tự chuyển nhượng thẻ cho chính mình" });
+    }
 
-    // Hủy transfer pending cũ
-    await db.execute(
+    conn = await db.getConnection();
+    await conn.beginTransaction();
+
+    // Khóa hàng thẻ nfc_cards bằng FOR UPDATE để chống spam click race condition
+    const [cards] = await conn.execute(
+      `SELECT n.*, p.name AS province_name FROM nfc_cards n
+       JOIN provinces p ON p.id = n.province_id
+       WHERE n.id = ? AND n.owner_user_id = ? AND n.status = 'active' FOR UPDATE`,
+      [cardId, req.user.id],
+    );
+
+    if (!cards.length) {
+      await conn.rollback();
+      return res.status(403).json({ message: "Thẻ không thuộc về bạn hoặc đã bị vô hiệu hóa" });
+    }
+
+    // Hủy toàn bộ transfer pending cũ của thẻ này (chỉ giữ 1 lời mời mới nhất)
+    await conn.execute(
       `UPDATE card_transfers SET status = 'cancelled'
        WHERE nfc_card_id = ? AND status = 'pending'`,
-      [req.params.id],
+      [cardId],
     );
 
     const token = crypto.randomBytes(32).toString("hex");
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-    await db.execute(
+    await conn.execute(
       `INSERT INTO card_transfers
          (nfc_card_id, from_user_id, to_email, token, status, note, expires_at)
        VALUES (?, ?, ?, ?, 'pending', ?, ?)`,
-      [req.params.id, req.user.id, email, token, note || null, expires],
+      [cardId, req.user.id, targetEmail, token, note ? note.trim() : null, expires],
     );
 
+    await conn.commit();
+
+    // Gửi email thông báo cho người nhận (nếu email lỗi vẫn không crash transaction)
     const [sender] = await db.execute(`SELECT name FROM users WHERE id = ?`, [
       req.user.id,
     ]);
-    await sendTransferRequestEmail(email, {
+    sendTransferRequestEmail(targetEmail, {
       senderName: sender[0]?.name || "Người dùng VinaTap",
       provinceName: cards[0].province_name,
       token,
       note: note || "",
+    }).catch((emailErr) => {
+      console.warn("Gửi email transfer thất bại (nhưng record trên web vẫn tạo thành công):", emailErr.message);
     });
 
-    res.json({ message: `Đã gửi lời mời chuyển nhượng đến ${email}` });
+    res.json({ message: `Đã gửi lời mời chuyển nhượng thành công đến ${targetEmail}` });
   } catch (err) {
+    if (conn) {
+      try {
+        await conn.rollback();
+      } catch (rbErr) {
+        console.error("Rollback error:", rbErr);
+      }
+    }
     console.error("initiateTransfer:", err);
-    res.status(500).json({ message: "Lỗi server" });
+    res.status(500).json({ message: "Lỗi server khi chuyển nhượng thẻ" });
+  } finally {
+    if (conn) conn.release();
   }
 };
 
 // ─── ACCEPT TRANSFER (POST /api/nfc/transfer/accept) ─────────
 const acceptTransfer = async (req, res) => {
+  const { token, transfer_id } = req.body;
+  if (!token && !transfer_id) {
+    return res.status(400).json({ message: "Thiếu thông tin token hoặc transfer_id" });
+  }
+
+  const conn = await db.getConnection();
   try {
-    const { token } = req.body;
-    if (!token) return res.status(400).json({ message: "Thiếu token" });
+    await conn.beginTransaction();
 
-    const [transfers] = await db.execute(
-      `SELECT * FROM card_transfers
-       WHERE token = ? AND status = 'pending' AND expires_at > NOW() LIMIT 1`,
-      [token],
-    );
-    if (!transfers.length)
-      return res
-        .status(400)
-        .json({ message: "Link không hợp lệ hoặc đã hết hạn" });
-
-    const tr = transfers[0];
-
-    const [me] = await db.execute(`SELECT email FROM users WHERE id = ?`, [
-      req.user.id,
-    ]);
-    if (!me.length || me[0].email.toLowerCase() !== tr.to_email.toLowerCase())
-      return res
-        .status(403)
-        .json({ message: "Link này không dành cho tài khoản của bạn" });
-
-    const conn = await db.getConnection();
-    try {
-      await conn.beginTransaction();
-      await conn.execute(
-        `UPDATE nfc_cards SET owner_user_id = ? WHERE id = ?`,
-        [req.user.id, tr.nfc_card_id],
-      );
-      await conn.execute(
-        `UPDATE albums SET owner_id = ? WHERE nfc_card_id = ? AND status = 'active'`,
-        [req.user.id, tr.nfc_card_id],
-      );
-      await conn.execute(
-        `UPDATE card_transfers
-         SET status = 'accepted', to_user_id = ?, accepted_at = NOW()
-         WHERE id = ?`,
-        [req.user.id, tr.id],
-      );
-      await conn.commit();
-    } catch (e) {
-      await conn.rollback();
-      throw e;
-    } finally {
-      conn.release();
+    // Khóa hàng transfer bằng FOR UPDATE để chống nhiều người cùng click nhận cùng 1 lúc
+    let query = `SELECT * FROM card_transfers WHERE status = 'pending' AND expires_at > NOW() AND `;
+    const params = [];
+    if (transfer_id) {
+      query += `id = ? FOR UPDATE`;
+      params.push(transfer_id);
+    } else {
+      query += `token = ? FOR UPDATE`;
+      params.push(token);
     }
 
-    // Thông báo cho người chuyển
-    const [from] = await db.execute(
-      `SELECT u.email, u.name FROM users u
-       WHERE u.id = ?`,
-      [tr.from_user_id],
-    );
-    const [recipient] = await db.execute(
-      `SELECT name FROM users WHERE id = ?`,
-      [req.user.id],
-    );
-    if (from[0]) {
-      await sendTransferAcceptedEmail(from[0].email, {
-        ownerName: from[0].name,
-        recipientName: recipient[0]?.name || tr.to_email,
+    const [transfers] = await conn.execute(query, params);
+    if (!transfers.length) {
+      await conn.rollback();
+      return res.status(400).json({
+        message: "Lời mời chuyển nhượng không hợp lệ, đã hết hạn hoặc đã được nhận bởi người khác",
       });
     }
 
-    res.json({ message: "Chuyển nhượng thành công! Thẻ đã thuộc về bạn." });
+    const tr = transfers[0];
+
+    // Xác thực email người nhận khớp với tài khoản hiện tại
+    const [me] = await conn.execute(`SELECT email, name FROM users WHERE id = ?`, [
+      req.user.id,
+    ]);
+    if (!me.length || me[0].email.toLowerCase() !== tr.to_email.toLowerCase()) {
+      await conn.rollback();
+      return res.status(403).json({
+        message: `Lời mời này được gửi đến email ${tr.to_email}. Vui lòng đăng nhập đúng tài khoản này để nhận.`,
+      });
+    }
+
+    // Khóa hàng thẻ nfc_cards
+    const [cards] = await conn.execute(
+      `SELECT * FROM nfc_cards WHERE id = ? FOR UPDATE`,
+      [tr.nfc_card_id],
+    );
+    if (!cards.length) {
+      await conn.rollback();
+      return res.status(404).json({ message: "Không tìm thấy thẻ NFC tương ứng" });
+    }
+    if (cards[0].status !== "active") {
+      await conn.rollback();
+      return res.status(403).json({
+        message: "Thẻ NFC này đã bị vô hiệu hóa hoặc bị khóa bởi quản trị viên",
+      });
+    }
+
+    // 1. Chuyển quyền sở hữu thẻ NFC sang người nhận
+    await conn.execute(
+      `UPDATE nfc_cards SET owner_user_id = ? WHERE id = ?`,
+      [req.user.id, tr.nfc_card_id],
+    );
+
+    // 2. Chuyển quyền sở hữu album tương ứng sang người nhận (kể cả active hoặc archived)
+    await conn.execute(
+      `UPDATE albums SET owner_id = ? WHERE nfc_card_id = ? AND status != 'deleted'`,
+      [req.user.id, tr.nfc_card_id],
+    );
+
+    // 3. Cập nhật trạng thái card_transfers thành accepted
+    await conn.execute(
+      `UPDATE card_transfers
+       SET status = 'accepted', to_user_id = ?, accepted_at = NOW()
+       WHERE id = ?`,
+      [req.user.id, tr.id],
+    );
+
+    // 4. Hủy mọi lời mời pending khác liên quan đến thẻ này
+    await conn.execute(
+      `UPDATE card_transfers SET status = 'cancelled'
+       WHERE nfc_card_id = ? AND id != ? AND status = 'pending'`,
+      [tr.nfc_card_id, tr.id],
+    );
+
+    await conn.commit();
+
+    // Gửi email cảm ơn/thông báo cho người tặng cũ
+    const [fromUser] = await db.execute(
+      `SELECT u.email, u.name FROM users u WHERE u.id = ?`,
+      [tr.from_user_id],
+    );
+    if (fromUser[0]) {
+      sendTransferAcceptedEmail(fromUser[0].email, {
+        ownerName: fromUser[0].name,
+        recipientName: me[0]?.name || tr.to_email,
+      }).catch(() => {});
+    }
+
+    res.json({ message: "🎉 Nhận thẻ thành công! Mảnh bản đồ và album kỷ niệm đã thuộc về bạn." });
   } catch (err) {
+    await conn.rollback();
     console.error("acceptTransfer:", err);
-    res.status(500).json({ message: "Lỗi server" });
+    res.status(500).json({ message: "Lỗi server khi tiếp nhận thẻ" });
+  } finally {
+    conn.release();
   }
 };
 
 // ─── CANCEL TRANSFER (DELETE /api/nfc/:id/transfer) ──────────
 const cancelTransfer = async (req, res) => {
   try {
-    await db.execute(
+    const [result] = await db.execute(
       `UPDATE card_transfers SET status = 'cancelled'
        WHERE nfc_card_id = ? AND from_user_id = ? AND status = 'pending'`,
       [req.params.id, req.user.id],
     );
-    res.json({ message: "Đã hủy yêu cầu chuyển nhượng" });
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy yêu cầu chuyển nhượng đang chờ xử lý để hủy",
+      });
+    }
+    res.json({ message: "Đã hủy yêu cầu chuyển nhượng thẻ" });
   } catch (err) {
     console.error("cancelTransfer:", err);
     res.status(500).json({ message: "Lỗi server" });
@@ -320,12 +462,30 @@ const createBatch = async (req, res) => {
             .replace(/[\u0300-\u036f]/g, "")
             .replace(/[^a-z0-9]+/g, "-")
             .replace(/^-+|-+$/g, "");
+
+          const lowerName = rawName.toLowerCase();
+          let detectedRegion = "north";
+          if (/đà nẵng|quảng|huế|nghệ an|hà tĩnh|thanh hóa|bình định|phú yên|khánh hòa|ninh thuận|bình thuận/i.test(lowerName)) {
+            detectedRegion = "central";
+          } else if (/hồ chí minh|sài gòn|cần thơ|bình dương|đồng nai|long an|tiền giang|bến tre|vĩnh long|trà vinh|hậu giang|sóc trăng|bạc liêu|cà mau|kiên giang|an giang|đồng tháp|tây ninh|bình phước|bà rịa/i.test(lowerName)) {
+            detectedRegion = "south";
+          } else if (/trường sa|hoàng sa|phú quốc|côn đảo/i.test(lowerName)) {
+            detectedRegion = "islands";
+          }
+
           const [insProv] = await db.execute(
-            `INSERT INTO provinces (name, slug, region, description, status) VALUES (?, ?, 'south', ?, 'active')`,
-            [rawName, slug, `Khám phá văn hóa & địa danh ${rawName}`]
+            `INSERT INTO provinces (name, slug, region, description, status) VALUES (?, ?, ?, ?, 'active')`,
+            [rawName, slug, detectedRegion, `Khám phá văn hóa & địa danh ${rawName}`]
           );
           province_id = insProv.insertId;
         }
+      }
+    }
+
+    if (province_id) {
+      const [prov] = await db.execute(`SELECT id FROM provinces WHERE id = ? LIMIT 1`, [province_id]);
+      if (!prov.length) {
+        return res.status(400).json({ message: "Tỉnh thành (province_id) không tồn tại trong hệ thống" });
       }
     }
 
@@ -633,6 +793,8 @@ module.exports = {
   claimCard,
   activateSerial,
   getMyCards,
+  getPendingTransfers,
+  rejectTransfer,
   initiateTransfer,
   acceptTransfer,
   cancelTransfer,

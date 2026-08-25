@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { manualSaleAPI, orderAPI, productAPI } from "@/lib/api";
 import { getToken } from "@/lib/auth";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminRevenue.css";
 
 const formatVND = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
@@ -337,8 +338,8 @@ export default function AdminRevenue() {
       </div>
 
       {loading ? (
-        <div className="admin-dash-loading">
-          <div className="spinner" />
+        <div className="card admin-rev-table-wrap" style={{ padding: "2.5rem 1rem" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang tải dữ liệu doanh thu..." subtext="Đang đồng bộ đơn hàng VietQR & Bán buôn" />
         </div>
       ) : activeTab === "online" ? (
         /* DANH SÁCH ĐƠN SHOP ONLINE (VIETQR / COD) */

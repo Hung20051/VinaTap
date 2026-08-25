@@ -2,10 +2,22 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Logo from "@/components/layout/Logo";
 import { useRouter } from "next/navigation";
+import {
+  Radio,
+  Sparkles,
+  Zap,
+  CheckCircle2,
+  ArrowRight,
+  ShieldCheck,
+  MapPin,
+  AlertCircle,
+  Smartphone,
+  Edit3,
+} from "lucide-react";
 import { nfcAPI, albumAPI } from "@/lib/api";
 import { requireAuth } from "@/lib/auth";
+import "./ActivatePage.css";
 
 export default function ActivatePage() {
   const router = useRouter();
@@ -28,7 +40,7 @@ export default function ActivatePage() {
 
     const cleaned = serial.trim().toUpperCase();
     if (!cleaned) {
-      setError("Vui lòng nhập mã serial in trên mảnh ghép");
+      setError("Vui lòng nhập mã serial in trên mảnh ghép gỗ");
       return;
     }
 
@@ -37,7 +49,7 @@ export default function ActivatePage() {
       const res = await nfcAPI.activate(cleaned);
       setCard(res.card);
     } catch (err) {
-      setError(err.message || "Kích hoạt thất bại, vui lòng thử lại");
+      setError(err.message || "Kích hoạt thất bại, vui lòng kiểm tra lại mã serial");
     } finally {
       setLoading(false);
     }
@@ -58,236 +70,167 @@ export default function ActivatePage() {
 
   if (checkingAuth) {
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className="activate-wrapper">
         <div className="spinner" />
       </div>
     );
   }
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="container navbar__inner">
-          <Logo className="navbar__logo" />
-          <div className="navbar__links">
-            <Link href="/customer/dashboard">Dashboard</Link>
-          </div>
-        </div>
-      </nav>
+    <div className="activate-wrapper">
+      <div className="activate-bg-glow activate-bg-glow--top" />
 
-      <div
-        style={{
-          minHeight: "calc(100vh - 65px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "3rem 1rem",
-          background: "linear-gradient(135deg, #fff1eb 0%, #fafafa 100%)",
-        }}
-      >
-        <div
-          className="card"
-          style={{ width: "100%", maxWidth: 440, padding: "2rem" }}
-        >
-          {!card ? (
-            <>
-              <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
-                <p style={{ fontSize: "2.5rem" }}>🔑</p>
-                <h1
-                  style={{
-                    fontSize: "1.4rem",
-                    fontWeight: 800,
-                    marginTop: ".5rem",
-                  }}
-                >
-                  Kích hoạt mảnh ghép NFC
-                </h1>
-                <p
-                  style={{
-                    color: "var(--text-secondary)",
-                    fontSize: ".9rem",
-                    marginTop: ".4rem",
-                  }}
-                >
-                  Nhập mã serial in trên mặt sau mảnh ghép, hoặc chạm điện thoại
-                  vào chip NFC để tự động điền
-                </p>
+      <div className="activate-card">
+        {!card ? (
+          <>
+            {/* NFC Wave Animation Icon */}
+            <div className="activate-icon-container">
+              <div className="activate-radar-ring" />
+              <div className="activate-radar-ring activate-radar-ring--delayed" />
+              <div className="activate-icon-badge">
+                <Radio size={36} strokeWidth={2.4} />
               </div>
+            </div>
 
-              {error && (
-                <div
-                  style={{
-                    background: "#fee2e2",
-                    color: "var(--danger)",
-                    padding: "0.65rem 1rem",
-                    borderRadius: "var(--radius-md)",
-                    fontSize: ".85rem",
-                    marginBottom: "1rem",
-                  }}
-                >
-                  {error}
-                </div>
-              )}
+            {/* Header Text */}
+            <div className="activate-header">
+              <h1 className="activate-title">Kích Hoạt Mảnh Ghép NFC</h1>
+              <p className="activate-subtitle">
+                Chạm điện thoại vào chip NFC trên mảnh gỗ hoặc nhập mã Serial để mở khóa bản đồ du lịch của bạn.
+              </p>
+            </div>
 
-              <form onSubmit={handleActivate}>
-                <label
-                  style={{
-                    fontSize: ".85rem",
-                    fontWeight: 600,
-                    display: "block",
-                    marginBottom: ".35rem",
-                  }}
-                >
-                  Mã serial
+            {/* Error Message */}
+            {error && (
+              <div className="activate-error-banner">
+                <AlertCircle size={18} />
+                <span>{error}</span>
+              </div>
+            )}
+
+            {/* Serial Form */}
+            <form onSubmit={handleActivate} className="activate-form">
+              <div>
+                <label className="activate-input-label">
+                  <span>MÃ SERIAL MẢNH GHÉP</span>
+                  <span className="activate-input-hint">In ở mặt sau thẻ gỗ</span>
                 </label>
-                <input
-                  className="input"
-                  placeholder="VD: HAN-2026-A3F9C71B2C"
-                  value={serial}
-                  onChange={(e) => {
-                    setSerial(e.target.value);
-                    if (error) setError("");
-                  }}
-                  style={{
-                    textAlign: "center",
-                    letterSpacing: "1px",
-                    fontWeight: 600,
-                    textTransform: "uppercase",
-                  }}
-                  autoFocus
-                />
-
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={loading}
-                  style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    marginTop: "1.25rem",
-                    opacity: loading ? 0.7 : 1,
-                  }}
-                >
-                  {loading ? "Đang kích hoạt..." : "Kích hoạt ngay"}
-                </button>
-              </form>
-
-              <p
-                style={{
-                  textAlign: "center",
-                  fontSize: ".8rem",
-                  color: "var(--text-muted)",
-                  marginTop: "1.25rem",
-                }}
-              >
-                Mỗi mảnh ghép chỉ kích hoạt được 1 lần và gắn với đúng 1 tài
-                khoản
-              </p>
-            </>
-          ) : (
-            <div style={{ textAlign: "center" }}>
-              <p style={{ fontSize: "2.5rem" }}>🎉</p>
-              <h1
-                style={{
-                  fontSize: "1.4rem",
-                  fontWeight: 800,
-                  marginTop: ".5rem",
-                }}
-              >
-                Kích hoạt thành công!
-              </h1>
-              <p
-                style={{
-                  color: "var(--text-secondary)",
-                  fontSize: ".9rem",
-                  marginTop: ".4rem",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                Bạn vừa mở khóa mảnh ghép
-              </p>
-
-              <div
-                style={{
-                  background: "var(--primary-light)",
-                  borderRadius: "var(--radius-lg)",
-                  padding: "1.5rem",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "1.6rem",
-                    fontWeight: 800,
-                    color: "var(--primary)",
-                  }}
-                >
-                  {card.province_name}
-                </p>
-                <p
-                  style={{
-                    fontSize: ".8rem",
-                    color: "var(--text-muted)",
-                    marginTop: ".25rem",
-                  }}
-                >
-                  Serial: {card.serial_code}
-                </p>
-              </div>
-
-              {error && (
-                <div
-                  style={{
-                    background: "#fee2e2",
-                    color: "var(--danger)",
-                    padding: "0.65rem 1rem",
-                    borderRadius: "var(--radius-md)",
-                    fontSize: ".85rem",
-                    marginBottom: "1rem",
-                    textAlign: "left",
-                  }}
-                >
-                  {error}
+                <div className="activate-input-wrap">
+                  <input
+                    className="activate-serial-input"
+                    placeholder="VD: HAN-2026-A3F9C7"
+                    value={serial}
+                    onChange={(e) => {
+                      setSerial(e.target.value);
+                      if (error) setError("");
+                    }}
+                    autoFocus
+                  />
                 </div>
-              )}
+              </div>
 
               <button
-                className="btn btn-primary"
-                onClick={handleCreateAlbum}
-                disabled={creatingAlbum}
+                type="submit"
+                className="activate-submit-btn"
+                disabled={loading || !serial.trim()}
+              >
+                {loading ? (
+                  <>Đang xác thực thẻ NFC...</>
+                ) : (
+                  <>
+                    <Zap size={18} fill="currentColor" />
+                    <span>Kích Hoạt Mảnh Ghép Ngay</span>
+                  </>
+                )}
+              </button>
+            </form>
+
+            {/* Helper Guide 2-Steps */}
+            <div className="activate-guide-grid">
+              <div className="activate-guide-item">
+                <div className="activate-guide-icon">📱</div>
+                <h4>Cách 1: Chạm NFC</h4>
+                <p>Bật NFC trên điện thoại và chạm nhẹ vào mảnh ghép gỗ.</p>
+              </div>
+
+              <div className="activate-guide-item">
+                <div className="activate-guide-icon">✍️</div>
+                <h4>Cách 2: Nhập Serial</h4>
+                <p>Xem chuỗi ký tự in laser ở mặt sau mảnh ghép gỗ.</p>
+              </div>
+            </div>
+
+            <p className="activate-footer-note">
+              🔒 Mỗi mảnh ghép chỉ kích hoạt được 1 lần và gắn cố định với tài khoản của bạn.
+            </p>
+          </>
+        ) : (
+          <div className="activate-success-card">
+            {/* Success Badge */}
+            <div className="activate-success-badge">
+              <CheckCircle2 size={44} strokeWidth={2.5} />
+            </div>
+
+            <h1 className="activate-title" style={{ color: "#16a34a" }}>
+              Mở Khóa Thành Công!
+            </h1>
+            <p className="activate-subtitle">
+              Mảnh ghép đã được gắn vào tài khoản của bạn và sẵn sàng lưu giữ những kỷ niệm tuyệt đẹp.
+            </p>
+
+            {/* Province Info Showcase */}
+            <div className="activate-province-showcase">
+              <div
                 style={{
-                  width: "100%",
-                  justifyContent: "center",
-                  opacity: creatingAlbum ? 0.7 : 1,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  color: "#ea580c",
+                  fontSize: "0.85rem",
+                  fontWeight: 800,
+                  textTransform: "uppercase",
+                  marginBottom: "0.5rem",
                 }}
               >
-                {creatingAlbum
-                  ? "Đang tạo album..."
-                  : "✨ Tạo album & bắt đầu lưu kỷ niệm"}
+                <MapPin size={16} /> Mảnh ghép tỉnh / thành phố
+              </div>
+              <h2 className="activate-province-name">{card.province_name}</h2>
+              <span className="activate-serial-tag">Serial: {card.serial_code}</span>
+            </div>
+
+            {error && (
+              <div className="activate-error-banner" style={{ textAlign: "left" }}>
+                <AlertCircle size={18} />
+                <span>{error}</span>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="activate-success-actions">
+              <button
+                className="activate-submit-btn"
+                onClick={handleCreateAlbum}
+                disabled={creatingAlbum}
+              >
+                <Sparkles size={18} />
+                <span>
+                  {creatingAlbum
+                    ? "Đang khởi tạo Album..."
+                    : "Khởi Tạo Album & Lưu Kỷ Niệm"}
+                </span>
+                <ArrowRight size={18} />
               </button>
 
               <Link
                 href={`/province/${card.province_slug}`}
-                className="btn btn-ghost"
-                style={{
-                  width: "100%",
-                  justifyContent: "center",
-                  marginTop: ".5rem",
-                }}
+                className="activate-btn-ghost"
               >
-                Xem thông tin tỉnh trước
+                Khám phá thông tin du lịch {card.province_name}
               </Link>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }

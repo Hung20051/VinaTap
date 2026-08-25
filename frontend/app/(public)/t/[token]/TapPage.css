@@ -1,0 +1,243 @@
+/* ═══════════════════════════════════════════════════════════════
+   VINATAP — TAP NFC LANDING PAGE STYLING
+   Co-located Stylesheet for /t/[token] Route
+   ═══════════════════════════════════════════════════════════════ */
+
+.tap-page-container {
+  min-height: 100vh;
+  background: radial-gradient(
+      circle at 15% 15%,
+      rgba(234, 88, 12, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 85% 85%,
+      rgba(59, 130, 246, 0.06) 0%,
+      transparent 50%
+    ),
+    #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+.tap-page-center-state {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.tap-state-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.tap-state-title {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.tap-state-desc {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+/* ─── Main Content Box ──────────────────────────────────────── */
+.tap-main-content {
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+  display: flex;
+  flex-direction: column;
+  animation: tapSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tapSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Province Hero Banner */
+.tap-hero-card {
+  height: 240px;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  margin-bottom: 1.75rem;
+  box-shadow: 0 20px 40px -10px rgba(234, 88, 12, 0.25);
+}
+
+.tap-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tap-hero-card:hover .tap-hero-img {
+  transform: scale(1.04);
+}
+
+.tap-hero-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 4.5rem;
+  color: #ffffff;
+}
+
+.tap-province-name {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.tap-province-desc {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0 0 1.75rem 0;
+}
+
+/* ─── Status Action Cards ───────────────────────────────────── */
+.tap-action-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  padding: 2rem 1.75rem;
+  box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(226, 232, 240, 0.6);
+  text-align: center;
+}
+
+.tap-action-icon {
+  font-size: 2.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.tap-action-title {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+}
+
+.tap-action-subtitle {
+  color: #64748b;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0 0 1.5rem 0;
+}
+
+.tap-error-text {
+  color: #dc2626;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.tap-btn-primary {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.95rem 1.5rem;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(234, 88, 12, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tap-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+  box-shadow: 0 14px 30px rgba(234, 88, 12, 0.5);
+  transform: translateY(-2px);
+}
+
+.tap-btn-outline {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.95rem 1.5rem;
+  background: #ffffff;
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.tap-btn-outline:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+  color: #0f172a;
+  transform: translateY(-2px);
+}
+
+.tap-link-secondary {
+  display: inline-block;
+  margin-top: 1.25rem;
+  color: #64748b;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.tap-link-secondary:hover {
+  color: #ea580c;
+}
+
+/* Owned State Layout */
+.tap-owned-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.tap-owned-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* Video Box */
+.tap-video-wrap {
+  margin-top: 1.75rem;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}

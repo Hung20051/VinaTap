@@ -18,6 +18,7 @@ import {
   Info,
 } from "lucide-react";
 import { systemSettingAPI } from "@/lib/api";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./SystemSettings.css";
 
 const VIETQR_BANKS = [
@@ -208,8 +209,8 @@ export default function SystemSettings() {
       </div>
 
       {loading ? (
-        <div className="admin-dash-loading">
-          <div className="spinner" />
+        <div style={{ padding: "3rem 1rem", background: "#fff", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang tải cấu hình hệ thống..." subtext="Đang lấy thông tin ngân hàng VietQR và thương hiệu" />
         </div>
       ) : (
         <form id="system-settings-form" onSubmit={handleSubmit} className="admin-sets-content">

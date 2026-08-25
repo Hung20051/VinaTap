@@ -16,6 +16,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { nfcAPI, provinceAPI, adminStatsAPI, userAPI, productAPI } from "@/lib/api";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminNfcCards.css";
 
 export default function AdminNfcCards() {
@@ -359,8 +360,8 @@ export default function AdminNfcCards() {
       </div>
 
       {loading ? (
-        <div className="admin-dash-loading">
-          <div className="spinner" />
+        <div className="card admin-nfc-table-wrap" style={{ padding: "2.5rem 1rem" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang tải danh sách thẻ NFC..." subtext="Đang giải mã token và kiểm tra kích hoạt" />
         </div>
       ) : cards.length === 0 ? (
         <div className="card admin-nfc-empty">

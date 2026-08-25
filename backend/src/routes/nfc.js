@@ -6,6 +6,8 @@ const {
   claimCard,
   activateSerial,
   getMyCards,
+  getPendingTransfers,
+  rejectTransfer,
   initiateTransfer,
   acceptTransfer,
   cancelTransfer,
@@ -28,9 +30,11 @@ router.post("/t/:token/claim", protect, claimCard);
 router.post("/activate", activateLimiter, protect, activateSerial); // dự phòng chip hỏng
 router.get("/my-cards", protect, getMyCards);
 
-// ── CUSTOMER: chuyển nhượng ──────────────────────────────────
+// ── CUSTOMER: chuyển nhượng (Tặng & Nhận quà) ───────────────────
+router.get("/transfers/pending", protect, getPendingTransfers); // lấy danh sách quà tặng đang chờ
+router.post("/transfers/reject", protect, rejectTransfer); // người nhận từ chối
+router.post("/transfer/accept", protect, acceptTransfer); // người nhận xác nhận (qua token hoặc transfer_id)
 router.post("/:id/transfer", protect, initiateTransfer); // gửi lời mời
-router.post("/transfer/accept", protect, acceptTransfer); // người nhận xác nhận
 router.delete("/:id/transfer", protect, cancelTransfer); // người gửi hủy
 
 // ── ADMIN ────────────────────────────────────────────────────

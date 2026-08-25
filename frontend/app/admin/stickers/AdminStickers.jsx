@@ -8,6 +8,7 @@ import StickerGroup from "./components/StickerGroup";
 import CategorySelect from "./components/CategorySelect";
 import StickerFormModal from "./components/StickerFormModal";
 import StickerBulkModal from "./components/StickerBulkModal";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminStickers.css";
 
 export default function AdminStickers() {
@@ -164,8 +165,8 @@ export default function AdminStickers() {
       {!loading && <StickerOfTheDay stickers={stickers} />}
 
       {loading ? (
-        <div className="admin-dash-loading">
-          <div className="spinner" />
+        <div style={{ padding: "3rem 1rem", background: "#fff", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang tải bộ sưu tập Sticker..." subtext="Đang tối ưu đồ họa Vector và PNG" />
         </div>
       ) : filtered.length === 0 ? (
         <div className="card admin-stickers-empty">

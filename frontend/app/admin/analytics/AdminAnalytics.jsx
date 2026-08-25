@@ -13,6 +13,7 @@ import {
   Filter,
 } from "lucide-react";
 import { analyticsAPI, getBaseUrl } from "@/lib/api";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminAnalytics.css";
 
 export default function AdminAnalytics() {
@@ -125,8 +126,8 @@ export default function AdminAnalytics() {
       </div>
 
       {loading ? (
-        <div className="admin-dash-loading">
-          <div className="spinner" />
+        <div style={{ padding: "3rem 1rem", background: "#fff", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang phân tích lưu lượng truy cập..." subtext="Đang tính toán lượt quét NFC và thiết bị" />
         </div>
       ) : (
         <>

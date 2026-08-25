@@ -21,6 +21,7 @@ import {
 import { adminStatsAPI, manualSaleAPI } from "@/lib/api";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminDashboard.css";
 
 const formatVND = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
@@ -86,8 +87,8 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="admin-dash-loading">
-        <div className="spinner" />
+      <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <DinoLoader fullScreen={false} size={220} text="Đang tải dữ liệu tổng quan..." subtext="Đang tổng hợp KPI doanh thu và người dùng" />
       </div>
     );
   }

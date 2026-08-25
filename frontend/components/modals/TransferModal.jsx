@@ -1,32 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { nfcAPI } from "@/lib/api";
 
 // Props:
-//   cardId  — id của nfc_card
+//   cardId   — id của nfc_card
 //   cardName — tên tỉnh để hiện trong modal
-//   onClose  — callback đóng modal
-export default function TransferModal({ cardId, cardName, onClose }) {
+//   onClose  — callback đóng modal (không reload)
+//   onSuccess— callback khi chuyển nhượng thành công (reload dữ liệu)
+export default function TransferModal({ cardId, cardName, onClose, onSuccess }) {
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
   const [status, setStatus] = useState("idle"); // idle|loading|success|error
   const [msg, setMsg] = useState("");
+  const inFlightRef = useRef(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!email.trim() || inFlightRef.current || status === "loading") return;
+    inFlightRef.current = true;
     setStatus("loading");
     try {
       const res = await nfcAPI.initiateTransfer(cardId, {
         email: email.trim(),
         note,
       });
-      setMsg(res.message);
+      setMsg(res.message || "Đã gửi lời mời chuyển nhượng thành công!");
       setStatus("success");
     } catch (err) {
       setMsg(err.message || "Gửi thất bại");
       setStatus("error");
+    } finally {
+      inFlightRef.current = false;
+    }
+  };
+
+  const handleClose = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (status === "success" && onSuccess) {
+      onSuccess();
+    } else if (onClose) {
+      onClose();
     }
   };
 
@@ -36,17 +53,25 @@ export default function TransferModal({ cardId, cardName, onClose }) {
         position: "fixed",
         inset: 0,
         zIndex: 9999,
-        background: "rgba(0,0,0,.55)",
+        background: "rgba(0,0,0,.6)",
+        backdropFilter: "blur(4px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: "1rem",
       }}
-      onClick={onClose}
+      onClick={handleClose}
     >
       <div
         className="card"
-        style={{ width: "100%", maxWidth: 420, padding: "1.75rem" }}
+        style={{
+          width: "100%",
+          maxWidth: 440,
+          padding: "1.75rem",
+          borderRadius: 20,
+          background: "#ffffff",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {status !== "success" ? (
@@ -59,12 +84,22 @@ export default function TransferModal({ cardId, cardName, onClose }) {
                 marginBottom: "1.25rem",
               }}
             >
-              <h2 style={{ fontWeight: 800, fontSize: "1.1rem" }}>
+              <h2 style={{ fontWeight: 800, fontSize: "1.15rem", color: "#0f172a", margin: 0 }}>
                 🎁 Chuyển nhượng mảnh {cardName}
               </h2>
               <button
-                onClick={onClose}
-                style={{ fontSize: "1.25rem", color: "var(--text-secondary)" }}
+                type="button"
+                onClick={handleClose}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "1.3rem",
+                  color: "#94a3b8",
+                  cursor: "pointer",
+                  padding: "4px 8px",
+                  borderRadius: "8px",
+                  lineHeight: 1,
+                }}
               >
                 ✕
               </button>
@@ -72,7 +107,7 @@ export default function TransferModal({ cardId, cardName, onClose }) {
 
             <p
               style={{
-                color: "var(--text-secondary)",
+                color: "#64748b",
                 fontSize: ".85rem",
                 marginBottom: "1.25rem",
                 lineHeight: 1.5,
@@ -88,16 +123,17 @@ export default function TransferModal({ cardId, cardName, onClose }) {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: ".75rem",
+                gap: ".85rem",
               }}
             >
               <div>
                 <label
                   style={{
-                    fontSize: ".8rem",
-                    fontWeight: 600,
+                    fontSize: ".82rem",
+                    fontWeight: 700,
+                    color: "#334155",
                     display: "block",
-                    marginBottom: ".3rem",
+                    marginBottom: ".35rem",
                   }}
                 >
                   Email người nhận *
@@ -110,15 +146,18 @@ export default function TransferModal({ cardId, cardName, onClose }) {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoFocus
+                  style={{ width: "100%", padding: "0.65rem 0.85rem", borderRadius: "10px", border: "1px solid #cbd5e1" }}
                 />
               </div>
+
               <div>
                 <label
                   style={{
-                    fontSize: ".8rem",
-                    fontWeight: 600,
+                    fontSize: ".82rem",
+                    fontWeight: 700,
+                    color: "#334155",
                     display: "block",
-                    marginBottom: ".3rem",
+                    marginBottom: ".35rem",
                   }}
                 >
                   Lời nhắn (tùy chọn)
@@ -126,26 +165,26 @@ export default function TransferModal({ cardId, cardName, onClose }) {
                 <textarea
                   className="input"
                   rows={2}
-                  placeholder="VD: Chúc bạn có nhiều chuyến đi vui..."
+                  placeholder="VD: Chúc bạn có nhiều chuyến đi vui vẻ..."
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  style={{ resize: "vertical" }}
+                  style={{ width: "100%", padding: "0.65rem 0.85rem", borderRadius: "10px", border: "1px solid #cbd5e1", resize: "vertical" }}
                 />
               </div>
 
               {msg && status === "error" && (
-                <p style={{ color: "var(--danger)", fontSize: ".85rem" }}>
-                  {msg}
+                <p style={{ color: "#ef4444", fontSize: ".85rem", margin: 0, fontWeight: 600 }}>
+                  ⚠️ {msg}
                 </p>
               )}
 
               <div
-                style={{ display: "flex", gap: ".5rem", marginTop: ".25rem" }}
+                style={{ display: "flex", gap: ".6rem", marginTop: ".5rem" }}
               >
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  style={{ flex: 1, justifyContent: "center" }}
+                  style={{ flex: 1, justifyContent: "center", padding: "0.75rem 1rem", borderRadius: "12px", background: "#ea580c", color: "#fff", border: "none", fontWeight: 700, cursor: "pointer" }}
                   disabled={status === "loading" || !email.trim()}
                 >
                   {status === "loading" ? "Đang gửi..." : "📨 Gửi lời mời"}
@@ -153,7 +192,8 @@ export default function TransferModal({ cardId, cardName, onClose }) {
                 <button
                   type="button"
                   className="btn btn-ghost"
-                  onClick={onClose}
+                  onClick={handleClose}
+                  style={{ padding: "0.75rem 1.25rem", borderRadius: "12px", background: "#f1f5f9", color: "#475569", border: "none", fontWeight: 700, cursor: "pointer" }}
                 >
                   Hủy
                 </button>
@@ -162,37 +202,40 @@ export default function TransferModal({ cardId, cardName, onClose }) {
 
             <p
               style={{
-                color: "var(--text-muted)",
+                color: "#94a3b8",
                 fontSize: ".75rem",
                 marginTop: "1rem",
+                marginBottom: 0,
                 lineHeight: 1.5,
               }}
             >
-              ⚠️ Sau khi người nhận xác nhận, bạn sẽ mất quyền truy cập vào thẻ
-              và album này. Hành động không thể hoàn tác.
+              ⚠️ Sau khi người nhận xác nhận, bạn sẽ mất quyền sở hữu thẻ
+              và album này.
             </p>
           </>
         ) : (
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>📨</div>
-            <h2 style={{ fontWeight: 700, marginBottom: ".5rem" }}>
-              Đã gửi lời mời!
+          <div style={{ textAlign: "center", padding: "1rem 0" }}>
+            <div style={{ fontSize: "3.5rem", marginBottom: "0.75rem" }}>📨</div>
+            <h2 style={{ fontWeight: 800, fontSize: "1.3rem", color: "#0f172a", marginBottom: ".5rem" }}>
+              Đã gửi lời mời tặng thẻ!
             </h2>
             <p
               style={{
-                color: "var(--text-secondary)",
+                color: "#64748b",
                 marginBottom: "1.5rem",
                 fontSize: ".9rem",
+                lineHeight: 1.5,
               }}
             >
               {msg}
             </p>
             <button
+              type="button"
               className="btn btn-primary"
-              onClick={onClose}
-              style={{ width: "100%", justifyContent: "center" }}
+              onClick={handleClose}
+              style={{ width: "100%", justifyContent: "center", padding: "0.75rem", borderRadius: "12px", background: "#059669", color: "#fff", border: "none", fontWeight: 700, cursor: "pointer" }}
             >
-              Đóng
+              Hoàn tất
             </button>
           </div>
         )}

@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminHeader from "@/components/layout/AdminHeader";
 import AdminSidebar from "@/components/layout/AdminSidebar";
-import { getUser, requireAdmin, clearAuth } from "@/lib/auth";
+import { getUser, isAdmin, clearAuth } from "@/lib/auth";
+import DinoLoader from "@/components/ui/DinoLoader";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -13,11 +14,13 @@ export default function AdminLayout({ children }) {
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    if (!requireAdmin(router)) return;
-    setUser(getUser());
-    setAuthorized(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!isAdmin()) {
+      router.replace("/auth");
+    } else {
+      setUser(getUser());
+      setAuthorized(true);
+    }
+  }, [router]);
 
   useEffect(() => {
     const handleUserUpdated = (e) => setUser(e.detail);
@@ -44,10 +47,10 @@ export default function AdminLayout({ children }) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            minHeight: "60vh",
+            minHeight: "70vh",
           }}
         >
-          <div className="spinner" />
+          <DinoLoader fullScreen={false} size={220} text="Đang xác thực quyền Quản trị viên..." subtext="Vui lòng chờ trong giây lát" />
         </main>
       </div>
     );

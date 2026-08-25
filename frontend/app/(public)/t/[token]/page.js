@@ -6,6 +6,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import { nfcAPI, albumAPI, analyticsAPI } from "@/lib/api";
 import { isLoggedIn, getUser } from "@/lib/auth";
+import "./TapPage.css";
 
 export default function TapPage() {
   const { token } = useParams();
@@ -90,9 +91,9 @@ export default function TapPage() {
   // ─── Loading ────────────────────────────────────────────────
   if (status === "loading") {
     return (
-      <div style={styles.center}>
+      <div className="tap-page-center-state">
         <div className="spinner" />
-        <p style={{ marginTop: "1rem", color: "var(--text-secondary)" }}>
+        <p className="tap-state-desc" style={{ marginTop: "1rem" }}>
           Đang tải thông tin thẻ...
         </p>
       </div>
@@ -102,15 +103,11 @@ export default function TapPage() {
   // ─── Error ──────────────────────────────────────────────────
   if (status === "error") {
     return (
-      <div style={styles.center}>
-        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>❌</div>
-        <h2 style={{ fontWeight: 700, marginBottom: ".5rem" }}>
-          Có lỗi xảy ra
-        </h2>
-        <p style={{ color: "var(--text-secondary)", marginBottom: "1.5rem" }}>
-          {msg}
-        </p>
-        <Link href="/" className="btn btn-primary">
+      <div className="tap-page-center-state">
+        <div className="tap-state-icon">❌</div>
+        <h2 className="tap-state-title">Có lỗi xảy ra</h2>
+        <p className="tap-state-desc">{msg}</p>
+        <Link href="/" className="tap-btn-primary" style={{ maxWidth: "220px" }}>
           Về trang chủ
         </Link>
       </div>
@@ -118,7 +115,7 @@ export default function TapPage() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "var(--bg-page)" }}>
+    <div className="tap-page-container">
       {/* Header */}
       <nav className="navbar">
         <div className="container navbar__inner">
@@ -126,98 +123,39 @@ export default function TapPage() {
         </div>
       </nav>
 
-      <div style={{ maxWidth: 480, margin: "0 auto", padding: "3rem 1rem" }}>
+      <div className="tap-main-content">
         {/* Ảnh tỉnh */}
-        <div
-          style={{
-            height: 220,
-            borderRadius: 20,
-            overflow: "hidden",
-            background: "var(--primary-light)",
-            marginBottom: "1.5rem",
-          }}
-        >
+        <div className="tap-hero-card">
           {card?.thumbnail_url ? (
             <img
               src={card.thumbnail_url}
               alt={card.province_name}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              className="tap-hero-img"
             />
           ) : (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "100%",
-                fontSize: "4rem",
-              }}
-            >
-              🗺
-            </div>
+            <div className="tap-hero-placeholder">🗺</div>
           )}
         </div>
 
         {/* Tên tỉnh */}
-        <h1
-          style={{
-            fontSize: "1.75rem",
-            fontWeight: 800,
-            marginBottom: ".5rem",
-          }}
-        >
-          {card?.province_name}
-        </h1>
-        <p
-          style={{
-            color: "var(--text-secondary)",
-            marginBottom: "1.5rem",
-            lineHeight: 1.6,
-          }}
-        >
+        <h1 className="tap-province-name">{card?.province_name}</h1>
+        <p className="tap-province-desc">
           {card?.description || "Khám phá địa danh nổi tiếng tại đây."}
         </p>
 
         {/* ─── Trạng thái UNCLAIMED: mời claim ─── */}
         {status === "unclaimed" && (
-          <div
-            className="card"
-            style={{ padding: "1.5rem", textAlign: "center" }}
-          >
-            <div style={{ fontSize: "2.5rem", marginBottom: ".75rem" }}>🎉</div>
-            <h2 style={{ fontWeight: 700, marginBottom: ".5rem" }}>
-              Mảnh ghép chưa có chủ!
-            </h2>
-            <p
-              style={{
-                color: "var(--text-secondary)",
-                marginBottom: "1.25rem",
-                fontSize: ".9rem",
-              }}
-            >
+          <div className="tap-action-card">
+            <div className="tap-action-icon">🎉</div>
+            <h2 className="tap-action-title">Mảnh ghép chưa có chủ!</h2>
+            <p className="tap-action-subtitle">
               {isLoggedIn()
                 ? "Bấm kích hoạt để sở hữu mảnh ghép này và tạo album kỷ niệm."
                 : "Đăng nhập để kích hoạt và sở hữu mảnh ghép này."}
             </p>
-            {msg && (
-              <p
-                style={{
-                  color: "var(--danger)",
-                  fontSize: ".85rem",
-                  marginBottom: ".75rem",
-                }}
-              >
-                {msg}
-              </p>
-            )}
+            {msg && <p className="tap-error-text">{msg}</p>}
             <button
-              className="btn btn-primary"
-              style={{
-                width: "100%",
-                justifyContent: "center",
-                fontSize: "1rem",
-                padding: ".8rem",
-              }}
+              className="tap-btn-primary"
               onClick={handleClaim}
               disabled={claiming}
             >
@@ -229,12 +167,7 @@ export default function TapPage() {
             </button>
             <Link
               href={`/province/${card?.province_slug}`}
-              style={{
-                display: "block",
-                marginTop: "1rem",
-                color: "var(--text-secondary)",
-                fontSize: ".85rem",
-              }}
+              className="tap-link-secondary"
             >
               Xem thông tin tỉnh trước →
             </Link>
@@ -243,48 +176,38 @@ export default function TapPage() {
 
         {/* ─── Trạng thái OWNED: mình là chủ ─── */}
         {status === "owned" && (
-          <div className="card" style={{ padding: "1.5rem" }}>
-            <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
-              <span style={{ fontSize: "2rem" }}>✅</span>
+          <div className="tap-action-card">
+            <div className="tap-owned-header">
+              <span style={{ fontSize: "2.25rem" }}>✅</span>
               <div>
-                <h2 style={{ fontWeight: 700, fontSize: "1.1rem" }}>
+                <h2 className="tap-action-title" style={{ textAlign: "left", marginBottom: "0.25rem" }}>
                   Đây là mảnh ghép của bạn!
                 </h2>
-                <p
-                  style={{ color: "var(--text-secondary)", fontSize: ".85rem" }}
-                >
+                <p className="tap-action-subtitle" style={{ textAlign: "left", margin: 0 }}>
                   Bạn đã kích hoạt mảnh ghép {card?.province_name}.
                 </p>
               </div>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: ".75rem",
-              }}
-            >
+
+            <div className="tap-owned-actions-list">
               {album ? (
                 <Link
                   href={`/album/${album.id}`}
-                  className="btn btn-primary"
-                  style={{ justifyContent: "center" }}
+                  className="tap-btn-primary"
                 >
                   📸 Xem album kỷ niệm
                 </Link>
               ) : (
                 <Link
                   href="/customer/dashboard"
-                  className="btn btn-primary"
-                  style={{ justifyContent: "center" }}
+                  className="tap-btn-primary"
                 >
                   📸 Tạo album kỷ niệm
                 </Link>
               )}
               <Link
                 href={`/province/${card?.province_slug}`}
-                className="btn btn-outline"
-                style={{ justifyContent: "center" }}
+                className="tap-btn-outline"
               >
                 🗺 Xem thông tin tỉnh
               </Link>
@@ -294,28 +217,16 @@ export default function TapPage() {
 
         {/* ─── Trạng thái CLAIMED: người khác đang giữ ─── */}
         {status === "claimed" && (
-          <div
-            className="card"
-            style={{ padding: "1.5rem", textAlign: "center" }}
-          >
-            <div style={{ fontSize: "2.5rem", marginBottom: ".75rem" }}>🔒</div>
-            <h2 style={{ fontWeight: 700, marginBottom: ".5rem" }}>
-              Mảnh ghép đã có chủ
-            </h2>
-            <p
-              style={{
-                color: "var(--text-secondary)",
-                marginBottom: "1.25rem",
-                fontSize: ".9rem",
-              }}
-            >
+          <div className="tap-action-card">
+            <div className="tap-action-icon">🔒</div>
+            <h2 className="tap-action-title">Mảnh ghép đã có chủ</h2>
+            <p className="tap-action-subtitle">
               Mảnh ghép <b>{card?.province_name}</b> đang được sở hữu bởi người
               khác. Bạn vẫn có thể xem thông tin tỉnh.
             </p>
             <Link
               href={`/province/${card?.province_slug}`}
-              className="btn btn-primary"
-              style={{ justifyContent: "center" }}
+              className="tap-btn-primary"
             >
               🗺 Khám phá {card?.province_name}
             </Link>
@@ -324,18 +235,12 @@ export default function TapPage() {
 
         {/* Video YouTube */}
         {card?.youtube_url && (
-          <div
-            style={{
-              marginTop: "1.5rem",
-              borderRadius: 12,
-              overflow: "hidden",
-            }}
-          >
+          <div className="tap-video-wrap">
             <iframe
               src={card.youtube_url
                 .replace("watch?v=", "embed/")
                 .replace("youtu.be/", "youtube.com/embed/")}
-              style={{ width: "100%", height: 220, border: "none" }}
+              style={{ width: "100%", height: 240, border: "none", display: "block" }}
               allowFullScreen
               title={`Giới thiệu ${card?.province_name}`}
             />
@@ -345,15 +250,3 @@ export default function TapPage() {
     </div>
   );
 }
-
-const styles = {
-  center: {
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "2rem",
-    textAlign: "center",
-  },
-};

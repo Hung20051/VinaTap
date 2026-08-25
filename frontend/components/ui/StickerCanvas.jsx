@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { mediaAPI, stickerAPI } from "@/lib/api";
+import "./StickerCanvas.css";
 
 export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
   const canvasRef = useRef(null);
@@ -29,18 +30,23 @@ export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
     img.src = mediaItem.file_url;
 
     // Load overlay hiện có từ DB (nếu có)
-    // mediaItem.overlays được truyền từ trang album
-    if (mediaItem.overlays?.length) {
-      const loaded = mediaItem.overlays.map((o, i) => ({
+    const rawOverlays =
+      mediaItem.overlays ||
+      (typeof mediaItem.stickers === "string"
+        ? JSON.parse(mediaItem.stickers || "[]")
+        : mediaItem.stickers);
+
+    if (rawOverlays && rawOverlays.length) {
+      const loaded = rawOverlays.map((o, i) => ({
         _key: i,
         id: o.id,
         sticker_id: o.sticker_id,
         image_url: o.image_url,
         x: (o.pos_x / 100) * CANVAS_W,
         y: (o.pos_y / 100) * CANVAS_H,
-        scale: o.scale,
-        rotation: o.rotation_deg,
-        z_index: o.z_index,
+        scale: o.scale || 1,
+        rotation: o.rotation_deg || 0,
+        z_index: o.z_index || i,
       }));
       setOverlays(loaded);
     }
@@ -203,32 +209,15 @@ export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 9999,
-        background: "rgba(0,0,0,.85)",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "1rem",
-        gap: "1rem",
-      }}
-    >
+    <div className="sticker-canvas-overlay">
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "100%",
-          maxWidth: CANVAS_W,
-        }}
-      >
-        <h2 style={{ color: "#fff", fontWeight: 700 }}>✨ Thêm sticker</h2>
-        <button onClick={onClose} style={{ color: "#fff", fontSize: "1.3rem" }}>
+      <div className="sticker-canvas-header">
+        <h2 className="sticker-canvas-title">✨ Dán Con Dấu / Sticker Du Lịch</h2>
+        <button
+          onClick={onClose}
+          className="sticker-canvas-close-btn"
+          title="Đóng"
+        >
           ✕
         </button>
       </div>
@@ -238,12 +227,7 @@ export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
         ref={canvasRef}
         width={CANVAS_W}
         height={CANVAS_H}
-        style={{
-          maxWidth: "100%",
-          borderRadius: 12,
-          cursor: dragging ? "grabbing" : "grab",
-          touchAction: "none",
-        }}
+        className={`sticker-canvas-element ${dragging ? "dragging" : "grab"}`}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
@@ -255,35 +239,39 @@ export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
 
       {/* Controls cho sticker đang chọn */}
       {selected && (
-        <div
-          style={{
-            display: "flex",
-            gap: ".5rem",
-            flexWrap: "wrap",
-            justifyContent: "center",
-          }}
-        >
-          <button onClick={() => adjustSelected("scale", 0.1)} style={ctrlBtn}>
-            🔍+
+        <div className="sticker-canvas-controls">
+          <button
+            onClick={() => adjustSelected("scale", 0.1)}
+            className="sticker-ctrl-btn"
+            title="Phóng to"
+          >
+            🔍+ Phóng to
           </button>
-          <button onClick={() => adjustSelected("scale", -0.1)} style={ctrlBtn}>
-            🔍-
+          <button
+            onClick={() => adjustSelected("scale", -0.1)}
+            className="sticker-ctrl-btn"
+            title="Thu nhỏ"
+          >
+            🔍- Thu nhỏ
           </button>
           <button
             onClick={() => adjustSelected("rotation", 15)}
-            style={ctrlBtn}
+            className="sticker-ctrl-btn"
+            title="Xoay phải 15 độ"
           >
-            ↩ +15°
+            ↩ Xoay +15°
           </button>
           <button
             onClick={() => adjustSelected("rotation", -15)}
-            style={ctrlBtn}
+            className="sticker-ctrl-btn"
+            title="Xoay trái 15 độ"
           >
-            ↪ -15°
+            ↪ Xoay -15°
           </button>
           <button
             onClick={deleteSelected}
-            style={{ ...ctrlBtn, background: "#dc2626" }}
+            className="sticker-ctrl-btn sticker-ctrl-btn--danger"
+            title="Xóa sticker này"
           >
             🗑 Xóa
           </button>
@@ -291,17 +279,7 @@ export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
       )}
 
       {/* Sticker picker */}
-      <div
-        style={{
-          display: "flex",
-          gap: ".5rem",
-          overflowX: "auto",
-          maxWidth: CANVAS_W,
-          padding: ".5rem",
-          background: "rgba(255,255,255,.1)",
-          borderRadius: 10,
-        }}
-      >
+      <div className="sticker-picker-container">
         {stickers.map((s) => (
           <img
             key={s.id}
@@ -309,32 +287,12 @@ export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
             alt={s.name}
             title={s.name}
             onClick={() => addSticker(s)}
-            style={{
-              width: 48,
-              height: 48,
-              flexShrink: 0,
-              cursor: "pointer",
-              borderRadius: 8,
-              border: "2px solid transparent",
-              transition: "border-color .15s",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.borderColor = "var(--primary, #e85d04)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.borderColor = "transparent")
-            }
+            className="sticker-picker-thumb"
           />
         ))}
         {!stickers.length && (
-          <p
-            style={{
-              color: "rgba(255,255,255,.5)",
-              fontSize: ".85rem",
-              padding: ".5rem",
-            }}
-          >
-            Admin chưa thêm sticker nào
+          <p className="sticker-picker-empty">
+            Chưa có con dấu du lịch nào trong hệ thống
           </p>
         )}
       </div>
@@ -343,30 +301,10 @@ export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
       <button
         onClick={handleSave}
         disabled={saving}
-        style={{
-          background: "var(--primary, #e85d04)",
-          color: "#fff",
-          border: "none",
-          borderRadius: 999,
-          padding: ".7rem 2rem",
-          fontWeight: 700,
-          fontSize: "1rem",
-          cursor: saving ? "not-allowed" : "pointer",
-          opacity: saving ? 0.7 : 1,
-        }}
+        className="sticker-save-btn"
       >
-        {saving ? "Đang lưu..." : "💾 Lưu sticker"}
+        {saving ? "Đang lưu con dấu..." : "💾 Lưu Con Dấu Lên Ảnh"}
       </button>
     </div>
   );
 }
-
-const ctrlBtn = {
-  background: "rgba(255,255,255,.15)",
-  color: "#fff",
-  border: "none",
-  borderRadius: 8,
-  padding: ".4rem .8rem",
-  cursor: "pointer",
-  fontSize: ".85rem",
-};

@@ -383,3 +383,29 @@
     padding: 10px;
   }
 }
+
+.settings-password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.settings-password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 6px;
+  transition: color 0.2s ease;
+}
+
+.settings-password-toggle-btn:hover {
+  color: #ea580c;
+}

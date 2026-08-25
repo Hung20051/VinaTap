@@ -9,6 +9,7 @@ import { authAPI } from "@/lib/api";
 import { LayoutDashboard, ShoppingBag } from "lucide-react";
 import { t } from "@/lib/i18n";
 import { getLang } from "@/lib/prefs";
+import DinoLoader from "@/components/ui/DinoLoader";
 
 export default function CustomerLayout({ children }) {
   const router = useRouter();
@@ -81,7 +82,7 @@ export default function CustomerLayout({ children }) {
   if (mounted && isAdmin()) {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div className="spinner" />
+        <DinoLoader fullScreen={false} size={220} text="Đang chuyển tiếp tới trang Quản trị..." subtext="Vui lòng chờ trong giây lát" />
       </div>
     );
   }

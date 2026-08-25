@@ -1,9 +1,7 @@
 import Link from "next/link";
+import Dino404 from "@/components/ui/Dino404";
 
-// Next.js App Router tự động dùng file này làm trang 404 cho MỌI route
-// không khớp (và cả khi gọi notFound() thủ công) — không cần import hay
-// khai báo route ở đâu cả, cứ đặt đúng tên `not-found.js` trong app/ là
-// được nhận diện.
+// Next.js App Router tự động dùng file này làm trang 404 cho MỌI route không tồn tại
 export default function NotFound() {
   return (
     <div
@@ -14,57 +12,48 @@ export default function NotFound() {
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "2rem",
-        background:
-          "radial-gradient(circle at 30% 20%, #fff1eb 0%, #fafafa 55%, #fafafa 100%)",
+        padding: "2.5rem 1.5rem",
+        background: "radial-gradient(circle at 50% 30%, #ffffff 0%, #f8fafc 100%)",
+        boxSizing: "border-box",
       }}
     >
-      {/* La bàn xoay nhẹ — gợi ý "lạc đường" đúng chất app du lịch/bản đồ */}
+      {/* Animation Khủng Long 404 Lottie to rộng bao phủ */}
       <div
         style={{
-          fontSize: "5.5rem",
-          lineHeight: 1,
-          animation: "compassSpin 3.5s ease-in-out infinite",
+          width: "100%",
+          maxWidth: "850px",
+          margin: "0 auto",
+          display: "flex",
+          justifyContent: "center",
         }}
-        aria-hidden="true"
       >
-        🧭
+        <Dino404 size={850} />
       </div>
 
       <h1
         style={{
-          marginTop: "1.5rem",
-          fontSize: "clamp(3rem, 10vw, 5rem)",
-          fontWeight: 800,
-          color: "#e85d04",
-          letterSpacing: "-2px",
-          lineHeight: 1,
-        }}
-      >
-        404
-      </h1>
-
-      <h2
-        style={{
-          marginTop: ".75rem",
-          fontSize: "1.4rem",
-          fontWeight: 700,
+          marginTop: "1.25rem",
+          fontSize: "clamp(2.2rem, 5vw, 3.5rem)",
+          fontWeight: 900,
           color: "#0f172a",
+          letterSpacing: "-0.03em",
+          lineHeight: 1.15,
         }}
       >
-        Lạc đường rồi bạn ơi!
-      </h2>
+        404 - Lạc đường rồi!
+      </h1>
 
       <p
         style={{
-          marginTop: ".6rem",
-          maxWidth: 420,
-          color: "#6b7280",
-          fontSize: ".95rem",
+          marginTop: "0.6rem",
+          maxWidth: "540px",
+          color: "#64748b",
+          fontSize: "clamp(0.95rem, 2vw, 1.1rem)",
+          lineHeight: 1.6,
         }}
       >
-        Trang này chưa có trên bản đồ của VinaTap — có thể đang được khám phá,
-        hoặc đường dẫn không còn tồn tại nữa.
+        Trang này không tồn tại hoặc đã được di chuyển. Chú khủng long VinaTap
+        đang cố tìm lại lối đi giúp bạn!
       </p>
 
       <Link
@@ -73,28 +62,20 @@ export default function NotFound() {
           marginTop: "2rem",
           display: "inline-flex",
           alignItems: "center",
-          gap: ".5rem",
-          padding: ".8rem 1.75rem",
+          gap: "0.5rem",
+          padding: "1rem 2.5rem",
           borderRadius: 9999,
-          background: "#0d9488",
+          background: "#059669",
           color: "#fff",
-          fontWeight: 700,
-          fontSize: ".95rem",
-          boxShadow: "0 8px 24px rgba(13,148,136,.3)",
+          fontWeight: 800,
+          fontSize: "1rem",
+          boxShadow: "0 10px 25px rgba(5, 150, 105, 0.35)",
+          textDecoration: "none",
+          transition: "transform 0.2s ease, background-color 0.2s ease",
         }}
       >
-        ← Về trang chủ
+        ← Trở về Trang Chủ
       </Link>
-
-      <style>{`
-        @keyframes compassSpin {
-          0%, 100% { transform: rotate(-12deg); }
-          50% { transform: rotate(12deg); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          * { animation: none !important; }
-        }
-      `}</style>
     </div>
   );
 }

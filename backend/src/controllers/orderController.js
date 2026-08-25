@@ -25,6 +25,10 @@ setInterval(
 
 const isSpammingOrders = (userId) => {
   const now = Date.now();
+  if (userOrderTimestamps.size > 10000) {
+    userOrderTimestamps.clear();
+  }
+
   const timestamps = userOrderTimestamps.get(userId) || [];
 
   // Lọc các timestamp trong vòng 60 giây gần đây
@@ -182,7 +186,9 @@ const checkOrderStatus = async (req, res) => {
     }
 
     const isOwner =
-      req.user && (req.user.id === order.user_id || req.user.role === "admin");
+      req.user &&
+      (Number(req.user.id) === Number(order.user_id) ||
+        req.user.role === "admin");
 
     res.json({
       order_code: order.order_code,
@@ -227,7 +233,7 @@ const paymentWebhook = async (req, res) => {
       payload.content || payload.description || payload.transferContent || "";
 
     // 🔍 2. Tìm mã đơn VNTxxxxxx trong nội dung chuyển khoản
-    const match = content.match(/VNT[A-Z0-9]{12,18}/i);
+    const match = content.match(/VNT[A-Z0-9]{14}/i) || content.match(/VNT[A-Z0-9]{10,20}/i);
     if (!match) {
       return res
         .status(200)

@@ -17,6 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { orderAPI, systemSettingAPI } from "@/lib/api";
+import DinoLoader from "@/components/ui/DinoLoader";
 import "./CustomerOrders.css";
 
 const EMPTY_BANK_CONFIG = {
@@ -233,9 +234,8 @@ export default function CustomerOrders() {
 
       {/* ─── 3. ORDERS LIST / EMPTY STATE ──────────────────────────── */}
       {loading ? (
-        <div className="cust-orders-loading">
-          <div className="cust-spinner" />
-          <p>Đang tải lịch sử đơn hàng...</p>
+        <div style={{ padding: "3rem 1rem", background: "#fff", borderRadius: "20px", border: "1px solid #f1f5f9" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang tải lịch sử đơn hàng..." subtext="Đang đồng bộ trạng thái thanh toán VietQR" />
         </div>
       ) : filteredOrders.length === 0 ? (
         <div className="cust-orders-empty-box">

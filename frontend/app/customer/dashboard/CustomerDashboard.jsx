@@ -23,11 +23,14 @@ import {
   ChevronRight,
   LayoutGrid,
   GalleryHorizontalEnd,
+  Gift,
 } from "lucide-react";
 import { albumAPI, nfcAPI, authAPI, provinceAPI } from "@/lib/api";
 import { getUser, updateUser, clearAuth, isAdmin, isLoggedIn } from "@/lib/auth";
 import { applyStoredTheme, getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
+import TransferModal from "@/components/modals/TransferModal";
+import GiftNotificationBanner from "@/components/ui/GiftNotificationBanner";
 import "@/styles/dashboard.css";
 
 const REGION_CONFIG = {
@@ -67,6 +70,8 @@ export default function CustomerDashboard() {
   const [viewMode, setViewMode] = useState("collected"); // "collected" | "all_map"
   const [layoutMode, setLayoutMode] = useState("slider"); // "slider" | "grid"
   const [searchQuery, setSearchQuery] = useState("");
+  const [transferCard, setTransferCard] = useState(null); // { id, name } | null
+  const [pendingGifts, setPendingGifts] = useState([]);
   const [lang, setLangState] = useState(() => {
     if (typeof window !== "undefined") return getLang();
     return "vi";
@@ -108,14 +113,16 @@ export default function CustomerDashboard() {
     setLoading(true);
     setError("");
     try {
-      const [albumRes, cardRes, provRes] = await Promise.all([
+      const [albumRes, cardRes, provRes, giftRes] = await Promise.all([
         albumAPI.getMy().catch(() => ({ albums: [] })),
         nfcAPI.myCards().catch(() => ({ cards: [] })),
         provinceAPI.getAll().catch(() => ({ provinces: [] })),
+        nfcAPI.getPendingTransfers().catch(() => ({ transfers: [] })),
       ]);
       setAlbums(albumRes.albums || []);
       setCards(cardRes.cards || []);
       setAllProvinces(provRes.provinces || []);
+      setPendingGifts(giftRes.transfers || []);
     } catch (err) {
       setError(err.message || "Không tải được dữ liệu");
     } finally {
@@ -139,20 +146,29 @@ export default function CustomerDashboard() {
     setCreatingFor(card.id);
     try {
       const res = await albumAPI.create({ nfc_card_id: card.id });
-      router.push(`/album/${res.album.id}`);
+      const targetAlbum = res.album || res;
+      const targetSlug = targetAlbum?.share_code || targetAlbum?.id;
+      if (targetSlug) {
+        router.push(`/album/${targetSlug}`);
+      } else {
+        await loadData();
+      }
     } catch (err) {
       setError(err.message || "Không tạo được album");
+      await loadData();
+    } finally {
       setCreatingFor(null);
     }
   };
 
   const totalViews = albums.reduce((sum, a) => sum + (a.view_count || 0), 0);
-  const collectedCount = cards.length;
+  const totalCardsCount = cards.length;
+  const uniqueProvinceCount = unlockedProvinceIds.size;
   const progressPct = Math.min(
     100,
-    Math.round((collectedCount / TOTAL_PROVINCES) * 100),
+    Math.round((uniqueProvinceCount / TOTAL_PROVINCES) * 100),
   );
-  const rankInfo = getExplorerRank(collectedCount);
+  const rankInfo = getExplorerRank(uniqueProvinceCount);
 
   // Lọc theo chế độ xem (Chỉ đã mở khóa HOẶC Tất cả 34 tỉnh)
   const itemsToDisplay = viewMode === "collected" ? cards : allProvinces;
@@ -244,7 +260,7 @@ export default function CustomerDashboard() {
             <div className="passport-prog-meta">
               <span className="prog-label">Tiến độ mở khóa bản đồ</span>
               <span className="prog-stats">
-                <strong>{collectedCount}</strong>/{TOTAL_PROVINCES} Tỉnh thành ({progressPct}%)
+                <strong>{uniqueProvinceCount}</strong>/{TOTAL_PROVINCES} Tỉnh thành ({progressPct}%)
               </span>
             </div>
             <div className="passport-prog-track">
@@ -260,7 +276,7 @@ export default function CustomerDashboard() {
             <div className="passport-stat-item">
               <div className="p-stat-icon is-orange">🗺️</div>
               <div className="p-stat-data">
-                <span className="p-stat-val">{collectedCount}</span>
+                <span className="p-stat-val">{totalCardsCount}</span>
                 <span className="p-stat-lbl">Mảnh ghép sở hữu</span>
               </div>
             </div>
@@ -293,6 +309,12 @@ export default function CustomerDashboard() {
           <span>⚠️ {error}</span>
         </div>
       )}
+
+      {/* 🎁 Hộp quà tặng đang chờ nhận trực tiếp trên Web */}
+      <GiftNotificationBanner
+        gifts={pendingGifts}
+        onGiftProcessed={() => loadData()}
+      />
 
       {/* ─── 2. BỘ SƯU TẬP THẺ BÀI DU LỊCH ───────────────────────── */}
       <div className="cust-explorer-section">
@@ -469,10 +491,17 @@ export default function CustomerDashboard() {
 
                       <div className="card-media-gradient-overlay" />
 
-                      <div className="card-status-pill is-active">
-                        <CheckCircle2 size={12} />
-                        <span>Đã Kích Hoạt</span>
-                      </div>
+                      {album?.status === "archived" ? (
+                        <div className="card-status-pill is-locked" style={{ background: "#dc2626", color: "#fff" }}>
+                          <Lock size={12} />
+                          <span>Album Bị Khóa</span>
+                        </div>
+                      ) : (
+                        <div className="card-status-pill is-active">
+                          <CheckCircle2 size={12} />
+                          <span>Đã Kích Hoạt</span>
+                        </div>
+                      )}
 
                       <div className="card-region-tag">
                         <span>{regionInfo.icon}</span>
@@ -495,7 +524,11 @@ export default function CustomerDashboard() {
 
                       <div className="card-album-preview-meta">
                         {album ? (
-                          photoCount > 0 ? (
+                          album.status === "archived" ? (
+                            <span className="album-count-text" style={{ color: "#dc2626", fontWeight: 700 }}>
+                              ⚠️ Album bị khóa: {album.locked_reason || "Vi phạm chính sách"}
+                            </span>
+                          ) : photoCount > 0 ? (
                             <span className="album-count-text">
                               📸 <strong>{photoCount}</strong> bức ảnh kỷ niệm lưu giữ
                             </span>
@@ -511,25 +544,59 @@ export default function CustomerDashboard() {
                         )}
                       </div>
 
-                      <div className="card-action-bar">
+                      <div className="card-action-bar" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                         {album ? (
-                          <Link href={`/album/${album.id}`} className="btn-card-cta is-view-album">
-                            <Camera size={16} />
-                            <span>{photoCount > 0 ? `Mở Album (${photoCount} ảnh)` : "Đăng Ảnh Kỷ Niệm"}</span>
-                            <ArrowRight size={15} className="arrow-icon" />
-                          </Link>
+                          album.status === "archived" ? (
+                            <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta" style={{ flex: 1, background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
+                              <Lock size={16} />
+                              <span>Xem Lý Do Khóa</span>
+                              <ArrowRight size={15} className="arrow-icon" />
+                            </Link>
+                          ) : (
+                            <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta is-view-album" style={{ flex: 1 }}>
+                              <Camera size={16} />
+                              <span>{photoCount > 0 ? `Mở Album (${photoCount})` : "Đăng Ảnh"}</span>
+                              <ArrowRight size={15} className="arrow-icon" />
+                            </Link>
+                          )
                         ) : (
                           <button
                             type="button"
                             className="btn-card-cta is-create-album"
+                            style={{ flex: 1 }}
                             disabled={creatingFor === card.id}
                             onClick={() => handleCreateAlbum(card)}
                           >
                             <Sparkles size={16} />
-                            <span>{creatingFor === card.id ? "Đang tạo..." : "Tạo Album Kỷ Niệm"}</span>
+                            <span>{creatingFor === card.id ? "Đang tạo..." : "Tạo Album"}</span>
                             <ArrowRight size={15} className="arrow-icon" />
                           </button>
                         )}
+                        <button
+                          type="button"
+                          className="btn-card-gift"
+                          title="Tặng / Chuyển nhượng thẻ này cho bạn bè qua email"
+                          onClick={() => setTransferCard({ id: card.id, name: card.province_name })}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: "5px",
+                            padding: "0.72rem 0.9rem",
+                            borderRadius: "12px",
+                            background: "rgba(234, 88, 12, 0.08)",
+                            color: "#ea580c",
+                            border: "1px solid rgba(234, 88, 12, 0.2)",
+                            fontWeight: 700,
+                            fontSize: "0.82rem",
+                            cursor: "pointer",
+                            whiteSpace: "nowrap",
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          <Gift size={16} />
+                          <span>Tặng</span>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -597,7 +664,11 @@ export default function CustomerDashboard() {
                       <div className="card-album-preview-meta">
                         {isUnlocked ? (
                           album ? (
-                            photoCount > 0 ? (
+                            album.status === "archived" ? (
+                              <span className="album-count-text" style={{ color: "#dc2626", fontWeight: 700 }}>
+                                ⚠️ Album tạm khóa: {album.locked_reason || "Vi phạm chính sách"}
+                              </span>
+                            ) : photoCount > 0 ? (
                               <span className="album-count-text">
                                 📸 <strong>{photoCount}</strong> bức ảnh kỷ niệm
                               </span>
@@ -618,30 +689,68 @@ export default function CustomerDashboard() {
                         )}
                       </div>
 
-                      <div className="card-action-bar">
+                      <div className="card-action-bar" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                         {isUnlocked ? (
-                          album ? (
-                            <Link href={`/album/${album.id}`} className="btn-card-cta is-view-album">
-                              <Camera size={16} />
-                              <span>Mở Album Kỷ Niệm</span>
-                              <ArrowRight size={15} className="arrow-icon" />
-                            </Link>
-                          ) : (
-                            <button
-                              type="button"
-                              className="btn-card-cta is-create-album"
-                              disabled={creatingFor === matchedCard?.id}
-                              onClick={() => matchedCard && handleCreateAlbum(matchedCard)}
-                            >
-                              <Sparkles size={16} />
-                              <span>Tạo Album Kỷ Niệm</span>
-                              <ArrowRight size={15} className="arrow-icon" />
-                            </button>
-                          )
+                          <>
+                            {album ? (
+                              album.status === "archived" ? (
+                                <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta" style={{ flex: 1, background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
+                                  <Lock size={16} />
+                                  <span>Xem Lý Do Khóa</span>
+                                  <ArrowRight size={15} className="arrow-icon" />
+                                </Link>
+                              ) : (
+                                <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta is-view-album" style={{ flex: 1 }}>
+                                  <Camera size={16} />
+                                  <span>Mở Album</span>
+                                  <ArrowRight size={15} className="arrow-icon" />
+                                </Link>
+                              )
+                            ) : (
+                              <button
+                                type="button"
+                                className="btn-card-cta is-create-album"
+                                style={{ flex: 1 }}
+                                disabled={creatingFor === matchedCard?.id}
+                                onClick={() => matchedCard && handleCreateAlbum(matchedCard)}
+                              >
+                                <Sparkles size={16} />
+                                <span>Tạo Album</span>
+                                <ArrowRight size={15} className="arrow-icon" />
+                              </button>
+                            )}
+                            {matchedCard && (
+                              <button
+                                type="button"
+                                className="btn-card-gift"
+                                title="Tặng / Chuyển nhượng thẻ này cho bạn bè"
+                                onClick={() => setTransferCard({ id: matchedCard.id, name: province.name })}
+                                style={{
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  gap: "5px",
+                                  padding: "0.72rem 0.9rem",
+                                  borderRadius: "12px",
+                                  background: "rgba(234, 88, 12, 0.08)",
+                                  color: "#ea580c",
+                                  border: "1px solid rgba(234, 88, 12, 0.2)",
+                                  fontWeight: 700,
+                                  fontSize: "0.82rem",
+                                  cursor: "pointer",
+                                  whiteSpace: "nowrap",
+                                  transition: "all 0.2s ease",
+                                }}
+                              >
+                                <Gift size={16} />
+                                <span>Tặng</span>
+                              </button>
+                            )}
+                          </>
                         ) : (
-                          <Link href={`/shop`} className="btn-card-cta is-buy-unlock">
+                          <Link href={`/shop`} className="btn-card-cta is-buy-unlock" style={{ flex: 1 }}>
                             <ShoppingBag size={16} />
-                            <span>Mua Thẻ Mở Khóa Tỉnh Này</span>
+                            <span>Mua Thẻ Mở Khóa</span>
                             <ArrowRight size={15} className="arrow-icon" />
                           </Link>
                         )}
@@ -654,6 +763,19 @@ export default function CustomerDashboard() {
           </div>
         )}
       </div>
+
+      {/* 🎁 Modal Chuyển nhượng / Tặng thẻ */}
+      {transferCard && (
+        <TransferModal
+          cardId={transferCard.id}
+          cardName={transferCard.name}
+          onClose={() => setTransferCard(null)}
+          onSuccess={() => {
+            setTransferCard(null);
+            loadData();
+          }}
+        />
+      )}
     </div>
   );
 }

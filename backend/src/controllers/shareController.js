@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const Album = require("../models/Album");
+const { emitToAlbum } = require("../config/socket");
 const {
   sendShareRequestEmail,
   sendShareApprovedEmail,
@@ -23,7 +24,7 @@ const requestEdit = async (req, res) => {
     // approved. Nếu trước đó bị reject/revoked thì cho phép xin lại.
     const [existing] = await db.execute(
       `SELECT * FROM album_shares WHERE album_id = ? AND user_id = ?`,
-      [album_id, user_id],
+      [album.id, user_id],
     );
     if (existing.length && ["pending", "approved"].includes(existing[0].status))
       return res.status(409).json({
@@ -41,8 +42,13 @@ const requestEdit = async (req, res) => {
       `INSERT INTO album_shares (album_id, user_id, permission, status)
        VALUES (?, ?, 'edit', 'pending')
        ON DUPLICATE KEY UPDATE status = 'pending', requested_at = NOW(), approved_at = NULL`,
-      [album_id, user_id],
+      [album.id, user_id],
     );
+
+    emitToAlbum(album.id, album.share_code, "collaborator_requested", {
+      albumId: album.id,
+      userId: user_id,
+    });
 
     // Gửi email cho chủ album
     const [owner] = await db.execute(`SELECT * FROM users WHERE id = ?`, [
@@ -56,7 +62,7 @@ const requestEdit = async (req, res) => {
         ownerName: owner[0].name,
         requesterName: requester[0].name,
         albumTitle: album.title || album.province_name,
-        albumId: album_id,
+        albumId: album.id,
       });
     }
 
@@ -91,11 +97,17 @@ const reviewRequest = async (req, res) => {
     const [result] = await db.execute(
       `UPDATE album_shares SET status = ?, approved_at = ${action === "approve" ? "NOW()" : "NULL"}
        WHERE id = ? AND album_id = ?`,
-      [newStatus, req.params.shareId, req.params.id],
+      [newStatus, req.params.shareId, album.id],
     );
 
     if (!result.affectedRows)
       return res.status(404).json({ message: "Không tìm thấy yêu cầu" });
+
+    emitToAlbum(album.id, album.share_code, "collaborator_reviewed", {
+      albumId: album.id,
+      action,
+      shareId: req.params.shareId,
+    });
 
     // Gửi email thông báo cho người xin
     if (action === "approve") {
@@ -135,8 +147,14 @@ const revokeAccess = async (req, res) => {
 
     await db.execute(
       `UPDATE album_shares SET status = 'revoked' WHERE id = ? AND album_id = ?`,
-      [req.params.shareId, req.params.id],
+      [req.params.shareId, album.id],
     );
+
+    emitToAlbum(album.id, album.share_code, "collaborator_revoked", {
+      albumId: album.id,
+      shareId: req.params.shareId,
+    });
+
     res.json({ message: "Đã thu hồi quyền truy cập" });
   } catch (err) {
     console.error("revokeAccess:", err);
@@ -161,9 +179,9 @@ const getCollaborators = async (req, res) => {
       `SELECT s.*, u.name, u.email
        FROM album_shares s
        JOIN users u ON u.id = s.user_id
-       WHERE s.album_id = ?
+       WHERE s.album_id = ? AND s.status IN ('pending', 'approved')
        ORDER BY s.requested_at DESC`,
-      [req.params.id],
+      [album.id],
     );
     res.json({ collaborators: shares });
   } catch (err) {
