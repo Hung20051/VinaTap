@@ -14,11 +14,6 @@ const getFreshUser = async (id) => {
   return rows[0] || null;
 };
 
-const signToken = (user) =>
-  jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || "7d",
-  });
-
 // Bắt buộc phải có JWT hợp lệ VÀ tài khoản còn active
 const protect = async (req, res, next) => {
   try {

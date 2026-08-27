@@ -151,6 +151,15 @@ const Order = {
     try {
       await conn.beginTransaction();
 
+      // Nếu tạo đơn VietQR mới, tự động hủy các đơn VietQR "pending" cũ của user để dọn sạch đơn nháp
+      if (paymentMethod === "vietqr" && userId) {
+        await conn.execute(
+          `UPDATE orders SET status = 'cancelled', updated_at = NOW() 
+           WHERE user_id = ? AND payment_method = 'vietqr' AND status = 'pending'`,
+          [userId],
+        );
+      }
+
       // Retry INSERT nếu trùng order_code (xác suất cực thấp với 4 byte random)
       for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
         orderCode = generateOrderCode();
@@ -250,7 +259,10 @@ const Order = {
             });
           }
         } catch (notifErr) {
-          console.error("Lỗi gửi thông báo đơn hàng COD mới:", notifErr.message);
+          console.error(
+            "Lỗi gửi thông báo đơn hàng COD mới:",
+            notifErr.message,
+          );
         }
       }
 
@@ -276,45 +288,15 @@ const Order = {
     }
   },
 
-  // ⚡ TỰ ĐỘNG HỦY ĐƠN HÀNG VIETQR "PENDING" Quá 24 Giờ & HOÀN TRẢ VOUCHER
+  // ⚡ TỰ ĐỘNG HỦY ĐƠN HÀNG VIETQR "PENDING" Quá 24 Giờ
   // ⚠️ CHỈ ÁP DỤNG CHO VIETQR (payment_method = 'vietqr'). KHÔNG HỦY ĐƠN COD!
+  // VietQR pending CHƯA BAO GIỜ bị trừ voucher khi tạo đơn → KHÔNG hoàn trả used_count
   async autoCancelExpiredOrders() {
     const conn = await db.getConnection();
     try {
       await conn.beginTransaction();
 
-      // 1. Tìm các đơn VietQR pending quá 24h có dùng voucher
-      const [expiredWithVoucher] = await conn.execute(
-        `SELECT id, user_id, voucher_code FROM orders 
-         WHERE status = 'pending' AND payment_method = 'vietqr' 
-           AND created_at < DATE_SUB(NOW(), INTERVAL 24 HOUR) 
-           AND voucher_code IS NOT NULL AND voucher_code != ''`,
-      );
-
-      // Hoàn trả voucher cho từng đơn
-      for (const ord of expiredWithVoucher) {
-        if (ord.voucher_code) {
-          const [vRows] = await conn.execute(
-            `SELECT id FROM vouchers WHERE UPPER(code) = ? LIMIT 1`,
-            [ord.voucher_code.toUpperCase()],
-          );
-          if (vRows.length > 0) {
-            const vId = vRows[0].id;
-            await conn.execute(
-              `UPDATE vouchers SET used_count = GREATEST(0, used_count - 1) WHERE id = ?`,
-              [vId],
-            );
-            if (ord.user_id) {
-              await conn.execute(
-                `UPDATE user_vouchers SET status = 'available', used_at = NULL WHERE user_id = ? AND voucher_id = ?`,
-                [ord.user_id, vId],
-              );
-            }
-          }
-        }
-      }
-
-      // 2. Chuyển trạng thái đơn VietQR quá 24h sang cancelled (Giữ nguyên đơn COD)
+      // Chuyển trạng thái đơn VietQR quá 24h chưa thanh toán sang cancelled
       await conn.execute(
         `UPDATE orders 
          SET status = 'cancelled', updated_at = NOW() 
@@ -326,7 +308,7 @@ const Order = {
     } catch (err) {
       await conn.rollback();
       console.error(
-        "Lỗi tự động hủy đơn VietQR quá hạn & hoàn trả voucher:",
+        "Lỗi tự động hủy đơn VietQR quá hạn:",
         err.message,
       );
     } finally {
@@ -341,7 +323,10 @@ const Order = {
       [userId],
     );
     return rows.map((r) => {
-      const parsedItems = typeof r.items_json === "string" ? JSON.parse(r.items_json) : (r.items_json || []);
+      const parsedItems =
+        typeof r.items_json === "string"
+          ? JSON.parse(r.items_json)
+          : r.items_json || [];
       return {
         ...r,
         items: parsedItems,
@@ -356,7 +341,12 @@ const Order = {
   },
 
   // Admin lấy toàn bộ đơn hàng
-  async getAllAdmin({ search, status = "active", limit = 50, offset = 0 } = {}) {
+  async getAllAdmin({
+    search,
+    status = "active",
+    limit = 50,
+    offset = 0,
+  } = {}) {
     let whereClause = [];
     let params = [];
 
@@ -375,7 +365,9 @@ const Order = {
       );
     } else if (status === "pending_qr") {
       // Chỉ xem đơn VietQR đang chờ khách quét mã
-      whereClause.push(`(o.payment_method = 'vietqr' AND o.status = 'pending')`);
+      whereClause.push(
+        `(o.payment_method = 'vietqr' AND o.status = 'pending')`,
+      );
     } else if (status && status !== "all") {
       whereClause.push(`o.status = ?`);
       params.push(status);
@@ -404,7 +396,10 @@ const Order = {
 
     return {
       orders: rows.map((r) => {
-        const parsedItems = typeof r.items_json === "string" ? JSON.parse(r.items_json) : (r.items_json || []);
+        const parsedItems =
+          typeof r.items_json === "string"
+            ? JSON.parse(r.items_json)
+            : r.items_json || [];
         return {
           ...r,
           items: parsedItems,
@@ -485,42 +480,43 @@ const Order = {
   async markAsPaid(orderCode, transactionData = {}) {
     const cleanCode = (orderCode || "").trim().toUpperCase();
 
-    // getByCode() chỉ SELECT vài cột — cần lấy đủ voucher_code để xử lý
-    const [fullRows] = await db.execute(
-      `SELECT * FROM orders WHERE order_code = ? LIMIT 1`,
-      [cleanCode],
-    );
-    const order = fullRows[0] || null;
-
-    if (!order) {
-      throw new Error(`Đơn hàng ${cleanCode} không tồn tại trên hệ thống`);
-    }
-
-    if (
-      order.status === "paid" ||
-      order.status === "processing" ||
-      order.status === "completed"
-    ) {
-      return order; // Đã thanh toán trước đó
-    }
-
-    const isLatePayment = order.status === "cancelled";
-
-    // ── Bọc trong TRANSACTION để đảm bảo atomicity ──────────────
     const conn = await db.getConnection();
     try {
       await conn.beginTransaction();
 
-      // 1. Cập nhật trạng thái đơn hàng → paid
-      await conn.execute(
-        `UPDATE orders SET status = 'paid', updated_at = NOW() WHERE order_code = ?`,
+      // 1. SELECT FOR UPDATE trong Transaction để khóa dòng đơn hàng, tránh Race Condition
+      const [fullRows] = await conn.execute(
+        `SELECT * FROM orders WHERE order_code = ? LIMIT 1 FOR UPDATE`,
+        [cleanCode],
+      );
+      const order = fullRows[0] || null;
+
+      if (!order) {
+        await conn.rollback();
+        throw new Error(`Đơn hàng ${cleanCode} không tồn tại trên hệ thống`);
+      }
+
+      if (
+        order.status === "paid" ||
+        order.status === "processing" ||
+        order.status === "completed"
+      ) {
+        await conn.rollback();
+        return order; // Đã thanh toán trước đó (idempotent)
+      }
+
+      // 2. Chỉ UPDATE nếu trạng thái hiện tại là pending hoặc cancelled
+      const [updateResult] = await conn.execute(
+        `UPDATE orders SET status = 'paid', updated_at = NOW() WHERE order_code = ? AND status IN ('pending', 'cancelled')`,
         [cleanCode],
       );
 
-      // 2. Xử lý voucher: tăng used_count + đánh dấu user đã dùng
-      // Áp dụng cho CẢ 2 trường hợp:
-      //   - VietQR pending → paid: chưa từng tăng used_count (chỉ COD mới tăng lúc create)
-      //   - cancelled → paid (chuyển tiền muộn): voucher đã bị hoàn trả khi cancel, cần tăng lại
+      if (updateResult.affectedRows === 0) {
+        await conn.rollback();
+        return { ...order, status: "paid" };
+      }
+
+      // 3. Xử lý voucher: tăng used_count + đánh dấu user đã dùng (chỉ tăng nếu user chưa từng dùng voucher này)
       if (order.voucher_code) {
         const [vRows] = await conn.execute(
           `SELECT id FROM vouchers WHERE UPPER(code) = ? LIMIT 1`,
@@ -528,17 +524,37 @@ const Order = {
         );
         if (vRows.length > 0) {
           const vId = vRows[0].id;
-          await conn.execute(
-            `UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?`,
-            [vId],
-          );
+          let alreadyUsed = false;
           if (order.user_id) {
-            await conn.execute(
-              `INSERT INTO user_vouchers (user_id, voucher_id, status, used_at)
-               VALUES (?, ?, 'used', NOW())
-               ON DUPLICATE KEY UPDATE status = 'used', used_at = NOW()`,
+            const [uvCheck] = await conn.execute(
+              `SELECT status FROM user_vouchers WHERE user_id = ? AND voucher_id = ? LIMIT 1`,
               [order.user_id, vId],
             );
+            if (uvCheck.length > 0 && uvCheck[0].status === "used") {
+              alreadyUsed = true;
+            }
+          }
+
+          if (!alreadyUsed) {
+            await conn.execute(
+              `UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?`,
+              [vId],
+            );
+            if (order.user_id) {
+              await conn.execute(
+                `INSERT INTO user_vouchers (user_id, voucher_id, status, used_at)
+                 VALUES (?, ?, 'used', NOW())
+                 ON DUPLICATE KEY UPDATE status = 'used', used_at = NOW()`,
+                [order.user_id, vId],
+              );
+              // Gỡ bỏ voucher khỏi các đơn nháp/đã hủy khác của cùng user để tránh bị dùng lặp lại
+              await conn.execute(
+                `UPDATE orders 
+                 SET voucher_code = NULL, discount_amount = 0, total_amount = subtotal + shipping_fee, updated_at = NOW()
+                 WHERE user_id = ? AND id != ? AND UPPER(voucher_code) = ? AND status IN ('pending', 'cancelled')`,
+                [order.user_id, order.id, order.voucher_code.toUpperCase()],
+              );
+            }
           }
         }
       }

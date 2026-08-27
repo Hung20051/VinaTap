@@ -99,7 +99,9 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  transition: transform 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
 }
 
 .settings-acc-avatar-wrapper:hover .settings-acc-avatar-badge {
@@ -382,30 +384,4 @@
     text-align: center;
     padding: 10px;
   }
-}
-
-.settings-password-input-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.settings-password-toggle-btn {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  color: #94a3b8;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border-radius: 6px;
-  transition: color 0.2s ease;
-}
-
-.settings-password-toggle-btn:hover {
-  color: #ea580c;
 }

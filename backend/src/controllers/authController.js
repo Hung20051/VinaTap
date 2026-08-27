@@ -4,7 +4,7 @@ const User = require("../models/User");
 const OtpCode = require("../models/OtpCode");
 const SystemSetting = require("../models/SystemSetting");
 const cloudinary = require("../config/cloudinary");
-const { uploadSingle, runMiddleware } = require("../middleware/upload");
+const { uploadSingle, uploadImageOnly, runMiddleware } = require("../middleware/upload");
 const {
   MAX_ATTEMPTS,
   OTP_TTL_MINUTES,
@@ -20,15 +20,13 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Tạo JWT token
 const signToken = (user) => {
   if (!process.env.JWT_SECRET) {
-    throw new Error("JWT_SECRET chưa được cấu hình trong biến môi trường (.env)");
+    throw new Error(
+      "JWT_SECRET chưa được cấu hình trong biến môi trường (.env)",
+    );
   }
-  return jwt.sign(
-    { id: user.id, role: user.role },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.JWT_EXPIRES_IN || "7d",
-    },
-  );
+  return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+  });
 };
 
 // Rút gọn user object trả ra ngoài API — loại bỏ password_hash/google_id
@@ -521,7 +519,10 @@ const updateMe = async (req, res) => {
     await User.updateProfile(req.user.id, patch);
     const user = await User.findById(req.user.id);
 
-    res.json({ message: "Cập nhật hồ sơ thành công", user: toPublicUser(user) });
+    res.json({
+      message: "Cập nhật hồ sơ thành công",
+      user: toPublicUser(user),
+    });
   } catch (err) {
     console.error("updateMe error:", err);
     res.status(500).json({ message: "Lỗi server" });
@@ -587,7 +588,7 @@ const changePassword = async (req, res) => {
 // thuộc album/tỉnh nào cả.
 const uploadAvatar = async (req, res) => {
   try {
-    await runMiddleware(req, res, uploadSingle);
+    await runMiddleware(req, res, uploadImageOnly);
 
     if (!req.file)
       return res.status(400).json({ message: "Không tìm thấy file ảnh" });
@@ -616,7 +617,10 @@ const uploadAvatar = async (req, res) => {
     await User.updateProfile(req.user.id, { avatar_url: uploaded.secure_url });
     const user = await User.findById(req.user.id);
 
-    res.json({ message: "Cập nhật ảnh đại diện thành công", user: toPublicUser(user) });
+    res.json({
+      message: "Cập nhật ảnh đại diện thành công",
+      user: toPublicUser(user),
+    });
   } catch (err) {
     console.error("uploadAvatar error:", err);
     res

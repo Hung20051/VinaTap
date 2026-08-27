@@ -7,6 +7,8 @@ import { useParams, useSearchParams } from "next/navigation";
 import { provinceAPI, analyticsAPI } from "@/lib/api";
 import { isLoggedIn, clearAuth, getUser } from "@/lib/auth";
 import Map from "@/components/ui/Map";
+import Dino404 from "@/components/ui/Dino404";
+import DinoLoader from "@/components/ui/DinoLoader";
 import ProvinceAudioPlayer from "./components/ProvinceAudioPlayer";
 import ProvinceUnboxingModal from "./components/ProvinceUnboxingModal";
 import "@/styles/province.css";
@@ -108,23 +110,22 @@ export default function ProvincePage() {
 
   if (loading) {
     return (
-      <div className="province-loading">
-        <div className="spinner" />
-      </div>
+      <DinoLoader
+        text="Đang mở bản đồ tỉnh thành..."
+        subtext="Vui lòng chờ trong giây lát"
+        size={280}
+        fullScreen={true}
+      />
     );
   }
 
   if (notFound) {
     return (
-      <div className="province-notfound">
-        <p className="province-notfound__icon">🗺</p>
-        <h1 className="province-notfound__title">
-          Không tìm thấy tỉnh thành này
-        </h1>
-        <Link href="/" className="btn btn-primary">
-          Về trang chủ
-        </Link>
-      </div>
+      <Dino404
+        title="Không Tìm Thấy Tỉnh Thành"
+        message="Tỉnh thành này không nằm trong danh sách 63 tỉnh thành Việt Nam hoặc đường dẫn không chính xác."
+        backBtnText="Quay Lại"
+      />
     );
   }
 

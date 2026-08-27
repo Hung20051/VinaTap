@@ -49,7 +49,9 @@ export default function ActivatePage() {
       const res = await nfcAPI.activate(cleaned);
       setCard(res.card);
     } catch (err) {
-      setError(err.message || "Kích hoạt thất bại, vui lòng kiểm tra lại mã serial");
+      setError(
+        err.message || "Kích hoạt thất bại, vui lòng kiểm tra lại mã serial",
+      );
     } finally {
       setLoading(false);
     }
@@ -96,7 +98,8 @@ export default function ActivatePage() {
             <div className="activate-header">
               <h1 className="activate-title">Kích Hoạt Mảnh Ghép NFC</h1>
               <p className="activate-subtitle">
-                Chạm điện thoại vào chip NFC trên mảnh gỗ hoặc nhập mã Serial để mở khóa bản đồ du lịch của bạn.
+                Chạm điện thoại vào chip NFC trên mảnh gỗ hoặc nhập mã Serial để
+                mở khóa bản đồ du lịch của bạn.
               </p>
             </div>
 
@@ -113,7 +116,9 @@ export default function ActivatePage() {
               <div>
                 <label className="activate-input-label">
                   <span>MÃ SERIAL MẢNH GHÉP</span>
-                  <span className="activate-input-hint">In ở mặt sau thẻ gỗ</span>
+                  <span className="activate-input-hint">
+                    In ở mặt sau thẻ gỗ
+                  </span>
                 </label>
                 <div className="activate-input-wrap">
                   <input
@@ -161,7 +166,8 @@ export default function ActivatePage() {
             </div>
 
             <p className="activate-footer-note">
-              🔒 Mỗi mảnh ghép chỉ kích hoạt được 1 lần và gắn cố định với tài khoản của bạn.
+              🔒 Mỗi mảnh ghép chỉ kích hoạt được 1 lần và gắn cố định với tài
+              khoản của bạn.
             </p>
           </>
         ) : (
@@ -175,7 +181,8 @@ export default function ActivatePage() {
               Mở Khóa Thành Công!
             </h1>
             <p className="activate-subtitle">
-              Mảnh ghép đã được gắn vào tài khoản của bạn và sẵn sàng lưu giữ những kỷ niệm tuyệt đẹp.
+              Mảnh ghép đã được gắn vào tài khoản của bạn và sẵn sàng lưu giữ
+              những kỷ niệm tuyệt đẹp.
             </p>
 
             {/* Province Info Showcase */}
@@ -195,11 +202,16 @@ export default function ActivatePage() {
                 <MapPin size={16} /> Mảnh ghép tỉnh / thành phố
               </div>
               <h2 className="activate-province-name">{card.province_name}</h2>
-              <span className="activate-serial-tag">Serial: {card.serial_code}</span>
+              <span className="activate-serial-tag">
+                Serial: {card.serial_code}
+              </span>
             </div>
 
             {error && (
-              <div className="activate-error-banner" style={{ textAlign: "left" }}>
+              <div
+                className="activate-error-banner"
+                style={{ textAlign: "left" }}
+              >
                 <AlertCircle size={18} />
                 <span>{error}</span>
               </div>

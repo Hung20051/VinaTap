@@ -38,6 +38,8 @@ import {
   VolumeX,
 } from "lucide-react";
 import StickerCanvas from "@/components/ui/StickerCanvas";
+import Dino404 from "@/components/ui/Dino404";
+import DinoLoader from "@/components/ui/DinoLoader";
 import { albumAPI, mediaAPI } from "@/lib/api";
 import { getUser, isLoggedIn } from "@/lib/auth";
 import { getSocket, joinAlbumRoom, leaveAlbumRoom } from "@/lib/socket";
@@ -474,68 +476,22 @@ export default function AlbumPage() {
 
   if (loading) {
     return (
-      <div className="album-page-loading">
-        <div className="album-spinner"></div>
-        <p>Đang nạp Album Kỷ Niệm VinaTap...</p>
-      </div>
+      <DinoLoader
+        text="Đang nạp Album Kỷ Niệm VinaTap..."
+        subtext="Vui lòng chờ trong giây lát"
+        size={280}
+        fullScreen={true}
+      />
     );
   }
 
   if (loadError) {
     return (
-      <div
-        className="album-error-state"
-        style={{
-          maxWidth: 520,
-          margin: "6rem auto",
-          textAlign: "center",
-          padding: "2.5rem 2rem",
-          background: "#ffffff",
-          borderRadius: "24px",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.06)",
-          border: "1.5px solid #fee2e2",
-        }}
-      >
-        <div
-          style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            background: "#fee2e2",
-            color: "#dc2626",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "1.8rem",
-            margin: "0 auto 1.25rem",
-          }}
-        >
-          🔒
-        </div>
-        <h2 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#1e293b", marginBottom: "0.5rem" }}>
-          Không Thể Truy Cập Album
-        </h2>
-        <p style={{ fontSize: "0.92rem", color: "#64748b", lineHeight: 1.6, marginBottom: "1.75rem" }}>
-          {loadError.message}
-        </p>
-        <Link
-          href="/"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "0.75rem 1.5rem",
-            borderRadius: "12px",
-            background: "#ea580c",
-            color: "#ffffff",
-            textDecoration: "none",
-            fontWeight: 700,
-            fontSize: "0.9rem",
-          }}
-        >
-          <ChevronLeft size={16} /> Về Trang Chủ VinaTap
-        </Link>
-      </div>
+      <Dino404
+        title="Không Tìm Thấy Album Kỷ Niệm"
+        message={loadError.message || "Album này có thể ở chế độ riêng tư, đã bị xóa hoặc đường dẫn không chính xác."}
+        backBtnText="Quay Lại"
+      />
     );
   }
 

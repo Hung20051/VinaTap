@@ -1,7 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Lock, Eye, EyeOff, CheckCircle2, ShieldCheck, KeyRound } from "lucide-react";
+import {
+  Lock,
+  Eye,
+  EyeOff,
+  CheckCircle2,
+  ShieldCheck,
+  KeyRound,
+} from "lucide-react";
 import { authAPI } from "@/lib/api";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
@@ -23,7 +30,8 @@ export default function SettingsPassword() {
     setLang(getLang());
     const handleLangUpdated = (e) => setLang(e.detail);
     window.addEventListener("vinatap:lang-updated", handleLangUpdated);
-    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () =>
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -63,7 +71,8 @@ export default function SettingsPassword() {
           <span className="title-mobile">🔒 Đổi Mật Khẩu</span>
         </h1>
         <p className="settings-acc-subtitle">
-          Cập nhật mật khẩu định kỳ để bảo vệ tài khoản và bộ sưu tập thẻ của bạn
+          Cập nhật mật khẩu định kỳ để bảo vệ tài khoản và bộ sưu tập thẻ của
+          bạn
         </p>
       </div>
 
@@ -74,24 +83,35 @@ export default function SettingsPassword() {
 
         <div className="settings-acc-form-grid">
           {/* Mật khẩu hiện tại */}
-          <div className="settings-acc-field">
+          <div className="settings-acc-field settings-acc-field--full">
             <label className="settings-acc-label">
               <Lock size={14} /> Mật Khẩu Hiện Tại *
             </label>
-            <div className="settings-password-input-wrapper">
+            <div style={{ position: "relative" }}>
               <input
                 type={showCurrent ? "text" : "password"}
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="Nhập mật khẩu hiện tại..."
+                placeholder="Nhập mật khẩu hiện tại của bạn..."
                 className="settings-acc-input"
+                style={{ paddingRight: "40px" }}
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowCurrent(!showCurrent)}
-                className="settings-password-toggle-btn"
-                title={showCurrent ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  color: "#94a3b8",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
                 {showCurrent ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -103,20 +123,31 @@ export default function SettingsPassword() {
             <label className="settings-acc-label">
               <Lock size={14} /> Mật Khẩu Mới (ít nhất 6 ký tự) *
             </label>
-            <div className="settings-password-input-wrapper">
+            <div style={{ position: "relative" }}>
               <input
                 type={showNew ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Nhập mật khẩu mới..."
                 className="settings-acc-input"
+                style={{ paddingRight: "40px" }}
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                className="settings-password-toggle-btn"
-                title={showNew ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  color: "#94a3b8",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
                 {showNew ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -128,20 +159,31 @@ export default function SettingsPassword() {
             <label className="settings-acc-label">
               <ShieldCheck size={14} /> Xác Nhận Mật Khẩu Mới *
             </label>
-            <div className="settings-password-input-wrapper">
+            <div style={{ position: "relative" }}>
               <input
                 type={showConfirm ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Nhập lại mật khẩu mới..."
                 className="settings-acc-input"
+                style={{ paddingRight: "40px" }}
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
-                className="settings-password-toggle-btn"
-                title={showConfirm ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                  color: "#94a3b8",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
                 {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>

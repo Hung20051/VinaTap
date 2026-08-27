@@ -119,7 +119,11 @@ const uploadMedia = async (req, res) => {
     const { album_id, taken_at } = req.body;
     if (!album_id) return res.status(400).json({ message: "Thiếu album_id" });
 
-    const targetAlbum = await checkUploadPermission(album_id, req.user.id, req.user.role);
+    const targetAlbum = await checkUploadPermission(
+      album_id,
+      req.user.id,
+      req.user.role,
+    );
     if (!targetAlbum)
       return res
         .status(403)
@@ -174,9 +178,15 @@ const uploadMedia = async (req, res) => {
       uploader_id: req.user.id,
     };
 
+    const [uploaderRows] = await db.execute(
+      `SELECT name FROM users WHERE id = ? LIMIT 1`,
+      [req.user.id],
+    );
+    const uploaderName = uploaderRows[0]?.name || "Cộng tác viên";
+
     emitToAlbum(numericAlbumId, targetAlbum.share_code, "media_added", {
       items: [mediaObj],
-      uploaderName: req.user.name || "Cộng tác viên",
+      uploaderName,
     });
 
     res.status(201).json({
@@ -202,7 +212,11 @@ const uploadMultipleMedia = async (req, res) => {
     const { album_id } = req.body;
     if (!album_id) return res.status(400).json({ message: "Thiếu album_id" });
 
-    const targetAlbum = await checkUploadPermission(album_id, req.user.id, req.user.role);
+    const targetAlbum = await checkUploadPermission(
+      album_id,
+      req.user.id,
+      req.user.role,
+    );
     if (!targetAlbum)
       return res
         .status(403)
@@ -259,9 +273,15 @@ const uploadMultipleMedia = async (req, res) => {
       });
     }
 
+    const [uploaderRows] = await db.execute(
+      `SELECT name FROM users WHERE id = ? LIMIT 1`,
+      [req.user.id],
+    );
+    const uploaderName = uploaderRows[0]?.name || "Cộng tác viên";
+
     emitToAlbum(numericAlbumId, targetAlbum.share_code, "media_added", {
       items: results,
-      uploaderName: req.user.name || "Cộng tác viên",
+      uploaderName,
     });
 
     res.status(201).json({
@@ -285,9 +305,17 @@ const updateMedia = async (req, res) => {
       return res.status(404).json({ message: "Không tìm thấy media" });
     }
 
-    const canEdit = await checkUploadPermission(albumId, req.user.id, req.user.role);
+    const canEdit = await checkUploadPermission(
+      albumId,
+      req.user.id,
+      req.user.role,
+    );
     if (!canEdit) {
-      return res.status(403).json({ message: "Bạn không có quyền chỉnh sửa media trong album này" });
+      return res
+        .status(403)
+        .json({
+          message: "Bạn không có quyền chỉnh sửa media trong album này",
+        });
     }
 
     const { caption_user, sort_order, taken_at } = req.body;
@@ -338,9 +366,15 @@ const deleteMedia = async (req, res) => {
       return res.status(404).json({ message: "Không tìm thấy media" });
     }
 
-    const canEdit = await checkUploadPermission(albumId, req.user.id, req.user.role);
+    const canEdit = await checkUploadPermission(
+      albumId,
+      req.user.id,
+      req.user.role,
+    );
     if (!canEdit) {
-      return res.status(403).json({ message: "Bạn không có quyền xóa media trong album này" });
+      return res
+        .status(403)
+        .json({ message: "Bạn không có quyền xóa media trong album này" });
     }
 
     await db.execute(

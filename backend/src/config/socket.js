@@ -1,4 +1,5 @@
 const { Server } = require("socket.io");
+const jwt = require("jsonwebtoken");
 
 let io = null;
 
@@ -95,7 +96,8 @@ const getIO = () => {
 const emitToAlbum = (albumId, shareCode, event, data) => {
   if (!io) return;
   if (albumId) io.to(`album_${albumId}`).emit(event, data);
-  if (shareCode && shareCode !== albumId) io.to(`album_${shareCode}`).emit(event, data);
+  if (shareCode && shareCode !== albumId)
+    io.to(`album_${shareCode}`).emit(event, data);
 };
 
 // Tiện ích phát sự kiện tới 1 User cụ thể
