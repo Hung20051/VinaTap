@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 /**
  * Fullscreen Interactive Pixel-Perfect Dino 404
  * Rendered with sharp HTML5 Canvas — 100% full-width horizon, zero blur on zoom!
- * Rich obstacle variety: Single, Double, Triple Small/Large Cacti + Flying Pterodactyl Birds!
+ * Framerate-independent Delta Time Physics (identical speed on 144Hz Desktop & Mobile phones).
  */
 export default function Dino404({
   title = "404 - Lạc đường rồi!",
   message = "Trang này không tồn tại hoặc đã được di chuyển. Chú khủng long VinaTap đang cố tìm lại lối đi giúp bạn!",
-  backBtnText = "Quay Lại",
+  backBtnText = "Quay Lại Trang Trước",
   onBack,
 }) {
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function Dino404({
     const ctx = canvas.getContext("2d");
 
     let animId;
-    let width = (canvas.width = canvas.parentElement.clientWidth || window.innerWidth);
+    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
     let height = (canvas.height = 200);
 
     const resize = () => {
@@ -60,19 +60,20 @@ export default function Dino404({
     let gameOver = false;
     let autoPlay = true;
     let internalScore = 0;
-    let speed = 5.2;
+    let baseSpeed = 5.0; // Standard speed normalized to 60fps
     let spawnTimer = 0;
     let birdWingTimer = 0;
     let birdWingFrame = 0;
+    let lastTime = null;
 
     const dino = {
-      x: Math.max(40, width * 0.15),
+      x: Math.max(35, Math.min(width * 0.15, 120)),
       y: groundY - 44,
       w: 40,
       h: 44,
       vy: 0,
-      gravity: 0.75,
-      jumpForce: -13.5,
+      gravity: 0.72,
+      jumpForce: -13.2,
       isGrounded: true,
       legFrame: 0,
       legTimer: 0,
@@ -142,13 +143,13 @@ export default function Dino404({
       ctx.fillStyle = "#22252a";
 
       // Head & Body
-      ctx.fillRect(x + 18, y, 22, 14); // Head top
-      ctx.fillRect(x + 18, y + 14, 22, 4); // Mouth
-      ctx.fillRect(x + 14, y + 10, 8, 20); // Neck
-      ctx.fillRect(x + 6, y + 18, 20, 16); // Body
-      ctx.fillRect(x, y + 18, 6, 10); // Tail top
-      ctx.fillRect(x - 4, y + 14, 4, 6); // Tail tip
-      ctx.fillRect(x + 24, y + 22, 8, 4); // Arm
+      ctx.fillRect(x + 18, y, 22, 14);
+      ctx.fillRect(x + 18, y + 14, 22, 4);
+      ctx.fillRect(x + 14, y + 10, 8, 20);
+      ctx.fillRect(x + 6, y + 18, 20, 16);
+      ctx.fillRect(x, y + 18, 6, 10);
+      ctx.fillRect(x - 4, y + 14, 4, 6);
+      ctx.fillRect(x + 24, y + 22, 8, 4);
 
       // Eye
       if (dead) {
@@ -189,28 +190,24 @@ export default function Dino404({
       const { x, y, type, h } = obs;
 
       if (type === "small_single") {
-        // Small Single Cactus
         ctx.fillRect(x + 4, y - 26, 6, 26);
         ctx.fillRect(x, y - 18, 4, 4);
         ctx.fillRect(x, y - 22, 4, 6);
         ctx.fillRect(x + 10, y - 14, 4, 4);
         ctx.fillRect(x + 10, y - 20, 4, 8);
       } else if (type === "small_double") {
-        // Double Small Cactus
         ctx.fillRect(x + 4, y - 26, 5, 26);
         ctx.fillRect(x, y - 18, 4, 4);
         ctx.fillRect(x, y - 22, 4, 6);
         ctx.fillRect(x + 9, y - 14, 4, 4);
         ctx.fillRect(x + 9, y - 20, 4, 8);
 
-        // Cactus 2
         ctx.fillRect(x + 18, y - 28, 5, 28);
         ctx.fillRect(x + 14, y - 20, 4, 4);
         ctx.fillRect(x + 14, y - 24, 4, 6);
         ctx.fillRect(x + 23, y - 16, 4, 4);
         ctx.fillRect(x + 23, y - 22, 4, 8);
       } else if (type === "small_triple") {
-        // Triple Small Cactus Cluster
         for (let i = 0; i < 3; i++) {
           const cx = x + i * 13;
           const ch = 24 + (i % 2) * 4;
@@ -221,14 +218,12 @@ export default function Dino404({
           ctx.fillRect(cx + 8, y - ch + 6, 3, 6);
         }
       } else if (type === "large_single") {
-        // Tall Large Majestic Cactus
         ctx.fillRect(x + 6, y - h, 7, h);
         ctx.fillRect(x, y - h * 0.72, 6, 5);
         ctx.fillRect(x, y - h * 0.72 - 10, 5, 12);
         ctx.fillRect(x + 13, y - h * 0.52, 6, 5);
         ctx.fillRect(x + 15, y - h * 0.52 - 12, 5, 14);
       } else if (type === "large_double") {
-        // Double Large Cactus
         ctx.fillRect(x + 5, y - 42, 6, 42);
         ctx.fillRect(x, y - 30, 5, 4);
         ctx.fillRect(x, y - 38, 4, 10);
@@ -241,24 +236,19 @@ export default function Dino404({
         ctx.fillRect(x + 29, y - 26, 5, 4);
         ctx.fillRect(x + 30, y - 36, 4, 12);
       } else if (type === "bird") {
-        // Flying Pterodactyl Bird
         ctx.fillStyle = "#1e293b";
-        // Body & Beak
         ctx.fillRect(x + 8, y - 10, 16, 6);
-        ctx.fillRect(x + 24, y - 12, 8, 4); // Beak
-        ctx.fillRect(x + 2, y - 8, 6, 3); // Tail
-        ctx.fillRect(x + 20, y - 12, 2, 2); // Eye white
+        ctx.fillRect(x + 24, y - 12, 8, 4);
+        ctx.fillRect(x + 2, y - 8, 6, 3);
+        ctx.fillRect(x + 20, y - 12, 2, 2);
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(x + 22, y - 11, 2, 2);
         ctx.fillStyle = "#1e293b";
 
-        // Wings Animation
         if (birdWingFrame === 0) {
-          // Wing Up
           ctx.fillRect(x + 10, y - 20, 6, 10);
           ctx.fillRect(x + 6, y - 24, 6, 6);
         } else {
-          // Wing Down
           ctx.fillRect(x + 10, y - 4, 6, 10);
           ctx.fillRect(x + 6, y + 4, 6, 6);
         }
@@ -273,14 +263,22 @@ export default function Dino404({
       ctx.fillRect(x, y + 8, 46, 6);
     };
 
-    // ─── MAIN ANIMATION LOOP ─────────────────────────────────────────
-    const loop = () => {
+    // ─── MAIN ANIMATION LOOP WITH DELTA TIME ─────────────────────────
+    const loop = (timestamp) => {
+      if (!lastTime) lastTime = timestamp;
+      const elapsed = (timestamp - lastTime) / 1000;
+      lastTime = timestamp;
+
+      // Normalize to 60fps (max dt capped at 0.05s to prevent huge jumps)
+      const dt = Math.min(elapsed, 0.05);
+      const timeFactor = dt * 60;
+
       ctx.clearRect(0, 0, width, height);
 
       // 1. Clouds
       clouds.forEach((c) => {
         if (!gameOver) {
-          c.x -= c.speed;
+          c.x -= c.speed * timeFactor;
           if (c.x < -60) c.x = width + 20;
         }
         drawCloud(c.x, c.y);
@@ -298,7 +296,7 @@ export default function Dino404({
       ctx.fillStyle = "#64748b";
       groundBumps.forEach((b) => {
         if (!gameOver) {
-          b.x -= speed;
+          b.x -= baseSpeed * timeFactor;
           if (b.x < -20) b.x = width + Math.random() * 20;
         }
         ctx.fillRect(b.x, groundY + 4, b.len, 2);
@@ -306,9 +304,9 @@ export default function Dino404({
 
       if (!gameOver) {
         // 3. Dino Physics
-        dino.y += dino.vy;
+        dino.y += dino.vy * timeFactor;
         if (dino.y + dino.h < groundY) {
-          dino.vy += dino.gravity;
+          dino.vy += dino.gravity * timeFactor;
           dino.isGrounded = false;
         } else {
           dino.y = groundY - dino.h;
@@ -316,20 +314,20 @@ export default function Dino404({
           dino.isGrounded = true;
         }
 
-        dino.legTimer++;
+        dino.legTimer += timeFactor;
         if (dino.legTimer > 5) {
           dino.legFrame = dino.legFrame === 0 ? 1 : 0;
           dino.legTimer = 0;
         }
 
-        birdWingTimer++;
+        birdWingTimer += timeFactor;
         if (birdWingTimer > 8) {
           birdWingFrame = birdWingFrame === 0 ? 1 : 0;
           birdWingTimer = 0;
         }
 
-        // 4. Random Obstacle Spawner (Diverse Varieties)
-        spawnTimer++;
+        // 4. Random Obstacle Spawner (Time-normalized)
+        spawnTimer += timeFactor;
         const spawnInterval = Math.max(65, 80 - Math.floor(internalScore / 150)) + Math.random() * 55;
 
         if (spawnTimer > spawnInterval) {
@@ -337,7 +335,6 @@ export default function Dino404({
           let newObs;
 
           if (internalScore > 120 && rand < 0.25) {
-            // Flying Pterodactyl Bird
             const birdAltitude = Math.random() < 0.5 ? groundY - 32 : groundY - 48;
             newObs = {
               x: width + 30,
@@ -347,19 +344,14 @@ export default function Dino404({
               type: "bird",
             };
           } else if (rand < 0.3) {
-            // Small Single
             newObs = { x: width + 20, y: groundY, w: 16, h: 26, type: "small_single" };
           } else if (rand < 0.55) {
-            // Small Double
             newObs = { x: width + 20, y: groundY, w: 30, h: 28, type: "small_double" };
           } else if (rand < 0.72) {
-            // Small Triple
             newObs = { x: width + 20, y: groundY, w: 42, h: 28, type: "small_triple" };
           } else if (rand < 0.88) {
-            // Large Single
             newObs = { x: width + 20, y: groundY, w: 20, h: 42, type: "large_single" };
           } else {
-            // Large Double
             newObs = { x: width + 20, y: groundY, w: 38, h: 46, type: "large_double" };
           }
 
@@ -370,7 +362,7 @@ export default function Dino404({
         // 5. Obstacles Movement & Collision
         for (let i = obstacles.length - 1; i >= 0; i--) {
           const obs = obstacles[i];
-          obs.x -= speed;
+          obs.x -= baseSpeed * timeFactor;
 
           // Auto-play AI Jump / Dodge
           if (autoPlay && obs.x - dino.x < 85 && obs.x - dino.x > 20) {
