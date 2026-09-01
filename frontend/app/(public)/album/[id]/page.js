@@ -40,6 +40,7 @@ import {
 import StickerCanvas from "@/components/ui/StickerCanvas";
 import Dino404 from "@/components/ui/Dino404";
 import DinoLoader from "@/components/ui/DinoLoader";
+import ShareModal from "@/components/modals/ShareModal";
 import { albumAPI, mediaAPI } from "@/lib/api";
 import { getUser, isLoggedIn } from "@/lib/auth";
 import { getSocket, joinAlbumRoom, leaveAlbumRoom } from "@/lib/socket";
@@ -73,6 +74,9 @@ export default function AlbumPage() {
 
   const [collaborators, setCollaborators] = useState(null);
   const [requestingEdit, setRequestingEdit] = useState(false);
+
+  // Share Modal State
+  const [showShareModal, setShowShareModal] = useState(false);
 
   // Report Modal State
   const [showReportModal, setShowReportModal] = useState(false);
@@ -227,12 +231,7 @@ export default function AlbumPage() {
   };
 
   const handleShareLink = () => {
-    const slug = album?.share_code || album?.id || id;
-    const url = `${window.location.origin}/album/${slug}`;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url);
-      showToast("success", "Đã sao chép liên kết Album bí mật!");
-    }
+    setShowShareModal(true);
   };
 
   const handleSaveInfo = async () => {
@@ -1451,6 +1450,19 @@ export default function AlbumPage() {
           </div>
         </div>
       )}
+
+      {/* ─── 8. SHARE MODAL (QR CODE & LINK) ────────────────────── */}
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        albumTitle={album?.title || album?.province_name || "Album Kỷ Niệm VinaTap"}
+        shareUrl={
+          typeof window !== "undefined"
+            ? `${window.location.origin}/album/${album?.share_code || album?.id || id}`
+            : ""
+        }
+        provinceName={album?.province_name || "Việt Nam"}
+      />
     </div>
   );
 }
