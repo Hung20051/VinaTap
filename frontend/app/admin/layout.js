@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminHeader from "@/components/layout/AdminHeader";
 import AdminSidebar from "@/components/layout/AdminSidebar";
-import { getUser, isAdmin, clearAuth } from "@/lib/auth";
+import { getUser, isAdmin, clearAuth, updateUser } from "@/lib/auth";
+import { authAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
 
 export default function AdminLayout({ children }) {
@@ -14,12 +15,41 @@ export default function AdminLayout({ children }) {
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    if (!isAdmin()) {
-      router.replace("/auth");
-    } else {
-      setUser(getUser());
-      setAuthorized(true);
-    }
+    let isMounted = true;
+
+    const verifyAdmin = async () => {
+      // 1. Kiểm tra nhanh ở client
+      if (!isAdmin()) {
+        router.replace("/auth");
+        return;
+      }
+
+      // 2. Xác thực thực tế với Backend API /auth/me
+      try {
+        const res = await authAPI.getMe();
+        if (isMounted) {
+          if (res?.user && res.user.role === "admin") {
+            updateUser(res.user);
+            setUser(res.user);
+            setAuthorized(true);
+          } else {
+            clearAuth();
+            router.replace("/auth");
+          }
+        }
+      } catch (err) {
+        if (isMounted) {
+          clearAuth();
+          router.replace("/auth");
+        }
+      }
+    };
+
+    verifyAdmin();
+
+    return () => {
+      isMounted = false;
+    };
   }, [router]);
 
   useEffect(() => {

@@ -172,7 +172,6 @@ const getTts = async (req, res) => {
       "Content-Type": "audio/mpeg",
       "Content-Length": buffer.length,
       "Cache-Control": "public, max-age=86400",
-      "Access-Control-Allow-Origin": "*",
       "Cross-Origin-Resource-Policy": "cross-origin",
     });
     res.send(buffer);

@@ -118,9 +118,10 @@ const Notification = {
   async markAsRead(notificationId, userId) {
 
     if (notificationId === "all") {
-      // Đánh dấu tất cả là đã đọc cho user này
-      const [allNotifs] = await db.execute(
-        `SELECT n.id
+      // Đánh dấu tất cả là đã đọc cho user này bằng 1 câu lệnh batch tối ưu duy nhất
+      await db.execute(
+        `INSERT IGNORE INTO notification_reads (notification_id, user_id)
+         SELECT n.id, ?
          FROM notifications n
          LEFT JOIN notification_recipients rec ON rec.notification_id = n.id
          JOIN users cur_u ON cur_u.id = ?
@@ -128,14 +129,8 @@ const Notification = {
            (n.recipient_type = 'all' AND n.created_at >= cur_u.created_at)
            OR rec.user_id = ?
          )`,
-        [userId, userId],
+        [userId, userId, userId],
       );
-      for (const n of allNotifs) {
-        await db.execute(
-          `INSERT IGNORE INTO notification_reads (notification_id, user_id) VALUES (?, ?)`,
-          [n.id, userId],
-        );
-      }
       return { success: true };
     } else {
       await db.execute(

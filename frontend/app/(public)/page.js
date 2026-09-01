@@ -211,14 +211,20 @@ export default function HomePage() {
               <a href="#home" onClick={scrollToSection("home")}>
                 Trang chủ
               </a>
+              <Link
+                href="/shop"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                Cửa hàng Thẻ NFC
+              </Link>
+              <a href="#provinces" onClick={scrollToSection("provinces")}>
+                Cẩm nang Tỉnh thành
+              </a>
               <a href="#about" onClick={scrollToSection("about")}>
                 Giới thiệu
               </a>
               <a href="#gia" onClick={scrollToSection("gia")}>
                 Các gói
-              </a>
-              <a href="#provinces" onClick={scrollToSection("provinces")}>
-                Mới
               </a>
               <a href="#faq" onClick={scrollToSection("faq")}>
                 Hỏi đáp

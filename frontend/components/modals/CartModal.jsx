@@ -3,7 +3,18 @@
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
 import "./CartModal.css";
 
-export default function CartModal({ cart = [], onUpdateQuantity, onRemoveItem, onClearCart, onClose, onCheckout }) {
+export default function CartModal({
+  isOpen = false,
+  cart = [],
+  onUpdateQuantity,
+  onRemoveItem,
+  onClearCart,
+  onClose,
+  onCheckout,
+  onProceedToCheckout,
+}) {
+  if (!isOpen) return null;
+
   const formatMoney = (amount) =>
     new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount);
 
@@ -110,8 +121,12 @@ export default function CartModal({ cart = [], onUpdateQuantity, onRemoveItem, o
                   type="button"
                   className="btn-cart-checkout"
                   onClick={() => {
-                    onClose();
-                    onCheckout();
+                    if (onProceedToCheckout) {
+                      onProceedToCheckout();
+                    } else if (onCheckout) {
+                      if (onClose) onClose();
+                      onCheckout();
+                    }
                   }}
                 >
                   <span>Thanh Toán</span>

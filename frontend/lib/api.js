@@ -267,23 +267,14 @@ export const albumAPI = {
   deleteTag: (id, tagId) =>
     request(`/albums/${id}/tags/${tagId}`, { method: "DELETE" }),
 
-  requestEdit: (id) =>
-    request(`/albums/${id}/share/request`, { method: "POST" }),
   requestCollaborator: (id) =>
     request(`/albums/${id}/share/request`, { method: "POST" }),
   getCollaborators: (id) => request(`/albums/${id}/share`),
-  reviewRequest: (id, shareId, action) =>
-    request(`/albums/${id}/share/${shareId}`, {
-      method: "PUT",
-      body: JSON.stringify({ action }),
-    }),
   reviewCollaborator: (id, shareId, status) =>
     request(`/albums/${id}/share/${shareId}`, {
       method: "PUT",
       body: JSON.stringify({ action: status }),
     }),
-  revokeAccess: (id, shareId) =>
-    request(`/albums/${id}/share/${shareId}`, { method: "DELETE" }),
   revokeCollaborator: (id, shareId) =>
     request(`/albums/${id}/share/${shareId}`, { method: "DELETE" }),
 
@@ -363,11 +354,6 @@ export const mediaAPI = {
   deleteSticker: (overlayId) =>
     request(`/media/stickers/${overlayId}`, { method: "DELETE" }),
   addTag: (id, tag_id) =>
-    request(`/media/${id}/tags`, {
-      method: "POST",
-      body: JSON.stringify({ tag_id }),
-    }),
-  attachTag: (id, tag_id) =>
     request(`/media/${id}/tags`, {
       method: "POST",
       body: JSON.stringify({ tag_id }),

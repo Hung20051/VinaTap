@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -16,15 +16,19 @@ import {
   LayoutDashboard,
   Zap,
   Search,
+  User,
+  Settings,
+  LogOut,
+  ChevronDown,
+  Package,
 } from "lucide-react";
-import CustomerHeader from "@/components/layout/CustomerHeader";
-import Sidebar from "@/components/layout/Sidebar";
+import Logo from "@/components/layout/Logo";
 import CheckoutModal from "@/components/modals/CheckoutModal";
 import CartModal from "@/components/modals/CartModal";
 import { getUser, clearAuth, isAdmin } from "@/lib/auth";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
-import { productAPI, shippingAPI, systemSettingAPI } from "@/lib/api";
+import { productAPI, shippingAPI } from "@/lib/api";
 import "./ShopPage.css";
 
 export default function ShopPage() {
@@ -32,18 +36,37 @@ export default function ShopPage() {
   const initialVoucherCode = searchParams.get("voucher") || "";
 
   const [user, setUser] = useState(null);
+  const [userAdmin, setUserAdmin] = useState(false);
   const [lang, setLang] = useState("vi");
   const [cart, setCart] = useState([]);
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const [cartModalOpen, setCartModalOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [dbProducts, setDbProducts] = useState([]);
-  const [shippingRule, setShippingRule] = useState({ base_fee: 30000, free_shipping_threshold: 500000 });
+  const [shippingRule, setShippingRule] = useState({
+    base_fee: 30000,
+    free_shipping_threshold: 500000,
+  });
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const userMenuRef = useRef(null);
 
   useEffect(() => {
     setUser(getUser());
+    setUserAdmin(isAdmin());
     setLang(getLang());
-    
+
+    const handleUserUpdated = (e) => {
+      setUser(e.detail);
+      setUserAdmin(isAdmin());
+    };
+    window.addEventListener("vinatap:user-updated", handleUserUpdated);
+
+    const handleClickOutside = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setUserDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
     productAPI
       .getPublic()
       .then((res) => {
@@ -57,11 +80,18 @@ export default function ShopPage() {
         if (res && res.rule) {
           setShippingRule({
             base_fee: Number(res.rule.base_fee || 30000),
-            free_shipping_threshold: Number(res.rule.free_shipping_threshold || 500000),
+            free_shipping_threshold: Number(
+              res.rule.free_shipping_threshold || 500000,
+            ),
           });
         }
       })
       .catch(() => {});
+
+    return () => {
+      window.removeEventListener("vinatap:user-updated", handleUserUpdated);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const products = dbProducts.map((p) => ({
@@ -69,43 +99,26 @@ export default function ShopPage() {
     name: p.name,
     price: Number(p.price),
     originalPrice: Number(p.original_price || 0),
-    tag: p.tag || (Number(p.price) <= 5000 ? `TEST GIÁ ${Number(p.price).toLocaleString("vi-VN")}Đ 🔥` : "HOT SELLER 🔥"),
+    tag:
+      p.tag ||
+      (Number(p.price) <= 5000
+        ? `TEST GIÁ ${Number(p.price).toLocaleString("vi-VN")}Đ 🔥`
+        : "HOT SELLER 🔥"),
     description: p.description || "Mảnh ghép NFC kỷ niệm du lịch VinaTap.",
-    image: p.image || "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
-    features: ["Chip NFC NXP chuẩn ISO", "Chống nước & chống xước", "Bảo hành chính hãng VinaTap"],
+    image:
+      p.image ||
+      "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
+    features: [
+      "Chip NFC NXP chuẩn ISO",
+      "Chống nước & chống xước",
+      "Bảo hành chính hãng VinaTap",
+    ],
   }));
 
   const handleLogout = () => {
     clearAuth();
     window.location.href = "/";
   };
-
-  const navItems = [
-    {
-      href: "/customer/dashboard",
-      icon: <LayoutDashboard size={20} />,
-      label: t(lang, "collection"),
-    },
-    {
-      href: "/customer/orders",
-      icon: <ShoppingBag size={20} />,
-      label: "Đơn Hàng Của Tôi",
-    },
-    {
-      href: "/shop",
-      icon: <ShoppingBag size={20} />,
-      label: "Cửa Hàng Thẻ NFC",
-    },
-    ...(user?.role === "admin"
-      ? [
-          {
-            href: "/admin",
-            icon: <ShieldCheck size={20} />,
-            label: "Trang Quản Trị Admin",
-          },
-        ]
-      : []),
-  ];
 
   const addToCart = (product) => {
     const itemToAdd = {
@@ -148,13 +161,39 @@ export default function ShopPage() {
     setCart([]);
   };
 
+  const handleAddToCart = (product) => {
+    if (!user) {
+      window.location.href = "/auth?redirect=/shop";
+      return;
+    }
+    addToCart(product);
+  };
+
+  const handleBuyNow = (product) => {
+    if (!user) {
+      window.location.href = "/auth?redirect=/shop";
+      return;
+    }
+    addToCart(product);
+    setCartModalOpen(true);
+  };
+
+  const handleOpenCart = () => {
+    if (!user) {
+      window.location.href = "/auth?redirect=/shop";
+      return;
+    }
+    setCartModalOpen(true);
+  };
+
   const totalCartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
   const cartSubtotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
   const formatMoney = (amount) =>
-    new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
-      amount,
-    );
+    new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(amount);
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -168,21 +207,123 @@ export default function ShopPage() {
 
   return (
     <div className="shop-page-shell">
-      <CustomerHeader
-        isDrawerOpen={drawerOpen}
-        onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
-      />
+      {/* ─── PUBLIC SHOP NAVBAR ──────────────────────────────────────── */}
+      <header className="shop-public-navbar">
+        <div className="shop-navbar-container">
+          {/* Logo */}
+          <div className="shop-navbar-left">
+            <Logo />
+          </div>
 
-      <Sidebar
-        isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        navItems={navItems}
-        user={user}
-        lang={lang}
-        onLogout={handleLogout}
-      />
+          {/* Center Nav Links */}
+          <nav className="shop-navbar-links">
+            <Link href="/" className="shop-nav-link">
+              🗺️ Khám Phá Bản Đồ
+            </Link>
+            <Link href="/shop" className="shop-nav-link shop-nav-link--active">
+              🛍️ Cửa Hàng Thẻ NFC
+            </Link>
+          </nav>
 
-      {/* ─── 1. MODERN STORE HEADER (Không còn khối đen cồng kềnh) ─── */}
+          {/* Right Actions */}
+          <div className="shop-navbar-actions">
+            {/* Quick Cart Button */}
+            <button
+              type="button"
+              className="shop-nav-cart-btn"
+              onClick={handleOpenCart}
+              title="Xem giỏ hàng"
+            >
+              <ShoppingCart size={19} />
+              {totalCartCount > 0 && (
+                <span className="shop-cart-badge">{totalCartCount}</span>
+              )}
+            </button>
+
+            {/* Auth Button / User Dropdown */}
+            {user ? (
+              <div className="shop-user-dropdown-wrap" ref={userMenuRef}>
+                <button
+                  type="button"
+                  className="shop-user-menu-btn"
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                >
+                  {user.avatar_url ? (
+                    <img
+                      src={user.avatar_url}
+                      alt={user.name}
+                      className="shop-user-avatar"
+                    />
+                  ) : (
+                    <div className="shop-user-avatar-fallback">
+                      {(user.name || "U")[0].toUpperCase()}
+                    </div>
+                  )}
+                  <span className="shop-user-name">{user.name}</span>
+                  <ChevronDown size={14} />
+                </button>
+
+                {userDropdownOpen && (
+                  <div className="shop-dropdown-menu">
+                    <div className="shop-dropdown-header">
+                      <strong>{user.name}</strong>
+                      <span>{user.email}</span>
+                    </div>
+                    <Link
+                      href="/customer/dashboard"
+                      className="shop-dropdown-item"
+                      onClick={() => setUserDropdownOpen(false)}
+                    >
+                      <LayoutDashboard size={16} />
+                      <span>Bộ Sưu Tập Của Tôi</span>
+                    </Link>
+                    <Link
+                      href="/customer/orders"
+                      className="shop-dropdown-item"
+                      onClick={() => setUserDropdownOpen(false)}
+                    >
+                      <Package size={16} />
+                      <span>Đơn Hàng Của Tôi</span>
+                    </Link>
+                    {userAdmin && (
+                      <Link
+                        href="/admin/dashboard"
+                        className="shop-dropdown-item"
+                        onClick={() => setUserDropdownOpen(false)}
+                      >
+                        <ShieldCheck size={16} />
+                        <span>Trang Quản Trị Admin</span>
+                      </Link>
+                    )}
+                    <Link
+                      href="/settings/account"
+                      className="shop-dropdown-item"
+                      onClick={() => setUserDropdownOpen(false)}
+                    >
+                      <Settings size={16} />
+                      <span>Cài Đặt Tài Khoản</span>
+                    </Link>
+                    <button
+                      type="button"
+                      className="shop-dropdown-item shop-dropdown-item--logout"
+                      onClick={handleLogout}
+                    >
+                      <LogOut size={16} />
+                      <span>Đăng Xuất</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link href="/auth" className="shop-nav-login-btn">
+                Đăng Nhập
+              </Link>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* ─── 1. MODERN STORE HERO BANNER ─────────────────────────────── */}
       <div className="shop-modern-header">
         <div className="shop-header-inner">
           <div className="shop-title-area">
@@ -194,7 +335,8 @@ export default function ShopPage() {
               Sở Hữu Mảnh Ghép <span>34 Tỉnh Thành</span>
             </h1>
             <p className="shop-main-desc">
-              Chạm thẻ NFC để mở khóa album ảnh kỷ niệm và lưu giữ trọn vẹn từng khoảnh khắc du lịch của bạn.
+              Chạm thẻ NFC để mở khóa album ảnh kỷ niệm và lưu giữ trọn vẹn từng
+              khoảnh khắc du lịch của bạn.
             </p>
           </div>
 
@@ -214,10 +356,13 @@ export default function ShopPage() {
               <button
                 type="button"
                 className="shop-quick-cart-btn"
-                onClick={() => setCartModalOpen(true)}
+                onClick={handleOpenCart}
               >
                 <ShoppingCart size={17} />
-                <span>Giỏ hàng: <strong>{totalCartCount}</strong> ({formatMoney(cartSubtotal)})</span>
+                <span>
+                  Giỏ hàng: <strong>{totalCartCount}</strong> (
+                  {formatMoney(cartSubtotal)})
+                </span>
               </button>
             )}
           </div>
@@ -230,7 +375,9 @@ export default function ShopPage() {
           <div className="shop-empty-products">
             <ShoppingBag size={44} className="empty-icon" />
             <h3>Không tìm thấy sản phẩm nào</h3>
-            <p>Thử tìm kiếm với từ khóa khác hoặc quay lại xem tất cả sản phẩm.</p>
+            <p>
+              Thử tìm kiếm với từ khóa khác hoặc quay lại xem tất cả sản phẩm.
+            </p>
             {searchQuery && (
               <button
                 type="button"
@@ -246,20 +393,29 @@ export default function ShopPage() {
             {filteredProducts.map((p) => (
               <div key={p.id} className="shopee-card">
                 <div className="shopee-img-wrap">
-                  <img src={p.image} alt={p.name} className="shopee-img" loading="lazy" />
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    className="shopee-img"
+                    loading="lazy"
+                  />
                   <span className="shopee-tag-badge">{p.tag}</span>
                 </div>
 
                 <div className="shopee-card-body">
-                  <h3 className="shopee-title" title={p.name}>{p.name}</h3>
-                  {p.description && (
-                    <p className="shopee-desc" title={p.description}>{p.description}</p>
-                  )}
+                  <h3 className="shopee-title" title={p.name}>
+                    {p.name}
+                  </h3>
+                  <p className="shopee-desc">{p.description}</p>
 
                   <div className="shopee-price-row">
-                    <span className="shopee-price-main">{formatMoney(p.price)}</span>
-                    {p.originalPrice > 0 && (
-                      <span className="shopee-price-del">{formatMoney(p.originalPrice)}</span>
+                    <span className="shopee-price-main">
+                      {formatMoney(p.price)}
+                    </span>
+                    {p.originalPrice > p.price && (
+                      <span className="shopee-price-del">
+                        {formatMoney(p.originalPrice)}
+                      </span>
                     )}
                   </div>
 
@@ -267,18 +423,15 @@ export default function ShopPage() {
                     <button
                       type="button"
                       className="btn-shopee-cart"
-                      onClick={() => addToCart(p)}
-                      title="Thêm vào giỏ hàng"
+                      onClick={() => handleAddToCart(p)}
+                      title="Thêm vào giỏ"
                     >
-                      <ShoppingCart size={15} />
+                      <ShoppingCart size={17} />
                     </button>
                     <button
                       type="button"
                       className="btn-shopee-buy"
-                      onClick={() => {
-                        addToCart(p);
-                        setCheckoutOpen(true);
-                      }}
+                      onClick={() => handleBuyNow(p)}
                     >
                       <span>Mua Ngay</span>
                       <Zap size={14} />
@@ -291,28 +444,30 @@ export default function ShopPage() {
         )}
       </main>
 
-      {/* MODAL CHI TIẾT GIỎ HÀNG QUẢN LÝ / XÓA SẢN PHẨM */}
-      {cartModalOpen && (
-        <CartModal
-          cart={cart}
-          onUpdateQuantity={updateQuantity}
-          onRemoveItem={removeItem}
-          onClearCart={clearCart}
-          onClose={() => setCartModalOpen(false)}
-          onCheckout={() => setCheckoutOpen(true)}
-        />
-      )}
+      {/* ─── 3. MODALS (Cart & Checkout) ─────────────────────────────── */}
+      <CartModal
+        isOpen={cartModalOpen}
+        onClose={() => setCartModalOpen(false)}
+        cart={cart}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
+        onClearCart={clearCart}
+        onProceedToCheckout={() => {
+          setCartModalOpen(false);
+          setCheckoutOpen(true);
+        }}
+        freeShippingThreshold={shippingRule.free_shipping_threshold}
+      />
 
-      {/* MODAL CHECKOUT VỚI THÔNG TIN VOUCHER & VIETQR */}
-      {checkoutOpen && (
-        <CheckoutModal
-          items={cart.length > 0 ? cart : (products && products.length > 0 ? [products[0]] : [])}
-          initialVoucher={initialVoucherCode}
-          shippingRule={shippingRule}
-          onClose={() => setCheckoutOpen(false)}
-          onSuccess={() => setCart([])}
-        />
-      )}
+      <CheckoutModal
+        isOpen={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        cart={cart}
+        onClearCart={clearCart}
+        initialVoucherCode={initialVoucherCode}
+        shippingRule={shippingRule}
+        user={user}
+      />
     </div>
   );
 }

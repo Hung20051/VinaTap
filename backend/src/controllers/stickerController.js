@@ -102,13 +102,6 @@ const attachCategoriesToStickers = async (stickers) => {
 const syncStickerCategories = async (stickerId, categoriesInput) => {
   if (categoriesInput === undefined || categoriesInput === null) return;
 
-  // Xóa bỏ các dòng rác trong DB bị tạo nhầm trước đó nếu có
-  try {
-    await db.query(
-      `DELETE FROM sticker_categories WHERE slug LIKE '%[%' OR slug LIKE '%"%' OR slug LIKE '%\\%' OR slug LIKE '%]%'`,
-    );
-  } catch (e) {}
-
   const cleanSlugsOrIds = extractCleanSlugs(categoriesInput);
 
   await db.execute(`DELETE FROM sticker_category_map WHERE sticker_id = ?`, [

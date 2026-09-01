@@ -12,7 +12,10 @@ export const getSocket = () => {
   if (typeof window === "undefined") return null;
 
   if (!socket) {
-    const token = localStorage.getItem("token");
+    const token =
+      localStorage.getItem("vinatap_token") ||
+      localStorage.getItem("token") ||
+      "";
     socket = io(SOCKET_URL, {
       transports: ["websocket", "polling"],
       auth: { token },
@@ -32,6 +35,13 @@ export const getSocket = () => {
   }
 
   return socket;
+};
+
+export const resetSocket = () => {
+  if (socket) {
+    socket.disconnect();
+    socket = null;
+  }
 };
 
 export const joinAlbumRoom = (albumIdentifier) => {

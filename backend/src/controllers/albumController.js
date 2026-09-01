@@ -249,6 +249,13 @@ const deleteAlbum = async (req, res) => {
     if (album.owner_id !== req.user.id && req.user.role !== "admin")
       return res.status(403).json({ message: "Không có quyền xóa album này" });
 
+    // Chặn user thường xóa album đang bị Admin khóa (archived)
+    if (album.status === "archived" && req.user.role !== "admin") {
+      return res.status(403).json({
+        message: "Album này đang bị khóa bởi Quản trị viên, bạn không thể xóa.",
+      });
+    }
+
     await Album.delete(req.params.id);
     emitToAlbum(album.id, album.share_code, "album_deleted", { albumId: album.id });
     res.json({ message: "Đã xóa album" });
@@ -268,6 +275,12 @@ const createTag = async (req, res) => {
 
     const album = await Album.findById(req.params.id);
     if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
+
+    if (album.status === "archived" && req.user.role !== "admin") {
+      return res.status(403).json({
+        message: "Album này đã bị khóa bởi Quản trị viên",
+      });
+    }
 
     const canEdit = await Album.canEdit(album.id, req.user.id);
     if (!canEdit)
@@ -304,6 +317,12 @@ const deleteTag = async (req, res) => {
     const album = await Album.findById(req.params.id);
     if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
 
+    if (album.status === "archived" && req.user.role !== "admin") {
+      return res.status(403).json({
+        message: "Album này đã bị khóa bởi Quản trị viên",
+      });
+    }
+
     const canEdit = await Album.canEdit(album.id, req.user.id);
     if (!canEdit)
       return res
@@ -320,6 +339,100 @@ const deleteTag = async (req, res) => {
     res.json({ message: "Đã xóa tag" });
   } catch (err) {
     console.error("deleteTag:", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
+// ─── GẮN/GỠ TAG CHO MEDIA ─────────────────────────────────────
+// POST /api/albums/:id/media/:mediaId/tags
+// Body: { tag_ids: [1, 2, 3] }
+const setMediaTags = async (req, res) => {
+  try {
+    const { tag_ids } = req.body;
+    if (!Array.isArray(tag_ids))
+      return res.status(400).json({ message: "tag_ids phải là mảng" });
+
+    const album = await Album.findById(req.params.id);
+    if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
+
+    if (album.status === "archived" && req.user.role !== "admin") {
+      return res.status(403).json({
+        message: "Album này đã bị khóa bởi Quản trị viên",
+      });
+    }
+
+    const canEdit = await Album.canEdit(album.id, req.user.id);
+    if (!canEdit)
+      return res
+        .status(403)
+        .json({ message: "Bạn không có quyền sửa album này" });
+
+    const mediaId = req.params.mediaId;
+
+    // Xóa tags cũ của media này
+    await db.execute(`DELETE FROM photo_media_tags WHERE media_id = ?`, [
+      mediaId,
+    ]);
+
+    // Thêm tags mới (chỉ thêm những tag thuộc về album này)
+    if (tag_ids.length > 0) {
+      const placeholders = tag_ids.map(() => "?").join(",");
+      const [validTags] = await db.execute(
+        `SELECT id FROM photo_tags WHERE album_id = ? AND id IN (${placeholders})`,
+        [album.id, ...tag_ids],
+      );
+      for (const t of validTags) {
+        await db.execute(
+          `INSERT IGNORE INTO photo_media_tags (media_id, tag_id) VALUES (?, ?)`,
+          [mediaId, t.id],
+        );
+      }
+    }
+
+    res.json({ message: "Cập nhật tags thành công" });
+  } catch (err) {
+    console.error("setMediaTags:", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
+// ─── CẬP NHẬT GHI CHÚ BỨC ẢNH ────────────────────────────────
+// PATCH /api/albums/:id/media/:mediaId/note
+// Body: { note }
+const updateMediaNote = async (req, res) => {
+  try {
+    const album = await Album.findById(req.params.id);
+    if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
+
+    if (album.status === "archived" && req.user.role !== "admin") {
+      return res.status(403).json({
+        message: "Album này đã bị khóa bởi Quản trị viên",
+      });
+    }
+
+    const canEdit = await Album.canEdit(album.id, req.user.id);
+    if (!canEdit)
+      return res
+        .status(403)
+        .json({ message: "Bạn không có quyền sửa album này" });
+
+    const mediaId = req.params.mediaId;
+    const note = (req.body.note || "").trim().slice(0, 300);
+
+    await db.execute(`UPDATE album_media SET note = ? WHERE id = ? AND album_id = ?`, [
+      note,
+      mediaId,
+      album.id,
+    ]);
+
+    emitToAlbum(album.id, album.share_code, "media_note_updated", {
+      mediaId: Number(mediaId),
+      note,
+    });
+
+    res.json({ message: "Cập nhật ghi chú thành công", note });
+  } catch (err) {
+    console.error("updateMediaNote:", err);
     res.status(500).json({ message: "Lỗi server" });
   }
 };
@@ -402,13 +515,21 @@ const reportAlbum = async (req, res) => {
     const album = await Album.findById(albumId);
     if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
 
+    let reporterEmail = email || null;
+    if (!reporterEmail && req.user?.id) {
+      const [uRows] = await db.execute(`SELECT email FROM users WHERE id = ? LIMIT 1`, [req.user.id]);
+      if (uRows.length) {
+        reporterEmail = uRows[0].email;
+      }
+    }
+
     await db.execute(
       `INSERT INTO album_reports (album_id, reporter_user_id, reporter_email, reason, description, status)
        VALUES (?, ?, ?, ?, ?, 'pending')`,
       [
         album.id,
         req.user?.id || null,
-        email || req.user?.email || null,
+        reporterEmail,
         reason,
         description || null,
       ],

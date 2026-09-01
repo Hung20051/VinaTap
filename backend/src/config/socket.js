@@ -1,16 +1,12 @@
 const { Server } = require("socket.io");
 const jwt = require("jsonwebtoken");
+const { getAllowedOrigins } = require("../utils/corsOrigins");
+const Album = require("../models/Album");
 
 let io = null;
 
 const initSocket = (server) => {
-  const allowedOrigins = process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(",").map((s) => s.trim())
-    : [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        process.env.FRONTEND_URL,
-      ].filter(Boolean);
+  const allowedOrigins = getAllowedOrigins();
 
   io = new Server(server, {
     cors: {
@@ -50,11 +46,32 @@ const initSocket = (server) => {
   });
 
   io.on("connection", (socket) => {
-    // Client tham gia phòng Album để nhận real-time sync
-    socket.on("join_album", (albumIdentifier) => {
-      if (albumIdentifier) {
-        const roomName = `album_${albumIdentifier}`;
-        socket.join(roomName);
+    // Client tham gia phòng Album để nhận real-time sync (Bảo vệ quyền riêng tư album private)
+    socket.on("join_album", async (albumIdentifier) => {
+      if (!albumIdentifier) return;
+      try {
+        const album = await Album.findById(albumIdentifier);
+        if (!album) return;
+
+        // 1. Album Public -> Cho phép mọi người (kể cả Guest) tham gia
+        if (album.is_public) {
+          return socket.join(`album_${albumIdentifier}`);
+        }
+
+        // 2. Album Private -> Bắt buộc phải đăng nhập và là Owner, Admin, hoặc Collaborator
+        if (!socket.user) return;
+        const userId = Number(socket.user.id);
+
+        if (album.owner_id === userId || socket.user.role === "admin") {
+          return socket.join(`album_${albumIdentifier}`);
+        }
+
+        const canEdit = await Album.canEdit(album.id, userId);
+        if (canEdit) {
+          return socket.join(`album_${albumIdentifier}`);
+        }
+      } catch (err) {
+        console.error("Socket join_album auth error:", err.message);
       }
     });
 

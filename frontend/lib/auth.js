@@ -1,5 +1,7 @@
 "use client";
 
+import { resetSocket } from "./socket";
+
 const TOKEN_KEY = "vinatap_token";
 const USER_KEY = "vinatap_user";
 
@@ -7,12 +9,14 @@ const USER_KEY = "vinatap_user";
 export const saveAuth = (token, user) => {
   localStorage.setItem(TOKEN_KEY, token);
   localStorage.setItem(USER_KEY, JSON.stringify(user));
+  resetSocket();
 };
 
 // Xóa khi logout
 export const clearAuth = () => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+  resetSocket();
 };
 
 // Lấy token

@@ -50,14 +50,6 @@ const Order = {
       }
     }
 
-    // 2. Chống Rác VietQR: Tự động hủy các đơn VietQR pending cũ chưa thanh toán của user này
-    if (paymentMethod === "vietqr" && userId) {
-      await db.execute(
-        `UPDATE orders SET status = 'cancelled', updated_at = NOW() WHERE user_id = ? AND payment_method = 'vietqr' AND status = 'pending'`,
-        [userId],
-      );
-    }
-
     // 2. BACKEND TRUY VẤN GIÁ SẢN PHẨM TỪ DATABASE (Zero client trust)
     let calculatedSubtotal = 0;
     const verifiedItems = [];
@@ -297,7 +289,7 @@ const Order = {
       await conn.beginTransaction();
 
       // Chuyển trạng thái đơn VietQR quá 24h chưa thanh toán sang cancelled
-      await conn.execute(
+      const [cancelResult] = await conn.execute(
         `UPDATE orders 
          SET status = 'cancelled', updated_at = NOW() 
          WHERE status = 'pending' AND payment_method = 'vietqr' 
@@ -305,6 +297,9 @@ const Order = {
       );
 
       await conn.commit();
+      if (cancelResult.affectedRows > 0) {
+        console.log(`⏰ [AutoCancel] Đã tự động hủy ${cancelResult.affectedRows} đơn VietQR quá hạn 24h.`);
+      }
     } catch (err) {
       await conn.rollback();
       console.error(
@@ -333,11 +328,6 @@ const Order = {
         items_json: parsedItems,
       };
     });
-  },
-
-  // Tự động hủy các đơn VietQR pending quá hạn kèm hoàn trả voucher
-  async cleanExpiredPendingOrders() {
-    await this.autoCancelExpiredOrders();
   },
 
   // Admin lấy toàn bộ đơn hàng
@@ -425,7 +415,7 @@ const Order = {
     }
 
     const [existing] = await db.execute(
-      `SELECT user_id, voucher_code, status FROM orders WHERE id = ? LIMIT 1`,
+      `SELECT user_id, voucher_code, status, payment_method FROM orders WHERE id = ? LIMIT 1`,
       [id],
     );
 
@@ -435,7 +425,12 @@ const Order = {
       existing[0].status !== "cancelled"
     ) {
       const ord = existing[0];
-      if (ord.voucher_code) {
+      // Chỉ hoàn trả voucher nếu đơn này đã thực sự tiêu voucher (đã thanh toán hoặc đơn COD pending)
+      const shouldRefundVoucher =
+        ["paid", "processing", "shipping", "completed"].includes(ord.status) ||
+        (ord.payment_method === "cod" && ord.status === "pending");
+
+      if (shouldRefundVoucher && ord.voucher_code) {
         const [vRows] = await db.execute(
           `SELECT id FROM vouchers WHERE UPPER(code) = ? LIMIT 1`,
           [ord.voucher_code.toUpperCase()],
@@ -480,6 +475,9 @@ const Order = {
   async markAsPaid(orderCode, transactionData = {}) {
     const cleanCode = (orderCode || "").trim().toUpperCase();
 
+    let order = null;
+    let isLatePayment = false;
+
     const conn = await db.getConnection();
     try {
       await conn.beginTransaction();
@@ -489,12 +487,15 @@ const Order = {
         `SELECT * FROM orders WHERE order_code = ? LIMIT 1 FOR UPDATE`,
         [cleanCode],
       );
-      const order = fullRows[0] || null;
+      order = fullRows[0] || null;
 
       if (!order) {
         await conn.rollback();
         throw new Error(`Đơn hàng ${cleanCode} không tồn tại trên hệ thống`);
       }
+
+      // Xác định xem đơn này có phải bị hủy/quá hạn trước đó và nay chuyển tiền muộn không
+      isLatePayment = order.status === "cancelled";
 
       if (
         order.status === "paid" ||
@@ -568,51 +569,53 @@ const Order = {
     }
 
     // ── Gửi notification (ngoài transaction — không critical) ────
-    const Notification = require("./Notification");
-    const amountText = new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(order.total_amount);
+    if (order) {
+      const Notification = require("./Notification");
+      const amountText = new Intl.NumberFormat("vi-VN", {
+        style: "currency",
+        currency: "VND",
+      }).format(order.total_amount);
 
-    // 1. Gửi thông báo hệ thống CHỈ CHO ADMIN (không gửi cho @all) 🔔
-    const notifTitle = isLatePayment
-      ? `⚡ [CHUYỂN TIỀN MUỘN] Đơn Hàng #${cleanCode} Đã Khôi Phục & Thanh Toán!`
-      : `💰 Đơn Hàng Đã Thanh Toán: #${cleanCode}`;
+      // 1. Gửi thông báo hệ thống CHỈ CHO ADMIN (không gửi cho @all) 🔔
+      const notifTitle = isLatePayment
+        ? `⚡ [CHUYỂN TIỀN MUỘN] Đơn Hàng #${cleanCode} Đã Khôi Phục & Thanh Toán!`
+        : `💰 Đơn Hàng Đã Thanh Toán: #${cleanCode}`;
 
-    try {
-      await Notification.send({
-        recipient_type: "group",
-        group_target: "admin",
-        type: "system",
-        title: notifTitle,
-        content: `Khách hàng ${order.recipient_name} (${order.recipient_phone}) vừa chuyển khoản ${amountText} cho đơn #${cleanCode}${isLatePayment ? " (Đơn này trước đó bị quá hạn 24h & đã được tự động khôi phục)" : ""}.`,
-        link: "/admin/revenue",
-        payload: { order_code: cleanCode, total_amount: order.total_amount },
-        created_by: order.user_id || 0,
-      });
-    } catch (e) {
-      console.error("Lỗi gửi thông báo admin khi thanh toán:", e.message);
-    }
-
-    // 2. Gửi thông báo riêng cho Khách hàng đã mua 🔔
-    if (order.user_id) {
       try {
         await Notification.send({
-          recipient_type: "user",
-          user_ids: [order.user_id],
-          type: "promo",
-          title: `🎉 Thanh Toán Thành Công Đơn #${cleanCode}`,
-          content: `VinaTap đã xác nhận thanh toán ${amountText} cho đơn hàng #${cleanCode}. Đơn hàng đang được chuẩn bị & đóng gói giao tới bạn!`,
-          link: "/customer/orders",
+          recipient_type: "group",
+          group_target: "admin",
+          type: "system",
+          title: notifTitle,
+          content: `Khách hàng ${order.recipient_name} (${order.recipient_phone}) vừa chuyển khoản ${amountText} cho đơn #${cleanCode}${isLatePayment ? " (Đơn này trước đó bị quá hạn 24h & đã được tự động khôi phục)" : ""}.`,
+          link: "/admin/revenue",
           payload: { order_code: cleanCode, total_amount: order.total_amount },
-          created_by: 0,
+          created_by: order.user_id || 0,
         });
       } catch (e) {
-        console.error("Lỗi gửi thông báo khách khi thanh toán:", e.message);
+        console.error("Lỗi gửi thông báo admin khi thanh toán:", e.message);
+      }
+
+      // 2. Gửi thông báo riêng cho Khách hàng đã mua 🔔
+      if (order.user_id) {
+        try {
+          await Notification.send({
+            recipient_type: "user",
+            user_ids: [order.user_id],
+            type: "promo",
+            title: `🎉 Thanh Toán Thành Công Đơn #${cleanCode}`,
+            content: `VinaTap đã xác nhận thanh toán ${amountText} cho đơn hàng #${cleanCode}. Đơn hàng đang được chuẩn bị & đóng gói giao tới bạn!`,
+            link: "/customer/orders",
+            payload: { order_code: cleanCode, total_amount: order.total_amount },
+            created_by: 0,
+          });
+        } catch (e) {
+          console.error("Lỗi gửi thông báo khách khi thanh toán:", e.message);
+        }
       }
     }
 
-    return { ...order, status: "paid" };
+    return order ? { ...order, status: "paid" } : { status: "paid" };
   },
 };
 

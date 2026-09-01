@@ -680,9 +680,14 @@ export default function AlbumPage() {
               ) : (
                 <>
                   <div className="album-meta-badge-row">
-                    <span className="album-meta-badge album-meta-badge--province">
-                      📍 {album.province_name}
-                    </span>
+                    <Link
+                      href={album.province_slug ? `/province/${album.province_slug}` : "/#provinces"}
+                      className="album-meta-badge album-meta-badge--province"
+                      title={`Khám phá cẩm nang du lịch & danh thắng ${album.province_name}`}
+                      style={{ textDecoration: "none", cursor: "pointer", transition: "transform 0.15s ease" }}
+                    >
+                      📍 {album.province_name} <span style={{ opacity: 0.8, fontSize: "0.75rem", marginLeft: "4px" }}>↗ Cẩm nang</span>
+                    </Link>
                     {album.is_public ? (
                       <span className="album-meta-badge album-meta-badge--public">
                         <Globe size={12} /> Công Khai

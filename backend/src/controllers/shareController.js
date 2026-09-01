@@ -170,9 +170,9 @@ const getCollaborators = async (req, res) => {
     if (!album)
       return res.status(404).json({ message: "Không tìm thấy album" });
 
-    if (album.owner_id !== req.user.id)
+    if (album.owner_id !== req.user.id && req.user.role !== "admin")
       return res.status(403).json({
-        message: "Chỉ chủ album mới được xem danh sách cộng tác viên",
+        message: "Chỉ chủ album hoặc Quản trị viên mới được xem danh sách cộng tác viên",
       });
 
     const [shares] = await db.execute(

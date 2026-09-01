@@ -27,12 +27,19 @@ const OFFICIAL_DEFAULT_BANK_CONFIG = {
 };
 
 export default function CheckoutModal({
+  isOpen = true,
   items = [],
+  cart = [],
   initialVoucher = "",
+  initialVoucherCode = "",
   shippingRule = null,
   onClose,
   onSuccess,
+  onClearCart,
+  user,
 }) {
+  const checkoutItems = items && items.length > 0 ? items : cart || [];
+
   const [shippingInfo, setShippingInfo] = useState({
     name: "",
     phone: "",
@@ -41,7 +48,9 @@ export default function CheckoutModal({
   });
 
   const [paymentMethod, setPaymentMethod] = useState("vietqr"); // 'vietqr' | 'cod'
-  const [voucherCode, setVoucherCode] = useState(initialVoucher || "");
+  const [voucherCode, setVoucherCode] = useState(
+    initialVoucher || initialVoucherCode || "",
+  );
   const [walletVouchers, setWalletVouchers] = useState([]);
   const [shipRule, setShipRule] = useState(
     shippingRule || { base_fee: 30000, free_shipping_threshold: 500000 },
@@ -188,7 +197,7 @@ export default function CheckoutModal({
   };
 
   // Tính nhẩm xem trước tổng tiền ở Frontend (Backend vẫn sẽ kiểm tra lại 100%)
-  const subtotal = items.reduce(
+  const subtotal = checkoutItems.reduce(
     (sum, item) => sum + (item.price || 150000) * (item.quantity || 1),
     0,
   );
@@ -259,7 +268,7 @@ export default function CheckoutModal({
 
     try {
       const res = await orderAPI.create({
-        items: items.map((i) => ({
+        items: checkoutItems.map((i) => ({
           product_id: i.id || null,
           name: i.name,
           price: i.price,
@@ -300,6 +309,8 @@ export default function CheckoutModal({
       currency: "VND",
     }).format(amount);
 
+  if (!isOpen) return null;
+
   return (
     <div className="checkout-modal-overlay" onClick={onClose}>
       <div className="checkout-modal-card" onClick={(e) => e.stopPropagation()}>
@@ -313,7 +324,7 @@ export default function CheckoutModal({
             <div className="checkout-header">
               <div className="checkout-badge-row">
                 <span className="checkout-items-chip">
-                  📦 {items.length} sản phẩm ({formatMoney(subtotal)})
+                  📦 {checkoutItems.length} sản phẩm ({formatMoney(subtotal)})
                 </span>
               </div>
               <h3 className="checkout-title">Xác Nhận &amp; Thanh Toán</h3>

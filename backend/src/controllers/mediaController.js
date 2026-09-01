@@ -1,5 +1,4 @@
 const cloudinary = require("../config/cloudinary");
-const { visionModel } = require("../config/gemini");
 const {
   uploadSingle,
   uploadMultiple,
@@ -19,37 +18,6 @@ const uploadToCloudinary = (buffer, options = {}) =>
     });
     stream.end(buffer);
   });
-
-// ─── HELPER: fetch ảnh URL → base64 ─────────────────────────
-const fetchImageAsBase64 = async (url) => {
-  const res = await fetch(url);
-  const buffer = await res.arrayBuffer();
-  return Buffer.from(buffer).toString("base64");
-};
-
-// ─── HELPER: Gemini AI caption ───────────────────────────────
-const getAiCaption = async (imageUrl) => {
-  try {
-    const settings = await SystemSetting.getAll();
-    const prompt =
-      settings.ai_caption_prompt ||
-      "Bạn là trợ lý du lịch Việt Nam. Hãy viết 1 caption ngắn gọn, cảm xúc bằng tiếng Việt (tối đa 2 câu) mô tả bức ảnh du lịch này. Chỉ trả về caption, không thêm gì khác.";
-
-    const result = await visionModel.generateContent([
-      prompt,
-      {
-        inlineData: {
-          mimeType: "image/jpeg",
-          data: await fetchImageAsBase64(imageUrl),
-        },
-      },
-    ]);
-    return result.response.text().trim();
-  } catch (err) {
-    console.error("Gemini caption error:", err.message);
-    return null; // Không fail upload nếu AI lỗi
-  }
-};
 
 // ─── HELPER: kiểm tra quyền upload vào album ─────────────────
 // Admin luôn được phép — dùng để chuẩn bị nội dung sẵn cho khách
@@ -148,7 +116,7 @@ const uploadMedia = async (req, res) => {
       });
     }
 
-    const caption_ai = isVideo ? null : await getAiCaption(uploaded.secure_url);
+    const caption_ai = null;
 
     const [result] = await db.execute(
       `INSERT INTO album_media
@@ -241,9 +209,7 @@ const uploadMultipleMedia = async (req, res) => {
         });
       }
 
-      const caption_ai = isVideo
-        ? null
-        : await getAiCaption(uploaded.secure_url);
+      const caption_ai = null;
 
       const [result] = await db.execute(
         `INSERT INTO album_media

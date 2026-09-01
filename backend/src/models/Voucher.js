@@ -1,6 +1,44 @@
 const db = require("../config/db");
 
 const Voucher = {
+  // Helper format dữ liệu voucher chuẩn hóa cho Frontend
+  formatVoucher(v) {
+    if (!v) return null;
+    const isExpired = v.expires_at
+      ? new Date(v.expires_at) < new Date()
+      : false;
+    let discountText = "";
+    if (v.discount_type === "percent") {
+      discountText = `Giảm ${v.discount_value}%`;
+    } else if (v.discount_type === "amount") {
+      discountText = `Giảm ${new Intl.NumberFormat("vi-VN").format(v.discount_value)}đ`;
+    } else {
+      discountText = "Free Ship";
+    }
+
+    return {
+      id: v.id,
+      code: v.code,
+      name: v.name,
+      description: v.description,
+      discount_type: v.discount_type,
+      discount_value: parseFloat(v.discount_value) || 0,
+      min_order_amount: parseFloat(v.min_order_amount) || 0,
+      max_discount_amount: v.max_discount_amount
+        ? parseFloat(v.max_discount_amount)
+        : null,
+      usage_limit: v.usage_limit,
+      used_count: v.used_count || 0,
+      expires_at: v.expires_at,
+      status: v.status,
+      user_voucher_status: v.user_voucher_status || "available",
+      assigned_at: v.assigned_at || null,
+      discountText,
+      isExpired,
+      isPermanent: !v.expires_at,
+    };
+  },
+
   // 🛍️ Lấy danh sách Voucher trong Ví người dùng (+ Voucher công khai chưa lưu)
   async getUserWallet(userId) {
 
@@ -29,8 +67,8 @@ const Voucher = {
     );
 
     return {
-      myVouchers: myRows.map(this.formatVoucher),
-      publicVouchers: publicRows.map(this.formatVoucher),
+      myVouchers: myRows.map((r) => Voucher.formatVoucher(r)),
+      publicVouchers: publicRows.map((r) => Voucher.formatVoucher(r)),
     };
   },
 
@@ -168,30 +206,6 @@ const Voucher = {
       } catch (e) {}
     }
     return { count, recipientIds };
-  },
-
-  // Format Voucher thành object JSON chuẩn cho Frontend
-  formatVoucher(v) {
-    let isExpired = false;
-    if (v.expires_at && new Date(v.expires_at) < new Date()) {
-      isExpired = true;
-    }
-
-    let discountText = "";
-    if (v.discount_type === "percent") {
-      discountText = `Giảm ${v.discount_value}%`;
-    } else if (v.discount_type === "amount") {
-      discountText = `Giảm ${new Intl.NumberFormat("vi-VN").format(v.discount_value)}đ`;
-    } else {
-      discountText = "Free Ship";
-    }
-
-    return {
-      ...v,
-      discountText,
-      isExpired,
-      isPermanent: !v.expires_at,
-    };
   },
 
   // 🛍️ CHỈ KIỂM TRA Voucher (Không tự động tăng used_count)

@@ -190,13 +190,17 @@ const checkOrderStatus = async (req, res) => {
       (Number(req.user.id) === Number(order.user_id) ||
         req.user.role === "admin");
 
+    if (!isOwner) {
+      return res
+        .status(403)
+        .json({ message: "Bạn không có quyền xem trạng thái đơn hàng này" });
+    }
+
     res.json({
       order_code: order.order_code,
       status: order.status,
-      ...(isOwner && {
-        total_amount: order.total_amount,
-        payment_method: order.payment_method,
-      }),
+      total_amount: order.total_amount,
+      payment_method: order.payment_method,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -208,7 +212,7 @@ const paymentWebhook = async (req, res) => {
   try {
     // 🔒 1. Xác thực Webhook bằng Secret Key
     const sepayKey = process.env.SEPAY_WEBHOOK_KEY;
-    if (sepayKey && sepayKey !== "your_sepay_webhook_api_key_here") {
+    if (sepayKey) {
       const authHeader =
         req.headers["authorization"] || req.headers["x-api-key"] || "";
       // ⚠️ Chỉ chấp nhận key qua header — KHÔNG qua query string (tránh lộ key trong access log)
