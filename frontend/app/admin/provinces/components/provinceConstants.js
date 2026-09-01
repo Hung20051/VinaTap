@@ -72,12 +72,91 @@ export const detectRegion = (name = "", displayName = "", lat = null) => {
   return "north";
 };
 
-// Query Nominatim API
+// ─── Query Geocoding & Place Suggestions (Photon Geocoding + OpenStreetMap) ───
 export const queryNominatim = async (searchQuery) => {
-  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-    searchQuery,
-  )}&countrycodes=vn&limit=6&addressdetails=1`;
-  const res = await fetch(url, { headers: { "Accept-Language": "vi" } });
-  if (!res.ok) return [];
-  return await res.json();
+  if (!searchQuery || !searchQuery.trim()) return [];
+
+  const cleanQuery = searchQuery.trim();
+
+  // 1. Dùng Photon Geocoding API giới hạn phạm vi LÃNH THỔ VIỆT NAM (bbox & VN country code)
+  try {
+    const photonUrl = `https://photon.komoot.io/api/?q=${encodeURIComponent(
+      cleanQuery,
+    )}&lat=14.0583&lon=108.2772&bbox=102.14,8.18,109.46,23.39&limit=10`;
+    const res = await fetch(photonUrl);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.features && data.features.length > 0) {
+        // Chỉ lấy các địa điểm thuộc lãnh thổ Việt Nam
+        const vnFeatures = data.features.filter((f) => {
+          const p = f.properties || {};
+          const cc = (p.countrycode || "").toUpperCase();
+          const cName = (p.country || "").toLowerCase();
+          return (
+            cc === "VN" ||
+            cName.includes("việt nam") ||
+            cName.includes("vietnam") ||
+            !p.country
+          );
+        });
+
+        // Ưu tiên xếp hạng cấp hành chính: Tỉnh / Thành phố / Quận Huyện / Thị xã lên đầu
+        const rankMap = { state: 1, city: 2, county: 3, district: 4, town: 5 };
+        vnFeatures.sort((a, b) => {
+          const rankA = rankMap[a.properties?.type] || 99;
+          const rankB = rankMap[b.properties?.type] || 99;
+          return rankA - rankB;
+        });
+
+        if (vnFeatures.length > 0) {
+          return vnFeatures.slice(0, 6).map((f) => {
+            const p = f.properties || {};
+            const coords = f.geometry?.coordinates || [0, 0];
+            const displayName = [
+              p.name,
+              p.district,
+              p.city,
+              p.state,
+              p.country || "Việt Nam",
+            ]
+              .filter(Boolean)
+              .join(", ");
+            return {
+              name: p.name || cleanQuery,
+              displayName: displayName || cleanQuery,
+              display_name: displayName || cleanQuery,
+              lat: Number(coords[1]).toFixed(6),
+              lon: Number(coords[0]).toFixed(6),
+              lng: Number(coords[0]).toFixed(6),
+              address: {
+                road: p.street || p.name,
+                suburb: p.district,
+                city_district: p.district,
+                city: p.city,
+                state: p.state || p.city,
+              },
+            };
+          });
+        }
+      }
+    }
+  } catch (err) {
+    console.warn("Photon geocoding error:", err.message);
+  }
+
+  // 2. Fallback sang OpenStreetMap Nominatim giới hạn countrycodes=vn
+  try {
+    const osmUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+      cleanQuery,
+    )}&countrycodes=vn&limit=6&addressdetails=1`;
+    const res = await fetch(osmUrl, {
+      headers: { "Accept-Language": "vi" },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) return data;
+    }
+  } catch (err) {}
+
+  return [];
 };

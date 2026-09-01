@@ -1,5 +1,15 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Upload, Globe, Image as ImageIcon, Video, MapPin, Sparkles, Check, Trash2 } from "lucide-react";
+import {
+  X,
+  Upload,
+  Globe,
+  Image as ImageIcon,
+  Video,
+  MapPin,
+  Sparkles,
+  Check,
+  Trash2,
+} from "lucide-react";
 import {
   REGIONS,
   generateSlug,
@@ -105,16 +115,18 @@ export default function ProvinceFormModal({
     provinceTimeoutRef.current = setTimeout(async () => {
       setIsSearchingPlaces(true);
       try {
-        const queryWithCountry = `${query.trim()}, Vietnam`;
-        const data = await queryNominatim(queryWithCountry);
+        let data = await queryNominatim(query.trim());
+        if (!data || data.length === 0) {
+          data = await queryNominatim(`${query.trim()}, Vietnam`);
+        }
 
-        const items = data.map((item) => {
-          const region = detectRegion(item.display_name, item.name);
+        const items = (Array.isArray(data) ? data : []).map((item) => {
+          const region = detectRegion(item.display_name, item.name, item.lat);
           return {
             name: item.name || query,
-            displayName: item.display_name,
-            lat: Number(item.lat).toFixed(6),
-            lng: Number(item.lon).toFixed(6),
+            displayName: item.display_name || item.name,
+            lat: Number(item.lat || 0).toFixed(6),
+            lng: Number(item.lon || item.lng || 0).toFixed(6),
             region: region,
           };
         });
@@ -259,33 +271,35 @@ export default function ProvinceFormModal({
                   </div>
 
                   {/* Dropdown Suggestions */}
-                  {showSuggestionsDropdown && provinceSuggestions.length > 0 && (
-                    <div className="admin-prov-autocomplete-dropdown">
-                      <div className="admin-prov-autocomplete-head">
-                        📍 Gợi ý Tỉnh / Thành Phố:
-                      </div>
-                      {provinceSuggestions.map((sug, idx) => (
-                        <div
-                          key={idx}
-                          className="admin-prov-autocomplete-item"
-                          onClick={() => handleSelectProvinceSuggestion(sug)}
-                        >
-                          <Globe
-                            size={16}
-                            className="admin-prov-autocomplete-icon"
-                          />
-                          <div className="admin-prov-autocomplete-info">
-                            <div className="admin-prov-autocomplete-title">
-                              {sug.name} ({REGIONS[sug.region]?.label || sug.region})
-                            </div>
-                            <div className="admin-prov-autocomplete-addr">
-                              {sug.displayName}
+                  {showSuggestionsDropdown &&
+                    provinceSuggestions.length > 0 && (
+                      <div className="admin-prov-autocomplete-dropdown">
+                        <div className="admin-prov-autocomplete-head">
+                          📍 Gợi ý Tỉnh / Thành Phố:
+                        </div>
+                        {provinceSuggestions.map((sug, idx) => (
+                          <div
+                            key={idx}
+                            className="admin-prov-autocomplete-item"
+                            onClick={() => handleSelectProvinceSuggestion(sug)}
+                          >
+                            <Globe
+                              size={16}
+                              className="admin-prov-autocomplete-icon"
+                            />
+                            <div className="admin-prov-autocomplete-info">
+                              <div className="admin-prov-autocomplete-title">
+                                {sug.name} (
+                                {REGIONS[sug.region]?.label || sug.region})
+                              </div>
+                              <div className="admin-prov-autocomplete-addr">
+                                {sug.displayName}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                        ))}
+                      </div>
+                    )}
                 </label>
 
                 <label className="admin-prov-field">
@@ -380,7 +394,9 @@ export default function ProvinceFormModal({
               {/* Box Ảnh Bìa */}
               <div className="admin-prov-media-card">
                 <div className="admin-prov-mode-header">
-                  <span className="admin-prov-media-title">🖼️ Ảnh Bìa Mảnh Ghép / Thumbnail:</span>
+                  <span className="admin-prov-media-title">
+                    🖼️ Ảnh Bìa Mảnh Ghép / Thumbnail:
+                  </span>
                   <div className="admin-prov-mode-tabs">
                     <button
                       type="button"
@@ -455,7 +471,9 @@ export default function ProvinceFormModal({
                       className="admin-prov-preview-img-display"
                     />
                     <div className="admin-prov-preview-meta">
-                      <span className="admin-prov-preview-ok">✓ Đã có ảnh bìa</span>
+                      <span className="admin-prov-preview-ok">
+                        ✓ Đã có ảnh bìa
+                      </span>
                       <button
                         type="button"
                         className="admin-prov-thumb-remove-btn"
@@ -474,7 +492,9 @@ export default function ProvinceFormModal({
               {/* Box Video Giới Thiệu */}
               <div className="admin-prov-media-card">
                 <div className="admin-prov-mode-header">
-                  <span className="admin-prov-media-title">🎬 Video Giới Thiệu (YouTube):</span>
+                  <span className="admin-prov-media-title">
+                    🎬 Video Giới Thiệu (YouTube):
+                  </span>
                   <div className="admin-prov-mode-tabs">
                     <button
                       type="button"
@@ -613,14 +633,22 @@ export default function ProvinceFormModal({
                 </label>
               </div>
               <p className="admin-prov-geo-hint">
-                💡 <em>Mẹo: Tọa độ GPS giúp hệ thống hiển thị bản đồ số và chỉ đường chính xác khi khách hàng quét thẻ NFC.</em>
+                💡{" "}
+                <em>
+                  Mẹo: Tọa độ GPS giúp hệ thống hiển thị bản đồ số và chỉ đường
+                  chính xác khi khách hàng quét thẻ NFC.
+                </em>
               </p>
             </div>
           )}
 
           {/* Modal Footer */}
           <div className="admin-prov-modal__footer">
-            <button type="button" className="btn btn-ghost-prov" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-ghost-prov"
+              onClick={onClose}
+            >
               Đóng
             </button>
             <button
