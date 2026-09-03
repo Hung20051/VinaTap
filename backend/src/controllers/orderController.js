@@ -192,8 +192,8 @@ const checkOrderStatus = async (req, res) => {
 
     if (!isOwner) {
       return res
-        .status(403)
-        .json({ message: "Bạn không có quyền xem trạng thái đơn hàng này" });
+        .status(404)
+        .json({ message: "Không tìm thấy đơn hàng" });
     }
 
     res.json({
@@ -224,11 +224,11 @@ const paymentWebhook = async (req, res) => {
           .status(401)
           .json({ status: "error", message: "Unauthorized Webhook Request" });
       }
-    } else if (process.env.NODE_ENV === "production") {
+    } else if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
       return res.status(403).json({
         status: "error",
         message:
-          "Webhook Secret Key chưa được cấu hình trên môi trường Production",
+          "Webhook Secret Key chưa được cấu hình trên môi trường Production/Staging",
       });
     }
 
@@ -254,11 +254,11 @@ const paymentWebhook = async (req, res) => {
       });
     }
 
-    // 💰 3. Kiểm tra số tiền chuyển thực tế (chống chuyển thiếu tiền)
+    // 💰 3. Kiểm tra số tiền chuyển thực tế (chống chuyển thiếu tiền hoặc giả mạo 0đ)
     const transferAmount = Number(
       payload.transferAmount || payload.amountIn || payload.amount || 0,
     );
-    if (transferAmount > 0 && transferAmount < Number(order.total_amount)) {
+    if (transferAmount < Number(order.total_amount)) {
       return res.status(400).json({
         status: "error",
         message: `Số tiền chuyển (${transferAmount}đ) không đủ so với tổng giá trị đơn hàng (${order.total_amount}đ)`,

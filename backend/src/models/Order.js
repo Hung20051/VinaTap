@@ -191,10 +191,16 @@ const Order = {
       // Với VietQR (pending), voucher chỉ bị trừ khi khách thực sự chuyển tiền (markAsPaid).
       // Điều này giúp khách có thể sử dụng lại mã Voucher ngay lập tức nếu lỡ tắt modal QR.
       if (voucherForApply && voucherForApply.id && paymentMethod === "cod") {
-        await conn.execute(
-          `UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?`,
+        const [vUpdateRes] = await conn.execute(
+          `UPDATE vouchers SET used_count = used_count + 1 
+           WHERE id = ? AND (usage_limit IS NULL OR used_count < usage_limit)`,
           [voucherForApply.id],
         );
+        if (vUpdateRes.affectedRows === 0) {
+          await conn.rollback();
+          throw new Error("Mã giảm giá đã hết lượt sử dụng do có người vừa áp dụng!");
+        }
+
         if (userId) {
           await conn.execute(
             `INSERT INTO user_vouchers (user_id, voucher_id, status, used_at)

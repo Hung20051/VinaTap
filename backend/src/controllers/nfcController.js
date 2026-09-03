@@ -12,8 +12,8 @@ const db = require("../config/db");
 const tapCard = async (req, res) => {
   try {
     const [rows] = await db.execute(
-      `SELECT n.*, p.name AS province_name, p.slug AS province_slug,
-              p.description, p.youtube_url, p.thumbnail_url,
+      `SELECT n.*, p.id AS prov_id, p.name AS province_name, p.slug AS province_slug,
+              p.region, p.description, p.youtube_url, p.thumbnail_url,
               u.name AS owner_name
        FROM nfc_cards n
        JOIN provinces p ON p.id = n.province_id
@@ -25,6 +25,39 @@ const tapCard = async (req, res) => {
       return res.status(404).json({ message: "Thẻ không tồn tại" });
 
     const c = rows[0];
+
+    // Lấy Album gắn với thẻ này nếu có
+    let album = null;
+    try {
+      const [albumRows] = await db.execute(
+        `SELECT a.id, a.share_code, a.title, a.description, a.is_public, a.view_count, a.created_at,
+                (SELECT COUNT(*) FROM album_media m WHERE m.album_id = a.id AND m.status = 'active') AS media_count,
+                (SELECT COALESCE(m.thumbnail_url, m.file_url) 
+                 FROM album_media m 
+                 WHERE m.album_id = a.id AND m.status = 'active' 
+                 ORDER BY m.sort_order ASC, m.id ASC LIMIT 1) AS cover_url
+         FROM albums a 
+         WHERE a.nfc_card_id = ? AND a.status != 'deleted' LIMIT 1`,
+        [c.id],
+      );
+      album = albumRows[0] || null;
+    } catch (albErr) {
+      console.warn("tapCard album fetch error:", albErr.message);
+    }
+
+    // Lấy danh sách địa danh nổi bật của tỉnh
+    let landmarks = [];
+    try {
+      const [lmRows] = await db.execute(
+        `SELECT id, name, description, address, thumbnail_url, latitude, longitude 
+         FROM landmarks WHERE province_id = ? AND (status IS NULL OR status = 'active') ORDER BY id ASC LIMIT 6`,
+        [c.prov_id],
+      );
+      landmarks = lmRows || [];
+    } catch (lmErr) {
+      console.warn("tapCard landmarks fetch error:", lmErr.message);
+    }
+
     res.json({
       card: {
         id: c.id,
@@ -33,16 +66,19 @@ const tapCard = async (req, res) => {
         status: c.status,
         province_name: c.province_name,
         province_slug: c.province_slug,
+        region: c.region,
         description: c.description,
         youtube_url: c.youtube_url,
         thumbnail_url: c.thumbnail_url,
         has_owner: !!c.owner_user_id,
         owner_name: c.owner_name || null,
+        album,
+        landmarks,
       },
     });
   } catch (err) {
-    console.error("tapCard:", err);
-    res.status(500).json({ message: "Lỗi server" });
+    console.error("tapCard error:", err);
+    res.status(500).json({ message: "Lỗi server khi tải thông tin thẻ" });
   }
 };
 
@@ -445,7 +481,11 @@ const acceptTransfer = async (req, res) => {
         "🎉 Nhận thẻ thành công! Mảnh bản đồ và album kỷ niệm đã thuộc về bạn.",
     });
   } catch (err) {
-    await conn.rollback();
+    try {
+      await conn.rollback();
+    } catch (rbErr) {
+      console.error("Rollback error:", rbErr);
+    }
     console.error("acceptTransfer:", err);
     res.status(500).json({ message: "Lỗi server khi tiếp nhận thẻ" });
   } finally {
@@ -487,19 +527,19 @@ const createBatch = async (req, res) => {
       );
       if (prodRows.length > 0) {
         const prod = prodRows[0];
-        // Tìm tỉnh theo tên tương đồng
+        const rawName =
+          prod.name
+            .replace(/^(Mảnh ghép NFC 3D\s*[-–:]*|Mảnh\s*[-–:]*|Thẻ\s*[-–:]*)/i, "")
+            .trim() || prod.name;
+        // Tìm tỉnh theo tên tương đồng chính xác
         const [provRows] = await db.execute(
-          `SELECT id FROM provinces WHERE name LIKE ? OR ? LIKE CONCAT('%', name, '%') LIMIT 1`,
-          [`%${prod.name}%`, prod.name],
+          `SELECT id FROM provinces WHERE name = ? OR name LIKE ? LIMIT 1`,
+          [rawName, `%${rawName}%`],
         );
         if (provRows.length > 0) {
           province_id = provRows[0].id;
         } else {
           // Tự động tạo bản ghi tỉnh thành tương ứng cho sản phẩm
-          const rawName =
-            prod.name
-              .replace(/^(Mảnh ghép NFC 3D\s*[-–:]*|Mảnh\s*[-–:]*)/i, "")
-              .trim() || prod.name;
           const slug = rawName
             .toLowerCase()
             .normalize("NFD")
