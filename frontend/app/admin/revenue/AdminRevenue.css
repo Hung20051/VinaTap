@@ -1,15 +1,61 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   ADMIN REVENUE & ORDER MANAGEMENT — PREMIUM STYLESHEET
+   ══════════════════════════════════════════════════════════════════════════ */
+
 .admin-rev-container {
-  padding: 1.5rem;
-  max-width: 1400px;
+  padding: 1.75rem 2rem 3rem;
+  max-width: 1440px;
   margin: 0 auto;
+  font-family: inherit;
+  color: #0f172a;
 }
 
+/* ─── 1. PAGE HEADER ────────────────────────────────────────── */
 .admin-rev-header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.admin-rev-header__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-rev-badge-pill {
+  display: inline-flex;
   align-items: center;
-  margin-bottom: 1.25rem;
-  gap: 1rem;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #ffedd5;
+  width: fit-content;
+  margin-bottom: 4px;
+}
+
+.admin-dash-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-dash-subtitle {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0;
 }
 
 .admin-rev-header__actions {
@@ -22,40 +68,69 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.admin-rev-btn-csv:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+  transform: translateY(-1px);
 }
 
 .admin-rev-btn-create {
-  background: #ea580c;
-  border-color: #ea580c;
-  color: #ffffff;
-  font-weight: 700;
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .admin-rev-btn-create:hover {
-  background: #c2410c;
-  border-color: #c2410c;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.35);
 }
 
-/* ─── STICKY CONTROLS (TABS + SEARCH + FILTER) ─────────────── */
+/* ─── 2. STICKY CONTROLS & TOOLBAR ──────────────────────────── */
 .admin-rev-sticky-controls {
   position: sticky;
   top: 60px;
-  z-index: 100;
-  background: rgba(248, 250, 252, 0.94);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 8px 0 10px;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  z-index: 50;
+  background: rgba(248, 250, 252, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 12px 0 16px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
+/* Modern Segmented Tab Bar */
 .admin-tab-nav {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 0.75rem;
+  display: inline-flex;
+  background: #e2e8f0;
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+  width: fit-content;
 }
 
 .admin-tab-btn {
@@ -63,9 +138,25 @@
   align-items: center;
   gap: 8px;
   font-weight: 700;
-  font-size: 0.88rem;
-  padding: 0.5rem 1.15rem;
-  border-radius: 10px;
+  font-size: 0.86rem;
+  padding: 7px 18px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.admin-tab-btn:hover:not(.is-active) {
+  color: #0f172a;
+}
+
+.admin-tab-btn.is-active {
+  background: #ffffff;
+  color: #ea580c;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .tab-label-desktop {
@@ -76,21 +167,24 @@
   display: none;
 }
 
+/* Filter & Search Bar */
 .admin-rev-filter-wrap {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .admin-rev-search {
   position: relative;
   flex: 1;
-  max-width: 400px;
+  min-width: 260px;
+  max-width: 440px;
 }
 
 .admin-rev-search__icon {
   position: absolute;
-  left: 12px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: #94a3b8;
@@ -99,131 +193,371 @@
 
 .admin-rev-search__input {
   width: 100%;
-  padding: 9px 32px 9px 36px;
-  border-radius: 10px;
+  padding: 10px 36px 10px 40px;
+  border-radius: 12px;
   border: 1px solid #cbd5e1;
   font-size: 0.88rem;
   background: #ffffff;
   color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
 }
 
 .admin-rev-search__input:focus {
   outline: none;
   border-color: #ea580c;
   box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+  background: #ffffff;
 }
 
 .admin-rev-search__clear {
   position: absolute;
-  right: 8px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  background: #e2e8f0;
+  background: #f1f5f9;
   border: none;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #475569;
+  color: #64748b;
   cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-rev-search__clear:hover {
+  background: #e2e8f0;
+  color: #0f172a;
 }
 
 .admin-rev-status-select {
-  padding: 8px 12px;
-  border-radius: 10px;
+  padding: 10px 16px;
+  border-radius: 12px;
   border: 1px solid #cbd5e1;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #334155;
+  color: #1e293b;
   background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 260px;
 }
 
 .admin-rev-status-select:focus {
   outline: none;
   border-color: #ea580c;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
 }
 
-/* ─── TABLE VIEW (DESKTOP) ─────────────────────────────────── */
+/* ─── 3. TABLE VIEW (DESKTOP) ───────────────────────────────── */
 .admin-rev-table-wrap {
   overflow-x: auto;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid #e2e8f0;
   background: #ffffff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
 }
 
 .admin-rev-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   text-align: left;
 }
 
 .admin-rev-table th {
   background: #f8fafc;
-  color: #475569;
+  color: #64748b;
+  font-size: 0.75rem;
   font-weight: 700;
-  padding: 12px 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 14px 16px;
   border-bottom: 1px solid #e2e8f0;
   white-space: nowrap;
 }
 
 .admin-rev-table td {
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-bottom: 1px solid #f1f5f9;
   color: #1e293b;
   vertical-align: middle;
+  transition: background 0.15s ease;
 }
 
-.admin-rev-table tr:hover td {
+.admin-rev-table tbody tr:hover td {
+  background: #f8fafc !important;
+}
+
+.admin-rev-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Cell Specific Styles */
+.rev-order-code-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #0284c7;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.rev-order-code-badge:hover,
+.order-card-code-link:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
+}
+
+.rev-order-date {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 3px;
+  display: block;
+}
+
+.rev-customer-name {
+  font-weight: 700;
+  color: #0f172a;
+  display: block;
+}
+
+.rev-customer-sub {
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-top: 1px;
+  display: block;
+}
+
+.rev-phone-text {
+  font-weight: 700;
+  color: #334155;
+}
+
+.rev-address-text {
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.35;
+  margin-top: 2px;
+  max-width: 260px;
+}
+
+.rev-price-main {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #ea580c;
+  display: block;
+}
+
+.rev-price-discount {
+  font-size: 0.74rem;
+  color: #16a34a;
+  font-weight: 600;
+  margin-top: 2px;
+  display: block;
+}
+
+/* Status Badges */
+.rev-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rev-status-pill.is-paid {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.rev-status-pill.is-pending-cod {
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #ffedd5;
+}
+
+.rev-status-pill.is-pending-qr {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.rev-status-pill.is-shipping {
+  background: #f0f9ff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.rev-status-pill.is-completed {
+  background: #f5f3ff;
+  color: #7c3aed;
+  border: 1px solid #ddd6fe;
+}
+
+.rev-status-pill.is-cancelled {
   background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
 }
 
-.admin-rev-code {
-  font-weight: 700;
-  color: #2563eb;
-  font-family: monospace;
+.rev-status-pill.is-cancel-req {
+  background: #fff1f2;
+  color: #e11d48;
+  border: 1px solid #fecdd3;
+  animation: pulseLight 2s infinite;
 }
 
-.admin-rev-buyer {
+@keyframes pulseLight {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Payment Method Badges */
+.rev-pm-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.76rem;
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.rev-pm-pill.is-vietqr {
+  background: #f0f9ff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.rev-pm-pill.is-cod {
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #fed7aa;
+}
+
+/* Action Button Group */
+.rev-actions-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.rev-btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.rev-btn-action.is-primary {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.2);
+}
+
+.rev-btn-action.is-primary:hover {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  transform: translateY(-1px);
+}
+
+.rev-btn-action.is-success {
+  background: #16a34a;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.2);
+}
+
+.rev-btn-action.is-success:hover {
+  background: #15803d;
+  transform: translateY(-1px);
+}
+
+.rev-btn-action.is-purple {
+  background: #7c3aed;
+  color: #ffffff;
+  border: none;
+}
+
+.rev-btn-action.is-purple:hover {
+  background: #6d28d9;
+}
+
+.rev-btn-action.is-secondary {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+}
+
+.rev-btn-action.is-secondary:hover {
+  background: #f1f5f9;
   color: #0f172a;
 }
 
-.admin-rev-subtext {
-  font-size: 0.76rem;
-  color: #64748b;
-  margin-top: 2px;
+.rev-btn-action.is-danger-ghost {
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: #ef4444;
 }
 
-.admin-rev-price {
-  font-weight: 800;
-  color: #ea580c;
+.rev-btn-action.is-danger-ghost:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
 }
 
 .admin-rev-empty {
   text-align: center;
-  padding: 3rem 1.5rem;
+  padding: 3.5rem 1.5rem;
   color: #64748b;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
 }
 
-/* ─── 📱 MOBILE ORDER CARDS (ALL SCREEN SIZES) ──────────────── */
+/* ─── 4. MOBILE CARDS VIEW ──────────────────────────────────── */
 .admin-rev-cards-mobile {
   display: none;
 }
 
 .admin-order-card {
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid #e2e8f0;
-  padding: 12px 14px;
+  padding: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .order-card-header {
@@ -231,134 +565,56 @@
   justify-content: space-between;
   align-items: flex-start;
   border-bottom: 1px dashed #f1f5f9;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
   gap: 8px;
-}
-
-.order-card-code {
-  font-weight: 800;
-  color: #2563eb;
-  font-size: 0.85rem;
-  font-family: monospace;
-}
-
-.order-card-time {
-  font-size: 0.72rem;
-  color: #94a3b8;
-  margin-top: 1px;
-}
-
-.order-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 0.8rem;
-  color: #334155;
-}
-
-.order-card-customer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-.customer-name {
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.customer-phone {
-  color: #64748b;
-  font-size: 0.78rem;
-}
-
-.order-card-address {
-  font-size: 0.76rem;
-  color: #64748b;
-  line-height: 1.35;
-  background: #f8fafc;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-
-.order-card-product {
-  font-size: 0.82rem;
-  color: #0f172a;
 }
 
 .order-card-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2px;
-  padding-top: 6px;
+  padding-top: 8px;
   border-top: 1px solid #f1f5f9;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
-.order-card-price-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.payment-tag {
-  font-size: 0.72rem;
-  font-weight: 700;
-  background: #f1f5f9;
-  color: #475569;
-  padding: 2px 6px;
-  border-radius: 6px;
-}
-
-.order-card-total {
-  font-size: 0.95rem;
-  font-weight: 900;
-  color: #ea580c;
-}
-
-.order-card-actions {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-/* ─── PAGINATION ────────────────────────────────────────────── */
+/* ─── 5. PAGINATION ─────────────────────────────────────────── */
 .admin-pagination {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 12px 18px;
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid #e2e8f0;
   margin-top: 1.25rem;
 }
 
 .admin-pagination-info {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: #64748b;
   font-weight: 600;
 }
 
-.admin-pagination-controls {
-  display: flex;
-  gap: 6px;
-}
-
 .admin-pagination-btn {
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  background: #f8fafc;
-  color: #334155;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-pagination-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  color: #0f172a;
 }
 
 .admin-pagination-btn:disabled {
@@ -366,37 +622,89 @@
   cursor: not-allowed;
 }
 
-/* ─── 📝 MODAL THỦ CÔNG (BALANCED SHOPIFY STYLE) ────────────── */
+/* ─── 6. RESPONSIVE BREAKPOINTS ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .admin-rev-table-wrap {
+    display: none;
+  }
+
+  .admin-rev-cards-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tab-label-desktop {
+    display: none;
+  }
+
+  .tab-label-mobile {
+    display: inline;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-rev-container {
+    padding: 1rem;
+  }
+
+  .admin-rev-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .admin-rev-header__actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .admin-rev-filter-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-rev-search {
+    max-width: 100%;
+  }
+
+  .admin-rev-status-select {
+    width: 100%;
+  }
+}
+
+/* ─── 7. MODAL TẠO / SỬA ĐƠN BÁN BUÔN THỦ CÔNG ─────────────────────────────── */
 .admin-rev-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
   z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  padding: 1rem;
 }
 
 .admin-rev-modal-card {
   background: #ffffff;
+  border-radius: 16px;
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
   max-height: 90vh;
-  border-radius: 18px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 1.5rem;
+  position: relative;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  animation: adminRevModalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes adminRevModalPop {
+@keyframes modalPop {
   from {
     opacity: 0;
-    transform: scale(0.96) translateY(8px);
+    transform: scale(0.95) translateY(10px);
   }
   to {
     opacity: 1;
@@ -410,15 +718,15 @@
 
 .admin-rev-modal-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.25rem;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid #f1f5f9;
-  background: #fafafa;
 }
 
 .admin-rev-modal-title {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #0f172a;
   margin: 0;
@@ -428,8 +736,8 @@
   background: #f1f5f9;
   border: none;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -444,27 +752,20 @@
 }
 
 .admin-rev-modal-form {
-  padding: 1.15rem 1.25rem;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-}
-
-.admin-rev-form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .admin-rev-form-field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  flex: 1;
 }
 
 .admin-rev-form-label {
-  font-size: 0.78rem;
+  font-size: 0.8125rem;
   font-weight: 700;
   color: #334155;
 }
@@ -473,14 +774,15 @@
 .admin-rev-form-select,
 .admin-rev-form-textarea {
   width: 100%;
-  padding: 7px 11px;
-  border-radius: 9px;
+  padding: 10px 14px;
+  border-radius: 10px;
   border: 1px solid #cbd5e1;
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   font-family: inherit;
   color: #0f172a;
   background: #ffffff;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
 }
 
 .admin-rev-form-input:focus,
@@ -488,11 +790,12 @@
 .admin-rev-form-textarea:focus {
   outline: none;
   border-color: #ea580c;
-  box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.14);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
 }
 
-.prod-name-input {
-  font-weight: 700;
+.admin-rev-form-row {
+  display: flex;
+  gap: 12px;
 }
 
 .input-with-currency {
@@ -501,40 +804,34 @@
   align-items: center;
 }
 
-.input-with-currency .price-input {
-  padding-right: 44px;
-  font-weight: 800;
-  color: #ea580c;
-  font-size: 0.94rem;
+.input-with-currency input {
+  padding-right: 50px;
 }
 
 .currency-tag {
   position: absolute;
-  right: 9px;
-  font-size: 0.72rem;
-  font-weight: 800;
+  right: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
   color: #94a3b8;
-  background: #f1f5f9;
-  padding: 2px 5px;
-  border-radius: 4px;
   pointer-events: none;
 }
 
 .admin-rev-calc-badge {
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+  padding: 10px 14px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  background: #fff7ed;
-  border: 1px solid #ffedd5;
-  border-radius: 9px;
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   color: #c2410c;
 }
 
 .admin-rev-calc-badge strong {
-  font-size: 0.95rem;
-  font-weight: 900;
+  font-size: 1.1rem;
+  font-weight: 800;
   color: #ea580c;
 }
 
@@ -542,280 +839,37 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 0.2rem;
-  padding-top: 0.75rem;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
   border-top: 1px solid #f1f5f9;
 }
 
 .admin-rev-btn-cancel {
-  padding: 7px 16px;
-  border-radius: 8px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #475569;
   font-weight: 600;
-  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.admin-rev-btn-cancel:hover {
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
 .admin-rev-btn-submit {
-  padding: 7px 22px;
-  border-radius: 8px;
-  font-weight: 800;
-  font-size: 0.84rem;
-  background: linear-gradient(135deg, #ff7b00 0%, #ea580c 100%);
+  padding: 9px 22px;
+  border-radius: 10px;
+  background: #ea580c;
   border: none;
   color: #ffffff;
-  box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25);
-  transition: transform 0.15s, box-shadow 0.15s;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
 .admin-rev-btn-submit:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 14px rgba(234, 88, 12, 0.35);
-}
-
-/* ─────────────────────────────────────────────────────────────
-   📱 MOBILE & TABLET RESPONSIVE (IPHONE SE, SAMSUNG, IPAD...)
-   ───────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .admin-rev-container {
-    padding: 0;
-  }
-
-  /* Compact 1-Row App Bar Header */
-  .admin-rev-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    gap: 8px;
-  }
-
-  .admin-rev-header__title-group .admin-dash-title {
-    font-size: 1.15rem;
-    margin: 0;
-    white-space: nowrap;
-  }
-
-  .admin-rev-header__title-group .admin-dash-subtitle {
-    display: none;
-  }
-
-  .admin-rev-header__actions {
-    width: auto;
-    display: flex;
-    gap: 6px;
-    flex-shrink: 0;
-  }
-
-  .admin-rev-btn-csv {
-    width: 34px;
-    height: 34px;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-  }
-
-  .admin-rev-btn-csv .btn-label-desktop {
-    display: none;
-  }
-
-  .admin-rev-btn-create {
-    padding: 6px 10px;
-    font-size: 0.76rem;
-    border-radius: 8px;
-    white-space: nowrap;
-  }
-
-  .admin-rev-sticky-controls {
-    top: 54px;
-    padding: 4px 0 6px;
-    margin-bottom: 0.65rem;
-  }
-
-  /* iOS Pill Segment Tab Bar */
-  .admin-tab-nav {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-    margin-bottom: 0.45rem;
-    background: #f1f5f9;
-    padding: 3px;
-    border-radius: 10px;
-    border: 1px solid #e2e8f0;
-  }
-
-  .admin-tab-btn {
-    width: 100%;
-    justify-content: center;
-    font-size: 0.76rem;
-    font-weight: 700;
-    padding: 6px 4px;
-    border-radius: 7px;
-    border: none;
-    background: transparent;
-    color: #64748b;
-    white-space: nowrap;
-  }
-
-  .admin-tab-btn.btn-primary {
-    background: #ffffff;
-    color: #ea580c;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-  }
-
-  .admin-tab-btn.btn-outline {
-    background: transparent;
-    color: #64748b;
-    border: none;
-  }
-
-  .tab-label-desktop {
-    display: none;
-  }
-
-  .tab-label-mobile {
-    display: inline;
-  }
-
-  /* Search & Filter Compact 2 Rows (Không bị co méo) */
-  .admin-rev-filter-wrap {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 5px;
-  }
-
-  .admin-rev-search {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .admin-rev-search__input {
-    padding: 6px 26px 6px 30px;
-    font-size: 0.78rem;
-    height: 35px;
-    border-radius: 9px;
-  }
-
-  .admin-rev-search__icon {
-    left: 9px;
-  }
-
-  .admin-rev-status-select {
-    width: 100%;
-    font-size: 0.76rem;
-    font-weight: 600;
-    height: 35px;
-    padding: 6px 10px;
-    border-radius: 9px;
-  }
-
-  /* Ẩn Table, hiện Thẻ Order Cards trên Mobile */
-  .admin-rev-table-wrap {
-    display: none;
-  }
-
-  .admin-rev-cards-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .admin-order-card {
-    padding: 10px 12px;
-    border-radius: 12px;
-    gap: 5px;
-  }
-
-  .order-card-header {
-    margin-bottom: 2px;
-  }
-
-  .order-card-code {
-    font-size: 0.82rem;
-  }
-
-  .order-card-body {
-    gap: 3px;
-    font-size: 0.76rem;
-  }
-
-  .order-card-footer {
-    margin-top: 3px;
-    padding-top: 5px;
-  }
-
-  .admin-pagination {
-    padding: 8px 10px;
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .admin-pagination-btn {
-    font-size: 0.76rem;
-    padding: 5px 9px;
-  }
-
-  /* 📱 MOBILE BOTTOM SHEET CHO MODAL */
-  .admin-rev-modal-overlay {
-    padding: 0;
-    align-items: flex-end;
-  }
-
-  .admin-rev-modal-card {
-    max-width: 100%;
-    border-radius: 20px 20px 0 0;
-    max-height: 88vh;
-    animation: adminRevSheetSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @keyframes adminRevSheetSlideUp {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-
-  .admin-rev-modal-handle-bar {
-    display: block;
-    width: 36px;
-    height: 4px;
-    background: #cbd5e1;
-    border-radius: 99px;
-    margin: 6px auto 0 auto;
-  }
-
-  .admin-rev-modal-header {
-    padding: 0.75rem 1.15rem;
-  }
-
-  .admin-rev-modal-form {
-    padding: 0.85rem 1.15rem;
-    gap: 0.75rem;
-  }
-
-  .admin-rev-form-row {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .admin-rev-modal-footer {
-    display: flex;
-    gap: 8px;
-    padding-bottom: 0.5rem;
-  }
-
-  .admin-rev-btn-cancel {
-    flex: 1;
-    justify-content: center;
-    padding: 9px;
-  }
-
-  .admin-rev-btn-submit {
-    flex: 2;
-    justify-content: center;
-    padding: 9px;
-  }
+  background: #c2410c;
 }

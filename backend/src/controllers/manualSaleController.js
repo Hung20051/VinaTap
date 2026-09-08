@@ -172,11 +172,15 @@ const exportCsv = async (req, res) => {
       "Ngày tạo",
     ];
 
-    // Escape theo chuẩn CSV: nếu ô chứa dấu phẩy/ngoặc kép/xuống dòng thì
-    // bọc trong ngoặc kép, và tự nhân đôi ngoặc kép có sẵn bên trong.
+    // Escape theo chuẩn CSV & Chống CSV Formula Injection (CWE-1236):
+    // - Vô hiệu hóa ký tự công thức (=, +, -, @, \t, \r) bằng dấu nháy đơn '
+    // - Nếu ô chứa dấu phẩy/ngoặc kép/xuống dòng thì bọc trong ngoặc kép
     const escapeCsvCell = (value) => {
-      const str = value === null || value === undefined ? "" : String(value);
-      if (/[",\n]/.test(str)) {
+      let str = value === null || value === undefined ? "" : String(value);
+      if (/^[=+\-@\t\r]/.test(str)) {
+        str = "'" + str;
+      }
+      if (/[",\n\r]/.test(str)) {
         return `"${str.replace(/"/g, '""')}"`;
       }
       return str;

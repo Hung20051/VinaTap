@@ -317,23 +317,121 @@ const Order = {
     }
   },
 
+  // Helper bổ sung thông tin ảnh & tên sản phẩm từ bảng products
+  async enrichOrderItems(rows) {
+    if (!rows || rows.length === 0) return [];
+    try {
+      const [products] = await db.execute(
+        `SELECT id, name, image, price FROM products`,
+      );
+      const productMap = new Map();
+      products.forEach((p) => productMap.set(p.id, p));
+
+      const DEFAULT_HERITAGE_IMAGES = [
+        "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600",
+        "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600",
+        "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=600",
+        "https://images.unsplash.com/photo-1528127269322-539801943592?w=600",
+      ];
+
+      return rows.map((r, rIdx) => {
+        let parsedItems =
+          typeof r.items_json === "string"
+            ? JSON.parse(r.items_json)
+            : r.items_json || [];
+
+        const totalQty = parsedItems.reduce(
+          (sum, it) => sum + Number(it.quantity || 1),
+          0,
+        );
+        const derivedPerItemPrice =
+          totalQty > 0
+            ? Math.max(
+                0,
+                Math.round(
+                  (Number(r.total_amount || 0) -
+                    Number(r.shipping_fee || 0) +
+                    Number(r.discount_amount || 0)) /
+                    totalQty,
+                ),
+              )
+            : 0;
+
+        parsedItems = parsedItems.map((item, itemIdx) => {
+          const prod = item.product_id ? productMap.get(item.product_id) : null;
+          const fallbackImg =
+            DEFAULT_HERITAGE_IMAGES[(rIdx + itemIdx) % DEFAULT_HERITAGE_IMAGES.length];
+          const finalName =
+            item.name || item.title || item.product_name || (prod ? prod.name : "Thẻ Gỗ NFC VinaTap");
+          const finalImg =
+            item.image || item.image_url || item.thumbnail || (prod && prod.image ? prod.image : fallbackImg);
+
+          let finalUnitPrice = Number(
+            item.unit_price ??
+              item.price ??
+              item.item_price ??
+              item.unitPrice ??
+              (prod ? prod.price : 0),
+          );
+
+          if ((!finalUnitPrice || finalUnitPrice <= 0) && derivedPerItemPrice > 0) {
+            finalUnitPrice = derivedPerItemPrice;
+          }
+
+          const finalQuantity = Math.max(1, parseInt(item.quantity) || 1);
+
+          return {
+            ...item,
+            name: finalName,
+            title: finalName,
+            image: finalImg,
+            unit_price: finalUnitPrice,
+            price: finalUnitPrice,
+            quantity: finalQuantity,
+            item_total: finalUnitPrice * finalQuantity,
+          };
+        });
+
+        return {
+          ...r,
+          items: parsedItems,
+          items_json: parsedItems,
+        };
+      });
+    } catch (err) {
+      console.error("enrichOrderItems error:", err);
+      return rows.map((r) => ({
+        ...r,
+        items:
+          typeof r.items_json === "string"
+            ? JSON.parse(r.items_json)
+            : r.items_json || [],
+      }));
+    }
+  },
+
   // Khách lấy lịch sử đơn hàng của mình
   async getByUser(userId) {
     const [rows] = await db.execute(
       `SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT 50`,
       [userId],
     );
-    return rows.map((r) => {
-      const parsedItems =
-        typeof r.items_json === "string"
-          ? JSON.parse(r.items_json)
-          : r.items_json || [];
-      return {
-        ...r,
-        items: parsedItems,
-        items_json: parsedItems,
-      };
-    });
+    return await this.enrichOrderItems(rows);
+  },
+
+  // Khách lấy chi tiết 1 đơn hàng theo ID
+  async getDetailById(orderId, userId = null) {
+    let sql = `SELECT * FROM orders WHERE id = ?`;
+    let params = [orderId];
+    if (userId) {
+      sql += ` AND user_id = ?`;
+      params.push(userId);
+    }
+    sql += ` LIMIT 1`;
+    const [rows] = await db.execute(sql, params);
+    if (rows.length === 0) return null;
+    const enriched = await this.enrichOrderItems(rows);
+    return enriched[0] || null;
   },
 
   // Admin lấy toàn bộ đơn hàng
@@ -355,10 +453,13 @@ const Order = {
     }
 
     if (status === "active") {
-      // Đơn thực tế cần xử lý: COD (mới/đang xử lý) + VietQR đã thanh toán
+      // Đơn thực tế cần xử lý: COD (mới) + VietQR đã thanh toán hoặc đang giao
       whereClause.push(
-        `((o.payment_method = 'cod' AND o.status IN ('pending', 'processing')) OR (o.status IN ('paid', 'processing', 'shipping')))`,
+        `((o.payment_method = 'cod' AND o.status = 'pending') OR (o.status IN ('paid', 'shipping')))`,
       );
+    } else if (status === "cancel_request") {
+      // Xem các đơn khách đang yêu cầu hủy
+      whereClause.push(`o.cancel_request_status = 'pending'`);
     } else if (status === "pending_qr") {
       // Chỉ xem đơn VietQR đang chờ khách quét mã
       whereClause.push(
@@ -411,7 +512,6 @@ const Order = {
     const validStatuses = [
       "pending",
       "paid",
-      "processing",
       "shipping",
       "completed",
       "cancelled",
@@ -420,47 +520,228 @@ const Order = {
       throw new Error("Trạng thái đơn hàng không hợp lệ");
     }
 
-    const [existing] = await db.execute(
-      `SELECT user_id, voucher_code, status, payment_method FROM orders WHERE id = ? LIMIT 1`,
-      [id],
-    );
+    const conn = await db.getConnection();
+    try {
+      await conn.beginTransaction();
 
-    if (
-      existing.length > 0 &&
-      status === "cancelled" &&
-      existing[0].status !== "cancelled"
-    ) {
-      const ord = existing[0];
-      // Chỉ hoàn trả voucher nếu đơn này đã thực sự tiêu voucher (đã thanh toán hoặc đơn COD pending)
-      const shouldRefundVoucher =
-        ["paid", "processing", "shipping", "completed"].includes(ord.status) ||
-        (ord.payment_method === "cod" && ord.status === "pending");
+      const [existing] = await conn.execute(
+        `SELECT user_id, voucher_code, status, payment_method FROM orders WHERE id = ? FOR UPDATE`,
+        [id],
+      );
 
-      if (shouldRefundVoucher && ord.voucher_code) {
-        const [vRows] = await db.execute(
-          `SELECT id FROM vouchers WHERE UPPER(code) = ? LIMIT 1`,
-          [ord.voucher_code.toUpperCase()],
-        );
-        if (vRows.length > 0) {
-          const vId = vRows[0].id;
-          await db.execute(
-            `UPDATE vouchers SET used_count = GREATEST(0, used_count - 1) WHERE id = ?`,
-            [vId],
+      if (existing.length === 0) {
+        throw new Error("Không tìm thấy đơn hàng");
+      }
+
+      const currentStatus = existing[0].status;
+      // Chuyển đổi trạng thái an toàn (State Machine)
+      const allowedTransitions = {
+        pending:   ["paid", "shipping", "cancelled"],
+        paid:      ["shipping", "cancelled"],
+        shipping:  ["completed", "cancelled"],
+        completed: [], // Đơn đã hoàn tất -> Không thể chuyển ngược
+        cancelled: ["paid"], // Chỉ mở lại khi khách chuyển tiền muộn
+      };
+
+      if (currentStatus !== status && !allowedTransitions[currentStatus]?.includes(status)) {
+        throw new Error(`Không thể chuyển đơn từ "${currentStatus}" sang "${status}"`);
+      }
+
+      // 1. Nếu chuyển sang "paid" và đơn có voucher: đảm bảo voucher được trừ lượt dùng (nếu chưa trừ)
+      if (status === "paid" && currentStatus !== "paid") {
+        const ord = existing[0];
+        if (ord.voucher_code) {
+          const [vRows] = await conn.execute(
+            `SELECT id FROM vouchers WHERE UPPER(code) = ? LIMIT 1 FOR UPDATE`,
+            [ord.voucher_code.toUpperCase()],
           );
-          if (ord.user_id) {
-            await db.execute(
-              `UPDATE user_vouchers SET status = 'available', used_at = NULL WHERE user_id = ? AND voucher_id = ?`,
-              [ord.user_id, vId],
-            );
+          if (vRows.length > 0) {
+            const vId = vRows[0].id;
+            let alreadyUsed = false;
+            if (ord.user_id) {
+              const [uvCheck] = await conn.execute(
+                `SELECT status FROM user_vouchers WHERE user_id = ? AND voucher_id = ? LIMIT 1`,
+                [ord.user_id, vId],
+              );
+              if (uvCheck.length > 0 && uvCheck[0].status === "used") {
+                alreadyUsed = true;
+              }
+            }
+
+            if (!alreadyUsed) {
+              await conn.execute(
+                `UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?`,
+                [vId],
+              );
+              if (ord.user_id) {
+                await conn.execute(
+                  `INSERT INTO user_vouchers (user_id, voucher_id, status, used_at)
+                   VALUES (?, ?, 'used', NOW())
+                   ON DUPLICATE KEY UPDATE status = 'used', used_at = NOW()`,
+                  [ord.user_id, vId],
+                );
+              }
+            }
           }
         }
       }
+
+      // 2. Nếu chuyển sang "cancelled": hoàn trả voucher nếu đơn này đã thực sự tiêu voucher
+      if (
+        status === "cancelled" &&
+        currentStatus !== "cancelled"
+      ) {
+        const ord = existing[0];
+        // Chỉ hoàn trả voucher nếu đơn này đã thực sự tiêu voucher (đã thanh toán hoặc đơn COD pending)
+        const shouldRefundVoucher =
+          ["paid", "shipping", "completed"].includes(ord.status) ||
+          (ord.payment_method === "cod" && ord.status === "pending");
+
+        if (shouldRefundVoucher && ord.voucher_code) {
+          const [vRows] = await conn.execute(
+            `SELECT id FROM vouchers WHERE UPPER(code) = ? FOR UPDATE`,
+            [ord.voucher_code.toUpperCase()],
+          );
+          if (vRows.length > 0) {
+            const vId = vRows[0].id;
+            await conn.execute(
+              `UPDATE vouchers SET used_count = GREATEST(0, used_count - 1) WHERE id = ?`,
+              [vId],
+            );
+            if (ord.user_id) {
+              await conn.execute(
+                `UPDATE user_vouchers SET status = 'available', used_at = NULL WHERE user_id = ? AND voucher_id = ?`,
+                [ord.user_id, vId],
+              );
+            }
+          }
+        }
+      }
+
+      if (status === "cancelled") {
+        await conn.execute(
+          `UPDATE orders 
+           SET status = ?, 
+               cancel_reason = COALESCE(?, cancel_reason), 
+               cancel_request_status = CASE WHEN cancel_request_status = 'pending' THEN 'approved' ELSE cancel_request_status END,
+               updated_at = NOW() 
+           WHERE id = ?`,
+          [status, cancelReason, id],
+        );
+      } else {
+        await conn.execute(
+          `UPDATE orders SET status = ?, updated_at = NOW() WHERE id = ?`,
+          [status, id],
+        );
+      }
+
+      await conn.commit();
+    } catch (err) {
+      await conn.rollback();
+      throw err;
+    } finally {
+      conn.release();
+    }
+  },
+
+  // 🛍️ Khách hàng tự hủy đơn hàng COD đang ở trạng thái pending
+  async cancelByCustomer(orderId, userId, reason) {
+    const [rows] = await db.execute(
+      `SELECT id, order_code, user_id, status, payment_method FROM orders WHERE id = ? AND user_id = ? LIMIT 1`,
+      [orderId, userId],
+    );
+
+    if (rows.length === 0) {
+      throw new Error("Không tìm thấy đơn hàng hoặc bạn không có quyền hủy đơn này");
     }
 
-    await db.execute(
-      `UPDATE orders SET status = ?, updated_at = NOW() WHERE id = ?`,
-      [status, id],
+    const order = rows[0];
+    if (order.status !== "pending") {
+      throw new Error("Chỉ có thể tự hủy đơn hàng khi đơn đang ở trạng thái Chờ xử lý");
+    }
+
+    const cancelReasonText = reason ? `Khách tự hủy: ${reason.trim()}` : "Khách tự hủy đơn trên hệ thống";
+    await this.updateStatus(orderId, "cancelled", cancelReasonText);
+    return order;
+  },
+
+  // 📝 Khách hàng gửi yêu cầu hủy đơn hàng đã thanh toán (VietQR paid)
+  async requestCancelByCustomer(orderId, userId, { reason, bankInfo }) {
+    if (!reason || !reason.trim()) {
+      throw new Error("Vui lòng nhập lý do yêu cầu hủy đơn");
+    }
+
+    const [rows] = await db.execute(
+      `SELECT id, order_code, user_id, status, payment_method, cancel_request_status FROM orders WHERE id = ? AND user_id = ? LIMIT 1`,
+      [orderId, userId],
     );
+
+    if (rows.length === 0) {
+      throw new Error("Không tìm thấy đơn hàng hoặc bạn không có quyền thao tác");
+    }
+
+    const order = rows[0];
+    if (order.status === "shipping" || order.status === "completed") {
+      throw new Error("Đơn hàng đã được bàn giao cho vận chuyển, không thể yêu cầu hủy trực tiếp");
+    }
+
+    if (order.status === "cancelled") {
+      throw new Error("Đơn hàng này đã bị hủy trước đó");
+    }
+
+    if (order.cancel_request_status === "pending") {
+      throw new Error("Yêu cầu hủy của bạn đang được Admin xử lý, vui lòng chờ trong giây lát");
+    }
+
+    const cancelReasonText = `Khách yêu cầu hủy: ${reason.trim()}`;
+    const bankInfoText = (bankInfo || "").trim();
+
+    await db.execute(
+      `UPDATE orders 
+       SET cancel_request_status = 'pending', 
+           cancel_reason = ?, 
+           cancel_bank_info = ?, 
+           updated_at = NOW() 
+       WHERE id = ?`,
+      [cancelReasonText, bankInfoText, orderId],
+    );
+
+    return order;
+  },
+
+  // 👑 Admin duyệt hoặc từ chối yêu cầu hủy đơn của khách
+  async reviewCancelRequest(orderId, action, rejectionReason = null) {
+    const [rows] = await db.execute(
+      `SELECT id, order_code, user_id, status, cancel_request_status FROM orders WHERE id = ? LIMIT 1`,
+      [orderId],
+    );
+
+    if (rows.length === 0) {
+      throw new Error("Không tìm thấy đơn hàng");
+    }
+
+    const order = rows[0];
+    if (action === "approve") {
+      await this.updateStatus(orderId, "cancelled", "Admin đã duyệt yêu cầu hủy & hoàn tiền");
+      await db.execute(
+        `UPDATE orders SET cancel_request_status = 'approved', updated_at = NOW() WHERE id = ?`,
+        [orderId],
+      );
+    } else if (action === "reject") {
+      const rejectNote = rejectionReason?.trim() || "Sản phẩm đã được xử lý và chuẩn bị bàn giao vận chuyển";
+      await db.execute(
+        `UPDATE orders 
+         SET cancel_request_status = 'rejected', 
+             cancel_reason = CONCAT('Admin từ chối hủy: ', ?), 
+             updated_at = NOW() 
+         WHERE id = ?`,
+        [rejectNote, orderId],
+      );
+    } else {
+      throw new Error("Hành động không hợp lệ (chỉ chấp nhận approve hoặc reject)");
+    }
+
+    return order;
   },
 
   // 🔍 Lấy trạng thái đơn hàng bằng Mã Đơn Hàng (order_code)

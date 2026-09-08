@@ -67,6 +67,11 @@ const sendMessage = async (req, res) => {
         .status(400)
         .json({ message: "Nội dung tin nhắn không được trống" });
 
+    if (content.length > 5000)
+      return res
+        .status(400)
+        .json({ message: "Nội dung tin nhắn quá dài (tối đa 5.000 ký tự)" });
+
     // Kiểm tra session thuộc về user
     const [sessions] = await db.execute(
       `SELECT * FROM chatbot_sessions WHERE id = ? AND user_id = ? AND status = 'active'`,

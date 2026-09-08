@@ -531,11 +531,21 @@ const createBatch = async (req, res) => {
           prod.name
             .replace(/^(Mảnh ghép NFC 3D\s*[-–:]*|Mảnh\s*[-–:]*|Thẻ\s*[-–:]*)/i, "")
             .trim() || prod.name;
-        // Tìm tỉnh theo tên tương đồng chính xác
-        const [provRows] = await db.execute(
-          `SELECT id FROM provinces WHERE name = ? OR name LIKE ? LIMIT 1`,
-          [rawName, `%${rawName}%`],
+        // 1. Ưu tiên tìm tỉnh theo tên chính xác tuyệt đối
+        let [provRows] = await db.execute(
+          `SELECT id FROM provinces WHERE name = ? LIMIT 1`,
+          [rawName],
         );
+
+        // 2. Nếu chưa khớp chính xác, tìm kiếm tương đối có sắp xếp theo độ tương đồng
+        if (provRows.length === 0) {
+          const escapedLike = rawName.replace(/[%_\\]/g, "\\$&");
+          [provRows] = await db.execute(
+            `SELECT id FROM provinces WHERE name LIKE ? ESCAPE '\\' ORDER BY LENGTH(name) ASC LIMIT 1`,
+            [`%${escapedLike}%`],
+          );
+        }
+
         if (provRows.length > 0) {
           province_id = provRows[0].id;
         } else {

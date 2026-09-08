@@ -517,16 +517,33 @@ export const orderAPI = {
       body: JSON.stringify(body),
     }),
   getMyOrders: () => request("/orders/my"),
+  getMyOrderDetail: (id) => request(`/orders/my/${id}`),
   getAdminOrders: (params = {}) => {
     const qs = new URLSearchParams(
       Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
     ).toString();
     return request(`/orders/admin/all${qs ? `?${qs}` : ""}`);
   },
-  updateStatus: (id, status) =>
+  getAdminOrderDetail: (id) => request(`/orders/admin/${id}`),
+  updateStatus: (id, status, cancel_reason) =>
     request(`/orders/admin/${id}/status`, {
       method: "PATCH",
-      body: JSON.stringify({ status }),
+      body: JSON.stringify({ status, cancel_reason }),
+    }),
+  cancelMyOrder: (id, reason) =>
+    request(`/orders/my/${id}/cancel`, {
+      method: "POST",
+      body: JSON.stringify({ reason }),
+    }),
+  requestCancelMyOrder: (id, { reason, bankInfo }) =>
+    request(`/orders/my/${id}/cancel-request`, {
+      method: "POST",
+      body: JSON.stringify({ reason, bankInfo }),
+    }),
+  reviewCancelRequest: (id, { action, rejection_reason }) =>
+    request(`/orders/admin/${id}/cancel-request`, {
+      method: "PATCH",
+      body: JSON.stringify({ action, rejection_reason }),
     }),
   checkStatus: (orderCode) => request(`/orders/check-status/${orderCode}`),
 };

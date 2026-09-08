@@ -2,56 +2,38 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  Package,
-  ShoppingBag,
-  Clock,
-  CheckCircle,
-  Truck,
-  XCircle,
-  QrCode,
-  ChevronRight,
-  RefreshCw,
-  Copy,
-  Check,
-  X,
-} from "lucide-react";
-import { orderAPI, systemSettingAPI } from "@/lib/api";
+import { Package, ShoppingBag, RefreshCw } from "lucide-react";
+import { orderAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
+import OrderTabs from "./components/OrderTabs";
+import OrderCard from "./components/OrderCard";
+import CancelModal from "./components/CancelModal";
 import "./CustomerOrders.css";
-
-const EMPTY_BANK_CONFIG = {
-  bankId: "",
-  bankName: "",
-  accountNo: "",
-  accountName: "",
-};
 
 export default function CustomerOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState("all");
-  const [selectedOrderForQr, setSelectedOrderForQr] = useState(null);
-  const [copiedMemo, setCopiedMemo] = useState(false);
-  const [bankConfig, setBankConfig] = useState(EMPTY_BANK_CONFIG);
+
+  // Modal State
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    type: "direct", // "direct" or "request"
+    order: null,
+  });
+  const [submittingModal, setSubmittingModal] = useState(false);
+
+  // Toast Notification
+  const [toastMessage, setToastMessage] = useState(null);
 
   useEffect(() => {
     loadOrders();
-    systemSettingAPI
-      .get()
-      .then((res) => {
-        if (res && res.settings) {
-          const s = res.settings;
-          setBankConfig({
-            bankId: s.bank_id || "",
-            bankName: s.bank_name || "",
-            accountNo: s.bank_account_no || "",
-            accountName: s.bank_account_name || "",
-          });
-        }
-      })
-      .catch(() => {});
   }, []);
+
+  const showToast = (msg, type = "success") => {
+    setToastMessage({ msg, type });
+    setTimeout(() => setToastMessage(null), 3500);
+  };
 
   const loadOrders = async () => {
     setLoading(true);
@@ -65,15 +47,12 @@ export default function CustomerOrders() {
     }
   };
 
-  // 🎯 Chỉ hiển thị những đơn hàng ĐÃ MUA THỰC SỰ:
-  // 1. Đơn VietQR đã thanh toán thành công (paid, shipping, completed, processing)
-  // 2. Đơn COD nhận hàng thanh toán tiền mặt (pending, paid, shipping, completed)
-  // ❌ Tự động ẩn các đơn VietQR pending chưa chuyển tiền (người dùng đóng popup/reload) để rác danh sách
+  // 🎯 Lọc danh sách hiển thị: Loại bỏ đơn VietQR chưa thanh toán (abandoned)
   const validPurchasedOrders = orders.filter((o) => {
-    if (["paid", "processing", "shipping", "completed"].includes(o.status)) {
+    if (["paid", "shipping", "completed", "cancelled"].includes(o.status)) {
       return true;
     }
-    if (o.payment_method === "cod" && o.status !== "cancelled") {
+    if (o.payment_method === "cod") {
       return true;
     }
     return false;
@@ -81,92 +60,96 @@ export default function CustomerOrders() {
 
   const filteredOrders = validPurchasedOrders.filter((o) => {
     if (filterStatus === "all") return true;
-    if (filterStatus === "processing") {
-      return o.status === "paid" || o.status === "processing" || (o.payment_method === "cod" && o.status === "pending");
+    if (filterStatus === "preparing") {
+      return (
+        (o.status === "paid" && o.cancel_request_status !== "pending") ||
+        (o.payment_method === "cod" && o.status === "pending")
+      );
+    }
+    if (filterStatus === "shipping") {
+      return o.status === "shipping";
+    }
+    if (filterStatus === "cancel_request") {
+      return o.cancel_request_status === "pending";
+    }
+    if (filterStatus === "completed") {
+      return o.status === "completed";
+    }
+    if (filterStatus === "cancelled") {
+      return o.status === "cancelled";
     }
     return o.status === filterStatus;
   });
 
-  const formatMoney = (amount) =>
-    new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount || 0);
-
-  const getStatusBadge = (status, paymentMethod) => {
-    switch (status) {
-      case "pending":
-        if (paymentMethod === "cod") {
-          return (
-            <span className="badge badge-warning" style={{ background: "#fef3c7", color: "#b45309", border: "1px solid #fde68a" }}>
-              📦 Đang chuẩn bị hàng (COD)
-            </span>
-          );
-        }
-        return (
-          <span className="badge badge-warning" style={{ background: "#fef3c7", color: "#b45309", border: "1px solid #fde68a" }}>
-            ⏳ Chờ xác nhận
-          </span>
-        );
-      case "paid":
-        return (
-          <span className="badge badge-success" style={{ background: "#dcfce7", color: "#15803d", border: "1px solid #86efac", fontWeight: 800 }}>
-            ✅ Đã thanh toán
-          </span>
-        );
-      case "shipping":
-        return (
-          <span className="badge badge-blue" style={{ background: "#e0f2fe", color: "#0369a1", border: "1px solid #bae6fd" }}>
-            🚚 Đang giao hàng
-          </span>
-        );
-      case "completed":
-        return (
-          <span className="badge badge-purple" style={{ background: "#f3e8ff", color: "#7e22ce", border: "1px solid #e9d5ff" }}>
-            🎉 Hoàn tất
-          </span>
-        );
-      case "cancelled":
-        return (
-          <span className="badge badge-danger" style={{ background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
-            ❌ Đã hủy
-          </span>
-        );
-      default:
-        return <span className="badge">{status}</span>;
+  // Xử lý khách tự hủy đơn COD pending
+  const handleConfirmDirectCancel = async (order, reason) => {
+    setSubmittingModal(true);
+    try {
+      await orderAPI.cancelMyOrder(order.id, reason);
+      showToast("Đã hủy đơn hàng thành công!", "success");
+      setModalConfig({ isOpen: false, type: "direct", order: null });
+      loadOrders();
+    } catch (err) {
+      alert(err.message || "Lỗi khi hủy đơn hàng");
+    } finally {
+      setSubmittingModal(false);
     }
   };
 
-  const copyMemo = async (code) => {
+  // Xử lý gửi yêu cầu hủy đơn VietQR paid
+  const handleConfirmRequestCancel = async (order, { reason, bankInfo }) => {
+    setSubmittingModal(true);
     try {
-      await navigator.clipboard.writeText(code);
-    } catch {
-      // Fallback cho HTTP hoặc trình duyệt không hỗ trợ Clipboard API
-      const textarea = document.createElement("textarea");
-      textarea.value = code;
-      textarea.style.position = "fixed";
-      textarea.style.left = "-9999px";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.select();
-      try { document.execCommand("copy"); } catch {}
-      document.body.removeChild(textarea);
+      await orderAPI.requestCancelMyOrder(order.id, { reason, bankInfo });
+      showToast(
+        "Đã gửi yêu cầu hủy đơn. Admin sẽ liên hệ & hoàn tiền cho bạn sớm nhất!",
+        "success",
+      );
+      setModalConfig({ isOpen: false, type: "request", order: null });
+      loadOrders();
+    } catch (err) {
+      alert(err.message || "Lỗi gửi yêu cầu hủy");
+    } finally {
+      setSubmittingModal(false);
     }
-    setCopiedMemo(true);
-    setTimeout(() => setCopiedMemo(false), 2000);
   };
 
   return (
     <div className="cust-orders-wrap">
-      {/* ─── 1. PAGE HEADER ────────────────────────────────────────── */}
+      {/* TOAST NOTIFICATION */}
+      {toastMessage && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "24px",
+            right: "24px",
+            zIndex: 9999,
+            background: toastMessage.type === "success" ? "#0f172a" : "#dc2626",
+            color: "#ffffff",
+            padding: "12px 20px",
+            borderRadius: "14px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+            fontSize: "0.9rem",
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            animation: "custFadeIn 0.3s ease",
+          }}
+        >
+          <span>{toastMessage.msg}</span>
+        </div>
+      )}
+
+      {/* ─── 1. HEADER HERO BANNER ─────────────────────────────────── */}
       <div className="cust-orders-header">
-        <div className="cust-orders-title-group">
-          <div className="cust-orders-tag-row">
-            <span className="cust-orders-chip">📦 Quản lý mua sắm</span>
+        <div className="cust-orders-header-title-box">
+          <div className="cust-orders-tag">
+            <span>🏮 Quản lý mua sắm</span>
           </div>
           <h1 className="cust-orders-title">Đơn Hàng Của Tôi</h1>
           <p className="cust-orders-subtitle">
-            Theo dõi trạng thái giao nhận và lịch sử mua thẻ NFC di sản VinaTap
+            Theo dõi hành trình chế tác xưởng mộc, giao nhận và quản lý đơn hàng
           </p>
         </div>
 
@@ -187,55 +170,29 @@ export default function CustomerOrders() {
         </div>
       </div>
 
-      {/* ─── 2. STATUS FILTER PILLS ─────────────────────────────────── */}
-      <div className="cust-orders-tabs-carousel">
-        <button
-          type="button"
-          className={`cust-tab-pill ${filterStatus === "all" ? "is-active" : ""}`}
-          onClick={() => setFilterStatus("all")}
-        >
-          <span>✨ Tất cả</span>
-          <span className="tab-count-badge">{validPurchasedOrders.length}</span>
-        </button>
-
-        <button
-          type="button"
-          className={`cust-tab-pill ${filterStatus === "processing" ? "is-active" : ""}`}
-          onClick={() => setFilterStatus("processing")}
-        >
-          <span>📦 Đang chuẩn bị</span>
-          <span className="tab-count-badge">
-            {validPurchasedOrders.filter((o) => o.status === "paid" || o.status === "processing" || (o.payment_method === "cod" && o.status === "pending")).length}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          className={`cust-tab-pill ${filterStatus === "shipping" ? "is-active" : ""}`}
-          onClick={() => setFilterStatus("shipping")}
-        >
-          <span>🚚 Đang giao hàng</span>
-          <span className="tab-count-badge">
-            {validPurchasedOrders.filter((o) => o.status === "shipping").length}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          className={`cust-tab-pill ${filterStatus === "completed" ? "is-active" : ""}`}
-          onClick={() => setFilterStatus("completed")}
-        >
-          <span>🎉 Đã hoàn tất</span>
-          <span className="tab-count-badge">
-            {validPurchasedOrders.filter((o) => o.status === "completed").length}
-          </span>
-        </button>
-      </div>
+      {/* ─── 2. STATUS FILTER PILLS (MODULAR) ───────────────────────── */}
+      <OrderTabs
+        filterStatus={filterStatus}
+        setFilterStatus={setFilterStatus}
+        orders={validPurchasedOrders}
+      />
 
       {/* ─── 3. ORDERS LIST / EMPTY STATE ──────────────────────────── */}
       {loading ? (
-        <div style={{ padding: "3rem 1rem", background: "#fff", borderRadius: "20px", border: "1px solid #f1f5f9" }}>
-          <DinoLoader fullScreen={false} size={200} text="Đang tải lịch sử đơn hàng..." subtext="Đang đồng bộ trạng thái thanh toán VietQR" />
+        <div
+          style={{
+            padding: "3rem 1rem",
+            background: "#fff",
+            borderRadius: "20px",
+            border: "1px solid #f1f5f9",
+          }}
+        >
+          <DinoLoader
+            fullScreen={false}
+            size={200}
+            text="Đang tải lịch sử đơn hàng..."
+            subtext="Đang đồng bộ trạng thái đơn hàng & xưởng chế tác"
+          />
         </div>
       ) : filteredOrders.length === 0 ? (
         <div className="cust-orders-empty-box">
@@ -245,177 +202,46 @@ export default function CustomerOrders() {
           <h2 className="empty-pkg-title">
             {filterStatus === "all"
               ? "Bạn chưa có đơn hàng nào"
-              : "Không có đơn hàng nào ở mục này"}
+              : "Không có đơn hàng nào trong mục này"}
           </h2>
           <p className="empty-pkg-desc">
-            {filterStatus === "all"
-              ? "Khám phá ngay bộ sưu tập 34 thẻ NFC gỗ di sản độc bản và các ưu đãi đặc quyền từ VinaTap!"
-              : "Thử chuyển qua bộ lọc khác hoặc kiểm tra lại lịch sử mua sắm của bạn."}
+            Khám phá bộ sưu tập Thẻ Gỗ NFC Di Sản Việt Nam độc bản và tạo đơn hàng
+            ngay hôm nay!
           </p>
-          <div className="empty-pkg-actions">
-            <Link href="/shop" className="btn-empty-cta is-primary">
-              <ShoppingBag size={16} />
-              <span>Khám Phá Cửa Hàng Thẻ NFC →</span>
-            </Link>
-            <Link href="/customer/dashboard" className="btn-empty-cta is-secondary">
-              <span>Về Trang Bộ Sưu Tập</span>
-            </Link>
-          </div>
+          <Link href="/shop" className="btn-empty-shop">
+            <ShoppingBag size={18} />
+            <span>Khám Phá Cửa Hàng Ngay</span>
+          </Link>
         </div>
       ) : (
         <div className="cust-orders-list">
-          {filteredOrders.map((order) => {
-            const items = order.items || order.items_json || [];
-            return (
-              <div key={order.id} className="cust-order-card">
-                <div className="cust-order-top">
-                  <div>
-                    <span className="cust-order-code">#{order.order_code}</span>
-                    <span className="cust-order-date">
-                      {new Date(order.created_at).toLocaleDateString("vi-VN", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                      })}
-                    </span>
-                  </div>
-                  <div>{getStatusBadge(order.status, order.payment_method)}</div>
-                </div>
-
-                <div className="cust-order-body">
-                  <div className="cust-order-items-list">
-                    {items.map((item, idx) => (
-                      <div key={idx} className="cust-order-item-row">
-                        <div className="cust-order-item-info">
-                          <strong>{item.product_name_snapshot || item.name}</strong>
-                          <span className="cust-order-item-qty">x{item.quantity}</span>
-                        </div>
-                        <div style={{ fontWeight: 600, color: "#334155" }}>
-                          {formatMoney((item.unit_price || item.price) * item.quantity)}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="cust-order-details-grid">
-                    <div>
-                      <strong>📍 Địa chỉ nhận hàng:</strong>
-                      <div style={{ color: "#475569", marginTop: "2px" }}>
-                        {order.recipient_name} ({order.recipient_phone})
-                        <br />
-                        {order.recipient_address}
-                      </div>
-                    </div>
-                    <div>
-                      <strong>💳 Phương thức thanh toán:</strong>
-                      <div style={{ color: "#475569", marginTop: "2px" }}>
-                        {order.payment_method === "vietqr" ? (
-                          <span style={{ color: "#0284c7", fontWeight: 700 }}>
-                            Chuyển khoản VietQR
-                          </span>
-                        ) : (
-                          <span style={{ color: "#ea580c", fontWeight: 700 }}>
-                            Thanh toán khi nhận hàng (COD)
-                          </span>
-                        )}
-                        {order.voucher_code && (
-                          <div style={{ color: "#16a34a", fontSize: "0.8rem", marginTop: "4px" }}>
-                            🎟️ Voucher: {order.voucher_code} (-{formatMoney(order.discount_amount)})
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="cust-order-footer">
-                  <div>
-                    <span style={{ fontSize: "0.85rem", color: "#64748b" }}>Tổng thanh toán: </span>
-                    <span className="cust-order-total">{formatMoney(order.total_amount)}</span>
-                  </div>
-
-                  {order.status === "pending" && order.payment_method === "vietqr" && (
-                    <button
-                      className="btn-repay-qr"
-                      onClick={() => setSelectedOrderForQr(order)}
-                    >
-                      <QrCode size={15} /> Quét Mã QR Thanh Toán
-                    </button>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+          {filteredOrders.map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              onDirectCancel={(o) =>
+                setModalConfig({ isOpen: true, type: "direct", order: o })
+              }
+              onRequestCancel={(o) =>
+                setModalConfig({ isOpen: true, type: "request", order: o })
+              }
+            />
+          ))}
         </div>
       )}
 
-      {/* MODAL XEM LẠI MÃ VIETQR KHI CHƯA THANH TOÁN */}
-      {selectedOrderForQr && (
-        <div className="checkout-modal-overlay" onClick={() => setSelectedOrderForQr(null)}>
-          <div className="checkout-modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: "550px" }}>
-            <button className="checkout-modal-close" onClick={() => setSelectedOrderForQr(null)}>
-              <X size={20} />
-            </button>
-
-            <div style={{ padding: "1.5rem", textAlign: "center" }}>
-              <h3 style={{ fontSize: "1.2rem", fontWeight: 800, margin: "0 0 0.5rem" }}>
-                📱 Quét Mã VietQR Chuyển Khoản
-              </h3>
-              <p style={{ fontSize: "0.85rem", color: "#64748b", margin: "0 0 1rem" }}>
-                Đơn hàng: <strong>{selectedOrderForQr.order_code}</strong>
-              </p>
-
-              <div style={{ display: "inline-block", background: "#f8fafc", padding: "12px", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
-                <img
-                  src={`https://img.vietqr.io/image/${bankConfig.bankId}-${bankConfig.accountNo}-compact2.png?amount=${selectedOrderForQr.total_amount}&addInfo=${selectedOrderForQr.order_code}&accountName=${encodeURIComponent(bankConfig.accountName)}`}
-                  alt="VietQR"
-                  style={{ width: "240px", height: "auto", display: "block" }}
-                />
-              </div>
-
-              <div style={{ marginTop: "1rem", background: "#f1f5f9", padding: "10px", borderRadius: "10px", fontSize: "0.85rem", textAlign: "left" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-                  <span>Ngân hàng:</span>
-                  <strong>{bankConfig.bankName}</strong>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-                  <span>Số TK:</span>
-                  <strong>{bankConfig.accountNo}</strong>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-                  <span>Số tiền:</span>
-                  <strong style={{ color: "#ea580c" }}>{formatMoney(selectedOrderForQr.total_amount)}</strong>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span>Nội dung CK:</span>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <code style={{ background: "#e2e8f0", padding: "2px 6px", borderRadius: "4px", fontWeight: 700 }}>
-                      {selectedOrderForQr.order_code}
-                    </code>
-                    <button
-                      type="button"
-                      onClick={() => copyMemo(selectedOrderForQr.order_code)}
-                      style={{ border: "none", background: "none", cursor: "pointer" }}
-                    >
-                      {copiedMemo ? <Check size={14} className="text-green" /> : <Copy size={14} />}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setSelectedOrderForQr(null)}
-                style={{ width: "100%", marginTop: "1.25rem" }}
-              >
-                Đã Chuyển Khoản & Đóng
-              </button>
-            </div>
-          </div>
-        </div>
+      {/* ─── 4. CANCEL / REFUND MODAL (MODULAR) ────────────────────── */}
+      {modalConfig.isOpen && (
+        <CancelModal
+          type={modalConfig.type}
+          order={modalConfig.order}
+          onClose={() =>
+            setModalConfig({ isOpen: false, type: "direct", order: null })
+          }
+          onConfirmDirect={handleConfirmDirectCancel}
+          onConfirmRequest={handleConfirmRequestCancel}
+          submitting={submittingModal}
+        />
       )}
     </div>
   );

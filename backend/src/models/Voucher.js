@@ -19,7 +19,8 @@ const Voucher = {
     return {
       id: v.id,
       code: v.code,
-      name: v.name,
+      title: v.title || v.name || "",
+      name: v.title || v.name || "",
       description: v.description,
       discount_type: v.discount_type,
       discount_value: parseFloat(v.discount_value) || 0,

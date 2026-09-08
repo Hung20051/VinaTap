@@ -88,6 +88,21 @@ const getMyOrders = async (req, res) => {
   }
 };
 
+// 2.1 Khách xem chi tiết 1 đơn hàng của mình
+const getMyOrderDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await Order.getDetailById(id, req.user.id);
+    if (!order) {
+      return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+    }
+    res.json({ order });
+  } catch (err) {
+    console.error("getMyOrderDetail error:", err);
+    res.status(500).json({ message: "Lỗi nạp chi tiết đơn hàng" });
+  }
+};
+
 // 3. Admin xem tất cả đơn hàng hệ thống
 const getAdminOrders = async (req, res) => {
   try {
@@ -100,30 +115,44 @@ const getAdminOrders = async (req, res) => {
   }
 };
 
-// 4. Admin cập nhật trạng thái đơn hàng
+// 3.1 Admin xem chi tiết 1 đơn hàng bất kỳ
+const getAdminOrderDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await Order.getDetailById(id);
+    if (!order) {
+      return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+    }
+    res.json({ order });
+  } catch (err) {
+    console.error("getAdminOrderDetail error:", err);
+    res.status(500).json({ message: "Lỗi nạp chi tiết đơn hàng Admin" });
+  }
+};
+
+// 4. Admin cập nhật trạng thái đơn hàng (paid, shipping, completed, cancelled)
 const updateOrderStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
-    await Order.updateStatus(id, status);
+    const { status, cancel_reason } = req.body;
+    await Order.updateStatus(id, status, cancel_reason);
 
-    // Gửi notification khi admin chuyển sang "paid" — KHÔNG gọi markAsPaid()
-    // (hàm đó dành cho webhook tự động, gọi ở đây sẽ gửi notification 2 lần)
-    if (status === "paid") {
-      try {
-        const [rows] = await require("../config/db").execute(
-          `SELECT order_code, user_id, recipient_name, recipient_phone, total_amount
-           FROM orders WHERE id = ? LIMIT 1`,
-          [id],
-        );
-        if (rows.length > 0) {
-          const order = rows[0];
-          const Notification = require("../models/Notification");
-          const amountText = new Intl.NumberFormat("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }).format(order.total_amount);
+    // Gửi notification khi admin chuyển sang "paid" hoặc "cancelled"
+    try {
+      const [rows] = await require("../config/db").execute(
+        `SELECT order_code, user_id, recipient_name, recipient_phone, total_amount
+         FROM orders WHERE id = ? LIMIT 1`,
+        [id],
+      );
+      if (rows.length > 0) {
+        const order = rows[0];
+        const Notification = require("../models/Notification");
+        const amountText = new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(order.total_amount);
 
+        if (status === "paid") {
           // Thông báo cho admin
           await Notification.send({
             recipient_type: "group",
@@ -152,13 +181,24 @@ const updateOrderStatus = async (req, res) => {
               created_by: 0,
             });
           }
+        } else if (status === "cancelled" && order.user_id) {
+          await Notification.send({
+            recipient_type: "user",
+            user_ids: [order.user_id],
+            type: "system",
+            title: `❌ Đơn Hàng #${order.order_code} Đã Bị Hủy`,
+            content: `Đơn hàng #${order.order_code} đã được chuyển sang trạng thái Đã hủy. Lý do: ${cancel_reason || "Admin đã xử lý hủy đơn"}.`,
+            link: "/customer/orders",
+            payload: { order_code: order.order_code },
+            created_by: req.user.id,
+          });
         }
-      } catch (notifErr) {
-        console.error(
-          "Lỗi bắn thông báo khi Admin duyệt đơn:",
-          notifErr.message,
-        );
       }
+    } catch (notifErr) {
+      console.error(
+        "Lỗi bắn thông báo khi Admin cập nhật đơn:",
+        notifErr.message,
+      );
     }
 
     res.json({
@@ -167,6 +207,116 @@ const updateOrderStatus = async (req, res) => {
   } catch (err) {
     console.error("updateOrderStatus error:", err);
     res.status(400).json({ message: err.message || "Lỗi cập nhật đơn hàng" });
+  }
+};
+
+// 4.1. Khách hàng tự hủy đơn hàng COD (khi đơn còn pending)
+const customerCancelOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    const order = await Order.cancelByCustomer(id, req.user.id, reason);
+
+    // Bắn thông báo cho Admin
+    try {
+      const Notification = require("../models/Notification");
+      await Notification.send({
+        recipient_type: "group",
+        group_target: "admin",
+        type: "system",
+        title: `❌ Khách Tự Hủy Đơn: #${order.order_code}`,
+        content: `Khách hàng vừa tự hủy đơn hàng #${order.order_code}. Lý do: ${reason || "Không nêu lý do"}`,
+        link: "/admin/revenue",
+        payload: { order_code: order.order_code },
+        created_by: req.user.id,
+      });
+    } catch (e) {}
+
+    res.json({ message: "Đã hủy đơn hàng thành công" });
+  } catch (err) {
+    console.error("customerCancelOrder error:", err);
+    res.status(400).json({ message: err.message || "Lỗi khi hủy đơn hàng" });
+  }
+};
+
+// 4.2. Khách hàng gửi yêu cầu hủy đơn đã thanh toán (VietQR paid)
+const customerRequestCancel = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason, bankInfo } = req.body;
+    const order = await Order.requestCancelByCustomer(id, req.user.id, {
+      reason,
+      bankInfo,
+    });
+
+    // Bắn thông báo cho Admin
+    try {
+      const Notification = require("../models/Notification");
+      await Notification.send({
+        recipient_type: "group",
+        group_target: "admin",
+        type: "system",
+        title: `⚠️ Yêu Cầu Hủy Đơn: #${order.order_code}`,
+        content: `Khách hàng yêu cầu hủy đơn đã thanh toán #${order.order_code}. Lý do: ${reason}. Vui lòng kiểm tra và duyệt trên Dashboard.`,
+        link: "/admin/revenue",
+        payload: { order_code: order.order_code },
+        created_by: req.user.id,
+      });
+    } catch (e) {}
+
+    res.json({ message: "Đã gửi yêu cầu hủy đơn tới Quản trị viên" });
+  } catch (err) {
+    console.error("customerRequestCancel error:", err);
+    res.status(400).json({ message: err.message || "Lỗi gửi yêu cầu hủy đơn" });
+  }
+};
+
+// 4.3. Admin duyệt hoặc từ chối yêu cầu hủy đơn
+const adminReviewCancelRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { action, rejection_reason } = req.body; // 'approve' | 'reject'
+    const order = await Order.reviewCancelRequest(id, action, rejection_reason);
+
+    // Bắn thông báo cho khách hàng
+    if (order.user_id) {
+      try {
+        const Notification = require("../models/Notification");
+        if (action === "approve") {
+          await Notification.send({
+            recipient_type: "user",
+            user_ids: [order.user_id],
+            type: "system",
+            title: `✅ Đã Duyệt Hủy Đơn #${order.order_code}`,
+            content: `Yêu cầu hủy đơn #${order.order_code} đã được chấp thuận. VinaTap đang tiến hành hoàn tiền và mở lại voucher cho bạn.`,
+            link: "/customer/orders",
+            payload: { order_code: order.order_code },
+            created_by: req.user.id,
+          });
+        } else {
+          await Notification.send({
+            recipient_type: "user",
+            user_ids: [order.user_id],
+            type: "system",
+            title: `❌ Từ Chối Hủy Đơn #${order.order_code}`,
+            content: `Yêu cầu hủy đơn #${order.order_code} không được chấp thuận: ${rejection_reason || "Đơn hàng đã đóng gói và chuẩn bị giao"}.`,
+            link: "/customer/orders",
+            payload: { order_code: order.order_code },
+            created_by: req.user.id,
+          });
+        }
+      } catch (e) {}
+    }
+
+    res.json({
+      message:
+        action === "approve"
+          ? "Đã duyệt hủy đơn và hoàn trả voucher"
+          : "Đã từ chối yêu cầu hủy đơn",
+    });
+  } catch (err) {
+    console.error("adminReviewCancelRequest error:", err);
+    res.status(400).json({ message: err.message || "Lỗi xử lý yêu cầu hủy" });
   }
 };
 
@@ -185,12 +335,17 @@ const checkOrderStatus = async (req, res) => {
       return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
     }
 
-    const isOwner =
-      req.user &&
-      (Number(req.user.id) === Number(order.user_id) ||
-        req.user.role === "admin");
+    // Cho phép tra cứu nếu:
+    // 1. Đơn của khách vãng lai (order.user_id = null)
+    // 2. User đang đăng nhập là chủ đơn hàng
+    // 3. Admin hệ thống
+    const isAuthorized =
+      order.user_id === null ||
+      (req.user &&
+        (Number(req.user.id) === Number(order.user_id) ||
+          req.user.role === "admin"));
 
-    if (!isOwner) {
+    if (!isAuthorized) {
       return res
         .status(404)
         .json({ message: "Không tìm thấy đơn hàng" });
@@ -281,8 +436,13 @@ const paymentWebhook = async (req, res) => {
 module.exports = {
   createOrder,
   getMyOrders,
+  getMyOrderDetail,
   getAdminOrders,
+  getAdminOrderDetail,
   updateOrderStatus,
+  customerCancelOrder,
+  customerRequestCancel,
+  adminReviewCancelRequest,
   checkOrderStatus,
   paymentWebhook,
 };

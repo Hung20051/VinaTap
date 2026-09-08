@@ -165,9 +165,10 @@ const ManualSale = {
          
          UNION ALL
          
-         SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS date, total_amount AS revenue, 1 AS cards_sold
+         SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS date, total_amount AS revenue,
+                COALESCE((SELECT SUM(jt.quantity) FROM JSON_TABLE(orders.items_json, '$[*]' COLUMNS (quantity INT PATH '$.quantity')) AS jt), 1) AS cards_sold
          FROM orders
-         WHERE status IN ('paid', 'processing', 'shipping', 'completed') AND created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
+         WHERE status IN ('paid', 'shipping', 'completed') AND created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
        ) combined
        GROUP BY date
        ORDER BY date ASC`,
@@ -182,15 +183,16 @@ const ManualSale = {
       `SELECT
          (
            (SELECT COALESCE(SUM(total_amount), 0) FROM manual_sales WHERE status = 'active') +
-           (SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE status IN ('paid', 'processing', 'shipping', 'completed'))
+           (SELECT COALESCE(SUM(total_amount), 0) FROM orders WHERE status IN ('paid', 'shipping', 'completed'))
          ) AS total_revenue,
          (
            (SELECT COALESCE(SUM(quantity), 0) FROM manual_sales WHERE status = 'active') +
-           (SELECT COALESCE(SUM(1), 0) FROM orders WHERE status IN ('paid', 'processing', 'shipping', 'completed'))
+           (SELECT COALESCE(SUM(jt.quantity), 0) FROM orders, JSON_TABLE(orders.items_json, '$[*]' COLUMNS (quantity INT PATH '$.quantity')) AS jt
+            WHERE orders.status IN ('paid', 'shipping', 'completed'))
          ) AS total_cards_sold,
          (
            (SELECT COUNT(*) FROM manual_sales WHERE status = 'active') +
-           (SELECT COUNT(*) FROM orders WHERE status IN ('paid', 'processing', 'shipping', 'completed'))
+           (SELECT COUNT(*) FROM orders WHERE status IN ('paid', 'shipping', 'completed'))
          ) AS total_orders`,
     );
     return rows[0];
