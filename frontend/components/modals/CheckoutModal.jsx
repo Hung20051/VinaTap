@@ -65,6 +65,28 @@ export default function CheckoutModal({
   const [pollingTimedOut, setPollingTimedOut] = useState(false);
   const [checkingManual, setCheckingManual] = useState(false);
 
+  // 🔄 TỰ ĐỘNG RESET TRẠNG THÁI KHI ĐÓNG/MỞ MODAL HOẶC KHI GIỎ HÀNG THAY ĐỔI
+  useEffect(() => {
+    if (!isOpen) {
+      setCreatedOrder(null);
+      setIsPaymentVerified(false);
+      setErrorMsg("");
+      setPollingTimedOut(false);
+      setCheckingManual(false);
+      setSubmitting(false);
+    }
+  }, [isOpen]);
+
+  const handleCloseModal = () => {
+    setCreatedOrder(null);
+    setIsPaymentVerified(false);
+    setErrorMsg("");
+    setPollingTimedOut(false);
+    setCheckingManual(false);
+    setSubmitting(false);
+    if (onClose) onClose();
+  };
+
   useEffect(() => {
     // 👤 TỰ ĐỘNG ĐIỀN THÔNG TIN TÀI KHOẢN NẾU ĐÃ CÓ TRONG SETTING
     const u = getUser();
@@ -312,9 +334,9 @@ export default function CheckoutModal({
   if (!isOpen) return null;
 
   return (
-    <div className="checkout-modal-overlay" onClick={onClose}>
+    <div className="checkout-modal-overlay" onClick={handleCloseModal}>
       <div className="checkout-modal-card" onClick={(e) => e.stopPropagation()}>
-        <button className="checkout-modal-close" onClick={onClose}>
+        <button className="checkout-modal-close" onClick={handleCloseModal}>
           <X size={20} />
         </button>
 
@@ -679,7 +701,7 @@ export default function CheckoutModal({
                   NFC tới bạn trong 1-3 ngày tới.
                 </p>
 
-                <button className="btn-cod-done" onClick={onClose}>
+                <button className="btn-cod-done" onClick={handleCloseModal}>
                   Đã Hiểu & Xong
                 </button>
               </div>

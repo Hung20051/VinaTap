@@ -47,7 +47,22 @@ class SystemSetting {
   }
 
   static async updateMany(settingsObj) {
+    const ALLOWED_SETTING_KEYS = [
+      "company_name",
+      "company_hotline",
+      "company_email",
+      "company_address",
+      "bank_id",
+      "bank_name",
+      "bank_account_no",
+      "bank_account_name",
+      "ai_caption_prompt",
+      "maintenance_mode",
+      "allow_registration",
+    ];
+
     for (const [key, value] of Object.entries(settingsObj)) {
+      if (!ALLOWED_SETTING_KEYS.includes(key)) continue;
       await db.execute(
         `INSERT INTO system_settings (setting_key, setting_value)
          VALUES (?, ?)

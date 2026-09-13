@@ -508,7 +508,7 @@ const Order = {
   },
 
   // Cập nhật trạng thái đơn hàng (Admin) — Nếu chuyển sang 'cancelled' thì HOÀN TRẢ VOUCHER
-  async updateStatus(id, status) {
+  async updateStatus(id, status, cancelReason = null) {
     const validStatuses = [
       "pending",
       "paid",
@@ -569,10 +569,14 @@ const Order = {
             }
 
             if (!alreadyUsed) {
-              await conn.execute(
-                `UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?`,
+              const [vUpdateRes] = await conn.execute(
+                `UPDATE vouchers SET used_count = used_count + 1 
+                 WHERE id = ? AND (usage_limit IS NULL OR used_count < usage_limit)`,
                 [vId],
               );
+              if (vUpdateRes.affectedRows === 0) {
+                console.warn(`[Voucher] Voucher ID ${vId} đã đạt giới hạn lượt dùng khi duyệt đơn ID ${id}`);
+              }
               if (ord.user_id) {
                 await conn.execute(
                   `INSERT INTO user_vouchers (user_id, voucher_id, status, used_at)
@@ -696,15 +700,19 @@ const Order = {
     const cancelReasonText = `Khách yêu cầu hủy: ${reason.trim()}`;
     const bankInfoText = (bankInfo || "").trim();
 
-    await db.execute(
+    const [updateResult] = await db.execute(
       `UPDATE orders 
        SET cancel_request_status = 'pending', 
            cancel_reason = ?, 
            cancel_bank_info = ?, 
            updated_at = NOW() 
-       WHERE id = ?`,
+       WHERE id = ? AND cancel_request_status != 'pending'`,
       [cancelReasonText, bankInfoText, orderId],
     );
+
+    if (updateResult.affectedRows === 0) {
+      throw new Error("Yêu cầu hủy của bạn đang được Admin xử lý hoặc đơn hàng không hợp lệ");
+    }
 
     return order;
   },
@@ -723,10 +731,6 @@ const Order = {
     const order = rows[0];
     if (action === "approve") {
       await this.updateStatus(orderId, "cancelled", "Admin đã duyệt yêu cầu hủy & hoàn tiền");
-      await db.execute(
-        `UPDATE orders SET cancel_request_status = 'approved', updated_at = NOW() WHERE id = ?`,
-        [orderId],
-      );
     } else if (action === "reject") {
       const rejectNote = rejectionReason?.trim() || "Sản phẩm đã được xử lý và chuẩn bị bàn giao vận chuyển";
       await db.execute(
@@ -807,7 +811,7 @@ const Order = {
       // 3. Xử lý voucher: tăng used_count + đánh dấu user đã dùng (chỉ tăng nếu user chưa từng dùng voucher này)
       if (order.voucher_code) {
         const [vRows] = await conn.execute(
-          `SELECT id FROM vouchers WHERE UPPER(code) = ? LIMIT 1`,
+          `SELECT id FROM vouchers WHERE UPPER(code) = ? LIMIT 1 FOR UPDATE`,
           [order.voucher_code.toUpperCase()],
         );
         if (vRows.length > 0) {
@@ -824,10 +828,14 @@ const Order = {
           }
 
           if (!alreadyUsed) {
-            await conn.execute(
-              `UPDATE vouchers SET used_count = used_count + 1 WHERE id = ?`,
+            const [vUpdateRes] = await conn.execute(
+              `UPDATE vouchers SET used_count = used_count + 1 
+               WHERE id = ? AND (usage_limit IS NULL OR used_count < usage_limit)`,
               [vId],
             );
+            if (vUpdateRes.affectedRows === 0) {
+              console.warn(`[Voucher] Voucher ID ${vId} đã đạt giới hạn lượt dùng khi markAsPaid cho đơn ${cleanCode}`);
+            }
             if (order.user_id) {
               await conn.execute(
                 `INSERT INTO user_vouchers (user_id, voucher_id, status, used_at)

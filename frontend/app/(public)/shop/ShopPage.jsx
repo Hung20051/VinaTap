@@ -459,15 +459,17 @@ export default function ShopPage() {
         freeShippingThreshold={shippingRule.free_shipping_threshold}
       />
 
-      <CheckoutModal
-        isOpen={checkoutOpen}
-        onClose={() => setCheckoutOpen(false)}
-        cart={cart}
-        onClearCart={clearCart}
-        initialVoucherCode={initialVoucherCode}
-        shippingRule={shippingRule}
-        user={user}
-      />
+      {checkoutOpen && (
+        <CheckoutModal
+          isOpen={checkoutOpen}
+          onClose={() => setCheckoutOpen(false)}
+          cart={cart}
+          onClearCart={clearCart}
+          initialVoucherCode={initialVoucherCode}
+          shippingRule={shippingRule}
+          user={user}
+        />
+      )}
     </div>
   );
 }

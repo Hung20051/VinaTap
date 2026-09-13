@@ -4,11 +4,11 @@ const {
   getSettings,
   updateSettings,
 } = require("../controllers/systemSettingController");
-const { protect } = require("../middleware/auth");
+const { protect, optionalAuth } = require("../middleware/auth");
 const { requireRole } = require("../middleware/role");
 
 // Public hoặc Guest xem được thông tin liên hệ / giá vận chuyển
-router.get("/", getSettings);
+router.get("/", optionalAuth, getSettings);
 
 // Chỉ Admin mới có quyền cập nhật cấu hình hệ thống
 router.put("/", protect, requireRole("admin"), updateSettings);
