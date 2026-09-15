@@ -519,7 +519,7 @@ const createBatch = async (req, res) => {
   try {
     let { province_id, product_id, prefix, count } = req.body;
 
-    // Nếu truyền product_id thay vì province_id -> tìm hoặc tạo province tương ứng
+    // Nếu truyền product_id thay vì province_id -> tìm hoặc liên kết province tương ứng
     if (product_id && !province_id) {
       const [prodRows] = await db.execute(
         `SELECT * FROM products WHERE id = ? LIMIT 1`,
@@ -527,29 +527,35 @@ const createBatch = async (req, res) => {
       );
       if (prodRows.length > 0) {
         const prod = prodRows[0];
-        const rawName =
-          prod.name
-            .replace(/^(Mảnh ghép NFC 3D\s*[-–:]*|Mảnh\s*[-–:]*|Thẻ\s*[-–:]*)/i, "")
-            .trim() || prod.name;
-        // 1. Ưu tiên tìm tỉnh theo tên chính xác tuyệt đối
-        let [provRows] = await db.execute(
-          `SELECT id FROM provinces WHERE name = ? LIMIT 1`,
-          [rawName],
+        const [allProvs] = await db.execute(
+          `SELECT id, name, slug FROM provinces`,
         );
 
-        // 2. Nếu chưa khớp chính xác, tìm kiếm tương đối có sắp xếp theo độ tương đồng
-        if (provRows.length === 0) {
-          const escapedLike = rawName.replace(/[%_\\]/g, "\\$&");
-          [provRows] = await db.execute(
-            `SELECT id FROM provinces WHERE name LIKE ? ESCAPE '\\' ORDER BY LENGTH(name) ASC LIMIT 1`,
-            [`%${escapedLike}%`],
-          );
+        // 1. Loại bỏ các tiền tố/hậu tố của tên sản phẩm để lấy tên địa danh
+        const cleanName = prod.name
+          .replace(/^(Mảnh ghép NFC 3D|Mảnh ghép NFC|Mảnh ghép|Thẻ NFC Du Lịch|Thẻ NFC 3D|Thẻ NFC|Thẻ Du Lịch|Thẻ|NFC Du Lịch|NFC)\s*[-–:]*\s*/i, "")
+          .replace(/\s*[-–:]*\s*(Bản Đồ|Du Lịch|Thủ Đô|Sài Gòn|Năng Động|Mộng Mơ|Miền Bắc|Miền Trung|Miền Nam).*$/i, "")
+          .trim();
+
+        const prodNameLower = prod.name.toLowerCase();
+
+        // 2. Tìm tỉnh đã có trong DB phù hợp nhất
+        let matchedProv = allProvs.find(
+          (p) =>
+            prodNameLower.includes(p.name.toLowerCase()) ||
+            (cleanName && p.name.toLowerCase() === cleanName.toLowerCase()),
+        );
+
+        // Trường hợp đặc biệt: TP.HCM / Sài Gòn
+        if (!matchedProv && /hồ chí minh|sài gòn|hcm|tphcm/i.test(prodNameLower)) {
+          matchedProv = allProvs.find((p) => /hồ chí minh/i.test(p.name));
         }
 
-        if (provRows.length > 0) {
-          province_id = provRows[0].id;
+        if (matchedProv) {
+          province_id = matchedProv.id;
         } else {
-          // Tự động tạo bản ghi tỉnh thành tương ứng cho sản phẩm
+          // Tự động tạo bản ghi tỉnh thành mới nếu chưa từng có
+          const rawName = cleanName || prod.name;
           const slug = rawName
             .toLowerCase()
             .normalize("NFD")
@@ -557,34 +563,44 @@ const createBatch = async (req, res) => {
             .replace(/[^a-z0-9]+/g, "-")
             .replace(/^-+|-+$/g, "");
 
-          const lowerName = rawName.toLowerCase();
-          let detectedRegion = "north";
-          if (
-            /đà nẵng|quảng|huế|nghệ an|hà tĩnh|thanh hóa|bình định|phú yên|khánh hòa|ninh thuận|bình thuận/i.test(
-              lowerName,
-            )
-          ) {
-            detectedRegion = "central";
-          } else if (
-            /hồ chí minh|sài gòn|cần thơ|bình dương|đồng nai|long an|tiền giang|bến tre|vĩnh long|trà vinh|hậu giang|sóc trăng|bạc liêu|cà mau|kiên giang|an giang|đồng tháp|tây ninh|bình phước|bà rịa/i.test(
-              lowerName,
-            )
-          ) {
-            detectedRegion = "south";
-          } else if (/trường sa|hoàng sa|phú quốc|côn đảo/i.test(lowerName)) {
-            detectedRegion = "island";
-          }
-
-          const [insProv] = await db.execute(
-            `INSERT INTO provinces (name, slug, region, description, status) VALUES (?, ?, ?, ?, 'active')`,
-            [
-              rawName,
-              slug,
-              detectedRegion,
-              `Khám phá văn hóa & địa danh ${rawName}`,
-            ],
+          // Kiểm tra xem slug đã có chưa để tránh lỗi Duplicate Key
+          const [existSlug] = await db.execute(
+            `SELECT id FROM provinces WHERE slug = ? LIMIT 1`,
+            [slug],
           );
-          province_id = insProv.insertId;
+
+          if (existSlug.length > 0) {
+            province_id = existSlug[0].id;
+          } else {
+            const lowerName = rawName.toLowerCase();
+            let detectedRegion = "north";
+            if (
+              /đà nẵng|quảng|huế|nghệ an|hà tĩnh|thanh hóa|bình định|phú yên|khánh hòa|ninh thuận|bình thuận|lâm đồng|đà lạt/i.test(
+                lowerName,
+              )
+            ) {
+              detectedRegion = "central";
+            } else if (
+              /hồ chí minh|sài gòn|cần thơ|bình dương|đồng nai|long an|tiền giang|bến tre|vĩnh long|trà vinh|hậu giang|sóc trăng|bạc liêu|cà mau|kiên giang|an giang|đồng tháp|tây ninh|bình phước|bà rịa/i.test(
+                lowerName,
+              )
+            ) {
+              detectedRegion = "south";
+            } else if (/trường sa|hoàng sa|phú quốc|côn đảo/i.test(lowerName)) {
+              detectedRegion = "island";
+            }
+
+            const [insProv] = await db.execute(
+              `INSERT INTO provinces (name, slug, region, description, status) VALUES (?, ?, ?, ?, 'active')`,
+              [
+                rawName,
+                slug,
+                detectedRegion,
+                `Khám phá văn hóa & địa danh ${rawName}`,
+              ],
+            );
+            province_id = insProv.insertId;
+          }
         }
       }
     }
@@ -728,33 +744,43 @@ const adminAssignCard = async (req, res) => {
     if (!target)
       return res.status(404).json({ message: "Không tìm thấy người dùng" });
 
-    await db.execute(
-      `UPDATE nfc_cards
-       SET owner_user_id = ?, activated_at = NOW(), status = 'active'
-       WHERE id = ?`,
-      [target.id, card.id],
-    );
+    const conn = await db.getConnection();
+    try {
+      await conn.beginTransaction();
 
-    // Ghi log vào card_transfers
-    // ⚠️ FIX: cột `token` có ràng buộc UNIQUE. Trước đây hard-code chuỗi
-    // 'ADMIN_ASSIGN' cho MỌI lần gán thủ công -> lần thứ 2 trở đi luôn lỗi
-    // "Duplicate entry" vì đụng unique constraint. Sinh token ngẫu nhiên
-    // (không dùng để gửi email, chỉ để lưu log) giống cách các luồng
-    // transfer khác đang làm.
-    const adminToken = `ADMIN_ASSIGN_${crypto.randomBytes(16).toString("hex")}`;
-    await db.execute(
-      `INSERT INTO card_transfers
-         (nfc_card_id, from_user_id, to_email, to_user_id, token, status, note, expires_at, accepted_at)
-       VALUES (?, ?, ?, ?, ?, 'accepted', ?, NOW(), NOW())`,
-      [
-        card.id,
-        req.user.id,
-        target.email,
-        target.id,
-        adminToken,
-        reason ? `[Admin] ${reason}` : "[Admin gán thủ công]",
-      ],
-    );
+      await conn.execute(
+        `UPDATE nfc_cards
+         SET owner_user_id = ?, activated_at = NOW(), status = 'active'
+         WHERE id = ?`,
+        [target.id, card.id],
+      );
+
+      // Ghi log vào card_transfers
+      // ⚠️ FIX: cột `token` có ràng buộc UNIQUE. Sinh token ngẫu nhiên
+      // (không dùng để gửi email, chỉ để lưu log) giống cách các luồng
+      // transfer khác đang làm.
+      const adminToken = `ADMIN_ASSIGN_${crypto.randomBytes(16).toString("hex")}`;
+      await conn.execute(
+        `INSERT INTO card_transfers
+           (nfc_card_id, from_user_id, to_email, to_user_id, token, status, note, expires_at, accepted_at)
+         VALUES (?, ?, ?, ?, ?, 'accepted', ?, NOW(), NOW())`,
+        [
+          card.id,
+          req.user.id,
+          target.email,
+          target.id,
+          adminToken,
+          reason ? `[Admin] ${reason}` : "[Admin gán thủ công]",
+        ],
+      );
+
+      await conn.commit();
+    } catch (err) {
+      await conn.rollback();
+      throw err;
+    } finally {
+      conn.release();
+    }
 
     res.json({
       message: `Đã gán thẻ ${card.serial_code} cho ${target.name} (${target.email})`,
@@ -851,29 +877,41 @@ const provisionCard = async (req, res) => {
             "Thẻ chưa có chủ — cần cung cấp owner_email hoặc owner_id hợp lệ",
         });
 
-      await db.execute(
-        `UPDATE nfc_cards
-         SET owner_user_id = ?, activated_at = NOW(), status = 'active'
-         WHERE id = ?`,
-        [target.id, card.id],
-      );
+      const conn = await db.getConnection();
+      try {
+        await conn.beginTransaction();
 
-      const provisionToken = `PROVISION_${crypto.randomBytes(16).toString("hex")}`;
-      await db.execute(
-        `INSERT INTO card_transfers
-           (nfc_card_id, from_user_id, to_email, to_user_id, token, status, note, expires_at, accepted_at)
-         VALUES (?, ?, ?, ?, ?, 'accepted', ?, NOW(), NOW())`,
-        [
-          card.id,
-          req.user.id,
-          target.email,
-          target.id,
-          provisionToken,
-          reason
-            ? `[Admin] ${reason}`
-            : "[Admin chuẩn bị album trước khi giao]",
-        ],
-      );
+        await conn.execute(
+          `UPDATE nfc_cards
+           SET owner_user_id = ?, activated_at = NOW(), status = 'active'
+           WHERE id = ?`,
+          [target.id, card.id],
+        );
+
+        const provisionToken = `PROVISION_${crypto.randomBytes(16).toString("hex")}`;
+        await conn.execute(
+          `INSERT INTO card_transfers
+             (nfc_card_id, from_user_id, to_email, to_user_id, token, status, note, expires_at, accepted_at)
+           VALUES (?, ?, ?, ?, ?, 'accepted', ?, NOW(), NOW())`,
+          [
+            card.id,
+            req.user.id,
+            target.email,
+            target.id,
+            provisionToken,
+            reason
+              ? `[Admin] ${reason}`
+              : "[Admin chuẩn bị album trước khi giao]",
+          ],
+        );
+
+        await conn.commit();
+      } catch (err) {
+        await conn.rollback();
+        throw err;
+      } finally {
+        conn.release();
+      }
 
       finalOwnerId = target.id;
     }

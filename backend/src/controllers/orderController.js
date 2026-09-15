@@ -379,11 +379,11 @@ const paymentWebhook = async (req, res) => {
           .status(401)
           .json({ status: "error", message: "Unauthorized Webhook Request" });
       }
-    } else if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging") {
+    } else {
+      console.warn("[Webhook] SEPAY_WEBHOOK_KEY chưa được cấu hình — từ chối request");
       return res.status(403).json({
         status: "error",
-        message:
-          "Webhook Secret Key chưa được cấu hình trên môi trường Production/Staging",
+        message: "Webhook Secret Key chưa được cấu hình trên hệ thống",
       });
     }
 
