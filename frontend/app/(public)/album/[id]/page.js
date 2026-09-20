@@ -184,6 +184,9 @@ export default function AlbumPage() {
     try {
       const res = await albumAPI.getOne(id);
       setAlbum(res.album);
+      if (res.album?.share_code && id !== res.album.share_code && typeof window !== "undefined") {
+        window.history.replaceState(null, "", `/album/${res.album.share_code}`);
+      }
       const uniqueMedia = (res.media || []).filter(
         (m, idx, arr) => arr.findIndex((x) => x.id === m.id) === idx,
       );

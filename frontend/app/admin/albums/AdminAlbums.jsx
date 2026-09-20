@@ -1048,7 +1048,7 @@ export default function AdminAlbums() {
             <div className="admin-modal-footer">
               {selectedAlbum.is_public && (
                 <a
-                  href={`/album/${selectedAlbum.id}`}
+                  href={`/album/${selectedAlbum.share_code || selectedAlbum.id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-modal-secondary"

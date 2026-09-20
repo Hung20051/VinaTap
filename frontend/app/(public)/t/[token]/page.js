@@ -166,9 +166,9 @@ export default function TapPage() {
       const myCard = cards.cards?.find((c) => c.nfc_token === token);
       if (myCard && !myCard.album_id) {
         const alb = await albumAPI.create({ nfc_card_id: myCard.id });
-        router.push(`/album/${alb.album.id}`);
+        router.push(`/album/${alb.album?.share_code || alb.album.id}`);
       } else if (myCard?.album_id) {
-        router.push(`/album/${myCard.album_id}`);
+        router.push(`/album/${myCard.share_code || myCard.album_id}`);
       } else {
         router.push("/customer/dashboard");
       }

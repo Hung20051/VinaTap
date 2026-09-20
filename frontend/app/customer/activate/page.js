@@ -63,7 +63,7 @@ export default function ActivatePage() {
     setError("");
     try {
       const res = await albumAPI.create({ nfc_card_id: card.id });
-      router.push(`/album/${res.album.id}`);
+      router.push(`/album/${res.album?.share_code || res.album.id}`);
     } catch (err) {
       setError(err.message || "Không tạo được album, thử lại từ Dashboard");
       setCreatingAlbum(false);
