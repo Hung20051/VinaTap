@@ -199,6 +199,20 @@
   transform: translateY(-2px);
 }
 
+.album-icon-btn--guide {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #c2410c;
+  text-decoration: none;
+}
+
+.album-icon-btn--guide:hover {
+  background: #ffedd5;
+  border-color: #fdba74;
+  color: #9a3412;
+  transform: translateY(-1px);
+}
+
 @media (max-width: 640px) {
   .album-nav-inner {
     padding: 8px 12px;
@@ -429,7 +443,29 @@
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
+  text-decoration: none;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.album-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.album-pill-btn--province {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.4) 0%, rgba(249, 115, 22, 0.3) 100%);
+  border-color: rgba(251, 146, 60, 0.65);
+  color: #ffedd5;
+  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.25);
+}
+
+.album-pill-btn--province:hover {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  border-color: #fed7aa;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.45);
 }
 
 /* ─── Tablet & Mobile Responsive Overrides ───────────────────── */
@@ -833,6 +869,37 @@
   background: #0f172a;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.album-gallery-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.album-story-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #ea580c;
+  border: 1.5px solid #fed7aa;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.album-story-btn-cta:hover {
+  background: #fff7ed;
+  border-color: #f97316;
+  color: #c2410c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.2);
 }
 
 .album-btn-upload-cta {

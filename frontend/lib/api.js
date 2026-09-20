@@ -177,6 +177,11 @@ export const provinceAPI = {
       method: "PUT",
       body: JSON.stringify(data),
     }),
+  saveFullGuide: (id, data) =>
+    request(`/provinces/${id}/full-guide`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
   delete: (id) => request(`/provinces/${id}`, { method: "DELETE" }),
   // Landmarks
   createLandmark: (provinceId, data) =>
@@ -259,13 +264,6 @@ export const albumAPI = {
   update: (id, body) =>
     request(`/albums/${id}`, { method: "PUT", body: JSON.stringify(body) }),
   delete: (id) => request(`/albums/${id}`, { method: "DELETE" }),
-  createTag: (id, body) =>
-    request(`/albums/${id}/tags`, {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  deleteTag: (id, tagId) =>
-    request(`/albums/${id}/tags/${tagId}`, { method: "DELETE" }),
 
   requestCollaborator: (id) =>
     request(`/albums/${id}/share/request`, { method: "POST" }),
@@ -353,13 +351,6 @@ export const mediaAPI = {
     }),
   deleteSticker: (overlayId) =>
     request(`/media/stickers/${overlayId}`, { method: "DELETE" }),
-  addTag: (id, tag_id) =>
-    request(`/media/${id}/tags`, {
-      method: "POST",
-      body: JSON.stringify({ tag_id }),
-    }),
-  removeTag: (id, tagId) =>
-    request(`/media/${id}/tags/${tagId}`, { method: "DELETE" }),
 };
 
 // ─── STICKERS ─────────────────────────────────────────────────

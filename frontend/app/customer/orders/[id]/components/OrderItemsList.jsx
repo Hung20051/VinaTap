@@ -58,7 +58,7 @@ export default function OrderItemsList({ order }) {
             "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600";
 
           const itemName =
-            item.name || item.title || item.product_name || "Thẻ Gỗ NFC Di Sản VinaTap";
+            item.name || item.title || item.product_name || "Thẻ Mảnh Ghép NFC Di Sản VinaTap";
 
           return (
             <div key={idx} className="detail-item-card">
@@ -78,7 +78,7 @@ export default function OrderItemsList({ order }) {
                 <h4 className="detail-item-name">{itemName}</h4>
                 <div className="detail-item-meta">
                   Phân loại:{" "}
-                  <strong>{item.wood_type || item.variant || "Gỗ Khắc Laser Cao Cấp"}</strong>
+                  <strong>{item.wood_type || item.variant || "Mảnh Ghép Khắc Laser Cao Cấp"}</strong>
                 </div>
 
                 <div className="detail-item-badges">

@@ -27,7 +27,9 @@ const tapCard = async (req, res) => {
     const c = rows[0];
 
     // Lấy Album gắn với thẻ này nếu có
+    // Lấy Album gắn với thẻ này nếu có (kèm danh sách ảnh preview)
     let album = null;
+    let albumMedia = [];
     try {
       const [albumRows] = await db.execute(
         `SELECT a.id, a.share_code, a.title, a.description, a.is_public, a.view_count, a.created_at,
@@ -41,6 +43,17 @@ const tapCard = async (req, res) => {
         [c.id],
       );
       album = albumRows[0] || null;
+
+      if (album) {
+        const [mRows] = await db.execute(
+          `SELECT id, media_type, file_url, thumbnail_url, caption_user, caption_ai, taken_at 
+           FROM album_media 
+           WHERE album_id = ? AND status = 'active' 
+           ORDER BY sort_order ASC, id ASC LIMIT 6`,
+          [album.id],
+        );
+        albumMedia = mRows || [];
+      }
     } catch (albErr) {
       console.warn("tapCard album fetch error:", albErr.message);
     }
@@ -49,13 +62,39 @@ const tapCard = async (req, res) => {
     let landmarks = [];
     try {
       const [lmRows] = await db.execute(
-        `SELECT id, name, description, address, thumbnail_url, latitude, longitude 
-         FROM landmarks WHERE province_id = ? AND (status IS NULL OR status = 'active') ORDER BY id ASC LIMIT 6`,
+        `SELECT id, name, description, address, thumbnail_url, category, latitude, longitude 
+         FROM landmarks WHERE province_id = ? AND (status IS NULL OR status = 'active') ORDER BY sort_order ASC, id ASC LIMIT 6`,
         [c.prov_id],
       );
       landmarks = lmRows || [];
     } catch (lmErr) {
       console.warn("tapCard landmarks fetch error:", lmErr.message);
+    }
+
+    // Lấy danh sách ẩm thực nổi bật
+    let foods = [];
+    try {
+      const [foodRows] = await db.execute(
+        `SELECT id, title, image_url, address, description, view_count, is_featured 
+         FROM province_foods WHERE province_id = ? AND (status IS NULL OR status = 'active') ORDER BY sort_order ASC, id ASC LIMIT 6`,
+        [c.prov_id],
+      );
+      foods = foodRows || [];
+    } catch (fErr) {
+      console.warn("tapCard foods fetch error:", fErr.message);
+    }
+
+    // Lấy danh sách lễ hội
+    let festivals = [];
+    try {
+      const [festRows] = await db.execute(
+        `SELECT id, title, image_url, event_time, description 
+         FROM province_festivals WHERE province_id = ? AND (status IS NULL OR status = 'active') ORDER BY sort_order ASC, id ASC LIMIT 3`,
+        [c.prov_id],
+      );
+      festivals = festRows || [];
+    } catch (festErr) {
+      console.warn("tapCard festivals fetch error:", festErr.message);
     }
 
     res.json({
@@ -73,7 +112,10 @@ const tapCard = async (req, res) => {
         has_owner: !!c.owner_user_id,
         owner_name: c.owner_name || null,
         album,
+        albumMedia,
         landmarks,
+        foods,
+        festivals,
       },
     });
   } catch (err) {

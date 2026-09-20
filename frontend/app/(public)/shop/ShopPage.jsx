@@ -218,10 +218,19 @@ export default function ShopPage() {
           {/* Center Nav Links */}
           <nav className="shop-navbar-links">
             <Link href="/" className="shop-nav-link">
-              🗺️ Khám Phá Bản Đồ
+              Trang chủ
+            </Link>
+            <Link href="/#about" className="shop-nav-link">
+              Giới thiệu
             </Link>
             <Link href="/shop" className="shop-nav-link shop-nav-link--active">
-              🛍️ Cửa Hàng Thẻ NFC
+              Sản phẩm
+            </Link>
+            <Link href="/#provinces" className="shop-nav-link">
+              Cẩm nang
+            </Link>
+            <Link href="/#faq" className="shop-nav-link">
+              Hỏi đáp
             </Link>
           </nav>
 

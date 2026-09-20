@@ -36,6 +36,8 @@ import {
   Stamp,
   Volume2,
   VolumeX,
+  MapPin,
+  Compass,
 } from "lucide-react";
 import StickerCanvas from "@/components/ui/StickerCanvas";
 import Dino404 from "@/components/ui/Dino404";
@@ -55,22 +57,16 @@ export default function AlbumPage() {
 
   const [album, setAlbum] = useState(null);
   const [media, setMedia] = useState([]);
-  const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(null);
   const [toast, setToast] = useState(null);
 
   const [uploading, setUploading] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all"); // 'all' | 'image' | 'video'
-  const [selectedTagFilter, setSelectedTagFilter] = useState(null);
 
   const [editingInfo, setEditingInfo] = useState(false);
   const [infoForm, setInfoForm] = useState({ title: "", description: "" });
   const [savingInfo, setSavingInfo] = useState(false);
-
-  const [showTagModal, setShowTagModal] = useState(false);
-  const [newTag, setNewTag] = useState({ label: "", color: "#ea580c" });
-  const [addingTag, setAddingTag] = useState(false);
 
   const [collaborators, setCollaborators] = useState(null);
   const [requestingEdit, setRequestingEdit] = useState(false);
@@ -143,19 +139,6 @@ export default function AlbumPage() {
       );
     };
 
-    // 🏷️ Tag mới được tạo
-    const handleTagCreated = ({ tag }) => {
-      setTags((prev) => {
-        if (prev.some((t) => t.id === tag.id)) return prev;
-        return [tag, ...prev];
-      });
-    };
-
-    // ✕ Tag bị xóa
-    const handleTagDeleted = ({ tagId }) => {
-      setTags((prev) => prev.filter((t) => t.id !== tagId));
-    };
-
     // 📝 Thông tin album thay đổi
     const handleAlbumUpdated = ({ album: updatedAlbum }) => {
       if (updatedAlbum) {
@@ -172,8 +155,6 @@ export default function AlbumPage() {
     socket.on("media_added", handleMediaAdded);
     socket.on("media_deleted", handleMediaDeleted);
     socket.on("media_updated", handleMediaUpdated);
-    socket.on("tag_created", handleTagCreated);
-    socket.on("tag_deleted", handleTagDeleted);
     socket.on("album_updated", handleAlbumUpdated);
     socket.on("collaborator_requested", handleCollaboratorEvent);
     socket.on("collaborator_reviewed", handleCollaboratorEvent);
@@ -185,8 +166,6 @@ export default function AlbumPage() {
       socket.off("media_added", handleMediaAdded);
       socket.off("media_deleted", handleMediaDeleted);
       socket.off("media_updated", handleMediaUpdated);
-      socket.off("tag_created", handleTagCreated);
-      socket.off("tag_deleted", handleTagDeleted);
       socket.off("album_updated", handleAlbumUpdated);
       socket.off("collaborator_requested", handleCollaboratorEvent);
       socket.off("collaborator_reviewed", handleCollaboratorEvent);
@@ -209,7 +188,6 @@ export default function AlbumPage() {
         (m, idx, arr) => arr.findIndex((x) => x.id === m.id) === idx,
       );
       setMedia(uniqueMedia);
-      setTags(res.tags || []);
       setInfoForm({
         title: res.album.title || "",
         description: res.album.description || "",
@@ -323,43 +301,6 @@ export default function AlbumPage() {
     }
   };
 
-  // ─── XỬ LÝ TAGS ──────────────────────────────────────────────
-  const handleCreateTag = async (e) => {
-    e.preventDefault();
-    if (!newTag.label.trim()) return;
-    setAddingTag(true);
-    const albumTargetId = album?.share_code || album?.id || id;
-    try {
-      const res = await albumAPI.createTag(albumTargetId, newTag);
-      const createdTag = res.tag || (res.id ? res : null);
-      if (createdTag) {
-        setTags((prev) => {
-          if (prev.some((t) => t && t.id === createdTag.id)) return prev;
-          return [createdTag, ...prev.filter(Boolean)];
-        });
-      }
-      setNewTag({ label: "", color: "#ea580c" });
-      setShowTagModal(false);
-      showToast("success", "Đã thêm tag mới!");
-    } catch (err) {
-      showToast("error", err.message || "Lỗi tạo tag");
-    } finally {
-      setAddingTag(false);
-    }
-  };
-
-  const handleDeleteTag = async (tagId) => {
-    const albumTargetId = album?.share_code || album?.id || id;
-    try {
-      await albumAPI.deleteTag(albumTargetId, tagId);
-      setTags(tags.filter((t) => t.id !== tagId));
-      if (selectedTagFilter === tagId) setSelectedTagFilter(null);
-      showToast("success", "Đã xóa tag");
-    } catch (err) {
-      showToast("error", err.message || "Lỗi xóa tag");
-    }
-  };
-
   // ─── XỬ LÝ MEDIA ─────────────────────────────────────────────
   const handlePickFiles = () => {
     fileInputRef.current?.click();
@@ -426,34 +367,6 @@ export default function AlbumPage() {
     }
   };
 
-  const handleToggleTagOnMedia = async (mediaItem, tagId, isTagged) => {
-    try {
-      if (isTagged) {
-        await mediaAPI.removeTag(mediaItem.id, tagId);
-      } else {
-        await mediaAPI.attachTag(mediaItem.id, tagId);
-      }
-      const tagObj = tags.find((t) => t.id === tagId);
-      if (!tagObj) return;
-
-      const currentTags = (mediaItem.tags || "").split(",").filter(Boolean);
-      let nextTags = [];
-      if (isTagged) {
-        nextTags = currentTags.filter((l) => l !== tagObj.label);
-      } else {
-        nextTags = [...currentTags, tagObj.label];
-      }
-
-      setMedia(
-        media.map((m) =>
-          m.id === mediaItem.id ? { ...m, tags: nextTags.join(",") } : m,
-        ),
-      );
-    } catch (err) {
-      showToast("error", err.message || "Lỗi cập nhật tag");
-    }
-  };
-
   const handleSendReport = async (e) => {
     e.preventDefault();
     if (!reportReason) return;
@@ -506,13 +419,6 @@ export default function AlbumPage() {
     const isPhoto = m.media_type === "photo" || m.media_type === "image" || !isVideo;
     if (activeFilter === "image" && !isPhoto) return false;
     if (activeFilter === "video" && !isVideo) return false;
-    if (selectedTagFilter) {
-      const tagObj = tags.find((t) => t.id === selectedTagFilter);
-      if (tagObj) {
-        const itemTags = (m.tags || "").split(",").filter(Boolean);
-        if (!itemTags.includes(tagObj.label)) return false;
-      }
-    }
     return true;
   });
 
@@ -544,6 +450,15 @@ export default function AlbumPage() {
           </div>
 
           <div className="album-nav-right">
+            <Link
+              href={album.province_slug ? `/province/${album.province_slug}` : "/#provinces"}
+              className="album-icon-btn album-icon-btn--guide"
+              title={`Xem cẩm nang & thông tin du lịch ${album.province_name || "tỉnh này"}`}
+            >
+              <Compass size={16} />
+              <span className="btn-text-desktop">Thông tin tỉnh</span>
+            </Link>
+
             <button
               className="album-icon-btn"
               onClick={handleShareLink}
@@ -624,7 +539,12 @@ export default function AlbumPage() {
         <div className="album-hero-container">
           <div className="album-hero-card">
             {/* Province Map Piece 3D Badge */}
-            <div className="album-hero-badge-wrap">
+            <Link
+              href={album.province_slug ? `/province/${album.province_slug}` : "/#provinces"}
+              className="album-hero-badge-wrap"
+              title={`Khám phá cẩm nang & thông tin ${album.province_name}`}
+              style={{ textDecoration: "none", display: "block" }}
+            >
               <div className="album-nfc-piece-card">
                 {album.province_thumbnail ? (
                   <img
@@ -636,7 +556,7 @@ export default function AlbumPage() {
                   <div className="album-piece-placeholder">🗺️</div>
                 )}
               </div>
-            </div>
+            </Link>
 
             {/* Album Titles & Meta */}
             <div className="album-hero-meta">
@@ -726,6 +646,16 @@ export default function AlbumPage() {
 
               {/* Owner & Collaborator Action Buttons */}
               <div className="album-hero-actions-bar">
+                {/* Nút xem thông tin tỉnh / cẩm nang */}
+                <Link
+                  href={album.province_slug ? `/province/${album.province_slug}` : "/#provinces"}
+                  className="album-pill-btn album-pill-btn--province"
+                  title={`Khám phá cẩm nang du lịch & danh thắng ${album.province_name}`}
+                >
+                  <Compass size={14} />
+                  <span>Thông tin {album.province_name}</span>
+                </Link>
+
                 {isOwner && (
                   <>
                     {album.status === "active" && !editingInfo && (
@@ -795,7 +725,7 @@ export default function AlbumPage() {
                       border: "1px solid rgba(234, 88, 12, 0.3)",
                     }}
                   >
-                    ⏳ Đang Chờ Chủ Album Duyệt
+                    ⏳ Đã gửi yêu cầu đóng góp
                   </div>
                 )}
 
@@ -827,82 +757,7 @@ export default function AlbumPage() {
         </div>
       </section>
 
-      {/* ─── 2. TAGS & STORIES FILTER BAR ───────────────────────── */}
-      <section className="album-tags-section">
-        <div className="album-tags-container">
-          <div
-            className="album-tags-scroll"
-            onWheel={(e) => {
-              if (e.deltaY !== 0) {
-                e.currentTarget.scrollLeft += e.deltaY;
-              }
-            }}
-          >
-            <button
-              className={`album-story-tag ${selectedTagFilter === null ? "active" : ""}`}
-              onClick={() => setSelectedTagFilter(null)}
-            >
-              <span>✨ Tất Cả</span>
-            </button>
-
-            {tags.filter(Boolean).map((t) => (
-              <span
-                key={t?.id}
-                className={`album-story-tag ${selectedTagFilter === t?.id ? "active" : ""}`}
-                style={{
-                  "--tag-color": t?.color || "#ea580c",
-                }}
-                onClick={() =>
-                  setSelectedTagFilter(selectedTagFilter === t?.id ? null : t?.id)
-                }
-              >
-                <span>#{t?.label}</span>
-                {isOwner && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteTag(t?.id);
-                    }}
-                    className="album-story-tag-del"
-                    title="Xóa tag"
-                  >
-                    ✕
-                  </button>
-                )}
-              </span>
-            ))}
-
-            {(isOwner || isCollaborator) && album.status === "active" && (
-              <button
-                className="album-story-tag album-story-tag--add"
-                onClick={() => setShowTagModal(true)}
-              >
-                <Plus size={13} /> Thêm Tag
-              </button>
-            )}
-          </div>
-
-          {filteredMedia.length > 0 && (
-            <div className="album-tags-action-side">
-              <button
-                className="album-story-tag album-story-tag--play"
-                onClick={() => setStoryModeIndex(0)}
-                title="Trình chiếu Story hành trình"
-              >
-                <Play size={13} fill="currentColor" />
-                <span>
-                  Trình Chiếu Story{" "}
-                  {selectedTagFilter
-                    ? `(#${tags.find((t) => t?.id === selectedTagFilter)?.label || ""})`
-                    : ""}
-                </span>
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ─── 3. COLLABORATOR REQUESTS (CHỈ CHỦ ALBUM) ───────────── */}
+      {/* ─── 2. COLLABORATOR REQUESTS (CHỈ CHỦ ALBUM) ───────────── */}
       {isOwner && (pendingRequests.length > 0 || approvedCollaborators.length > 0) && (
         <section className="album-collab-section">
           <div className="album-collab-card">
@@ -952,7 +807,7 @@ export default function AlbumPage() {
         </section>
       )}
 
-      {/* ─── 4. MEDIA GALLERY & FILTER TABS ─────────────────────── */}
+      {/* ─── 3. MEDIA GALLERY & FILTER TABS ─────────────────────── */}
       <main className="album-gallery-section">
         <div className="album-gallery-header">
           <div className="album-media-type-tabs">
@@ -987,6 +842,17 @@ export default function AlbumPage() {
           </div>
 
           <div className="album-gallery-actions">
+            {filteredMedia.length > 0 && (
+              <button
+                className="album-story-btn-cta"
+                onClick={() => setStoryModeIndex(0)}
+                title="Trình chiếu Story hành trình"
+              >
+                <Play size={14} fill="currentColor" />
+                <span>Trình Chiếu Story</span>
+              </button>
+            )}
+
             <input
               ref={fileInputRef}
               type="file"
@@ -1035,7 +901,6 @@ export default function AlbumPage() {
               <MediaCard
                 key={m.id ? `media-${m.id}` : `media-idx-${idx}`}
                 item={m}
-                tags={tags}
                 isOwner={isOwner}
                 canEdit={canEdit && album.status === "active"}
                 canDelete={isOwner || (user && user.id === m.uploader_id)}
@@ -1180,81 +1045,6 @@ export default function AlbumPage() {
           provinceThumb={album?.province_thumbnail}
           onClose={() => setStoryModeIndex(null)}
         />
-      )}
-
-      {/* ─── 6. CREATE TAG MODAL ─────────────────────────────────── */}
-      {showTagModal && (
-        <div
-          className="album-modal-overlay"
-          onClick={() => setShowTagModal(false)}
-        >
-          <div className="album-modal-card" onClick={(e) => e.stopPropagation()}>
-            <div className="album-modal-header">
-              <h3>
-                <TagIcon size={18} /> Tạo Tag / Chủ Đề Kỷ Niệm
-              </h3>
-              <button
-                className="album-modal-close"
-                onClick={() => setShowTagModal(false)}
-              >
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={handleCreateTag} className="album-modal-form">
-              <label className="album-form-label">Tên Tag (Ví dụ: Ăn Uống, Check-in...):</label>
-              <input
-                type="text"
-                placeholder="Nhập tên tag..."
-                className="album-form-input"
-                value={newTag.label}
-                onChange={(e) =>
-                  setNewTag({ ...newTag, label: e.target.value })
-                }
-                autoFocus
-                required
-              />
-
-              <label className="album-form-label">Chọn Màu Nhận Diện:</label>
-              <div className="album-color-preset-row">
-                {presetColors.map((color) => (
-                  <div
-                    key={color}
-                    onClick={() => setNewTag({ ...newTag, color })}
-                    className={`album-color-dot ${newTag.color === color ? "active" : ""}`}
-                    style={{ background: color }}
-                  />
-                ))}
-                <input
-                  type="color"
-                  value={newTag.color}
-                  onChange={(e) =>
-                    setNewTag({ ...newTag, color: e.target.value })
-                  }
-                  className="album-custom-color-input"
-                  title="Tự chọn màu"
-                />
-              </div>
-
-              <div className="album-modal-actions">
-                <button
-                  type="button"
-                  className="album-btn album-btn--ghost"
-                  onClick={() => setShowTagModal(false)}
-                >
-                  Hủy
-                </button>
-                <button
-                  type="submit"
-                  className="album-btn album-btn--primary"
-                  disabled={addingTag || !newTag.label.trim()}
-                >
-                  <Plus size={16} /> {addingTag ? "Đang thêm..." : "Tạo Tag Mới"}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
       )}
 
       {/* Modal Báo Cáo Vi Phạm */}
@@ -1470,13 +1260,11 @@ export default function AlbumPage() {
 // ─── Component: Media Card Gallery Item ───────────────────────
 function MediaCard({
   item,
-  tags,
   isOwner,
   canEdit,
   canDelete,
   onDelete,
   onSaveCaption,
-  onToggleTag,
   onOpenLightbox,
   onOpenSticker,
 }) {
@@ -1484,9 +1272,6 @@ function MediaCard({
     item.caption_user || item.caption_ai || "",
   );
   const [editingCaption, setEditingCaption] = useState(false);
-  const [showTagPicker, setShowTagPicker] = useState(false);
-
-  const mediaTags = (item.tags || "").split(",").filter(Boolean);
 
   const stickerList = Array.isArray(item.stickers)
     ? item.stickers
@@ -1551,7 +1336,7 @@ function MediaCard({
         </div>
       </div>
 
-      {/* Caption & Tag Row */}
+      {/* Caption & Actions Row */}
       <div className="album-media-details" onClick={(e) => e.stopPropagation()}>
         {editingCaption ? (
           <div className="album-edit-caption-row" onClick={(e) => e.stopPropagation()}>
@@ -1594,28 +1379,9 @@ function MediaCard({
           </p>
         )}
 
-        {/* Tags & Stamp Actions Row */}
-        <div className="album-card-tags-row" onClick={(e) => e.stopPropagation()}>
-          {mediaTags.map((label) => (
-            <span key={label} className="album-card-tag-pill">
-              #{label}
-            </span>
-          ))}
-
-          {canEdit && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowTagPicker((v) => !v);
-              }}
-              className="album-card-add-tag-btn"
-            >
-              + Tag
-            </button>
-          )}
-
-          {canEdit && item.media_type !== "video" && (
+        {/* Action Buttons: Dán Sticker */}
+        {canEdit && item.media_type !== "video" && (
+          <div className="album-card-tags-row" onClick={(e) => e.stopPropagation()}>
             <button
               type="button"
               className="album-card-stamp-btn"
@@ -1627,32 +1393,6 @@ function MediaCard({
             >
               <Stamp size={12} /> Dán Sticker
             </button>
-          )}
-        </div>
-
-        {/* Tag Selection Popup */}
-        {showTagPicker && canEdit && (
-          <div className="album-tag-picker-popover" onClick={(e) => e.stopPropagation()}>
-            {tags.length === 0 && (
-              <span className="album-no-tag-hint">Chưa có tag nào</span>
-            )}
-            {tags.map((t) => {
-              const isTagged = mediaTags.includes(t.label);
-              return (
-                <button
-                  key={t.id}
-                  type="button"
-                  className={`album-tag-picker-chip ${isTagged ? "active" : ""}`}
-                  style={{ "--chip-color": t.color || "#ea580c" }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleTag(t.id, isTagged);
-                  }}
-                >
-                  {t.label}
-                </button>
-              );
-            })}
           </div>
         )}
 

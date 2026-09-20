@@ -107,13 +107,9 @@ const getAlbum = async (req, res) => {
     }
 
     // Lấy media trong album
-    // "stickers": trước đây addStickerOverlay/update/delete tồn tại nhưng
-    // không có nơi nào trả overlay về cho client -> ảnh dán sticker xong
-    // reload trang là mất dấu vết. Dùng subquery JSON_ARRAYAGG lấy toàn bộ
-    // overlay + ảnh sticker theo từng media (NULL nếu ảnh chưa dán gì).
+    // Lấy media trong album
     const [media] = await db.execute(
       `SELECT m.*,
-              GROUP_CONCAT(DISTINCT t.label ORDER BY t.label SEPARATOR ',') AS tags,
               (SELECT JSON_ARRAYAGG(JSON_OBJECT(
                         'id', o.id,
                         'sticker_id', o.sticker_id,
@@ -128,17 +124,8 @@ const getAlbum = async (req, res) => {
                JOIN stickers s ON s.id = o.sticker_id
                WHERE o.media_id = m.id) AS stickers
        FROM album_media m
-       LEFT JOIN media_tag_map mt ON mt.media_id = m.id
-       LEFT JOIN photo_tags t     ON t.id = mt.tag_id
        WHERE m.album_id = ? AND m.status = 'active'
-       GROUP BY m.id
        ORDER BY m.sort_order ASC, m.taken_at ASC`,
-      [album.id],
-    );
-
-    // Lấy danh sách tag của album
-    const [tags] = await db.execute(
-      `SELECT * FROM photo_tags WHERE album_id = ? ORDER BY created_at DESC`,
       [album.id],
     );
 
@@ -182,7 +169,6 @@ const getAlbum = async (req, res) => {
         can_edit,
       },
       media,
-      tags,
     });
   } catch (err) {
     console.error("getAlbum:", err);
@@ -261,84 +247,6 @@ const deleteAlbum = async (req, res) => {
     res.json({ message: "Đã xóa album" });
   } catch (err) {
     console.error("deleteAlbum:", err);
-    res.status(500).json({ message: "Lỗi server" });
-  }
-};
-
-// ─── THÊM TAG ────────────────────────────────────────────────
-// POST /api/albums/:id/tags
-// Body: { label, color }
-const createTag = async (req, res) => {
-  try {
-    const { label, color } = req.body;
-    if (!label) return res.status(400).json({ message: "Thiếu tên tag" });
-
-    const album = await Album.findById(req.params.id);
-    if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
-
-    if (album.status === "archived" && req.user.role !== "admin") {
-      return res.status(403).json({
-        message: "Album này đã bị khóa bởi Quản trị viên",
-      });
-    }
-
-    const canEdit = await Album.canEdit(album.id, req.user.id);
-    if (!canEdit)
-      return res
-        .status(403)
-        .json({ message: "Bạn không có quyền sửa album này" });
-
-    const [result] = await db.execute(
-      `INSERT INTO photo_tags (album_id, label, color) VALUES (?, ?, ?)`,
-      [album.id, label, color || null],
-    );
-    const newTag = {
-      id: result.insertId,
-      album_id: album.id,
-      label,
-      color,
-    };
-    emitToAlbum(album.id, album.share_code, "tag_created", { tag: newTag });
-    res.status(201).json({
-      message: "Thêm tag thành công",
-      tag: newTag,
-      ...newTag,
-    });
-  } catch (err) {
-    console.error("createTag:", err);
-    res.status(500).json({ message: "Lỗi server" });
-  }
-};
-
-// ─── XÓA TAG ─────────────────────────────────────────────────
-// DELETE /api/albums/:id/tags/:tagId
-const deleteTag = async (req, res) => {
-  try {
-    const album = await Album.findById(req.params.id);
-    if (!album) return res.status(404).json({ message: "Không tìm thấy album" });
-
-    if (album.status === "archived" && req.user.role !== "admin") {
-      return res.status(403).json({
-        message: "Album này đã bị khóa bởi Quản trị viên",
-      });
-    }
-
-    const canEdit = await Album.canEdit(album.id, req.user.id);
-    if (!canEdit)
-      return res
-        .status(403)
-        .json({ message: "Bạn không có quyền sửa album này" });
-
-    await db.execute(`DELETE FROM photo_tags WHERE id = ? AND album_id = ?`, [
-      req.params.tagId,
-      album.id,
-    ]);
-    emitToAlbum(album.id, album.share_code, "tag_deleted", {
-      tagId: Number(req.params.tagId),
-    });
-    res.json({ message: "Đã xóa tag" });
-  } catch (err) {
-    console.error("deleteTag:", err);
     res.status(500).json({ message: "Lỗi server" });
   }
 };
@@ -475,8 +383,6 @@ module.exports = {
   getMyAlbums,
   updateAlbum,
   deleteAlbum,
-  createTag,
-  deleteTag,
   getAdminStats,
   getAdminList,
   getAdminReports,

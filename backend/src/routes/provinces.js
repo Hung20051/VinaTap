@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getAllProvinces,
   getProvince,
+  saveFullProvinceGuide,
   createProvince,
   updateProvince,
   deleteProvince,
@@ -31,6 +32,7 @@ router.get("/:slug", getProvince);
 
 // Chỉ admin
 router.post("/", protect, requireRole("admin"), createProvince);
+router.put("/:id/full-guide", protect, requireRole("admin"), saveFullProvinceGuide);
 router.put("/:id", protect, requireRole("admin"), updateProvince);
 router.delete("/:id", protect, requireRole("admin"), deleteProvince);
 

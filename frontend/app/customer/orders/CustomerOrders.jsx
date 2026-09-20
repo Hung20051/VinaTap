@@ -205,7 +205,7 @@ export default function CustomerOrders() {
               : "Không có đơn hàng nào trong mục này"}
           </h2>
           <p className="empty-pkg-desc">
-            Khám phá bộ sưu tập Thẻ Gỗ NFC Di Sản Việt Nam độc bản và tạo đơn hàng
+            Khám phá bộ sưu tập Thẻ Mảnh Ghép NFC Di Sản Việt Nam độc bản và tạo đơn hàng
             ngay hôm nay!
           </p>
           <Link href="/shop" className="btn-empty-shop">

@@ -117,7 +117,7 @@ export default function OrderCard({
             "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600";
 
           const itemName =
-            item.name || item.title || item.product_name || "Thẻ Gỗ NFC Di Sản VinaTap";
+            item.name || item.title || item.product_name || "Thẻ Mảnh Ghép NFC Di Sản VinaTap";
 
           return (
             <div key={idx} className="order-card-item-row">
@@ -136,7 +136,7 @@ export default function OrderCard({
               <div className="item-info-col">
                 <h4 className="item-title">{itemName}</h4>
                 <div className="item-variant-label">
-                  {item.wood_type || item.variant || "Gỗ Khắc Laser Cao Cấp"}
+                  {item.wood_type || item.variant || "Mảnh Ghép Khắc Laser Cao Cấp"}
                 </div>
               </div>
 

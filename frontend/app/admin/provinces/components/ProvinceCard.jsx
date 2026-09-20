@@ -79,28 +79,14 @@ export default function ProvinceCard({
 
       {/* Footer Actions */}
       <div className="admin-prov-card__footer">
-        <button
-          type="button"
-          className="btn btn-outline admin-prov-btn-sm"
-          onClick={() => onOpenLandmarks(prov)}
+        <a
+          href={`/admin/provinces/${prov.slug}/edit`}
+          className="btn btn-primary admin-prov-btn-full"
+          style={{ width: "100%", justifyContent: "center", gap: "6px" }}
         >
-          <MapPin size={14} /> Danh thắng
-        </button>
-        <button
-          type="button"
-          className="btn btn-ghost admin-prov-btn-sm"
-          onClick={() => onOpenEdit(prov)}
-        >
-          <Edit3 size={14} /> Chỉnh sửa
-        </button>
-        <button
-          type="button"
-          className="btn btn-ghost admin-prov-btn-sm"
-          onClick={() => onPreview(prov)}
-          title="Xem chi tiết"
-        >
-          <Eye size={14} />
-        </button>
+          <Edit3 size={15} />
+          <span>Chỉnh sửa Cẩm nang</span>
+        </a>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import AdminHeader from "@/components/layout/AdminHeader";
 import AdminSidebar from "@/components/layout/AdminSidebar";
 import { getUser, isAdmin, clearAuth, updateUser } from "@/lib/auth";
@@ -10,9 +10,13 @@ import DinoLoader from "@/components/ui/DinoLoader";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [authorized, setAuthorized] = useState(false);
+
+  // Kiểm tra nếu là trang Visual Editor cẩm nang (có thanh công cụ riêng)
+  const isVisualEditor = pathname?.includes("/provinces/") && pathname?.endsWith("/edit");
 
   useEffect(() => {
     let isMounted = true;
@@ -67,10 +71,12 @@ export default function AdminLayout({ children }) {
   if (!authorized) {
     return (
       <div className="app-shell-vertical">
-        <AdminHeader
-          isDrawerOpen={false}
-          onToggleDrawer={() => {}}
-        />
+        {!isVisualEditor && (
+          <AdminHeader
+            isDrawerOpen={false}
+            onToggleDrawer={() => {}}
+          />
+        )}
         <main
           className="app-main-content"
           style={{
@@ -84,6 +90,10 @@ export default function AdminLayout({ children }) {
         </main>
       </div>
     );
+  }
+
+  if (isVisualEditor) {
+    return <main className="admin-visual-editor-root">{children}</main>;
   }
 
   return (

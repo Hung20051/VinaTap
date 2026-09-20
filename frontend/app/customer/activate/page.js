@@ -40,7 +40,7 @@ export default function ActivatePage() {
 
     const cleaned = serial.trim().toUpperCase();
     if (!cleaned) {
-      setError("Vui lòng nhập mã serial in trên mảnh ghép gỗ");
+      setError("Vui lòng nhập mã serial in trên mảnh ghép NFC");
       return;
     }
 
@@ -98,7 +98,7 @@ export default function ActivatePage() {
             <div className="activate-header">
               <h1 className="activate-title">Kích Hoạt Mảnh Ghép NFC</h1>
               <p className="activate-subtitle">
-                Chạm điện thoại vào chip NFC trên mảnh gỗ hoặc nhập mã Serial để
+                Chạm điện thoại vào chip trên mảnh NFC hoặc nhập mã Serial để
                 mở khóa bản đồ du lịch của bạn.
               </p>
             </div>
@@ -117,7 +117,7 @@ export default function ActivatePage() {
                 <label className="activate-input-label">
                   <span>MÃ SERIAL MẢNH GHÉP</span>
                   <span className="activate-input-hint">
-                    In ở mặt sau thẻ gỗ
+                    In ở mặt sau thẻ NFC
                   </span>
                 </label>
                 <div className="activate-input-wrap">
@@ -155,13 +155,13 @@ export default function ActivatePage() {
               <div className="activate-guide-item">
                 <div className="activate-guide-icon">📱</div>
                 <h4>Cách 1: Chạm NFC</h4>
-                <p>Bật NFC trên điện thoại và chạm nhẹ vào mảnh ghép gỗ.</p>
+                <p>Bật NFC trên điện thoại và chạm nhẹ vào mảnh ghép NFC.</p>
               </div>
 
               <div className="activate-guide-item">
                 <div className="activate-guide-icon">✍️</div>
                 <h4>Cách 2: Nhập Serial</h4>
-                <p>Xem chuỗi ký tự in laser ở mặt sau mảnh ghép gỗ.</p>
+                <p>Xem chuỗi ký tự in laser ở mặt sau mảnh ghép NFC.</p>
               </div>
             </div>
 

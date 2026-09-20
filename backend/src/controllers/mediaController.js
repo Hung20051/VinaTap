@@ -460,75 +460,6 @@ const deleteStickerOverlay = async (req, res) => {
   }
 };
 
-// ─── GẮN TAG VÀO MEDIA ───────────────────────────────────────
-// POST /api/media/:id/tags
-// Body: { tag_id }
-// ✅ FIX: thêm album_id vào INSERT cho đúng schema v2.1
-const addTagToMedia = async (req, res) => {
-  try {
-    const { tag_id } = req.body;
-    if (!tag_id) return res.status(400).json({ message: "Thiếu tag_id" });
-
-    // Lấy album_id từ media để insert composite FK đúng schema v2.1
-    const [mediaRows] = await db.execute(
-      `SELECT album_id FROM album_media WHERE id = ? AND status = 'active'`,
-      [req.params.id],
-    );
-    if (!mediaRows.length)
-      return res.status(404).json({ message: "Không tìm thấy media" });
-
-    const album_id = mediaRows[0].album_id;
-
-    if (!(await checkUploadPermission(album_id, req.user.id, req.user.role)))
-      return res
-        .status(403)
-        .json({ message: "Bạn không có quyền sửa ảnh này" });
-
-    // Kiểm tra tag thuộc cùng album
-    const [tagRows] = await db.execute(
-      `SELECT id FROM photo_tags WHERE id = ? AND album_id = ?`,
-      [tag_id, album_id],
-    );
-    if (!tagRows.length)
-      return res.status(400).json({ message: "Tag không thuộc album này" });
-
-    // ✅ INSERT đúng 3 cột theo schema v2.1: album_id, media_id, tag_id
-    await db.execute(
-      `INSERT IGNORE INTO media_tag_map (album_id, media_id, tag_id) VALUES (?, ?, ?)`,
-      [album_id, req.params.id, tag_id],
-    );
-
-    res.json({ message: "Gắn tag thành công" });
-  } catch (err) {
-    console.error("addTagToMedia:", err);
-    res.status(500).json({ message: "Lỗi server" });
-  }
-};
-
-// ─── BỎ TAG KHỎI MEDIA ───────────────────────────────────────
-// DELETE /api/media/:id/tags/:tagId
-const removeTagFromMedia = async (req, res) => {
-  try {
-    const albumId = await getAlbumIdByMedia(req.params.id);
-    if (!albumId)
-      return res.status(404).json({ message: "Không tìm thấy media" });
-
-    if (!(await checkUploadPermission(albumId, req.user.id, req.user.role)))
-      return res
-        .status(403)
-        .json({ message: "Bạn không có quyền sửa ảnh này" });
-
-    await db.execute(
-      `DELETE FROM media_tag_map WHERE media_id = ? AND tag_id = ?`,
-      [req.params.id, req.params.tagId],
-    );
-    res.json({ message: "Đã bỏ tag" });
-  } catch (err) {
-    console.error("removeTagFromMedia:", err);
-    res.status(500).json({ message: "Lỗi server" });
-  }
-};
-
 module.exports = {
   uploadMedia,
   uploadMultipleMedia,
@@ -537,6 +468,4 @@ module.exports = {
   addStickerOverlay,
   updateStickerOverlay,
   deleteStickerOverlay,
-  addTagToMedia,
-  removeTagFromMedia,
 };

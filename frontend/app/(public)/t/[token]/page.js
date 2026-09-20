@@ -13,14 +13,20 @@ import {
   Image as ImageIcon,
   CheckCircle2,
   Compass,
-  Lock,
   ArrowRight,
   ShieldCheck,
   Zap,
-  Play,
   Share2,
   Eye,
   Camera,
+  Utensils,
+  Calendar,
+  X,
+  Copy,
+  Check,
+  ChevronRight,
+  ExternalLink,
+  QrCode,
 } from "lucide-react";
 
 import Dino404 from "@/components/ui/Dino404";
@@ -28,9 +34,18 @@ import DinoLoader from "@/components/ui/DinoLoader";
 import "./TapPage.css";
 
 const REGION_BADGES = {
-  north: { label: "Miền Bắc", bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe" },
-  central: { label: "Miền Trung", bg: "#fefce8", color: "#ca8a04", border: "#fef08a" },
-  south: { label: "Miền Nam", bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+  north: { label: "Miền Bắc", bg: "rgba(37, 99, 235, 0.1)", color: "#2563eb", border: "rgba(37, 99, 235, 0.3)" },
+  central: { label: "Miền Trung", bg: "rgba(234, 88, 12, 0.1)", color: "#ea580c", border: "rgba(234, 88, 12, 0.3)" },
+  south: { label: "Miền Nam", bg: "rgba(22, 163, 74, 0.1)", color: "#16a34a", border: "rgba(22, 163, 74, 0.3)" },
+};
+
+const CATEGORY_MAP = {
+  attraction: { label: "Danh thắng", color: "#3b82f6" },
+  beach: { label: "Bãi biển", color: "#06b6d4" },
+  temple: { label: "Di tích", color: "#eab308" },
+  nature: { label: "Thiên nhiên", color: "#10b981" },
+  market: { label: "Chợ", color: "#ec4899" },
+  food: { label: "Ẩm thực", color: "#f97316" },
 };
 
 export default function TapPage() {
@@ -38,10 +53,60 @@ export default function TapPage() {
   const router = useRouter();
   const [card, setCard] = useState(null);
   const [album, setAlbum] = useState(null);
+  const [albumMedia, setAlbumMedia] = useState([]);
+  const [landmarks, setLandmarks] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [festivals, setFestivals] = useState([]);
   const [status, setStatus] = useState("loading"); // loading|unclaimed|owned|claimed|error
   const [msg, setMsg] = useState("");
   const [claiming, setClaiming] = useState(false);
-  const [activeTab, setActiveTab] = useState("album"); // 'album' | 'guide'
+  const [activeTab, setActiveTab] = useState("guide"); // 'guide' | 'food' | 'album' (for desktop)
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [envelopeOpened, setEnvelopeOpened] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [selectedModalItem, setSelectedModalItem] = useState(null);
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  // 🔄 Đồng bộ hóa Lịch sử Trình duyệt
+  useEffect(() => {
+    const handlePopState = () => {
+      if (window.location.hash !== "#detail") {
+        setShowWelcome(true);
+      } else {
+        setShowWelcome(false);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("hashchange", handlePopState);
+
+    if (window.location.hash === "#detail") {
+      setShowWelcome(false);
+    } else {
+      setShowWelcome(true);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("hashchange", handlePopState);
+    };
+  }, []);
+
+  const handleOpenDetail = () => {
+    if (window.location.hash !== "#detail") {
+      window.history.pushState({ view: "detail" }, "", window.location.pathname + "#detail");
+    }
+    setShowWelcome(false);
+  };
+
+  const handleBackToWelcome = () => {
+    setEnvelopeOpened(true); // When returning from navbar, keep it open or let them view postcard
+    if (window.location.hash === "#detail") {
+      window.history.back();
+    } else {
+      setShowWelcome(true);
+    }
+  };
 
   useEffect(() => {
     if (!token) return;
@@ -53,6 +118,9 @@ export default function TapPage() {
       const res = await nfcAPI.tap(token);
       const c = res.card;
       setCard(c);
+      setLandmarks(c.landmarks || []);
+      setFoods(c.foods || []);
+      setFestivals(c.festivals || []);
 
       if (c.status === "disabled") {
         setStatus("error");
@@ -62,19 +130,22 @@ export default function TapPage() {
 
       if (c.album) {
         setAlbum(c.album);
+        setAlbumMedia(c.albumMedia || []);
+        if (c.album.media_count > 0) {
+          setActiveTab("album");
+        }
       }
 
       if (!c.has_owner) {
-        setStatus("unclaimed"); // Chưa có chủ — mời claim
+        setStatus("unclaimed");
         return;
       }
 
-      // Đã có chủ — kiểm tra xem mình có phải chủ không
       const me = getUser();
       if (me && c.owner_name === me.name) {
         setStatus("owned");
       } else {
-        setStatus("claimed"); // Người khác đang giữ
+        setStatus("claimed");
       }
     } catch (err) {
       setStatus("error");
@@ -107,11 +178,36 @@ export default function TapPage() {
     }
   };
 
+  const getShareUrl = () => {
+    if (typeof window === "undefined") return "";
+    return window.location.href.split("#")[0];
+  };
+
+  const handleCopyLink = () => {
+    const url = getShareUrl();
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleNativeShare = () => {
+    const url = getShareUrl();
+    if (navigator.share) {
+      navigator.share({
+        title: `Mảnh ghép NFC VinaTap — ${card?.province_name}`,
+        text: `Khám phá cẩm nang du lịch và nhật ký ảnh ${card?.province_name} cùng VinaTap!`,
+        url,
+      });
+    } else {
+      handleCopyLink();
+    }
+  };
+
   if (status === "loading") {
     return (
       <DinoLoader
         text="Đang nhận diện chip NFC..."
-        subtext="Vui lòng giữ điện thoại gần mảnh ghép VinaTap"
+        subtext="Vui lòng giữ điện thoại gần thẻ thông minh"
         size={260}
         fullScreen={true}
       />
@@ -129,292 +225,797 @@ export default function TapPage() {
   }
 
   const regionInfo = REGION_BADGES[card?.region] || REGION_BADGES.north;
+  const pName = card?.province_name || "Việt Nam";
 
+  // 💌 1. MÀN HÌNH THIỆP CHÀO MỪNG (UNBOXING ENVELOPE & POSTCARD)
+  if (showWelcome) {
+    return (
+      <div className="tap-welcome-screen">
+        <div className="tap-welcome-bg-wrap">
+          {card?.thumbnail_url ? (
+            <img
+              src={card.thumbnail_url}
+              alt={pName}
+              className="tap-welcome-bg-img"
+            />
+          ) : (
+            <div className="tap-welcome-bg-fallback" />
+          )}
+          <div className="tap-welcome-overlay" />
+        </div>
+
+        {/* ── TRẠNG THÁI 1: BÌ THƯ DU LỊCH CỔ ĐIỂN (CHẠM ĐỂ MỞ) ── */}
+        {!envelopeOpened ? (
+          <div className="tap-envelope-container">
+            <div
+              className="tap-vintage-envelope"
+              onClick={() => setEnvelopeOpened(true)}
+              role="button"
+              tabIndex={0}
+            >
+              {/* Viền chỉ vàng du lịch thanh lịch */}
+              <div className="tap-envelope-gold-trim" />
+
+              {/* Con tem & Dấu bưu điện du lịch */}
+              <div className="tap-envelope-top-row">
+                <div className="tap-envelope-postmark">
+                  <span>★ VIETNAM PASS ★</span>
+                  <strong>{pName}</strong>
+                </div>
+                <div className="tap-envelope-stamp">
+                  <span className="tap-stamp-flag">🇻🇳</span>
+                  <span className="tap-stamp-txt">VINATAP</span>
+                  <span className="tap-stamp-yr">2026</span>
+                </div>
+              </div>
+
+              {/* Thông tin người nhận thư */}
+              <div className="tap-envelope-to-box">
+                <span className="tap-envelope-from">From: <strong>VinaTap Smart Pass</strong></span>
+                <span className="tap-to-label">Gửi lữ khách ghé thăm:</span>
+                <h1 className="tap-to-name">{pName}</h1>
+                <div
+                  className="tap-to-region-pill"
+                  style={{
+                    background: regionInfo.bg,
+                    color: regionInfo.color,
+                    borderColor: regionInfo.border,
+                  }}
+                >
+                  <MapPin size={12} />
+                  <span>{regionInfo.label} • Mảnh Ghép NFC 3D</span>
+                </div>
+              </div>
+
+              {/* Khu vực con dấu sáp đỏ 3D (Đặt riêng biệt không đè chữ) */}
+              <div className="tap-envelope-seal-section">
+                <div className="tap-wax-seal-btn" title="Chạm để mở thư">
+                  <div className="tap-wax-seal-glow" />
+                  <div className="tap-wax-seal-core">
+                    <Sparkles size={16} className="tap-wax-sparkle" />
+                    <span className="tap-wax-text">CHẠM ĐỂ MỞ</span>
+                  </div>
+                </div>
+                <p className="tap-envelope-hint">
+                  <span>👆 Chạm vào con dấu để mở bưu thiếp</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Nút vào thẳng cẩm nang */}
+            <button
+              type="button"
+              className="tap-envelope-skip-btn"
+              onClick={handleOpenDetail}
+            >
+              <span>Vào thẳng cẩm nang & mảnh ghép</span>
+              <ArrowRight size={14} />
+            </button>
+          </div>
+        ) : (
+          /* ── TRẠNG THÁI 2: BƯU THIẾP DU LỊCH CAO CẤP MỞ RA (UNBOXED POSTCARD) ── */
+          <div className="tap-postcard-unboxed-wrapper">
+            <div className="tap-unboxed-postcard">
+              {/* Ảnh bìa danh thắng nổi tiếng */}
+              <div className="tap-postcard-hero">
+                <img
+                  src={card?.thumbnail_url || "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80"}
+                  alt={pName}
+                  className="tap-postcard-hero-img"
+                />
+                <div className="tap-postcard-hero-overlay" />
+                <div
+                  className="tap-postcard-hero-badge"
+                  style={{
+                    background: regionInfo.bg,
+                    color: regionInfo.color,
+                    borderColor: regionInfo.border,
+                  }}
+                >
+                  <MapPin size={12} />
+                  <span>{regionInfo.label} • NFC 3D</span>
+                </div>
+                <div className="tap-postcard-hero-stamp">
+                  <span>VIETNAM 2026</span>
+                </div>
+              </div>
+
+              {/* Thân thiệp lời chúc */}
+              <div className="tap-postcard-content-body">
+                <div className="tap-postcard-title-row">
+                  <div className="tap-postcard-pre">
+                    <Sparkles size={14} style={{ color: "#f59e0b" }} />
+                    <span>CHÀO MỪNG BẠN ĐẾN VỚI</span>
+                  </div>
+                  <h2 className="tap-postcard-main-title">{pName}</h2>
+                </div>
+
+                {/* Hộp thư tay trang nhã */}
+                <div className="tap-postcard-letter-box">
+                  <span className="tap-quote-mark">“</span>
+                  <p className="tap-letter-text">
+                    Cảm ơn bạn đã chọn <strong>{pName}</strong> cho hành trình của mình. Hãy để chiếc thẻ thông minh này lưu giữ những khoảnh khắc đẹp nhất và đồng hành cùng bạn khám phá mọi nẻo đường!
+                  </p>
+                  <div className="tap-letter-signature">
+                    <span>Đội ngũ VinaTap 💙</span>
+                  </div>
+                </div>
+
+                {/* Chip thông tin serial & bảo mật */}
+                <div className="tap-postcard-chips-row">
+                  {card?.serial_code && (
+                    <div className="tap-postcard-chip-pill">
+                      <ShieldCheck size={13} style={{ color: "#ea580c" }} />
+                      <span>#{card.serial_code}</span>
+                    </div>
+                  )}
+                  <div className="tap-postcard-chip-pill">
+                    <Radio size={13} style={{ color: "#16a34a" }} />
+                    <span>{status === "unclaimed" ? "Sẵn sàng kích hoạt" : "Đã kích hoạt"}</span>
+                  </div>
+                </div>
+
+                {/* Nút hành động chính */}
+                <button
+                  type="button"
+                  className="tap-postcard-cta-btn"
+                  onClick={handleOpenDetail}
+                >
+                  <span>Khám Phá Mảnh Ghép Ngay</span>
+                  <ArrowRight size={17} />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // 📖 2. GIAO DIỆN THÔNG MINH TỰ ĐỘNG THÍCH ỨNG (DESKTOP 2 CỘT RỘNG + MOBILE SMART PASS VUỐT GỌN)
   return (
     <div className="tap-page-wrapper">
-      {/* Header Glass */}
+      {/* ── Navbar Glass Header ── */}
       <nav className="tap-nav-glass">
         <div className="tap-nav-inner">
           <Logo />
-          <div className="tap-nav-chip">
-            <span className="tap-nav-chip-dot" />
-            <span>NFC CHÍNH HÃNG</span>
+          <div className="tap-nav-actions">
+            <button
+              type="button"
+              className="tap-nav-postcard-btn"
+              onClick={handleBackToWelcome}
+              title="Xem lại thiệp chào mừng"
+            >
+              <span className="tap-nav-icon">💌</span>
+              <span className="tap-nav-text-desktop">Thiệp Chào Mừng</span>
+            </button>
+            <button
+              type="button"
+              className="tap-nav-share-btn"
+              onClick={() => setShowShareModal(true)}
+              title="Chia sẻ thẻ & Mã QR"
+            >
+              <Share2 size={14} />
+              <span className="tap-nav-text-desktop">Chia sẻ</span>
+            </button>
           </div>
         </div>
       </nav>
 
-      {/* Main Container */}
-      <main className="tap-main-container">
-        {/* ─── Hero Province Showcase Card ─── */}
-        <section className="tap-hero-card">
-          <div className="tap-hero-img-box">
-            {card?.thumbnail_url ? (
-              <img
-                src={card.thumbnail_url}
-                alt={card.province_name}
-                className="tap-hero-img"
-              />
-            ) : (
-              <div style={{ fontSize: "4.5rem", opacity: 0.85 }}>🗺️</div>
-            )}
-            <div className="tap-hero-gradient-overlay" />
+      {/* ── Desktop 2-Column Responsive Layout (Trải rộng trên máy tính) ── */}
+      <main className="tap-desktop-layout">
+        {/* CỘT TRÁI: THẺ NFC 3D + THÔNG TIN CHỦ + HÀNH ĐỘNG */}
+        <aside className="tap-sidebar-col">
+          {/* Thẻ NFC 3D */}
+          <div className="tap-card-3d-wrap">
+            <div className="tap-card-3d">
+              <div className="tap-card-3d-bg">
+                {card?.thumbnail_url ? (
+                  <img src={card.thumbnail_url} alt={pName} className="tap-card-3d-img" />
+                ) : (
+                  <div className="tap-card-fallback-art">🗺️</div>
+                )}
+                <div className="tap-card-overlay" />
+                <div className="tap-card-hologram-shine" />
+              </div>
 
-            {/* Region Badge */}
-            <div
-              className="tap-hero-region-badge"
-              style={{
-                background: regionInfo.bg,
-                color: regionInfo.color,
-                borderColor: regionInfo.border,
-              }}
-            >
-              {regionInfo.label}
-            </div>
-
-            {/* NFC Chip Indicator */}
-            <div className="tap-hero-nfc-badge">
-              <Radio size={14} className="text-orange-400" />
-              <span>Mảnh Ghép Gỗ 3D</span>
-            </div>
-
-            <div className="tap-hero-img-title">
-              <h1 className="tap-hero-title">{card?.province_name}</h1>
-            </div>
-          </div>
-
-          <div className="tap-hero-content">
-            <p className="tap-hero-desc">
-              {card?.description || "Khám phá các danh lam thắng cảnh, ẩm thực và văn hóa đặc trưng tại đây."}
-            </p>
-
-            <div className="tap-hero-meta-grid">
-              {card?.serial_code && (
-                <div className="tap-meta-pill">
-                  <ShieldCheck size={14} style={{ color: "#ea580c" }} />
-                  <span>Serial: <strong>{card.serial_code}</strong></span>
+              <div className="tap-card-header">
+                <div className="tap-card-brand">
+                  <span className="tap-brand-logo">VinaTap</span>
+                  <span className="tap-brand-badge">PROVINCE PASS</span>
                 </div>
-              )}
-              {card?.landmarks && card.landmarks.length > 0 && (
-                <div className="tap-meta-pill">
-                  <MapPin size={14} style={{ color: "#0284c7" }} />
-                  <span>{card.landmarks.length} địa danh nổi tiếng</span>
+                <div className="tap-card-nfc-chip">
+                  <Radio size={15} className="tap-nfc-signal" />
+                  <span className="tap-chip-label">NFC 3D</span>
                 </div>
-              )}
-              <div className="tap-meta-pill">
-                <Compass size={14} style={{ color: "#16a34a" }} />
-                <span>Bản đồ du lịch số</span>
+              </div>
+
+              <div className="tap-card-center">
+                <div className="tap-card-region-tag" style={{ color: regionInfo.color }}>
+                  {regionInfo.label}
+                </div>
+                <h2 className="tap-card-name">{pName}</h2>
+                <p className="tap-card-slogan">Mảnh ghép bản đồ du lịch số Việt Nam</p>
+              </div>
+
+              <div className="tap-card-footer">
+                <div className="tap-card-serial-box">
+                  <span className="tap-serial-label">SERIAL NUMBER</span>
+                  <span className="tap-serial-val">{card?.serial_code || "VN-2026-NFC"}</span>
+                </div>
+                <div className="tap-card-holo-seal">
+                  <ShieldCheck size={18} />
+                  <span>VERIFIED</span>
+                </div>
               </div>
             </div>
           </div>
-        </section>
 
-        {/* ─── Dual Tab Switcher: Album Kỷ Niệm vs Cẩm Nang Du Lịch ─── */}
-        <div className="tap-tabs-bar">
-          <button
-            type="button"
-            className={`tap-tab-btn ${activeTab === "album" ? "active" : ""}`}
-            onClick={() => setActiveTab("album")}
-          >
-            <Camera size={16} />
-            <span>📸 Album Kỷ Niệm</span>
-          </button>
-          <button
-            type="button"
-            className={`tap-tab-btn ${activeTab === "guide" ? "active" : ""}`}
-            onClick={() => setActiveTab("guide")}
-          >
-            <Compass size={16} />
-            <span>🗺️ Cẩm Nang Du Lịch</span>
-          </button>
-        </div>
-
-        {/* ─── TAB 1: ALBUM KỶ NIỆM ─── */}
-        {activeTab === "album" && (
-          <div className="tap-content-card">
-            {/* TRƯỜNG HỢP 1: CHƯA CÓ CHỦ (UNCLAIMED) */}
-            {status === "unclaimed" && (
-              <div className="tap-unclaimed-box">
-                <div className="tap-unclaimed-icon">
-                  <Sparkles size={28} />
+          {/* Hộp trạng thái thẻ & CTA */}
+          <div className="tap-card-status-box">
+            <div className="tap-owner-status">
+              {status === "unclaimed" && (
+                <div className="tap-status-badge unclaimed">
+                  <Sparkles size={15} />
+                  <span>Chưa có chủ nhân • Sẵn sàng sở hữu</span>
                 </div>
-                <h2 className="tap-unclaimed-title">Mảnh Ghép Chưa Có Chủ Nhân!</h2>
-                <p className="tap-unclaimed-desc">
-                  {isLoggedIn()
-                    ? `Kích hoạt ngay để sở hữu mảnh ghép ${card?.province_name} và tạo Album kỷ niệm check-in của riêng bạn.`
-                    : `Đăng nhập để nhận quyền sở hữu mảnh ghép ${card?.province_name} vào bộ sưu tập bản đồ số.`}
-                </p>
+              )}
+              {status === "owned" && (
+                <div className="tap-status-badge owned">
+                  <CheckCircle2 size={15} />
+                  <span>Mảnh ghép của bạn (Chính chủ)</span>
+                </div>
+              )}
+              {status === "claimed" && (
+                <div className="tap-status-badge claimed">
+                  <ShieldCheck size={15} />
+                  <span>Thuộc bộ sưu tập của <strong>{card?.owner_name || "Thành viên"}</strong></span>
+                </div>
+              )}
+            </div>
 
-                {msg && (
-                  <p style={{ color: "#dc2626", fontSize: "0.85rem", marginBottom: "0.75rem" }}>
-                    {msg}
-                  </p>
-                )}
+            <p className="tap-card-desc-snippet">
+              {card?.description || `Khám phá các danh lam thắng cảnh, ẩm thực và trải nghiệm đặc sắc tại ${pName}.`}
+            </p>
 
+            <div className="tap-action-buttons">
+              {status === "unclaimed" && (
                 <button
-                  className="tap-btn-primary"
+                  type="button"
+                  className="tap-btn-gold-claim"
                   onClick={handleClaim}
                   disabled={claiming}
                 >
                   <Zap size={18} />
-                  <span>
-                    {claiming
-                      ? "Đang kết nối chip NFC..."
-                      : isLoggedIn()
-                      ? "Kích Hoạt Quyền Sở Hữu"
-                      : "Đăng Nhập Để Kích Hoạt"}
-                  </span>
+                  <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Mảnh Ghép"}</span>
                 </button>
-              </div>
-            )}
+              )}
 
-            {/* TRƯỜNG HỢP 2: ĐÃ CÓ ALBUM (MỞ CHO TẤT CẢ MỌI NGƯỜI CÙNG XEM) */}
-            {status !== "unclaimed" && album && (
-              <>
-                <div style={{ textAlign: "center", marginBottom: "0.25rem" }}>
-                  <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "#ea580c", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-                    {status === "owned" ? "✨ Mảnh Ghép Của Bạn" : `✨ Nhật Ký Của ${card?.owner_name || "Thành viên VinaTap"}`}
-                  </span>
-                </div>
-
-                <div className="tap-album-preview-card">
-                  <img
-                    src={album.cover_url || card?.thumbnail_url || "/images/placeholder-album.png"}
-                    alt={album.title}
-                    className="tap-album-cover"
-                  />
-                  <div className="tap-album-info">
-                    <h3 className="tap-album-title">{album.title || `Nhật ký ${card?.province_name}`}</h3>
-                    <p style={{ fontSize: "0.82rem", color: "#64748b", margin: 0 }}>
-                      Người tạo: <strong>{card?.owner_name || "Thành viên VinaTap"}</strong>
-                    </p>
-                    <div className="tap-album-meta">
-                      <span>📸 {album.media_count || 0} ảnh & video</span>
-                      <span>👁️ {album.view_count || 0} lượt xem</span>
-                    </div>
-                  </div>
-                </div>
-
-                <Link href={`/album/${album.share_code || album.id}`} className="tap-btn-primary">
-                  <ImageIcon size={18} />
-                  <span>
-                    {status === "owned"
-                      ? "Xem Album Kỷ Niệm Của Bạn"
-                      : `Mở Xem Album Ảnh Của ${card?.owner_name || "Bạn Bè"}`}
-                  </span>
-                </Link>
-              </>
-            )}
-
-            {/* TRƯỜNG HỢP 3: MÌNH LÀ CHỦ NHƯNG CHƯA TẠO ALBUM */}
-            {status === "owned" && !album && (
-              <div className="tap-unclaimed-box">
-                <div className="tap-unclaimed-icon" style={{ background: "#f0fdf4", color: "#16a34a" }}>
-                  <CheckCircle2 size={28} />
-                </div>
-                <h2 className="tap-unclaimed-title">Bạn Đã Sở Hữu Mảnh Ghép!</h2>
-                <p className="tap-unclaimed-desc">
-                  Mảnh ghép <strong>{card?.province_name}</strong> đã nằm trong bộ sưu tập của bạn. Hãy tạo ngay Album đầu tiên để lưu lại những kỷ niệm đẹp!
-                </p>
-
-                <Link href="/customer/dashboard" className="tap-btn-primary">
+              {status === "owned" && (
+                <Link
+                  href={album ? `/album/${album.share_code || album.id}` : "/customer/dashboard"}
+                  className="tap-btn-primary"
+                >
                   <Camera size={18} />
-                  <span>Tạo Album Ảnh & Video Ngay</span>
+                  <span>{album ? "Quản Lý Album Của Bạn" : "Tạo Album Kỷ Niệm Ngay"}</span>
                 </Link>
-              </div>
-            )}
+              )}
 
-            {/* TRƯỜNG HỢP 4: BẠN BÈ / KHÁCH CHẠM VÀO KHI CHỦ NHÂN CHƯA UP ALBUM */}
-            {status === "claimed" && !album && (
-              <div className="tap-unclaimed-box">
-                <div className="tap-unclaimed-icon" style={{ background: "#fff7ed", color: "#ea580c" }}>
-                  <Camera size={28} />
-                </div>
-                <h2 className="tap-unclaimed-title">Bộ Sưu Tập Của {card?.owner_name || "Bạn Bè"}</h2>
-                <p className="tap-unclaimed-desc">
-                  Mảnh ghép <strong>{card?.province_name}</strong> này thuộc về <strong>{card?.owner_name}</strong>. Chủ nhân đang chuẩn bị đăng tải những bức ảnh kỷ niệm cho chuyến đi. Mời bạn cùng khám phá cẩm nang du lịch bên dưới nhé!
-                </p>
+              {status === "claimed" && album && (
+                <Link
+                  href={`/album/${album.share_code || album.id}`}
+                  className="tap-btn-primary"
+                >
+                  <Camera size={18} />
+                  <span>Xem Nhật Ký {card?.owner_name || "Bạn Bè"}</span>
+                </Link>
+              )}
+
+              <div className="tap-dual-actions">
                 <button
                   type="button"
-                  className="tap-btn-secondary"
-                  onClick={() => setActiveTab("guide")}
+                  className="tap-btn-icon-label"
+                  onClick={() => setShowShareModal(true)}
                 >
-                  <Compass size={16} />
-                  <span>Khám Phá Cẩm Nang Du Lịch {card?.province_name}</span>
+                  <Share2 size={15} />
+                  <span>Chia sẻ & QR</span>
                 </button>
+
+                <Link
+                  href={`/province/${card?.province_slug}`}
+                  className="tap-btn-icon-label"
+                >
+                  <ExternalLink size={15} />
+                  <span>Cẩm nang đầy đủ</span>
+                </Link>
               </div>
-            )}
-          </div>
-        )}
-
-        {/* ─── TAB 2: CẨM NANG DU LỊCH TỈNH ─── */}
-        {activeTab === "guide" && (
-          <div className="tap-content-card">
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <h3 style={{ margin: 0, fontSize: "1rem", fontWeight: 800, color: "#0f172a" }}>
-                📍 Danh Lam Thắng Cảnh Nổi Bật
-              </h3>
-              <Link
-                href={`/province/${card?.province_slug}`}
-                style={{ fontSize: "0.8rem", color: "#ea580c", fontWeight: 700, textDecoration: "none" }}
-              >
-                Xem tất cả →
-              </Link>
             </div>
+          </div>
+        </aside>
 
-            {/* Danh sách địa danh */}
-            {card?.landmarks && card.landmarks.length > 0 ? (
-              <div className="tap-landmarks-list">
-                {card.landmarks.slice(0, 4).map((lm) => (
-                  <div key={lm.id} className="tap-landmark-item">
-                    <img
-                      src={lm.image_url || card.thumbnail_url || "/images/placeholder-landmark.png"}
-                      alt={lm.name}
-                      className="tap-landmark-thumb"
-                    />
-                    <div className="tap-landmark-info">
-                      <h4 className="tap-landmark-name">{lm.name}</h4>
-                      <p className="tap-landmark-addr">{lm.address || card.province_name}</p>
+        {/* CỘT PHẢI (DESKTOP): TABS VÀ LƯỚI NỘI DUNG ĐA PHƯƠNG TIỆN */}
+        <section className="tap-desktop-content-col">
+          {/* Tabs Bar */}
+          <div className="tap-desktop-tabs-bar">
+            <button
+              type="button"
+              className={`tap-desktop-tab-btn ${activeTab === "guide" ? "active" : ""}`}
+              onClick={() => setActiveTab("guide")}
+            >
+              <Compass size={17} />
+              <span>🗺️ Cẩm Nang & Danh Thắng ({landmarks.length})</span>
+            </button>
+
+            <button
+              type="button"
+              className={`tap-desktop-tab-btn ${activeTab === "food" ? "active" : ""}`}
+              onClick={() => setActiveTab("food")}
+            >
+              <Utensils size={17} />
+              <span>🍜 Quán Ngon & Ẩm Thực ({foods.length})</span>
+            </button>
+
+            <button
+              type="button"
+              className={`tap-desktop-tab-btn ${activeTab === "album" ? "active" : ""}`}
+              onClick={() => setActiveTab("album")}
+            >
+              <Camera size={17} />
+              <span>📸 Album Kỷ Niệm ({album?.media_count || 0})</span>
+            </button>
+          </div>
+
+          {/* TAB 1: CẨM NANG */}
+          {activeTab === "guide" && (
+            <div className="tap-desktop-tab-pane">
+              <div className="tap-desktop-pane-header">
+                <div>
+                  <h3 className="tap-desktop-pane-title">Danh Lam Thắng Cảnh Nổi Tiếng</h3>
+                  <p className="tap-desktop-pane-sub">Top những điểm đến biểu tượng không thể bỏ lỡ khi đến {pName}</p>
+                </div>
+                <Link href={`/province/${card?.province_slug}`} className="tap-see-all-badge">
+                  <span>Toàn bộ cẩm nang</span>
+                  <ChevronRight size={15} />
+                </Link>
+              </div>
+
+              <div className="tap-desktop-cards-grid">
+                {landmarks.map((lm, idx) => {
+                  const cat = CATEGORY_MAP[lm.category] || CATEGORY_MAP.attraction;
+                  return (
+                    <div
+                      key={lm.id || idx}
+                      className="tap-desktop-landmark-card"
+                      onClick={() => setSelectedModalItem({ ...lm, type: "landmark" })}
+                    >
+                      <div className="tap-desktop-img-box">
+                        <img
+                          src={lm.thumbnail_url || card?.thumbnail_url}
+                          alt={lm.name}
+                          className="tap-desktop-img"
+                        />
+                        <span className="tap-desktop-cat-badge" style={{ background: cat.color }}>
+                          {cat.label}
+                        </span>
+                      </div>
+                      <div className="tap-desktop-card-body">
+                        <h4>{lm.name}</h4>
+                        <p className="tap-card-addr">
+                          <MapPin size={12} className="tap-pin" />
+                          <span>{lm.address || pName}</span>
+                        </p>
+                        <p className="tap-card-desc-clamp">{lm.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {festivals.length > 0 && (
+                <div className="tap-desktop-fest-banner">
+                  <div className="tap-fest-badge-icon">
+                    <Calendar size={20} />
+                  </div>
+                  <div>
+                    <span className="tap-fest-time-tag">{festivals[0].event_time || "Hàng năm"}</span>
+                    <h4>{festivals[0].title}</h4>
+                    <p>{festivals[0].description}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 2: QUÁN NGON */}
+          {activeTab === "food" && (
+            <div className="tap-desktop-tab-pane">
+              <div className="tap-desktop-pane-header">
+                <div>
+                  <h3 className="tap-desktop-pane-title">Ẩm Thực & Quán Ngon Đặc Sản</h3>
+                  <p className="tap-desktop-pane-sub">Những món ngon trứ danh làm say lòng du khách tại {pName}</p>
+                </div>
+                <Link href={`/province/${card?.province_slug}`} className="tap-see-all-badge">
+                  <span>Khám phá thêm</span>
+                  <ChevronRight size={15} />
+                </Link>
+              </div>
+
+              <div className="tap-desktop-cards-grid">
+                {foods.map((f, idx) => (
+                  <div
+                    key={f.id || idx}
+                    className="tap-desktop-landmark-card"
+                    onClick={() => setSelectedModalItem({ ...f, type: "food" })}
+                  >
+                    <div className="tap-desktop-img-box">
+                      <img src={f.image_url} alt={f.title} className="tap-desktop-img" />
+                      {f.view_count && (
+                        <span className="tap-desktop-views-badge">
+                          <Eye size={12} />
+                          <span>{f.view_count}</span>
+                        </span>
+                      )}
+                    </div>
+                    <div className="tap-desktop-card-body">
+                      <h4>{f.title}</h4>
+                      {f.address && (
+                        <p className="tap-card-addr">
+                          <MapPin size={12} className="tap-pin" />
+                          <span>{f.address}</span>
+                        </p>
+                      )}
+                      <p className="tap-card-desc-clamp">{f.description}</p>
                     </div>
                   </div>
                 ))}
               </div>
-            ) : (
-              <p style={{ color: "#64748b", fontSize: "0.85rem", margin: 0, textAlign: "center", padding: "1rem 0" }}>
-                Chưa có danh sách địa danh cho tỉnh này.
-              </p>
-            )}
+            </div>
+          )}
 
-            {/* Video YouTube giới thiệu */}
-            {card?.youtube_url && (
-              <div className="tap-video-frame">
-                <iframe
-                  src={card.youtube_url
-                    .replace("watch?v=", "embed/")
-                    .replace("youtu.be/", "youtube.com/embed/")}
-                  style={{ width: "100%", height: 200, border: "none", display: "block" }}
-                  allowFullScreen
-                  title={`Giới thiệu ${card?.province_name}`}
-                />
+          {/* TAB 3: ALBUM */}
+          {activeTab === "album" && (
+            <div className="tap-desktop-tab-pane">
+              {status === "unclaimed" && (
+                <div className="tap-desktop-unclaimed-cta">
+                  <Sparkles size={40} style={{ color: "#ea580c" }} />
+                  <h3>Mảnh Ghép Chưa Có Chủ Nhân!</h3>
+                  <p>Hãy kích hoạt ngay để bắt đầu lưu lại những kỷ niệm check-in đầu tiên tại {pName}.</p>
+                  <button type="button" className="tap-btn-gold-claim large" onClick={handleClaim}>
+                    <Zap size={18} />
+                    <span>Kích Hoạt Sở Hữu Thẻ</span>
+                  </button>
+                </div>
+              )}
+
+              {status !== "unclaimed" && album && (
+                <div className="tap-desktop-album-wrap">
+                  <div className="tap-desktop-album-top">
+                    <div>
+                      <span className="tap-album-tag-small">✨ TRAVEL DIARY</span>
+                      <h3>{album.title || `Nhật ký chuyến đi ${pName}`}</h3>
+                      <p className="tap-album-meta-text">
+                        <span>📸 {album.media_count || 0} khoảnh khắc</span> • <span>👁️ {album.view_count || 0} lượt xem</span>
+                      </p>
+                    </div>
+                    <Link href={`/album/${album.share_code || album.id}`} className="tap-btn-primary fit">
+                      <span>Mở Album Toàn Bộ</span>
+                      <ArrowRight size={16} />
+                    </Link>
+                  </div>
+
+                  {albumMedia.length > 0 ? (
+                    <div className="tap-desktop-polaroid-grid">
+                      {albumMedia.map((m, idx) => (
+                        <div key={m.id || idx} className="tap-polaroid-item">
+                          <img src={m.thumbnail_url || m.file_url} alt="Kỷ niệm" className="tap-polaroid-pic" />
+                          {(m.caption_user || m.caption_ai) && (
+                            <p className="tap-polaroid-text">{m.caption_user || m.caption_ai}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="tap-empty-box">
+                      <Camera size={32} />
+                      <p>Chưa có hình ảnh nào được tải lên album.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+      </main>
+
+      {/* ── Mobile Smart Pass (Hiển thị mượt mà trên Điện thoại < 960px) ── */}
+      <div className="tap-mobile-smartpass">
+        {/* 1. Thẻ NFC 3D */}
+        <div className="tap-mobile-card-box">
+          <div className="tap-smart-card">
+            <img
+              src={card?.thumbnail_url || "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80"}
+              alt={pName}
+              className="tap-card-bg-photo"
+            />
+            <div className="tap-card-scrim" />
+            <div className="tap-card-holo-glow" />
+
+            <div className="tap-card-top-row">
+              <span className="tap-card-logo-badge">VinaTap Pass</span>
+              <div className="tap-card-chip-badge">
+                <Radio size={13} className="tap-nfc-icon-pulse" />
+                <span>NFC 3D</span>
               </div>
-            )}
+            </div>
 
-            {/* Nút xem toàn bộ cẩm nang */}
-            <Link
-              href={`/province/${card?.province_slug}`}
-              className="tap-btn-secondary"
-            >
-              <Compass size={16} />
-              <span>Mở Toàn Bộ Cẩm Nang & Bản Đồ {card?.province_name}</span>
-            </Link>
+            <div className="tap-card-bottom-row">
+              <span className="tap-card-region" style={{ color: regionInfo.color }}>
+                {regionInfo.label}
+              </span>
+              <h2 className="tap-card-heading">{pName}</h2>
+              <div className="tap-card-serial-row">
+                <span>{card?.serial_code || "VN-2026-NFC"}</span>
+                <span className="tap-verified-chip">
+                  <ShieldCheck size={13} />
+                  <span>VERIFIED</span>
+                </span>
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* 2. Primary Action Button */}
+        <div className="tap-mobile-action-wrap">
+          {status === "unclaimed" && (
+            <button type="button" className="tap-smart-action-btn claim" onClick={handleClaim}>
+              <Zap size={18} />
+              <span>Kích Hoạt Nhận Mảnh Ghép</span>
+            </button>
+          )}
+
+          {status !== "unclaimed" && album && (
+            <Link href={`/album/${album.share_code || album.id}`} className="tap-smart-action-btn album">
+              <Camera size={18} />
+              <span>Xem Album Ảnh ({album.media_count || 0} ảnh)</span>
+              <ArrowRight size={16} />
+            </Link>
+          )}
+
+          {status === "owned" && !album && (
+            <Link href="/customer/dashboard" className="tap-smart-action-btn album">
+              <Camera size={18} />
+              <span>Tạo Album Kỷ Niệm Đầu Tiên</span>
+              <ArrowRight size={16} />
+            </Link>
+          )}
+
+          {status === "claimed" && !album && (
+            <div className="tap-friend-owner-pill">
+              <ShieldCheck size={14} style={{ color: "#16a34a" }} />
+              <span>Mảnh ghép của <strong>{card?.owner_name || "Bạn bè"}</strong></span>
+            </div>
+          )}
+        </div>
+
+        {/* 3. Carousel Vuốt Ngang: Địa Danh */}
+        {landmarks.length > 0 && (
+          <section className="tap-mobile-carousel-sec">
+            <div className="tap-carousel-header">
+              <div className="tap-carousel-title-box">
+                <Compass size={16} style={{ color: "#ea580c" }} />
+                <h3>Điểm Đến Nổi Bật</h3>
+              </div>
+              <Link href={`/province/${card?.province_slug}`} className="tap-carousel-link">
+                <span>Xem tất cả</span>
+                <ChevronRight size={14} />
+              </Link>
+            </div>
+
+            <div className="tap-horizontal-scroll snap-x">
+              {landmarks.map((lm, idx) => {
+                const cat = CATEGORY_MAP[lm.category] || CATEGORY_MAP.attraction;
+                return (
+                  <div
+                    key={lm.id || idx}
+                    className="tap-mini-story-card"
+                    onClick={() => setSelectedModalItem({ ...lm, type: "landmark" })}
+                  >
+                    <img src={lm.thumbnail_url || card?.thumbnail_url} alt={lm.name} className="tap-story-img" />
+                    <div className="tap-story-scrim" />
+                    <span className="tap-story-cat" style={{ background: cat.color }}>
+                      {cat.label}
+                    </span>
+                    <div className="tap-story-text">
+                      <h4>{lm.name}</h4>
+                      <p><MapPin size={10} /><span>{lm.address || pName}</span></p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
         )}
 
-        {/* Footer info */}
-        <div className="tap-footer-badge">
-          <ShieldCheck size={14} />
-          <span>VinaTap Vietnam — Bản Đồ Gỗ Du Lịch Thông Minh NFC</span>
+        {/* 4. Carousel Vuốt Ngang: Ẩm Thực */}
+        {foods.length > 0 && (
+          <section className="tap-mobile-carousel-sec">
+            <div className="tap-carousel-header">
+              <div className="tap-carousel-title-box">
+                <Utensils size={16} style={{ color: "#ea580c" }} />
+                <h3>Món Ngon Phải Thử</h3>
+              </div>
+              <Link href={`/province/${card?.province_slug}`} className="tap-carousel-link">
+                <span>Quán ngon</span>
+                <ChevronRight size={14} />
+              </Link>
+            </div>
+
+            <div className="tap-horizontal-scroll snap-x">
+              {foods.map((f, idx) => (
+                <div
+                  key={f.id || idx}
+                  className="tap-mini-story-card food"
+                  onClick={() => setSelectedModalItem({ ...f, type: "food" })}
+                >
+                  <img src={f.image_url} alt={f.title} className="tap-story-img" />
+                  <div className="tap-story-scrim" />
+                  {f.view_count && (
+                    <span className="tap-story-views">
+                      <Eye size={10} />
+                      <span>{f.view_count}</span>
+                    </span>
+                  )}
+                  <div className="tap-story-text">
+                    <h4>{f.title}</h4>
+                    {f.address && (
+                      <p><MapPin size={10} /><span>{f.address}</span></p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* 5. CTA Cẩm Nang Chi Tiết */}
+        <div className="tap-mobile-footer-btns">
+          <Link href={`/province/${card?.province_slug}`} className="tap-btn-full-guide">
+            <Compass size={18} />
+            <span>Mở Bản Đồ & Cẩm Nang {pName}</span>
+            <ArrowRight size={16} />
+          </Link>
         </div>
-      </main>
+      </div>
+
+      {/* ── Modal Xem Nhanh Địa Danh / Món Ăn ── */}
+      {selectedModalItem && (
+        <div className="tap-modal-backdrop" onClick={() => setSelectedModalItem(null)}>
+          <div className="tap-modal-sheet" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="tap-sheet-close" onClick={() => setSelectedModalItem(null)}>
+              <X size={18} />
+            </button>
+
+            <div className="tap-sheet-img-box">
+              <img
+                src={selectedModalItem.thumbnail_url || selectedModalItem.image_url || card?.thumbnail_url}
+                alt={selectedModalItem.name || selectedModalItem.title}
+                className="tap-sheet-img"
+              />
+            </div>
+
+            <div className="tap-sheet-content">
+              <h3>{selectedModalItem.name || selectedModalItem.title}</h3>
+              {selectedModalItem.address && (
+                <p className="tap-sheet-addr">
+                  <MapPin size={14} className="tap-pin" />
+                  <span>{selectedModalItem.address}</span>
+                </p>
+              )}
+              <p className="tap-sheet-desc">
+                {selectedModalItem.description || `Địa điểm hấp dẫn không thể bỏ lỡ tại ${pName}.`}
+              </p>
+              <Link href={`/province/${card?.province_slug}`} className="tap-btn-full-guide in-sheet">
+                <span>Xem Trong Cẩm Nang Du Lịch</span>
+                <ChevronRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Modal Chia Sẻ Thẻ & Mã QR ── */}
+      {showShareModal && (
+        <div className="tap-modal-backdrop" onClick={() => setShowShareModal(false)}>
+          <div className="tap-share-modal-sheet" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="tap-sheet-close-btn"
+              onClick={() => setShowShareModal(false)}
+              aria-label="Đóng"
+            >
+              <X size={18} />
+            </button>
+
+            <div className="tap-share-modal-header">
+              <div className="tap-share-icon-circle">
+                <Share2 size={20} />
+              </div>
+              <h3 className="tap-share-title">Chia Sẻ Mảnh Ghép {pName}</h3>
+              <p className="tap-share-subtitle">
+                Quét mã QR hoặc sao chép liên kết để gửi cho bạn bè
+              </p>
+            </div>
+
+            {/* Mã QR Code */}
+            <div className="tap-qr-box">
+              <div className="tap-qr-frame">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(
+                    getShareUrl()
+                  )}&margin=8`}
+                  alt={`Mã QR thẻ ${pName}`}
+                  className="tap-qr-image"
+                />
+              </div>
+              <p className="tap-qr-hint">
+                <QrCode size={13} />
+                <span>Quét bằng Camera điện thoại hoặc Zalo</span>
+              </p>
+            </div>
+
+            {/* Hộp Copy Link */}
+            <div className="tap-copy-bar">
+              <input
+                type="text"
+                readOnly
+                value={getShareUrl()}
+                className="tap-copy-input"
+                onClick={(e) => e.target.select()}
+              />
+              <button
+                type="button"
+                className={`tap-copy-btn ${copied ? "copied" : ""}`}
+                onClick={handleCopyLink}
+              >
+                {copied ? <Check size={16} /> : <Copy size={16} />}
+                <span>{copied ? "Đã chép!" : "Sao chép"}</span>
+              </button>
+            </div>
+
+            {/* Native Share button */}
+            {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
+              <button
+                type="button"
+                className="tap-native-share-btn"
+                onClick={handleNativeShare}
+              >
+                <Share2 size={16} />
+                <span>Mở chia sẻ hệ thống</span>
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

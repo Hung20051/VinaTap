@@ -535,7 +535,7 @@ export default function AdminProducts() {
                 <input
                   type="text"
                   required
-                  placeholder="VD: Mảnh Ghép NFC Gỗ 3D — Hà Nội"
+                  placeholder="VD: Mảnh Ghép NFC 3D — Hà Nội"
                   className="admin-prod-form-input prod-name-input"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -615,7 +615,7 @@ export default function AdminProducts() {
                 <label className="admin-prod-form-label">Mô tả sản phẩm:</label>
                 <textarea
                   rows={2}
-                  placeholder="Mô tả chất liệu gỗ bách xanh, chip NFC..."
+                  placeholder="Mô tả chất liệu, chip NFC..."
                   className="admin-prod-form-textarea"
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}

@@ -9,8 +9,6 @@ const {
   addStickerOverlay,
   updateStickerOverlay,
   deleteStickerOverlay,
-  addTagToMedia,
-  removeTagFromMedia,
 } = require("../controllers/mediaController");
 
 const { protect } = require("../middleware/auth");
@@ -27,9 +25,5 @@ router.delete("/:id", protect, deleteMedia);
 router.post("/:id/stickers", protect, addStickerOverlay);
 router.put("/stickers/:overlayId", protect, updateStickerOverlay);
 router.delete("/stickers/:overlayId", protect, deleteStickerOverlay);
-
-// Tag
-router.post("/:id/tags", protect, addTagToMedia);
-router.delete("/:id/tags/:tagId", protect, removeTagFromMedia);
 
 module.exports = router;

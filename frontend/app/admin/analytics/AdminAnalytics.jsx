@@ -199,7 +199,7 @@ export default function AdminAnalytics() {
                   {(stats.nfc_scans_count || 0).toLocaleString("vi-VN")}
                 </h3>
                 <span className="admin-analytics-kpi-sub text-green">
-                  🏷️ Thẻ gỗ NFC đã được chạm
+                  🏷️ Thẻ NFC đã được chạm
                 </span>
               </div>
             </div>

@@ -1,822 +1,700 @@
-/* ============================================================
-   VinaTap — Province page (app/province/[slug]/page.js)
-   Trước đây trang này không có file CSS riêng — toàn bộ style
-   nằm inline trong JSX. File này tách phần style TĨNH ra thành
-   class, chỉ giữ lại inline style cho phần THẬT SỰ động (ảnh nền
-   hero lấy từ province.thumbnail_url, vì URL đổi theo từng tỉnh
-   nên không thể viết thành class cố định được).
-   ============================================================ */
+/* ================================================================
+   CẨM NANG DU LỊCH TỈNH THÀNH (CHUẨN BỐ CỤC MIA.VN)
+   Phong cách hiện đại, trực quan, tạp chí du lịch số cao cấp
+   ================================================================ */
 
-/* ─── LOADING / NOT FOUND ─────────────────────────────────── */
-.province-loading {
+.mia-page-wrapper {
+  background-color: #f8fafc;
   min-height: 100vh;
+  color: #1e293b;
+  font-family: inherit;
+  padding-bottom: 5rem;
+}
+
+.mia-main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 3rem;
+}
+
+/* ─── 1. BREADCRUMB ────────────────────────────────────────── */
+.mia-breadcrumb {
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  padding: 0.25rem 0;
 }
-.province-notfound {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  text-align: center;
-  padding: 1.5rem;
+
+.mia-breadcrumb-item {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
-.province-notfound__icon {
-  font-size: 2.5rem;
+
+.mia-breadcrumb-item:hover {
+  color: #ea580c;
 }
-.province-notfound__title {
-  font-size: 1.2rem;
+
+.mia-breadcrumb-sep {
+  color: #cbd5e1;
+}
+
+.mia-breadcrumb-current {
+  color: #0f172a;
   font-weight: 700;
 }
 
-/* ─── PREMIUM HERO BANNER ───────────────────────────────────── */
-.province-hero-wrap {
+/* ─── 2. HERO INTRO 2-COLUMN ────────────────────────────────── */
+.mia-hero-section {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 1.5rem;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+  border: 1px solid #f1f5f9;
+  margin-bottom: 2.75rem;
+  align-items: stretch;
+}
+
+.mia-hero-left {
+  display: flex;
+}
+
+.mia-hero-img-wrap {
   width: 100%;
-  position: relative;
+  min-height: 320px;
+  max-height: 380px;
+  border-radius: 16px;
   overflow: hidden;
-}
-
-.province-hero-banner {
   position: relative;
-  padding: 3.5rem 0 4rem;
-  color: #ffffff;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+  background: #e2e8f0;
 }
 
-.province-hero-banner::after {
-  content: "";
+.mia-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mia-hero-img-wrap:hover .mia-hero-img {
+  transform: scale(1.03);
+}
+
+.mia-hero-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.5rem 1.75rem;
+  background: #fdfbf7;
+  border-radius: 16px;
+  border: 1px dashed #fed7aa;
+}
+
+.mia-hero-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.mia-hero-desc p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #475569;
+  text-align: justify;
+}
+
+/* ─── 3. SECTIONS & HEADERS ─────────────────────────────────── */
+.mia-section {
+  margin-bottom: 3.25rem;
+}
+
+.mia-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.mia-section-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.3px;
+  position: relative;
+}
+
+.mia-see-all-btn {
+  background: none;
+  border: none;
+  color: #ea580c;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.mia-see-all-btn:hover {
+  background: #fff7ed;
+  text-decoration: underline;
+}
+
+/* ─── 4. GRID & SCROLLABLE ROWS (ĐIỂM THAM QUAN / LỄ HỘI) ──── */
+.mia-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.mia-grid-scroll-x {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  gap: 1.25rem !important;
+  padding-bottom: 0.75rem !important;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mia-grid-scroll-x > * {
+  flex: 0 0 340px !important;
+  min-width: 300px !important;
+  max-width: 380px !important;
+}
+
+.mia-grid-scroll-x::-webkit-scrollbar {
+  height: 6px;
+}
+.mia-grid-scroll-x::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 9999px;
+}
+.mia-grid-scroll-x::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+.mia-grid-scroll-x::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ─── VERTICAL BOUNDED SCROLL BOX ────────────────────────────── */
+.mia-scroll-y-box {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 4px;
+}
+
+.mia-scroll-y-box::-webkit-scrollbar {
+  width: 5px;
+}
+.mia-scroll-y-box::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 4px;
+}
+.mia-scroll-y-box::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.mia-scroll-y-box::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.mia-card-img-large {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  height: 240px;
+  cursor: pointer;
+  background: #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mia-card-img-large:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.mia-card-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.mia-card-img-large:hover .mia-card-bg-img {
+  transform: scale(1.06);
+}
+
+.mia-card-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.88) 0%,
+    rgba(15, 23, 42, 0.4) 45%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.mia-card-title {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(248,250,252,0.6) 100%);
-  pointer-events: none;
-}
-
-.province-hero-inner {
-  position: relative;
+  padding: 1.1rem 1.2rem;
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
   z-index: 2;
 }
 
-.province-hero-content {
-  max-width: 720px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.1rem;
-}
-
-.province-hero-badges {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.province-badge-region {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: #fb923c;
-  background: rgba(251, 146, 60, 0.15);
-  border: 1px solid rgba(251, 146, 60, 0.35);
-  padding: 5px 14px;
-  border-radius: 99px;
-  backdrop-filter: blur(8px);
-}
-
-.province-badge-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #f97316;
-  box-shadow: 0 0 8px #f97316;
-}
-
-.province-badge-nfc {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #e2e8f0;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 5px 14px;
-  border-radius: 99px;
-  backdrop-filter: blur(8px);
-}
-
-.province-hero-title {
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
-  font-weight: 900;
-  line-height: 1.15;
-  letter-spacing: -0.5px;
-  margin: 0;
-  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
-}
-
-.province-hero-desc {
-  font-size: 1.02rem;
-  line-height: 1.6;
-  color: #cbd5e1;
-  margin: 0;
-  max-width: 660px;
-}
-
-.province-hero-stats {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  flex-wrap: wrap;
-}
-
-.province-stat-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.86rem;
-  font-weight: 600;
-  color: #f1f5f9;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 6px 14px;
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-}
-
-.province-hero-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
-}
-
-.province-btn-hero-primary {
-  padding: 0.85rem 1.8rem;
-  font-size: 0.95rem;
-  font-weight: 800;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #ff7b00 0%, #e85d04 100%);
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 8px 24px rgba(232, 93, 4, 0.35);
-  transition: all 0.2s ease;
-}
-
-.province-btn-hero-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(232, 93, 4, 0.45);
-}
-
-.province-btn-hero-secondary {
-  padding: 0.85rem 1.8rem;
-  font-size: 0.95rem;
-  font-weight: 800;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(8px);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.province-btn-hero-secondary:hover {
-  background: rgba(255, 255, 255, 0.22);
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-/* ─── NỘI DUNG ───────────────────────────────────────────────── */
-.province-content {
-  padding: 2.5rem 1rem 4rem;
-}
-.province-section {
-  margin-bottom: 2rem;
-}
-.province-section__title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-}
-.province-specialties-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-.province-specialty-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  background: var(--primary-light);
-  color: var(--primary-dark);
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 1px solid transparent;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    border-color 0.15s ease;
-}
-.province-specialty-chip:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  border-color: var(--primary);
-}
-.province-specialty-chip__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--primary);
-  flex-shrink: 0;
-}
-
-/* ─── VIDEO GIỚI THIỆU (16:9 responsive) ──────────────────── */
-.province-video-wrap {
-  position: relative;
-  padding-top: 56.25%;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.province-video-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* ─── DANH SÁCH ĐỊA DANH ──────────────────────────────────── */
-.province-landmarks-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-.province-landmarks-header__title {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-.province-filter-row {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.province-filter-btn {
-  padding: 0.4rem 0.9rem;
-  font-size: 0.82rem;
-}
-
-.province-empty {
-  padding: 2.5rem;
-  text-align: center;
-  color: var(--text-muted);
-}
-
-.province-landmark-grid {
+/* ─── 5. CULINARY & REVIEW 3-COLUMN GRID ───────────────────── */
+.mia-culinary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: 1.15fr 1fr 1fr;
   gap: 1.25rem;
 }
 
-/* Tile "+N" — thay cho các thẻ bị ẩn khi danh sách địa danh dài hơn 3,
-   bấm vào để hiện toàn bộ (xem hàm setExpandedLandmarks trong page.js) */
-.province-landmark-more-card {
+.mia-food-list-col {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  min-height: 130px;
-  border-radius: var(--radius-lg);
-  border: 1.5px dashed var(--primary);
-  background: var(--primary-light);
-  color: var(--primary-dark);
-  transition:
-    transform 0.15s ease,
-    background 0.15s ease;
-}
-.province-landmark-more-card:hover {
-  transform: translateY(-3px);
-  background: #ffe4d1;
-}
-.province-landmark-more-card__plus {
-  font-size: 1.6rem;
-  font-weight: 800;
-  line-height: 1;
-}
-.province-landmark-more-card__label {
-  font-size: 0.8rem;
-  font-weight: 600;
+  gap: 0.75rem;
 }
 
-.province-landmarks-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-/* ─── CAROUSEL FALLBACK CỦA MAP (khi chưa cấu hình Google Maps API key)
-   Cùng pattern với carousel tỉnh thành ở trang chủ (home.css
-   .home-provinces__carousel) — tự trượt 3s/lần, dừng khi hover, có nút
-   lùi/tới, scroll-snap. Trước đây là 1 lưới cứng dồn hết địa danh thành
-   khối dài xấu. */
-.map-fallback-carousel {
-  position: relative;
-}
-.map-fallback-carousel__track {
-  display: flex;
-  gap: 1.25rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 0.5rem;
-}
-.map-fallback-carousel__card {
-  flex: 0 0 240px;
-  scroll-snap-align: start;
-  padding: 1rem;
-  display: block;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.map-fallback-carousel__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
-}
-.map-fallback-carousel__card-name {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-.map-fallback-carousel__card-address {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-top: 0.25rem;
-}
-.map-fallback-carousel__card-cta {
-  font-size: 0.78rem;
-  color: var(--primary);
-  font-weight: 600;
-  display: inline-block;
-  margin-top: 0.4rem;
-}
-.map-fallback-carousel__nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #fff;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  color: var(--text-primary);
+.mia-food-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-}
-.map-fallback-carousel__nav-btn:hover {
-  background: var(--primary);
-  color: #fff;
-  transform: translateY(-50%) scale(1.06);
-}
-.map-fallback-carousel__nav-btn--prev {
-  left: -16px;
-}
-.map-fallback-carousel__nav-btn--next {
-  right: -16px;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 8px 10px;
+  border: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-.province-landmark-card {
+.mia-food-item:hover {
+  transform: translateX(4px);
+  border-color: #fed7aa;
+  background: #fffaf5;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.08);
+}
+
+.mia-food-thumb {
+  width: 78px;
+  height: 64px;
+  border-radius: 10px;
   overflow: hidden;
+  flex-shrink: 0;
+  background: #e2e8f0;
 }
-.province-landmark-card__thumb {
-  height: 130px;
-  background: var(--primary-light);
-}
-.province-landmark-card__thumb img {
+
+.mia-food-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.province-landmark-card__thumb-placeholder {
+
+.mia-food-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mia-food-title {
+  margin: 0 0 5px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mia-food-meta {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  font-size: 0.74rem;
+  color: #94a3b8;
+}
+
+.mia-food-featured-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
   height: 100%;
-  font-size: 2rem;
+  min-height: 290px;
+  cursor: pointer;
+  background: #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.province-landmark-card__body {
+
+.mia-food-featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.mia-food-featured-card:hover .mia-card-bg-img {
+  transform: scale(1.06);
+}
+
+/* ─── 6. BỘ 3 CẨM NANG (DI CHUYỂN, LỊCH TRÌNH, KINH NGHIỆM) ── */
+.mia-guides-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.35rem;
+}
+
+.mia-guide-column {
+  background: #ffffff;
+  border-radius: 20px;
   padding: 1rem;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
 }
-.province-landmark-card__badge {
-  font-size: 0.7rem;
-  margin-bottom: 0.4rem;
-}
-.province-landmark-card__name {
-  font-weight: 700;
-  font-size: 0.95rem;
-  margin: 0.35rem 0;
-}
-.province-landmark-card__address {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-bottom: 0.6rem;
-}
-.province-landmark-card__cta {
+
+.mia-guide-top-img-card {
   width: 100%;
-  justify-content: center;
-  font-size: 0.82rem;
+  height: 175px;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  background: #e2e8f0;
 }
 
-/* ─── RESPONSIVE (mobile) ─────────────────────────────────────
-   Breakpoint khớp quy ước chung của project: 768px / 480px. */
-@media (max-width: 768px) {
-  .province-hero {
-    padding: 2.5rem 0;
-  }
-  .province-hero__cta {
-    width: 100%;
-    justify-content: center;
-    padding: 0.8rem 1.5rem;
-  }
-  .province-content {
-    padding: 1.75rem 0.85rem 3rem;
-  }
-  .province-landmarks-header {
-    align-items: flex-start;
-  }
-  .province-filter-row {
-    width: 100%;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 0.25rem;
-  }
-  .province-filter-btn {
-    flex-shrink: 0;
-  }
-  .province-landmark-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.85rem;
-  }
+.mia-guide-top-img-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-@media (max-width: 480px) {
-  .province-hero__stats {
-    gap: 1rem;
-    font-size: 0.85rem;
-  }
-  .province-landmark-grid {
-    grid-template-columns: 1fr;
-  }
-  .province-landmark-card__thumb {
-    height: 160px;
-  }
+.mia-guide-top-img-card:hover img {
+  transform: scale(1.05);
 }
 
-/* ─── AUDIO PLAYER STYLES ───────────────────────────────────── */
-.province-audio-card {
-  padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
-  border: 1px solid #ffedd5;
-  border-radius: 16px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 15px rgba(232, 93, 4, 0.06);
-}
-
-.province-audio-header {
+.mia-guide-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f8fafc;
 }
 
-.province-audio-title {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.province-audio-icon-radio {
-  color: #e85d04;
-  animation: pulseRadio 2s infinite ease-in-out;
-}
-
-.province-audio-title h3 {
-  font-size: 1.05rem;
+.mia-guide-col-title {
+  font-size: 1.15rem;
   font-weight: 800;
   color: #0f172a;
   margin: 0;
 }
 
-.province-audio-title p {
-  font-size: 0.8rem;
-  color: #64748b;
-  margin: 2px 0 0 0;
-}
-
-.province-audio-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.72rem;
+.mia-guide-see-all {
+  font-size: 0.82rem;
   font-weight: 700;
-  color: #e85d04;
-  background: #fff3e6;
-  padding: 4px 10px;
-  border-radius: 99px;
-  border: 1px solid #fed7aa;
-}
-
-.province-audio-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.province-audio-play-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff7b00 0%, #e85d04 100%);
-  color: #ffffff;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: #ea580c;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(232, 93, 4, 0.3);
-  transition: all 0.2s ease;
-  flex-shrink: 0;
 }
 
-.province-audio-play-btn:hover {
-  transform: scale(1.06);
-  box-shadow: 0 6px 18px rgba(232, 93, 4, 0.4);
+.mia-guide-see-all:hover {
+  text-decoration: underline;
 }
 
-.province-audio-track {
-  flex: 1;
+.mia-guide-article-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.65rem;
 }
 
-.province-audio-bar-wrap {
-  width: 100%;
-  height: 8px;
-  background: #fed7aa;
-  border-radius: 99px;
+.mia-guide-article-list li {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #334155;
+  cursor: pointer;
+  padding: 4px 0;
+  position: relative;
+  transition: all 0.2s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.province-audio-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #ff7b00, #ea580c);
-  border-radius: 99px;
-  transition: width 0.3s ease;
+.mia-guide-article-list li:hover {
+  color: #ea580c;
+  transform: translateX(3px);
 }
 
-.province-audio-status-text {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.76rem;
-  color: #64748b;
-  font-weight: 600;
-}
-
-.province-audio-side-btns {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-@keyframes pulseRadio {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.15); opacity: 0.8; }
-}
-
-/* ─── UNBOXING CEREMONY MODAL ────────────────────────────────── */
-.province-unbox-backdrop {
+/* ─── 7. MODAL XEM CHI TIẾT BÀI VIẾT / ĐỊA DANH ─────────────── */
+.mia-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+  -webkit-backdrop-filter: blur(8px);
   z-index: 9999;
-  animation: fadeIn 0.25s ease;
-}
-
-.province-unbox-modal {
-  width: 100%;
-  max-width: 440px;
-  padding: 2.25rem 1.75rem;
-  text-align: center;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-  border: 1px solid #334155;
-  color: #ffffff;
-  border-radius: 24px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(232, 93, 4, 0.25);
-  position: relative;
-  animation: popScale 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.province-unbox-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: #94a3b8;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1.25rem;
+  animation: modalFadeIn 0.25s ease forwards;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mia-modal-container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 580px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+  position: relative;
+  animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalScaleUp {
+  from {
+    transform: scale(0.94) translateY(20px);
+  }
+  to {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.mia-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f172a;
   cursor: pointer;
+  z-index: 10;
   transition: all 0.2s ease;
 }
 
-.province-unbox-close:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+.mia-modal-close:hover {
+  background: #ffffff;
+  transform: rotate(90deg) scale(1.1);
 }
 
-.province-unbox-banner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.province-unbox-sparkle-ring {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(232, 93, 4, 0.4) 0%, rgba(232, 93, 4, 0) 70%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.5rem;
-}
-
-.province-unbox-sparkle-icon {
-  color: #fb923c;
-  filter: drop-shadow(0 0 8px #f97316);
-  animation: spinSlow 8s linear infinite;
-}
-
-.province-unbox-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #fb923c;
-  background: rgba(251, 146, 60, 0.15);
-  padding: 4px 12px;
-  border-radius: 99px;
-  border: 1px solid rgba(251, 146, 60, 0.3);
-}
-
-.province-unbox-banner h2 {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #94a3b8;
-  margin: 0.5rem 0 0 0;
-  letter-spacing: 0.5px;
-}
-
-.province-unbox-banner h1 {
-  font-size: 1.8rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #ffffff 0%, #fb923c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0;
-}
-
-.province-unbox-card-3d-wrap {
-  margin: 1.5rem 0;
-  perspective: 1000px;
-}
-
-.province-unbox-card-3d {
-  width: 220px;
-  height: 140px;
-  margin: 0 auto;
-  border-radius: 14px;
-  overflow: hidden;
+.mia-modal-image-wrap {
   position: relative;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(249, 115, 22, 0.4);
-  border: 2px solid rgba(251, 146, 60, 0.6);
-  transform: rotateY(-8deg) rotateX(6deg);
-  transition: transform 0.3s ease;
+  width: 100%;
+  height: 250px;
+  background: #0f172a;
 }
 
-.province-unbox-card-3d:hover {
-  transform: rotateY(0deg) rotateX(0deg) scale(1.05);
-}
-
-.province-unbox-card-3d img {
+.mia-modal-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.province-unbox-no-img {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #f97316;
-  gap: 0.5rem;
+.mia-modal-img-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.9) 0%,
+    rgba(15, 23, 42, 0.3) 50%,
+    transparent 100%
+  );
+}
+
+.mia-modal-img-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem;
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.25rem;
   font-weight: 800;
+  line-height: 1.35;
 }
 
-.province-unbox-chip-badge {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  font-size: 0.65rem;
-  font-weight: 900;
+.mia-modal-body {
+  padding: 1.5rem;
+}
+
+.mia-modal-title {
+  font-size: 1.35rem;
+  font-weight: 800;
   color: #0f172a;
-  background: #fb923c;
-  padding: 2px 6px;
-  border-radius: 4px;
+  margin: 0 0 0.85rem;
 }
 
-.province-unbox-shine {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  transform: skewX(-25deg);
-  animation: shinePass 3s infinite;
+.mia-modal-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
 }
 
-.province-unbox-desc {
-  font-size: 0.88rem;
-  color: #cbd5e1;
-  line-height: 1.5;
+.mia-meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: #475569;
+  font-weight: 600;
+}
+
+.mia-meta-tag.is-badge {
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #fed7aa;
+}
+
+.mia-modal-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #fffaf5;
+  border: 1px solid #fed7aa;
+  border-radius: 12px;
+  font-size: 0.86rem;
+  color: #334155;
+  line-height: 1.45;
+  margin-bottom: 1.15rem;
+}
+
+.mia-modal-desc {
+  font-size: 0.93rem;
+  line-height: 1.65;
+  color: #334155;
   margin-bottom: 1.5rem;
 }
 
-.province-unbox-actions {
+.mia-modal-desc p {
+  margin: 0 0 0.65rem;
+}
+
+.mia-modal-subdesc {
+  font-size: 0.88rem;
+  color: #64748b;
+  font-style: italic;
+}
+
+.mia-modal-actions {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 10px;
 }
 
-.province-unbox-btn {
-  width: 100%;
+.mia-btn-direction {
+  flex: 1;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  padding: 0.75rem;
+  gap: 8px;
+  padding: 11px 18px;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 700;
   border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.35);
+  transition: all 0.2s ease;
 }
 
-@keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.mia-btn-direction:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(234, 88, 12, 0.45);
 }
 
-@keyframes shinePass {
-  0% { left: -100%; }
-  40%, 100% { left: 150%; }
+.mia-btn-share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 16px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-@keyframes popScale {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+.mia-btn-share:hover {
+  background: #e2e8f0;
+}
+
+/* ─── 8. RESPONSIVE MEDIA QUERIES ───────────────────────────── */
+@media (max-width: 1024px) {
+  .mia-hero-section {
+    grid-template-columns: 1fr;
+  }
+  .mia-culinary-grid {
+    grid-template-columns: 1fr;
+  }
+  .mia-guides-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .mia-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .mia-card-img-large {
+    height: 200px;
+  }
+  .mia-food-featured-card {
+    min-height: 220px;
+  }
 }

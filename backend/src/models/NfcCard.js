@@ -45,7 +45,7 @@ const NfcCard = {
     return rows;
   },
 
-  // Kích hoạt bằng serial (dự phòng) — thẻ gỗ không hết hạn nên bỏ expires_at
+  // Kích hoạt bằng serial (dự phòng) — thẻ NFC không hết hạn nên bỏ expires_at
   async activate(serial_code, user_id) {
     const [result] = await db.execute(
       `UPDATE nfc_cards

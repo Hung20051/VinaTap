@@ -25,17 +25,214 @@ const getProvince = async (req, res) => {
     // Lấy kèm danh sách địa danh
     const [landmarks] = await db.execute(
       `SELECT id, name, address, latitude, longitude, maps_place_id,
-              thumbnail_url, description, category
+              thumbnail_url, description, category, sort_order
        FROM landmarks
-       WHERE province_id = ?
-       ORDER BY category, name`,
+       WHERE province_id = ? AND status = 'active'
+       ORDER BY sort_order ASC, id ASC`,
       [province.id],
     );
 
-    res.json({ province, landmarks });
+    // Lấy danh sách quán ăn & món ngon
+    const [foods] = await db.execute(
+      `SELECT id, title, image_url, address, description, view_count, published_date, is_featured, sort_order
+       FROM province_foods
+       WHERE province_id = ? AND status = 'active'
+       ORDER BY sort_order ASC, id ASC`,
+      [province.id],
+    );
+
+    // Lấy danh sách cẩm nang & review
+    const [articles] = await db.execute(
+      `SELECT id, category, title, image_url, description, view_count, published_date, is_featured, sort_order
+       FROM province_articles
+       WHERE province_id = ? AND status = 'active'
+       ORDER BY sort_order ASC, id ASC`,
+      [province.id],
+    );
+
+    // Lấy danh sách lễ hội
+    const [festivals] = await db.execute(
+      `SELECT id, title, image_url, event_time, description, sort_order
+       FROM province_festivals
+       WHERE province_id = ? AND status = 'active'
+       ORDER BY sort_order ASC, id ASC`,
+      [province.id],
+    );
+
+    res.json({ province, landmarks, foods, articles, festivals });
   } catch (err) {
     console.error("getProvince:", err);
     res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
+// ─── ADMIN: LƯU TOÀN BỘ CẨM NANG VISUAL EDITOR ─────────────────
+// PUT /api/provinces/:id/full-guide
+const saveFullProvinceGuide = async (req, res) => {
+  const connection = await db.getConnection();
+  try {
+    await connection.beginTransaction();
+    const provinceId = req.params.id;
+    const {
+      province: pData,
+      landmarks = [],
+      foods = [],
+      articles = [],
+      festivals = [],
+    } = req.body;
+
+    if (pData) {
+      const allowed = [
+        "name",
+        "slug",
+        "region",
+        "description",
+        "thumbnail_url",
+        "youtube_url",
+        "population",
+        "area_km2",
+        "specialties",
+        "lat",
+        "lng",
+        "status",
+      ];
+      const keys = Object.keys(pData).filter((k) => allowed.includes(k));
+      if (keys.length > 0) {
+        const setClause = keys.map((k) => `${k} = ?`).join(", ");
+        const values = keys.map((k) => pData[k]);
+        await connection.execute(
+          `UPDATE provinces SET ${setClause} WHERE id = ?`,
+          [...values, provinceId],
+        );
+      }
+    }
+
+    // Sync landmarks if provided
+    if (Array.isArray(landmarks)) {
+      await connection.execute(
+        `DELETE FROM landmarks WHERE province_id = ?`,
+        [provinceId],
+      );
+      for (let i = 0; i < landmarks.length; i++) {
+        const l = landmarks[i];
+        const name = l.name || l.title;
+        if (name) {
+          await connection.execute(
+            `INSERT INTO landmarks (province_id, name, address, latitude, longitude, maps_place_id, thumbnail_url, description, category, sort_order, status)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              provinceId,
+              name,
+              l.address || null,
+              l.latitude || null,
+              l.longitude || null,
+              l.maps_place_id || null,
+              l.thumbnail_url || l.image || null,
+              l.description || l.desc || null,
+              l.category || "attraction",
+              i + 1,
+              "active",
+            ],
+          );
+        }
+      }
+    }
+
+    // Sync foods if provided
+    if (Array.isArray(foods)) {
+      await connection.execute(
+        `DELETE FROM province_foods WHERE province_id = ?`,
+        [provinceId],
+      );
+      for (let i = 0; i < foods.length; i++) {
+        const f = foods[i];
+        const title = f.title || f.name;
+        if (title) {
+          await connection.execute(
+            `INSERT INTO province_foods (province_id, title, image_url, address, description, view_count, published_date, is_featured, sort_order, status)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              provinceId,
+              title,
+              f.image_url || f.image || null,
+              f.address || null,
+              f.description || f.desc || null,
+              f.view_count || f.views || "100,000+",
+              f.published_date || f.date || "01/01/2026",
+              f.is_featured ? 1 : 0,
+              i + 1,
+              "active",
+            ],
+          );
+        }
+      }
+    }
+
+    // Sync articles if provided
+    if (Array.isArray(articles)) {
+      await connection.execute(
+        `DELETE FROM province_articles WHERE province_id = ?`,
+        [provinceId],
+      );
+      for (let i = 0; i < articles.length; i++) {
+        const a = articles[i];
+        const title = a.title || a.name;
+        if (title) {
+          await connection.execute(
+            `INSERT INTO province_articles (province_id, category, title, image_url, description, view_count, published_date, is_featured, sort_order, status)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              provinceId,
+              a.category || "transport",
+              title,
+              a.image_url || a.image || null,
+              a.description || a.desc || null,
+              a.view_count || a.views || "50,000+",
+              a.published_date || a.date || "01/01/2026",
+              a.is_featured ? 1 : 0,
+              i + 1,
+              "active",
+            ],
+          );
+        }
+      }
+    }
+
+    // Sync festivals if provided
+    if (Array.isArray(festivals)) {
+      await connection.execute(
+        `DELETE FROM province_festivals WHERE province_id = ?`,
+        [provinceId],
+      );
+      for (let i = 0; i < festivals.length; i++) {
+        const fe = festivals[i];
+        const title = fe.title || fe.name;
+        if (title) {
+          await connection.execute(
+            `INSERT INTO province_festivals (province_id, title, image_url, event_time, description, sort_order, status)
+             VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            [
+              provinceId,
+              title,
+              fe.image_url || fe.image || null,
+              fe.event_time || fe.date || "Hàng năm",
+              fe.description || fe.desc || null,
+              i + 1,
+              "active",
+            ],
+          );
+        }
+      }
+    }
+
+    await connection.commit();
+    res.json({ message: "Lưu cẩm nang tỉnh thành thành công!" });
+  } catch (err) {
+    await connection.rollback();
+    console.error("saveFullProvinceGuide error:", err);
+    res.status(500).json({ message: "Lỗi lưu dữ liệu cẩm nang" });
+  } finally {
+    connection.release();
   }
 };
 
@@ -114,15 +311,12 @@ const deleteProvince = async (req, res) => {
 const { uploadSingle, runMiddleware } = require("../middleware/upload");
 const cloudinary = require("../config/cloudinary");
 
-const uploadToCloudinary = (buffer, folder = "vinatap/provinces") =>
+const uploadToCloudinary = (buffer, options = { folder: "vinatap/uploads", resource_type: "auto" }) =>
   new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder, resource_type: "auto" },
-      (err, result) => {
-        if (err) reject(err);
-        else resolve(result);
-      },
-    );
+    const stream = cloudinary.uploader.upload_stream(options, (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
     stream.end(buffer);
   });
 
@@ -132,8 +326,22 @@ const uploadFile = async (req, res) => {
     if (!req.file)
       return res.status(400).json({ message: "Không tìm thấy file" });
 
-    const result = await uploadToCloudinary(req.file.buffer, "vinatap/uploads");
-    res.json({ message: "Upload file thành công", url: result.secure_url });
+    if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY) {
+      const base64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+      return res.json({ message: "Upload file thành công", url: base64 });
+    }
+
+    try {
+      const result = await uploadToCloudinary(req.file.buffer, {
+        folder: "vinatap/uploads",
+        resource_type: "auto",
+      });
+      res.json({ message: "Upload file thành công", url: result.secure_url });
+    } catch (cErr) {
+      console.warn("Cloudinary upload failed, using Data URI fallback:", cErr.message);
+      const base64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
+      res.json({ message: "Upload file thành công", url: base64 });
+    }
   } catch (err) {
     console.error("uploadFile error:", err);
     res.status(500).json({ message: err.message || "Lỗi upload file" });
@@ -184,6 +392,7 @@ const getTts = async (req, res) => {
 module.exports = {
   getAllProvinces,
   getProvince,
+  saveFullProvinceGuide,
   createProvince,
   updateProvince,
   deleteProvince,

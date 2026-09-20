@@ -72,7 +72,7 @@ const POLICY_ITEMS = [
 const FAQ_ITEMS = [
   {
     q: "Mảnh ghép NFC hoạt động ra sao?",
-    a: "Mỗi mảnh gỗ có gắn 1 chip NFC nhỏ bên trong, đại diện cho 1 tỉnh thành. Chỉ cần chạm mặt sau điện thoại vào mảnh gỗ, album của tỉnh đó sẽ mở ngay trên trình duyệt — không cần tải app, không cần quét mã.",
+    a: "Mỗi mảnh NFC có gắn 1 chip thông minh bên trong, đại diện cho 1 tỉnh thành. Chỉ cần chạm mặt sau điện thoại vào mảnh NFC, album của tỉnh đó sẽ mở ngay trên trình duyệt — không cần tải app, không cần quét mã.",
   },
   {
     q: "Ai là người tạo album cho mảnh ghép?",
@@ -211,20 +211,17 @@ export default function HomePage() {
               <a href="#home" onClick={scrollToSection("home")}>
                 Trang chủ
               </a>
+              <a href="#about" onClick={scrollToSection("about")}>
+                Giới thiệu
+              </a>
               <Link
                 href="/shop"
                 style={{ color: "inherit", textDecoration: "none" }}
               >
-                Cửa hàng Thẻ NFC
+                Sản phẩm
               </Link>
               <a href="#provinces" onClick={scrollToSection("provinces")}>
-                Cẩm nang Tỉnh thành
-              </a>
-              <a href="#about" onClick={scrollToSection("about")}>
-                Giới thiệu
-              </a>
-              <a href="#gia" onClick={scrollToSection("gia")}>
-                Các gói
+                Cẩm nang
               </a>
               <a href="#faq" onClick={scrollToSection("faq")}>
                 Hỏi đáp

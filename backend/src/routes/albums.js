@@ -7,8 +7,6 @@ const {
   getMyAlbums,
   updateAlbum,
   deleteAlbum,
-  createTag,
-  deleteTag,
   getAdminStats,
   getAdminList,
   getAdminReports,
@@ -40,10 +38,6 @@ router.get("/my", protect, getMyAlbums);
 router.get("/:id", optionalAuth, getAlbum); // guest xem được nếu public
 router.put("/:id", protect, updateAlbum);
 router.delete("/:id", protect, deleteAlbum);
-
-// Tags
-router.post("/:id/tags", protect, createTag);
-router.delete("/:id/tags/:tagId", protect, deleteTag);
 
 // Share / cộng tác
 router.post("/:id/share/request", protect, requestEdit);
