@@ -275,6 +275,22 @@
   gap: 1.25rem;
 }
 
+/* Khi không có bài dạng danh sách, đưa các card nổi bật về từ cột đầu,
+   tránh để trống cả một cột ở bên trái. */
+.mia-culinary-grid--featured-only {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mia-culinary-grid--featured-only .mia-food-list-col {
+  display: none;
+}
+
+/* Không có cột danh sách để làm mốc chiều cao, nên cố định chiều cao card
+   để ảnh không giãn theo tỷ lệ gốc khi chỉ còn hai card nổi bật. */
+.mia-culinary-grid--featured-only .mia-food-featured-card {
+  height: 300px;
+}
+
 .mia-food-list-col {
   display: flex;
   flex-direction: column;
@@ -696,5 +712,8 @@
   }
   .mia-food-featured-card {
     min-height: 220px;
+  }
+  .mia-culinary-grid--featured-only .mia-food-featured-card {
+    height: 220px;
   }
 }

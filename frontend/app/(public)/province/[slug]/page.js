@@ -88,6 +88,8 @@ export default function ProvincePage() {
 
   const guideData = getProvinceGuideData(province, landmarks, foods, articles, festivals);
   const pName = province.name || "Việt Nam";
+  const hasCulinaryList = guideData.culinary.list.length > 0;
+  const hasReviewList = guideData.reviews.list.length > 0;
 
   // Ảnh bìa chính
   const heroImage =
@@ -170,7 +172,7 @@ export default function ProvincePage() {
             </button>
           </div>
 
-          <div className="mia-culinary-grid">
+          <div className={`mia-culinary-grid ${hasCulinaryList ? "" : "mia-culinary-grid--featured-only"}`}>
             {/* Cột trái: bài viết món ngon dạng list (cuộn dọc có giới hạn) */}
             <div className="mia-food-list-col mia-scroll-y-box" style={{ maxHeight: "380px" }}>
               {guideData.culinary.list.map((item) => (
@@ -372,7 +374,7 @@ export default function ProvincePage() {
             </button>
           </div>
 
-          <div className="mia-culinary-grid">
+          <div className={`mia-culinary-grid ${hasReviewList ? "" : "mia-culinary-grid--featured-only"}`}>
             {/* Cột trái: các bài review dạng list (cuộn dọc) */}
             <div className="mia-food-list-col mia-scroll-y-box" style={{ maxHeight: "380px" }}>
               {guideData.reviews.list.map((item) => (
