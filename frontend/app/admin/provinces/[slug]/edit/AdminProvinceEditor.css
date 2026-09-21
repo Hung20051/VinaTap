@@ -5,7 +5,7 @@
 .admin-editor-wrapper {
   min-height: 100vh;
   background-color: #f8fafc;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: inherit;
   color: #1e293b;
   position: relative;
 }

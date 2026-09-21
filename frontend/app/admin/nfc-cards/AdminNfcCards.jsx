@@ -14,6 +14,7 @@ import {
   RefreshCw,
   HelpCircle,
   ChevronDown,
+  ExternalLink,
 } from "lucide-react";
 import { nfcAPI, provinceAPI, adminStatsAPI, userAPI, productAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
@@ -848,6 +849,17 @@ export default function AdminNfcCards() {
                 <strong>{viewTokenCard.serial_code}</strong> | Tỉnh:{" "}
                 <strong>{viewTokenCard.province_name}</strong>
               </p>
+              <div style={{ marginTop: "1.25rem", display: "flex", gap: "10px", justifyContent: "flex-end" }}>
+                <a
+                  href={`/t/${viewTokenCard.nfc_token}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                  style={{ textDecoration: "none" }}
+                >
+                  <ExternalLink size={16} /> Xem Giao Diện Chạm Thẻ (Test Tap)
+                </a>
+              </div>
             </div>
           </div>
         </div>
