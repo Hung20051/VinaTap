@@ -1,5 +1,5 @@
 const express = require("express");
-const passport = require("passport");
+const { passport, isGoogleOAuthEnabled } = require("../config/passport");
 const router = express.Router();
 
 const {
@@ -61,6 +61,12 @@ router.post(
 router.post("/forgot-password/reset-password", otpVerifyLimiter, resetPassword);
 
 // Google OAuth
+if (!isGoogleOAuthEnabled) {
+  const googleOAuthUnavailable = (req, res) =>
+    res.status(503).json({ message: "Google OAuth is not configured." });
+  router.get("/google", googleOAuthUnavailable);
+  router.get("/google/callback", googleOAuthUnavailable);
+} else {
 // Bước 1: redirect sang Google
 router.get(
   "/google",
@@ -79,6 +85,7 @@ router.get(
   }),
   googleCallback,
 );
+}
 
 // Lấy thông tin user đang đăng nhập
 router.get("/me", protect, getMe);

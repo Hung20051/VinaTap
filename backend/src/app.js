@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const passport = require("./config/passport"); // khởi tạo strategy
+const { passport } = require("./config/passport"); // khởi tạo strategy
 
 const app = express();
 
