@@ -1509,303 +1509,614 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem;
+  padding: 1.5rem 1rem;
   overflow-y: auto;
-  background: #0f172a;
+  background: #090d16;
+  font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tap-welcome-screen *,
+.tap-welcome-screen button,
+.tap-welcome-screen input,
+.tap-welcome-screen select,
+.tap-welcome-screen textarea {
+  font-family: inherit;
 }
 
 .tap-welcome-bg-wrap {
   position: fixed;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
 .tap-welcome-bg-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(20px) brightness(0.4) saturate(1.3);
-  transform: scale(1.15);
+  filter: blur(28px) brightness(0.32) saturate(1.4);
+  transform: scale(1.18);
 }
 
 .tap-welcome-bg-fallback {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
+  background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
 }
 
 .tap-welcome-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.88) 100%);
+  background: radial-gradient(
+    circle at center,
+    rgba(15, 23, 42, 0.4) 0%,
+    rgba(9, 13, 22, 0.92) 85%,
+    #090d16 100%
+  );
 }
 
-/* ── 5.1 VINTAGE TRAVEL ENVELOPE (PHONG BÌ DU LỊCH CỔ ĐIỂN) ── */
+/* ── 5.1 LUXURY TRAVEL ENVELOPE (BÌ THƯ DU LỊCH THƯỢNG HẠNG) ── */
 .tap-envelope-container {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 410px;
+  max-width: 420px;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.15rem;
-  animation: envelopeFloat 3.5s ease-in-out infinite;
+  gap: 1.25rem;
+  animation: envelopeFloat 4s ease-in-out infinite;
 }
 
 @keyframes envelopeFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Ambient glow behind the envelope */
+.tap-envelope-ambient-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(234, 88, 12, 0.28) 0%, rgba(251, 146, 60, 0.12) 45%, transparent 70%);
+  filter: blur(35px);
+  pointer-events: none;
+  z-index: 0;
+  animation: glowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+  to { opacity: 1; transform: translateX(-50%) scale(1.08); }
 }
 
 .tap-vintage-envelope {
   position: relative;
+  z-index: 1;
   width: 100%;
-  background: #fffdf9;
-  border-radius: 22px;
-  padding: 1.35rem 1.25rem 1.15rem;
+  background: radial-gradient(ellipse at 50% 0%, #ffffff 0%, #fdfbf7 40%, #f7f1e5 100%);
+  border-radius: 26px;
+  padding: 1.6rem 1.45rem 1.4rem;
   box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(254, 215, 170, 0.7),
-    inset 0 0 30px rgba(254, 243, 199, 0.4);
+    0 30px 70px -15px rgba(0, 0, 0, 0.75),
+    0 10px 25px -5px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(217, 119, 6, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.85),
+    inset 0 2px 18px rgba(245, 158, 11, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1rem;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  user-select: none;
 }
 
 .tap-vintage-envelope:hover {
-  transform: scale(1.02);
+  transform: translateY(-3px) scale(1.015);
   box-shadow: 
-    0 30px 60px -15px rgba(234, 88, 12, 0.4),
-    0 0 0 2px rgba(251, 146, 60, 0.85);
+    0 38px 80px -18px rgba(234, 88, 12, 0.45),
+    0 15px 30px -8px rgba(0, 0, 0, 0.5),
+    0 0 0 2px rgba(245, 158, 11, 0.7),
+    inset 0 0 0 1px #ffffff;
 }
 
-/* Gold Trim Accent */
-.tap-envelope-gold-trim {
+/* Vintage Airmail Border Accent (Top & Bottom) */
+.tap-envelope-airmail-ribbon {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 5px;
-  background: linear-gradient(90deg, #d97706, #fbbf24, #ea580c, #fbbf24, #d97706);
+  height: 8px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #dc2626 0,
+    #dc2626 12px,
+    #ffffff 12px,
+    #ffffff 18px,
+    #1d4ed8 18px,
+    #1d4ed8 30px,
+    #ffffff 30px,
+    #ffffff 36px,
+    #f59e0b 36px,
+    #f59e0b 48px,
+    #ffffff 48px,
+    #ffffff 54px
+  );
+  opacity: 0.9;
 }
 
-/* Top Row: Postmark & Stamp */
+.tap-envelope-gold-trim {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d97706, #fbbf24, #ea580c, #fbbf24, #d97706, transparent);
+}
+
+/* ── Top Row: Postmark & Collectible Stamp ── */
 .tap-envelope-top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 2px;
+  padding-top: 4px;
+  position: relative;
+  gap: 12px;
 }
 
+/* 1. Cancellation Postmark (Con dấu bưu điện) */
 .tap-envelope-postmark {
   display: flex;
-  flex-direction: column;
-  border: 1.5px dashed #d97706;
+  align-items: center;
+  gap: 6px;
+  transform: rotate(-7deg);
+  opacity: 0.88;
+  transition: transform 0.25s ease;
+}
+
+.tap-vintage-envelope:hover .tap-envelope-postmark {
+  transform: rotate(-9deg) scale(1.04);
+}
+
+.tap-postmark-inner {
+  border: 2px solid #b91c1c;
   border-radius: 50%;
-  width: 72px;
-  height: 72px;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 4px;
-  transform: rotate(-8deg);
-  opacity: 0.85;
+  padding: 5px;
+  position: relative;
+  box-shadow: inset 0 0 0 1.5px rgba(185, 28, 28, 0.4);
 }
 
-.tap-envelope-postmark span {
-  font-size: 0.46rem;
+.tap-postmark-star {
+  font-size: 0.44rem;
   font-weight: 800;
-  color: #d97706;
-  letter-spacing: 0.3px;
-}
-
-.tap-envelope-postmark strong {
-  font-size: 0.7rem;
-  font-weight: 900;
-  color: #92400e;
+  color: #b91c1c;
+  letter-spacing: 0.4px;
+  line-height: 1.1;
   text-transform: uppercase;
 }
 
+.tap-postmark-city {
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: #991b1b;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 1px 0;
+  line-height: 1.15;
+}
+
+.tap-postmark-year {
+  font-size: 0.48rem;
+  font-weight: 800;
+  color: #b91c1c;
+  letter-spacing: 1px;
+}
+
+.tap-postmark-waves {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 32px;
+}
+
+.tap-postmark-waves span {
+  display: block;
+  height: 2px;
+  background: #b91c1c;
+  opacity: 0.75;
+  border-radius: 2px;
+}
+
+.tap-postmark-waves span:nth-child(2) {
+  width: 80%;
+}
+
+/* 2. Serrated Collectible Stamp (Tem bưu chính răng cưa) */
 .tap-envelope-stamp {
-  border: 1.5px dashed #b45309;
+  position: relative;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.12));
+  transform: rotate(3deg);
+  transition: transform 0.25s ease;
+}
+
+.tap-vintage-envelope:hover .tap-envelope-stamp {
+  transform: rotate(5deg) scale(1.04);
+}
+
+.tap-stamp-perforation {
   background: #fffbeb;
-  border-radius: 6px;
-  padding: 4px 8px;
+  padding: 4px;
+  border: 2px dashed #d97706;
+  border-radius: 8px;
+  position: relative;
+}
+
+.tap-stamp-art {
+  background: linear-gradient(145deg, #fef3c7 0%, #fff7ed 60%, #ffedd5 100%);
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  border-radius: 5px;
+  padding: 6px 9px 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  min-width: 68px;
 }
 
-.tap-stamp-flag {
-  font-size: 0.95rem;
+.tap-stamp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4px;
+  margin-bottom: 2px;
 }
 
-.tap-stamp-txt {
-  font-size: 0.56rem;
+.tap-stamp-country {
+  font-size: 0.52rem;
   font-weight: 900;
   color: #92400e;
   letter-spacing: 0.5px;
 }
 
-.tap-stamp-yr {
+.tap-stamp-value {
   font-size: 0.5rem;
   font-weight: 800;
   color: #b45309;
 }
 
-/* Envelope To Section */
+.tap-stamp-icon-wrap {
+  margin: 1px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tap-stamp-flag {
+  font-size: 1.15rem;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+}
+
+.tap-stamp-brand {
+  font-size: 0.52rem;
+  font-weight: 900;
+  color: #b45309;
+  letter-spacing: 0.6px;
+}
+
+/* ── Envelope Recipient Box ── */
 .tap-envelope-to-box {
   display: flex;
   flex-direction: column;
-  padding-left: 0.5rem;
-  border-left: 3px solid #fed7aa;
-  gap: 2px;
+  padding: 0.65rem 0.85rem 0.75rem;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 16px;
+  border: 1px solid rgba(254, 215, 170, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+  gap: 4px;
+  position: relative;
 }
 
-.tap-envelope-from {
-  font-size: 0.68rem;
-  color: #94a3b8;
+.tap-envelope-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 2px;
+  gap: 8px;
+}
+
+.tap-envelope-from-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #c2410c;
+  text-transform: uppercase;
+}
+
+.tap-tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ea580c;
+  box-shadow: 0 0 6px #ea580c;
+}
+
+.tap-envelope-serial-tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #78716c;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .tap-to-label {
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   font-style: italic;
-  color: #b45309;
+  color: #9a3412;
+  font-weight: 600;
+  margin-top: 1px;
 }
 
 .tap-to-name {
-  font-size: clamp(1.6rem, 5vw, 1.95rem);
+  font-size: clamp(1.85rem, 6vw, 2.35rem);
   font-weight: 900;
   color: #0f172a;
-  margin: 1px 0 2px;
-  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin: 1px 0 3px;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #c2410c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tap-to-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
 }
 
 .tap-to-region-pill {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 9px;
+  gap: 5px;
+  padding: 4px 11px;
   border-radius: 99px;
-  font-size: 0.7rem;
+  font-size: 0.74rem;
   font-weight: 800;
   border: 1px solid;
-  width: fit-content;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-/* Dedicated Wax Seal Section (No Text Overlap) */
+/* ── 3D Royal Wax Seal Section (Con Dấu Sáp Hoàng Gia) ── */
 .tap-envelope-seal-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding-top: 0.5rem;
-  border-top: 1px dashed #fed7aa;
+  gap: 9px;
+  padding-top: 0.65rem;
+  border-top: 1px dashed rgba(217, 119, 6, 0.4);
+  position: relative;
 }
 
 .tap-wax-seal-btn {
   position: relative;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
+  width: 82px;
+  height: 82px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   margin: 0 auto;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .tap-wax-seal-glow {
   position: absolute;
-  inset: -8px;
+  inset: -12px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(234, 88, 12, 0.45) 0%, transparent 72%);
-  animation: tapPulse 1.8s infinite;
+  background: radial-gradient(circle, rgba(234, 88, 12, 0.55) 0%, rgba(220, 38, 38, 0.25) 45%, transparent 72%);
+  animation: sealHaloPulse 2.2s infinite ease-in-out;
+  pointer-events: none;
 }
 
+@keyframes sealHaloPulse {
+  0%, 100% {
+    transform: scale(0.92);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+/* Outer molten wax scallop contour */
+.tap-wax-seal-scallop {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  border-radius: 50% 48% 52% 49% / 49% 52% 48% 51%;
+  background: radial-gradient(circle at 35% 30%, #f97316 0%, #ea580c 20%, #dc2626 45%, #991b1b 75%, #500724 100%);
+  box-shadow: 
+    0 14px 28px -4px rgba(153, 27, 27, 0.68),
+    0 6px 14px -2px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.45),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+
+.tap-vintage-envelope:hover .tap-wax-seal-scallop,
+.tap-wax-seal-btn:hover .tap-wax-seal-scallop {
+  transform: scale(1.08);
+  box-shadow: 
+    0 18px 36px -4px rgba(234, 88, 12, 0.75),
+    0 8px 18px -2px rgba(0, 0, 0, 0.45),
+    inset 0 3px 6px rgba(255, 255, 255, 0.6),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.7);
+}
+
+.tap-wax-seal-btn:active .tap-wax-seal-scallop {
+  transform: scale(0.96);
+}
+
+/* Inner debossed coin core */
 .tap-wax-seal-core {
   position: relative;
-  width: 66px;
-  height: 66px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 32%, #f97316 0%, #ea580c 35%, #991b1b 85%, #7f1d1d 100%);
+  background: radial-gradient(circle at 40% 35%, #ea580c 0%, #b91c1c 45%, #7f1d1d 90%, #450a0a 100%);
+  border: 1.5px solid rgba(254, 240, 138, 0.55);
   box-shadow: 
-    0 10px 22px -3px rgba(153, 27, 27, 0.65),
-    inset 0 2px 4px rgba(255, 255, 255, 0.4),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+    inset 0 3px 6px rgba(0, 0, 0, 0.55),
+    inset 0 -2px 4px rgba(254, 240, 138, 0.25),
+    0 1px 2px rgba(255, 255, 255, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+  overflow: hidden;
   padding: 4px 6px;
-  color: #fffbeb;
-  gap: 3px;
-  border: 2px solid rgba(254, 215, 170, 0.7);
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-sizing: border-box;
+  gap: 2px;
 }
 
-.tap-vintage-envelope:hover .tap-wax-seal-core,
-.tap-wax-seal-btn:hover .tap-wax-seal-core {
-  transform: scale(1.08);
+.tap-wax-shine-glint {
+  position: absolute;
+  top: -30%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 60%
+  );
+  transform: rotate(25deg);
+  animation: glintSweep 3.5s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes glintSweep {
+  0%, 75% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(25deg);
+  }
+}
+
+.tap-wax-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
 }
 
 .tap-wax-sparkle {
   color: #fef08a;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
-  animation: tapPulse 1.4s infinite;
-  flex-shrink: 0;
+  animation: tapPulse 1.6s infinite;
 }
 
 .tap-wax-text {
-  font-size: 0.48rem;
+  font-size: 0.52rem;
   font-weight: 900;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   text-align: center;
   text-transform: uppercase;
   color: #fffbeb;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.75), 0 0 8px rgba(254, 240, 138, 0.4);
   white-space: nowrap;
   display: block;
-  width: 100%;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .tap-envelope-hint {
-  text-align: center;
-  font-size: 0.72rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #ea580c;
+  letter-spacing: 0.2px;
   margin: 0;
 }
 
+.tap-hint-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ea580c;
+  box-shadow: 0 0 8px #ea580c;
+  animation: tapPulse 1.4s infinite;
+}
+
+/* Skip Button: Polished Luxury Glass Pill */
 .tap-envelope-skip-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 7px 16px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  gap: 8px;
+  padding: 9px 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 99px;
-  color: #ffffff;
-  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tap-envelope-skip-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(251, 146, 60, 0.6);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(234, 88, 12, 0.25);
+}
+
+.tap-skip-arrow {
+  transition: transform 0.25s ease;
+}
+
+.tap-envelope-skip-btn:hover .tap-skip-arrow {
+  transform: translateX(4px);
+  color: #fb923c;
 }
 
 /* ── 5.2 UNBOXED LUXURY 3D POSTCARD ── */
@@ -1944,7 +2255,7 @@
   top: 2px;
   left: 8px;
   font-size: 2.2rem;
-  font-family: Georgia, serif;
+  font-family: inherit;
   color: #fdba74;
   line-height: 1;
   opacity: 0.6;

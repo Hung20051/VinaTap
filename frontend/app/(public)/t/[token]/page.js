@@ -244,61 +244,103 @@ export default function TapPage() {
           <div className="tap-welcome-overlay" />
         </div>
 
-        {/* ── TRẠNG THÁI 1: BÌ THƯ DU LỊCH CỔ ĐIỂN (CHẠM ĐỂ MỞ) ── */}
+        {/* ── TRẠNG THÁI 1: BÌ THƯ DU LỊCH THƯỢNG HẠNG (CHẠM ĐỂ MỞ) ── */}
         {!envelopeOpened ? (
           <div className="tap-envelope-container">
+            {/* Vòng hào quang huyền ảo phía sau bì thư */}
+            <div className="tap-envelope-ambient-glow" />
+
             <div
               className="tap-vintage-envelope"
               onClick={() => setEnvelopeOpened(true)}
               role="button"
               tabIndex={0}
             >
-              {/* Viền chỉ vàng du lịch thanh lịch */}
+              {/* Viền chỉ Airmail phong cách Đông Dương & chỉ vàng */}
+              <div className="tap-envelope-airmail-ribbon" />
               <div className="tap-envelope-gold-trim" />
 
-              {/* Con tem & Dấu bưu điện du lịch */}
+              {/* Con tem bưu chính & Dấu bưu điện du lịch */}
               <div className="tap-envelope-top-row">
                 <div className="tap-envelope-postmark">
-                  <span>★ VIETNAM PASS ★</span>
-                  <strong>{pName}</strong>
+                  <div className="tap-postmark-inner">
+                    <span className="tap-postmark-star">★ VIETNAM PASS ★</span>
+                    <strong className="tap-postmark-city">{pName}</strong>
+                    <span className="tap-postmark-year">EST. 2026</span>
+                  </div>
+                  <div className="tap-postmark-waves">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
                 </div>
+
                 <div className="tap-envelope-stamp">
-                  <span className="tap-stamp-flag">🇻🇳</span>
-                  <span className="tap-stamp-txt">VINATAP</span>
-                  <span className="tap-stamp-yr">2026</span>
+                  <div className="tap-stamp-perforation">
+                    <div className="tap-stamp-art">
+                      <div className="tap-stamp-header">
+                        <span className="tap-stamp-country">VIỆT NAM</span>
+                        <span className="tap-stamp-value">2026</span>
+                      </div>
+                      <div className="tap-stamp-icon-wrap">
+                        <span className="tap-stamp-flag">🇻🇳</span>
+                      </div>
+                      <span className="tap-stamp-brand">VINATAP</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Thông tin người nhận thư */}
               <div className="tap-envelope-to-box">
-                <span className="tap-envelope-from">From: <strong>VinaTap Smart Pass</strong></span>
-                <span className="tap-to-label">Gửi lữ khách ghé thăm:</span>
+                <div className="tap-envelope-badge-row">
+                  <span className="tap-envelope-from-tag">
+                    <span className="tap-tag-dot" />
+                    BƯU THIẾP ĐỘC BẢN • VINATAP
+                  </span>
+                  {card?.serial_code && (
+                    <span className="tap-envelope-serial-tag">
+                      #{card.serial_code}
+                    </span>
+                  )}
+                </div>
+
+                <span className="tap-to-label">Kính gửi lữ khách ghé thăm:</span>
                 <h1 className="tap-to-name">{pName}</h1>
-                <div
-                  className="tap-to-region-pill"
-                  style={{
-                    background: regionInfo.bg,
-                    color: regionInfo.color,
-                    borderColor: regionInfo.border,
-                  }}
-                >
-                  <MapPin size={12} />
-                  <span>{regionInfo.label} • Mảnh Ghép NFC 3D</span>
+
+                <div className="tap-to-meta-row">
+                  <div
+                    className="tap-to-region-pill"
+                    style={{
+                      background: regionInfo.bg,
+                      color: regionInfo.color,
+                      borderColor: regionInfo.border,
+                    }}
+                  >
+                    <MapPin size={13} />
+                    <span>{regionInfo.label} • Mảnh Ghép NFC 3D</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Khu vực con dấu sáp đỏ 3D (Đặt riêng biệt không đè chữ) */}
+              {/* Khu vực con dấu sáp đỏ 3D hoàng gia (Tâm điểm xúc giác) */}
               <div className="tap-envelope-seal-section">
                 <div className="tap-wax-seal-btn" title="Chạm để mở thư">
                   <div className="tap-wax-seal-glow" />
-                  <div className="tap-wax-seal-core">
-                    <Sparkles size={16} className="tap-wax-sparkle" />
-                    <span className="tap-wax-text">CHẠM ĐỂ MỞ</span>
+                  <div className="tap-wax-seal-scallop">
+                    <div className="tap-wax-seal-core">
+                      <div className="tap-wax-shine-glint" />
+                      <div className="tap-wax-icon-wrap">
+                        <Sparkles size={18} className="tap-wax-sparkle" />
+                      </div>
+                      <span className="tap-wax-text">CHẠM ĐỂ MỞ</span>
+                    </div>
                   </div>
                 </div>
-                <p className="tap-envelope-hint">
-                  <span>👆 Chạm vào con dấu để mở bưu thiếp</span>
-                </p>
+                <div className="tap-envelope-hint">
+                  <span className="tap-hint-pulse-dot" />
+                  <span>Chạm vào con dấu sáp để mở bưu thiếp</span>
+                </div>
               </div>
             </div>
 
@@ -309,7 +351,7 @@ export default function TapPage() {
               onClick={handleOpenDetail}
             >
               <span>Vào thẳng cẩm nang & mảnh ghép</span>
-              <ArrowRight size={14} />
+              <ArrowRight size={15} className="tap-skip-arrow" />
             </button>
           </div>
         ) : (

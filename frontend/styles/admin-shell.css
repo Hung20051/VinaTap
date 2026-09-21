@@ -1,9 +1,29 @@
 /* ============================================================
    VinaTap — Khung nội dung admin (app/admin/layout.js)
-   Chỉ chứa padding/layout của vùng bên phải AdminSidebar — style
-   riêng của từng trang (AdminDashboard, AdminRevenue...) nằm ở
-   file .css riêng cùng folder với trang đó.
+   Đồng bộ toàn bộ phông chữ giao diện quản trị (Admin Role)
    ============================================================ */
+
+.admin-shell-root {
+  font-family: "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.admin-main-content {
+  font-family: inherit;
+}
+
+/* Đảm bảo toàn bộ form control, table, modal, button trong role admin luôn đồng bộ */
+.admin-shell-root input,
+.admin-shell-root select,
+.admin-shell-root textarea,
+.admin-shell-root button,
+.admin-shell-root table,
+.admin-shell-root th,
+.admin-shell-root td {
+  font-family: inherit;
+}
+
 .admin-content {
   flex: 1;
   min-width: 0;
@@ -34,11 +54,14 @@
   color: var(--danger, #dc2626);
 }
 .admin-dash-title {
+  font-family: inherit;
   font-size: 1.5rem;
   font-weight: 800;
+  letter-spacing: -0.02em;
 }
 .admin-dash-subtitle {
-  color: var(--text-muted);
+  font-family: inherit;
+  color: var(--text-muted, #64748b);
   margin-top: 0.25rem;
   margin-bottom: 1.5rem;
 }

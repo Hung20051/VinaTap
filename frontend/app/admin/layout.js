@@ -7,6 +7,7 @@ import AdminSidebar from "@/components/layout/AdminSidebar";
 import { getUser, isAdmin, clearAuth, updateUser } from "@/lib/auth";
 import { authAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
+import "@/styles/admin-shell.css";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -97,7 +98,7 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="app-shell-vertical">
+    <div className="app-shell-vertical admin-shell-root">
       <AdminHeader
         isDrawerOpen={drawerOpen}
         onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
@@ -108,7 +109,7 @@ export default function AdminLayout({ children }) {
         user={user}
         onLogout={handleLogout}
       />
-      <main className="app-main-content">{children}</main>
+      <main className="app-main-content admin-main-content">{children}</main>
     </div>
   );
 }
