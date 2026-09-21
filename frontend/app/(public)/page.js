@@ -791,7 +791,7 @@ export default function HomePage() {
               title="Sản phẩm"
               links={[
                 { label: "Trang chủ", href: "/" },
-                { label: "Kích hoạt NFC", href: "/activate" },
+                { label: "Kích hoạt NFC", href: "/customer/activate" },
                 { label: "Dashboard", href: "/customer/dashboard" },
                 { label: "Đăng nhập", href: "/auth" },
               ]}
