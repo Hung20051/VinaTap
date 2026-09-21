@@ -18,7 +18,8 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
+  Bot,
+  Send,
   CheckCircle2,
   Facebook,
   Youtube,
@@ -100,7 +101,14 @@ export default function HomePage() {
   const [user, setUser] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [scrolled, setScrolled] = useState(false);
-  const [openFaq, setOpenFaq] = useState(0);
+  const [faqInput, setFaqInput] = useState("");
+  const [faqMessages, setFaqMessages] = useState([
+    {
+      role: "assistant",
+      content:
+        "Chào bạn! Mình có thể giải đáp nhanh các câu hỏi về mảnh ghép NFC, album và chuyển nhượng thẻ.",
+    },
+  ]);
   const router = useRouter();
 
   // Slide tự động cho "Tỉnh thành nổi bật"
@@ -183,6 +191,43 @@ export default function HomePage() {
     e.preventDefault();
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     window.history.replaceState(null, "", `#${id}`);
+  };
+
+  const answerFaqQuestion = (question) => {
+    const keywords = question
+      .toLocaleLowerCase("vi")
+      .split(/[^\p{L}\p{N}]+/u)
+      .filter((word) => word.length > 2);
+
+    const bestMatch = FAQ_ITEMS.map((item) => ({
+      item,
+      score: keywords.reduce(
+        (total, word) =>
+          total + (item.q.toLocaleLowerCase("vi").includes(word) ? 2 : 0) +
+            (item.a.toLocaleLowerCase("vi").includes(word) ? 1 : 0),
+        0,
+      ),
+    })).sort((a, b) => b.score - a.score)[0];
+
+    return bestMatch?.score
+      ? bestMatch.item.a
+      : "Mình chưa tìm được câu trả lời phù hợp. Bạn có thể thử hỏi về cách hoạt động NFC, quyền riêng tư album, chuyển nhượng hoặc bảo hành thẻ.";
+  };
+
+  const sendFaqQuestion = (question) => {
+    const text = question.trim();
+    if (!text) return;
+    setFaqMessages((messages) => [
+      ...messages,
+      { role: "user", content: text },
+      { role: "assistant", content: answerFaqQuestion(text) },
+    ]);
+    setFaqInput("");
+  };
+
+  const handleFaqSubmit = (e) => {
+    e.preventDefault();
+    sendFaqQuestion(faqInput);
   };
 
   // Đang kiểm tra đăng nhập (và sẽ redirect nếu có) — không render gì để
@@ -654,32 +699,49 @@ export default function HomePage() {
               </h2>
             </div>
 
-            <div className="home-faq__list">
-              {FAQ_ITEMS.map((item, i) => {
-                const isOpen = openFaq === i;
-                return (
+            <div className="home-faq-chat">
+              <div className="home-faq-chat__header">
+                <span className="home-faq-chat__avatar"><Bot size={20} /></span>
+                <div>
+                  <strong>Trợ lý VinaTap</strong>
+                  <p>Đang sẵn sàng hỗ trợ</p>
+                </div>
+              </div>
+
+              <div className="home-faq-chat__messages" aria-live="polite">
+                {faqMessages.map((message, index) => (
                   <div
-                    key={item.q}
-                    className={`home-faq__item ${isOpen ? "is-open" : ""}`}
+                    key={`${message.role}-${index}`}
+                    className={`home-faq-chat__message is-${message.role}`}
                   >
-                    <button
-                      className="home-faq__question"
-                      onClick={() => setOpenFaq(isOpen ? -1 : i)}
-                      aria-expanded={isOpen}
-                    >
-                      {item.q}
-                      <ChevronDown
-                        size={18}
-                        strokeWidth={2.2}
-                        className="home-faq__chevron"
-                      />
-                    </button>
-                    <div className="home-faq__answer-wrap">
-                      <p className="home-faq__answer">{item.a}</p>
-                    </div>
+                    {message.content}
                   </div>
-                );
-              })}
+                ))}
+              </div>
+
+              <div className="home-faq-chat__suggestions">
+                {FAQ_ITEMS.slice(0, 3).map((item) => (
+                  <button
+                    key={item.q}
+                    type="button"
+                    onClick={() => sendFaqQuestion(item.q)}
+                  >
+                    {item.q}
+                  </button>
+                ))}
+              </div>
+
+              <form className="home-faq-chat__form" onSubmit={handleFaqSubmit}>
+                <input
+                  value={faqInput}
+                  onChange={(e) => setFaqInput(e.target.value)}
+                  placeholder="Nhập câu hỏi của bạn..."
+                  aria-label="Câu hỏi cho trợ lý VinaTap"
+                />
+                <button type="submit" disabled={!faqInput.trim()} aria-label="Gửi câu hỏi">
+                  <Send size={18} />
+                </button>
+              </form>
             </div>
           </div>
         </RevealSection>
