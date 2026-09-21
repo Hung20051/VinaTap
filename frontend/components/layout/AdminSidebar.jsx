@@ -146,7 +146,7 @@ export default function AdminSidebar({
             type="button"
             className="app-sidebar__toggle"
             onClick={onClose}
-            title="Đóng Menu"
+            title="Đóng menu"
           >
             <X size={20} />
           </button>
@@ -229,7 +229,7 @@ export default function AdminSidebar({
               <span className="app-avatar-name">
                 {mounted && user?.name ? user.name : "Admin"}
               </span>
-              <span className="app-avatar-role">Quản Trị Viên</span>
+              <span className="app-avatar-role">Quản trị viên</span>
             </div>
           </Link>
           {onLogout && (

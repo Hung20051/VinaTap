@@ -70,12 +70,12 @@ export default function CustomerLayout({ children }) {
     {
       href: "/customer/orders",
       icon: <ShoppingBag size={20} />,
-      label: "Đơn Hàng Của Tôi",
+      label: t(lang, "myOrders"),
     },
     {
       href: "/shop",
       icon: <ShoppingBag size={20} />,
-      label: "Cửa Hàng Thẻ NFC",
+      label: t(lang, "nfcStore"),
     },
   ];
 

@@ -63,11 +63,11 @@ export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
     if (pathname.includes("/admin/albums")) return { parent: "Admin", page: t(lang, "adminAlbums") };
     if (pathname.includes("/admin/users")) return { parent: "Admin", page: t(lang, "adminUsers") };
     if (pathname.includes("/admin/nfc-cards")) return { parent: "Admin", page: t(lang, "adminNfcCards") };
-    if (pathname.includes("/admin/notifications")) return { parent: "Admin", page: "Notifications" };
-    if (pathname.includes("/admin/products")) return { parent: "Admin", page: "Products & Shipping" };
+    if (pathname.includes("/admin/notifications")) return { parent: "Admin", page: "Thông báo" };
+    if (pathname.includes("/admin/products")) return { parent: "Admin", page: "Sản phẩm & vận chuyển" };
     if (pathname.includes("/admin/revenue")) return { parent: "Admin", page: t(lang, "adminRevenue") };
     if (pathname.includes("/admin/analytics")) return { parent: "Admin", page: t(lang, "adminAnalytics") };
-    if (pathname.includes("/admin/vouchers")) return { parent: "Admin", page: "Mã Giảm Giá" };
+    if (pathname.includes("/admin/vouchers")) return { parent: "Admin", page: "Mã giảm giá" };
 
     return { parent: "Admin", page: t(lang, "adminRole") };
   };
@@ -81,7 +81,7 @@ export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
           type="button"
           className="header-btn-hamburger"
           onClick={onToggleDrawer}
-          title={isDrawerOpen ? "Đóng Menu" : "Mở Menu"}
+          title={isDrawerOpen ? "Đóng menu" : "Mở menu"}
         >
           {isDrawerOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -147,7 +147,7 @@ export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
                   className="dropdown-item"
                   onClick={() => setUserDropdownOpen(false)}
                 >
-                  <ShieldCheck size={16} /> Bảng Quản Trị
+                  <ShieldCheck size={16} /> Bảng quản trị
                 </Link>
 
                 <Link

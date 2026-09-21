@@ -62,9 +62,9 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
 
   const getBreadcrumb = () => {
     if (pathname.includes("/customer/dashboard")) return { parent: t(lang, "greeting"), page: t(lang, "myCollection") };
-    if (pathname.includes("/customer/orders")) return { parent: t(lang, "greeting"), page: "Đơn Hàng Của Tôi" };
+    if (pathname.includes("/customer/orders")) return { parent: t(lang, "greeting"), page: t(lang, "myOrders") };
     if (pathname.includes("/shop")) return { parent: "VinaTap", page: t(lang, "nfcStore") };
-    return { parent: "VinaTap", page: "Trang Chủ" };
+    return { parent: "VinaTap", page: "Trang chủ" };
   };
 
   const breadcrumb = getBreadcrumb();

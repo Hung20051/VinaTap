@@ -57,7 +57,7 @@
   filter: brightness(0) invert(1);
 }
 .app-sidebar__logo span {
-  font-family: "Kalam", cursive;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 1.5rem;
 }
 .app-sidebar__toggle {
@@ -495,6 +495,7 @@
 
 /* ─── VERTICAL APP SHELL (GITHUB-STYLE TOP HEADER) ─── */
 .app-shell-vertical {
+  font-family: "Plus Jakarta Sans", sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
