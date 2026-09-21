@@ -15,7 +15,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Inter", "Be Vietnam Pro", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   background: var(--bg-page);
   color: var(--text-primary);
   min-height: 100vh;
@@ -34,6 +34,12 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  font: inherit;
+}
+
+input,
+textarea,
+select {
   font: inherit;
 }
 

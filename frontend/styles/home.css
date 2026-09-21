@@ -14,6 +14,10 @@
   --home-glow: rgba(13, 148, 136, 0.16);
 }
 
+/* Landing page: body đã khai báo font-family "Plus Jakarta Sans" global,
+   button/input/textarea/select thừa hưởng qua globals.css (font: inherit).
+   Không cần ghi đè lại ở đây. */
+
 /* ─── HIỆU ỨNG HIỆN DẦN KHI CUỘN ─────────────────────────────
    Dùng cùng với hook useReveal (IntersectionObserver). Mặc định
    ẩn nhẹ + trồi lên 24px, khi vào khung nhìn thì hiện + về vị trí. */
@@ -160,7 +164,7 @@
   box-shadow: 0 4px 14px var(--home-glow);
 }
 .home-navbar__logo span {
-  font-family: "Kalam", cursive;
+  font-family: inherit;
   font-size: 1.7rem;
 }
 .home-navbar__links {
@@ -261,8 +265,8 @@
   color: var(--home-orange);
   font-weight: 700;
   font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-transform: none;
   margin-bottom: 1.1rem;
 }
 .home-eyebrow--center {
@@ -1135,7 +1139,7 @@
 }
 .home-footer__brand-name span {
   color: var(--home-teal-light);
-  font-family: "Kalam", cursive;
+  font-family: inherit;
   font-size: 1.5rem;
 }
 .home-footer__brand-name img {

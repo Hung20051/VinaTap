@@ -246,11 +246,11 @@ export default function CustomerDashboard() {
             <div className="passport-actions">
               <Link href="/customer/activate" className="btn-passport-action is-primary">
                 <Sparkles size={16} />
-                <span>Kích Hoạt Thẻ Mới</span>
+                <span>Kích hoạt thẻ mới</span>
               </Link>
               <Link href="/shop" className="btn-passport-action is-secondary">
                 <ShoppingBag size={16} />
-                <span>Cửa Hàng Thẻ</span>
+                <span>Cửa hàng thẻ</span>
               </Link>
             </div>
           </div>
@@ -328,7 +328,7 @@ export default function CustomerDashboard() {
               onClick={() => setViewMode("collected")}
             >
               <Award size={15} />
-              <span>Thẻ Đã Sở Hữu ({cards.length})</span>
+              <span>Thẻ đã sở hữu ({cards.length})</span>
             </button>
             <button
               type="button"
@@ -336,7 +336,7 @@ export default function CustomerDashboard() {
               onClick={() => setViewMode("all_map")}
             >
               <Globe2 size={15} />
-              <span>Toàn Bộ 34 Tỉnh Thành</span>
+              <span>Toàn bộ 34 tỉnh thành</span>
             </button>
           </div>
 
@@ -362,7 +362,7 @@ export default function CustomerDashboard() {
                 title="Xem dạng thẻ trượt ngang (Slide)"
               >
                 <GalleryHorizontalEnd size={16} />
-                <span className="layout-btn-text">Dạng Trượt</span>
+                <span className="layout-btn-text">Dạng trượt</span>
               </button>
               <button
                 type="button"
@@ -371,7 +371,7 @@ export default function CustomerDashboard() {
                 title="Xem dạng lưới (Grid)"
               >
                 <LayoutGrid size={16} />
-                <span className="layout-btn-text">Dạng Lưới</span>
+                <span className="layout-btn-text">Dạng lưới</span>
               </button>
             </div>
           </div>
@@ -441,11 +441,11 @@ export default function CustomerDashboard() {
               <div className="empty-actions">
                 <Link href="/customer/activate" className="btn-passport-action is-primary">
                   <Plus size={16} />
-                  <span>Kích Hoạt Ngay</span>
+                  <span>Kích hoạt ngay</span>
                 </Link>
                 <Link href="/shop" className="btn-passport-action is-secondary">
                   <ShoppingBag size={16} />
-                  <span>Mua Thẻ Mới</span>
+                  <span>Mua thẻ mới</span>
                 </Link>
               </div>
             </div>
@@ -494,12 +494,12 @@ export default function CustomerDashboard() {
                       {album?.status === "archived" ? (
                         <div className="card-status-pill is-locked" style={{ background: "#dc2626", color: "#fff" }}>
                           <Lock size={12} />
-                          <span>Album Bị Khóa</span>
+                          <span>Album bị khóa</span>
                         </div>
                       ) : (
                         <div className="card-status-pill is-active">
                           <CheckCircle2 size={12} />
-                          <span>Đã Kích Hoạt</span>
+                          <span>Đã kích hoạt</span>
                         </div>
                       )}
 
@@ -549,13 +549,13 @@ export default function CustomerDashboard() {
                           album.status === "archived" ? (
                             <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta" style={{ flex: 1, background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
                               <Lock size={16} />
-                              <span>Xem Lý Do Khóa</span>
+                              <span>Xem lý do khóa</span>
                               <ArrowRight size={15} className="arrow-icon" />
                             </Link>
                           ) : (
                             <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta is-view-album" style={{ flex: 1 }}>
                               <Camera size={16} />
-                              <span>{photoCount > 0 ? `Mở Album (${photoCount})` : "Đăng Ảnh"}</span>
+                              <span>{photoCount > 0 ? `Mở album (${photoCount})` : "Đăng ảnh"}</span>
                               <ArrowRight size={15} className="arrow-icon" />
                             </Link>
                           )
@@ -568,7 +568,7 @@ export default function CustomerDashboard() {
                             onClick={() => handleCreateAlbum(card)}
                           >
                             <Sparkles size={16} />
-                            <span>{creatingFor === card.id ? "Đang tạo..." : "Tạo Album"}</span>
+                            <span>{creatingFor === card.id ? "Đang tạo..." : "Tạo album"}</span>
                             <ArrowRight size={15} className="arrow-icon" />
                           </button>
                         )}
@@ -632,12 +632,12 @@ export default function CustomerDashboard() {
                       {isUnlocked ? (
                         <div className="card-status-pill is-active">
                           <CheckCircle2 size={12} />
-                          <span>Đã Sở Hữu</span>
+                          <span>Đã sở hữu</span>
                         </div>
                       ) : (
                         <div className="card-status-pill is-locked">
                           <Lock size={12} />
-                          <span>Chưa Mở Khóa</span>
+                          <span>Chưa mở khóa</span>
                         </div>
                       )}
 
@@ -696,13 +696,13 @@ export default function CustomerDashboard() {
                               album.status === "archived" ? (
                                 <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta" style={{ flex: 1, background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
                                   <Lock size={16} />
-                                  <span>Xem Lý Do Khóa</span>
+                                  <span>Xem lý do khóa</span>
                                   <ArrowRight size={15} className="arrow-icon" />
                                 </Link>
                               ) : (
                                 <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta is-view-album" style={{ flex: 1 }}>
                                   <Camera size={16} />
-                                  <span>Mở Album</span>
+                                  <span>Mở album</span>
                                   <ArrowRight size={15} className="arrow-icon" />
                                 </Link>
                               )
@@ -715,7 +715,7 @@ export default function CustomerDashboard() {
                                 onClick={() => matchedCard && handleCreateAlbum(matchedCard)}
                               >
                                 <Sparkles size={16} />
-                                <span>Tạo Album</span>
+                                <span>Tạo album</span>
                                 <ArrowRight size={15} className="arrow-icon" />
                               </button>
                             )}
@@ -750,7 +750,7 @@ export default function CustomerDashboard() {
                         ) : (
                           <Link href={`/shop`} className="btn-card-cta is-buy-unlock" style={{ flex: 1 }}>
                             <ShoppingBag size={16} />
-                            <span>Mua Thẻ Mở Khóa</span>
+                            <span>Mua thẻ mở khóa</span>
                             <ArrowRight size={15} className="arrow-icon" />
                           </Link>
                         )}

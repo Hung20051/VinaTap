@@ -246,7 +246,7 @@ export default function HomePage() {
           ưu tiên thấp, ngầm hiểu là "có thể cần ở trang sau", không cảnh
           báo nếu chưa dùng ngay. */}
       <link rel="prefetch" as="image" href="/auth-bg.jpg" />
-      <div className="home">
+      <div className="home home--guest">
         {/* ─── Navbar ─── */}
         <nav className={`home-navbar ${scrolled ? "is-scrolled" : ""}`}>
           <div className="container home-navbar__inner">
