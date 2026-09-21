@@ -3,9 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import Logo from "@/components/layout/Logo";
 import { authAPI } from "@/lib/api";
 import { saveAuth, isLoggedIn } from "@/lib/auth";
+import { getLang } from "@/lib/prefs";
+import { t } from "@/lib/i18n";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
 
 const RESEND_COOLDOWN_SECONDS = 60;
 
@@ -17,6 +21,7 @@ export default function ForgotPasswordPage() {
   // 'password' -> nhập mật khẩu mới (đã xác thực OTP xong, không còn phụ
   //               thuộc hạn 10 phút của OTP nữa — dùng resetToken riêng)
   const [step, setStep] = useState("email");
+  const [lang, setLang] = useState("vi");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [resetToken, setResetToken] = useState("");
@@ -28,6 +33,13 @@ export default function ForgotPasswordPage() {
   const [resendCooldown, setResendCooldown] = useState(0);
   const [checking, setChecking] = useState(true);
   const cooldownRef = useRef(null);
+
+  useEffect(() => {
+    setLang(getLang());
+    const handleLangUpdated = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn()) {
@@ -242,6 +254,15 @@ export default function ForgotPasswordPage() {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {/* Thanh điều hướng về Homepage + Đổi ngôn ngữ */}
+      <nav className="auth-topbar" aria-label="Điều hướng">
+        <Link href="/" className="auth-nav-home" title={t(lang, "backToHome")}>
+          <ArrowLeft size={18} />
+          <span>{t(lang, "backToHome")}</span>
+        </Link>
+        <LanguageSwitch variant="auth" />
+      </nav>
+
       {/* Overlay để chữ/branding phía bên trái dễ đọc trên nền ảnh */}
       <div
         style={{

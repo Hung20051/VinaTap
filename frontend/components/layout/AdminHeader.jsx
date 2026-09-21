@@ -16,6 +16,7 @@ import NotificationBell from "@/components/layout/NotificationBell";
 import { getUser, clearAuth } from "@/lib/auth";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import "./Header.css";
 
 export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
@@ -63,11 +64,11 @@ export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
     if (pathname.includes("/admin/albums")) return { parent: "Admin", page: t(lang, "adminAlbums") };
     if (pathname.includes("/admin/users")) return { parent: "Admin", page: t(lang, "adminUsers") };
     if (pathname.includes("/admin/nfc-cards")) return { parent: "Admin", page: t(lang, "adminNfcCards") };
-    if (pathname.includes("/admin/notifications")) return { parent: "Admin", page: "Thông báo" };
-    if (pathname.includes("/admin/products")) return { parent: "Admin", page: "Sản phẩm & vận chuyển" };
+    if (pathname.includes("/admin/notifications")) return { parent: "Admin", page: t(lang, "adminNotifications") };
+    if (pathname.includes("/admin/products")) return { parent: "Admin", page: t(lang, "adminProductsShippingFull") };
     if (pathname.includes("/admin/revenue")) return { parent: "Admin", page: t(lang, "adminRevenue") };
-    if (pathname.includes("/admin/analytics")) return { parent: "Admin", page: t(lang, "adminAnalytics") };
-    if (pathname.includes("/admin/vouchers")) return { parent: "Admin", page: "Mã giảm giá" };
+    if (pathname.includes("/admin/analytics")) return { parent: "Admin", page: t(lang, "adminTrafficStats") };
+    if (pathname.includes("/admin/vouchers")) return { parent: "Admin", page: t(lang, "adminVouchers") };
 
     return { parent: "Admin", page: t(lang, "adminRole") };
   };
@@ -81,14 +82,14 @@ export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
           type="button"
           className="header-btn-hamburger"
           onClick={onToggleDrawer}
-          title={isDrawerOpen ? "Đóng menu" : "Mở menu"}
+          title={isDrawerOpen ? t(lang, "close") : "Menu"}
         >
           {isDrawerOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
         <Logo
           className="header-logo-brand"
-          href="/admin/dashboard"
+          href="/"
         />
 
         <div className="header-breadcrumb-divider">/</div>
@@ -100,6 +101,7 @@ export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
       </div>
 
       <div className="header-region-right">
+        <LanguageSwitch variant="header" />
         <NotificationBell />
 
         {user && (

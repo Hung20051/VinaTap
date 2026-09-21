@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,9 @@ import {
   getUser,
   getPostAuthRedirect,
 } from "@/lib/auth";
+import { getLang } from "@/lib/prefs";
+import { t } from "@/lib/i18n";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import "@/styles/auth.css";
 
 const RESEND_COOLDOWN_SECONDS = 60;
@@ -19,6 +22,7 @@ const RESEND_COOLDOWN_SECONDS = 60;
 export default function AuthPage() {
   const router = useRouter();
 
+  const [lang, setLang] = useState("vi");
   const [mode, setMode] = useState("login"); // 'login' | 'register'
   // Đăng ký chia 2 bước: 'form' (nhập thông tin) -> 'otp' (nhập mã xác thực)
   const [registerStep, setRegisterStep] = useState("form");
@@ -35,6 +39,13 @@ export default function AuthPage() {
   // không ảnh hưởng logic.
   const [slideDir, setSlideDir] = useState("right");
   const cooldownRef = useRef(null);
+
+  useEffect(() => {
+    setLang(getLang());
+    const handleLangUpdated = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+  }, []);
 
   // Xử lý redirect từ Google OAuth callback (?token=...) hoặc lỗi (?error=...)
   // và bỏ qua trang này luôn nếu đã đăng nhập sẵn.
@@ -227,49 +238,55 @@ export default function AuthPage() {
 
   return (
     <div className="auth-page">
+      {/* Thanh điều hướng về Homepage + Đổi ngôn ngữ */}
+      <nav className="auth-topbar" aria-label="Điều hướng">
+        <Link href="/" className="auth-nav-home" title={t(lang, "backToHome")}>
+          <ArrowLeft size={18} />
+          <span>{t(lang, "backToHome")}</span>
+        </Link>
+        <LanguageSwitch variant="auth" />
+      </nav>
+
       {/* Branding bên trái */}
       <div className="auth-brand">
         <Logo className="auth-brand__logo" size={65} />
         <h1 className="auth-brand__title">
-          Khám phá
+          {t(lang, "authBrandTitle1")}
           <br />
-          Việt Nam
+          {t(lang, "authBrandTitle2")}
         </h1>
         <p className="auth-brand__desc">
-          Nơi mỗi tỉnh thành là một kỷ niệm.
+          {t(lang, "authBrandDesc1")}
           <br />
-          Sưu tầm, khám phá và lưu giữ hành trình của bạn.
+          {t(lang, "authBrandDesc2")}
         </p>
       </div>
 
       {/* Card đăng nhập / đăng ký */}
       <div className="auth-card">
-        {/* Tab đăng nhập / đăng ký — ẩn khi đang ở bước nhập OTP để tránh
-            người dùng bấm nhầm mất tiến trình. Pill trắng trượt qua lại
-            phía sau tab đang chọn. */}
+        {/* Tab đăng nhập / đăng ký */}
         {!isRegisterOtpStep && (
           <div className="auth-tabs">
             <div
               className={`auth-tabs__indicator ${mode === "register" ? "is-register" : ""}`}
             />
             {[
-              { key: "login", label: "Đăng nhập" },
-              { key: "register", label: "Đăng ký" },
-            ].map((t) => (
+              { key: "login", label: t(lang, "authTabLogin") },
+              { key: "register", label: t(lang, "authTabRegister") },
+            ].map((item) => (
               <button
-                key={t.key}
+                key={item.key}
                 type="button"
-                onClick={() => switchMode(t.key)}
-                className={`auth-tab ${mode === t.key ? "is-active" : ""}`}
+                onClick={() => switchMode(item.key)}
+                className={`auth-tab ${mode === item.key ? "is-active" : ""}`}
               >
-                {t.label}
+                {item.label}
               </button>
             ))}
           </div>
         )}
 
-        {/* Khung nội dung — cao cố định (min-height ở CSS) để login/register/otp
-            luôn bằng nhau, và trượt nhẹ mỗi khi đổi bước (key đổi -> remount). */}
+        {/* Khung nội dung */}
         <div key={contentKey} className={`auth-content dir-${slideDir}`}>
           {isRegisterOtpStep && (
             <button
@@ -277,16 +294,15 @@ export default function AuthPage() {
               onClick={backToRegisterForm}
               className="auth-back-btn"
             >
-              ← Quay lại
+              {t(lang, "authBack")}
             </button>
           )}
 
           {isRegisterOtpStep && (
             <>
-              <h1 className="auth-otp-title">Nhập mã xác thực</h1>
+              <h1 className="auth-otp-title">{t(lang, "authOtpTitle")}</h1>
               <p className="auth-otp-desc">
-                Mã gồm 6 số vừa được gửi tới <b>{form.email}</b>. Mã có hiệu lực
-                trong 10 phút.
+                {t(lang, "authOtpDesc")} <b>{form.email}</b>. {t(lang, "authOtpExpire")}
               </p>
             </>
           )}
@@ -325,8 +341,8 @@ export default function AuthPage() {
                     className="auth-resend-btn"
                   >
                     {resendCooldown > 0
-                      ? `Gửi lại mã sau ${resendCooldown}s`
-                      : "Gửi lại mã"}
+                      ? `${t(lang, "authResendOtpIn")} ${resendCooldown}s`
+                      : t(lang, "authResendOtp")}
                   </button>
                 </div>
               </>
@@ -334,11 +350,11 @@ export default function AuthPage() {
               <>
                 {mode === "register" && (
                   <div className="auth-field">
-                    <label className="auth-label">Họ tên</label>
+                    <label className="auth-label">{t(lang, "authLabelName")}</label>
                     <input
                       className="auth-input"
                       name="name"
-                      placeholder="Nhập họ tên của bạn"
+                      placeholder={t(lang, "authPlaceholderName")}
                       value={form.name}
                       onChange={handleChange}
                       autoComplete="name"
@@ -347,12 +363,12 @@ export default function AuthPage() {
                 )}
 
                 <div className="auth-field">
-                  <label className="auth-label">Email</label>
+                  <label className="auth-label">{t(lang, "authLabelEmail")}</label>
                   <input
                     className="auth-input"
                     type="email"
                     name="email"
-                    placeholder="Nhập email của bạn"
+                    placeholder={t(lang, "authPlaceholderEmail")}
                     value={form.email}
                     onChange={handleChange}
                     autoComplete="email"
@@ -360,13 +376,13 @@ export default function AuthPage() {
                 </div>
 
                 <div className="auth-field">
-                  <label className="auth-label">Mật khẩu</label>
+                  <label className="auth-label">{t(lang, "authLabelPassword")}</label>
                   <div className="auth-password-wrap">
                     <input
                       className="auth-input"
                       type={showPassword ? "text" : "password"}
                       name="password"
-                      placeholder="Ít nhất 6 ký tự"
+                      placeholder={t(lang, "authPlaceholderPassword")}
                       value={form.password}
                       onChange={handleChange}
                       autoComplete={
@@ -389,7 +405,7 @@ export default function AuthPage() {
 
                 {mode === "login" && (
                   <div className="auth-forgot">
-                    <Link href="/forgot-password">Quên mật khẩu?</Link>
+                    <Link href="/forgot-password">{t(lang, "authForgotPassword")}</Link>
                   </div>
                 )}
               </>
@@ -398,12 +414,12 @@ export default function AuthPage() {
             <button type="submit" disabled={loading} className="auth-submit">
               {loading && <span className="auth-submit__spinner" />}
               {loading
-                ? "Đang xử lý..."
+                ? t(lang, "authProcessing")
                 : isRegisterOtpStep
-                  ? "Xác nhận"
+                  ? t(lang, "authBtnConfirm")
                   : mode === "login"
-                    ? "Đăng nhập"
-                    : "Gửi mã xác thực"}
+                    ? t(lang, "authBtnLogin")
+                    : t(lang, "authBtnSendOtp")}
             </button>
           </form>
 
@@ -412,7 +428,7 @@ export default function AuthPage() {
               {/* Divider */}
               <div className="auth-divider">
                 <div className="auth-divider__line" />
-                <span className="auth-divider__text">hoặc</span>
+                <span className="auth-divider__text">{t(lang, "authOr")}</span>
                 <div className="auth-divider__line" />
               </div>
 
@@ -441,30 +457,30 @@ export default function AuthPage() {
                     d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.1 5.6l6.2 5.2C40.8 36 44 30.9 44 24c0-1.4-.1-2.8-.4-3.5z"
                   />
                 </svg>
-                Tiếp tục với Google
+                {t(lang, "authGoogle")}
               </a>
 
               <p className="auth-switch">
                 {mode === "login" ? (
                   <>
-                    Chưa có tài khoản?
+                    {t(lang, "authNoAccount")}{" "}
                     <button
                       type="button"
                       onClick={() => switchMode("register")}
                       className="auth-switch__btn"
                     >
-                      Đăng ký ngay
+                      {t(lang, "authRegisterNow")}
                     </button>
                   </>
                 ) : (
                   <>
-                    Đã có tài khoản?
+                    {t(lang, "authHasAccount")}{" "}
                     <button
                       type="button"
                       onClick={() => switchMode("login")}
                       className="auth-switch__btn"
                     >
-                      Đăng nhập
+                      {t(lang, "authLoginNow")}
                     </button>
                   </>
                 )}

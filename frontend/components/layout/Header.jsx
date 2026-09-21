@@ -19,6 +19,7 @@ import NotificationBell from "@/components/layout/NotificationBell";
 import { getUser, isAdmin, clearAuth } from "@/lib/auth";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import "./Header.css";
 
 export default function Header({ onToggleDrawer, isDrawerOpen }) {
@@ -75,24 +76,20 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
     if (pathname.includes("/admin/albums")) return { parent: "Admin", page: t(lang, "adminAlbums") };
     if (pathname.includes("/admin/users")) return { parent: "Admin", page: t(lang, "adminUsers") };
     if (pathname.includes("/admin/nfc-cards")) return { parent: "Admin", page: t(lang, "adminNfcCards") };
-    if (pathname.includes("/admin/notifications")) return { parent: "Admin", page: "Notifications" };
-    if (pathname.includes("/admin/products")) return { parent: "Admin", page: "Products & Shipping" };
+    if (pathname.includes("/admin/notifications")) return { parent: "Admin", page: t(lang, "adminNotifications") };
+    if (pathname.includes("/admin/products")) return { parent: "Admin", page: t(lang, "adminProductsShippingFull") };
     if (pathname.includes("/admin/revenue")) return { parent: "Admin", page: t(lang, "adminRevenue") };
-    if (pathname.includes("/admin/analytics")) return { parent: "Admin", page: t(lang, "adminAnalytics") };
+    if (pathname.includes("/admin/analytics")) return { parent: "Admin", page: t(lang, "adminTrafficStats") };
     if (pathname.startsWith("/admin")) return { parent: "Admin", page: t(lang, "adminRole") };
     if (pathname.includes("/customer/dashboard")) return { parent: t(lang, "greeting"), page: t(lang, "myCollection") };
     if (pathname.includes("/settings")) return { parent: "VinaTap", page: t(lang, "accountSettings") };
 
-    return { parent: "VinaTap", page: "Trang Chủ" };
+    return { parent: "VinaTap", page: t(lang, "homeNavHome") };
   };
 
   const handleLogoClick = (e) => {
     e.preventDefault();
-    if (isAdmin()) {
-      router.push("/admin/dashboard");
-    } else {
-      router.push("/customer/dashboard");
-    }
+    router.push("/");
   };
 
   const breadcrumb = getBreadcrumb();
@@ -104,14 +101,14 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
           type="button"
           className="header-btn-hamburger"
           onClick={onToggleDrawer}
-          title={isDrawerOpen ? "Đóng Menu" : "Mở Menu"}
+          title={isDrawerOpen ? t(lang, "close") : "Menu"}
         >
           {isDrawerOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
         <Logo
           className="header-logo-brand"
-          href={userAdmin ? "/admin/dashboard" : "/customer/dashboard"}
+          href="/"
           onClick={handleLogoClick}
         />
 
@@ -124,6 +121,7 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
       </div>
 
       <div className="header-region-right">
+        <LanguageSwitch variant="header" />
         <NotificationBell />
 
         {user && (
