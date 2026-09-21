@@ -99,11 +99,6 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
       </div>
 
       <div className="header-region-right">
-        <Link href="/" className="btn-header-home" title={t(lang, "navHome")}>
-          <Home size={15} />
-          <span>{t(lang, "navHome")}</span>
-        </Link>
-
         <Link href="/shop" className="btn-header-shop">
           <ShoppingBag size={15} />
           <span>{t(lang, "shop")}</span>
