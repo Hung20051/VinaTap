@@ -13,10 +13,12 @@ import {
   ChevronDown,
   ShoppingBag,
   Package,
+  Home,
 } from "lucide-react";
 import Logo from "./Logo";
 import NotificationBell from "@/components/layout/NotificationBell";
 import VoucherWalletModal from "@/components/modals/VoucherWalletModal";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { getUser, clearAuth } from "@/lib/auth";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
@@ -83,18 +85,25 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
 
         <Logo
           className="header-logo-brand"
-          href="/customer/dashboard"
+          href="/"
         />
 
         <div className="header-breadcrumb-divider">/</div>
         <div className="header-breadcrumb">
-          <span className="bc-parent">{breadcrumb.parent}</span>
+          <Link href="/" className="bc-parent" title={t(lang, "navHome")} style={{ textDecoration: "none" }}>
+            {breadcrumb.parent}
+          </Link>
           <span className="bc-slash">/</span>
           <span className="bc-page">{breadcrumb.page}</span>
         </div>
       </div>
 
       <div className="header-region-right">
+        <Link href="/" className="btn-header-home" title={t(lang, "navHome")}>
+          <Home size={15} />
+          <span>{t(lang, "navHome")}</span>
+        </Link>
+
         <Link href="/shop" className="btn-header-shop">
           <ShoppingBag size={15} />
           <span>{t(lang, "shop")}</span>
@@ -108,6 +117,8 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
           <Ticket size={15} />
           <span>{t(lang, "vouchers")}</span>
         </button>
+
+        <LanguageSwitcher />
 
         <NotificationBell />
 
@@ -138,6 +149,14 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
                 </div>
 
                 <div className="dropdown-divider" />
+
+                <Link
+                  href="/"
+                  className="dropdown-item"
+                  onClick={() => setUserDropdownOpen(false)}
+                >
+                  <Home size={16} /> {t(lang, "navHome")}
+                </Link>
 
                 <Link
                   href="/customer/dashboard"

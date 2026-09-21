@@ -6,7 +6,7 @@ import CustomerHeader from "@/components/layout/CustomerHeader";
 import Sidebar from "@/components/layout/Sidebar";
 import { getUser, getToken, saveAuth, requireAuth, isAdmin, clearAuth } from "@/lib/auth";
 import { authAPI } from "@/lib/api";
-import { LayoutDashboard, ShoppingBag } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Home } from "lucide-react";
 import { t } from "@/lib/i18n";
 import { getLang } from "@/lib/prefs";
 import DinoLoader from "@/components/ui/DinoLoader";
@@ -62,6 +62,11 @@ export default function CustomerLayout({ children }) {
   };
 
   const navItems = [
+    {
+      href: "/",
+      icon: <Home size={20} />,
+      label: t(lang, "navHome"),
+    },
     {
       href: "/customer/dashboard",
       icon: <LayoutDashboard size={20} />,

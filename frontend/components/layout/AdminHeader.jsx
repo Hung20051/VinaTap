@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Logo from "./Logo";
 import NotificationBell from "@/components/layout/NotificationBell";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { getUser, clearAuth } from "@/lib/auth";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
@@ -100,6 +101,7 @@ export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
       </div>
 
       <div className="header-region-right">
+        <LanguageSwitcher />
         <NotificationBell />
 
         {user && (

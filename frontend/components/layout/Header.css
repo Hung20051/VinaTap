@@ -219,6 +219,12 @@
   color: #38bdf8;
 }
 
+.btn-header-home {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f1f5f9;
+}
+
 .btn-header-voucher:hover {
   background: rgba(234, 88, 12, 0.25);
   color: #ffffff;
@@ -227,6 +233,12 @@
 .btn-header-shop:hover {
   background: rgba(2, 132, 199, 0.25);
   color: #ffffff;
+}
+
+.btn-header-home:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 /* User Badge Dropdown 👤 */
@@ -303,7 +315,8 @@
     display: none !important;
   }
   .btn-header-voucher,
-  .btn-header-shop {
+  .btn-header-shop,
+  .btn-header-home {
     display: none !important; /* On mobile, hide shop & voucher from header to keep logo & avatar crisp and non-overlapping */
   }
   .header-user-name {

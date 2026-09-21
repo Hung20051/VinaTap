@@ -29,6 +29,9 @@ import { provinceAPI } from "@/lib/api";
 import { isLoggedIn, getUser, clearAuth } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useReveal } from "@/hooks/useReveal";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
+import { getLang } from "@/lib/prefs";
+import { t } from "@/lib/i18n";
 import "@/styles/home.css";
 
 const REGION_LABEL = {
@@ -109,20 +112,27 @@ export default function HomePage() {
         "Chào bạn! Mình có thể giải đáp nhanh các câu hỏi về mảnh ghép NFC, album và chuyển nhượng thẻ.",
     },
   ]);
+  const [lang, setLangState] = useState("vi");
   const router = useRouter();
+
+  useEffect(() => {
+    setLangState(getLang());
+    const handleLangUpdated = (e) => {
+      if (e.detail) setLangState(e.detail);
+    };
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+  }, []);
 
   // Slide tự động cho "Tỉnh thành nổi bật"
   const provinceTrackRef = useRef(null);
   const [provinceAutoPaused, setProvinceAutoPaused] = useState(false);
 
-  // Khách đã đăng nhập thì đưa thẳng vào Dashboard — không cho quay lại
-  // xem trang landing page nữa (landing page chỉ dành cho khách vãng lai).
+  // Khách đã đăng nhập vẫn có thể xem trang chủ và điều hướng tự do
   useEffect(() => {
     if (isLoggedIn()) {
-      router.replace("/customer/dashboard");
-      return;
+      setUser(getUser());
     }
-    setUser(getUser());
     setCheckingAuth(false);
     provinceAPI
       .getAll()
@@ -254,44 +264,46 @@ export default function HomePage() {
 
             <div className="home-navbar__links">
               <a href="#home" onClick={scrollToSection("home")}>
-                Trang chủ
+                {t(lang, "navHome")}
               </a>
               <a href="#about" onClick={scrollToSection("about")}>
-                Giới thiệu
+                {t(lang, "navAbout")}
               </a>
               <Link
                 href="/shop"
                 style={{ color: "inherit", textDecoration: "none" }}
               >
-                Sản phẩm
+                {t(lang, "navProducts")}
               </Link>
               <a href="#provinces" onClick={scrollToSection("provinces")}>
-                Cẩm nang
+                {t(lang, "navGuide")}
               </a>
               <a href="#faq" onClick={scrollToSection("faq")}>
-                Hỏi đáp
+                {t(lang, "navFaq")}
               </a>
             </div>
 
             <div className="home-navbar__actions">
+              <LanguageSwitcher />
+
               {user ? (
                 <>
                   <Link
                     href="/customer/dashboard"
                     className="home-navbar__dashboard-link"
                   >
-                    Dashboard
+                    {t(lang, "dashboard")}
                   </Link>
                   <button
                     onClick={handleLogout}
                     className="home-navbar__logout-btn"
                   >
-                    Đăng xuất
+                    {t(lang, "logout")}
                   </button>
                 </>
               ) : (
                 <Link href="/auth" className="home-navbar__login-btn">
-                  Đăng nhập
+                  {t(lang, "login")}
                 </Link>
               )}
             </div>
@@ -304,30 +316,28 @@ export default function HomePage() {
             <div>
               <div className="home-eyebrow">
                 <span className="home-eyebrow__dash" />
-                Khám phá Việt Nam
+                {t(lang, "heroEyebrow")}
               </div>
               <h1 className="home-hero__title">
-                Mang cả Việt Nam
+                {t(lang, "heroTitleLead")}
                 <br />
                 <span className="home-hero__title-accent">
-                  vào lòng bàn tay bạn
+                  {t(lang, "heroTitleAccent")}
                 </span>
               </h1>
               <p className="home-hero__desc">
-                Sưu tầm 34 mảnh ghép NFC theo từng tỉnh thành, ghép thành bản đồ
-                treo tường, và lưu giữ kỷ niệm mỗi chuyến đi trong album ảnh có
-                AI viết caption giúp bạn.
+                {t(lang, "heroDesc")}
               </p>
               <div className="home-hero__cta-row">
                 <Link href="/activate" className="home-btn-teal">
-                  Kích hoạt mảnh NFC
+                  {t(lang, "heroActivateBtn")}
                 </Link>
                 <a
                   href="#provinces"
                   onClick={scrollToSection("provinces")}
                   className="home-btn-outline-ink"
                 >
-                  Khám phá tỉnh thành
+                  {t(lang, "heroExploreBtn")}
                 </a>
               </div>
 
@@ -336,9 +346,9 @@ export default function HomePage() {
                   <Puzzle size={20} strokeWidth={2.2} />
                 </div>
                 <div>
-                  <div className="home-hero__highlight-title">34 mảnh ghép</div>
+                  <div className="home-hero__highlight-title">{t(lang, "piecesBadgeTitle")}</div>
                   <div className="home-hero__highlight-sub">
-                    Mỗi tỉnh 1 mảnh, sưu tầm trọn bộ bản đồ
+                    {t(lang, "piecesBadgeSub")}
                   </div>
                 </div>
               </div>
@@ -380,13 +390,13 @@ export default function HomePage() {
                   />
                 </span>
                 <div>
-                  <div className="home-hero__card-title">Kích hoạt NFC</div>
-                  <div className="home-hero__card-sub">Chạm là mở album</div>
+                  <div className="home-hero__card-title">{t(lang, "tapNfcBadge")}</div>
+                  <div className="home-hero__card-sub">{t(lang, "tapNfcSub")}</div>
                 </div>
               </div>
               <div className="home-hero__card home-hero__card--ai">
                 <Sparkles size={14} strokeWidth={2.4} />
-                AI viết caption
+                {t(lang, "aiCaptionBadge")}
               </div>
             </div>
           </div>
@@ -394,7 +404,12 @@ export default function HomePage() {
           {/* Dải tính năng nhanh */}
           <div className="home-feature-strip">
             <div className="container home-feature-strip__inner">
-              {FEATURE_STRIP.map(({ icon: Icon, label }) => (
+              {[
+                { icon: Smartphone, label: t(lang, "featNoApp") },
+                { icon: Globe, label: t(lang, "featEveryPhone") },
+                { icon: ShieldCheck, label: t(lang, "featPrivateAlbum") },
+                { icon: Puzzle, label: t(lang, "featCollectPieces") },
+              ].map(({ icon: Icon, label }) => (
                 <div key={label} className="home-feature-strip__item">
                   <span className="home-feature-strip__icon">
                     <Icon size={18} strokeWidth={2.2} />
@@ -410,7 +425,12 @@ export default function HomePage() {
         <RevealSection id="about" className="home-about">
           <div className="container home-about__grid">
             <div className="home-about__icons-grid">
-              {ABOUT_ICONS.map(({ icon: Icon, label }) => (
+              {[
+                { icon: Puzzle, label: t(lang, "aboutPhysical") },
+                { icon: Globe, label: t(lang, "aboutWeb") },
+                { icon: Camera, label: t(lang, "aboutAiAlbum") },
+                { icon: Gamepad2, label: t(lang, "aboutGamification") },
+              ].map(({ icon: Icon, label }) => (
                 <div key={label} className="home-about__icon-tile">
                   <Icon size={26} strokeWidth={2} />
                   <span className="home-about__icon-label">{label}</span>
@@ -421,29 +441,26 @@ export default function HomePage() {
             <div>
               <div className="home-eyebrow">
                 <span className="home-eyebrow__dash" />
-                Giới thiệu
+                {t(lang, "aboutEyebrow")}
               </div>
               <h2 className="home-about__title">
-                Mỗi tỉnh thành là một mảnh ghép, một câu chuyện
+                {t(lang, "aboutHeading")}
               </h2>
               <p className="home-about__desc">
-                VinaTap kết hợp một mảnh ghép NFC vật lý với trải nghiệm web
-                tương tác: quét NFC để xem thông tin tỉnh, chỉ đường tới địa
-                danh, và mở album ảnh cá nhân được AI tự viết caption — biến
-                việc sưu tầm quà lưu niệm thành một hành trình khám phá.
+                {t(lang, "aboutStory")}
               </p>
               <div className="home-about__stats">
                 <div>
                   <div className="home-about__stat-value">34+</div>
-                  <div className="home-about__stat-label">Tỉnh thành</div>
+                  <div className="home-about__stat-label">{t(lang, "aboutStatProvinces")}</div>
                 </div>
                 <div>
                   <div className="home-about__stat-value">3</div>
-                  <div className="home-about__stat-label">Lớp trải nghiệm</div>
+                  <div className="home-about__stat-label">{t(lang, "aboutStatLayers")}</div>
                 </div>
                 <div>
                   <div className="home-about__stat-value">2025</div>
-                  <div className="home-about__stat-label">Năm ra mắt</div>
+                  <div className="home-about__stat-label">{t(lang, "aboutStatLaunch")}</div>
                 </div>
               </div>
             </div>
@@ -456,44 +473,44 @@ export default function HomePage() {
             <div className="home-section-head">
               <div className="home-eyebrow home-eyebrow--center">
                 <span className="home-eyebrow__dash" />
-                Các gói
+                {t(lang, "pricingEyebrow")}
                 <span className="home-eyebrow__dash" />
               </div>
-              <h2 className="home-section-title">Chọn gói phù hợp với bạn</h2>
+              <h2 className="home-section-title">{t(lang, "pricingHeading")}</h2>
             </div>
 
             <div className="home-pricing__grid">
               {[
                 {
-                  name: "Mảnh ghép lẻ",
+                  name: t(lang, "tierSingleName"),
                   price: "50.000đ",
-                  desc: "1 mảnh NFC cho 1 tỉnh thành bất kỳ",
+                  desc: t(lang, "tierSingleDesc"),
                   features: [
-                    "1 mảnh NFC vật lý",
-                    "1 album ảnh AI",
-                    "Kích hoạt trọn đời",
+                    t(lang, "tierSingleF1"),
+                    t(lang, "tierSingleF2"),
+                    t(lang, "tierSingleF3"),
                   ],
                   highlight: false,
                 },
                 {
-                  name: "Bộ 5 tỉnh",
+                  name: t(lang, "tierFiveName"),
                   price: "220.000đ",
-                  desc: "Khởi đầu hành trình sưu tầm của bạn",
+                  desc: t(lang, "tierFiveDesc"),
                   features: [
-                    "5 mảnh NFC tự chọn",
-                    "5 album ảnh AI",
-                    "Tiết kiệm so với mua lẻ",
+                    t(lang, "tierFiveF1"),
+                    t(lang, "tierFiveF2"),
+                    t(lang, "tierFiveF3"),
                   ],
                   highlight: true,
                 },
                 {
-                  name: "Bộ đầy đủ 34 tỉnh",
+                  name: t(lang, "tierAllName"),
                   price: "1.400.000đ",
-                  desc: "Trọn bộ bản đồ Việt Nam treo tường",
+                  desc: t(lang, "tierAllDesc"),
                   features: [
-                    "34 mảnh NFC toàn quốc",
-                    "34 album ảnh AI",
-                    "Ưu đãi tốt nhất/mảnh",
+                    t(lang, "tierAllF1"),
+                    t(lang, "tierAllF2"),
+                    t(lang, "tierAllF3"),
                   ],
                   highlight: false,
                 },
@@ -503,7 +520,7 @@ export default function HomePage() {
                   className={`home-pricing__card ${tier.highlight ? "home-pricing__card--highlight" : ""}`}
                 >
                   {tier.highlight && (
-                    <span className="home-pricing__badge">Phổ biến nhất</span>
+                    <span className="home-pricing__badge">{t(lang, "pricingPopularBadge")}</span>
                   )}
                   <div className="home-pricing__name">{tier.name}</div>
                   <div className="home-pricing__price">{tier.price}</div>
@@ -521,7 +538,7 @@ export default function HomePage() {
                     ))}
                   </div>
                   <Link href="/activate" className="home-pricing__cta">
-                    Chọn gói này
+                    {t(lang, "pricingChooseBtn")}
                   </Link>
                 </div>
               ))}
@@ -535,11 +552,11 @@ export default function HomePage() {
             <div className="home-section-head">
               <div className="home-eyebrow home-eyebrow--center">
                 <span className="home-eyebrow__dash" />
-                Mới
+                {t(lang, "provincesEyebrow")}
                 <span className="home-eyebrow__dash" />
               </div>
               <h2 className="home-section-title home-section-title--md">
-                Tỉnh thành nổi bật
+                {t(lang, "provincesHeading")}
               </h2>
             </div>
 
@@ -552,7 +569,7 @@ export default function HomePage() {
                 />
                 <input
                   className="input home-provinces__search"
-                  placeholder="Tìm tỉnh thành..."
+                  placeholder={t(lang, "provincesSearchPlaceholder")}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -565,11 +582,11 @@ export default function HomePage() {
                 >
                   {
                     {
-                      all: "Tất cả",
-                      north: "Miền Bắc",
-                      central: "Miền Trung",
-                      south: "Miền Nam",
-                      island: "Hải đảo",
+                      all: t(lang, "regionAll"),
+                      north: t(lang, "regionNorth"),
+                      central: t(lang, "regionCentral"),
+                      south: t(lang, "regionSouth"),
+                      island: t(lang, "regionIsland"),
                     }[r]
                   }
                 </button>
@@ -582,7 +599,7 @@ export default function HomePage() {
               </div>
             ) : !filtered.length ? (
               <p className="home-provinces__empty">
-                Không tìm thấy tỉnh thành nào
+                {t(lang, "provincesEmpty")}
               </p>
             ) : (
               <div
@@ -624,7 +641,12 @@ export default function HomePage() {
                             </div>
                           )}
                           <span className="home-provinces__region-badge">
-                            {REGION_LABEL[p.region]}
+                            {{
+                              north: t(lang, "regionNorth"),
+                              central: t(lang, "regionCentral"),
+                              south: t(lang, "regionSouth"),
+                              island: t(lang, "regionIsland"),
+                            }[p.region] || p.region}
                           </span>
                         </div>
                         <div className="home-provinces__card-body">
@@ -633,7 +655,7 @@ export default function HomePage() {
                           </h3>
                           <p className="home-provinces__card-desc">
                             {p.description ||
-                              "Khám phá địa danh nổi tiếng tại đây"}
+                              t(lang, "provincesDefaultDesc")}
                           </p>
                         </div>
                       </div>
@@ -660,15 +682,31 @@ export default function HomePage() {
             <div className="home-section-head">
               <div className="home-eyebrow home-eyebrow--center">
                 <span className="home-eyebrow__dash" />
-                Chính sách
+                {t(lang, "policyEyebrow")}
                 <span className="home-eyebrow__dash" />
               </div>
               <h2 className="home-section-title home-section-title--sm">
-                Cam kết với người dùng
+                {t(lang, "policyHeading")}
               </h2>
             </div>
             <div className="home-policy__grid">
-              {POLICY_ITEMS.map(({ icon: Icon, title, desc }) => (
+              {[
+                {
+                  icon: RefreshCw,
+                  title: t(lang, "policyP1Title"),
+                  desc: t(lang, "policyP1Desc"),
+                },
+                {
+                  icon: Lock,
+                  title: t(lang, "policyP2Title"),
+                  desc: t(lang, "policyP2Desc"),
+                },
+                {
+                  icon: Wrench,
+                  title: t(lang, "policyP3Title"),
+                  desc: t(lang, "policyP3Desc"),
+                },
+              ].map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="home-policy__card">
                   <div className="home-policy__icon">
                     <Icon size={20} strokeWidth={2.2} />
@@ -679,8 +717,7 @@ export default function HomePage() {
               ))}
             </div>
             <p className="home-policy__disclaimer">
-              * Nội dung chính sách tạm thời, cần đội ngũ pháp lý rà soát trước
-              khi ra mắt chính thức.
+              {t(lang, "policyDisclaimer")}
             </p>
           </div>
         </RevealSection>
@@ -691,11 +728,11 @@ export default function HomePage() {
             <div className="home-section-head">
               <div className="home-eyebrow home-eyebrow--center">
                 <span className="home-eyebrow__dash" />
-                Hỏi đáp
+                {t(lang, "faqEyebrow")}
                 <span className="home-eyebrow__dash" />
               </div>
               <h2 className="home-section-title home-section-title--md">
-                Những điều bạn cần biết
+                {t(lang, "faqHeading")}
               </h2>
             </div>
 
@@ -703,8 +740,8 @@ export default function HomePage() {
               <div className="home-faq-chat__header">
                 <span className="home-faq-chat__avatar"><Bot size={20} /></span>
                 <div>
-                  <strong>Trợ lý VinaTap</strong>
-                  <p>Đang sẵn sàng hỗ trợ</p>
+                  <strong>{t(lang, "faqAssistantName")}</strong>
+                  <p>{t(lang, "faqAssistantReady")}</p>
                 </div>
               </div>
 
@@ -735,7 +772,7 @@ export default function HomePage() {
                 <input
                   value={faqInput}
                   onChange={(e) => setFaqInput(e.target.value)}
-                  placeholder="Nhập câu hỏi của bạn..."
+                  placeholder={t(lang, "faqPlaceholder")}
                   aria-label="Câu hỏi cho trợ lý VinaTap"
                 />
                 <button type="submit" disabled={!faqInput.trim()} aria-label="Gửi câu hỏi">
@@ -756,8 +793,7 @@ export default function HomePage() {
                 onClick={scrollToSection("home")}
               />
               <p className="home-footer__brand-desc">
-                Bản đồ du lịch NFC Việt Nam — sưu tầm, khám phá, lưu giữ kỷ niệm
-                từng chuyến đi.
+                {t(lang, "footerDesc")}
               </p>
               <div className="home-footer__socials">
                 <a
@@ -788,36 +824,36 @@ export default function HomePage() {
             </div>
 
             <FooterCol
-              title="Sản phẩm"
+              title={t(lang, "footerColProducts")}
               links={[
-                { label: "Trang chủ", href: "/" },
-                { label: "Kích hoạt NFC", href: "/customer/activate" },
-                { label: "Dashboard", href: "/customer/dashboard" },
-                { label: "Đăng nhập", href: "/auth" },
+                { label: t(lang, "navHome"), href: "/" },
+                { label: t(lang, "activateNfc"), href: "/customer/activate" },
+                { label: t(lang, "dashboard"), href: "/customer/dashboard" },
+                { label: t(lang, "login"), href: "/auth" },
               ]}
             />
             <FooterCol
-              title="Khám phá"
+              title={t(lang, "footerColExplore")}
               links={[
-                { label: "Các gói", href: "/#gia" },
-                { label: "Tỉnh thành", href: "/#provinces" },
-                { label: "Giới thiệu", href: "/#about" },
-                { label: "Hỏi đáp", href: "/#faq" },
+                { label: t(lang, "pricingEyebrow"), href: "/#gia" },
+                { label: t(lang, "provincesHeading"), href: "/#provinces" },
+                { label: t(lang, "navAbout"), href: "/#about" },
+                { label: t(lang, "navFaq"), href: "/#faq" },
               ]}
             />
             <FooterCol
-              title="Công ty"
+              title={t(lang, "footerColCompany")}
               links={[
-                { label: "Về VinaTap", href: "#" },
-                { label: "Liên hệ", href: "#" },
-                { label: "Điều khoản", href: "#" },
-                { label: "Chính sách", href: "/#chinh-sach" },
+                { label: t(lang, "footerAboutUs"), href: "#" },
+                { label: t(lang, "footerContact"), href: "#" },
+                { label: t(lang, "footerTerms"), href: "#" },
+                { label: t(lang, "footerPolicy"), href: "/#chinh-sach" },
               ]}
             />
           </div>
           <div className="home-footer__bottom">
             <div className="container home-footer__bottom-inner">
-              © 2025 VinaTap. Tất cả quyền được bảo lưu.
+              {t(lang, "footerCopyright")}
             </div>
           </div>
         </footer>

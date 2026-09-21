@@ -33,23 +33,25 @@ import TransferModal from "@/components/modals/TransferModal";
 import GiftNotificationBanner from "@/components/ui/GiftNotificationBanner";
 import "@/styles/dashboard.css";
 
-const REGION_CONFIG = {
-  all: { label: "Tất cả miền", icon: "✨" },
-  north: { label: "Miền Bắc", icon: "🌲" },
-  central: { label: "Miền Trung", icon: "🏛️" },
-  south: { label: "Miền Nam", icon: "🌴" },
-  island: { label: "Hải Đảo", icon: "🏝️" },
-};
+function getRegionConfig(lang) {
+  return {
+    all: { label: t(lang, "regionAllDash"), icon: "✨" },
+    north: { label: t(lang, "regionNorthDash"), icon: "🌲" },
+    central: { label: t(lang, "regionCentralDash"), icon: "🏛️" },
+    south: { label: t(lang, "regionSouthDash"), icon: "🌴" },
+    island: { label: t(lang, "regionIslandDash"), icon: "🏝️" },
+  };
+}
 
 const TOTAL_PROVINCES = 34;
 
 // Hệ thống danh hiệu & cấp bậc thám hiểm
-function getExplorerRank(count) {
-  if (count >= 34) return { rank: "Huyền Thoại Việt Nam", level: 5, color: "#f59e0b", icon: "👑" };
-  if (count >= 22) return { rank: "Bậc Thầy Khám Phá", level: 4, color: "#ec4899", icon: "🏆" };
-  if (count >= 12) return { rank: "Nhà Thám Hiểm", level: 3, color: "#8b5cf6", icon: "🧭" };
-  if (count >= 5) return { rank: "Người Đồng Hành", level: 2, color: "#3b82f6", icon: "🎒" };
-  return { rank: "Tân Thủ Du Hành", level: 1, color: "#10b981", icon: "🌱" };
+function getExplorerRank(count, lang) {
+  if (count >= 34) return { rank: t(lang, "rankLegend"), level: 5, color: "#f59e0b", icon: "👑" };
+  if (count >= 22) return { rank: t(lang, "rankMaster"), level: 4, color: "#ec4899", icon: "🏆" };
+  if (count >= 12) return { rank: t(lang, "rankAdventurer"), level: 3, color: "#8b5cf6", icon: "🧭" };
+  if (count >= 5) return { rank: t(lang, "rankWayfarer"), level: 2, color: "#3b82f6", icon: "🎒" };
+  return { rank: t(lang, "rankNovice"), level: 1, color: "#10b981", icon: "🌱" };
 }
 
 export default function CustomerDashboard() {
@@ -168,7 +170,8 @@ export default function CustomerDashboard() {
     100,
     Math.round((uniqueProvinceCount / TOTAL_PROVINCES) * 100),
   );
-  const rankInfo = getExplorerRank(uniqueProvinceCount);
+  const rankInfo = getExplorerRank(uniqueProvinceCount, lang);
+  const REGION_CONFIG = getRegionConfig(lang);
 
   // Lọc theo chế độ xem (Chỉ đã mở khóa HOẶC Tất cả 34 tỉnh)
   const itemsToDisplay = viewMode === "collected" ? cards : allProvinces;
@@ -231,14 +234,14 @@ export default function CustomerDashboard() {
                     <span>{rankInfo.icon}</span>
                     <span>Level {rankInfo.level}: {rankInfo.rank}</span>
                   </span>
-                  <span className="passport-id-tag">Hộ chiếu #VN-{user?.id || 1}</span>
+                  <span className="passport-id-tag">{t(lang, "passportTag")} #VN-{user?.id || 1}</span>
                 </div>
 
                 <h1 className="passport-name">
-                  {user?.name || "Nhà Thám Hiểm"}
+                  {user?.name || t(lang, "defaultExplorer")}
                 </h1>
                 <p className="passport-subtitle">
-                  Hành trình chinh phục 34 mảnh ghép bản đồ di sản Việt Nam
+                  {t(lang, "passportSubtitle")}
                 </p>
               </div>
             </div>
@@ -246,11 +249,11 @@ export default function CustomerDashboard() {
             <div className="passport-actions">
               <Link href="/customer/activate" className="btn-passport-action is-primary">
                 <Sparkles size={16} />
-                <span>Kích hoạt thẻ mới</span>
+                <span>{t(lang, "btnActivateCard")}</span>
               </Link>
               <Link href="/shop" className="btn-passport-action is-secondary">
                 <ShoppingBag size={16} />
-                <span>Cửa hàng thẻ</span>
+                <span>{t(lang, "btnCardStore")}</span>
               </Link>
             </div>
           </div>
@@ -258,9 +261,9 @@ export default function CustomerDashboard() {
           {/* Progress bar */}
           <div className="passport-progress-section">
             <div className="passport-prog-meta">
-              <span className="prog-label">Tiến độ mở khóa bản đồ</span>
+              <span className="prog-label">{t(lang, "mapUnlockProgress")}</span>
               <span className="prog-stats">
-                <strong>{uniqueProvinceCount}</strong>/{TOTAL_PROVINCES} Tỉnh thành ({progressPct}%)
+                <strong>{uniqueProvinceCount}</strong>/{TOTAL_PROVINCES} {t(lang, "provincesCountLabel")} ({progressPct}%)
               </span>
             </div>
             <div className="passport-prog-track">
@@ -277,7 +280,7 @@ export default function CustomerDashboard() {
               <div className="p-stat-icon is-orange">🗺️</div>
               <div className="p-stat-data">
                 <span className="p-stat-val">{totalCardsCount}</span>
-                <span className="p-stat-lbl">Mảnh ghép sở hữu</span>
+                <span className="p-stat-lbl">{t(lang, "ownedPieces")}</span>
               </div>
             </div>
 
@@ -285,7 +288,7 @@ export default function CustomerDashboard() {
               <div className="p-stat-icon is-blue">📸</div>
               <div className="p-stat-data">
                 <span className="p-stat-val">{albums.length}</span>
-                <span className="p-stat-lbl">Album kỷ niệm</span>
+                <span className="p-stat-lbl">{t(lang, "memoryAlbumsCount")}</span>
               </div>
             </div>
 
@@ -293,7 +296,7 @@ export default function CustomerDashboard() {
               <div className="p-stat-icon is-emerald">👁️</div>
               <div className="p-stat-data">
                 <span className="p-stat-val">{totalViews}</span>
-                <span className="p-stat-lbl">Lượt xem album</span>
+                <span className="p-stat-lbl">{t(lang, "albumViewsCount")}</span>
               </div>
             </div>
           </div>
@@ -328,7 +331,7 @@ export default function CustomerDashboard() {
               onClick={() => setViewMode("collected")}
             >
               <Award size={15} />
-              <span>Thẻ đã sở hữu ({cards.length})</span>
+              <span>{t(lang, "tabOwnedCards")} ({cards.length})</span>
             </button>
             <button
               type="button"
@@ -336,7 +339,7 @@ export default function CustomerDashboard() {
               onClick={() => setViewMode("all_map")}
             >
               <Globe2 size={15} />
-              <span>Toàn bộ 34 tỉnh thành</span>
+              <span>{t(lang, "tabAllProvinces")}</span>
             </button>
           </div>
 
@@ -346,7 +349,7 @@ export default function CustomerDashboard() {
               <Search size={15} className="search-icon" />
               <input
                 type="text"
-                placeholder="Tìm kiếm tỉnh thành, mã serial..."
+                placeholder={t(lang, "searchDashPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="search-input"
@@ -359,19 +362,19 @@ export default function CustomerDashboard() {
                 type="button"
                 className={`btn-layout-opt ${layoutMode === "slider" ? "is-active" : ""}`}
                 onClick={() => setLayoutMode("slider")}
-                title="Xem dạng thẻ trượt ngang (Slide)"
+                title={t(lang, "tipSlide")}
               >
                 <GalleryHorizontalEnd size={16} />
-                <span className="layout-btn-text">Dạng trượt</span>
+                <span className="layout-btn-text">{t(lang, "layoutSlide")}</span>
               </button>
               <button
                 type="button"
                 className={`btn-layout-opt ${layoutMode === "grid" ? "is-active" : ""}`}
                 onClick={() => setLayoutMode("grid")}
-                title="Xem dạng lưới (Grid)"
+                title={t(lang, "tipGrid")}
               >
                 <LayoutGrid size={16} />
-                <span className="layout-btn-text">Dạng lưới</span>
+                <span className="layout-btn-text">{t(lang, "layoutGrid")}</span>
               </button>
             </div>
           </div>
@@ -411,7 +414,7 @@ export default function CustomerDashboard() {
                 type="button"
                 className="btn-slider-arrow"
                 onClick={() => scrollSlider("left")}
-                title="Trượt sang trái"
+                title={t(lang, "tipScrollLeft")}
               >
                 <ChevronLeft size={18} />
               </button>
@@ -419,7 +422,7 @@ export default function CustomerDashboard() {
                 type="button"
                 className="btn-slider-arrow"
                 onClick={() => scrollSlider("right")}
-                title="Trượt sang phải"
+                title={t(lang, "tipScrollRight")}
               >
                 <ChevronRight size={18} />
               </button>
@@ -434,24 +437,24 @@ export default function CustomerDashboard() {
               <div className="empty-globe-icon">
                 <Compass size={48} />
               </div>
-              <h3 className="empty-title">Bạn chưa có mảnh ghép nào</h3>
+              <h3 className="empty-title">{t(lang, "emptyCollectionTitle")}</h3>
               <p className="empty-desc">
-                Chạm thẻ NFC vào điện thoại hoặc kích hoạt mã thẻ để mở khóa địa danh đầu tiên trên bản đồ!
+                {t(lang, "emptyCollectionDesc")}
               </p>
               <div className="empty-actions">
                 <Link href="/customer/activate" className="btn-passport-action is-primary">
                   <Plus size={16} />
-                  <span>Kích hoạt ngay</span>
+                  <span>{t(lang, "btnActivateNow")}</span>
                 </Link>
                 <Link href="/shop" className="btn-passport-action is-secondary">
                   <ShoppingBag size={16} />
-                  <span>Mua thẻ mới</span>
+                  <span>{t(lang, "btnBuyNewCard")}</span>
                 </Link>
               </div>
             </div>
           ) : (
             <div className="cust-no-result">
-              <p>Không tìm thấy địa danh nào phù hợp với bộ lọc hiện tại.</p>
+              <p>{t(lang, "noMatchProvinces")}</p>
               <button
                 type="button"
                 className="btn-reset-filters"
@@ -460,7 +463,7 @@ export default function CustomerDashboard() {
                   setSearchQuery("");
                 }}
               >
-                Đặt lại bộ lọc
+                {t(lang, "btnResetFilters")}
               </button>
             </div>
           )
@@ -494,12 +497,12 @@ export default function CustomerDashboard() {
                       {album?.status === "archived" ? (
                         <div className="card-status-pill is-locked" style={{ background: "#dc2626", color: "#fff" }}>
                           <Lock size={12} />
-                          <span>Album bị khóa</span>
+                          <span>{t(lang, "albumArchived")}</span>
                         </div>
                       ) : (
                         <div className="card-status-pill is-active">
                           <CheckCircle2 size={12} />
-                          <span>Đã kích hoạt</span>
+                          <span>{t(lang, "cardStatusActive")}</span>
                         </div>
                       )}
 
@@ -526,20 +529,20 @@ export default function CustomerDashboard() {
                         {album ? (
                           album.status === "archived" ? (
                             <span className="album-count-text" style={{ color: "#dc2626", fontWeight: 700 }}>
-                              ⚠️ Album bị khóa: {album.locked_reason || "Vi phạm chính sách"}
+                              ⚠️ {t(lang, "albumArchived")}: {album.locked_reason || (lang === "en" ? "Policy violation" : "Vi phạm chính sách")}
                             </span>
                           ) : photoCount > 0 ? (
                             <span className="album-count-text">
-                              📸 <strong>{photoCount}</strong> bức ảnh kỷ niệm lưu giữ
+                              📸 <strong>{photoCount}</strong> {t(lang, "photosPreserved")}
                             </span>
                           ) : (
                             <span className="album-count-text is-empty">
-                              📸 Album trống • Hãy tải lên bức ảnh đầu tiên!
+                              📸 {t(lang, "emptyAlbumHint")}
                             </span>
                           )
                         ) : (
                           <span className="album-count-text is-empty">
-                            ✨ Thẻ đã sẵn sàng • Chạm để tạo album
+                            ✨ {t(lang, "cardReadyHint")}
                           </span>
                         )}
                       </div>
@@ -549,13 +552,13 @@ export default function CustomerDashboard() {
                           album.status === "archived" ? (
                             <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta" style={{ flex: 1, background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
                               <Lock size={16} />
-                              <span>Xem lý do khóa</span>
+                              <span>{t(lang, "viewLockReason")}</span>
                               <ArrowRight size={15} className="arrow-icon" />
                             </Link>
                           ) : (
                             <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta is-view-album" style={{ flex: 1 }}>
                               <Camera size={16} />
-                              <span>{photoCount > 0 ? `Mở album (${photoCount})` : "Đăng ảnh"}</span>
+                              <span>{photoCount > 0 ? `${t(lang, "btnOpenAlbum")} (${photoCount})` : t(lang, "btnAddPhoto")}</span>
                               <ArrowRight size={15} className="arrow-icon" />
                             </Link>
                           )
@@ -568,14 +571,14 @@ export default function CustomerDashboard() {
                             onClick={() => handleCreateAlbum(card)}
                           >
                             <Sparkles size={16} />
-                            <span>{creatingFor === card.id ? "Đang tạo..." : "Tạo album"}</span>
+                            <span>{creatingFor === card.id ? t(lang, "btnCreatingAlbum") : t(lang, "btnCreateAlbum")}</span>
                             <ArrowRight size={15} className="arrow-icon" />
                           </button>
                         )}
                         <button
                           type="button"
                           className="btn-card-gift"
-                          title="Tặng / Chuyển nhượng thẻ này cho bạn bè qua email"
+                          title={t(lang, "btnGiftTip")}
                           onClick={() => setTransferCard({ id: card.id, name: card.province_name })}
                           style={{
                             display: "inline-flex",
@@ -595,7 +598,7 @@ export default function CustomerDashboard() {
                           }}
                         >
                           <Gift size={16} />
-                          <span>Tặng</span>
+                          <span>{t(lang, "btnGiftCard")}</span>
                         </button>
                       </div>
                     </div>
@@ -632,12 +635,12 @@ export default function CustomerDashboard() {
                       {isUnlocked ? (
                         <div className="card-status-pill is-active">
                           <CheckCircle2 size={12} />
-                          <span>Đã sở hữu</span>
+                          <span>{t(lang, "cardStatusOwned")}</span>
                         </div>
                       ) : (
                         <div className="card-status-pill is-locked">
                           <Lock size={12} />
-                          <span>Chưa mở khóa</span>
+                          <span>{t(lang, "cardStatusLocked")}</span>
                         </div>
                       )}
 
@@ -656,8 +659,8 @@ export default function CustomerDashboard() {
                         <h3 className="card-province-title">{province.name}</h3>
                         <p className="card-prov-desc">
                           {isUnlocked
-                            ? `Mã thẻ: ${matchedCard?.serial_code || "NFC-ACTIVE"}`
-                            : "Mảnh ghép bản đồ du lịch NFC Việt Nam"}
+                            ? `${t(lang, "cardCodeLabel")}: ${matchedCard?.serial_code || "NFC-ACTIVE"}`
+                            : t(lang, "mapPieceSubtitle")}
                         </p>
                       </div>
 
@@ -666,25 +669,25 @@ export default function CustomerDashboard() {
                           album ? (
                             album.status === "archived" ? (
                               <span className="album-count-text" style={{ color: "#dc2626", fontWeight: 700 }}>
-                                ⚠️ Album tạm khóa: {album.locked_reason || "Vi phạm chính sách"}
+                                ⚠️ {t(lang, "albumArchived")}: {album.locked_reason || (lang === "en" ? "Policy violation" : "Vi phạm chính sách")}
                               </span>
                             ) : photoCount > 0 ? (
                               <span className="album-count-text">
-                                📸 <strong>{photoCount}</strong> bức ảnh kỷ niệm
+                                📸 <strong>{photoCount}</strong> {t(lang, "photosCount")}
                               </span>
                             ) : (
                               <span className="album-count-text is-empty">
-                                📸 Chưa có ảnh • Chạm để thêm ảnh
+                                📸 {t(lang, "noPhotosHint")}
                               </span>
                             )
                           ) : (
                             <span className="album-count-text is-empty">
-                              ✨ Sẵn sàng tạo album kỷ niệm
+                              ✨ {t(lang, "readyToCreateAlbum")}
                             </span>
                           )
                         ) : (
                           <span className="album-count-text is-locked-txt">
-                            🔒 Sưu tầm thẻ để mở khóa album địa danh này
+                            🔒 {t(lang, "collectToUnlockHint")}
                           </span>
                         )}
                       </div>
@@ -696,13 +699,13 @@ export default function CustomerDashboard() {
                               album.status === "archived" ? (
                                 <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta" style={{ flex: 1, background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
                                   <Lock size={16} />
-                                  <span>Xem lý do khóa</span>
+                                  <span>{t(lang, "viewLockReason")}</span>
                                   <ArrowRight size={15} className="arrow-icon" />
                                 </Link>
                               ) : (
                                 <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta is-view-album" style={{ flex: 1 }}>
                                   <Camera size={16} />
-                                  <span>Mở album</span>
+                                  <span>{t(lang, "btnOpenAlbum")}</span>
                                   <ArrowRight size={15} className="arrow-icon" />
                                 </Link>
                               )
@@ -715,7 +718,7 @@ export default function CustomerDashboard() {
                                 onClick={() => matchedCard && handleCreateAlbum(matchedCard)}
                               >
                                 <Sparkles size={16} />
-                                <span>Tạo album</span>
+                                <span>{creatingFor === matchedCard?.id ? t(lang, "btnCreatingAlbum") : t(lang, "btnCreateAlbum")}</span>
                                 <ArrowRight size={15} className="arrow-icon" />
                               </button>
                             )}
@@ -723,7 +726,7 @@ export default function CustomerDashboard() {
                               <button
                                 type="button"
                                 className="btn-card-gift"
-                                title="Tặng / Chuyển nhượng thẻ này cho bạn bè"
+                                title={t(lang, "btnGiftTip")}
                                 onClick={() => setTransferCard({ id: matchedCard.id, name: province.name })}
                                 style={{
                                   display: "inline-flex",
@@ -743,14 +746,14 @@ export default function CustomerDashboard() {
                                 }}
                               >
                                 <Gift size={16} />
-                                <span>Tặng</span>
+                                <span>{t(lang, "btnGiftCard")}</span>
                               </button>
                             )}
                           </>
                         ) : (
                           <Link href={`/shop`} className="btn-card-cta is-buy-unlock" style={{ flex: 1 }}>
                             <ShoppingBag size={16} />
-                            <span>Mua thẻ mở khóa</span>
+                            <span>{t(lang, "btnBuyCardToUnlock")}</span>
                             <ArrowRight size={15} className="arrow-icon" />
                           </Link>
                         )}
