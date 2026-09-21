@@ -35,6 +35,56 @@
   pointer-events: none;
 }
 
+/* ─── TOPBAR (Navigation về Homepage & Ngôn ngữ) ──────────────── */
+.auth-topbar {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.auth-nav-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.15rem;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.auth-nav-home:hover {
+  background: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  transform: translateX(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 640px) {
+  .auth-topbar {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+  .auth-nav-home {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+  }
+}
+
 /* ─── BRANDING (bên trái) ─────────────────────────────────────── */
 .auth-brand {
   position: absolute;

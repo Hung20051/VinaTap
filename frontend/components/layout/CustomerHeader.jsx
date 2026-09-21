@@ -20,6 +20,7 @@ import VoucherWalletModal from "@/components/modals/VoucherWalletModal";
 import { getUser, clearAuth } from "@/lib/auth";
 import { getLang } from "@/lib/prefs";
 import { t } from "@/lib/i18n";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import "./Header.css";
 
 export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
@@ -64,7 +65,7 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
     if (pathname.includes("/customer/dashboard")) return { parent: t(lang, "greeting"), page: t(lang, "myCollection") };
     if (pathname.includes("/customer/orders")) return { parent: t(lang, "greeting"), page: t(lang, "myOrders") };
     if (pathname.includes("/shop")) return { parent: "VinaTap", page: t(lang, "nfcStore") };
-    return { parent: "VinaTap", page: "Trang chủ" };
+    return { parent: "VinaTap", page: t(lang, "homeNavHome") };
   };
 
   const breadcrumb = getBreadcrumb();
@@ -76,14 +77,14 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
           type="button"
           className="header-btn-hamburger"
           onClick={onToggleDrawer}
-          title={isDrawerOpen ? "Đóng Menu" : "Mở Menu"}
+          title={isDrawerOpen ? t(lang, "close") : "Menu"}
         >
           {isDrawerOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
         <Logo
           className="header-logo-brand"
-          href="/customer/dashboard"
+          href="/"
         />
 
         <div className="header-breadcrumb-divider">/</div>
@@ -95,6 +96,8 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
       </div>
 
       <div className="header-region-right">
+        <LanguageSwitch variant="header" />
+
         <Link href="/shop" className="btn-header-shop">
           <ShoppingBag size={15} />
           <span>{t(lang, "shop")}</span>

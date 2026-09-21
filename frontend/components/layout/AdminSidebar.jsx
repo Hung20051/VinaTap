@@ -43,42 +43,42 @@ export default function AdminSidebar({
   const adminSections = [
     {
       id: "overview",
-      title: "Tổng quan & Báo cáo",
+      title: t(lang, "adminSecOverview"),
       icon: BarChart3,
       items: [
-        { href: "/admin/dashboard", icon: LayoutDashboard, label: "Tổng quan" },
-        { href: "/admin/revenue", icon: DollarSign, label: "Doanh thu" },
-        { href: "/admin/analytics", icon: TrendingUp, label: "Thống kê truy cập" },
+        { href: "/admin/dashboard", icon: LayoutDashboard, label: t(lang, "adminOverview") },
+        { href: "/admin/revenue", icon: DollarSign, label: t(lang, "adminRevenue") },
+        { href: "/admin/analytics", icon: TrendingUp, label: t(lang, "adminTrafficStats") },
       ],
     },
     {
       id: "sales",
-      title: "Bán hàng & Kho thẻ",
+      title: t(lang, "adminSecSales"),
       icon: Package,
       items: [
-        { href: "/admin/products", icon: Package, label: "Sản phẩm" },
-        { href: "/admin/vouchers", icon: Ticket, label: "Vouchers" },
-        { href: "/admin/nfc-cards", icon: CreditCard, label: "Mã thẻ NFC" },
+        { href: "/admin/products", icon: Package, label: t(lang, "adminProductsShipping") },
+        { href: "/admin/vouchers", icon: Ticket, label: t(lang, "vouchers") },
+        { href: "/admin/nfc-cards", icon: CreditCard, label: t(lang, "adminNfcCards") },
       ],
     },
     {
       id: "content",
-      title: "Dữ liệu & Du lịch",
+      title: t(lang, "adminSecContent"),
       icon: MapPin,
       items: [
-        { href: "/admin/provinces", icon: MapPin, label: "Tỉnh thành" },
-        { href: "/admin/albums", icon: Images, label: "Albums ảnh" },
-        { href: "/admin/stickers", icon: Sticker, label: "Stickers" },
+        { href: "/admin/provinces", icon: MapPin, label: t(lang, "adminProvinces") },
+        { href: "/admin/albums", icon: Images, label: t(lang, "adminAlbums") },
+        { href: "/admin/stickers", icon: Sticker, label: t(lang, "adminStickers") },
       ],
     },
     {
       id: "system",
-      title: "Quản trị & Hệ thống",
+      title: t(lang, "adminSecSystem"),
       icon: Settings,
       items: [
-        { href: "/admin/users", icon: Users, label: "Người dùng" },
-        { href: "/admin/notifications", icon: Bell, label: "Gửi thông báo" },
-        { href: "/admin/system-settings", icon: Settings, label: "Cài đặt" },
+        { href: "/admin/users", icon: Users, label: t(lang, "adminUsers") },
+        { href: "/admin/notifications", icon: Bell, label: t(lang, "adminNotifications") },
+        { href: "/admin/system-settings", icon: Settings, label: t(lang, "adminSystemSettings") },
       ],
     },
   ];
@@ -141,12 +141,12 @@ export default function AdminSidebar({
       {/* GitHub / Mobile App Slide Drawer */}
       <aside className={`app-sidebar-drawer ${isOpen ? "is-open" : ""}`}>
         <div className="app-sidebar__top">
-          <Logo className="app-sidebar__logo" href="/admin/dashboard" />
+          <Logo className="app-sidebar__logo" href="/" />
           <button
             type="button"
             className="app-sidebar__toggle"
             onClick={onClose}
-            title="Đóng menu"
+            title={t(lang, "close")}
           >
             <X size={20} />
           </button>
@@ -229,7 +229,7 @@ export default function AdminSidebar({
               <span className="app-avatar-name">
                 {mounted && user?.name ? user.name : "Admin"}
               </span>
-              <span className="app-avatar-role">Quản trị viên</span>
+              <span className="app-avatar-role">{t(lang, "adminRole")}</span>
             </div>
           </Link>
           {onLogout && (

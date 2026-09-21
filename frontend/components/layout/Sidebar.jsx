@@ -46,12 +46,12 @@ export default function Sidebar({
       {/* GitHub-style Off-canvas Slide Drawer */}
       <aside className={`app-sidebar-drawer ${isOpen ? "is-open" : ""}`}>
         <div className="app-sidebar__top">
-          <Logo className="app-sidebar__logo" href="/customer/dashboard" />
+          <Logo className="app-sidebar__logo" href="/" />
           <button
             type="button"
             className="app-sidebar__toggle"
             onClick={onClose}
-            title="Đóng Menu"
+            title={t(lang, "close")}
           >
             <X size={20} />
           </button>

@@ -1,0 +1,106 @@
+/* ============================================================
+   VinaTap — Language Switch (VI | EN) Component CSS
+   ============================================================ */
+
+.vt-lang-switch {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  padding: 3px 4px;
+  gap: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.vt-lang-switch:hover {
+  border-color: rgba(13, 148, 136, 0.4);
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.12);
+}
+
+.vt-lang-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+  line-height: 1.2;
+}
+
+.vt-lang-btn:hover {
+  color: #0f172a;
+}
+
+.vt-lang-btn.is-active {
+  background: var(--home-teal, #0d9488);
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.35);
+}
+
+.vt-lang-divider {
+  color: rgba(148, 163, 184, 0.5);
+  font-size: 0.75rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Variant: Navbar (trong suốt khi chưa scroll, ăn theo theme navbar) */
+.vt-lang-switch--navbar {
+  margin-right: 0.35rem;
+}
+
+/* Variant: Auth (kính mờ trên nền ảnh phong cảnh thác nước) */
+.vt-lang-switch--auth {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.vt-lang-switch--auth .vt-lang-btn {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.vt-lang-switch--auth .vt-lang-btn:hover {
+  color: #ffffff;
+}
+
+.vt-lang-switch--auth .vt-lang-btn.is-active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vt-lang-switch--auth .vt-lang-divider {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Variant: Header (Customer / Admin bar) */
+.vt-lang-switch--header {
+  margin-right: 0.25rem;
+  background: var(--bg-surface, #ffffff);
+  border-color: var(--border-color, rgba(0, 0, 0, 0.1));
+}
+
+[data-theme="dark"] .vt-lang-switch {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .vt-lang-btn {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .vt-lang-btn.is-active {
+  background: var(--home-teal, #0d9488);
+  color: #ffffff;
+}
