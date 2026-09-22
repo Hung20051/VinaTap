@@ -110,6 +110,7 @@ const tapCard = async (req, res) => {
         youtube_url: c.youtube_url,
         thumbnail_url: c.thumbnail_url,
         has_owner: !!c.owner_user_id,
+        owner_user_id: c.owner_user_id || null,
         owner_name: c.owner_name || null,
         album,
         albumMedia,

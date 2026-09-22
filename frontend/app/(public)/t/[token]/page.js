@@ -142,7 +142,11 @@ export default function TapPage() {
       }
 
       const me = getUser();
-      if (me && c.owner_name === me.name) {
+      const isOwner =
+        me &&
+        ((c.owner_user_id && me.id === c.owner_user_id) ||
+          (c.owner_name && me.name === c.owner_name));
+      if (isOwner) {
         setStatus("owned");
       } else {
         setStatus("claimed");
@@ -150,6 +154,37 @@ export default function TapPage() {
     } catch (err) {
       setStatus("error");
       setMsg(err.message || "Thẻ NFC không tồn tại hoặc đường dẫn không chính xác.");
+    }
+  };
+
+  const [creatingAlbum, setCreatingAlbum] = useState(false);
+
+  const handleCreateAlbum = async () => {
+    if (!isLoggedIn()) {
+      sessionStorage.setItem("pending_nfc_token", token);
+      router.push(`/auth?redirect=/t/${token}`);
+      return;
+    }
+    const targetCardId = card?.id;
+    if (!targetCardId) {
+      router.push("/customer/dashboard");
+      return;
+    }
+    setCreatingAlbum(true);
+    try {
+      const res = await albumAPI.create({ nfc_card_id: targetCardId });
+      const targetAlbum = res.album || res;
+      const targetSlug = targetAlbum?.share_code || targetAlbum?.id;
+      if (targetSlug) {
+        router.push(`/album/${targetSlug}`);
+      } else {
+        await loadCard();
+      }
+    } catch (err) {
+      console.error("handleCreateAlbum error:", err);
+      await loadCard();
+    } finally {
+      setCreatingAlbum(false);
     }
   };
 
@@ -486,13 +521,25 @@ export default function TapPage() {
                         <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Mảnh Ghép"}</span>
                       </button>
                     ) : status === "owned" ? (
-                      <Link
-                        href={album ? `/album/${album.share_code || album.id}` : "/customer/dashboard"}
-                        className="tap-btn-primary"
-                      >
-                        <Camera size={18} />
-                        <span>{album ? "Mở Album Kỷ Niệm Của Bạn" : "Tạo Album Kỷ Niệm Đầu Tiên"}</span>
-                      </Link>
+                      album ? (
+                        <Link
+                          href={`/album/${album.share_code || album.id}`}
+                          className="tap-btn-primary"
+                        >
+                          <Camera size={18} />
+                          <span>Mở Album Kỷ Niệm Của Bạn</span>
+                        </Link>
+                      ) : (
+                        <button
+                          type="button"
+                          className="tap-btn-primary"
+                          onClick={handleCreateAlbum}
+                          disabled={creatingAlbum}
+                        >
+                          <Camera size={18} />
+                          <span>{creatingAlbum ? "Đang khởi tạo album..." : "Tạo Album Kỷ Niệm Đầu Tiên"}</span>
+                        </button>
+                      )
                     ) : (
                       <button
                         type="button"
@@ -837,6 +884,24 @@ export default function TapPage() {
                 </div>
               )}
 
+              {status === "owned" && !album && (
+                <div className="tap-desktop-unclaimed-cta">
+                  <Camera size={40} style={{ color: "#2563eb" }} />
+                  <h3>Bắt Đầu Lưu Kỷ Niệm Tại {pName}!</h3>
+                  <p>Mảnh ghép này chưa có album. Hãy tạo album kỷ niệm đầu tiên để bắt đầu lưu giữ các bức ảnh &amp; video check-in đáng nhớ.</p>
+                  <button
+                    type="button"
+                    className="tap-btn-primary large"
+                    onClick={handleCreateAlbum}
+                    disabled={creatingAlbum}
+                    style={{ maxWidth: 320, margin: "0 auto" }}
+                  >
+                    <Camera size={18} />
+                    <span>{creatingAlbum ? "Đang khởi tạo album..." : "Tạo Album Kỷ Niệm Đầu Tiên"}</span>
+                  </button>
+                </div>
+              )}
+
               {status !== "unclaimed" && album && (
                 <div className="tap-desktop-album-wrap">
                   <div className="tap-desktop-album-top">
@@ -932,11 +997,16 @@ export default function TapPage() {
           )}
 
           {status === "owned" && !album && (
-            <Link href="/customer/dashboard" className="tap-smart-action-btn album">
+            <button
+              type="button"
+              className="tap-smart-action-btn album"
+              onClick={handleCreateAlbum}
+              disabled={creatingAlbum}
+            >
               <Camera size={18} />
-              <span>Tạo Album Kỷ Niệm Đầu Tiên</span>
+              <span>{creatingAlbum ? "Đang khởi tạo album..." : "Tạo Album Kỷ Niệm Đầu Tiên"}</span>
               <ArrowRight size={16} />
-            </Link>
+            </button>
           )}
 
           {status === "claimed" && !album && (
