@@ -12,6 +12,8 @@ import {
   AlertCircle,
   QrCode,
   Loader2,
+  ShieldAlert,
+  LogIn,
 } from "lucide-react";
 import { orderAPI, voucherAPI, shippingAPI, systemSettingAPI } from "@/lib/api";
 import { getUser } from "@/lib/auth";
@@ -265,6 +267,20 @@ export default function CheckoutModal({
     e.preventDefault();
     setErrorMsg("");
 
+    const currentUser = user || getUser();
+    if (!currentUser) {
+      setErrorMsg("Vui lòng đăng nhập tài khoản Khách hàng để tiếp tục đặt hàng.");
+      window.location.href = "/auth?redirect=/shop";
+      return;
+    }
+
+    if (currentUser.role === "admin") {
+      setErrorMsg(
+        "Tài khoản Quản trị viên (Admin) không thực hiện mua hàng. Vui lòng sử dụng tài khoản Khách hàng (Customer).",
+      );
+      return;
+    }
+
     if (!shippingInfo.name.trim()) {
       setErrorMsg("Vui lòng nhập họ và tên người nhận");
       return;
@@ -363,6 +379,31 @@ export default function CheckoutModal({
               <div className="checkout-error-banner is-warn">
                 <AlertCircle size={17} />
                 <span>Hệ thống VietQR đang bảo trì. Vui lòng chọn COD!</span>
+              </div>
+            )}
+
+            {user?.role === "admin" && (
+              <div className="checkout-admin-banner">
+                <ShieldAlert size={20} />
+                <div>
+                  <strong>Tài khoản Quản trị viên (Admin):</strong> Bạn đang đăng nhập bằng tài khoản Admin. Tính năng mua hàng chỉ dành riêng cho <strong>Khách hàng (Customer)</strong>.
+                </div>
+              </div>
+            )}
+
+            {!user && (
+              <div className="checkout-guest-banner">
+                <LogIn size={20} />
+                <div>
+                  <strong>Chưa đăng nhập:</strong> Vui lòng đăng nhập tài khoản Khách hàng để tiếp tục đặt hàng.
+                  <button
+                    type="button"
+                    className="btn-checkout-login-now"
+                    onClick={() => (window.location.href = "/auth?redirect=/shop")}
+                  >
+                    Đăng Nhập Ngay
+                  </button>
+                </div>
               </div>
             )}
 
@@ -542,10 +583,16 @@ export default function CheckoutModal({
                   className="btn-submit-order"
                   disabled={
                     submitting ||
+                    user?.role === "admin" ||
+                    !user ||
                     (paymentMethod === "vietqr" && (bankLoading || !bankConfig.accountNo))
                   }
                 >
-                  {submitting ? (
+                  {user?.role === "admin" ? (
+                    <span>Admin không thể đặt hàng (Dành cho Customer)</span>
+                  ) : !user ? (
+                    <span>Vui lòng đăng nhập để đặt hàng</span>
+                  ) : submitting ? (
                     <>
                       <Loader2 size={18} className="animate-spin" /> Đang Tạo Đơn Hàng...
                     </>

@@ -46,6 +46,13 @@ const isSpammingOrders = (userId) => {
 // 1. Tạo đơn hàng mới (Dành cho Khách Hàng)
 const createOrder = async (req, res) => {
   try {
+    if (req.user.role === "admin") {
+      return res.status(403).json({
+        message:
+          "Tài khoản Quản trị viên (Admin) không thực hiện mua hàng. Vui lòng sử dụng tài khoản Khách hàng (Customer).",
+      });
+    }
+
     const userId = req.user.id;
 
     // Chặn Spam Request / Postman Attack

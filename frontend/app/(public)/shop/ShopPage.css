@@ -678,3 +678,132 @@
   font-size: 0.82rem;
   cursor: pointer;
 }
+
+/* ─── ADMIN BANNER & NOTICES ───────────────────────────────── */
+.shop-admin-strip {
+  background: #fffbeb;
+  border-bottom: 1px solid #fef3c7;
+  padding: 0.65rem 1.25rem;
+}
+
+.shop-admin-strip-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #92400e;
+  line-height: 1.5;
+}
+
+.shop-admin-strip-icon {
+  color: #d97706;
+  flex-shrink: 0;
+}
+
+.shop-admin-strip-link {
+  color: #b45309;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.shop-admin-strip-link:hover {
+  color: #78350f;
+}
+
+/* Floating Admin Toast */
+.shop-admin-notice-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  max-width: 440px;
+  width: calc(100vw - 32px);
+  background: #ffffff;
+  border-left: 5px solid #d97706;
+  border-radius: 12px;
+  box-shadow: 0 14px 35px -8px rgba(0, 0, 0, 0.22), 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+  animation: slideInToast 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInToast {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.shop-admin-notice-toast-content {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.shop-admin-notice-toast-content .toast-icon {
+  color: #d97706;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.shop-admin-notice-toast-content .toast-text strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.shop-admin-notice-toast-content .toast-text p {
+  margin: 0;
+  font-size: 0.825rem;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.btn-toast-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-toast-close:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Admin Card Button Variations */
+.btn-shopee-buy--admin {
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%) !important;
+  box-shadow: 0 2px 6px rgba(71, 85, 105, 0.25) !important;
+  opacity: 0.92;
+}
+
+.btn-shopee-buy--admin:hover {
+  background: linear-gradient(135deg, #475569 0%, #334155 100%) !important;
+  transform: translateY(-1px);
+}
+
+.btn-shopee-cart--admin {
+  opacity: 0.85;
+}
+

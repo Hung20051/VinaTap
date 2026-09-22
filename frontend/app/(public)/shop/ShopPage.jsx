@@ -21,6 +21,8 @@ import {
   LogOut,
   ChevronDown,
   Package,
+  ShieldAlert,
+  X,
 } from "lucide-react";
 import Logo from "@/components/layout/Logo";
 import CheckoutModal from "@/components/modals/CheckoutModal";
@@ -37,6 +39,7 @@ export default function ShopPage() {
 
   const [user, setUser] = useState(null);
   const [userAdmin, setUserAdmin] = useState(false);
+  const [adminNotice, setAdminNotice] = useState("");
   const [lang, setLang] = useState("vi");
   const [cart, setCart] = useState([]);
   const [cartModalOpen, setCartModalOpen] = useState(false);
@@ -166,12 +169,26 @@ export default function ShopPage() {
       window.location.href = "/auth?redirect=/shop";
       return;
     }
+    if (user.role === "admin" || userAdmin) {
+      setAdminNotice(
+        "Tài khoản Quản trị viên (Admin) không thực hiện mua hàng. Vui lòng sử dụng tài khoản Khách hàng (Customer)."
+      );
+      setTimeout(() => setAdminNotice(""), 6000);
+      return;
+    }
     addToCart(product);
   };
 
   const handleBuyNow = (product) => {
     if (!user) {
       window.location.href = "/auth?redirect=/shop";
+      return;
+    }
+    if (user.role === "admin" || userAdmin) {
+      setAdminNotice(
+        "Tài khoản Quản trị viên (Admin) không thực hiện mua hàng. Vui lòng sử dụng tài khoản Khách hàng (Customer)."
+      );
+      setTimeout(() => setAdminNotice(""), 6000);
       return;
     }
     addToCart(product);
@@ -181,6 +198,13 @@ export default function ShopPage() {
   const handleOpenCart = () => {
     if (!user) {
       window.location.href = "/auth?redirect=/shop";
+      return;
+    }
+    if (user.role === "admin" || userAdmin) {
+      setAdminNotice(
+        "Tài khoản Quản trị viên (Admin) không thực hiện mua hàng. Vui lòng sử dụng tài khoản Khách hàng (Customer)."
+      );
+      setTimeout(() => setAdminNotice(""), 6000);
       return;
     }
     setCartModalOpen(true);
@@ -332,6 +356,41 @@ export default function ShopPage() {
         </div>
       </header>
 
+      {/* ─── ADMIN NOTICE STRIP ────────────────────────────────────── */}
+      {userAdmin && (
+        <div className="shop-admin-strip">
+          <div className="shop-admin-strip-inner">
+            <ShieldAlert size={18} className="shop-admin-strip-icon" />
+            <div className="shop-admin-strip-text">
+              <strong>Chế độ Quản trị viên (Admin):</strong> Bạn đang xem trước giao diện cửa hàng. Chức năng mua sắm & đặt đơn chỉ áp dụng cho tài khoản <strong>Khách hàng (Customer)</strong>. Quản trị viên quản lý tại{" "}
+              <Link href="/admin/products" className="shop-admin-strip-link">Quản lý Sản phẩm</Link> hoặc{" "}
+              <Link href="/admin/orders" className="shop-admin-strip-link">Quản lý Đơn hàng</Link>.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── FLOATING ADMIN NOTICE TOAST ───────────────────────────── */}
+      {adminNotice && (
+        <div className="shop-admin-notice-toast" role="alert">
+          <div className="shop-admin-notice-toast-content">
+            <ShieldAlert size={20} className="toast-icon" />
+            <div className="toast-text">
+              <strong>Thông báo quyền tài khoản</strong>
+              <p>{adminNotice}</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="btn-toast-close"
+            onClick={() => setAdminNotice("")}
+            aria-label="Đóng"
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
+
       {/* ─── 1. MODERN STORE HERO BANNER ─────────────────────────────── */}
       <div className="shop-modern-header">
         <div className="shop-header-inner">
@@ -431,19 +490,32 @@ export default function ShopPage() {
                   <div className="shopee-actions">
                     <button
                       type="button"
-                      className="btn-shopee-cart"
+                      className={`btn-shopee-cart ${userAdmin ? "btn-shopee-cart--admin" : ""}`}
                       onClick={() => handleAddToCart(p)}
-                      title="Thêm vào giỏ"
+                      title={
+                        userAdmin
+                          ? "Admin không thể mua hàng (Dành cho Customer)"
+                          : !user
+                          ? "Đăng nhập để thêm vào giỏ"
+                          : "Thêm vào giỏ"
+                      }
                     >
                       <ShoppingCart size={17} />
                     </button>
                     <button
                       type="button"
-                      className="btn-shopee-buy"
+                      className={`btn-shopee-buy ${userAdmin ? "btn-shopee-buy--admin" : ""}`}
                       onClick={() => handleBuyNow(p)}
+                      title={
+                        userAdmin
+                          ? "Admin không thể mua hàng (Dành cho Customer)"
+                          : !user
+                          ? "Đăng nhập để mua"
+                          : "Mua Ngay"
+                      }
                     >
-                      <span>Mua Ngay</span>
-                      <Zap size={14} />
+                      <span>{userAdmin ? "Dành cho Customer" : "Mua Ngay"}</span>
+                      {userAdmin ? <ShieldAlert size={14} /> : <Zap size={14} />}
                     </button>
                   </div>
                 </div>

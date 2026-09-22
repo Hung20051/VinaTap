@@ -1,6 +1,7 @@
 "use client";
 
-import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight } from "lucide-react";
+import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldAlert } from "lucide-react";
+import { getUser } from "@/lib/auth";
 import "./CartModal.css";
 
 export default function CartModal({
@@ -14,6 +15,9 @@ export default function CartModal({
   onProceedToCheckout,
 }) {
   if (!isOpen) return null;
+
+  const user = getUser();
+  const isAdmin = user?.role === "admin";
 
   const formatMoney = (amount) =>
     new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount);
@@ -117,21 +121,32 @@ export default function CartModal({
                   <strong className="cart-total-val">{formatMoney(subtotal)}</strong>
                 </div>
 
-                <button
-                  type="button"
-                  className="btn-cart-checkout"
-                  onClick={() => {
-                    if (onProceedToCheckout) {
-                      onProceedToCheckout();
-                    } else if (onCheckout) {
-                      if (onClose) onClose();
-                      onCheckout();
-                    }
-                  }}
-                >
-                  <span>Thanh Toán</span>
-                  <ArrowRight size={16} />
-                </button>
+                {isAdmin ? (
+                  <div className="cart-admin-lock-pill">
+                    <ShieldAlert size={14} />
+                    <span>Admin không thể mua hàng (Dành cho Customer)</span>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn-cart-checkout"
+                    onClick={() => {
+                      if (!user) {
+                        window.location.href = "/auth?redirect=/shop";
+                        return;
+                      }
+                      if (onProceedToCheckout) {
+                        onProceedToCheckout();
+                      } else if (onCheckout) {
+                        if (onClose) onClose();
+                        onCheckout();
+                      }
+                    }}
+                  >
+                    <span>Thanh Toán</span>
+                    <ArrowRight size={16} />
+                  </button>
+                )}
               </div>
             </div>
           </>
