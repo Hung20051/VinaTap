@@ -7,6 +7,7 @@ const {
   updateProduct,
   setProductActive,
   deleteProduct,
+  syncStandardPrices,
 } = require("../controllers/productController");
 const { protect } = require("../middleware/auth");
 const { requireRole } = require("../middleware/role");
@@ -18,9 +19,11 @@ router.get("/public", getAllProducts);
 router.use(protect, requireRole("admin"));
 
 router.get("/", getAllProducts);
+router.post("/sync-standard-prices", syncStandardPrices);
 router.post("/", createProduct);
 router.put("/:id", updateProduct);
 router.patch("/:id/active", setProductActive);
 router.delete("/:id", deleteProduct);
 
 module.exports = router;
+

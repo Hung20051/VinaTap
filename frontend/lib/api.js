@@ -402,6 +402,8 @@ export const productAPI = {
       body: JSON.stringify({ is_active }),
     }),
   delete: (id) => request(`/products/${id}`, { method: "DELETE" }),
+  syncStandardPrices: () =>
+    request("/products/sync-standard-prices", { method: "POST" }),
 };
 
 // ─── SHIPPING RULES (admin — phí giao hàng & freeship) ───────────

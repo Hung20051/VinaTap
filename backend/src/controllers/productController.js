@@ -91,10 +91,68 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+// POST /api/products/sync-standard-prices (Admin)
+const syncStandardPrices = async (req, res) => {
+  try {
+    const db = require("../config/db");
+
+    // 1. Cập nhật tất cả thẻ lẻ 34 tỉnh thành: 49.000đ (giá gốc 59.000đ)
+    await db.execute(
+      `UPDATE products 
+       SET price = 49000.00, original_price = 59000.00 
+       WHERE category = 'single'`
+    );
+
+    // 2. Cập nhật Combo 3 thẻ: 139.000đ (giá gốc 147.000đ)
+    await db.execute(
+      `UPDATE products 
+       SET price = 139000.00, original_price = 147000.00 
+       WHERE name LIKE '%Combo 3%'`
+    );
+
+    // 3. Cập nhật Combo 5 thẻ: 239.000đ (giá gốc 245.000đ)
+    await db.execute(
+      `UPDATE products 
+       SET price = 239000.00, original_price = 245000.00 
+       WHERE name LIKE '%Combo 5%'`
+    );
+
+    // 4. Cập nhật Trọn bộ 34 thẻ: 1.400.000đ (giá gốc 1.700.000đ)
+    await db.execute(
+      `UPDATE products 
+       SET price = 1400000.00, original_price = 1700000.00 
+       WHERE name LIKE '%Trọn Bộ 34%'`
+    );
+
+    // 5. Đảm bảo Combo 3 tồn tại trong hệ thống
+    const [c3] = await db.execute(
+      "SELECT id FROM products WHERE name LIKE '%Combo 3%' LIMIT 1"
+    );
+    if (c3.length === 0) {
+      await db.execute(
+        `INSERT INTO products (name, category, price, original_price, image, tag, description, is_active)
+         VALUES ('Combo 3 Thẻ NFC Du Lịch Tự Chọn', 'combo', 139000.00, 147000.00, 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&auto=format&fit=crop&q=60', 'Hot', 'Combo 3 thẻ NFC du lịch tự chọn tỉnh thành bất kỳ theo sở thích của bạn.', 1)`
+      );
+    }
+
+    const [rows] = await db.execute("SELECT id FROM products");
+    res.json({
+      message:
+        "Đã đồng bộ toàn bộ bảng giá chuẩn (1 thẻ: 49k, Combo 3: 139k, Combo 5: 239k, Bộ 34 thẻ: 1.400k) thành công!",
+      count: rows.length,
+    });
+  } catch (err) {
+    console.error("syncStandardPrices:", err);
+    res.status(500).json({ message: "Lỗi đồng bộ giá sản phẩm" });
+  }
+};
+
 module.exports = {
   getAllProducts,
   createProduct,
   updateProduct,
   setProductActive,
   deleteProduct,
+  syncStandardPrices,
 };
+

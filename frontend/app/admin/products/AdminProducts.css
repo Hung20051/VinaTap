@@ -33,6 +33,25 @@
   border-color: #c2410c;
 }
 
+.admin-prod-btn-sync {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #ea580c;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.admin-prod-btn-sync:hover {
+  background: #ea580c;
+  border-color: #ea580c;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+}
+
 .admin-prod-btn-reload {
   display: inline-flex;
   align-items: center;
@@ -846,6 +865,7 @@
     gap: 8px;
   }
 
+  .admin-prod-btn-sync,
   .admin-prod-btn-reload,
   .admin-prod-btn-create {
     flex: 1;

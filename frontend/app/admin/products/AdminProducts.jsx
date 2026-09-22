@@ -15,6 +15,7 @@ import {
   ImageIcon,
   RefreshCw,
   AlertTriangle,
+  Zap,
 } from "lucide-react";
 import { productAPI, shippingAPI, provinceAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
@@ -38,6 +39,7 @@ export default function AdminProducts() {
   });
   const [loading, setLoading] = useState(true);
   const [savingShip, setSavingShip] = useState(false);
+  const [syncingPrices, setSyncingPrices] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [toast, setToast] = useState(null);
 
@@ -228,6 +230,29 @@ export default function AdminProducts() {
     });
   };
 
+  const handleSyncPrices = () => {
+    setConfirmDialog({
+      title: "⚡ Xác Nhận Đồng Bộ Toàn Bộ Bảng Giá Chuẩn",
+      message:
+        "Bạn có chắc chắn muốn đồng bộ toàn bộ bảng giá sản phẩm theo chính sách giá thống nhất của VinaTap?\n\n• 1 Thẻ NFC lẻ (34 tỉnh thành): 49.000đ (Gạch giá: 59.000đ)\n• Combo 3 thẻ tự chọn: 139.000đ (Gạch giá: 147.000đ)\n• Combo 5 thẻ (Bắc / Trung / Nam): 239.000đ (Gạch giá: 245.000đ)\n• Trọn bộ 34 thẻ toàn quốc: 1.400.000đ (Gạch giá: 1.700.000đ)",
+      confirmText: "Đồng Bộ Giá Ngay",
+      confirmBg: "#ea580c",
+      onConfirm: async () => {
+        setSyncingPrices(true);
+        try {
+          const res = await productAPI.syncStandardPrices();
+          showToast(res?.message || "⚡ Đã đồng bộ bảng giá chuẩn thành công!");
+          await loadData();
+        } catch (err) {
+          showToast(err.message || "Lỗi đồng bộ giá", "error");
+        } finally {
+          setSyncingPrices(false);
+          setConfirmDialog(null);
+        }
+      },
+    });
+  };
+
   return (
     <div className="admin-prod-container">
       {toast && (
@@ -246,6 +271,14 @@ export default function AdminProducts() {
           </p>
         </div>
         <div className="admin-prod-header__actions">
+          <button
+            className="btn btn-outline admin-prod-btn-sync"
+            onClick={handleSyncPrices}
+            disabled={syncingPrices || loading}
+            title="Đồng bộ lại toàn bộ bảng giá: 1 thẻ 49k, Combo 3 thẻ 139k, Combo 5 thẻ 239k"
+          >
+            <Zap size={15} /> <span>{syncingPrices ? "Đang đồng bộ..." : "Đồng Bộ Giá Chuẩn"}</span>
+          </button>
           <button className="btn btn-ghost admin-prod-btn-reload" onClick={loadData} disabled={loading}>
             <RefreshCw size={15} /> <span>Tải lại</span>
           </button>

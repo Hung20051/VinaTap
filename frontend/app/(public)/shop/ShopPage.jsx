@@ -102,11 +102,7 @@ export default function ShopPage() {
     name: p.name,
     price: Number(p.price),
     originalPrice: Number(p.original_price || 0),
-    tag:
-      p.tag ||
-      (Number(p.price) <= 5000
-        ? `TEST GIÁ ${Number(p.price).toLocaleString("vi-VN")}Đ 🔥`
-        : "HOT SELLER 🔥"),
+    tag: p.tag || "BÁN CHẠY 🔥",
     description: p.description || "Mảnh ghép NFC kỷ niệm du lịch VinaTap.",
     image:
       p.image ||
