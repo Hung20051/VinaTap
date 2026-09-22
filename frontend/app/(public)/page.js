@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import {
@@ -170,6 +170,7 @@ export default function HomePage() {
   const [lang, setLang] = useState("vi");
   const [provinces, setProvinces] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [provinceError, setProvinceError] = useState(false);
   const [search, setSearch] = useState("");
   const [region, setRegion] = useState("all");
   const [user, setUser] = useState(null);
@@ -181,6 +182,34 @@ export default function HomePage() {
   const [faqMessages, setFaqMessages] = useState([]);
   const faqChatContainerRef = useRef(null);
   const router = useRouter();
+
+  const loadProvincesData = useCallback(() => {
+    setLoading(true);
+    setProvinceError(false);
+    provinceAPI
+      .getAll()
+      .then((d) => {
+        const list = d?.provinces || [];
+        setProvinces(list);
+        if (list.length > 0) {
+          try {
+            sessionStorage.setItem("vinatap_cached_provinces", JSON.stringify(list));
+          } catch {}
+        }
+      })
+      .catch((err) => {
+        console.error("Lỗi tải tỉnh thành:", err);
+        try {
+          const cached = sessionStorage.getItem("vinatap_cached_provinces");
+          if (cached) {
+            setProvinces(JSON.parse(cached));
+            return;
+          }
+        } catch {}
+        setProvinceError(true);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     if (faqMessages.length > 1 && faqChatContainerRef.current) {
@@ -228,11 +257,7 @@ export default function HomePage() {
   useEffect(() => {
     setUser(getUser());
     setCheckingAuth(false);
-    provinceAPI
-      .getAll()
-      .then((d) => setProvinces(d?.provinces || []))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+    loadProvincesData();
 
     const handleUserUpdated = (e) => setUser(e.detail);
     window.addEventListener("vinatap:user-updated", handleUserUpdated);
@@ -879,6 +904,38 @@ export default function HomePage() {
             {loading ? (
               <div className="home-provinces__loading">
                 <div className="spinner" />
+              </div>
+            ) : provinceError && !provinces.length ? (
+              <div
+                className="home-provinces__empty"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  padding: "2.5rem 1rem",
+                }}
+              >
+                <p style={{ color: "var(--color-text-secondary, #666)", margin: 0, fontSize: "1rem" }}>
+                  {lang === "vi"
+                    ? "Không thể kết nối đến máy chủ Backend để tải danh sách tỉnh thành."
+                    : "Unable to connect to Backend server to load provinces."}
+                </p>
+                <button
+                  type="button"
+                  onClick={loadProvincesData}
+                  className="home-provinces__region-btn is-active"
+                  style={{
+                    cursor: "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.4rem",
+                    padding: "0.5rem 1.25rem",
+                  }}
+                >
+                  <RefreshCw size={15} />
+                  {lang === "vi" ? "Thử lại kết nối" : "Retry connection"}
+                </button>
               </div>
             ) : !filtered.length ? (
               <p className="home-provinces__empty">

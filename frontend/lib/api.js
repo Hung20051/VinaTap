@@ -36,8 +36,6 @@ const request = async (endpoint, options = {}) => {
   const token = getToken();
   const headers = {
     "Content-Type": "application/json",
-    "Cache-Control": "no-cache",
-    Pragma: "no-cache",
     ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
