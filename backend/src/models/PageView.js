@@ -16,10 +16,14 @@ const PageView = {
     const isBot = BOT_REGEX.test(ua) ? 1 : 0; // Lọc bot ngầm an toàn
     const deviceType = MOBILE_REGEX.test(ua) ? "mobile" : "desktop";
 
-    // Trích xuất province_slug nếu path dạng /province/:slug
+    // Trích xuất province_slug nếu path dạng /province/:slug hoặc /provinces/:slug
     let slug = provinceSlug;
-    if (!slug && pagePath && pagePath.startsWith("/province/")) {
-      slug = pagePath.replace("/province/", "").split("?")[0].split("#")[0];
+    if (!slug && pagePath) {
+      if (pagePath.startsWith("/province/")) {
+        slug = pagePath.replace("/province/", "").split("?")[0].split("#")[0].replace(/\/$/, "");
+      } else if (pagePath.startsWith("/provinces/")) {
+        slug = pagePath.replace("/provinces/", "").split("?")[0].split("#")[0].replace(/\/$/, "");
+      }
     }
 
     const [result] = await db.execute(
@@ -115,10 +119,11 @@ const PageView = {
     // 7. Top các tỉnh thành được xem nhiều lượt nhất
     try {
       const [res] = await db.execute(
-        `SELECT pv.province_slug, COUNT(*) AS view_count
+        `SELECT pv.province_slug, COALESCE(pr.name, pv.province_slug) AS province_name, COUNT(*) AS view_count
          FROM page_views pv
+         LEFT JOIN provinces pr ON (pv.province_slug = pr.slug)
          ${whereClause ? `${whereClause} AND` : "WHERE"} pv.province_slug IS NOT NULL AND pv.province_slug != ''
-         GROUP BY pv.province_slug
+         GROUP BY pv.province_slug, COALESCE(pr.name, pv.province_slug)
          ORDER BY view_count DESC
          LIMIT 10`,
       );
@@ -127,13 +132,14 @@ const PageView = {
       console.error("PageView q7 error:", e.message);
     }
 
-    // 8. Nhật ký 15 lượt xem người dùng mới nhất
+    // 8. Nhật ký 20 lượt xem người dùng mới nhất
     try {
       const [res] = await db.execute(
-        `SELECT pv.id, pv.page_path, pv.province_slug, pv.ip_address, pv.device_type, pv.created_at
+        `SELECT pv.id, pv.page_path, pv.province_slug, COALESCE(pr.name, pv.province_slug) AS province_name, pv.ip_address, pv.device_type, pv.created_at
          FROM page_views pv
+         LEFT JOIN provinces pr ON (pv.province_slug = pr.slug)
          ORDER BY pv.created_at DESC
-         LIMIT 15`,
+         LIMIT 20`,
       );
       recentViewsRows = res || [];
     } catch (e) {

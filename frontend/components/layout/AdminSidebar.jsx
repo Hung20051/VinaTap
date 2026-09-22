@@ -83,10 +83,20 @@ export default function AdminSidebar({
     },
   ];
 
+  // Helper kiểm tra route đang kích hoạt (hỗ trợ cả subroutes như /admin/orders/:id, /admin/provinces/:slug)
+  const isItemActive = (href) => {
+    if (!pathname) return false;
+    if (pathname === href) return true;
+    if (href !== "/admin/dashboard" && href !== "/admin" && pathname.startsWith(href)) {
+      return true;
+    }
+    return false;
+  };
+
   // Tự động mở nhóm chứa trang hiện tại
   const findActiveSectionId = () => {
     for (const section of adminSections) {
-      if (section.items.some((item) => item.href === pathname)) {
+      if (section.items.some((item) => isItemActive(item.href))) {
         return section.id;
       }
     }
@@ -157,7 +167,7 @@ export default function AdminSidebar({
             const isExpanded = !!openSections[section.id];
             const SectionIcon = section.icon;
             const hasActiveChild = section.items.some(
-              (item) => item.href === pathname,
+              (item) => isItemActive(item.href),
             );
 
             return (
@@ -188,7 +198,7 @@ export default function AdminSidebar({
                   <div className="app-accordion-body">
                     {section.items.map((item) => {
                       const ItemIcon = item.icon;
-                      const isActive = pathname === item.href;
+                      const isActive = isItemActive(item.href);
                       return (
                         <Link
                           key={item.href}

@@ -49,10 +49,12 @@ export default function TrafficTracker() {
       return;
     }
 
-    // Trích xuất province_slug nếu path dạng /province/:slug
+    // Trích xuất province_slug nếu path dạng /province/:slug hoặc /provinces/:slug
     let provinceSlug = null;
     if (pathname.startsWith("/province/")) {
-      provinceSlug = pathname.replace("/province/", "").split("?")[0].split("#")[0];
+      provinceSlug = pathname.replace("/province/", "").split("?")[0].split("#")[0].replace(/\/$/, "");
+    } else if (pathname.startsWith("/provinces/")) {
+      provinceSlug = pathname.replace("/provinces/", "").split("?")[0].split("#")[0].replace(/\/$/, "");
     }
 
     analyticsAPI.track(pathname, provinceSlug).catch(() => {});
