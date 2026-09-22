@@ -1898,7 +1898,7 @@ export default function AdminRevenue() {
                       type="number"
                       required
                       min="0"
-                      placeholder="150000"
+                      placeholder="49000"
                       className="admin-rev-form-input price-input"
                       value={form.unit_price ?? ""}
                       onChange={(e) =>

@@ -23,8 +23,8 @@ import "./AdminProducts.css";
 const emptyForm = () => ({
   name: "",
   category: "single",
-  price: 150000,
-  original_price: 180000,
+  price: 49000,
+  original_price: 59000,
   image: "",
   tag: "SIÊU ƯU ĐÃI 🔥",
   description: "",
@@ -578,7 +578,7 @@ export default function AdminProducts() {
                       type="number"
                       required
                       min="0"
-                      placeholder="150000"
+                      placeholder="49000"
                       className="admin-prod-form-input price-input"
                       value={form.price}
                       onChange={(e) => setForm({ ...form, price: e.target.value })}

@@ -220,7 +220,7 @@ export default function CheckoutModal({
 
   // Tính nhẩm xem trước tổng tiền ở Frontend (Backend vẫn sẽ kiểm tra lại 100%)
   const subtotal = checkoutItems.reduce(
-    (sum, item) => sum + (item.price || 150000) * (item.quantity || 1),
+    (sum, item) => sum + (item.price || 49000) * (item.quantity || 1),
     0,
   );
 

@@ -492,7 +492,7 @@ export default function HomePage() {
               {[
                 {
                   name: t(lang, "pricingTier1Name"),
-                  price: "50.000đ",
+                  price: "49.000đ",
                   desc: t(lang, "pricingTier1Desc"),
                   features: [
                     t(lang, "pricingTier1F1"),
@@ -503,7 +503,7 @@ export default function HomePage() {
                 },
                 {
                   name: t(lang, "pricingTier2Name"),
-                  price: "220.000đ",
+                  price: "139.000đ",
                   desc: t(lang, "pricingTier2Desc"),
                   features: [
                     t(lang, "pricingTier2F1"),
@@ -514,7 +514,7 @@ export default function HomePage() {
                 },
                 {
                   name: t(lang, "pricingTier3Name"),
-                  price: "1.400.000đ",
+                  price: "239.000đ",
                   desc: t(lang, "pricingTier3Desc"),
                   features: [
                     t(lang, "pricingTier3F1"),
@@ -546,7 +546,7 @@ export default function HomePage() {
                       </div>
                     ))}
                   </div>
-                  <Link href="/activate" className="home-pricing__cta">
+                  <Link href="/shop" className="home-pricing__cta">
                     {t(lang, "pricingChooseBtn")}
                   </Link>
                 </div>
