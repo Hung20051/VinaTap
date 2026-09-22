@@ -221,9 +221,9 @@ export const dict = {
     faqTitle: "Những điều bạn cần biết",
     faqBotName: "Trợ lý VinaTap",
     faqBotStatus: "Đang sẵn sàng hỗ trợ",
-    faqBotGreeting: "Chào bạn! Mình có thể giải đáp nhanh các câu hỏi về mảnh ghép NFC, album và chuyển nhượng thẻ.",
-    faqPlaceholder: "Nhập câu hỏi của bạn...",
-    faqNoAnswer: "Mình chưa tìm được câu trả lời phù hợp. Bạn có thể thử hỏi về cách hoạt động NFC, quyền riêng tư album, chuyển nhượng hoặc bảo hành thẻ.",
+    faqBotGreeting: "Chào bạn! Mình là Trợ lý VinaTap. Mình có thể giải đáp chi tiết về giá thẻ & combo, cách đặt mua, công nghệ NFC, album kỷ niệm và bảo hành.",
+    faqPlaceholder: "Hỏi về giá thẻ, combo, cách mua, NFC, bảo hành...",
+    faqNoAnswer: "Mình có thể hỗ trợ bạn về giá thẻ (1 thẻ 49k, combo 3 thẻ 139k, 5 thẻ 239k), cách thức đặt mua, công nghệ chạm NFC hoặc bảo hành thẻ. Bạn hãy thử chọn câu hỏi nhanh bên trên hoặc nhập từ khóa nhé!",
 
     // Footer
     footerDesc: "Bản đồ du lịch NFC Việt Nam — sưu tầm, khám phá, lưu giữ kỷ niệm từng chuyến đi.",
@@ -553,9 +553,9 @@ export const dict = {
     faqTitle: "Things You Need To Know",
     faqBotName: "VinaTap Assistant",
     faqBotStatus: "Ready to help",
-    faqBotGreeting: "Hello! I can assist you with questions about NFC tiles, albums, and card transfers.",
-    faqPlaceholder: "Ask a question...",
-    faqNoAnswer: "I could not find an exact answer. Feel free to ask about NFC functionality, privacy, transfers, or card warranties.",
+    faqBotGreeting: "Hello! I am VinaTap Assistant. I can help answer questions about card prices & combos, ordering, NFC technology, photo albums, and warranty.",
+    faqPlaceholder: "Ask about card prices, combos, ordering, NFC, warranty...",
+    faqNoAnswer: "I can help with card prices (1 card 49k, combo 3 cards 139k, 5 cards 239k), ordering instructions, NFC tap technology, or warranty. Please try one of the quick suggestions above or type your question!",
 
     // Footer
     footerDesc: "Vietnam Smart NFC Travel Map — collect, explore, and preserve memories from every trip.",

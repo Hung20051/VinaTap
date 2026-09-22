@@ -52,46 +52,106 @@ const REGION_LABEL = {
 const FAQ_DATA = {
   vi: [
     {
-      q: "Mảnh ghép NFC hoạt động ra sao?",
-      a: "Mỗi mảnh NFC có gắn 1 chip thông minh bên trong, đại diện cho 1 tỉnh thành. Chỉ cần chạm mặt sau điện thoại vào mảnh NFC, album của tỉnh đó sẽ mở ngay trên trình duyệt — không cần tải app, không cần quét mã.",
+      q: "Giá thẻ và các gói combo bao nhiêu?",
+      category: "pricing",
+      a: "Bảng giá chính thức của thẻ NFC VinaTap:\n• 1 thẻ lẻ (tỉnh thành bất kỳ): 49.000đ / thẻ.\n• Combo 3 thẻ tự chọn: 139.000đ (tiết kiệm so với mua lẻ, rất được yêu thích).\n• Combo 5 thẻ (bộ 5 tỉnh): 239.000đ (ưu đãi theo gói).\n• Trọn bộ 34 thẻ toàn quốc: 1.400.000đ (kèm hộp quà kỷ niệm cao cấp).\nMỗi thẻ đều có quyền kích hoạt và lưu trữ album ảnh AI trọn đời. Bạn có thể ghé mục 'Sản phẩm' trên thanh menu để đặt mua ngay nhé!",
     },
     {
-      q: "Ai là người tạo album cho mảnh ghép?",
-      a: "Người đầu tiên kích hoạt (chạm hoặc nhập serial dự phòng) sẽ trở thành chủ mảnh ghép đó. Bạn có thể tự đặt tên album, viết mô tả và tải ảnh lên ngay sau khi kích hoạt.",
+      q: "Cách thức đặt mua và thanh toán ra sao?",
+      category: "order",
+      a: "Bạn chỉ cần vào mục 'Sản phẩm' trên thanh menu, chọn thẻ lẻ tỉnh thành hoặc combo mong muốn rồi bấm 'Mua ngay'.\nVinaTap hỗ trợ 2 hình thức thanh toán an toàn:\n1. Quét mã QR PayOS tự động qua tài khoản ngân hàng / ví điện tử.\n2. Thanh toán tiền mặt khi nhận hàng (COD).",
     },
     {
-      q: "Nội dung album có riêng tư không?",
-      a: "Bạn tự quyết định. Đặt album ở chế độ riêng tư thì chỉ bạn (và người bạn chia sẻ quyền xem) mới truy cập được. Đặt công khai thì bất kỳ ai chạm vào mảnh ghép cũng xem được album.",
+      q: "Phí ship và chính sách Freeship như thế nào?",
+      category: "shipping",
+      a: "Chính sách giao hàng của VinaTap:\n• Phí vận chuyển tiêu chuẩn toàn quốc: 30.000đ.\n• Miễn phí vận chuyển (Freeship): Tự động áp dụng cho đơn hàng từ 500.000đ trở lên.\nThời gian giao hàng từ 2 - 4 ngày làm việc trên toàn quốc.",
     },
     {
-      q: "Tôi có thể chuyển mảnh ghép cho người khác không?",
-      a: "Có. Vào trang quản lý mảnh ghép, chọn “Chuyển nhượng”, nhập email người nhận — họ xác nhận qua email là quyền sở hữu (và toàn bộ album) sẽ chuyển sang tài khoản của họ.",
+      q: "Mảnh ghép NFC hoạt động ra sao, có cần tải app không?",
+      category: "nfc",
+      a: "Mỗi mảnh NFC có gắn 1 chip thông minh NXP chuẩn ISO bên trong. Chỉ cần chạm nhẹ mặt sau điện thoại vào mảnh NFC, album ảnh của tỉnh đó sẽ mở ngay trên trình duyệt web.\n• Hoàn toàn không cần tải app.\n• Không cần quét mã QR.",
     },
     {
-      q: "Nếu chip NFC trên thẻ bị lỗi thì sao?",
-      a: "Mỗi thẻ đều có serial dự phòng in kèm — bạn vẫn kích hoạt và xem album bình thường bằng cách nhập serial thủ công. Nếu lỗi trong 30 ngày đầu, VinaTap đổi mới miễn phí.",
+      q: "Điện thoại nào có thể sử dụng được thẻ NFC?",
+      category: "device",
+      a: "Hầu hết smartphone hiện đại đều hỗ trợ:\n• iPhone: Từ iPhone 7 trở lên (đặc biệt iPhone Xr/Xs trở lên tự động nhận thẻ ngay).\n• Android: Mọi dòng máy Samsung, Xiaomi, Oppo, Pixel... có hỗ trợ NFC.\n• Nếu điện thoại không có NFC: Mỗi thẻ đều có mã Serial dự phòng in kèm để bạn nhập trên web và xem album bình thường.",
+    },
+    {
+      q: "Ai là người tạo album và kích hoạt thẻ?",
+      category: "album",
+      a: "Người đầu tiên chạm thẻ (hoặc nhập mã serial dự phòng) sẽ trở thành chủ nhân của mảnh ghép. Bạn có thể tự đặt tên album, tải lên ảnh, video kỷ niệm và viết nhật ký chuyến đi ngay sau khi kích hoạt.",
+    },
+    {
+      q: "Nội dung album ảnh có riêng tư không?",
+      category: "privacy",
+      a: "Bạn tự quyết định hoàn toàn:\n• Chế độ Riêng tư (mặc định): Chỉ bạn (và những người được bạn cấp quyền) mới có thể xem ảnh và video.\n• Chế độ Công khai: Bất kỳ ai chạm vào thẻ cũng có thể chiêm ngưỡng album hành trình của bạn.",
+    },
+    {
+      q: "Tôi có thể tặng hoặc chuyển nhượng thẻ không?",
+      category: "transfer",
+      a: "Có ạ! Trong trang quản lý thẻ, bạn chỉ cần chọn 'Chuyển nhượng', nhập email người nhận. Khi họ xác nhận qua email, toàn bộ quyền sở hữu thẻ và album kỷ niệm sẽ được chuyển sang tài khoản của họ an toàn.",
+    },
+    {
+      q: "Chính sách bảo hành và đổi trả thế nào?",
+      category: "warranty",
+      a: "VinaTap bảo hành chip chính hãng:\n• Đổi mới 1-1 miễn phí trong 30 ngày nếu chip NFC gặp lỗi kỹ thuật từ nhà sản xuất.\n• Thẻ được phủ lớp chống xước và chống nước bền bỉ.\n• Luôn có mã serial dự phòng in trên thẻ đảm bảo bạn không bao giờ mất quyền truy cập.",
+    },
+    {
+      q: "Dự án VinaTap là gì và có ý nghĩa gì?",
+      category: "about",
+      a: "VinaTap là dự án tiên phong số hóa di sản du lịch Việt Nam, kết hợp giữa mảnh ghép NFC 3D vật lý và nền tảng bản đồ du lịch số 34 tỉnh thành. VinaTap giúp bạn lưu giữ kỷ niệm thực tế của từng chuyến đi và truyền cảm hứng khám phá vẻ đẹp đất nước.",
     },
   ],
   en: [
     {
-      q: "How does the NFC tile work?",
-      a: "Each NFC tile embeds a smart chip representing a Vietnamese province. Simply tap the back of your smartphone to the tile, and that province album opens instantly in your web browser — no app download, no QR scanning required.",
+      q: "How much do the NFC cards and combos cost?",
+      category: "pricing",
+      a: "Official VinaTap Pricing:\n• Single Card (any province): 49,000 VND.\n• Combo 3 Cards: 139,000 VND (popular choice, saves compared to single).\n• Combo 5 Cards: 239,000 VND (package savings).\n• Full 34-Province Set: 1,400,000 VND (includes premium gift box).\nEach card includes lifetime AI album activation. Visit the 'Shop' section to order yours!",
     },
     {
-      q: "Who creates the album for the tile?",
-      a: "The first person to activate (via tap or backup serial) becomes the owner of that tile. You can name your album, write notes, and upload photos/videos immediately after activation.",
+      q: "How can I order and what payment methods are accepted?",
+      category: "order",
+      a: "Go to 'Shop' in the navigation bar, choose your favorite province cards or combos, and click 'Buy Now'.\nWe accept:\n1. Instant QR transfer via PayOS (all banks & e-wallets).\n2. Cash on Delivery (COD).",
+    },
+    {
+      q: "What are the shipping fees and Freeship policy?",
+      category: "shipping",
+      a: "VinaTap Shipping Policy:\n• Standard nationwide delivery fee: 30,000 VND.\n• Free Shipping (Freeship): Automatically applied for orders from 500,000 VND.\nDelivery time is typically 2-4 business days across Vietnam.",
+    },
+    {
+      q: "How does the NFC card work? Is an app required?",
+      category: "nfc",
+      a: "Each card embeds an ISO standard NXP smart NFC chip. Just tap the back of your smartphone to the card, and the province album opens directly in your mobile browser.\n• No app download required.\n• No QR scan needed.",
+    },
+    {
+      q: "Which smartphones are compatible with VinaTap NFC?",
+      category: "device",
+      a: "Most modern smartphones work seamlessly:\n• iPhone: iPhone 7 and above (iPhone Xr/Xs and newer read automatically without opening any app).\n• Android: Any Samsung, Xiaomi, Oppo, Pixel with NFC.\n• If your phone doesn't have NFC: Every card has a printed backup Serial Code to access your album on the web anytime.",
+    },
+    {
+      q: "Who activates and creates the photo album?",
+      category: "album",
+      a: "The first person to tap the card or enter the backup serial becomes the verified owner. You can name your album, upload photos/videos, and write travel memories immediately after activation.",
     },
     {
       q: "Is album content kept private?",
-      a: "You have full control. Set your album to private so only you and authorized friends can view it, or public so anyone who taps the tile can enjoy your travel journey.",
+      category: "privacy",
+      a: "You have 100% control:\n• Private mode (default): Only you and people you invite can view media.\n• Public mode: Anyone tapping the card can see your travel stories.\nAll photos are encrypted and securely stored in cloud servers.",
     },
     {
-      q: "Can I transfer tile ownership to another person?",
-      a: "Yes. In card management, select 'Transfer', enter the recipient's email address — once they confirm via email, full ownership and album access transfer to their account.",
+      q: "Can I gift or transfer card ownership to someone else?",
+      category: "transfer",
+      a: "Yes! In your card dashboard, select 'Transfer', enter the recipient's email address. Once they confirm via email, full card ownership and album access transfer safely to them.",
     },
     {
-      q: "What happens if the NFC chip is damaged or defective?",
-      a: "Every card includes a printed backup serial number — you can always activate and view your album by typing it manually. VinaTap provides free replacements for chip defects within the first 30 days.",
+      q: "What is the warranty and return policy?",
+      category: "warranty",
+      a: "VinaTap provides an official warranty:\n• Free 1-to-1 replacement within 30 days for any NFC chip manufacturing defect.\n• Scratch-resistant and waterproof physical cards.\n• Backup serial codes guarantee you never lose access.",
+    },
+    {
+      q: "What is the VinaTap project?",
+      category: "about",
+      a: "VinaTap is an innovative travel-tech project bridging physical NFC collection tiles with a digital travel heritage map across Vietnam's 34 provinces. It helps travelers preserve real trip memories and celebrate Vietnamese culture.",
     },
   ],
 };
@@ -107,7 +167,17 @@ export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
   const [faqInput, setFaqInput] = useState("");
   const [faqMessages, setFaqMessages] = useState([]);
+  const faqChatContainerRef = useRef(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (faqMessages.length > 1 && faqChatContainerRef.current) {
+      faqChatContainerRef.current.scrollTo({
+        top: faqChatContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [faqMessages]);
 
   useEffect(() => {
     const current = getLang();
@@ -224,26 +294,127 @@ export default function HomePage() {
   };
 
   const answerFaqQuestion = (question) => {
-    const list = FAQ_DATA[lang] || FAQ_DATA.vi;
-    const keywords = question
-      .toLowerCase()
-      .split(/[^\p{L}\p{N}]+/u)
-      .filter((word) => word.length > 1);
+    const isVi = lang === "vi";
+    const qLower = question.toLowerCase().trim();
 
-    const bestMatch = list
+    // 1. Kiểm tra trùng khớp câu hỏi mẫu trong FAQ_DATA
+    const list = FAQ_DATA[lang] || FAQ_DATA.vi;
+    const exactMatch = list.find(
+      (item) => item.q.toLowerCase() === qLower || qLower.includes(item.q.toLowerCase()),
+    );
+    if (exactMatch) return exactMatch.a;
+
+    // 2. Nhận diện ý định theo các chủ đề chính của dự án VinaTap (Intent Recognition)
+
+    // Chủ đề: Giá cả / Các gói combo / Chi phí
+    if (
+      /giá|bao nhiêu|nhiêu tiền|bao tiền|bảng giá|chi phí|combo|mua bao nhiêu|đắt|rẻ|tiền lẻ|price|pricing|cost|how much|tier|package/i.test(
+        qLower,
+      )
+    ) {
+      return isVi
+        ? "Bảng giá chính thức của thẻ NFC VinaTap:\n• 1 thẻ lẻ (tỉnh thành bất kỳ): 49.000đ / thẻ.\n• Combo 3 thẻ tự chọn: 139.000đ (tiết kiệm so với mua lẻ, rất được yêu thích).\n• Combo 5 thẻ (bộ 5 tỉnh): 239.000đ (ưu đãi theo gói).\n• Trọn bộ 34 thẻ toàn quốc: 1.400.000đ (kèm hộp quà kỷ niệm cao cấp).\nMỗi thẻ đều có quyền kích hoạt và lưu trữ album ảnh AI trọn đời. Bạn có thể ghé mục 'Sản phẩm' trên thanh menu để chọn thẻ và đặt mua ngay nhé!"
+        : "Here is the official VinaTap NFC card pricing:\n• Single Card (any province): 49,000 VND.\n• Combo 3 Cards: 139,000 VND (popular choice, saves compared to single).\n• Combo 5 Cards: 239,000 VND (package discount).\n• Complete 34-Province Set: 1,400,000 VND (includes premium gift box).\nAll cards come with lifetime AI album activation. You can visit the 'Shop' section in the menu to order now!";
+    }
+
+    // Chủ đề: Cách đặt mua / Shop / Mua ở đâu
+    if (/mua|đặt hàng|order|cửa hàng|shop|ở đâu|làm sao để mua|làm thế nào để mua|buy|purchase|where to buy/i.test(qLower)) {
+      return isVi
+        ? "Để đặt mua thẻ VinaTap, bạn làm theo 3 bước cực kỳ đơn giản:\n1. Bấm vào mục 'Sản phẩm' trên thanh điều hướng phía trên.\n2. Chọn thẻ tỉnh thành hoặc các gói Combo 3 thẻ (139k), Combo 5 thẻ (239k) bạn yêu thích rồi bấm 'Mua ngay'.\n3. Điền địa chỉ nhận hàng và chọn thanh toán qua mã QR PayOS hoặc thanh toán tiền mặt khi nhận hàng (COD) là hoàn tất ạ!"
+        : "To buy VinaTap cards, follow 3 easy steps:\n1. Click 'Shop' in the navigation bar.\n2. Select your desired province cards or 3-card (139k) / 5-card (239k) combos and click 'Buy Now'.\n3. Enter your delivery address and choose payment via PayOS QR or Cash on Delivery (COD)!";
+    }
+
+    // Chủ đề: Thanh toán / Chuyển khoản / PayOS / COD
+    if (/thanh toán|chuyển khoản|payos|cod|tiền mặt|ngân hàng|atm|quét mã|ví|payment|pay/i.test(qLower)) {
+      return isVi
+        ? "VinaTap hỗ trợ 2 hình thức thanh toán an toàn và tiện lợi:\n1. Chuyển khoản trực tuyến PayOS: Quét mã VietQR tự động xác nhận ngay tức thì, tương thích với mọi app ngân hàng và ví điện tử.\n2. Thanh toán khi nhận hàng (COD): Nhận hàng tận tay, kiểm tra thẻ rồi mới thanh toán tiền mặt cho bưu tá."
+        : "VinaTap supports 2 secure payment methods:\n1. Online QR Transfer via PayOS: Scan VietQR for instant automatic confirmation with all banks and e-wallets.\n2. Cash on Delivery (COD): Receive and inspect your physical cards before paying cash.";
+    }
+
+    // Chủ đề: Phí vận chuyển / Giao hàng / Freeship / Mất bao lâu
+    if (/ship|vận chuyển|giao hàng|phí ship|freeship|miễn phí ship|bao lâu|mấy ngày|delivery|shipping/i.test(qLower)) {
+      return isVi
+        ? "Chính sách giao hàng của VinaTap:\n• Phí vận chuyển tiêu chuẩn toàn quốc: 30.000đ.\n• Miễn phí vận chuyển (Freeship): Tự động áp dụng cho đơn hàng từ 500.000đ trở lên.\n• Thời gian giao hàng: Khoảng 2 - 4 ngày làm việc trên toàn quốc."
+        : "VinaTap Delivery Policy:\n• Standard nationwide shipping: 30,000 VND.\n• Free Shipping: Automatically applied for orders from 500,000 VND.\n• Delivery time: Usually 2 - 4 business days nationwide.";
+    }
+
+    // Chủ đề: Công nghệ NFC / Cách hoạt động / Có cần tải app không
+    if (/nfc|hoạt động|như thế nào|ra sao|cách dùng|sử dụng|cài app|tải app|quét mã|chạm thẻ|how it works/i.test(qLower)) {
+      return isVi
+        ? "Thẻ VinaTap sử dụng chip NFC chuẩn ISO NXP thông minh:\n• Bạn chỉ cần chạm nhẹ mặt sau điện thoại vào thẻ, album du lịch của tỉnh thành đó sẽ tự động mở ngay trên trình duyệt web điện thoại.\n• Hoàn toàn không cần tải app, không cần quét mã QR."
+        : "VinaTap uses smart ISO-certified NXP NFC chips:\n• Simply tap the back of your phone to the physical tile, and that province's travel album opens instantly in your mobile web browser.\n• No app download required and no QR scanning needed.";
+    }
+
+    // Chủ đề: Điện thoại tương thích / iPhone / Android / Máy không có NFC
+    if (/điện thoại|iphone|android|samsung|thiết bị|máy nào|hỗ trợ|không có nfc|tương thích|phone|device|compatible/i.test(qLower)) {
+      return isVi
+        ? "Hầu hết smartphone hiện nay đều tương thích hoàn hảo:\n• iPhone: Từ iPhone 7 trở lên (đặc biệt từ iPhone Xr/Xs trở lên tự động nhận thẻ ngay mà không cần thao tác gì thêm).\n• Android: Mọi điện thoại có trang bị NFC (Samsung, Xiaomi, Oppo, Pixel...).\n• Nếu máy không có NFC: Mỗi thẻ đều có mã Serial dự phòng in kèm — bạn chỉ cần nhập mã trên web là mở album bình thường!"
+        : "Most modern smartphones are fully compatible:\n• iPhone: iPhone 7 and above (iPhone Xr/Xs and newer read automatically in background).\n• Android: Any smartphone with NFC enabled (Samsung, Xiaomi, Oppo, etc.).\n• Phones without NFC: Every card includes a printed backup Serial Code so you can open the album on the web anytime!";
+    }
+
+    // Chủ đề: Kích hoạt thẻ / Tạo album / Đăng ảnh / Quản lý
+    if (/kích hoạt|activate|tạo album|up ảnh|đăng ảnh|lưu ảnh|tải ảnh|video|album|serial|nhập serial/i.test(qLower)) {
+      return isVi
+        ? "Quy trình kích hoạt và tạo album rất nhanh chóng:\n1. Chạm thẻ vào điện thoại lần đầu (hoặc nhập mã Serial in trên thẻ tại trang 'Kích hoạt').\n2. Đăng nhập để xác nhận quyền sở hữu thẻ.\n3. Bạn có thể tự do đặt tên album, tải lên các bức ảnh/video đẹp nhất, viết nhật ký hành trình để lưu giữ kỷ niệm du lịch trọn đời!"
+        : "Activating and creating an album takes under a minute:\n1. Tap the card to your phone for the first time (or enter the backup serial code on the 'Activate' page).\n2. Sign in to confirm ownership.\n3. Name your album, upload your travel photos/videos, write memories, and keep them alive forever on your map!";
+    }
+
+    // Chủ đề: Quyền riêng tư / Bảo mật / Ai xem được
+    if (/riêng tư|bảo mật|ai xem|công khai|lộ ảnh|private|public|privacy|security/i.test(qLower)) {
+      return isVi
+        ? "Bạn nắm toàn quyền kiểm soát album của mình:\n• Chế độ Riêng tư (mặc định): Chỉ bạn và những người được bạn cấp quyền mới xem được ảnh & video.\n• Chế độ Công khai: Bất kỳ ai chạm thẻ cũng có thể chiêm ngưỡng album của bạn.\nDữ liệu được mã hóa và lưu trữ an toàn trên nền tảng đám mây."
+        : "You have 100% control over your albums:\n• Private mode (default): Only you and authorized guests can view your media.\n• Public mode: Anyone tapping the physical card can see your travel stories.\nAll photos are securely encrypted and stored on cloud servers.";
+    }
+
+    // Chủ đề: Chuyển nhượng / Tặng thẻ
+    if (/chuyển nhượng|tặng|cho người khác|đổi chủ|sang tên|bán lại|transfer|gift/i.test(qLower)) {
+      return isVi
+        ? "Bạn hoàn toàn có thể tặng hoặc chuyển nhượng thẻ cho bạn bè:\n• Vào mục quản lý thẻ trong Dashboard, chọn 'Chuyển nhượng'.\n• Nhập email người nhận. Hệ thống sẽ gửi email xác nhận cho họ.\n• Khi người nhận bấm xác nhận, quyền sở hữu thẻ và album sẽ được chuyển sang tài khoản mới một cách an toàn."
+        : "You can easily gift or transfer card ownership:\n• Go to your card dashboard and click 'Transfer'.\n• Enter the recipient's email address.\n• Once they confirm via the email link, full card ownership and album access transfer securely to their account.";
+    }
+
+    // Chủ đề: Bảo hành / Đổi trả / Hỏng chip
+    if (/bảo hành|đổi trả|hỏng|lỗi|chip hỏng|1 đổi 1|chống nước|30 ngày|warranty|guarantee|defect/i.test(qLower)) {
+      return isVi
+        ? "Chính sách bảo hành chính hãng của VinaTap:\n• Đổi mới 1-1 miễn phí trong 30 ngày đầu nếu chip NFC gặp lỗi kỹ thuật từ nhà sản xuất.\n• Thẻ được chế tạo với vật liệu chống nước, chống xước cao cấp.\n• Mã serial dự phòng in trên thẻ đảm bảo bạn không bao giờ mất dữ liệu album dù thẻ có bị thất lạc."
+        : "Official VinaTap Warranty Policy:\n• Free 1-to-1 replacement within 30 days for any technical chip defect.\n• Waterproof and scratch-resistant build quality.\n• Backup serial codes guarantee your memories are never lost.";
+    }
+
+    // Chủ đề: Dự án VinaTap là gì / Ý nghĩa / Giới thiệu
+    if (/vinatap|dự án|là gì|giới thiệu|ý nghĩa|ý tưởng|sứ mệnh|mục đích|about|what is/i.test(qLower)) {
+      return isVi
+        ? "VinaTap là dự án công nghệ du lịch kết hợp giữa thẻ NFC vật lý thông minh và nền tảng bản đồ số hóa 34 tỉnh thành Việt Nam.\nMục tiêu của VinaTap là giúp mọi người lưu giữ kỷ niệm du lịch thực tế, biến hành trình khám phá đất nước thành bộ sưu tập di sản sống động và gắn kết bạn bè, gia đình."
+        : "VinaTap is an innovative travel-tech project that connects physical smart NFC tiles with an interactive digital travel map across Vietnam's 34 provinces.\nOur mission is to help travelers preserve authentic journey memories and celebrate the heritage and beauty of Vietnam.";
+    }
+
+    // Chủ đề: Chào hỏi
+    if (/chào|hi|hello|alo|ơi|bạn ơi|bot|hey/i.test(qLower)) {
+      return isVi
+        ? "Chào bạn! Mình là Trợ lý ảo của VinaTap. Mình có thể hỗ trợ bạn thông tin về giá thẻ (1 thẻ 49k, combo 3 thẻ 139k, 5 thẻ 239k), cách thức đặt mua, công nghệ chạm NFC hay chính sách bảo hành. Bạn cần mình giải đáp điều gì cứ nhắn nhé!"
+        : "Hello! I am VinaTap Assistant. I can help you with pricing (1 card 49k, combo 3 cards 139k, 5 cards 239k), ordering, NFC technology, or warranty. How can I help you today?";
+    }
+
+    // 3. Nếu không trúng intent cụ thể, tính điểm từ khóa khớp tốt nhất trong FAQ_DATA
+    const keywords = qLower.split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 1);
+    const scoredList = list
       .map((item) => ({
         item,
         score: keywords.reduce(
           (total, word) =>
             total +
-            (item.q.toLowerCase().includes(word) ? 2 : 0) +
+            (item.q.toLowerCase().includes(word) ? 3 : 0) +
             (item.a.toLowerCase().includes(word) ? 1 : 0),
           0,
         ),
       }))
-      .sort((a, b) => b.score - a.score)[0];
+      .sort((a, b) => b.score - a.score);
 
-    return bestMatch?.score ? bestMatch.item.a : t(lang, "faqNoAnswer");
+    if (scoredList[0]?.score >= 2) {
+      return scoredList[0].item.a;
+    }
+
+    // 4. Phản hồi gợi ý thông minh nếu chưa rõ câu hỏi
+    return t(lang, "faqNoAnswer");
   };
 
   const sendFaqQuestion = (question) => {
@@ -754,7 +925,11 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="home-faq-chat__messages" aria-live="polite">
+              <div
+                className="home-faq-chat__messages"
+                ref={faqChatContainerRef}
+                aria-live="polite"
+              >
                 {faqMessages.map((message, index) => (
                   <div
                     key={`${message.role}-${index}`}
@@ -766,7 +941,7 @@ export default function HomePage() {
               </div>
 
               <div className="home-faq-chat__suggestions">
-                {(FAQ_DATA[lang] || FAQ_DATA.vi).slice(0, 3).map((item) => (
+                {(FAQ_DATA[lang] || FAQ_DATA.vi).map((item) => (
                   <button
                     key={item.q}
                     type="button"
