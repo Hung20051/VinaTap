@@ -78,10 +78,7 @@ const Notification = {
   // Customer & Admin lấy danh sách thông báo dành cho mình
   async getForUser(userId, role) {
 
-    // Admin không nhận các thông báo quà tặng Voucher dành cho Khách Hàng
-    const promoFilter = role === "admin" ? "AND n.type != 'promo'" : "";
-
-    // 1. Lấy thông báo gửi cho @ALL (nhưng CHỈ lấy những thông báo gửi TỪ LÚC USER TẠO TÀI KHOẢN trở đi)
+    // 1. Lấy thông báo gửi cho @ALL (người dùng nhận thông báo trong vòng 30 ngày hoặc admin nhận tất cả)
     // 2. Lấy thông báo gửi trực tiếp qua notification_recipients
     const [rows] = await db.execute(
       `SELECT n.*,
@@ -93,9 +90,9 @@ const Notification = {
        LEFT JOIN users u ON u.id = n.created_by
        JOIN users cur_u ON cur_u.id = ?
        WHERE (
-         (n.recipient_type = 'all' AND n.created_at >= cur_u.created_at)
+         (n.recipient_type = 'all' AND (cur_u.role = 'admin' OR n.created_at >= DATE_SUB(cur_u.created_at, INTERVAL 30 DAY)))
          OR rec.user_id = ?
-       ) ${promoFilter}
+       )
        GROUP BY n.id
        ORDER BY n.created_at DESC
        LIMIT 30`,
