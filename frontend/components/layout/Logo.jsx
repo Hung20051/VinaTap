@@ -3,12 +3,13 @@ import Link from "next/link";
 
 export default function Logo({
   className = "navbar__logo",
-  size = 26,
+  size = 28,
   showText = true,
   style,
   onClick,
   href = "/",
 }) {
+  const width = Math.round(size * 1.38);
   return (
     <Link
       href={href}
@@ -20,12 +21,13 @@ export default function Logo({
       <Image
         src="/logo.png"
         alt="VinaTap"
-        width={size}
+        width={width}
         height={size}
         priority
         style={{
-          width: `${size}px`,
+          width: "auto",
           height: `${size}px`,
+          maxHeight: `${size}px`,
           objectFit: "contain",
           flexShrink: 0,
           display: "block",

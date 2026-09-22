@@ -143,13 +143,9 @@
   letter-spacing: -0.01em;
   color: var(--home-ink);
 }
-/* Logo hiển thị to & nét (ảnh tải về đúng độ phân giải cần dùng, không
-   phóng to bằng CSS transform vì sẽ bị mờ/vỡ nét). Dùng margin âm theo
-   chiều dọc để bù lại phần chiều cao tăng thêm, giữ navbar không bị giãn
-   cao ra. Nếu đổi size ảnh trong Logo.jsx, chỉnh margin ở đây cho khớp:
-   margin = -(size_mới - 40) / 2 */
 .home-navbar__logo img {
-  margin: -40px 0;
+  margin: 0;
+  object-fit: contain;
 }
 
 .home-navbar__logo-badge {
@@ -1143,7 +1139,7 @@
   font-size: 1.5rem;
 }
 .home-footer__brand-name img {
-  filter: brightness(0) invert(1);
+  object-fit: contain;
 }
 .home-footer__brand-icon {
   width: 30px;

@@ -65,9 +65,8 @@
 }
 
 .header-logo-brand img {
-  filter: brightness(0) invert(1);
-  width: 26px !important;
-  height: 26px !important;
+  width: auto !important;
+  height: 28px !important;
   object-fit: contain;
   display: block;
   flex-shrink: 0;

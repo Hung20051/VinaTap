@@ -273,7 +273,7 @@ export default function HomePage() {
         {/* ─── Navbar ─── */}
         <nav className={`home-navbar ${scrolled ? "is-scrolled" : ""}`}>
           <div className="container home-navbar__inner">
-            <Logo className="home-navbar__logo" size={65} />
+            <Logo className="home-navbar__logo" size={40} />
 
             <div className="home-navbar__links">
               <a href="#home" onClick={scrollToSection("home")}>
@@ -802,7 +802,7 @@ export default function HomePage() {
             <div>
               <Logo
                 className="home-footer__brand-name"
-                size={65}
+                size={38}
                 onClick={scrollToSection("home")}
               />
               <p className="home-footer__brand-desc">

@@ -108,7 +108,8 @@
   transition: opacity 0.2s;
 }
 .auth-brand__logo img {
-  filter: brightness(0) invert(1);
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
 }
 .auth-brand__logo span {
   font-family: "Kalam", cursive;

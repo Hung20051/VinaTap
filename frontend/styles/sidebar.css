@@ -54,7 +54,7 @@
   white-space: nowrap;
 }
 .app-sidebar__logo img {
-  filter: brightness(0) invert(1);
+  object-fit: contain;
 }
 .app-sidebar__logo span {
   font-family: "Plus Jakarta Sans", sans-serif;
