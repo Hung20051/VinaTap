@@ -640,9 +640,13 @@ export default function HomePage() {
                 {t(lang, "heroDesc")}
               </p>
               <div className="home-hero__cta-row">
-                <Link href="/activate" className="home-btn-teal">
+                <button
+                  type="button"
+                  className="home-btn-teal"
+                  onClick={(e) => e.preventDefault()}
+                >
                   {t(lang, "heroBtnActivate")}
-                </Link>
+                </button>
                 <a
                   href="#provinces"
                   onClick={scrollToSection("provinces")}
@@ -1196,7 +1200,7 @@ export default function HomePage() {
               title={t(lang, "footerProductCol")}
               links={[
                 { label: t(lang, "homeNavHome"), href: "/" },
-                { label: t(lang, "heroBtnActivate"), href: "/customer/activate" },
+                { label: t(lang, "heroBtnActivate"), href: "#" },
                 { label: t(lang, "dashboard"), href: "/customer/dashboard" },
                 { label: t(lang, "signIn"), href: "/auth" },
               ]}

@@ -488,12 +488,18 @@
   flex-wrap: wrap;
 }
 .home-btn-teal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--home-teal);
   color: #fff;
   font-weight: 700;
   padding: 0.9rem 1.9rem;
   border-radius: 999px;
   font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
   box-shadow: 0 10px 26px var(--home-glow);
   transition:
     transform 0.2s ease,
