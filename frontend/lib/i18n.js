@@ -207,14 +207,20 @@ export const dict = {
 
     // Policy
     policyEyebrow: "Chính sách",
-    policyTitle: "Cam kết với người dùng",
-    policy1Title: "Kích hoạt trong 1 năm",
-    policy1Desc: "Serial NFC có hiệu lực kích hoạt 12 tháng kể từ ngày mua.",
-    policy2Title: "Quyền riêng tư album",
-    policy2Desc: "Album mặc định công khai để xem, nhưng chỉ chủ album mới sửa/xóa được.",
-    policy3Title: "Bảo hành thẻ vật lý",
-    policy3Desc: "Đổi mới miễn phí nếu chip NFC lỗi trong 30 ngày đầu.",
-    policyDisclaimer: "* Nội dung chính sách tạm thời, cần đội ngũ pháp lý rà soát trước khi ra mắt chính thức.",
+    policyTitle: "Cam kết & Quyền lợi khách hàng",
+    policy1Title: "Bảo hành 1-1 trong 30 ngày",
+    policy1Desc: "Đổi mới miễn phí 100% nếu thẻ hoặc chip NFC gặp lỗi kỹ thuật từ nhà sản xuất trong vòng 30 ngày đầu.",
+    policy2Title: "Bảo mật & Quyền riêng tư",
+    policy2Desc: "Toàn quyền kiểm soát album riêng tư hoặc công khai. Mọi hình ảnh và video kỷ niệm được mã hóa lưu trữ an toàn trên đám mây.",
+    policy3Title: "Giao hàng & Freeship từ 500k",
+    policy3Desc: "Giao hàng tận nơi toàn quốc từ 2 - 4 ngày. Miễn phí vận chuyển tự động áp dụng cho đơn hàng từ 500.000đ.",
+    policy4Title: "Chuyển nhượng & Tặng thẻ",
+    policy4Desc: "Toàn quyền tặng hoặc chuyển nhượng quyền sở hữu thẻ và album kỷ niệm cho người thân qua email xác thực an toàn.",
+    policy5Title: "Thanh toán VietQR & COD",
+    policy5Desc: "Hỗ trợ quét mã VietQR tự động qua cổng PayOS minh bạch, hoặc kiểm tra hàng và thanh toán tiền mặt khi nhận hàng (COD).",
+    policy6Title: "Cam kết chất lượng di sản",
+    policy6Desc: "Thẻ vật lý chống nước, chống xước bền bỉ. Nội dung danh lam thắng cảnh 34 tỉnh thành được tra cứu và kiểm duyệt kỹ lưỡng.",
+    policyDisclaimer: "VinaTap cam kết đồng hành và bảo vệ tối đa quyền lợi của khách hàng trong suốt hành trình sưu tầm và khám phá di sản Việt Nam.",
 
     // FAQ
     faqEyebrow: "Hỏi đáp",
@@ -234,7 +240,7 @@ export const dict = {
     footerContact: "Liên hệ",
     footerTerms: "Điều khoản",
     footerPolicy: "Chính sách",
-    footerCopyright: "© 2025 VinaTap. Tất cả quyền được bảo lưu.",
+    footerCopyright: "© 2026 VinaTap. Tất cả quyền được bảo lưu.",
 
     // Auth
     authBrandTitle1: "Khám phá",
@@ -539,14 +545,20 @@ export const dict = {
 
     // Policy
     policyEyebrow: "Policies",
-    policyTitle: "Commitments to Users",
-    policy1Title: "1-Year Activation Window",
-    policy1Desc: "NFC serials remain valid for activation for 12 months from purchase date.",
-    policy2Title: "Album Privacy",
-    policy2Desc: "Albums are public to view by default, but only the owner can edit or delete content.",
-    policy3Title: "Physical Card Warranty",
-    policy3Desc: "Free replacement if the NFC chip has manufacturing defects within 30 days.",
-    policyDisclaimer: "* Preliminary policy terms, subject to final legal review before public launch.",
+    policyTitle: "Commitments & Customer Rights",
+    policy1Title: "30-Day 1-to-1 Warranty",
+    policy1Desc: "100% free replacement if the card or NFC chip has any technical defect within the first 30 days.",
+    policy2Title: "Privacy & Data Security",
+    policy2Desc: "Complete control over private or public albums. All travel photos and videos are securely encrypted in cloud storage.",
+    policy3Title: "Shipping & Free Delivery from 500k",
+    policy3Desc: "Nationwide delivery in 2-4 days. Free shipping is automatically applied for orders from 500,000 VND.",
+    policy4Title: "Card Transfer & Gifting",
+    policy4Desc: "Full ownership of cards and travel albums can be easily gifted or transferred via verified email.",
+    policy5Title: "Secure VietQR & COD Payment",
+    policy5Desc: "Supports transparent instant VietQR via PayOS gateway, or inspect cards and pay cash on delivery (COD).",
+    policy6Title: "Heritage Quality Guarantee",
+    policy6Desc: "Physical cards are waterproof and scratch-resistant. Cultural landmarks and regional travel information are thoroughly verified.",
+    policyDisclaimer: "VinaTap is dedicated to supporting and protecting our customers throughout your journey of collecting and exploring Vietnam's heritage.",
 
     // FAQ
     faqEyebrow: "FAQ",
@@ -566,7 +578,7 @@ export const dict = {
     footerContact: "Contact",
     footerTerms: "Terms",
     footerPolicy: "Policies",
-    footerCopyright: "© 2025 VinaTap. All rights reserved.",
+    footerCopyright: "© 2026 VinaTap. All rights reserved.",
 
     // Auth
     authBrandTitle1: "Discover",

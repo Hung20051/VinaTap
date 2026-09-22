@@ -92,11 +92,16 @@
   transition-delay: 0.21s;
 }
 .reveal.is-visible .home-about__icon-tile:nth-child(4),
+.reveal.is-visible .home-policy__card:nth-child(4),
 .reveal.is-visible .home-faq__item:nth-child(4) {
   transition-delay: 0.29s;
 }
+.reveal.is-visible .home-policy__card:nth-child(5),
 .reveal.is-visible .home-faq__item:nth-child(5) {
-  transition-delay: 0.37s;
+  transition-delay: 0.35s;
+}
+.reveal.is-visible .home-policy__card:nth-child(6) {
+  transition-delay: 0.41s;
 }
 @media (prefers-reduced-motion: reduce) {
   .reveal .home-about__icon-tile,
@@ -963,9 +968,9 @@
 }
 .home-policy__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
-  max-width: 900px;
+  max-width: 1040px;
   margin: 0 auto;
 }
 .home-policy__card {
@@ -1004,9 +1009,34 @@
 }
 .home-policy__disclaimer {
   text-align: center;
-  font-size: 0.78rem;
-  color: #b4b9c2;
-  margin-top: 2.2rem;
+  font-size: 0.84rem;
+  color: #94a3b8;
+  margin-top: 2rem;
+  font-weight: 500;
+}
+.home-policy__action {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+.home-policy__action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--home-teal-dark);
+  background: rgba(13, 148, 136, 0.08);
+  border: 1px solid rgba(13, 148, 136, 0.22);
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+.home-policy__action-link:hover {
+  background: var(--home-teal-dark);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);
 }
 
 /* ─── HỎI ĐÁP (FAQ ACCORDION) ─────────────────────────────── */

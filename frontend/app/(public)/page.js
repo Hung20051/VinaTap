@@ -24,6 +24,10 @@ import {
   Facebook,
   Youtube,
   Music2,
+  Truck,
+  Gift,
+  CreditCard,
+  ArrowRight,
 } from "lucide-react";
 import { provinceAPI } from "@/lib/api";
 import { isLoggedIn, getUser, clearAuth } from "@/lib/auth";
@@ -870,7 +874,7 @@ export default function HomePage() {
             <div className="home-policy__grid">
               {[
                 {
-                  icon: RefreshCw,
+                  icon: ShieldCheck,
                   title: t(lang, "policy1Title"),
                   desc: t(lang, "policy1Desc"),
                 },
@@ -880,9 +884,24 @@ export default function HomePage() {
                   desc: t(lang, "policy2Desc"),
                 },
                 {
-                  icon: Wrench,
+                  icon: Truck,
                   title: t(lang, "policy3Title"),
                   desc: t(lang, "policy3Desc"),
+                },
+                {
+                  icon: Gift,
+                  title: t(lang, "policy4Title"),
+                  desc: t(lang, "policy4Desc"),
+                },
+                {
+                  icon: CreditCard,
+                  title: t(lang, "policy5Title"),
+                  desc: t(lang, "policy5Desc"),
+                },
+                {
+                  icon: Sparkles,
+                  title: t(lang, "policy6Title"),
+                  desc: t(lang, "policy6Desc"),
                 },
               ].map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="home-policy__card">
@@ -897,6 +916,12 @@ export default function HomePage() {
             <p className="home-policy__disclaimer">
               {t(lang, "policyDisclaimer")}
             </p>
+            <div className="home-policy__action">
+              <Link href="/policy" className="home-policy__action-link">
+                <span>{lang === "vi" ? "Xem toàn bộ chính sách chi tiết" : "View full detailed policies"}</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
           </div>
         </RevealSection>
 
@@ -1032,10 +1057,10 @@ export default function HomePage() {
             <FooterCol
               title={t(lang, "footerCompanyCol")}
               links={[
-                { label: t(lang, "footerAbout"), href: "#" },
-                { label: t(lang, "footerContact"), href: "#" },
-                { label: t(lang, "footerTerms"), href: "#" },
-                { label: t(lang, "footerPolicy"), href: "/#chinh-sach" },
+                { label: t(lang, "footerAbout"), href: "/#about" },
+                { label: t(lang, "footerContact"), href: "/policy#support" },
+                { label: t(lang, "footerTerms"), href: "/terms" },
+                { label: t(lang, "footerPolicy"), href: "/policy" },
               ]}
             />
           </div>
