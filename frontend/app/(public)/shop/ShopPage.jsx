@@ -284,7 +284,7 @@ export default function ShopPage() {
                       onClick={() => setUserDropdownOpen(false)}
                     >
                       <LayoutDashboard size={16} />
-                      <span>Bộ Sưu Tập Của Tôi</span>
+                      <span>{t(lang, "myCollection")}</span>
                     </Link>
                     <Link
                       href="/customer/orders"
@@ -292,7 +292,7 @@ export default function ShopPage() {
                       onClick={() => setUserDropdownOpen(false)}
                     >
                       <Package size={16} />
-                      <span>Đơn Hàng Của Tôi</span>
+                      <span>{t(lang, "myOrders")}</span>
                     </Link>
                     {userAdmin && (
                       <Link
@@ -301,7 +301,7 @@ export default function ShopPage() {
                         onClick={() => setUserDropdownOpen(false)}
                       >
                         <ShieldCheck size={16} />
-                        <span>Trang Quản Trị Admin</span>
+                        <span>{t(lang, "adminPortal")}</span>
                       </Link>
                     )}
                     <Link
@@ -310,7 +310,7 @@ export default function ShopPage() {
                       onClick={() => setUserDropdownOpen(false)}
                     >
                       <Settings size={16} />
-                      <span>Cài Đặt Tài Khoản</span>
+                      <span>{t(lang, "accountSettings")}</span>
                     </Link>
                     <button
                       type="button"
@@ -318,7 +318,7 @@ export default function ShopPage() {
                       onClick={handleLogout}
                     >
                       <LogOut size={16} />
-                      <span>Đăng Xuất</span>
+                      <span>{t(lang, "logout")}</span>
                     </button>
                   </div>
                 )}

@@ -40,9 +40,13 @@ export default function OrderCard({
 
     switch (status) {
       case "pending":
-        return (
+        return payment_method === "cod" ? (
           <span className="order-card-status-pill is-amber">
             📦 Đang chuẩn bị (COD)
+          </span>
+        ) : (
+          <span className="order-card-status-pill is-amber">
+            ⏳ Chờ thanh toán (VietQR)
           </span>
         );
       case "paid":

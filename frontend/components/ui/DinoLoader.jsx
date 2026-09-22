@@ -1,20 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Lottie } from "lottie-react";
-import dinoLoadingData from "@/public/animations/DinoLoading.json";
+import Image from "next/image";
 
 /**
- * DinoLoader - Component hiển thị hoạt hình Khủng long Dino chạy lúc loading
- * @param {string} text - Dòng chữ thông báo chính
- * @param {string} subtext - Dòng chữ mô tả phụ
- * @param {number|string} size - Kích thước animation (mặc định 260px)
- * @param {boolean} fullScreen - Nếu true thì căn giữa phủ kín toàn màn hình (mặc định: true)
+ * BrandLoader (formerly DinoLoader)
+ * Modern, elegant branded loader component for VinaTap
+ * Eliminates awkward dinosaur graphics and unifies page transition states
  */
 export default function DinoLoader({
-  text = "Đang tải dữ liệu VinaTap...",
-  subtext = "Vui lòng chờ trong giây lát",
-  size = 260,
+  text = "Đang tải dữ liệu...",
+  subtext = "",
+  size = 56,
   fullScreen = true,
   className = "",
   style = {},
@@ -25,61 +22,83 @@ export default function DinoLoader({
     setMounted(true);
   }, []);
 
-  const widthStyle = typeof size === "number" ? `${size}px` : size;
-
   const content = (
     <div
-      className={`select-none ${className}`}
+      className={`vt-brand-loader select-none ${className}`}
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "1.5rem",
+        padding: "1.75rem",
         ...style,
       }}
     >
-      {/* Khung animation */}
+      {/* ─── Modern Dual-Ring Gradient Spinner with Brand Logo ─── */}
       <div
         style={{
-          width: widthStyle,
-          maxWidth: "90vw",
-          minHeight: typeof size === "number" ? `${Math.round(size * 0.55)}px` : "140px",
+          position: "relative",
+          width: "60px",
+          height: "60px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        {mounted ? (
-          <Lottie
-            src={dinoLoadingData}
-            loop={true}
-            autoplay={true}
-            style={{ width: "100%", height: "auto" }}
+        {/* Outer glowing track */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            borderRadius: "50%",
+            border: "3px solid rgba(13, 148, 136, 0.12)",
+          }}
+        />
+        {/* Rotating active gradient ring */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            borderRadius: "50%",
+            border: "3px solid transparent",
+            borderTopColor: "#0d9488",
+            borderRightColor: "#0284c7",
+            animation: "vtSpin 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+          }}
+        />
+        {/* Center Logo Icon */}
+        <div
+          style={{
+            width: "30px",
+            height: "30px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            animation: "vtPulse 1.8s ease-in-out infinite",
+          }}
+        >
+          <Image
+            src="/logo.png"
+            alt="VinaTap"
+            width={30}
+            height={30}
+            style={{ width: "auto", height: "24px", objectFit: "contain" }}
+            priority
           />
-        ) : (
-          <div
-            style={{
-              width: "100%",
-              height: "120px",
-              backgroundColor: "rgba(16, 185, 129, 0.08)",
-              borderRadius: "16px",
-            }}
-          />
-        )}
+        </div>
       </div>
 
-      {/* Chữ thông báo */}
+      {/* ─── Typography ─── */}
       {text && (
         <p
           style={{
-            marginTop: "1rem",
-            fontSize: "1.05rem",
-            fontWeight: 700,
-            color: "#065f46",
-            letterSpacing: "0.025em",
-            animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            marginTop: "1.1rem",
+            fontSize: "0.94rem",
+            fontWeight: 600,
+            color: "#0f172a",
+            letterSpacing: "-0.01em",
+            fontFamily: "inherit",
           }}
         >
           {text}
@@ -90,14 +109,36 @@ export default function DinoLoader({
         <p
           style={{
             marginTop: "0.25rem",
-            fontSize: "0.85rem",
+            fontSize: "0.82rem",
             color: "#64748b",
             maxWidth: "320px",
+            fontFamily: "inherit",
           }}
         >
           {subtext}
         </p>
       )}
+
+      <style jsx global>{`
+        @keyframes vtSpin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes vtPulse {
+          0%, 100% {
+            transform: scale(0.92);
+            opacity: 0.85;
+          }
+          50% {
+            transform: scale(1.08);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 
@@ -111,9 +152,10 @@ export default function DinoLoader({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "rgba(255, 255, 255, 0.92)",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)",
+          backgroundColor: "rgba(255, 255, 255, 0.88)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          animation: "fadeIn 0.15s ease-out",
         }}
       >
         {content}

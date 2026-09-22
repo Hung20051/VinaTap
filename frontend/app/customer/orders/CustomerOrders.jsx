@@ -47,12 +47,12 @@ export default function CustomerOrders() {
     }
   };
 
-  // 🎯 Lọc danh sách hiển thị: Loại bỏ đơn VietQR chưa thanh toán (abandoned)
+  // 🎯 Lọc danh sách hiển thị
   const validPurchasedOrders = orders.filter((o) => {
     if (["paid", "shipping", "completed", "cancelled"].includes(o.status)) {
       return true;
     }
-    if (o.payment_method === "cod") {
+    if (o.payment_method === "cod" || o.status === "pending") {
       return true;
     }
     return false;
@@ -63,7 +63,7 @@ export default function CustomerOrders() {
     if (filterStatus === "preparing") {
       return (
         (o.status === "paid" && o.cancel_request_status !== "pending") ||
-        (o.payment_method === "cod" && o.status === "pending")
+        o.status === "pending"
       );
     }
     if (filterStatus === "shipping") {

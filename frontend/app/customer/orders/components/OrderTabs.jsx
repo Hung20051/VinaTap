@@ -21,7 +21,7 @@ export default function OrderTabs({ filterStatus, setFilterStatus, orders }) {
       count: orders.filter(
         (o) =>
           (o.status === "paid" && o.cancel_request_status !== "pending") ||
-          (o.payment_method === "cod" && o.status === "pending"),
+          o.status === "pending",
       ).length,
     },
     {

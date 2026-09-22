@@ -5,7 +5,7 @@ export default function RootLoading() {
     <DinoLoader
       text="Đang tải dữ liệu VinaTap..."
       subtext="Vui lòng chờ trong giây lát"
-      size={280}
+      size={56}
       fullScreen={true}
     />
   );

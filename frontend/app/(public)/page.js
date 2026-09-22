@@ -28,6 +28,12 @@ import {
   Gift,
   CreditCard,
   ArrowRight,
+  User,
+  Settings,
+  LogOut,
+  ChevronDown,
+  ShoppingBag,
+  Package,
 } from "lucide-react";
 import { provinceAPI } from "@/lib/api";
 import { isLoggedIn, getUser, clearAuth } from "@/lib/auth";
@@ -169,6 +175,8 @@ export default function HomePage() {
   const [user, setUser] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [scrolled, setScrolled] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const userMenuRef = useRef(null);
   const [faqInput, setFaqInput] = useState("");
   const [faqMessages, setFaqMessages] = useState([]);
   const faqChatContainerRef = useRef(null);
@@ -225,6 +233,21 @@ export default function HomePage() {
       .then((d) => setProvinces(d?.provinces || []))
       .catch(console.error)
       .finally(() => setLoading(false));
+
+    const handleUserUpdated = (e) => setUser(e.detail);
+    window.addEventListener("vinatap:user-updated", handleUserUpdated);
+
+    const handleClickOutside = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setUserDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("vinatap:user-updated", handleUserUpdated);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   // Đổi diện mạo navbar (nền mờ + đổ bóng) khi cuộn xuống — chỉ là
@@ -474,20 +497,96 @@ export default function HomePage() {
             <div className="home-navbar__actions">
               <LanguageSwitch variant="navbar" />
               {user ? (
-                <>
-                  <Link
-                    href={user?.role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
-                    className="home-navbar__dashboard-link"
-                  >
-                    {t(lang, "dashboard")}
-                  </Link>
+                <div className="home-navbar__user-wrap" ref={userMenuRef}>
                   <button
-                    onClick={handleLogout}
-                    className="home-navbar__logout-btn"
+                    type="button"
+                    className="home-navbar__user-badge-btn"
+                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                    aria-label="User menu"
                   >
-                    {t(lang, "logout")}
+                    <div className="home-navbar__avatar">
+                      {user.avatar_url ? (
+                        <img src={user.avatar_url} alt={user.name} />
+                      ) : (
+                        <span>{user.name?.[0]?.toUpperCase() || "U"}</span>
+                      )}
+                    </div>
+                    <span className="home-navbar__user-name">{user.name}</span>
+                    <ChevronDown
+                      size={14}
+                      className={`home-navbar__chevron ${userDropdownOpen ? "is-open" : ""}`}
+                    />
                   </button>
-                </>
+
+                  {userDropdownOpen && (
+                    <div className="home-navbar__user-dropdown">
+                      <div className="home-navbar__dropdown-info">
+                        <strong>{user.name}</strong>
+                        <span>{user.email}</span>
+                      </div>
+
+                      <div className="home-navbar__dropdown-divider" />
+
+                      <Link
+                        href={user.role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
+                        className="home-navbar__dropdown-item"
+                        onClick={() => setUserDropdownOpen(false)}
+                      >
+                        <User size={16} />
+                        <span>
+                          {user.role === "admin"
+                            ? t(lang, "adminPortal")
+                            : t(lang, "myCollection")}
+                        </span>
+                      </Link>
+
+                      {user.role !== "admin" && (
+                        <>
+                          <Link
+                            href="/customer/orders"
+                            className="home-navbar__dropdown-item"
+                            onClick={() => setUserDropdownOpen(false)}
+                          >
+                            <Package size={16} />
+                            <span>{t(lang, "myOrders")}</span>
+                          </Link>
+
+                          <Link
+                            href="/shop"
+                            className="home-navbar__dropdown-item"
+                            onClick={() => setUserDropdownOpen(false)}
+                          >
+                            <ShoppingBag size={16} />
+                            <span>{t(lang, "nfcStore")}</span>
+                          </Link>
+
+                          <Link
+                            href="/settings/account"
+                            className="home-navbar__dropdown-item"
+                            onClick={() => setUserDropdownOpen(false)}
+                          >
+                            <Settings size={16} />
+                            <span>{t(lang, "accountSettings")}</span>
+                          </Link>
+                        </>
+                      )}
+
+                      <div className="home-navbar__dropdown-divider" />
+
+                      <button
+                        type="button"
+                        className="home-navbar__dropdown-item text-danger"
+                        onClick={() => {
+                          setUserDropdownOpen(false);
+                          handleLogout();
+                        }}
+                      >
+                        <LogOut size={16} />
+                        <span>{t(lang, "logout")}</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <Link href="/auth" className="home-navbar__login-btn">
                   {t(lang, "signIn")}

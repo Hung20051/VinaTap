@@ -234,29 +234,44 @@
   align-items: center;
   gap: 10px;
   padding: 0.6rem 0.75rem;
-  border-radius: 10px;
+  border-radius: 9px;
   color: #334155;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.88rem;
+  font-weight: 500;
   text-decoration: none;
   border: none;
   background: transparent;
   width: 100%;
   cursor: pointer;
   text-align: left;
-  transition: all 0.12s ease;
+  line-height: 1.4;
+  font-family: inherit;
+  transition: all 0.15s ease;
 }
 
 .shop-dropdown-item:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: #f8fafc;
+  color: #0d9488;
+}
+
+.shop-dropdown-item:hover svg {
+  color: #0d9488;
 }
 
 .shop-dropdown-item--logout {
-  color: #dc2626;
+  color: #ef4444;
   border-top: 1px solid #f1f5f9;
   margin-top: 4px;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 9px 9px;
+}
+
+.shop-dropdown-item--logout:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.shop-dropdown-item--logout:hover svg {
+  color: #dc2626;
 }
 
 .shop-dropdown-item--logout:hover {

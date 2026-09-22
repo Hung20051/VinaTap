@@ -65,6 +65,7 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
     if (pathname.includes("/customer/dashboard")) return { parent: t(lang, "greeting"), page: t(lang, "myCollection") };
     if (pathname.includes("/customer/orders")) return { parent: t(lang, "greeting"), page: t(lang, "myOrders") };
     if (pathname.includes("/shop")) return { parent: "VinaTap", page: t(lang, "nfcStore") };
+    if (pathname.includes("/settings")) return { parent: t(lang, "settings") || "Cài đặt", page: t(lang, "accountSettings") || "Tài khoản" };
     return { parent: "VinaTap", page: t(lang, "homeNavHome") };
   };
 
