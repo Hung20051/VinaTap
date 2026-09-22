@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "img.youtube.com" },
       { protocol: "https", hostname: "lh3.googleusercontent.com" }, // Google avatar
+      { protocol: "http", hostname: "localhost" },
+      { protocol: "http", hostname: "127.0.0.1" },
     ],
   },
 
@@ -29,12 +31,16 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Cho phép gọi API backend từ server component nếu cần sau này
+  // Cho phép gọi API backend và file uploads từ server component nếu cần sau này
   async rewrites() {
     return [
       {
         source: "/api/:path*",
         destination: `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"}/:path*`,
+      },
+      {
+        source: "/uploads/:path*",
+        destination: `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000"}/uploads/:path*`,
       },
     ];
   },

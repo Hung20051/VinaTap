@@ -227,10 +227,11 @@ export default function TapPage() {
   const regionInfo = REGION_BADGES[card?.region] || REGION_BADGES.north;
   const pName = card?.province_name || "Việt Nam";
 
-  // 💌 1. MÀN HÌNH THIỆP CHÀO MỪNG (UNBOXING ENVELOPE & POSTCARD)
+  // 💌 1. MÀN HÌNH CHÀO MỪNG DU LỊCH CAO CẤP (LUXURY FOLIO UNBOXING & TRAVEL PASS)
   if (showWelcome) {
     return (
       <div className="tap-welcome-screen">
+        {/* ── Background điện ảnh với độ mờ quang học & ánh sáng hoàng hôn ── */}
         <div className="tap-welcome-bg-wrap">
           {card?.thumbnail_url ? (
             <img
@@ -242,26 +243,115 @@ export default function TapPage() {
             <div className="tap-welcome-bg-fallback" />
           )}
           <div className="tap-welcome-overlay" />
+          <div className="tap-welcome-ambient-glow" />
         </div>
 
-        {/* ── TRẠNG THÁI 1: BÌ THƯ DU LỊCH THƯỢNG HẠNG (CHẠM ĐỂ MỞ) ── */}
-        {!envelopeOpened ? (
-          <div className="tap-envelope-container">
-            {/* Vòng hào quang huyền ảo phía sau bì thư */}
-            <div className="tap-envelope-ambient-glow" />
-
-            <div
-              className="tap-vintage-envelope"
-              onClick={() => setEnvelopeOpened(true)}
-              role="button"
-              tabIndex={0}
+        {/* ── Top Floating Minimal Bar ── */}
+        <header className="tap-welcome-top-bar">
+          <Logo href="/" />
+          <div className="tap-welcome-top-actions">
+            <button
+              type="button"
+              className="tap-top-btn-guide"
+              onClick={handleOpenDetail}
+              title="Xem cẩm nang & danh lam thắng cảnh"
             >
-              {/* Viền chỉ Airmail phong cách Đông Dương & chỉ vàng */}
-              <div className="tap-envelope-airmail-ribbon" />
-              <div className="tap-envelope-gold-trim" />
+              <Compass size={15} />
+              <span className="tap-top-btn-text">Vào thẳng cẩm nang</span>
+              <ArrowRight size={14} />
+            </button>
+            <button
+              type="button"
+              className="tap-top-btn-share"
+              onClick={() => setShowShareModal(true)}
+              title="Chia sẻ & Mã QR"
+            >
+              <Share2 size={15} />
+            </button>
+          </div>
+        </header>
 
-              {/* Con tem bưu chính & Dấu bưu điện du lịch */}
-              <div className="tap-envelope-top-row">
+        {/* ── Trọng tâm: Sân khấu Folio Du Lịch (Tự động thích ứng Desktop & Mobile) ── */}
+        <div className="tap-welcome-stage">
+          <div className={`tap-welcome-folio ${envelopeOpened ? "is-opened" : ""}`}>
+            {/* ══ CÁNH TRÁI (DESKTOP): 3D NFC CARD & DANH THẮNG BIỂU TƯỢNG ══ */}
+            <div className="tap-folio-left-wing">
+              <div className="tap-folio-hero-img-wrap">
+                <img
+                  src={card?.thumbnail_url || "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80"}
+                  alt={pName}
+                  className="tap-folio-hero-img"
+                />
+                <div className="tap-folio-hero-gradient" />
+                <div className="tap-folio-pass-badge">
+                  <span>🇻🇳 VIETNAM HERITAGE PASS</span>
+                </div>
+              </div>
+
+              {/* Thẻ 3D NFC Card tương tác */}
+              <div className="tap-folio-card-showcase">
+                <div className="tap-card-3d-mini">
+                  <div className="tap-card-3d-mini-bg">
+                    {card?.thumbnail_url && (
+                      <img src={card.thumbnail_url} alt={pName} />
+                    )}
+                    <div className="tap-card-mini-overlay" />
+                    <div className="tap-card-mini-hologram" />
+                  </div>
+                  <div className="tap-card-mini-content">
+                    <div className="tap-card-mini-top">
+                      <span className="tap-card-mini-logo">VinaTap</span>
+                      <div className="tap-card-mini-chip">
+                        <Radio size={12} className="tap-mini-nfc-pulse" />
+                        <span>NFC 3D</span>
+                      </div>
+                    </div>
+                    <div className="tap-card-mini-center">
+                      <span className="tap-card-mini-region" style={{ color: regionInfo.color }}>
+                        {regionInfo.label}
+                      </span>
+                      <h3 className="tap-card-mini-title">{pName}</h3>
+                    </div>
+                    <div className="tap-card-mini-bottom">
+                      <span className="tap-card-mini-serial">
+                        #{card?.serial_code || "VN-2026-NFC"}
+                      </span>
+                      <span className="tap-card-mini-verified">
+                        <ShieldCheck size={12} />
+                        <span>VERIFIED</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Thông tin nhanh tỉnh thành dưới thẻ */}
+              <div className="tap-folio-left-footer">
+                <div className="tap-folio-stat-item">
+                  <Compass size={14} />
+                  <span>{landmarks.length} Điểm đến</span>
+                </div>
+                <span className="tap-folio-stat-divider">•</span>
+                <div className="tap-folio-stat-item">
+                  <Utensils size={14} />
+                  <span>{foods.length} Món ngon</span>
+                </div>
+                <span className="tap-folio-stat-divider">•</span>
+                <div className="tap-folio-stat-item">
+                  <Camera size={14} />
+                  <span>{album?.media_count || 0} Ảnh check-in</span>
+                </div>
+              </div>
+            </div>
+
+            {/* ══ CÁNH PHẢI: BƯU THIẾP DU LỊCH & CON DẤU SÁP ══ */}
+            <div className="tap-folio-right-wing">
+              {/* Viền Airmail bưu chính & chỉ vàng */}
+              <div className="tap-folio-airmail-ribbon" />
+              <div className="tap-folio-gold-trim" />
+
+              {/* Hàng tem & con dấu bưu điện du lịch */}
+              <div className="tap-folio-postage-header">
                 <div className="tap-envelope-postmark">
                   <div className="tap-postmark-inner">
                     <span className="tap-postmark-star">★ VIETNAM PASS ★</span>
@@ -291,8 +381,8 @@ export default function TapPage() {
                 </div>
               </div>
 
-              {/* Thông tin người nhận thư */}
-              <div className="tap-envelope-to-box">
+              {/* Thông tin chào mừng lữ khách */}
+              <div className="tap-folio-recipient-box">
                 <div className="tap-envelope-badge-row">
                   <span className="tap-envelope-from-tag">
                     <span className="tap-tag-dot" />
@@ -320,116 +410,114 @@ export default function TapPage() {
                     <MapPin size={13} />
                     <span>{regionInfo.label} • Mảnh Ghép NFC 3D</span>
                   </div>
-                </div>
-              </div>
-
-              {/* Khu vực con dấu sáp đỏ 3D hoàng gia (Tâm điểm xúc giác) */}
-              <div className="tap-envelope-seal-section">
-                <div className="tap-wax-seal-btn" title="Chạm để mở thư">
-                  <div className="tap-wax-seal-glow" />
-                  <div className="tap-wax-seal-scallop">
-                    <div className="tap-wax-seal-core">
-                      <div className="tap-wax-shine-glint" />
-                      <div className="tap-wax-icon-wrap">
-                        <Sparkles size={18} className="tap-wax-sparkle" />
-                      </div>
-                      <span className="tap-wax-text">CHẠM ĐỂ MỞ</span>
-                    </div>
+                  <div className="tap-to-status-pill">
+                    <Radio size={12} style={{ color: "#16a34a" }} />
+                    <span>{status === "unclaimed" ? "Chưa kích hoạt" : "Đã kích hoạt"}</span>
                   </div>
                 </div>
-                <div className="tap-envelope-hint">
-                  <span className="tap-hint-pulse-dot" />
-                  <span>Chạm vào con dấu sáp để mở bưu thiếp</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Nút vào thẳng cẩm nang */}
-            <button
-              type="button"
-              className="tap-envelope-skip-btn"
-              onClick={handleOpenDetail}
-            >
-              <span>Vào thẳng cẩm nang & mảnh ghép</span>
-              <ArrowRight size={15} className="tap-skip-arrow" />
-            </button>
-          </div>
-        ) : (
-          /* ── TRẠNG THÁI 2: BƯU THIẾP DU LỊCH CAO CẤP MỞ RA (UNBOXED POSTCARD) ── */
-          <div className="tap-postcard-unboxed-wrapper">
-            <div className="tap-unboxed-postcard">
-              {/* Ảnh bìa danh thắng nổi tiếng */}
-              <div className="tap-postcard-hero">
-                <img
-                  src={card?.thumbnail_url || "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80"}
-                  alt={pName}
-                  className="tap-postcard-hero-img"
-                />
-                <div className="tap-postcard-hero-overlay" />
-                <div
-                  className="tap-postcard-hero-badge"
-                  style={{
-                    background: regionInfo.bg,
-                    color: regionInfo.color,
-                    borderColor: regionInfo.border,
-                  }}
-                >
-                  <MapPin size={12} />
-                  <span>{regionInfo.label} • NFC 3D</span>
-                </div>
-                <div className="tap-postcard-hero-stamp">
-                  <span>VIETNAM 2026</span>
-                </div>
               </div>
 
-              {/* Thân thiệp lời chúc */}
-              <div className="tap-postcard-content-body">
-                <div className="tap-postcard-title-row">
-                  <div className="tap-postcard-pre">
-                    <Sparkles size={14} style={{ color: "#f59e0b" }} />
-                    <span>CHÀO MỪNG BẠN ĐẾN VỚI</span>
-                  </div>
-                  <h2 className="tap-postcard-main-title">{pName}</h2>
-                </div>
-
-                {/* Hộp thư tay trang nhã */}
-                <div className="tap-postcard-letter-box">
-                  <span className="tap-quote-mark">“</span>
-                  <p className="tap-letter-text">
-                    Cảm ơn bạn đã chọn <strong>{pName}</strong> cho hành trình của mình. Hãy để chiếc thẻ thông minh này lưu giữ những khoảnh khắc đẹp nhất và đồng hành cùng bạn khám phá mọi nẻo đường!
+              {/* ── NỘI DUNG THIỆP: CHƯA MỞ vs ĐÃ MỞ ── */}
+              {!envelopeOpened ? (
+                /* Trạng thái 1: Con Dấu Sáp 3D Mời Chạm */
+                <div className="tap-folio-unopened-box">
+                  <p className="tap-folio-teaser-text">
+                    Mảnh ghép du lịch đã được nhận diện. Hãy chạm vào con dấu sáp hoàng gia để mở bưu thiếp kỷ niệm và cẩm nang khám phá!
                   </p>
-                  <div className="tap-letter-signature">
-                    <span>Đội ngũ VinaTap 💙</span>
-                  </div>
-                </div>
 
-                {/* Chip thông tin serial & bảo mật */}
-                <div className="tap-postcard-chips-row">
-                  {card?.serial_code && (
-                    <div className="tap-postcard-chip-pill">
-                      <ShieldCheck size={13} style={{ color: "#ea580c" }} />
-                      <span>#{card.serial_code}</span>
+                  <div className="tap-envelope-seal-section">
+                    <div
+                      className="tap-wax-seal-btn"
+                      onClick={() => setEnvelopeOpened(true)}
+                      role="button"
+                      tabIndex={0}
+                      title="Chạm để mở bưu thiếp"
+                    >
+                      <div className="tap-wax-seal-glow" />
+                      <div className="tap-wax-seal-scallop">
+                        <div className="tap-wax-seal-core">
+                          <div className="tap-wax-shine-glint" />
+                          <div className="tap-wax-icon-wrap">
+                            <Sparkles size={18} className="tap-wax-sparkle" />
+                          </div>
+                          <span className="tap-wax-text">CHẠM ĐỂ MỞ</span>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                  <div className="tap-postcard-chip-pill">
-                    <Radio size={13} style={{ color: "#16a34a" }} />
-                    <span>{status === "unclaimed" ? "Sẵn sàng kích hoạt" : "Đã kích hoạt"}</span>
+                    <div className="tap-envelope-hint">
+                      <span className="tap-hint-pulse-dot" />
+                      <span>Chạm vào con dấu sáp để mở bưu thiếp</span>
+                    </div>
+                  </div>
+
+                  <div className="tap-folio-actions-row">
+                    <button
+                      type="button"
+                      className="tap-folio-btn-skip"
+                      onClick={handleOpenDetail}
+                    >
+                      <span>Vào thẳng cẩm nang &amp; mảnh ghép</span>
+                      <ArrowRight size={15} />
+                    </button>
                   </div>
                 </div>
+              ) : (
+                /* Trạng thái 2: Thư Tay Mở Ra & Nút Hành Động */
+                <div className="tap-folio-opened-box">
+                  <div className="tap-postcard-letter-box">
+                    <span className="tap-quote-mark">“</span>
+                    <p className="tap-letter-text">
+                      Chào mừng bạn đến với <strong>{pName}</strong>! Chiếc thẻ thông minh này đã sẵn sàng lưu giữ những khoảnh khắc đẹp nhất và đồng hành cùng bạn khám phá từng địa danh, món ngon đặc sắc nơi đây.
+                    </p>
+                    <div className="tap-letter-signature">
+                      <span>Đội ngũ VinaTap 💙</span>
+                    </div>
+                  </div>
 
-                {/* Nút hành động chính */}
-                <button
-                  type="button"
-                  className="tap-postcard-cta-btn"
-                  onClick={handleOpenDetail}
-                >
-                  <span>Khám Phá Mảnh Ghép Ngay</span>
-                  <ArrowRight size={17} />
-                </button>
-              </div>
+                  <div className="tap-folio-action-buttons">
+                    {status === "unclaimed" ? (
+                      <button
+                        type="button"
+                        className="tap-btn-gold-claim"
+                        onClick={handleClaim}
+                        disabled={claiming}
+                      >
+                        <Zap size={18} />
+                        <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Mảnh Ghép"}</span>
+                      </button>
+                    ) : status === "owned" ? (
+                      <Link
+                        href={album ? `/album/${album.share_code || album.id}` : "/customer/dashboard"}
+                        className="tap-btn-primary"
+                      >
+                        <Camera size={18} />
+                        <span>{album ? "Mở Album Kỷ Niệm Của Bạn" : "Tạo Album Kỷ Niệm Đầu Tiên"}</span>
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        className="tap-btn-primary"
+                        onClick={handleOpenDetail}
+                      >
+                        <Compass size={18} />
+                        <span>Khám Phá Cẩm Nang {pName}</span>
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      className="tap-btn-explore-full"
+                      onClick={handleOpenDetail}
+                    >
+                      <span>Xem Toàn Bộ Cẩm Nang &amp; Bản Đồ</span>
+                      <ArrowRight size={16} />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
+        </div>
       </div>
     );
   }

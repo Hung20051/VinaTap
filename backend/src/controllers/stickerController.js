@@ -1,4 +1,5 @@
 const cloudinary = require("../config/cloudinary");
+const { uploadWithFallback } = require("../utils/fileStorage");
 const {
   uploadImageOnly,
   uploadImagesOnly,
@@ -229,14 +230,14 @@ const getAllStickersAdmin = async (req, res) => {
   }
 };
 
-// ─── HELPER: upload buffer ảnh lên Cloudinary folder stickers ──
-const uploadStickerImage = (buffer) =>
-  new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: "vinatap/stickers", format: "png" },
-      (err, result) => (err ? reject(err) : resolve(result)),
-    );
-    stream.end(buffer);
+// ─── HELPER: upload buffer ảnh lên Cloudinary folder stickers (fallback local) ──
+const uploadStickerImage = (buffer, originalname = "", mimetype = "image/png") =>
+  uploadWithFallback({
+    buffer,
+    originalname,
+    mimetype,
+    subfolder: "stickers",
+    cloudinaryOptions: { folder: "vinatap/stickers", format: "png" },
   });
 
 // ─── ADMIN: UPLOAD STICKER MỚI (1 ảnh) ────────────────────────
@@ -260,7 +261,11 @@ const createSticker = async (req, res) => {
       finalOrder = (maxRow?.max_order || 0) + 1;
     }
 
-    const uploaded = await uploadStickerImage(req.file.buffer);
+    const uploaded = await uploadStickerImage(
+      req.file.buffer,
+      req.file.originalname,
+      req.file.mimetype,
+    );
 
     const categoryInput = categories || category || "";
 
@@ -328,7 +333,11 @@ const bulkCreateStickers = async (req, res) => {
       }
       try {
         nextOrder++;
-        const uploaded = await uploadStickerImage(file.buffer);
+        const uploaded = await uploadStickerImage(
+          file.buffer,
+          file.originalname,
+          file.mimetype,
+        );
         const categoryInput = categories || category || "";
         const cleanCategoryStr = extractCleanSlugs(categoryInput).join(",");
 

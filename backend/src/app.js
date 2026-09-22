@@ -12,10 +12,19 @@ const app = express();
 // X-Frame-Options, Strip X-Powered-By,...). API thuần JSON (không tự
 // render HTML) nên tắt content-security-policy mặc định của helmet để
 // tránh chặn nhầm response — CSP nên cấu hình ở tầng frontend/CDN thay vì
+const path = require("path");
 const { getAllowedOrigins } = require("./utils/corsOrigins");
 
 // ở đây.
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
+);
+
+// Serve static uploads
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 // Danh sách domain được phép gọi API (whitelist)
 const allowedOrigins = getAllowedOrigins();

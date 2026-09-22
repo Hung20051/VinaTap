@@ -4,6 +4,7 @@ const User = require("../models/User");
 const OtpCode = require("../models/OtpCode");
 const SystemSetting = require("../models/SystemSetting");
 const cloudinary = require("../config/cloudinary");
+const { uploadWithFallback } = require("../utils/fileStorage");
 const { uploadSingle, uploadImageOnly, runMiddleware } = require("../middleware/upload");
 const {
   MAX_ATTEMPTS,
@@ -598,20 +599,20 @@ const uploadAvatar = async (req, res) => {
         message: "Ảnh đại diện chỉ chấp nhận file ảnh (jpg, png, webp, gif)",
       });
 
-    const uploaded = await new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        {
-          folder: "vinatap/avatars",
-          public_id: `user_${req.user.id}`, // ghi đè avatar cũ của cùng user thay vì tạo file rác mới mỗi lần đổi
-          overwrite: true,
-          resource_type: "image",
-          transformation: [
-            { width: 300, height: 300, crop: "fill", gravity: "face" },
-          ],
-        },
-        (err, result) => (err ? reject(err) : resolve(result)),
-      );
-      stream.end(req.file.buffer);
+    const uploaded = await uploadWithFallback({
+      buffer: req.file.buffer,
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      subfolder: "avatars",
+      cloudinaryOptions: {
+        folder: "vinatap/avatars",
+        public_id: `user_${req.user.id}`,
+        overwrite: true,
+        resource_type: "image",
+        transformation: [
+          { width: 300, height: 300, crop: "fill", gravity: "face" },
+        ],
+      },
     });
 
     await User.updateProfile(req.user.id, { avatar_url: uploaded.secure_url });

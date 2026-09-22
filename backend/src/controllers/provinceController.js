@@ -309,16 +309,7 @@ const deleteProvince = async (req, res) => {
 // ─── ADMIN: UPLOAD FILE LÊN CLOUDINARY ───────────────────────
 // POST /api/provinces/upload
 const { uploadSingle, runMiddleware } = require("../middleware/upload");
-const cloudinary = require("../config/cloudinary");
-
-const uploadToCloudinary = (buffer, options = { folder: "vinatap/uploads", resource_type: "auto" }) =>
-  new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(options, (err, result) => {
-      if (err) reject(err);
-      else resolve(result);
-    });
-    stream.end(buffer);
-  });
+const { uploadWithFallback } = require("../utils/fileStorage");
 
 const uploadFile = async (req, res) => {
   try {
@@ -326,22 +317,18 @@ const uploadFile = async (req, res) => {
     if (!req.file)
       return res.status(400).json({ message: "Không tìm thấy file" });
 
-    if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY) {
-      const base64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
-      return res.json({ message: "Upload file thành công", url: base64 });
-    }
-
-    try {
-      const result = await uploadToCloudinary(req.file.buffer, {
+    const result = await uploadWithFallback({
+      buffer: req.file.buffer,
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      subfolder: "provinces",
+      cloudinaryOptions: {
         folder: "vinatap/uploads",
         resource_type: "auto",
-      });
-      res.json({ message: "Upload file thành công", url: result.secure_url });
-    } catch (cErr) {
-      console.warn("Cloudinary upload failed, using Data URI fallback:", cErr.message);
-      const base64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`;
-      res.json({ message: "Upload file thành công", url: base64 });
-    }
+      },
+    });
+
+    res.json({ message: "Upload file thành công", url: result.secure_url });
   } catch (err) {
     console.error("uploadFile error:", err);
     res.status(500).json({ message: err.message || "Lỗi upload file" });

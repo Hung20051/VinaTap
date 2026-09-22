@@ -8,6 +8,7 @@ const db = require("../config/db");
 const SystemSetting = require("../models/SystemSetting");
 const Album = require("../models/Album");
 const { emitToAlbum } = require("../config/socket");
+const { uploadWithFallback } = require("../utils/fileStorage");
 
 // ─── HELPER: upload buffer lên Cloudinary ────────────────────
 const uploadToCloudinary = (buffer, options = {}) =>
@@ -102,18 +103,28 @@ const uploadMedia = async (req, res) => {
     const isVideo = file.mimetype.startsWith("video/");
     const resourceType = isVideo ? "video" : "image";
 
-    const uploaded = await uploadToCloudinary(file.buffer, {
-      folder: `vinatap/albums/${numericAlbumId}`,
-      resource_type: resourceType,
+    const uploaded = await uploadWithFallback({
+      buffer: file.buffer,
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+      subfolder: `albums/${numericAlbumId}`,
+      cloudinaryOptions: {
+        folder: `vinatap/albums/${numericAlbumId}`,
+        resource_type: resourceType,
+      },
     });
 
     let thumbnail_url = null;
     if (isVideo) {
-      thumbnail_url = cloudinary.url(uploaded.public_id, {
-        resource_type: "video",
-        format: "jpg",
-        transformation: [{ width: 400, crop: "scale" }],
-      });
+      if (!uploaded.isLocal && uploaded.public_id) {
+        thumbnail_url = cloudinary.url(uploaded.public_id, {
+          resource_type: "video",
+          format: "jpg",
+          transformation: [{ width: 400, crop: "scale" }],
+        });
+      }
+    } else {
+      thumbnail_url = uploaded.secure_url;
     }
 
     const caption_ai = null;
@@ -195,18 +206,30 @@ const uploadMultipleMedia = async (req, res) => {
     const results = [];
     for (const file of req.files) {
       const isVideo = file.mimetype.startsWith("video/");
-      const uploaded = await uploadToCloudinary(file.buffer, {
-        folder: `vinatap/albums/${numericAlbumId}`,
-        resource_type: isVideo ? "video" : "image",
+      const resourceType = isVideo ? "video" : "image";
+
+      const uploaded = await uploadWithFallback({
+        buffer: file.buffer,
+        originalname: file.originalname,
+        mimetype: file.mimetype,
+        subfolder: `albums/${numericAlbumId}`,
+        cloudinaryOptions: {
+          folder: `vinatap/albums/${numericAlbumId}`,
+          resource_type: resourceType,
+        },
       });
 
       let thumbnail_url = null;
       if (isVideo) {
-        thumbnail_url = cloudinary.url(uploaded.public_id, {
-          resource_type: "video",
-          format: "jpg",
-          transformation: [{ width: 400, crop: "scale" }],
-        });
+        if (!uploaded.isLocal && uploaded.public_id) {
+          thumbnail_url = cloudinary.url(uploaded.public_id, {
+            resource_type: "video",
+            format: "jpg",
+            transformation: [{ width: 400, crop: "scale" }],
+          });
+        }
+      } else {
+        thumbnail_url = uploaded.secure_url;
       }
 
       const caption_ai = null;
