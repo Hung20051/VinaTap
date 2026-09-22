@@ -36,13 +36,19 @@ const request = async (endpoint, options = {}) => {
   const token = getToken();
   const headers = {
     "Content-Type": "application/json",
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
     ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
   const baseUrl = getBaseUrl();
   let res;
   try {
-    res = await fetch(`${baseUrl}${endpoint}`, { ...options, headers });
+    res = await fetch(`${baseUrl}${endpoint}`, {
+      cache: "no-store",
+      ...options,
+      headers,
+    });
   } catch (netErr) {
     console.error(`Fetch error at ${baseUrl}${endpoint}:`, netErr);
     throw new Error(
@@ -389,9 +395,11 @@ export const stickerAPI = {
 
 // ─── PRODUCTS (admin — sản phẩm cho dropdown tạo đơn thủ công) ─
 export const productAPI = {
-  getPublic: () => request("/products/public"),
+  getPublic: () => request(`/products/public?_t=${Date.now()}`),
   getAll: (includeInactive) =>
-    request(`/products${includeInactive ? "?includeInactive=1" : ""}`),
+    request(
+      `/products?includeInactive=${includeInactive ? "1" : "0"}&_t=${Date.now()}`,
+    ),
   create: (body) =>
     request("/products", { method: "POST", body: JSON.stringify(body) }),
   update: (id, body) =>

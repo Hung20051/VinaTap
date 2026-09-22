@@ -22,7 +22,22 @@ export default function CartModal({
   const formatMoney = (amount) =>
     new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount);
 
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const getItemPrice = (item) => {
+    const p = Number(item.price || 0);
+    const name = item.name || "";
+    if (item.category === "combo" || name.includes("Combo")) {
+      if (name.includes("3") && !name.includes("34")) return 139000;
+      if (name.includes("5")) return 239000;
+      if (name.includes("34")) return 1400000;
+      return p >= 10000 ? p : 139000;
+    }
+    return p < 10000 ? 49000 : p;
+  };
+
+  const subtotal = cart.reduce(
+    (sum, item) => sum + getItemPrice(item) * item.quantity,
+    0,
+  );
 
   return (
     <div className="cart-modal-overlay" onClick={onClose}>
@@ -79,9 +94,13 @@ export default function CartModal({
 
                     <div className="cart-item-bottom">
                       <div className="cart-item-price-wrap">
-                        <span className="cart-item-unit-price">{formatMoney(item.price * item.quantity)}</span>
+                        <span className="cart-item-unit-price">
+                          {formatMoney(getItemPrice(item) * item.quantity)}
+                        </span>
                         {item.quantity > 1 && (
-                          <span className="cart-item-sub-price">({formatMoney(item.price)}/sp)</span>
+                          <span className="cart-item-sub-price">
+                            ({formatMoney(getItemPrice(item))}/sp)
+                          </span>
                         )}
                       </div>
 

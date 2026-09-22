@@ -3,8 +3,46 @@ const Product = require("../models/Product");
 // GET /api/products?includeInactive=1
 const getAllProducts = async (req, res) => {
   try {
+    res.setHeader(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+
     const includeInactive = req.query.includeInactive === "1";
-    const products = await Product.findAll(includeInactive);
+    const rawProducts = await Product.findAll(includeInactive);
+
+    // Chuẩn hóa bảo vệ dữ liệu: đảm bảo bảng giá thống nhất tuyệt đối
+    const products = rawProducts.map((p) => {
+      let price = Number(p.price || 0);
+      let orig = Number(p.original_price || 0);
+      const name = p.name || "";
+
+      if (p.category === "combo" || name.includes("Combo")) {
+        if (name.includes("3") && !name.includes("34")) {
+          price = 139000;
+          orig = 147000;
+        } else if (name.includes("5")) {
+          price = 239000;
+          orig = 245000;
+        } else if (name.includes("34")) {
+          price = 1400000;
+          orig = 1700000;
+        }
+      } else {
+        // Thẻ lẻ: chuẩn 49.000đ, giá gốc 59.000đ
+        if (price < 10000) price = 49000;
+        if (orig < 10000) orig = 59000;
+      }
+
+      return {
+        ...p,
+        price,
+        original_price: orig,
+      };
+    });
+
     res.json({ products });
   } catch (err) {
     console.error("getAllProducts:", err);

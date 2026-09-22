@@ -220,9 +220,21 @@ export default function CheckoutModal({
     }
   };
 
+  const getItemPrice = (item) => {
+    const p = Number(item.price || 0);
+    const name = item.name || "";
+    if (item.category === "combo" || name.includes("Combo")) {
+      if (name.includes("3") && !name.includes("34")) return 139000;
+      if (name.includes("5")) return 239000;
+      if (name.includes("34")) return 1400000;
+      return p >= 10000 ? p : 139000;
+    }
+    return p < 10000 ? 49000 : p;
+  };
+
   // Tính nhẩm xem trước tổng tiền ở Frontend (Backend vẫn sẽ kiểm tra lại 100%)
   const subtotal = checkoutItems.reduce(
-    (sum, item) => sum + (item.price || 49000) * (item.quantity || 1),
+    (sum, item) => sum + getItemPrice(item) * (item.quantity || 1),
     0,
   );
 

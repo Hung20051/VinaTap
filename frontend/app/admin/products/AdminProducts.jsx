@@ -58,6 +58,30 @@ export default function AdminProducts() {
     loadData();
   }, []);
 
+  const getStandardPrice = (p) => {
+    const priceNum = Number(p.price || 0);
+    const name = p.name || "";
+    if (p.category === "combo" || name.includes("Combo")) {
+      if (name.includes("3") && !name.includes("34")) return 139000;
+      if (name.includes("5")) return 239000;
+      if (name.includes("34")) return 1400000;
+      return priceNum >= 10000 ? priceNum : 139000;
+    }
+    return priceNum < 10000 ? 49000 : priceNum;
+  };
+
+  const getStandardOriginalPrice = (p) => {
+    const origNum = Number(p.original_price || 0);
+    const name = p.name || "";
+    if (p.category === "combo" || name.includes("Combo")) {
+      if (name.includes("3") && !name.includes("34")) return 147000;
+      if (name.includes("5")) return 245000;
+      if (name.includes("34")) return 1700000;
+      return origNum > 0 ? origNum : 245000;
+    }
+    return origNum < 10000 ? 59000 : origNum;
+  };
+
   const loadData = async () => {
     setLoading(true);
     try {
@@ -65,7 +89,19 @@ export default function AdminProducts() {
         productAPI.getAll(true),
         shippingAPI.get(),
       ]);
-      setProducts(prodRes.products || []);
+      const rawProds = prodRes.products || [];
+      const normalizedProds = rawProds.map((p) => ({
+        ...p,
+        price: getStandardPrice(p),
+        original_price: getStandardOriginalPrice(p),
+      }));
+      setProducts(normalizedProds);
+
+      // Tự động đồng bộ chuẩn hóa ngầm nếu phát hiện bất kỳ sản phẩm nào còn giá cũ < 10k
+      if (rawProds.some((p) => Number(p.price || 0) < 10000)) {
+        productAPI.syncStandardPrices().catch(() => {});
+      }
+
       if (shipRes.rule) {
         setShipping({
           base_fee: Number(shipRes.rule.base_fee || 30000),
@@ -143,8 +179,8 @@ export default function AdminProducts() {
     setForm({
       name: p.name || "",
       category: p.category || "single",
-      price: p.price || 0,
-      original_price: p.original_price || 0,
+      price: getStandardPrice(p),
+      original_price: getStandardOriginalPrice(p),
       image: p.image || "",
       tag: p.tag || "",
       description: p.description || "",

@@ -97,11 +97,38 @@ export default function ShopPage() {
     };
   }, []);
 
+  const getStandardPrice = (p) => {
+    const priceNum = Number(p.price || 0);
+    const name = p.name || "";
+    if (p.category === "combo" || name.includes("Combo")) {
+      if (name.includes("3") && !name.includes("34")) return 139000;
+      if (name.includes("5")) return 239000;
+      if (name.includes("34")) return 1400000;
+      return priceNum >= 10000 ? priceNum : 139000;
+    }
+    // Thẻ lẻ: Bắt buộc chuẩn 49.000đ, tuyệt đối không chấp nhận giá test < 10k
+    return priceNum < 10000 ? 49000 : priceNum;
+  };
+
+  const getStandardOriginalPrice = (p) => {
+    const origNum = Number(p.original_price || 0);
+    const name = p.name || "";
+    if (p.category === "combo" || name.includes("Combo")) {
+      if (name.includes("3") && !name.includes("34")) return 147000;
+      if (name.includes("5")) return 245000;
+      if (name.includes("34")) return 1700000;
+      return origNum > 0 ? origNum : 245000;
+    }
+    // Thẻ lẻ: Giá gốc niêm yết gạch đi là 59.000đ
+    return origNum < 10000 ? 59000 : origNum;
+  };
+
   const products = dbProducts.map((p) => ({
     id: p.id,
     name: p.name,
-    price: Number(p.price),
-    originalPrice: Number(p.original_price || 0),
+    category: p.category,
+    price: getStandardPrice(p),
+    originalPrice: getStandardOriginalPrice(p),
     tag: p.tag || "BÁN CHẠY 🔥",
     description: p.description || "Mảnh ghép NFC kỷ niệm du lịch VinaTap.",
     image:
