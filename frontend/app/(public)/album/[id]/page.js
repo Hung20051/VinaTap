@@ -38,6 +38,8 @@ import {
   VolumeX,
   MapPin,
   Compass,
+  GripVertical,
+  Download,
 } from "lucide-react";
 import StickerCanvas from "@/components/ui/StickerCanvas";
 import Dino404 from "@/components/ui/Dino404";
@@ -87,13 +89,17 @@ export default function AlbumPage() {
   const [stickerEditingItem, setStickerEditingItem] = useState(null);
   const [storyModeIndex, setStoryModeIndex] = useState(null);
 
+  // Drag & Drop Media Reordering State
+  const [draggedId, setDraggedId] = useState(null);
+  const [dragOverId, setDragOverId] = useState(null);
+
   const isOwner = !!(user && album && user.id === album.owner_id);
   const isCollaborator = album?.user_role === "collaborator";
   const isPendingCollaborator = album?.user_role === "pending_collaborator";
   const canEdit = isOwner || isCollaborator || !!album?.can_edit;
 
   useEffect(() => {
-    loadAlbum();
+    loadAlbum(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -139,6 +145,26 @@ export default function AlbumPage() {
       );
     };
 
+    // 🔀 Có sự sắp xếp lại thứ tự ảnh/video (reorder)
+    const handleMediaReordered = ({ items }) => {
+      if (Array.isArray(items)) {
+        setMedia((prev) => {
+          const map = new Map(prev.map((m) => [m.id, m]));
+          const reordered = [];
+          items.forEach((it) => {
+            if (map.has(it.id)) {
+              reordered.push({ ...map.get(it.id), sort_order: it.sort_order });
+              map.delete(it.id);
+            }
+          });
+          for (const remaining of map.values()) {
+            reordered.push(remaining);
+          }
+          return reordered;
+        });
+      }
+    };
+
     // 📝 Thông tin album thay đổi
     const handleAlbumUpdated = ({ album: updatedAlbum }) => {
       if (updatedAlbum) {
@@ -155,6 +181,7 @@ export default function AlbumPage() {
     socket.on("media_added", handleMediaAdded);
     socket.on("media_deleted", handleMediaDeleted);
     socket.on("media_updated", handleMediaUpdated);
+    socket.on("media_reordered", handleMediaReordered);
     socket.on("album_updated", handleAlbumUpdated);
     socket.on("collaborator_requested", handleCollaboratorEvent);
     socket.on("collaborator_reviewed", handleCollaboratorEvent);
@@ -166,6 +193,7 @@ export default function AlbumPage() {
       socket.off("media_added", handleMediaAdded);
       socket.off("media_deleted", handleMediaDeleted);
       socket.off("media_updated", handleMediaUpdated);
+      socket.off("media_reordered", handleMediaReordered);
       socket.off("album_updated", handleAlbumUpdated);
       socket.off("collaborator_requested", handleCollaboratorEvent);
       socket.off("collaborator_reviewed", handleCollaboratorEvent);
@@ -178,13 +206,19 @@ export default function AlbumPage() {
     setTimeout(() => setToast(null), 3500);
   };
 
-  const loadAlbum = async () => {
-    setLoading(true);
-    setLoadError(null);
+  const loadAlbum = async (showLoader = false) => {
+    if (showLoader) {
+      setLoading(true);
+      setLoadError(null);
+    }
     try {
       const res = await albumAPI.getOne(id);
       setAlbum(res.album);
-      if (res.album?.share_code && id !== res.album.share_code && typeof window !== "undefined") {
+      if (
+        res.album?.share_code &&
+        id !== res.album.share_code &&
+        typeof window !== "undefined"
+      ) {
         window.history.replaceState(null, "", `/album/${res.album.share_code}`);
       }
       const uniqueMedia = (res.media || []).filter(
@@ -196,9 +230,11 @@ export default function AlbumPage() {
         description: res.album.description || "",
       });
     } catch (err) {
-      setLoadError({ message: err.message || "Không tải được album" });
+      if (showLoader) {
+        setLoadError({ message: err.message || "Không tải được album" });
+      }
     } finally {
-      setLoading(false);
+      if (showLoader) setLoading(false);
     }
   };
 
@@ -334,7 +370,9 @@ export default function AlbumPage() {
         (res.media ? (Array.isArray(res.media) ? res.media : [res.media]) : []);
       setMedia((prev) => {
         const existingIds = new Set(prev.map((m) => m.id));
-        const uniqueToAdd = newItems.filter((it) => it?.id && !existingIds.has(it.id));
+        const uniqueToAdd = newItems.filter(
+          (it) => it?.id && !existingIds.has(it.id),
+        );
         return [...uniqueToAdd, ...prev];
       });
       showToast("success", `Đã lưu ${files.length} khoảnh khắc vào Album!`);
@@ -368,6 +406,96 @@ export default function AlbumPage() {
     } catch (err) {
       showToast("error", err.message || "Lỗi lưu ghi chú");
     }
+  };
+
+  // ─── TẢI MEDIA VỀ MÁY (STORY & LIGHTBOX) ─────────────────────
+  const handleDownloadMedia = async (fileUrl, fileName) => {
+    try {
+      showToast("success", "Đang tải tệp xuống...");
+      const response = await fetch(fileUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName || `vinatap_memory_${Date.now()}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      window.open(fileUrl, "_blank");
+    }
+  };
+
+  // ─── KÉO THẢ SẮP XẾP THỨ TỰ MEDIA (DRAG & DROP) ─────────────
+  const handleDragStart = (e, item) => {
+    if (!canEdit) return;
+    setDraggedId(item.id);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", item.id.toString());
+  };
+
+  const handleDragOver = (e, item) => {
+    if (!canEdit || !draggedId || draggedId === item.id) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (dragOverId !== item.id) {
+      setDragOverId(item.id);
+    }
+  };
+
+  const handleDragLeave = (e, item) => {
+    if (dragOverId === item.id) {
+      setDragOverId(null);
+    }
+  };
+
+  const handleDrop = async (e, targetItem) => {
+    e.preventDefault();
+    setDragOverId(null);
+    if (!canEdit || !draggedId || draggedId === targetItem.id) {
+      setDraggedId(null);
+      return;
+    }
+
+    const sourceId = draggedId;
+    setDraggedId(null);
+
+    const currentList = [...media];
+    const sourceIndex = currentList.findIndex((m) => m.id === sourceId);
+    const targetIndex = currentList.findIndex((m) => m.id === targetItem.id);
+
+    if (sourceIndex === -1 || targetIndex === -1) return;
+
+    // Di chuyển phần tử trong mảng
+    const [movedItem] = currentList.splice(sourceIndex, 1);
+    currentList.splice(targetIndex, 0, movedItem);
+
+    // Cập nhật UI ngay lập tức
+    setMedia(currentList);
+
+    // Gọi API lưu lại thứ tự vào CSDL
+    try {
+      const albumTargetId = album?.share_code || album?.id || id;
+      const reorderPayload = currentList.map((m, idx) => ({
+        id: m.id,
+        sort_order: idx,
+      }));
+      await mediaAPI.reorder({
+        album_id: albumTargetId,
+        items: reorderPayload,
+      });
+      showToast("success", "Đã cập nhật thứ tự trình chiếu Story!");
+    } catch (err) {
+      console.error("Lỗi cập nhật thứ tự:", err);
+      showToast("error", "Không thể lưu thứ tự ảnh/video");
+      loadAlbum(); // Rollback nếu lỗi
+    }
+  };
+
+  const handleDragEnd = () => {
+    setDraggedId(null);
+    setDragOverId(null);
   };
 
   const handleSendReport = async (e) => {
@@ -404,7 +532,10 @@ export default function AlbumPage() {
     return (
       <Dino404
         title="Không Tìm Thấy Album Kỷ Niệm"
-        message={loadError.message || "Album này có thể ở chế độ riêng tư, đã bị xóa hoặc đường dẫn không chính xác."}
+        message={
+          loadError.message ||
+          "Album này có thể ở chế độ riêng tư, đã bị xóa hoặc đường dẫn không chính xác."
+        }
         backBtnText="Quay Lại"
       />
     );
@@ -419,7 +550,8 @@ export default function AlbumPage() {
 
   const filteredMedia = media.filter((m) => {
     const isVideo = m.media_type === "video";
-    const isPhoto = m.media_type === "photo" || m.media_type === "image" || !isVideo;
+    const isPhoto =
+      m.media_type === "photo" || m.media_type === "image" || !isVideo;
     if (activeFilter === "image" && !isPhoto) return false;
     if (activeFilter === "video" && !isVideo) return false;
     return true;
@@ -454,7 +586,11 @@ export default function AlbumPage() {
 
           <div className="album-nav-right">
             <Link
-              href={album.province_slug ? `/province/${album.province_slug}` : "/#provinces"}
+              href={
+                album.province_slug
+                  ? `/province/${album.province_slug}`
+                  : "/#provinces"
+              }
               className="album-icon-btn album-icon-btn--guide"
               title={`Xem cẩm nang & thông tin du lịch ${album.province_name || "tỉnh này"}`}
             >
@@ -479,7 +615,9 @@ export default function AlbumPage() {
                 title="Thêm ảnh"
               >
                 <Camera size={16} />
-                <span className="btn-text-desktop">{uploading ? "Đang tải..." : "Thêm ảnh"}</span>
+                <span className="btn-text-desktop">
+                  {uploading ? "Đang tải..." : "Thêm ảnh"}
+                </span>
               </button>
             )}
           </div>
@@ -520,14 +658,33 @@ export default function AlbumPage() {
             🔒
           </div>
           <div>
-            <h3 style={{ margin: "0 0 0.35rem 0", fontSize: "1.1rem", fontWeight: 800, color: "#b91c1c" }}>
+            <h3
+              style={{
+                margin: "0 0 0.35rem 0",
+                fontSize: "1.1rem",
+                fontWeight: 800,
+                color: "#b91c1c",
+              }}
+            >
               Album Này Đang Bị Tạm Khóa Bởi Quản Trị Viên
             </h3>
-            <p style={{ margin: "0 0 0.4rem 0", fontSize: "0.9rem", color: "#7f1d1d", lineHeight: 1.5 }}>
-              <strong>Lý do khóa:</strong> {album.locked_reason || "Nội dung vi phạm chính sách cộng đồng hoặc thuần phong mỹ tục"}.
+            <p
+              style={{
+                margin: "0 0 0.4rem 0",
+                fontSize: "0.9rem",
+                color: "#7f1d1d",
+                lineHeight: 1.5,
+              }}
+            >
+              <strong>Lý do khóa:</strong>{" "}
+              {album.locked_reason ||
+                "Nội dung vi phạm chính sách cộng đồng hoặc thuần phong mỹ tục"}
+              .
             </p>
             <p style={{ margin: 0, fontSize: "0.82rem", color: "#991b1b" }}>
-              Album đã được tạm ẩn khỏi bản đồ du lịch công cộng. Nếu bạn cho rằng đây là sự nhầm lẫn, vui lòng liên hệ bộ phận CSKH để được hỗ trợ mở khóa.
+              Album đã được tạm ẩn khỏi bản đồ du lịch công cộng. Nếu bạn cho
+              rằng đây là sự nhầm lẫn, vui lòng liên hệ bộ phận CSKH để được hỗ
+              trợ mở khóa.
             </p>
           </div>
         </div>
@@ -543,7 +700,11 @@ export default function AlbumPage() {
           <div className="album-hero-card">
             {/* Province Map Piece 3D Badge */}
             <Link
-              href={album.province_slug ? `/province/${album.province_slug}` : "/#provinces"}
+              href={
+                album.province_slug
+                  ? `/province/${album.province_slug}`
+                  : "/#provinces"
+              }
               className="album-hero-badge-wrap"
               title={`Khám phá cẩm nang & thông tin ${album.province_name}`}
               style={{ textDecoration: "none", display: "block" }}
@@ -603,12 +764,29 @@ export default function AlbumPage() {
                 <>
                   <div className="album-meta-badge-row">
                     <Link
-                      href={album.province_slug ? `/province/${album.province_slug}` : "/#provinces"}
+                      href={
+                        album.province_slug
+                          ? `/province/${album.province_slug}`
+                          : "/#provinces"
+                      }
                       className="album-meta-badge album-meta-badge--province"
                       title={`Khám phá cẩm nang du lịch & danh thắng ${album.province_name}`}
-                      style={{ textDecoration: "none", cursor: "pointer", transition: "transform 0.15s ease" }}
+                      style={{
+                        textDecoration: "none",
+                        cursor: "pointer",
+                        transition: "transform 0.15s ease",
+                      }}
                     >
-                      📍 {album.province_name} <span style={{ opacity: 0.8, fontSize: "0.75rem", marginLeft: "4px" }}>↗ Cẩm nang</span>
+                      📍 {album.province_name}{" "}
+                      <span
+                        style={{
+                          opacity: 0.8,
+                          fontSize: "0.75rem",
+                          marginLeft: "4px",
+                        }}
+                      >
+                        ↗ Cẩm nang
+                      </span>
                     </Link>
                     {album.is_public ? (
                       <span className="album-meta-badge album-meta-badge--public">
@@ -629,13 +807,15 @@ export default function AlbumPage() {
                     <p className="album-hero-quote">"{album.description}"</p>
                   ) : (
                     <p className="album-hero-empty-desc">
-                      Hành trình chạm thẻ NFC và lưu giữ những kỷ niệm quý giá tại {album.province_name}.
+                      Hành trình chạm thẻ NFC và lưu giữ những kỷ niệm quý giá
+                      tại {album.province_name}.
                     </p>
                   )}
 
                   <div className="album-meta-stats-row">
                     <span className="album-meta-tag">
-                      <Smile size={14} /> Chủ Album: <strong>{album.owner_name}</strong>
+                      <Smile size={14} /> Chủ Album:{" "}
+                      <strong>{album.owner_name}</strong>
                     </span>
                     <span className="album-meta-tag">
                       <Camera size={14} /> {media.length} Khoảnh khắc
@@ -651,7 +831,11 @@ export default function AlbumPage() {
               <div className="album-hero-actions-bar">
                 {/* Nút xem thông tin tỉnh / cẩm nang */}
                 <Link
-                  href={album.province_slug ? `/province/${album.province_slug}` : "/#provinces"}
+                  href={
+                    album.province_slug
+                      ? `/province/${album.province_slug}`
+                      : "/#provinces"
+                  }
                   className="album-pill-btn album-pill-btn--province"
                   title={`Khám phá cẩm nang du lịch & danh thắng ${album.province_name}`}
                 >
@@ -732,16 +916,20 @@ export default function AlbumPage() {
                   </div>
                 )}
 
-                {!isOwner && !isCollaborator && !isPendingCollaborator && album.status === "active" && isLoggedIn() && (
-                  <button
-                    className="album-pill-btn album-pill-btn--primary"
-                    onClick={handleRequestEdit}
-                    disabled={requestingEdit}
-                  >
-                    <UserPlus size={14} />{" "}
-                    {requestingEdit ? "Đang gửi..." : "Xin Quyền Đóng Góp"}
-                  </button>
-                )}
+                {!isOwner &&
+                  !isCollaborator &&
+                  !isPendingCollaborator &&
+                  album.status === "active" &&
+                  isLoggedIn() && (
+                    <button
+                      className="album-pill-btn album-pill-btn--primary"
+                      onClick={handleRequestEdit}
+                      disabled={requestingEdit}
+                    >
+                      <UserPlus size={14} />{" "}
+                      {requestingEdit ? "Đang gửi..." : "Xin Quyền Đóng Góp"}
+                    </button>
+                  )}
 
                 {!isOwner && album.status === "active" && (
                   <button
@@ -761,54 +949,60 @@ export default function AlbumPage() {
       </section>
 
       {/* ─── 2. COLLABORATOR REQUESTS (CHỈ CHỦ ALBUM) ───────────── */}
-      {isOwner && (pendingRequests.length > 0 || approvedCollaborators.length > 0) && (
-        <section className="album-collab-section">
-          <div className="album-collab-card">
-            <div className="album-collab-header">
-              <UserCheck size={18} style={{ color: "#2563eb" }} />
-              <h3>Cộng Tác Viên Đóng Góp ({approvedCollaborators.length + pendingRequests.length})</h3>
-            </div>
+      {isOwner &&
+        (pendingRequests.length > 0 || approvedCollaborators.length > 0) && (
+          <section className="album-collab-section">
+            <div className="album-collab-card">
+              <div className="album-collab-header">
+                <UserCheck size={18} style={{ color: "#2563eb" }} />
+                <h3>
+                  Cộng Tác Viên Đóng Góp (
+                  {approvedCollaborators.length + pendingRequests.length})
+                </h3>
+              </div>
 
-            {pendingRequests.length > 0 && (
-              <div className="album-collab-pending-list">
-                {pendingRequests.map((c) => (
-                  <div key={c.id} className="album-collab-item">
-                    <span>
-                      <b>{c.name}</b> ({c.email}) muốn cùng đăng ảnh
-                    </span>
-                    <div className="album-collab-btns">
-                      <button
-                        className="album-btn album-btn--primary album-btn--xs"
-                        onClick={() => handleReviewRequest(c.id, "approve")}
-                      >
-                        <Check size={13} /> Duyệt
-                      </button>
-                      <button
-                        className="album-btn album-btn--ghost album-btn--xs"
-                        onClick={() => handleReviewRequest(c.id, "reject")}
-                      >
-                        Từ chối
-                      </button>
+              {pendingRequests.length > 0 && (
+                <div className="album-collab-pending-list">
+                  {pendingRequests.map((c) => (
+                    <div key={c.id} className="album-collab-item">
+                      <span>
+                        <b>{c.name}</b> ({c.email}) muốn cùng đăng ảnh
+                      </span>
+                      <div className="album-collab-btns">
+                        <button
+                          className="album-btn album-btn--primary album-btn--xs"
+                          onClick={() => handleReviewRequest(c.id, "approve")}
+                        >
+                          <Check size={13} /> Duyệt
+                        </button>
+                        <button
+                          className="album-btn album-btn--ghost album-btn--xs"
+                          onClick={() => handleReviewRequest(c.id, "reject")}
+                        >
+                          Từ chối
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
 
-            {approvedCollaborators.map((c) => (
-              <div key={c.id} className="album-collab-approved-row">
-                <span>👤 {c.name} ({c.email})</span>
-                <button
-                  className="album-btn-text-del"
-                  onClick={() => handleRevoke(c.id)}
-                >
-                  Thu hồi quyền
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+              {approvedCollaborators.map((c) => (
+                <div key={c.id} className="album-collab-approved-row">
+                  <span>
+                    👤 {c.name} ({c.email})
+                  </span>
+                  <button
+                    className="album-btn-text-del"
+                    onClick={() => handleRevoke(c.id)}
+                  >
+                    Thu hồi quyền
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
       {/* ─── 3. MEDIA GALLERY & FILTER TABS ─────────────────────── */}
       <main className="album-gallery-section">
@@ -885,7 +1079,8 @@ export default function AlbumPage() {
             </div>
             <h3>Chưa Có Khoảnh Khắc Nào</h3>
             <p>
-              Chạm thẻ NFC hoặc tải lên những bức ảnh & video đầu tiên của chuyến đi {album.province_name}!
+              Chạm thẻ NFC hoặc tải lên những bức ảnh & video đầu tiên của
+              chuyến đi {album.province_name}!
             </p>
             {(isOwner || isCollaborator) && album.status === "active" && (
               <button
@@ -894,7 +1089,9 @@ export default function AlbumPage() {
                 disabled={uploading}
               >
                 <UploadCloud size={18} />
-                <span>{uploading ? "Đang xử lý..." : "Tải Lên Khoảnh Khắc Đầu Tiên"}</span>
+                <span>
+                  {uploading ? "Đang xử lý..." : "Tải Lên Khoảnh Khắc Đầu Tiên"}
+                </span>
               </button>
             )}
           </div>
@@ -904,16 +1101,27 @@ export default function AlbumPage() {
               <MediaCard
                 key={m.id ? `media-${m.id}` : `media-idx-${idx}`}
                 item={m}
+                index={idx}
                 isOwner={isOwner}
                 canEdit={canEdit && album.status === "active"}
                 canDelete={isOwner || (user && user.id === m.uploader_id)}
                 onDelete={() => handleDeleteMedia(m.id)}
                 onSaveCaption={(caption) => handleSaveCaption(m.id, caption)}
-                onToggleTag={(tagId, isTagged) =>
-                  handleToggleTagOnMedia(m, tagId, isTagged)
-                }
                 onOpenLightbox={() => setLightboxIndex(idx)}
                 onOpenSticker={(it) => setStickerEditingItem(it)}
+                onDownload={() =>
+                  handleDownloadMedia(
+                    m.file_url,
+                    `vinatap_${album?.province_slug || "media"}_${m.id}`,
+                  )
+                }
+                onDragStart={(e) => handleDragStart(e, m)}
+                onDragOver={(e) => handleDragOver(e, m)}
+                onDragLeave={(e) => handleDragLeave(e, m)}
+                onDrop={(e) => handleDrop(e, m)}
+                onDragEnd={handleDragEnd}
+                isDragging={draggedId === m.id}
+                isDragOver={dragOverId === m.id}
               />
             ))}
           </div>
@@ -937,7 +1145,10 @@ export default function AlbumPage() {
             className="album-lightbox-card"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="album-lightbox-media-wrap" style={{ position: "relative" }}>
+            <div
+              className="album-lightbox-media-wrap"
+              style={{ position: "relative" }}
+            >
               {currentLightboxItem.media_type === "video" ? (
                 <video
                   src={currentLightboxItem.file_url}
@@ -946,7 +1157,14 @@ export default function AlbumPage() {
                   className="album-lightbox-video"
                 />
               ) : (
-                <div style={{ position: "relative", display: "inline-block", maxWidth: "100%", maxHeight: "72vh" }}>
+                <div
+                  style={{
+                    position: "relative",
+                    display: "inline-block",
+                    maxWidth: "100%",
+                    maxHeight: "72vh",
+                  }}
+                >
                   <img
                     src={currentLightboxItem.file_url}
                     alt=""
@@ -957,7 +1175,9 @@ export default function AlbumPage() {
                     ? currentLightboxItem.stickers
                     : (() => {
                         try {
-                          return JSON.parse(currentLightboxItem.stickers || "[]");
+                          return JSON.parse(
+                            currentLightboxItem.stickers || "[]",
+                          );
                         } catch (e) {
                           return [];
                         }
@@ -998,7 +1218,10 @@ export default function AlbumPage() {
                 )}
               </div>
 
-              <div className="album-lightbox-actions" style={{ display: "flex", gap: "8px" }}>
+              <div
+                className="album-lightbox-actions"
+                style={{ display: "flex", gap: "8px" }}
+              >
                 {canEdit && currentLightboxItem.media_type !== "video" && (
                   <button
                     className="album-lightbox-action-btn"
@@ -1046,6 +1269,7 @@ export default function AlbumPage() {
           albumName={album?.title || album?.province_name}
           ownerName={album?.owner_name}
           provinceThumb={album?.province_thumbnail}
+          onDownloadMedia={handleDownloadMedia}
           onClose={() => setStoryModeIndex(null)}
         />
       )}
@@ -1248,7 +1472,9 @@ export default function AlbumPage() {
       <ShareModal
         isOpen={showShareModal}
         onClose={() => setShowShareModal(false)}
-        albumTitle={album?.title || album?.province_name || "Album Kỷ Niệm VinaTap"}
+        albumTitle={
+          album?.title || album?.province_name || "Album Kỷ Niệm VinaTap"
+        }
         shareUrl={
           typeof window !== "undefined"
             ? `${window.location.origin}/album/${album?.share_code || album?.id || id}`
@@ -1263,6 +1489,7 @@ export default function AlbumPage() {
 // ─── Component: Media Card Gallery Item ───────────────────────
 function MediaCard({
   item,
+  index,
   isOwner,
   canEdit,
   canDelete,
@@ -1270,6 +1497,14 @@ function MediaCard({
   onSaveCaption,
   onOpenLightbox,
   onOpenSticker,
+  onDownload,
+  onDragStart,
+  onDragOver,
+  onDragLeave,
+  onDrop,
+  onDragEnd,
+  isDragging,
+  isDragOver,
 }) {
   const [caption, setCaption] = useState(
     item.caption_user || item.caption_ai || "",
@@ -1287,7 +1522,26 @@ function MediaCard({
       })();
 
   return (
-    <div className="album-media-item">
+    <div
+      className={`album-media-item ${isDragging ? "is-dragging" : ""} ${isDragOver ? "is-drag-over" : ""}`}
+      draggable={canEdit}
+      onDragStart={onDragStart}
+      onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
+      onDrop={onDrop}
+      onDragEnd={onDragEnd}
+    >
+      {/* Visual drag handle */}
+      {canEdit && (
+        <div
+          className="album-card-drag-handle"
+          title="Kéo thả để sắp xếp lại vị trí phát Story"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <GripVertical size={16} />
+        </div>
+      )}
+
       {/* Media Thumbnail Container */}
       <div
         className="album-media-visual"
@@ -1333,7 +1587,7 @@ function MediaCard({
 
         {/* Hover Action Overlay */}
         <div className="album-media-hover-overlay">
-          <div className="album-hover-zoom-btn">
+          <div className="album-hover-zoom-btn" title="Xem phóng to">
             <Maximize2 size={18} />
           </div>
         </div>
@@ -1342,7 +1596,10 @@ function MediaCard({
       {/* Caption & Actions Row */}
       <div className="album-media-details" onClick={(e) => e.stopPropagation()}>
         {editingCaption ? (
-          <div className="album-edit-caption-row" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="album-edit-caption-row"
+            onClick={(e) => e.stopPropagation()}
+          >
             <input
               className="album-caption-input"
               value={caption}
@@ -1384,7 +1641,10 @@ function MediaCard({
 
         {/* Action Buttons: Dán Sticker */}
         {canEdit && item.media_type !== "video" && (
-          <div className="album-card-tags-row" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="album-card-tags-row"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               type="button"
               className="album-card-stamp-btn"
@@ -1399,7 +1659,7 @@ function MediaCard({
           </div>
         )}
 
-        {/* Footer Meta: Date & Delete */}
+        {/* Footer Meta: Date, Download & Delete */}
         <div className="album-card-footer" onClick={(e) => e.stopPropagation()}>
           <span className="album-card-date">
             {item.created_at
@@ -1407,19 +1667,35 @@ function MediaCard({
               : ""}
           </span>
 
-          {canDelete && (
-            <button
-              type="button"
-              className="album-card-delete-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                onDelete();
-              }}
-              title="Xóa tệp"
-            >
-              <Trash2 size={14} />
-            </button>
-          )}
+          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            {onDownload && (
+              <button
+                type="button"
+                className="album-card-action-icon-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDownload();
+                }}
+                title="Tải ảnh/video về máy"
+              >
+                <Download size={14} />
+              </button>
+            )}
+
+            {canDelete && (
+              <button
+                type="button"
+                className="album-card-delete-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete();
+                }}
+                title="Xóa tệp"
+              >
+                <Trash2 size={14} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -1433,6 +1709,7 @@ function StoryViewer({
   albumName = "",
   ownerName = "",
   provinceThumb = "",
+  onDownloadMedia,
   onClose,
 }) {
   const [index, setIndex] = useState(initialIndex);
@@ -1565,11 +1842,7 @@ function StoryViewer({
         <div className="album-story-header">
           <div className="album-story-user-info">
             {provinceThumb ? (
-              <img
-                src={provinceThumb}
-                alt=""
-                className="album-story-avatar"
-              />
+              <img src={provinceThumb} alt="" className="album-story-avatar" />
             ) : (
               <div
                 className="album-story-avatar"
@@ -1614,6 +1887,23 @@ function StoryViewer({
               </button>
             )}
 
+            {/* Nút Tải Video / Ảnh về máy */}
+            <button
+              className="album-story-close-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onDownloadMedia) {
+                  onDownloadMedia(
+                    currentItem.file_url,
+                    `vinatap_story_${currentItem.id}`,
+                  );
+                }
+              }}
+              title="Tải ảnh / video này về máy"
+            >
+              <Download size={16} />
+            </button>
+
             <button
               className="album-story-close-btn"
               onClick={(e) => {
@@ -1653,7 +1943,9 @@ function StoryViewer({
               className="album-story-media"
             />
           ) : (
-            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+            <div
+              style={{ position: "relative", width: "100%", height: "100%" }}
+            >
               <img
                 src={currentItem.file_url}
                 alt=""

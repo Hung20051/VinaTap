@@ -256,9 +256,18 @@
 .album-hero-backdrop {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 12% 25%, rgba(30, 27, 75, 0.85) 0%, transparent 60%),
-              radial-gradient(circle at 85% 35%, rgba(234, 88, 12, 0.45) 0%, transparent 60%),
-              linear-gradient(180deg, #090d16 0%, #0f172a 100%);
+  background:
+    radial-gradient(
+      circle at 12% 25%,
+      rgba(30, 27, 75, 0.85) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 85% 35%,
+      rgba(234, 88, 12, 0.45) 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, #090d16 0%, #0f172a 100%);
   z-index: 1;
 }
 
@@ -287,7 +296,9 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 36px;
   padding: 3rem 3.25rem;
-  box-shadow: 0 35px 85px -10px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 35px 85px -10px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   color: #ffffff;
 }
 
@@ -300,21 +311,31 @@
   width: 140px;
   height: 140px;
   border-radius: 30px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
   backdrop-filter: blur(20px);
   border: 2px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(234, 88, 12, 0.25);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(234, 88, 12, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   position: relative;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease;
 }
 
 .album-nfc-piece-card:hover {
   transform: translateY(-6px) scale(1.04);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(234, 88, 12, 0.4);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(234, 88, 12, 0.4);
 }
 
 .album-piece-img {
@@ -454,7 +475,11 @@
 }
 
 .album-pill-btn--province {
-  background: linear-gradient(135deg, rgba(234, 88, 12, 0.4) 0%, rgba(249, 115, 22, 0.3) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(234, 88, 12, 0.4) 0%,
+    rgba(249, 115, 22, 0.3) 100%
+  );
   border-color: rgba(251, 146, 60, 0.65);
   color: #ffedd5;
   box-shadow: 0 4px 15px rgba(234, 88, 12, 0.25);
@@ -995,6 +1020,50 @@
   position: relative;
 }
 
+.album-media-item.is-dragging {
+  opacity: 0.45;
+  transform: scale(0.96);
+  border: 2px dashed #ea580c;
+  box-shadow: none;
+}
+
+.album-media-item.is-drag-over {
+  border: 2px solid #ea580c;
+  transform: scale(1.03);
+  box-shadow: 0 12px 36px rgba(234, 88, 12, 0.28);
+}
+
+.album-card-drag-handle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 15;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.album-card-drag-handle:hover {
+  background: #ea580c;
+  border-color: #fb923c;
+  transform: scale(1.1);
+}
+
+.album-card-drag-handle:active {
+  cursor: grabbing;
+}
+
 .album-media-item:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
@@ -1047,7 +1116,11 @@
 .album-media-hover-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
   opacity: 0;
   display: flex;
   align-items: flex-end;
@@ -1229,6 +1302,24 @@
   font-size: 0.74rem;
   color: #94a3b8;
   font-weight: 500;
+}
+
+.album-card-action-icon-btn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.album-card-action-icon-btn:hover {
+  color: #ea580c;
+  background: #fff7ed;
 }
 
 .album-card-delete-btn {
@@ -1648,7 +1739,9 @@
   .album-story-container {
     height: 92vh;
     border-radius: 28px;
-    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 30px 100px rgba(0, 0, 0, 0.9),
+      0 0 0 1px rgba(255, 255, 255, 0.15);
   }
 }
 

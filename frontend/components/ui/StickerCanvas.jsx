@@ -182,22 +182,16 @@ export default function StickerCanvas({ mediaItem, onClose, onSaved }) {
   const handleSave = async () => {
     setSaving(true);
     try {
-      // Xóa overlay cũ có id (đã lưu DB)
-      const existing = overlays.filter((ov) => ov.id);
-      for (const ov of existing) {
-        await mediaAPI.deleteSticker(ov.id);
-      }
-      // Lưu tất cả overlay hiện tại
-      for (const ov of overlays) {
-        await mediaAPI.addSticker(mediaItem.id, {
-          sticker_id: ov.sticker_id,
-          pos_x: (ov.x / CANVAS_W) * 100,
-          pos_y: (ov.y / CANVAS_H) * 100,
-          scale: ov.scale,
-          rotation_deg: ov.rotation,
-          z_index: ov.z_index,
-        });
-      }
+      const payload = overlays.map((ov) => ({
+        sticker_id: ov.sticker_id,
+        pos_x: (ov.x / CANVAS_W) * 100,
+        pos_y: (ov.y / CANVAS_H) * 100,
+        scale: ov.scale,
+        rotation_deg: ov.rotation,
+        z_index: ov.z_index,
+      }));
+
+      await mediaAPI.saveStickers(mediaItem.id, payload);
       onSaved?.();
       onClose?.();
     } catch (err) {

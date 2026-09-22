@@ -460,6 +460,103 @@ const deleteStickerOverlay = async (req, res) => {
   }
 };
 
+// ─── LƯU TOÀN BỘ STICKER LÊN ẢNH (GHI ĐÈ TẤT CẢ) ─────────────
+// PUT /api/media/:id/stickers
+const saveMediaStickers = async (req, res) => {
+  try {
+    const mediaId = req.params.id;
+    const albumId = await getAlbumIdByMedia(mediaId);
+    if (!albumId) {
+      return res.status(404).json({ message: "Không tìm thấy media" });
+    }
+
+    if (!(await checkUploadPermission(albumId, req.user.id, req.user.role))) {
+      return res.status(403).json({ message: "Bạn không có quyền sửa ảnh này" });
+    }
+
+    const { overlays } = req.body;
+    const overlayList = Array.isArray(overlays) ? overlays : [];
+
+    // Xóa toàn bộ sticker cũ của ảnh này
+    await db.execute(`DELETE FROM media_sticker_overlays WHERE media_id = ?`, [mediaId]);
+
+    // Thêm lại các sticker mới nếu có
+    for (const ov of overlayList) {
+      if (!ov.sticker_id) continue;
+      await db.execute(
+        `INSERT INTO media_sticker_overlays
+           (media_id, sticker_id, pos_x, pos_y, scale, rotation_deg, z_index)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [
+          mediaId,
+          ov.sticker_id,
+          ov.pos_x || 0,
+          ov.pos_y || 0,
+          ov.scale || 1.0,
+          ov.rotation_deg || 0,
+          ov.z_index || 0,
+        ],
+      );
+    }
+
+    const album = await Album.findById(albumId);
+    emitToAlbum(albumId, album?.share_code, "media_updated", {
+      mediaId: Number(mediaId),
+    });
+
+    res.json({ message: "Lưu sticker thành công" });
+  } catch (err) {
+    console.error("saveMediaStickers error:", err);
+    res.status(500).json({ message: "Lỗi server: " + err.message });
+  }
+};
+
+// ─── SẮP XẾP THỨ TỰ MEDIA (DRAG & DROP) ──────────────────────
+// PUT /api/media/reorder
+// Body: { album_id, items: [{ id: 1, sort_order: 0 }, { id: 2, sort_order: 1 }, ...] }
+const reorderMedia = async (req, res) => {
+  try {
+    const { album_id, items } = req.body;
+    if (!album_id || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ message: "Thiếu album_id hoặc danh sách sắp xếp items" });
+    }
+
+    const targetAlbum = await checkUploadPermission(
+      album_id,
+      req.user.id,
+      req.user.role,
+    );
+    if (!targetAlbum) {
+      return res.status(403).json({ message: "Bạn không có quyền sắp xếp album này" });
+    }
+
+    const numericAlbumId = targetAlbum.id;
+
+    // Cập nhật sort_order theo từng item
+    const updatePromises = items.map((item, idx) => {
+      const order = typeof item.sort_order === "number" ? item.sort_order : idx;
+      return db.execute(
+        `UPDATE album_media SET sort_order = ? WHERE id = ? AND album_id = ?`,
+        [order, item.id, numericAlbumId],
+      );
+    });
+
+    await Promise.all(updatePromises);
+
+    // Phát sự kiện Socket.IO để đồng bộ thời gian thực cho mọi người cùng xem album
+    emitToAlbum(numericAlbumId, targetAlbum.share_code, "media_reordered", {
+      album_id: numericAlbumId,
+      items,
+      reorderedBy: req.user.name || "Chủ album",
+    });
+
+    res.json({ message: "Đã cập nhật thứ tự ảnh thành công" });
+  } catch (err) {
+    console.error("reorderMedia error:", err);
+    res.status(500).json({ message: "Lỗi sắp xếp: " + err.message });
+  }
+};
+
 module.exports = {
   uploadMedia,
   uploadMultipleMedia,
@@ -468,4 +565,6 @@ module.exports = {
   addStickerOverlay,
   updateStickerOverlay,
   deleteStickerOverlay,
+  saveMediaStickers,
+  reorderMedia,
 };

@@ -331,6 +331,8 @@ export const notificationAPI = {
 export const mediaAPI = {
   upload: (formData) => upload("/media/upload", formData),
   uploadMultiple: (formData) => upload("/media/upload-multiple", formData),
+  reorder: (body) =>
+    request("/media/reorder", { method: "PUT", body: JSON.stringify(body) }),
   update: (id, body) =>
     request(`/media/${id}`, { method: "PUT", body: JSON.stringify(body) }),
   updateCaption: (id, caption_user) =>
@@ -343,6 +345,11 @@ export const mediaAPI = {
     request(`/media/${id}/stickers`, {
       method: "POST",
       body: JSON.stringify(body),
+    }),
+  saveStickers: (id, overlays) =>
+    request(`/media/${id}/stickers`, {
+      method: "PUT",
+      body: JSON.stringify({ overlays }),
     }),
   updateSticker: (overlayId, body) =>
     request(`/media/stickers/${overlayId}`, {
