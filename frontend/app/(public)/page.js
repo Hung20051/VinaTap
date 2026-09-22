@@ -499,7 +499,7 @@ export default function HomePage() {
                     t(lang, "pricingTier1F2"),
                     t(lang, "pricingTier1F3"),
                   ],
-                  highlight: false,
+                  badge: null,
                 },
                 {
                   name: t(lang, "pricingTier2Name"),
@@ -510,7 +510,7 @@ export default function HomePage() {
                     t(lang, "pricingTier2F2"),
                     t(lang, "pricingTier2F3"),
                   ],
-                  highlight: true,
+                  badge: t(lang, "pricingTier2Badge"),
                 },
                 {
                   name: t(lang, "pricingTier3Name"),
@@ -521,15 +521,15 @@ export default function HomePage() {
                     t(lang, "pricingTier3F2"),
                     t(lang, "pricingTier3F3"),
                   ],
-                  highlight: false,
+                  badge: null,
                 },
               ].map((tier) => (
                 <div
                   key={tier.name}
-                  className={`home-pricing__card ${tier.highlight ? "home-pricing__card--highlight" : ""}`}
+                  className="home-pricing__card"
                 >
-                  {tier.highlight && (
-                    <span className="home-pricing__badge">{t(lang, "pricingTier2Badge")}</span>
+                  {tier.badge && (
+                    <span className="home-pricing__badge">{tier.badge}</span>
                   )}
                   <div className="home-pricing__name">{tier.name}</div>
                   <div className="home-pricing__price">{tier.price}</div>
