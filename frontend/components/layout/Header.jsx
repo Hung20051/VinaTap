@@ -121,8 +121,8 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
       </div>
 
       <div className="header-region-right">
-        <LanguageSwitch variant="header" />
         <NotificationBell />
+        <LanguageSwitch variant="header" />
 
         {user && (
           <div className="header-user-menu-wrap" ref={userMenuRef}>

@@ -669,3 +669,247 @@ export const dict = {
 };
 
 export const t = (lang, key) => dict[lang]?.[key] || dict.vi[key] || key;
+
+// ─── TRANSLATION DATA CHO 34 TỈNH THÀNH VIỆT NAM ───
+export const PROVINCES_EN = {
+  "ha-noi": {
+    name: "Hanoi",
+    description:
+      "A thousand-year-old capital of culture featuring 36 ancient streets, sacred Hoan Kiem Lake, Thang Long Imperial Citadel, and world-renowned culinary heritage.",
+  },
+  "ho-chi-minh": {
+    name: "Ho Chi Minh City",
+    description:
+      "Vietnam's most vibrant economic, financial, and cultural powerhouse, blending classical colonial elegance with an energetic modern rhythm that never sleeps.",
+  },
+  "da-nang": {
+    name: "Da Nang",
+    description:
+      "Vietnam's most livable coastal metropolis with stunning My Khe Beach, the iconic Golden Bridge at Ba Na Hills, legendary Dragon Bridge, and Marble Mountains.",
+  },
+  "quang-ninh": {
+    name: "Quang Ninh",
+    description:
+      "UNESCO World Natural Wonder Ha Long Bay, the sacred mountain sanctuaries of Yen Tu, and an extraordinary maritime island heritage.",
+  },
+  "lam-dong": {
+    name: "Lam Dong",
+    description:
+      "The dreamy mist and flower kingdom of Da Lat, lush rolling tea hills, year-round cool highland breeze, and majestic waterfalls.",
+  },
+  "hai-phong": {
+    name: "Hai Phong",
+    description:
+      "The vibrant port city of red flamboyant blooms, the emerald waters of Cat Ba Archipelago, Do Son beach, and a renowned street food tour haven.",
+  },
+  "hue": {
+    name: "Hue",
+    description:
+      "The poetic imperial citadel along the Perfume River, royal palace complexes, UNESCO royal court music (Nha Nhac), and exquisite gastronomy.",
+  },
+  "can-tho": {
+    name: "Can Tho",
+    description:
+      "The bustling capital of the Mekong Delta, famous for lively Cai Rang floating market, scenic Ninh Kieu Wharf, and boundless tropical fruit orchards.",
+  },
+  "bac-ninh": {
+    name: "Bac Ninh",
+    description:
+      "The cradle of traditional Kinh Bac culture, birthplace of UNESCO-recognized Quan Ho folk melodies and centuries-old artisan craft villages.",
+  },
+  "hung-yen": {
+    name: "Hung Yen",
+    description:
+      "The storied Pho Hien river port with ancient sacred temples, blooming fragrant lotus ponds, and royal-tribute longan fruits.",
+  },
+  "ninh-binh": {
+    name: "Ninh Binh",
+    description:
+      "The thousand-year ancient capital Hoa Lu, UNESCO dual heritage Trang An landscape, Tam Coc river caves, and ethereal karst peaks.",
+  },
+  "phu-tho": {
+    name: "Phu Tho",
+    description:
+      "Ancestral heartland of the Vietnamese nation and the sacred Hung Kings Temple, surrounded by lush rolling Long Coc tea hills.",
+  },
+  "thai-nguyen": {
+    name: "Thai Nguyen",
+    description:
+      "Vietnam's premier tea capital with world-class Tan Cuong plantations, tranquil Nui Coc Lake, and historic ATK Dinh Hoa revolutionary base.",
+  },
+  "lao-cai": {
+    name: "Lao Cai",
+    description:
+      "Where northwest mountain ranges meet the sky, crowned by Mount Fansipan - Roof of Indochina, misty alpine Sa Pa, and breathtaking stepped rice terraces.",
+  },
+  "tuyen-quang": {
+    name: "Tuyen Quang",
+    description:
+      "Historic cradle of resistance with Tan Trao national relic, stunning Na Hang Lake among karst peaks, and Vietnam's grandest Mid-Autumn lantern festival.",
+  },
+  "cao-bang": {
+    name: "Cao Bang",
+    description:
+      "UNESCO Global Geopark Non Nuoc Cao Bang, majestic Ban Gioc Waterfall—one of Southeast Asia's greatest natural wonders, and historic Pac Bo.",
+  },
+  "lang-son": {
+    name: "Lang Son",
+    description:
+      "The historic northern frontier gateway featuring heroic Chi Lang Pass, Tam Thanh Pagoda caves, snowy Mau Son peak, and bustling border trade.",
+  },
+  "son-la": {
+    name: "Son La",
+    description:
+      "The idyllic Moc Chau highland blooming through four seasons, heart-shaped tea plantations, Ban Ang pine groves, and the monumental Son La hydropower plant.",
+  },
+  "dien-bien": {
+    name: "Dien Bien",
+    description:
+      "Echoes of historic Dien Bien Phu victories, golden Muong Thanh rice valley, and indigenous Thai culture along the peaceful Nam Rom River.",
+  },
+  "lai-chau": {
+    name: "Lai Chau",
+    description:
+      "A mountaineer's heaven boasting towering peaks like Pu Si Lung, the dramatic O Quy Ho mountain pass, and untouched Thu Lum terraced fields.",
+  },
+  "thanh-hoa": {
+    name: "Thanh Hoa",
+    description:
+      "A land of legends home to UNESCO World Heritage Citadel of the Ho Dynasty, lively Sam Son beach, pristine Pu Luong nature reserve, and sacred Cam Luong fish stream.",
+  },
+  "nghe-an": {
+    name: "Nghe An",
+    description:
+      "The beloved homeland of President Ho Chi Minh, picturesque Cua Lo coastline, Pu Mat National Park, and bright blooming sunflower fields in Nghia Dan.",
+  },
+  "ha-tinh": {
+    name: "Ha Tinh",
+    description:
+      "Poetic lands framed by Hong Linh mountain and La River, memorial sites of national poet Nguyen Du, and emerald-water Thien Cam beach.",
+  },
+  "quang-tri": {
+    name: "Quang Tri",
+    description:
+      "A heroic land of peace and reflection, preserving Quang Tri Ancient Citadel, Truong Son Martyrs Cemetery, Vinh Moc Tunnels, and historic Hien Luong Bridge.",
+  },
+  "quang-ngai": {
+    name: "Quang Ngai",
+    description:
+      "Volcanic ocean paradise of Ly Son island, sacred Thien An Mountain, serene Tra Khuc River, and tranquil beaches.",
+  },
+  "khanh-hoa": {
+    name: "Khanh Hoa",
+    description:
+      "International resort paradise of Nha Trang Bay, crystal-clear Cam Ranh and Ninh Van lagoons, and thriving marine coral reefs.",
+  },
+  "gia-lai": {
+    name: "Gia Lai",
+    description:
+      "The wild Central Highlands featuring emerald T'Nung volcanic lake, golden blooming Chu Dang Ya volcano, and vibrant indigenous gong heritage.",
+  },
+  "dak-lak": {
+    name: "Dak Lak",
+    description:
+      "World-famous coffee capital Buon Ma Thuot, tranquil Lak Lake, Yok Don elephant wilderness, and deep-rooted Ede longhouse folklore.",
+  },
+  "dong-nai": {
+    name: "Dong Nai",
+    description:
+      "Southeastern economic powerhouse and UNESCO Cat Tien Biosphere Reserve, scenic Giang Dien cascades, and expansive breezes over Tri An Lake.",
+  },
+  "tay-ninh": {
+    name: "Tay Ninh",
+    description:
+      "Spiritual sanctuary crowned by Ba Den Mountain—the highest peak in southern Vietnam, the ornate Cao Dai Holy See, and expansive Dau Tieng Lake.",
+  },
+  "vinh-long": {
+    name: "Vinh Long",
+    description:
+      "The peaceful green heart of the Mekong Delta with An Binh fruit islets, rustic river cruises, and glowing red heritage pottery kilns along the Co Chi River.",
+  },
+  "dong-thap": {
+    name: "Dong Thap",
+    description:
+      "The fragrant lotus heartland of Thap Muoi, vibrant year-round Sa Dec flower gardens, Tram Chim red-crowned crane sanctuary, and colonial Huynh Thuy Le house.",
+  },
+  "an-giang": {
+    name: "An Giang",
+    description:
+      "Mystic Seven Mountains realm, sacred Ba Chua Xu Temple on Mount Sam, duckweed carpets of Tra Su cajuput forest, and lively Long Xuyen floating market.",
+  },
+  "ca-mau": {
+    name: "Ca Mau",
+    description:
+      "The sacred southernmost tip of Vietnam at Cape Ca Mau where ancient mangrove forests meet the sea, U Minh Ha wilderness, and world-renowned fresh crabs.",
+  },
+};
+
+export const PROVINCE_BY_NAME_EN = {
+  "Hà Nội": PROVINCES_EN["ha-noi"],
+  "TP. Hồ Chí Minh": PROVINCES_EN["ho-chi-minh"],
+  "Đà Nẵng": PROVINCES_EN["da-nang"],
+  "Quảng Ninh": PROVINCES_EN["quang-ninh"],
+  "Lâm Đồng": PROVINCES_EN["lam-dong"],
+  "Hải Phòng": PROVINCES_EN["hai-phong"],
+  "Huế": PROVINCES_EN["hue"],
+  "Cần Thơ": PROVINCES_EN["can-tho"],
+  "Bắc Ninh": PROVINCES_EN["bac-ninh"],
+  "Hưng Yên": PROVINCES_EN["hung-yen"],
+  "Ninh Bình": PROVINCES_EN["ninh-binh"],
+  "Phú Thọ": PROVINCES_EN["phu-tho"],
+  "Thái Nguyên": PROVINCES_EN["thai-nguyen"],
+  "Lào Cai": PROVINCES_EN["lao-cai"],
+  "Tuyên Quang": PROVINCES_EN["tuyen-quang"],
+  "Cao Bằng": PROVINCES_EN["cao-bang"],
+  "Lạng Sơn": PROVINCES_EN["lang-son"],
+  "Sơn La": PROVINCES_EN["son-la"],
+  "Điện Biên": PROVINCES_EN["dien-bien"],
+  "Lai Châu": PROVINCES_EN["lai-chau"],
+  "Thanh Hóa": PROVINCES_EN["thanh-hoa"],
+  "Nghệ An": PROVINCES_EN["nghe-an"],
+  "Hà Tĩnh": PROVINCES_EN["ha-tinh"],
+  "Quảng Trị": PROVINCES_EN["quang-tri"],
+  "Quảng Ngãi": PROVINCES_EN["quang-ngai"],
+  "Khánh Hòa": PROVINCES_EN["khanh-hoa"],
+  "Gia Lai": PROVINCES_EN["gia-lai"],
+  "Đắk Lắk": PROVINCES_EN["dak-lak"],
+  "Đồng Nai": PROVINCES_EN["dong-nai"],
+  "Tây Ninh": PROVINCES_EN["tay-ninh"],
+  "Vĩnh Long": PROVINCES_EN["vinh-long"],
+  "Đồng Tháp": PROVINCES_EN["dong-thap"],
+  "An Giang": PROVINCES_EN["an-giang"],
+  "Cà Mau": PROVINCES_EN["ca-mau"],
+};
+
+export const getProvinceName = (item, lang = "vi") => {
+  if (!item) return "";
+  const viName =
+    typeof item === "string" ? item : (item.name || item.province_name || "");
+  if (lang !== "en") return viName;
+
+  const slug =
+    typeof item === "object" ? (item.slug || item.province_slug) : null;
+  if (slug && PROVINCES_EN[slug]?.name) {
+    return PROVINCES_EN[slug].name;
+  }
+  const byName = PROVINCE_BY_NAME_EN[viName];
+  if (byName?.name) return byName.name;
+  return viName;
+};
+
+export const getProvinceDesc = (item, lang = "vi") => {
+  if (!item) return "";
+  const viDesc = item.description || "";
+  if (lang !== "en") return viDesc || "Khám phá địa danh nổi tiếng tại đây";
+
+  const slug = item.slug || item.province_slug;
+  if (slug && PROVINCES_EN[slug]?.description) {
+    return PROVINCES_EN[slug].description;
+  }
+  const viName = item.name || item.province_name || "";
+  if (viName && PROVINCE_BY_NAME_EN[viName]?.description) {
+    return PROVINCE_BY_NAME_EN[viName].description;
+  }
+  return viDesc || "Discover famous landmarks here";
+};
+

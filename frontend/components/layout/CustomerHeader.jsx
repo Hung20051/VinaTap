@@ -96,8 +96,6 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
       </div>
 
       <div className="header-region-right">
-        <LanguageSwitch variant="header" />
-
         <Link href="/shop" className="btn-header-shop">
           <ShoppingBag size={15} />
           <span>{t(lang, "shop")}</span>
@@ -113,6 +111,8 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
         </button>
 
         <NotificationBell />
+
+        <LanguageSwitch variant="header" />
 
         {user && (
           <div className="header-user-menu-wrap" ref={userMenuRef}>

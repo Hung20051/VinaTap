@@ -30,7 +30,7 @@ import { isLoggedIn, getUser, clearAuth } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useReveal } from "@/hooks/useReveal";
 import { getLang } from "@/lib/prefs";
-import { t } from "@/lib/i18n";
+import { t, getProvinceName, getProvinceDesc } from "@/lib/i18n";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import "@/styles/home.css";
 
@@ -163,7 +163,15 @@ export default function HomePage() {
   }, []);
 
   const filtered = provinces.filter((p) => {
-    const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
+    const q = search.toLowerCase().trim();
+    const pNameEn = getProvinceName(p, "en");
+    const pDescEn = getProvinceDesc(p, "en");
+    const matchSearch =
+      !q ||
+      p.name.toLowerCase().includes(q) ||
+      pNameEn.toLowerCase().includes(q) ||
+      (p.description && p.description.toLowerCase().includes(q)) ||
+      (pDescEn && pDescEn.toLowerCase().includes(q));
     const matchRegion = region === "all" || p.region === region;
     return matchSearch && matchRegion;
   });
@@ -622,43 +630,44 @@ export default function HomePage() {
                   ref={provinceTrackRef}
                   className="no-scrollbar home-provinces__track"
                 >
-                  {filtered.map((p) => (
-                    <Link
-                      key={p.id}
-                      href={`/province/${p.slug}`}
-                      className="home-provinces__card-link"
-                    >
-                      <div className="home-provinces__card">
-                        <div className="home-provinces__card-thumb">
-                          {p.thumbnail_url ? (
-                            <img
-                              src={p.thumbnail_url}
-                              alt={p.name}
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div className="home-provinces__card-thumb-placeholder">
-                              <Map size={30} strokeWidth={1.8} />
-                            </div>
-                          )}
-                          <span className="home-provinces__region-badge">
-                            {REGION_LABEL[lang]?.[p.region] || REGION_LABEL.vi[p.region]}
-                          </span>
+                  {filtered.map((p) => {
+                    const displayName = getProvinceName(p, lang);
+                    const displayDesc = getProvinceDesc(p, lang);
+                    return (
+                      <Link
+                        key={p.id}
+                        href={`/province/${p.slug}`}
+                        className="home-provinces__card-link"
+                      >
+                        <div className="home-provinces__card">
+                          <div className="home-provinces__card-thumb">
+                            {p.thumbnail_url ? (
+                              <img
+                                src={p.thumbnail_url}
+                                alt={displayName}
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="home-provinces__card-thumb-placeholder">
+                                <Map size={30} strokeWidth={1.8} />
+                              </div>
+                            )}
+                            <span className="home-provinces__region-badge">
+                              {REGION_LABEL[lang]?.[p.region] || REGION_LABEL.vi[p.region]}
+                            </span>
+                          </div>
+                          <div className="home-provinces__card-body">
+                            <h3 className="home-provinces__card-title">
+                              {displayName}
+                            </h3>
+                            <p className="home-provinces__card-desc">
+                              {displayDesc}
+                            </p>
+                          </div>
                         </div>
-                        <div className="home-provinces__card-body">
-                          <h3 className="home-provinces__card-title">
-                            {p.name}
-                          </h3>
-                          <p className="home-provinces__card-desc">
-                            {p.description ||
-                              (lang === "en"
-                                ? "Discover famous landmarks here"
-                                : "Khám phá địa danh nổi tiếng tại đây")}
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
+                      </Link>
+                    );
+                  })}
                 </div>
 
                 {/* Nút tiến */}

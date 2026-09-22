@@ -28,7 +28,7 @@ import {
 import { albumAPI, nfcAPI, authAPI, provinceAPI } from "@/lib/api";
 import { getUser, updateUser, clearAuth, isAdmin, isLoggedIn } from "@/lib/auth";
 import { applyStoredTheme, getLang } from "@/lib/prefs";
-import { t } from "@/lib/i18n";
+import { t, getProvinceName } from "@/lib/i18n";
 import TransferModal from "@/components/modals/TransferModal";
 import GiftNotificationBanner from "@/components/ui/GiftNotificationBanner";
 import "@/styles/dashboard.css";
@@ -177,6 +177,7 @@ export default function CustomerDashboard() {
     const isCard = viewMode === "collected";
     const region = item.region;
     const name = isCard ? item.province_name : item.name;
+    const nameEn = getProvinceName(item, "en");
     const serial = isCard ? item.serial_code : "";
 
     const matchRegion =
@@ -184,6 +185,7 @@ export default function CustomerDashboard() {
     const matchSearch =
       !searchQuery.trim() ||
       name?.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+      nameEn?.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
       (serial && serial.toLowerCase().includes(searchQuery.toLowerCase().trim()));
 
     return matchRegion && matchSearch;
@@ -528,13 +530,13 @@ export default function CustomerDashboard() {
                       </div>
 
                       <div className="card-media-bottom-info">
-                        <span className="card-badge-province">📍 {card.province_name}</span>
+                        <span className="card-badge-province">📍 {getProvinceName(card, lang)}</span>
                       </div>
                     </div>
 
                     <div className="card-content-wrap">
                       <div className="card-meta-top">
-                        <h3 className="card-province-title">{card.province_name}</h3>
+                        <h3 className="card-province-title">{getProvinceName(card, lang)}</h3>
                         <div className="card-serial-chip">
                           <span className="chip-icon">🏷️</span>
                           <code>{card.serial_code}</code>
@@ -666,13 +668,13 @@ export default function CustomerDashboard() {
                       </div>
 
                       <div className="card-media-bottom-info">
-                        <span className="card-badge-province">📍 {province.name}</span>
+                        <span className="card-badge-province">📍 {getProvinceName(province, lang)}</span>
                       </div>
                     </div>
 
                     <div className="card-content-wrap">
                       <div className="card-meta-top">
-                        <h3 className="card-province-title">{province.name}</h3>
+                        <h3 className="card-province-title">{getProvinceName(province, lang)}</h3>
                         <p className="card-prov-desc">
                           {isUnlocked
                             ? `${t(lang, "cardSerialPrefix")}: ${matchedCard?.serial_code || "NFC-ACTIVE"}`
