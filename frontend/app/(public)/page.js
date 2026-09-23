@@ -34,6 +34,9 @@ import {
   ChevronDown,
   ShoppingBag,
   Package,
+  Menu,
+  Radio,
+  Wifi,
 } from "lucide-react";
 import { provinceAPI } from "@/lib/api";
 import { isLoggedIn, getUser, clearAuth } from "@/lib/auth";
@@ -168,6 +171,7 @@ const FAQ_DATA = {
 
 export default function HomePage() {
   const [lang, setLang] = useState("vi");
+  const isVi = lang === "vi";
   const [provinces, setProvinces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [provinceError, setProvinceError] = useState(false);
@@ -670,46 +674,200 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Minh họa: điện thoại chạm mảnh NFC mở album */}
+            {/* Minh họa: điện thoại chạm thẻ NFC mở ứng dụng VinaTap */}
             <div className="home-hero__illustration">
               <div className="home-hero__blob" />
+              <div className="home-hero__aura-ring" />
 
+              {/* Polaroid Photo góc trên phải */}
+              <div className="home-hero__polaroid">
+                <div className="home-hero__polaroid-pin" />
+                <div className="home-hero__polaroid-img-wrap">
+                  <img
+                    src="/lao-cai-fansipan.jpg"
+                    alt="Hà Giang"
+                    className="home-hero__polaroid-img"
+                  />
+                </div>
+                <div className="home-hero__polaroid-caption">Hà Giang ♡</div>
+              </div>
+
+              {/* Điện thoại thông minh hiển thị giao diện VinaTap */}
               <div className="home-hero__phone">
+                {/* Dynamic Island / Notch */}
+                <div className="home-hero__phone-notch">
+                  <span className="home-hero__notch-camera" />
+                </div>
+
+                {/* Status Bar */}
+                <div className="home-hero__phone-statusbar">
+                  <span className="home-hero__phone-time">09:41</span>
+                  <div className="home-hero__phone-status-icons">
+                    <Wifi size={11} strokeWidth={2.4} />
+                    <span className="home-hero__phone-battery">
+                      <span className="home-hero__phone-battery-level" />
+                    </span>
+                  </div>
+                </div>
+
+                {/* Màn hình App VinaTap */}
                 <div className="home-hero__phone-screen">
-                  <Map size={40} strokeWidth={1.6} color="var(--home-teal)" />
-                  <div className="home-hero__phone-title">{t(lang, "heroPhoneTitle")}</div>
-                  <div className="home-hero__phone-sub">
-                    {t(lang, "heroPhoneSub")}
+                  {/* App Header */}
+                  <div className="home-hero__app-header">
+                    <div className="home-hero__app-logo">
+                      <img src="/logo.png" alt="VinaTap" />
+                    </div>
+                    <Menu size={14} strokeWidth={2.2} className="home-hero__app-menu" />
+                  </div>
+
+                  {/* App Hero Banner */}
+                  <div className="home-hero__app-banner">
+                    <div className="home-hero__app-banner-overlay" />
+                    <div className="home-hero__app-banner-content">
+                      <div className="home-hero__app-banner-title">
+                        {t(lang, "heroPhoneTitle")}
+                      </div>
+                      <div className="home-hero__app-banner-sub">
+                        {t(lang, "heroPhoneSub")}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* App Search Bar */}
+                  <div className="home-hero__app-search">
+                    <Search size={11} strokeWidth={2.4} />
+                    <span>{isVi ? "Tìm tỉnh thành, địa danh..." : "Search destination..."}</span>
+                  </div>
+
+                  {/* Filter Pills */}
+                  <div className="home-hero__app-pills">
+                    <span className="home-hero__app-pill is-active">{isVi ? "Tất cả" : "All"}</span>
+                    <span className="home-hero__app-pill">{isVi ? "Miền Bắc" : "North"}</span>
+                    <span className="home-hero__app-pill">{isVi ? "Miền Trung" : "Central"}</span>
+                    <span className="home-hero__app-pill">{isVi ? "Miền Nam" : "South"}</span>
+                  </div>
+
+                  {/* Featured Section */}
+                  <div className="home-hero__app-section">
+                    <div className="home-hero__app-section-header">
+                      <span>{isVi ? "Tỉnh thành nổi bật" : "Featured Destinations"}</span>
+                      <ArrowRight size={11} />
+                    </div>
+
+                    <div className="home-hero__app-cards">
+                      <div className="home-hero__app-card">
+                        <div
+                          className="home-hero__app-card-thumb"
+                          style={{ backgroundImage: `url('/hue-cau-truong-tien.jpg')` }}
+                        />
+                        <div className="home-hero__app-card-info">
+                          <div className="home-hero__app-card-name">Đà Nẵng</div>
+                          <div className="home-hero__app-card-region">{isVi ? "Miền Trung" : "Central"}</div>
+                        </div>
+                      </div>
+
+                      <div className="home-hero__app-card">
+                        <div
+                          className="home-hero__app-card-thumb"
+                          style={{ backgroundImage: `url('/bac-ninh-quan-ho.jpg')` }}
+                        />
+                        <div className="home-hero__app-card-info">
+                          <div className="home-hero__app-card-name">Hà Nội</div>
+                          <div className="home-hero__app-card-region">{isVi ? "Miền Bắc" : "North"}</div>
+                        </div>
+                      </div>
+
+                      <div className="home-hero__app-card">
+                        <div
+                          className="home-hero__app-card-thumb"
+                          style={{ backgroundImage: `url('/dien-bien-nui-rung.jpg')` }}
+                        />
+                        <div className="home-hero__app-card-info">
+                          <div className="home-hero__app-card-name">Cần Thơ</div>
+                          <div className="home-hero__app-card-region">{isVi ? "Miền Nam" : "South"}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* App Bottom Nav */}
+                  <div className="home-hero__app-nav">
+                    <div className="home-hero__app-nav-item is-active">
+                      <Map size={12} />
+                      <span>{isVi ? "Trang chủ" : "Home"}</span>
+                    </div>
+                    <div className="home-hero__app-nav-item">
+                      <Globe size={12} />
+                      <span>{isVi ? "Bản đồ" : "Map"}</span>
+                    </div>
+                    <div className="home-hero__app-nav-item">
+                      <Camera size={12} />
+                      <span>{isVi ? "Album" : "Album"}</span>
+                    </div>
+                    <div className="home-hero__app-nav-item">
+                      <User size={12} />
+                      <span>{isVi ? "Tài khoản" : "Account"}</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Mảnh ghép NFC + sóng chạm */}
-              <div className="home-hero__tap-point">
-                <span className="home-hero__tap-ring" />
-                <span className="home-hero__tap-ring home-hero__tap-ring--d2" />
-                <span className="home-hero__tap-ring home-hero__tap-ring--d3" />
-                <span className="home-hero__tap-chip">
-                  <Puzzle size={16} strokeWidth={2.4} />
-                </span>
-              </div>
+              {/* Thẻ NFC đang chạm vào điện thoại */}
+              <div className="home-hero__nfc-card">
+                <div className="home-hero__nfc-card-glare" />
+                <div className="home-hero__nfc-card-body">
+                  <div className="home-hero__nfc-card-logo">
+                    <img src="/logo.png" alt="VinaTap" />
+                  </div>
+                  <div className="home-hero__nfc-card-center">
+                    <div className="home-hero__nfc-card-badge">
+                      <span className="home-hero__nfc-card-badge-vn">VIỆT NAM</span>
+                      <span className="home-hero__nfc-card-badge-sub">34 TỈNH THÀNH</span>
+                      <span className="home-hero__nfc-card-badge-line">1 HÀNH TRÌNH</span>
+                    </div>
+                  </div>
+                  <div className="home-hero__nfc-card-bottom">
+                    <Radio size={15} strokeWidth={2.4} className="home-hero__nfc-icon" />
+                  </div>
+                </div>
 
-              <div className="home-hero__card home-hero__card--activate">
-                <span className="home-hero__card-check">
-                  <CheckCircle2
-                    size={16}
-                    strokeWidth={2.4}
-                    color="var(--home-teal-dark)"
-                  />
-                </span>
-                <div>
-                  <div className="home-hero__card-title">{t(lang, "heroCardActivate")}</div>
-                  <div className="home-hero__card-sub">{t(lang, "heroCardTapOpen")}</div>
+                {/* Sóng NFC chạm lan tỏa */}
+                <div className="home-hero__nfc-waves">
+                  <span className="home-hero__nfc-wave home-hero__nfc-wave--1" />
+                  <span className="home-hero__nfc-wave home-hero__nfc-wave--2" />
+                  <span className="home-hero__nfc-wave home-hero__nfc-wave--3" />
                 </div>
               </div>
-              <div className="home-hero__card home-hero__card--ai">
-                <Sparkles size={14} strokeWidth={2.4} />
-                {t(lang, "heroCardAiCaption")}
+
+              {/* Floating Feature Badges lấy từ Hình 2 */}
+              <div className="home-hero__badge home-hero__badge--tap">
+                <div className="home-hero__badge-icon home-hero__badge-icon--teal">
+                  <Radio size={15} strokeWidth={2.4} />
+                </div>
+                <div>
+                  <div className="home-hero__badge-title">{t(lang, "heroCardActivate")}</div>
+                  <div className="home-hero__badge-desc">{t(lang, "heroCardTapOpen")}</div>
+                </div>
+              </div>
+
+              <div className="home-hero__badge home-hero__badge--ai">
+                <div className="home-hero__badge-icon home-hero__badge-icon--orange">
+                  <Sparkles size={15} strokeWidth={2.4} />
+                </div>
+                <div>
+                  <div className="home-hero__badge-title">{t(lang, "heroCardAiCaption")}</div>
+                  <div className="home-hero__badge-desc">{t(lang, "heroCardAiDesc")}</div>
+                </div>
+              </div>
+
+              <div className="home-hero__badge home-hero__badge--memory">
+                <div className="home-hero__badge-icon home-hero__badge-icon--blue">
+                  <Camera size={15} strokeWidth={2.4} />
+                </div>
+                <div>
+                  <div className="home-hero__badge-title">{t(lang, "heroCardMemories")}</div>
+                  <div className="home-hero__badge-desc">{t(lang, "heroCardMemoriesDesc")}</div>
+                </div>
               </div>
             </div>
           </div>

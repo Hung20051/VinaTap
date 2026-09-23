@@ -567,166 +567,659 @@
 }
 
 /* Minh họa điện thoại chạm mảnh NFC — signature element của trang */
+/* Minh họa điện thoại chạm thẻ NFC — Signature Hero Visual (khớp phong cách Hình 2) */
 .home-hero__illustration {
   position: relative;
-  height: 460px;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Hào quang nền mờ dịu, phong cách hiện đại */
 .home-hero__blob {
   position: absolute;
+  top: 50%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(13, 148, 136, 0.25) 0%,
+    rgba(20, 184, 166, 0.15) 35%,
+    rgba(232, 93, 4, 0.08) 60%,
+    transparent 72%
+  );
+  filter: blur(28px);
+  pointer-events: none;
+}
+
+.home-hero__aura-ring {
+  position: absolute;
+  top: 50%;
+  left: 48%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(13, 148, 136, 0.22);
+  pointer-events: none;
+  animation: home-aura-spin 40s linear infinite;
+}
+
+@keyframes home-aura-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Ảnh Polaroid góc trên phải */
+.home-hero__polaroid {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  width: 105px;
+  background: #ffffff;
+  padding: 6px 6px 12px 6px;
+  border-radius: 6px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.14), 0 2px 6px rgba(0, 0, 0, 0.06);
+  transform: rotate(11deg);
+  z-index: 2;
+  transition: transform 0.3s ease;
+  animation: home-polaroid-float 6s ease-in-out infinite;
+}
+
+.home-hero__polaroid:hover {
+  transform: rotate(6deg) scale(1.05);
+}
+
+.home-hero__polaroid-pin {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 35% 35%, #f87171 0%, #dc2626 100%);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4);
+}
+
+.home-hero__polaroid-img-wrap {
+  width: 100%;
+  height: 78px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.home-hero__polaroid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-hero__polaroid-caption {
+  margin-top: 5px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #334155;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+/* Smartphone hiển thị app VinaTap */
+.home-hero__phone {
+  position: absolute;
+  top: 50%;
+  left: 44%;
+  transform: translate(-50%, -50%);
+  width: 242px;
+  height: 488px;
+  background: #0b1120;
+  border-radius: 36px;
+  padding: 7px;
+  box-shadow:
+    0 25px 60px -10px rgba(13, 148, 136, 0.2),
+    0 35px 70px -15px rgba(15, 23, 42, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.16);
+  z-index: 3;
+  animation: home-phone-float 5s ease-in-out infinite;
+}
+
+.home-hero__phone-notch {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 68px;
+  height: 15px;
+  background: #000;
+  border-radius: 12px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+}
+
+.home-hero__notch-camera {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+
+.home-hero__phone-statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 12px 1px 12px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.home-hero__phone-time {
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.home-hero__phone-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.home-hero__phone-battery {
+  display: inline-block;
+  width: 14px;
+  height: 7px;
+  border: 1.2px solid #334155;
+  border-radius: 2px;
+  padding: 0.8px;
+  position: relative;
+}
+
+.home-hero__phone-battery::after {
+  content: "";
+  position: absolute;
+  right: -2.5px;
+  top: 1.5px;
+  width: 1.5px;
+  height: 2.5px;
+  background: #334155;
+  border-radius: 0 1px 1px 0;
+}
+
+.home-hero__phone-battery-level {
+  display: block;
+  width: 80%;
+  height: 100%;
+  background: #0d9488;
+  border-radius: 0.5px;
+}
+
+/* Màn hình App bên trong */
+.home-hero__phone-screen {
+  width: 100%;
+  height: calc(100% - 15px);
+  border-radius: 29px;
+  background: #f8fafc;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-hero__app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: #fff;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.home-hero__app-logo img {
+  height: 14px;
+  width: auto;
+  object-fit: contain;
+}
+
+.home-hero__app-menu {
+  color: #334155;
+}
+
+.home-hero__app-banner {
+  position: relative;
+  height: 96px;
+  background-image: url("/auth-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.home-hero__app-banner-overlay {
+  position: absolute;
   inset: 0;
-  border-radius: 48% 52% 55% 45% / 55% 45% 55% 45%;
   background: linear-gradient(
-    135deg,
-    var(--home-teal) 0%,
-    var(--home-teal-dark) 100%
+    180deg,
+    rgba(15, 23, 42, 0.1) 0%,
+    rgba(13, 148, 136, 0.88) 100%
   );
 }
-.home-hero__phone {
+
+.home-hero__app-banner-content {
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero__app-banner-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.home-hero__app-banner-sub {
+  font-size: 0.58rem;
+  color: #fed7aa;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.home-hero__app-search {
+  margin: 6px 8px 4px 8px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 3px 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.54rem;
+  color: #94a3b8;
+}
+
+.home-hero__app-pills {
+  display: flex;
+  gap: 4px;
+  padding: 3px 8px;
+  overflow: hidden;
+}
+
+.home-hero__app-pill {
+  font-size: 0.48rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #fff;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.home-hero__app-pill.is-active {
+  background: var(--home-teal);
+  color: #fff;
+  border-color: var(--home-teal);
+}
+
+.home-hero__app-section {
+  padding: 5px 8px;
+}
+
+.home-hero__app-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.home-hero__app-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.home-hero__app-card {
+  border-radius: 7px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f1f5f9;
+}
+
+.home-hero__app-card-thumb {
+  height: 44px;
+  background-size: cover;
+  background-position: center;
+}
+
+.home-hero__app-card-info {
+  padding: 2px 3px 4px 3px;
+}
+
+.home-hero__app-card-name {
+  font-size: 0.52rem;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-hero__app-card-region {
+  font-size: 0.42rem;
+  color: #94a3b8;
+}
+
+.home-hero__app-nav {
+  margin-top: auto;
+  background: #fff;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-around;
+  padding: 5px 0 7px;
+}
+
+.home-hero__app-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.44rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.home-hero__app-nav-item.is-active {
+  color: var(--home-teal);
+}
+
+/* Thẻ NFC thực tế đang chạm */
+.home-hero__nfc-card {
+  position: absolute;
+  right: 28px;
+  bottom: 75px;
+  width: 122px;
+  height: 178px;
+  border-radius: 12px;
+  transform: rotate(8deg);
+  background: linear-gradient(145deg, #0d9488 0%, #0f766e 45%, #0f172a 100%);
+  background-image:
+    linear-gradient(145deg, rgba(13, 148, 136, 0.88), rgba(15, 23, 42, 0.95)),
+    url("/auth-bg.jpg");
+  background-size: cover;
+  box-shadow:
+    0 16px 36px rgba(15, 23, 42, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  z-index: 4;
+  overflow: hidden;
+  animation: home-nfc-card-float 4.8s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.home-hero__nfc-card:hover {
+  transform: rotate(4deg) scale(1.04);
+}
+
+.home-hero__nfc-card-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.home-hero__nfc-card-body {
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero__nfc-card-logo img {
+  height: 13px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+
+.home-hero__nfc-card-center {
+  text-align: center;
+}
+
+.home-hero__nfc-card-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  padding: 6px 4px;
+}
+
+.home-hero__nfc-card-badge-vn {
+  font-size: 0.64rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.06em;
+}
+
+.home-hero__nfc-card-badge-sub {
+  font-size: 0.48rem;
+  color: #99f6e4;
+  font-weight: 700;
+}
+
+.home-hero__nfc-card-badge-line {
+  font-size: 0.44rem;
+  color: #fed7aa;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.home-hero__nfc-card-bottom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-hero__nfc-icon {
+  color: #fff;
+  opacity: 0.9;
+}
+
+/* Sóng NFC chạm */
+.home-hero__nfc-waves {
+  position: absolute;
+  left: -20px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+}
+
+.home-hero__nfc-wave {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 220px;
-  height: 380px;
-  background: var(--home-ink);
-  border-radius: 32px;
-  padding: 10px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
-  z-index: 2;
-}
-.home-hero__phone-screen {
-  width: 100%;
-  height: 100%;
-  border-radius: 24px;
-  background: linear-gradient(160deg, #fff 0%, #f1f5f4 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-}
-.home-hero__phone-title {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--home-ink);
-}
-.home-hero__phone-sub {
-  font-size: 0.65rem;
-  color: #8a92a0;
+  border-radius: 50%;
+  border: 2px solid var(--home-teal);
+  opacity: 0;
+  animation: home-nfc-wave-radiate 2.4s ease-out infinite;
 }
 
-/* Chip mảnh ghép + sóng chạm lan tỏa — biểu diễn đúng thao tác cốt lõi
-   của sản phẩm (tap-to-open), không chỉ là hoạ tiết trang trí. */
-.home-hero__tap-point {
-  position: absolute;
-  bottom: 96px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
-  z-index: 3;
+.home-hero__nfc-wave--1 {
+  width: 20px;
+  height: 20px;
+  animation-delay: 0s;
 }
-.home-hero__tap-chip {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--home-orange);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 18px rgba(232, 93, 4, 0.45);
-}
-.home-hero__tap-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.85);
-  animation: home-tap-ripple 2.4s ease-out infinite;
-}
-.home-hero__tap-ring--d2 {
+
+.home-hero__nfc-wave--2 {
+  width: 38px;
+  height: 38px;
   animation-delay: 0.8s;
 }
-.home-hero__tap-ring--d3 {
+
+.home-hero__nfc-wave--3 {
+  width: 56px;
+  height: 56px;
   animation-delay: 1.6s;
 }
-@keyframes home-tap-ripple {
+
+@keyframes home-nfc-wave-radiate {
   0% {
-    transform: scale(1);
-    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.85;
   }
   100% {
-    transform: scale(3.6);
-    opacity: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-hero__tap-ring {
-    animation: none;
+    transform: translate(-50%, -50%) scale(1.6);
     opacity: 0;
   }
 }
 
-.home-hero__card {
+/* Floating Feature Badges */
+.home-hero__badge {
   position: absolute;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  z-index: 2;
-  animation: home-card-float 4.5s ease-in-out infinite;
-}
-@keyframes home-card-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .home-hero__card {
-    animation: none;
-  }
-}
-.home-hero__card--activate {
-  left: 6px;
-  bottom: 30px;
-  padding: 1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  padding: 0.6rem 0.95rem;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1);
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.65rem;
+  z-index: 5;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.home-hero__card-check {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--home-teal-light);
+
+.home-hero__badge:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+}
+
+.home-hero__badge--tap {
+  top: 130px;
+  right: -6px;
+  animation: home-badge-float 4.2s ease-in-out infinite;
+}
+
+.home-hero__badge--ai {
+  top: 205px;
+  right: -12px;
+  animation: home-badge-float 4.6s ease-in-out infinite 0.6s;
+}
+
+.home-hero__badge--memory {
+  bottom: 25px;
+  left: 6px;
+  animation: home-badge-float 5s ease-in-out infinite 1.2s;
+}
+
+.home-hero__badge-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
-.home-hero__card-title {
-  font-weight: 700;
-  font-size: 0.85rem;
-  color: var(--home-ink);
+
+.home-hero__badge-icon--teal {
+  background: var(--home-teal-light);
+  color: var(--home-teal-dark);
 }
-.home-hero__card-sub {
-  font-size: 0.7rem;
-  color: #8a92a0;
-}
-.home-hero__card--ai {
-  right: 0;
-  top: 24px;
-  padding: 0.8rem 1.1rem;
-  font-size: 0.8rem;
-  font-weight: 700;
+
+.home-hero__badge-icon--orange {
+  background: #ffedd5;
   color: var(--home-orange);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  animation-delay: 1.2s;
+}
+
+.home-hero__badge-icon--blue {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.home-hero__badge-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--home-ink);
+  line-height: 1.2;
+}
+
+.home-hero__badge-desc {
+  font-size: 0.66rem;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+/* Animations */
+@keyframes home-phone-float {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-8px);
+  }
+}
+
+@keyframes home-polaroid-float {
+  0%, 100% {
+    transform: rotate(11deg) translateY(0);
+  }
+  50% {
+    transform: rotate(13deg) translateY(-6px);
+  }
+}
+
+@keyframes home-nfc-card-float {
+  0%, 100% {
+    transform: rotate(8deg) translateY(0);
+  }
+  50% {
+    transform: rotate(6deg) translateY(-7px);
+  }
+}
+
+@keyframes home-badge-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero__phone,
+  .home-hero__polaroid,
+  .home-hero__nfc-card,
+  .home-hero__badge,
+  .home-hero__aura-ring,
+  .home-hero__nfc-wave {
+    animation: none;
+  }
 }
 
 /* Dải tính năng nhanh dưới hero */
@@ -1485,6 +1978,12 @@
   .home-about__grid {
     grid-template-columns: 1fr;
   }
+  .home-hero__illustration {
+    height: 500px;
+    transform: scale(0.92);
+    transform-origin: center center;
+    margin: 1rem auto 0;
+  }
   .home-feature-strip__inner {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1500,7 +1999,9 @@
     padding: 0.85rem 1rem;
   }
   .home-hero__illustration {
-    height: 380px;
+    height: 440px;
+    transform: scale(0.82);
+    transform-origin: center center;
   }
   .home-hero__grid {
     padding: 2.5rem 1rem 1.5rem;
@@ -1545,7 +2046,9 @@
     font-size: 0.8rem;
   }
   .home-hero__illustration {
-    height: 300px;
+    height: 380px;
+    transform: scale(0.72);
+    transform-origin: center center;
   }
   .home-hero__desc {
     max-width: 100%;
