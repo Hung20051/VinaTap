@@ -394,15 +394,25 @@ export function getProvinceGuideData(
   }
 
   // 5. FESTIVALS
+  const FESTIVAL_IMAGE_OVERRIDES = {
+    "lễ hội cầu ngư đà nẵng": "/festivals/le-hoi-cau-ngu-da-nang.jpg",
+    "lễ hội đua thuyền đà nẵng": "/festivals/le-hoi-dua-thuyen-da-nang.jpg",
+    "lễ hội quán thế âm ngũ hành sơn đà nẵng": "/festivals/le-hoi-quan-the-am-da-nang.jpg",
+  };
+
   let festivals = null;
   if (dbFestivals && dbFestivals.length > 0) {
-    festivals = dbFestivals.map((fe, i) => ({
-      id: fe.id || `fe-${i}`,
-      title: fe.title,
-      image: fe.image_url || fe.image || "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&q=80",
-      date: fe.event_time || fe.date || "Hàng năm",
-      desc: fe.description || fe.desc || "",
-    }));
+    festivals = dbFestivals.map((fe, i) => {
+      const cleanTitle = (fe.title || "").toLowerCase().trim();
+      const overrideImg = FESTIVAL_IMAGE_OVERRIDES[cleanTitle];
+      return {
+        id: fe.id || `fe-${i}`,
+        title: fe.title,
+        image: overrideImg || fe.image_url || fe.image || "/festivals/le-hoi-cau-ngu-da-nang.jpg",
+        date: fe.event_time || fe.date || "Hàng năm",
+        desc: fe.description || fe.desc || "",
+      };
+    });
   } else if (province?.slug === "da-nang") {
     festivals = DANANG_GUIDE_DATA.festivals;
   }
