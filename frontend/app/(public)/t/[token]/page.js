@@ -243,7 +243,7 @@ export default function TapPage() {
     const url = getShareUrl();
     if (navigator.share) {
       navigator.share({
-        title: `Mảnh ghép NFC VinaTap — ${card?.province_name}`,
+        title: `Thẻ NFC VinaTap — ${card?.province_name}`,
         text: `Khám phá cẩm nang du lịch và nhật ký ảnh ${card?.province_name} cùng VinaTap!`,
         url,
       });
@@ -457,7 +457,7 @@ export default function TapPage() {
                     }}
                   >
                     <MapPin size={13} />
-                    <span>{regionInfo.label} • Mảnh Ghép NFC 3D</span>
+                    <span>{regionInfo.label} • Thẻ NFC 3D</span>
                   </div>
                   <div className="tap-to-status-pill">
                     <Radio size={12} style={{ color: "#16a34a" }} />
@@ -471,7 +471,7 @@ export default function TapPage() {
                 /* Trạng thái 1: Con Dấu Sáp 3D Mời Chạm */
                 <div className="tap-folio-unopened-box">
                   <p className="tap-folio-teaser-text">
-                    Mảnh ghép du lịch đã được nhận diện. Hãy chạm vào con dấu sáp hoàng gia để mở bưu thiếp kỷ niệm và cẩm nang khám phá!
+                    Thẻ NFC du lịch đã được nhận diện. Hãy chạm vào con dấu sáp hoàng gia để mở bưu thiếp kỷ niệm và cẩm nang khám phá!
                   </p>
 
                   <div className="tap-envelope-seal-section">
@@ -504,7 +504,7 @@ export default function TapPage() {
                       className="tap-folio-btn-skip"
                       onClick={handleOpenDetail}
                     >
-                      <span>Vào thẳng cẩm nang &amp; mảnh ghép</span>
+                      <span>Vào thẳng cẩm nang &amp; thẻ NFC</span>
                       <ArrowRight size={15} />
                     </button>
                   </div>
@@ -531,7 +531,7 @@ export default function TapPage() {
                         disabled={claiming}
                       >
                         <Zap size={18} />
-                        <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Mảnh Ghép"}</span>
+                        <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Thẻ NFC"}</span>
                       </button>
                     ) : status === "owned" ? (
                       album ? (
@@ -645,7 +645,7 @@ export default function TapPage() {
                   {regionInfo.label}
                 </div>
                 <h2 className="tap-card-name">{pName}</h2>
-                <p className="tap-card-slogan">Mảnh ghép bản đồ du lịch số Việt Nam</p>
+                <p className="tap-card-slogan">Thẻ NFC bản đồ du lịch số Việt Nam</p>
               </div>
 
               <div className="tap-card-footer">
@@ -673,7 +673,7 @@ export default function TapPage() {
               {status === "owned" && (
                 <div className="tap-status-badge owned">
                   <CheckCircle2 size={15} />
-                  <span>Mảnh ghép của bạn (Chính chủ)</span>
+                  <span>Thẻ NFC của bạn (Chính chủ)</span>
                 </div>
               )}
               {status === "claimed" && (
@@ -697,7 +697,7 @@ export default function TapPage() {
                   disabled={claiming}
                 >
                   <Zap size={18} />
-                  <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Mảnh Ghép"}</span>
+                  <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Thẻ NFC"}</span>
                 </button>
               )}
 
@@ -888,7 +888,7 @@ export default function TapPage() {
               {status === "unclaimed" && (
                 <div className="tap-desktop-unclaimed-cta">
                   <Sparkles size={40} style={{ color: "#ea580c" }} />
-                  <h3>Mảnh Ghép Chưa Có Chủ Nhân!</h3>
+                  <h3>Thẻ NFC Chưa Có Chủ Nhân!</h3>
                   <p>Hãy kích hoạt ngay để bắt đầu lưu lại những kỷ niệm check-in đầu tiên tại {pName}.</p>
                   <button type="button" className="tap-btn-gold-claim large" onClick={handleClaim}>
                     <Zap size={18} />
@@ -901,7 +901,7 @@ export default function TapPage() {
                 <div className="tap-desktop-unclaimed-cta">
                   <Camera size={40} style={{ color: "#2563eb" }} />
                   <h3>Bắt Đầu Lưu Kỷ Niệm Tại {pName}!</h3>
-                  <p>Mảnh ghép này chưa có album. Hãy tạo album kỷ niệm đầu tiên để bắt đầu lưu giữ các bức ảnh &amp; video check-in đáng nhớ.</p>
+                  <p>Thẻ NFC này chưa có album. Hãy tạo album kỷ niệm đầu tiên để bắt đầu lưu giữ các bức ảnh &amp; video check-in đáng nhớ.</p>
                   <button
                     type="button"
                     className="tap-btn-primary large"
@@ -997,7 +997,7 @@ export default function TapPage() {
           {status === "unclaimed" && (
             <button type="button" className="tap-smart-action-btn claim" onClick={handleClaim}>
               <Zap size={18} />
-              <span>Kích Hoạt Nhận Mảnh Ghép</span>
+              <span>Kích Hoạt Nhận Thẻ NFC</span>
             </button>
           )}
 
@@ -1025,7 +1025,7 @@ export default function TapPage() {
           {status === "claimed" && !album && (
             <div className="tap-friend-owner-pill">
               <ShieldCheck size={14} style={{ color: "#16a34a" }} />
-              <span>Mảnh ghép của <strong>{card?.owner_name || "Bạn bè"}</strong></span>
+              <span>Thẻ NFC của <strong>{card?.owner_name || "Bạn bè"}</strong></span>
             </div>
           )}
         </div>
@@ -1173,7 +1173,7 @@ export default function TapPage() {
               <div className="tap-share-icon-circle">
                 <Share2 size={20} />
               </div>
-              <h3 className="tap-share-title">Chia Sẻ Mảnh Ghép {pName}</h3>
+              <h3 className="tap-share-title">Chia Sẻ Thẻ NFC {pName}</h3>
               <p className="tap-share-subtitle">
                 Quét mã QR hoặc sao chép liên kết để gửi cho bạn bè
               </p>

@@ -204,7 +204,7 @@ export default function ProvinceFormModal({
                 : "➕ Thêm Tỉnh Thành Mới"}
             </h3>
             <p className="admin-prov-modal__sub">
-              Cập nhật thông tin bản đồ số, ảnh bìa mảnh ghép và đặc sản
+              Cập nhật thông tin bản đồ số, ảnh bìa thẻ NFC và đặc sản
             </p>
           </div>
           <button
@@ -395,7 +395,7 @@ export default function ProvinceFormModal({
               <div className="admin-prov-media-card">
                 <div className="admin-prov-mode-header">
                   <span className="admin-prov-media-title">
-                    🖼️ Ảnh Bìa Mảnh Ghép / Thumbnail:
+                    🖼️ Ảnh Bìa Thẻ NFC / Thumbnail:
                   </span>
                   <div className="admin-prov-mode-tabs">
                     <button

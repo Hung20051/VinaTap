@@ -149,8 +149,8 @@ export default function TermsPage() {
             </div>
             <p className="legal-text">
               {isVi
-                ? "Mỗi thẻ NFC vật lý VinaTap đại diện cho một mảnh ghép hành trình di sản Việt Nam với các quyền lợi đi kèm:"
-                : "Each physical VinaTap NFC tile represents a Vietnamese heritage travel piece with associated benefits:"}
+                ? "Mỗi thẻ NFC vật lý VinaTap đại diện cho một dấu ấn hành trình di sản Việt Nam với các quyền lợi đi kèm:"
+                : "Each physical VinaTap NFC card represents a Vietnamese heritage travel destination with associated benefits:"}
             </p>
             <ul className="legal-list">
               <li>

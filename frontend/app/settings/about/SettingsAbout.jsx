@@ -15,7 +15,7 @@ export default function SettingsAbout() {
 
   const [aboutData, setAboutData] = useState({
     app_version: "1.0",
-    about_desc: "VinaTap giúp bạn lưu giữ từng khoảnh khắc đáng nhớ qua từng mảnh ghép bản đồ Việt Nam.",
+    about_desc: "VinaTap giúp bạn lưu giữ từng khoảnh khắc đáng nhớ qua từng thẻ NFC bản đồ Việt Nam.",
   });
 
   useEffect(() => {

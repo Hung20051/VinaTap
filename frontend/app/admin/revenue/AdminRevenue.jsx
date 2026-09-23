@@ -1881,7 +1881,7 @@ export default function AdminRevenue() {
                 <input
                   type="text"
                   required
-                  placeholder="VD: Mảnh Ghép NFC 3D — Hà Nội"
+                  placeholder="VD: Thẻ NFC Du Lịch — Hà Nội"
                   className="admin-rev-form-input prod-name-input"
                   value={form.product_name_snapshot ?? ""}
                   onChange={(e) =>

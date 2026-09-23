@@ -362,7 +362,7 @@ const Order = {
           const fallbackImg =
             DEFAULT_HERITAGE_IMAGES[(rIdx + itemIdx) % DEFAULT_HERITAGE_IMAGES.length];
           const finalName =
-            item.name || item.title || item.product_name || (prod ? prod.name : "Thẻ Mảnh Ghép NFC VinaTap");
+            item.name || item.title || item.product_name || (prod ? prod.name : "Thẻ NFC Di Sản VinaTap");
           const finalImg =
             item.image || item.image_url || item.thumbnail || (prod && prod.image ? prod.image : fallbackImg);
 

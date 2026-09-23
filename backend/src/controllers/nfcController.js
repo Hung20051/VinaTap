@@ -521,7 +521,7 @@ const acceptTransfer = async (req, res) => {
 
     res.json({
       message:
-        "🎉 Nhận thẻ thành công! Mảnh bản đồ và album kỷ niệm đã thuộc về bạn.",
+        "🎉 Nhận thẻ thành công! Thẻ bản đồ và album kỷ niệm đã thuộc về bạn.",
     });
   } catch (err) {
     try {

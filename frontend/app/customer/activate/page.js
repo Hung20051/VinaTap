@@ -40,7 +40,7 @@ export default function ActivatePage() {
 
     const cleaned = serial.trim().toUpperCase();
     if (!cleaned) {
-      setError("Vui lòng nhập mã serial in trên mảnh ghép NFC");
+      setError("Vui lòng nhập mã serial in trên thẻ NFC");
       return;
     }
 
@@ -96,9 +96,9 @@ export default function ActivatePage() {
 
             {/* Header Text */}
             <div className="activate-header">
-              <h1 className="activate-title">Kích Hoạt Mảnh Ghép NFC</h1>
+              <h1 className="activate-title">Kích Hoạt Thẻ NFC</h1>
               <p className="activate-subtitle">
-                Chạm điện thoại vào chip trên mảnh NFC hoặc nhập mã Serial để
+                Chạm điện thoại vào chip trên thẻ NFC hoặc nhập mã Serial để
                 mở khóa bản đồ du lịch của bạn.
               </p>
             </div>
@@ -115,7 +115,7 @@ export default function ActivatePage() {
             <form onSubmit={handleActivate} className="activate-form">
               <div>
                 <label className="activate-input-label">
-                  <span>MÃ SERIAL MẢNH GHÉP</span>
+                  <span>MÃ SERIAL THẺ NFC</span>
                   <span className="activate-input-hint">
                     In ở mặt sau thẻ NFC
                   </span>
@@ -144,7 +144,7 @@ export default function ActivatePage() {
                 ) : (
                   <>
                     <Zap size={18} fill="currentColor" />
-                    <span>Kích Hoạt Mảnh Ghép Ngay</span>
+                    <span>Kích Hoạt Thẻ NFC Ngay</span>
                   </>
                 )}
               </button>
@@ -155,18 +155,18 @@ export default function ActivatePage() {
               <div className="activate-guide-item">
                 <div className="activate-guide-icon">📱</div>
                 <h4>Cách 1: Chạm NFC</h4>
-                <p>Bật NFC trên điện thoại và chạm nhẹ vào mảnh ghép NFC.</p>
+                <p>Bật NFC trên điện thoại và chạm nhẹ vào thẻ NFC.</p>
               </div>
 
               <div className="activate-guide-item">
                 <div className="activate-guide-icon">✍️</div>
                 <h4>Cách 2: Nhập Serial</h4>
-                <p>Xem chuỗi ký tự in laser ở mặt sau mảnh ghép NFC.</p>
+                <p>Xem chuỗi ký tự in laser ở mặt sau thẻ NFC.</p>
               </div>
             </div>
 
             <p className="activate-footer-note">
-              🔒 Mỗi mảnh ghép chỉ kích hoạt được 1 lần và gắn cố định với tài
+              🔒 Mỗi thẻ NFC chỉ kích hoạt được 1 lần và gắn cố định với tài
               khoản của bạn.
             </p>
           </>
@@ -181,7 +181,7 @@ export default function ActivatePage() {
               Mở Khóa Thành Công!
             </h1>
             <p className="activate-subtitle">
-              Mảnh ghép đã được gắn vào tài khoản của bạn và sẵn sàng lưu giữ
+              Thẻ NFC đã được gắn vào tài khoản của bạn và sẵn sàng lưu giữ
               những kỷ niệm tuyệt đẹp.
             </p>
 
@@ -199,7 +199,7 @@ export default function ActivatePage() {
                   marginBottom: "0.5rem",
                 }}
               >
-                <MapPin size={16} /> Mảnh ghép tỉnh / thành phố
+                <MapPin size={16} /> Thẻ NFC tỉnh / thành phố
               </div>
               <h2 className="activate-province-name">{card.province_name}</h2>
               <span className="activate-serial-tag">

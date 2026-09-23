@@ -42,9 +42,9 @@ export default function ProvinceUnboxingModal({ province, onClose }) {
             <Sparkles size={36} className="province-unbox-sparkle-icon" />
           </div>
           <span className="province-unbox-tag">
-            <Trophy size={14} /> MẢNH GHÉP ĐÃ MỞ KHÓA
+            <Trophy size={14} /> THẺ NFC ĐÃ MỞ KHÓA
           </span>
-          <h2>BẠN ĐÃ SỞ HỮU MẢNH GHÉP</h2>
+          <h2>BẠN ĐÃ SỞ HỮU THẺ NFC</h2>
           <h1>{province.name.toUpperCase()}</h1>
         </div>
 
@@ -65,7 +65,7 @@ export default function ProvinceUnboxingModal({ province, onClose }) {
         </div>
 
         <p className="province-unbox-desc">
-          🎉 Chúc mừng bạn đã bổ sung mảnh ghép <strong>{province.name}</strong> vào bộ sưu tập du lịch Việt Nam VinaTap!
+          🎉 Chúc mừng bạn đã bổ sung thẻ NFC <strong>{province.name}</strong> vào bộ sưu tập du lịch Việt Nam VinaTap!
         </p>
 
         <div className="province-unbox-actions">
@@ -90,7 +90,7 @@ export default function ProvinceUnboxingModal({ province, onClose }) {
             className="btn btn-outline province-unbox-btn"
             onClick={handleShare}
           >
-            <Share2 size={18} /> {copied ? "Đã copy link!" : "Chia sẻ mảnh ghép"}
+            <Share2 size={18} /> {copied ? "Đã copy link!" : "Chia sẻ thẻ NFC"}
           </button>
         </div>
       </div>

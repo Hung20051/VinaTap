@@ -4,7 +4,7 @@ import ShopPage from "./ShopPage";
 export const metadata = {
   title: "Cửa Hàng Thẻ NFC VinaTap — Mua Thẻ & Combo 34 Tỉnh Thành",
   description:
-    "Đặt mua Thẻ Mảnh Ghép NFC 3D, Thẻ Kim Loại VIP và Combo 34 Tỉnh Thành Việt Nam chính hãng VinaTap.",
+    "Đặt mua Thẻ NFC 3D, Thẻ Kim Loại VIP và Combo 34 Tỉnh Thành Việt Nam chính hãng VinaTap.",
 };
 
 export default function Page() {

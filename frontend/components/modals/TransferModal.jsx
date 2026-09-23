@@ -85,7 +85,7 @@ export default function TransferModal({ cardId, cardName, onClose, onSuccess }) 
               }}
             >
               <h2 style={{ fontWeight: 800, fontSize: "1.15rem", color: "#0f172a", margin: 0 }}>
-                🎁 Chuyển nhượng mảnh {cardName}
+                🎁 Chuyển nhượng thẻ {cardName}
               </h2>
               <button
                 type="button"

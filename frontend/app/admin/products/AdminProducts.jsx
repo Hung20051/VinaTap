@@ -604,7 +604,7 @@ export default function AdminProducts() {
                 <input
                   type="text"
                   required
-                  placeholder="VD: Mảnh Ghép NFC 3D — Hà Nội"
+                  placeholder="VD: Thẻ NFC Du Lịch — Hà Nội"
                   className="admin-prod-form-input prod-name-input"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -620,7 +620,7 @@ export default function AdminProducts() {
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                   >
-                    <option value="single">Mảnh Ghép Lẻ Tỉnh Thành</option>
+                    <option value="single">Thẻ NFC Lẻ Tỉnh Thành</option>
                     <option value="combo">Combo Trọn Bộ / Fullbox</option>
                     <option value="accessory">Thẻ VIP / Phụ Kiện</option>
                   </select>

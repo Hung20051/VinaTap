@@ -130,17 +130,17 @@ const sendTransferRequestEmail = async (
   await transporter.sendMail({
     from: `"VinaTap" <${process.env.EMAIL_USER}>`,
     to: toEmail,
-    subject: `${safe.sender} muốn tặng bạn mảnh ghép "${safe.province}"`,
+    subject: `${safe.sender} muốn tặng bạn thẻ NFC "${safe.province}"`,
     html: `
       <div style="font-family:sans-serif;max-width:500px;margin:auto">
         <h2 style="color:#e85d04">🗺 VinaTap</h2>
-        <p><b>${safe.sender}</b> muốn chuyển nhượng mảnh ghép NFC tỉnh <b>${safe.province}</b> cho bạn.</p>
+        <p><b>${safe.sender}</b> muốn chuyển nhượng thẻ NFC tỉnh <b>${safe.province}</b> cho bạn.</p>
         ${safe.note ? `<p style="color:#666;font-style:italic">"${safe.note}"</p>` : ""}
         <p>Bấm nút bên dưới để nhận thẻ (link có hiệu lực trong <b>7 ngày</b>):</p>
         <a href="${acceptUrl}"
            style="display:inline-block;padding:12px 24px;background:#e85d04;color:#fff;
                   border-radius:8px;text-decoration:none;margin-top:12px;font-weight:700">
-          Nhận mảnh ghép ${safe.province}
+          Nhận thẻ NFC ${safe.province}
         </a>
         <p style="color:#999;font-size:11px;margin-top:24px">
           Nếu bạn không biết về yêu cầu này, hãy bỏ qua email này.
@@ -161,12 +161,12 @@ const sendTransferAcceptedEmail = async (
   await transporter.sendMail({
     from: `"VinaTap" <${process.env.EMAIL_USER}>`,
     to: toEmail,
-    subject: `${safe.recipient} đã nhận mảnh ghép của bạn`,
+    subject: `${safe.recipient} đã nhận thẻ NFC của bạn`,
     html: `
       <div style="font-family:sans-serif;max-width:500px;margin:auto">
         <h2 style="color:#e85d04">🗺 VinaTap</h2>
         <p>Xin chào <b>${safe.owner}</b>,</p>
-        <p><b>${safe.recipient}</b> đã chấp nhận nhận mảnh ghép NFC từ bạn. Chuyển nhượng hoàn tất!</p>
+        <p><b>${safe.recipient}</b> đã chấp nhận nhận thẻ NFC từ bạn. Chuyển nhượng hoàn tất!</p>
         <a href="${BASE}/customer/dashboard"
            style="display:inline-block;padding:10px 20px;background:#e85d04;color:#fff;
                   border-radius:6px;text-decoration:none;margin-top:12px">

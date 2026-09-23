@@ -70,7 +70,7 @@ export default function SystemSettings() {
     privacy_content:
       "VinaTap thu thập: tên, email, số điện thoại, địa chỉ (nếu bạn cung cấp), ảnh đại diện, và nội dung album bạn tạo. Dữ liệu được lưu trữ bảo mật trên máy chủ VinaTap.\n\nMật khẩu được mã hóa một chiều (bcrypt), VinaTap không bao giờ lưu hoặc xem được mật khẩu gốc của bạn.\n\nVinaTap không chia sẻ dữ liệu cá nhân của bạn cho bên thứ ba ngoài mục đích vận hành dịch vụ.",
     app_version: "1.0",
-    about_desc: "VinaTap giúp bạn lưu giữ từng khoảnh khắc đáng nhớ qua từng mảnh ghép bản đồ Việt Nam.",
+    about_desc: "VinaTap giúp bạn lưu giữ từng khoảnh khắc đáng nhớ qua từng thẻ NFC bản đồ Việt Nam.",
   });
 
   useEffect(() => {

@@ -45,7 +45,7 @@ function AcceptTransferContent() {
   if (status === "loading") {
     return (
       <DinoLoader
-        text="Đang xử lý nhận mảnh ghép NFC..."
+        text="Đang xử lý nhận thẻ NFC..."
         subtext="Vui lòng chờ trong giây lát"
         size={260}
         fullScreen={true}
@@ -101,7 +101,7 @@ function AcceptTransferContent() {
                   marginBottom: ".75rem",
                 }}
               >
-                Nhận Mảnh Ghép NFC
+                Nhận Thẻ NFC
               </h1>
               <p
                 style={{
@@ -110,7 +110,7 @@ function AcceptTransferContent() {
                   fontSize: ".9rem",
                 }}
               >
-                Có người muốn tặng bạn một mảnh ghép VinaTap. Bấm xác nhận để
+                Có người muốn tặng bạn một thẻ NFC VinaTap. Bấm xác nhận để
                 nhận thẻ về tài khoản của bạn.
               </p>
               <button

@@ -17,7 +17,7 @@ export default function GiftNotificationBanner({ gifts = [], onGiftProcessed }) 
     setSuccessMsg("");
     try {
       const res = await nfcAPI.acceptTransfer({ transfer_id: gift.id });
-      setSuccessMsg(res.message || `🎉 Bạn đã nhận thành công mảnh ${gift.province_name}!`);
+      setSuccessMsg(res.message || `🎉 Bạn đã nhận thành công thẻ ${gift.province_name}!`);
       setTimeout(() => {
         if (onGiftProcessed) onGiftProcessed(gift.id);
       }, 1200);
@@ -29,7 +29,7 @@ export default function GiftNotificationBanner({ gifts = [], onGiftProcessed }) 
   };
 
   const handleReject = async (gift) => {
-    if (!confirm(`Bạn có chắc muốn từ chối nhận mảnh ghép ${gift.province_name}?`)) return;
+    if (!confirm(`Bạn có chắc muốn từ chối nhận thẻ NFC ${gift.province_name}?`)) return;
     setProcessingId(gift.id);
     setErrorMsg("");
     try {

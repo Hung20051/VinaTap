@@ -90,9 +90,9 @@ const FAQ_DATA = {
       a: "Chính sách giao hàng của VinaTap:\n• Phí vận chuyển tiêu chuẩn toàn quốc: 30.000đ.\n• Miễn phí vận chuyển (Freeship): Tự động áp dụng cho đơn hàng từ 500.000đ trở lên.\nThời gian giao hàng từ 2 - 4 ngày làm việc trên toàn quốc.",
     },
     {
-      q: "Mảnh ghép NFC hoạt động ra sao, có cần tải app không?",
+      q: "Thẻ NFC hoạt động ra sao, có cần tải app không?",
       category: "nfc",
-      a: "Mỗi mảnh NFC có gắn 1 chip thông minh NXP chuẩn ISO bên trong. Chỉ cần chạm nhẹ mặt sau điện thoại vào mảnh NFC, album ảnh của tỉnh đó sẽ mở ngay trên trình duyệt web.\n• Hoàn toàn không cần tải app.\n• Không cần quét mã QR.",
+      a: "Mỗi thẻ NFC có gắn 1 chip thông minh NXP chuẩn ISO bên trong. Chỉ cần chạm nhẹ mặt sau điện thoại vào thẻ NFC, album ảnh của tỉnh đó sẽ mở ngay trên trình duyệt web.\n• Hoàn toàn không cần tải app.\n• Không cần quét mã QR.",
     },
     {
       q: "Điện thoại nào có thể sử dụng được thẻ NFC?",
@@ -102,7 +102,7 @@ const FAQ_DATA = {
     {
       q: "Ai là người tạo album và kích hoạt thẻ?",
       category: "album",
-      a: "Người đầu tiên chạm thẻ (hoặc nhập mã serial dự phòng) sẽ trở thành chủ nhân của mảnh ghép. Bạn có thể tự đặt tên album, tải lên ảnh, video kỷ niệm và viết nhật ký chuyến đi ngay sau khi kích hoạt.",
+      a: "Người đầu tiên chạm thẻ (hoặc nhập mã serial dự phòng) sẽ trở thành chủ nhân của thẻ NFC. Bạn có thể tự đặt tên album, tải lên ảnh, video kỷ niệm và viết nhật ký chuyến đi ngay sau khi kích hoạt.",
     },
     {
       q: "Nội dung album ảnh có riêng tư không?",
@@ -122,7 +122,7 @@ const FAQ_DATA = {
     {
       q: "Dự án VinaTap là gì và có ý nghĩa gì?",
       category: "about",
-      a: "VinaTap là dự án tiên phong số hóa di sản du lịch Việt Nam, kết hợp giữa mảnh ghép NFC 3D vật lý và nền tảng bản đồ du lịch số 34 tỉnh thành. VinaTap giúp bạn lưu giữ kỷ niệm thực tế của từng chuyến đi và truyền cảm hứng khám phá vẻ đẹp đất nước.",
+      a: "VinaTap là dự án tiên phong số hóa di sản du lịch Việt Nam, kết hợp giữa thẻ NFC 3D vật lý và nền tảng bản đồ du lịch số 34 tỉnh thành. VinaTap giúp bạn lưu giữ kỷ niệm thực tế của từng chuyến đi và truyền cảm hứng khám phá vẻ đẹp đất nước.",
     },
   ],
   en: [
