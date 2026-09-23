@@ -1589,6 +1589,12 @@
   flex-shrink: 0;
 }
 
+.tap-welcome-top-bar .navbar__logo span {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6) !important;
+}
+
 .tap-welcome-top-actions {
   display: flex;
   align-items: center;
@@ -2241,8 +2247,8 @@
 
 .tap-wax-seal-btn {
   position: relative;
-  width: 82px;
-  height: 82px;
+  width: 90px;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2253,7 +2259,7 @@
 
 .tap-wax-seal-glow {
   position: absolute;
-  inset: -12px;
+  inset: -10px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(234, 88, 12, 0.55) 0%, rgba(220, 38, 38, 0.25) 45%, transparent 72%);
   animation: sealHaloPulse 2.2s infinite ease-in-out;
@@ -2267,8 +2273,8 @@
 
 .tap-wax-seal-scallop {
   position: relative;
-  width: 78px;
-  height: 78px;
+  width: 86px;
+  height: 86px;
   border-radius: 50% 48% 52% 49% / 49% 52% 48% 51%;
   background: radial-gradient(circle at 35% 30%, #f97316 0%, #ea580c 20%, #dc2626 45%, #991b1b 75%, #500724 100%);
   box-shadow: 
@@ -2297,22 +2303,19 @@
 
 .tap-wax-seal-core {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   background: radial-gradient(circle at 40% 35%, #ea580c 0%, #b91c1c 45%, #7f1d1d 90%, #450a0a 100%);
-  border: 1.5px solid rgba(254, 240, 138, 0.55);
+  border: 1.5px solid rgba(254, 240, 138, 0.65);
   box-shadow: 
     inset 0 3px 6px rgba(0, 0, 0, 0.55),
     inset 0 -2px 4px rgba(254, 240, 138, 0.25);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   overflow: hidden;
-  padding: 4px 6px;
-  gap: 2px;
+  padding: 0;
 }
 
 .tap-wax-shine-glint {
@@ -2341,24 +2344,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7));
+  transition: transform 0.25s ease;
+}
+
+.tap-wax-seal-btn:hover .tap-wax-icon-wrap {
+  transform: scale(1.15) rotate(12deg);
 }
 
 .tap-wax-sparkle {
   color: #fef08a;
-}
-
-.tap-wax-text {
-  font-size: 0.52rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  text-align: center;
-  text-transform: uppercase;
-  color: #fffbeb;
-  text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.75), 0 0 8px rgba(254, 240, 138, 0.4);
-  white-space: nowrap;
-  display: block;
-  line-height: 1.1;
 }
 
 .tap-envelope-hint {

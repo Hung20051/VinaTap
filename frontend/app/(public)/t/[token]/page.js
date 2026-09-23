@@ -487,9 +487,8 @@ export default function TapPage() {
                         <div className="tap-wax-seal-core">
                           <div className="tap-wax-shine-glint" />
                           <div className="tap-wax-icon-wrap">
-                            <Sparkles size={18} className="tap-wax-sparkle" />
+                            <Sparkles size={26} className="tap-wax-sparkle" />
                           </div>
-                          <span className="tap-wax-text">CHẠM ĐỂ MỞ</span>
                         </div>
                       </div>
                     </div>
