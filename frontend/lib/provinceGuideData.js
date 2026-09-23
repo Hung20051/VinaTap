@@ -238,6 +238,41 @@ export function getLandmarkThumbnail(landmark, defaultFallback = "") {
   return LANDMARK_IMAGE_OVERRIDES[name] || landmark.thumbnail_url || landmark.image || defaultFallback;
 }
 
+export const ARTICLE_IMAGE_OVERRIDES = {
+  "lên tầng 81 landmark 81 ngắm toàn cảnh sài gòn lung linh về đêm": "/reviews/landmark-81-ve-dem.jpg",
+  "lên tầng 81 landmark 81": "/reviews/landmark-81-ve-dem.jpg",
+  "landmark 81": "/reviews/landmark-81-ve-dem.jpg",
+};
+
+export function getArticleImage(art, fallback = "") {
+  if (!art) return fallback;
+  const title = (art.title || art.name || "").toLowerCase().trim();
+  for (const [key, val] of Object.entries(ARTICLE_IMAGE_OVERRIDES)) {
+    if (title.includes(key)) return val;
+  }
+  return art.image_url || art.image || fallback;
+}
+
+export const FESTIVAL_IMAGE_OVERRIDES = {
+  "lễ hội cầu ngư đà nẵng": "/festivals/le-hoi-cau-ngu-da-nang.jpg",
+  "lễ hội đua thuyền đà nẵng": "/festivals/le-hoi-dua-thuyen-da-nang.jpg",
+  "lễ hội quán thế âm ngũ hành sơn đà nẵng": "/festivals/le-hoi-quan-the-am-da-nang.jpg",
+  "lễ hội sông nước tp. hồ chí minh": "/festivals/le-hoi-song-nuoc-tphcm.jpg",
+  "lễ hội sông nước tphcm": "/festivals/le-hoi-song-nuoc-tphcm.jpg",
+  "lễ hội sông nước": "/festivals/le-hoi-song-nuoc-tphcm.jpg",
+  "lễ hội nghinh ông cần giờ": "/festivals/le-hoi-nghinh-ong-can-gio.jpg",
+  "lễ hội nghinh ông": "/festivals/le-hoi-nghinh-ong-can-gio.jpg",
+};
+
+export function getFestivalImage(fe, fallback = "/festivals/le-hoi-cau-ngu-da-nang.jpg") {
+  if (!fe) return fallback;
+  const title = (fe.title || fe.name || "").toLowerCase().trim();
+  for (const [key, val] of Object.entries(FESTIVAL_IMAGE_OVERRIDES)) {
+    if (title.includes(key)) return val;
+  }
+  return fe.image_url || fe.image || fallback;
+}
+
 /**
  * Tạo dữ liệu Cẩm nang du lịch tự động hoặc từ dữ liệu MySQL cho bất kỳ tỉnh thành nào
  */
@@ -396,19 +431,19 @@ export function getProvinceGuideData(
         title: r.title,
         date: r.published_date || r.date || "01/01/2026",
         views: r.view_count || r.views || "50,000+",
-        image: r.image_url || r.image || "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80",
+        image: getArticleImage(r, "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80"),
         desc: r.description || r.desc || "",
       })),
       featuredMain: {
         id: rMainRaw.id || "rmain",
         title: rMainRaw.title,
-        image: rMainRaw.image_url || rMainRaw.image || "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80",
+        image: getArticleImage(rMainRaw, "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80"),
         desc: rMainRaw.description || rMainRaw.desc || "",
       },
       featuredSub: {
         id: rSubRaw.id || "rsub",
         title: rSubRaw.title,
-        image: rSubRaw.image_url || rSubRaw.image || "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+        image: getArticleImage(rSubRaw, "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80"),
         desc: rSubRaw.description || rSubRaw.desc || "",
       },
     };
@@ -417,25 +452,15 @@ export function getProvinceGuideData(
   }
 
   // 5. FESTIVALS
-  const FESTIVAL_IMAGE_OVERRIDES = {
-    "lễ hội cầu ngư đà nẵng": "/festivals/le-hoi-cau-ngu-da-nang.jpg",
-    "lễ hội đua thuyền đà nẵng": "/festivals/le-hoi-dua-thuyen-da-nang.jpg",
-    "lễ hội quán thế âm ngũ hành sơn đà nẵng": "/festivals/le-hoi-quan-the-am-da-nang.jpg",
-  };
-
   let festivals = null;
   if (dbFestivals && dbFestivals.length > 0) {
-    festivals = dbFestivals.map((fe, i) => {
-      const cleanTitle = (fe.title || "").toLowerCase().trim();
-      const overrideImg = FESTIVAL_IMAGE_OVERRIDES[cleanTitle];
-      return {
-        id: fe.id || `fe-${i}`,
-        title: fe.title,
-        image: overrideImg || fe.image_url || fe.image || "/festivals/le-hoi-cau-ngu-da-nang.jpg",
-        date: fe.event_time || fe.date || "Hàng năm",
-        desc: fe.description || fe.desc || "",
-      };
-    });
+    festivals = dbFestivals.map((fe, i) => ({
+      id: fe.id || `fe-${i}`,
+      title: fe.title,
+      image: getFestivalImage(fe, "/festivals/le-hoi-cau-ngu-da-nang.jpg"),
+      date: fe.event_time || fe.date || "Hàng năm",
+      desc: fe.description || fe.desc || "",
+    }));
   } else if (province?.slug === "da-nang") {
     festivals = DANANG_GUIDE_DATA.festivals;
   }
