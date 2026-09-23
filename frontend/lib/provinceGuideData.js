@@ -220,6 +220,20 @@ export const DANANG_GUIDE_DATA = {
   ],
 };
 
+export const PROVINCE_IMAGE_OVERRIDES = {
+  "hai-phong": "/provinces/hai-phong.jpg",
+  "hải phòng": "/provinces/hai-phong.jpg",
+  "ha-noi": "/provinces/ha-noi.jpg",
+  "hà nội": "/provinces/ha-noi.jpg",
+};
+
+export function getProvinceCover(province) {
+  if (!province) return "";
+  const slug = (province.slug || "").toLowerCase().trim();
+  const name = (province.name || "").toLowerCase().trim();
+  return PROVINCE_IMAGE_OVERRIDES[slug] || PROVINCE_IMAGE_OVERRIDES[name] || "";
+}
+
 export const LANDMARK_IMAGE_OVERRIDES = {
   "nhà thờ đức bà sài gòn": "/landmarks/nha-tho-duc-ba-sai-gon.jpg",
   "nhà thờ đức bà": "/landmarks/nha-tho-duc-ba-sai-gon.jpg",
@@ -230,18 +244,70 @@ export const LANDMARK_IMAGE_OVERRIDES = {
   "dinh độc lập (hội trường thống nhất)": "/landmarks/dinh-doc-lap.jpg",
   "dinh độc lập": "/landmarks/dinh-doc-lap.jpg",
   "hội trường thống nhất": "/landmarks/dinh-doc-lap.jpg",
+  "quần thể danh thắng tràng an": "/landmarks/quan-the-danh-thang-trang-an.jpg",
+  "danh thắng tràng an": "/landmarks/quan-the-danh-thang-trang-an.jpg",
+  "tràng an": "/landmarks/quan-the-danh-thang-trang-an.jpg",
+  "hang múa & đỉnh ngọa long": "/landmarks/hang-mua-dinh-ngoa-long.jpg",
+  "hang múa": "/landmarks/hang-mua-dinh-ngoa-long.jpg",
+  "đỉnh ngọa long": "/landmarks/hang-mua-dinh-ngoa-long.jpg",
+  "quần đảo cát bà": "/landmarks/quan-dao-cat-ba.jpg",
+  "cát bà": "/landmarks/quan-dao-cat-ba.jpg",
+  "hồ hoàn kiếm & đền ngọc sơn": "/landmarks/ho-hoan-kiem-den-ngoc-son.jpg",
+  "hồ hoàn kiếm": "/landmarks/ho-hoan-kiem-den-ngoc-son.jpg",
+  "đền ngọc sơn": "/landmarks/ho-hoan-kiem-den-ngoc-son.jpg",
+  "hồ gươm": "/landmarks/ho-hoan-kiem-den-ngoc-son.jpg",
+  "văn miếu - quốc tử giám": "/landmarks/van-mieu-quoc-tu-giam.jpg",
+  "văn miếu": "/landmarks/van-mieu-quoc-tu-giam.jpg",
+  "quốc tử giám": "/landmarks/van-mieu-quoc-tu-giam.jpg",
+  "hoàng thành thăng long": "/landmarks/hoang-thanh-thang-long.jpg",
+  "hoàng thành": "/landmarks/hoang-thanh-thang-long.jpg",
+  "nhà thờ lớn hà nội": "/landmarks/nha-tho-lon-ha-noi.jpg",
+  "nhà thờ lớn": "/landmarks/nha-tho-lon-ha-noi.jpg",
 };
 
 export function getLandmarkThumbnail(landmark, defaultFallback = "") {
   if (!landmark) return defaultFallback;
   const name = (landmark.name || "").toLowerCase().trim();
-  return LANDMARK_IMAGE_OVERRIDES[name] || landmark.thumbnail_url || landmark.image || defaultFallback;
+  for (const [key, val] of Object.entries(LANDMARK_IMAGE_OVERRIDES)) {
+    if (name.includes(key)) return val;
+  }
+  return landmark.thumbnail_url || landmark.image || defaultFallback;
+}
+
+export const FOOD_IMAGE_OVERRIDES = {
+  "phở thìn lò đúc": "/foods/pho-thin-lo-duc.jpg",
+  "phở thìn": "/foods/pho-thin-lo-duc.jpg",
+};
+
+export function getFoodImage(food, fallback = "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80") {
+  if (!food) return fallback;
+  const title = (food.title || food.name || "").toLowerCase().trim();
+  for (const [key, val] of Object.entries(FOOD_IMAGE_OVERRIDES)) {
+    if (title.includes(key)) return val;
+  }
+  return food.image_url || food.image || fallback;
 }
 
 export const ARTICLE_IMAGE_OVERRIDES = {
   "lên tầng 81 landmark 81 ngắm toàn cảnh sài gòn lung linh về đêm": "/reviews/landmark-81-ve-dem.jpg",
   "lên tầng 81 landmark 81": "/reviews/landmark-81-ve-dem.jpg",
   "landmark 81": "/reviews/landmark-81-ve-dem.jpg",
+  "chinh phục 486 bậc thang hang múa ngắm trọn mùa lúa chín tam cốc": "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
+  "chinh phục 486 bậc thang hang múa": "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
+  "hang múa ngắm trọn mùa lúa chín": "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
+  "hang múa": "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
+  "kinh nghiệm đi tuyến cáp treo cát bà vượt biển ngắm vịnh lan hạ": "/reviews/cap-treo-cat-ba.jpg",
+  "kinh nghiệm đi tuyến cáp treo cát bà": "/reviews/cap-treo-cat-ba.jpg",
+  "tuyến cáp treo cát bà vượt biển": "/reviews/cap-treo-cat-ba.jpg",
+  "cáp treo cát bà": "/reviews/cap-treo-cat-ba.jpg",
+  "check-in quán cà phê đường tàu hà nội - trải nghiệm độc nhất vô nhị": "/reviews/ca-phe-duong-tau-ha-noi.jpg",
+  "check-in quán cà phê đường tàu hà nội": "/reviews/ca-phe-duong-tau-ha-noi.jpg",
+  "cà phê đường tàu hà nội": "/reviews/ca-phe-duong-tau-ha-noi.jpg",
+  "cà phê đường tàu": "/reviews/ca-phe-duong-tau-ha-noi.jpg",
+  "thưởng thức cà phê trứng giảng - vị ngọt béo ấm nồng nức tiếng hà nội": "/reviews/ca-phe-trung-giang.jpg",
+  "thưởng thức cà phê trứng giảng": "/reviews/ca-phe-trung-giang.jpg",
+  "cà phê trứng giảng": "/reviews/ca-phe-trung-giang.jpg",
+  "cà phê trứng": "/reviews/ca-phe-trung-giang.jpg",
 };
 
 export function getArticleImage(art, fallback = "") {
@@ -262,6 +328,11 @@ export const FESTIVAL_IMAGE_OVERRIDES = {
   "lễ hội sông nước": "/festivals/le-hoi-song-nuoc-tphcm.jpg",
   "lễ hội nghinh ông cần giờ": "/festivals/le-hoi-nghinh-ong-can-gio.jpg",
   "lễ hội nghinh ông": "/festivals/le-hoi-nghinh-ong-can-gio.jpg",
+  "lễ hội tràng an": "/festivals/le-hoi-trang-an.jpg",
+  "lễ hội chọi trâu đồ sơn": "/festivals/le-hoi-choi-trau-do-son.jpg",
+  "chọi trâu đồ sơn": "/festivals/le-hoi-choi-trau-do-son.jpg",
+  "lễ hội gò đống đa": "/festivals/le-hoi-go-dong-da.jpg",
+  "gò đống đa": "/festivals/le-hoi-go-dong-da.jpg",
 };
 
 export function getFestivalImage(fe, fallback = "/festivals/le-hoi-cau-ngu-da-nang.jpg") {
@@ -290,7 +361,13 @@ export function getProvinceGuideData(
   if (dbLandmarks && dbLandmarks.length > 0) {
     landmarks = dbLandmarks.map((l, i) => {
       const cleanName = (l.name || "").toLowerCase().trim();
-      const overrideImg = LANDMARK_IMAGE_OVERRIDES[cleanName];
+      let overrideImg = null;
+      for (const [key, val] of Object.entries(LANDMARK_IMAGE_OVERRIDES)) {
+        if (cleanName.includes(key)) {
+          overrideImg = val;
+          break;
+        }
+      }
       return {
         id: l.id || `l-${i}`,
         name: l.name,
@@ -337,25 +414,25 @@ export function getProvinceGuideData(
         id: f.id || `f-${i}`,
         title: f.title,
         date: f.published_date || f.date || "01/01/2026",
-        views: f.view_count || f.views || "100,000+",
-        image: f.image_url || f.image || "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
+        views: f.view_count || f.views || null,
+        image: getFoodImage(f, "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80"),
         address: f.address || `${pName}`,
         desc: f.description || f.desc || "",
       })),
-      featuredMain: {
+      featuredMain: fMainRaw ? {
         id: fMainRaw.id || "fmain",
         title: fMainRaw.title,
-        image: fMainRaw.image_url || fMainRaw.image || "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=800&q=80",
+        image: getFoodImage(fMainRaw, "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=800&q=80"),
         address: fMainRaw.address || `${pName}`,
         desc: fMainRaw.description || fMainRaw.desc || "",
-      },
-      featuredSub: {
+      } : null,
+      featuredSub: fSubRaw && fSubRaw.id !== fMainRaw?.id ? {
         id: fSubRaw.id || "fsub",
         title: fSubRaw.title,
-        image: fSubRaw.image_url || fSubRaw.image || "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+        image: getFoodImage(fSubRaw, "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80"),
         address: fSubRaw.address || `${pName}`,
         desc: fSubRaw.description || fSubRaw.desc || "",
-      },
+      } : null,
     };
   } else if (province?.slug === "da-nang") {
     culinary = DANANG_GUIDE_DATA.culinary;
@@ -416,7 +493,7 @@ export function getProvinceGuideData(
       (nonFeatRev.length >= 2 ? nonFeatRev[nonFeatRev.length - 2] : reviewArts[0]);
     const rSubRaw =
       featRev[1] ||
-      (nonFeatRev.length >= 1 ? nonFeatRev[nonFeatRev.length - 1] : reviewArts[1] || reviewArts[0]);
+      (nonFeatRev.length >= 1 ? nonFeatRev[nonFeatRev.length - 1] : (reviewArts.length > 1 ? reviewArts[1] : null));
     
     const listRevRaw =
       featRev.length > 0
@@ -430,7 +507,7 @@ export function getProvinceGuideData(
         id: r.id || `r-${i}`,
         title: r.title,
         date: r.published_date || r.date || "01/01/2026",
-        views: r.view_count || r.views || "50,000+",
+        views: r.view_count || r.views || null,
         image: getArticleImage(r, "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80"),
         desc: r.description || r.desc || "",
       })),
@@ -440,12 +517,12 @@ export function getProvinceGuideData(
         image: getArticleImage(rMainRaw, "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80"),
         desc: rMainRaw.description || rMainRaw.desc || "",
       },
-      featuredSub: {
+      featuredSub: rSubRaw && rSubRaw.id !== rMainRaw?.id ? {
         id: rSubRaw.id || "rsub",
         title: rSubRaw.title,
         image: getArticleImage(rSubRaw, "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80"),
         desc: rSubRaw.description || rSubRaw.desc || "",
-      },
+      } : null,
     };
   } else if (province?.slug === "da-nang") {
     reviews = DANANG_GUIDE_DATA.reviews;

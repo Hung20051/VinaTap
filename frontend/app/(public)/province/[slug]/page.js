@@ -8,7 +8,7 @@ import { provinceAPI } from "@/lib/api";
 import { isLoggedIn, clearAuth, getUser } from "@/lib/auth";
 import Dino404 from "@/components/ui/Dino404";
 import DinoLoader from "@/components/ui/DinoLoader";
-import { getProvinceGuideData } from "@/lib/provinceGuideData";
+import { getProvinceGuideData, getProvinceCover } from "@/lib/provinceGuideData";
 import GuideArticleModal from "./components/GuideArticleModal";
 import {
   ChevronRight,
@@ -93,6 +93,7 @@ export default function ProvincePage() {
 
   // Ảnh bìa chính
   const heroImage =
+    getProvinceCover(province) ||
     province.thumbnail_url ||
     guideData.landmarks[0]?.image ||
     "https://images.unsplash.com/photo-1528127269322-539801943592?w=1200&q=80";
@@ -188,7 +189,6 @@ export default function ProvincePage() {
                     <h4 className="mia-food-title">{item.title}</h4>
                     <div className="mia-food-meta">
                       <span>{item.date}</span>
-                      <span>{item.views} lượt xem</span>
                     </div>
                   </div>
                 </div>
@@ -213,21 +213,23 @@ export default function ProvincePage() {
             </div>
 
             {/* Cột phải: 1 Card ảnh lớn món đặc sản tiêu biểu */}
-            <div
-              className="mia-food-featured-card"
-              onClick={() => setSelectedItem(guideData.culinary.featuredSub)}
-            >
-              <img
-                src={guideData.culinary.featuredSub.image}
-                alt={guideData.culinary.featuredSub.title}
-                className="mia-card-bg-img"
-                loading="lazy"
-              />
-              <div className="mia-card-gradient" />
-              <h3 className="mia-card-title">
-                {guideData.culinary.featuredSub.title}
-              </h3>
-            </div>
+            {guideData.culinary.featuredSub && guideData.culinary.featuredSub.id !== guideData.culinary.featuredMain?.id && (
+              <div
+                className="mia-food-featured-card"
+                onClick={() => setSelectedItem(guideData.culinary.featuredSub)}
+              >
+                <img
+                  src={guideData.culinary.featuredSub.image}
+                  alt={guideData.culinary.featuredSub.title}
+                  className="mia-card-bg-img"
+                  loading="lazy"
+                />
+                <div className="mia-card-gradient" />
+                <h3 className="mia-card-title">
+                  {guideData.culinary.featuredSub.title}
+                </h3>
+              </div>
+            )}
           </div>
         </section>
 
@@ -390,7 +392,6 @@ export default function ProvincePage() {
                     <h4 className="mia-food-title">{item.title}</h4>
                     <div className="mia-food-meta">
                       <span>{item.date}</span>
-                      <span>{item.views} lượt xem</span>
                     </div>
                   </div>
                 </div>
@@ -415,21 +416,23 @@ export default function ProvincePage() {
             </div>
 
             {/* Cột phải: 1 Card ảnh lớn review chèo SUP/trải nghiệm */}
-            <div
-              className="mia-food-featured-card"
-              onClick={() => setSelectedItem(guideData.reviews.featuredSub)}
-            >
-              <img
-                src={guideData.reviews.featuredSub.image}
-                alt={guideData.reviews.featuredSub.title}
-                className="mia-card-bg-img"
-                loading="lazy"
-              />
-              <div className="mia-card-gradient" />
-              <h3 className="mia-card-title">
-                {guideData.reviews.featuredSub.title}
-              </h3>
-            </div>
+            {guideData.reviews.featuredSub && guideData.reviews.featuredSub.id !== guideData.reviews.featuredMain?.id && (
+              <div
+                className="mia-food-featured-card"
+                onClick={() => setSelectedItem(guideData.reviews.featuredSub)}
+              >
+                <img
+                  src={guideData.reviews.featuredSub.image}
+                  alt={guideData.reviews.featuredSub.title}
+                  className="mia-card-bg-img"
+                  loading="lazy"
+                />
+                <div className="mia-card-gradient" />
+                <h3 className="mia-card-title">
+                  {guideData.reviews.featuredSub.title}
+                </h3>
+              </div>
+            )}
           </div>
         </section>
 

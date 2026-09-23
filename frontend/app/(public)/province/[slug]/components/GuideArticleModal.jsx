@@ -42,11 +42,6 @@ export default function GuideArticleModal({ item, type, onClose }) {
                 <Calendar size={13} /> {item.date}
               </span>
             )}
-            {item.views && (
-              <span className="mia-meta-tag">
-                <Eye size={13} /> {item.views} lượt xem
-              </span>
-            )}
             {item.category && (
               <span className="mia-meta-tag is-badge">
                 {item.category === "attraction"

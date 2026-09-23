@@ -31,7 +31,7 @@ import {
 
 import Dino404 from "@/components/ui/Dino404";
 import DinoLoader from "@/components/ui/DinoLoader";
-import { getLandmarkThumbnail } from "@/lib/provinceGuideData";
+import { getLandmarkThumbnail, getFoodImage } from "@/lib/provinceGuideData";
 import "./TapPage.css";
 
 const REGION_BADGES = {
@@ -125,7 +125,12 @@ export default function TapPage() {
           thumbnail_url: getLandmarkThumbnail(lm, lm.thumbnail_url),
         }))
       );
-      setFoods(c.foods || []);
+      setFoods(
+        (c.foods || []).map((f) => ({
+          ...f,
+          image_url: getFoodImage(f, f.image_url),
+        }))
+      );
       setFestivals(c.festivals || []);
 
       if (c.status === "disabled") {
