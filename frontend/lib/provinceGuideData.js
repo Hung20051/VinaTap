@@ -220,6 +220,24 @@ export const DANANG_GUIDE_DATA = {
   ],
 };
 
+export const LANDMARK_IMAGE_OVERRIDES = {
+  "nhà thờ đức bà sài gòn": "/landmarks/nha-tho-duc-ba-sai-gon.jpg",
+  "nhà thờ đức bà": "/landmarks/nha-tho-duc-ba-sai-gon.jpg",
+  "bưu điện trung tâm thành phố": "/landmarks/buu-dien-trung-tam-thanh-pho.jpg",
+  "bưu điện trung tâm sài gòn": "/landmarks/buu-dien-trung-tam-thanh-pho.jpg",
+  "bưu điện trung tâm": "/landmarks/buu-dien-trung-tam-thanh-pho.jpg",
+  "bưu điện thành phố": "/landmarks/buu-dien-trung-tam-thanh-pho.jpg",
+  "dinh độc lập (hội trường thống nhất)": "/landmarks/dinh-doc-lap.jpg",
+  "dinh độc lập": "/landmarks/dinh-doc-lap.jpg",
+  "hội trường thống nhất": "/landmarks/dinh-doc-lap.jpg",
+};
+
+export function getLandmarkThumbnail(landmark, defaultFallback = "") {
+  if (!landmark) return defaultFallback;
+  const name = (landmark.name || "").toLowerCase().trim();
+  return LANDMARK_IMAGE_OVERRIDES[name] || landmark.thumbnail_url || landmark.image || defaultFallback;
+}
+
 /**
  * Tạo dữ liệu Cẩm nang du lịch tự động hoặc từ dữ liệu MySQL cho bất kỳ tỉnh thành nào
  */
@@ -235,20 +253,25 @@ export function getProvinceGuideData(
   // 1. LANDMARKS
   let landmarks = [];
   if (dbLandmarks && dbLandmarks.length > 0) {
-    landmarks = dbLandmarks.map((l, i) => ({
-      id: l.id || `l-${i}`,
-      name: l.name,
-      category: l.category || "attraction",
-      image:
-        l.thumbnail_url ||
-        l.image ||
-        `https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80`,
-      address: l.address || `${pName}, Việt Nam`,
-      desc: l.description || l.desc || `Danh lam thắng cảnh tiêu biểu tại ${pName}.`,
-      maps_place_id: l.maps_place_id,
-      latitude: l.latitude,
-      longitude: l.longitude,
-    }));
+    landmarks = dbLandmarks.map((l, i) => {
+      const cleanName = (l.name || "").toLowerCase().trim();
+      const overrideImg = LANDMARK_IMAGE_OVERRIDES[cleanName];
+      return {
+        id: l.id || `l-${i}`,
+        name: l.name,
+        category: l.category || "attraction",
+        image:
+          overrideImg ||
+          l.thumbnail_url ||
+          l.image ||
+          `https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80`,
+        address: l.address || `${pName}, Việt Nam`,
+        desc: l.description || l.desc || `Danh lam thắng cảnh tiêu biểu tại ${pName}.`,
+        maps_place_id: l.maps_place_id,
+        latitude: l.latitude,
+        longitude: l.longitude,
+      };
+    });
   } else if (province?.slug === "da-nang") {
     landmarks = DANANG_GUIDE_DATA.landmarks;
   }
