@@ -62,6 +62,15 @@ const REGION_LABEL = {
   },
 };
 
+// Tạm thời chỉ hiển thị 5 tỉnh thành theo yêu cầu (Hà Nội, Hồ Chí Minh, Hải Phòng, Đà Nẵng, Ninh Bình)
+const ALLOWED_PROVINCE_SLUGS = [
+  "ha-noi",
+  "ho-chi-minh",
+  "hai-phong",
+  "da-nang",
+  "ninh-binh",
+];
+
 const FAQ_DATA = {
   vi: [
     {
@@ -193,7 +202,10 @@ export default function HomePage() {
     provinceAPI
       .getAll()
       .then((d) => {
-        const list = d?.provinces || [];
+        const rawList = d?.provinces || [];
+        const list = rawList.filter((p) =>
+          ALLOWED_PROVINCE_SLUGS.includes(p.slug)
+        );
         setProvinces(list);
         if (list.length > 0) {
           try {
@@ -206,7 +218,10 @@ export default function HomePage() {
         try {
           const cached = sessionStorage.getItem("vinatap_cached_provinces");
           if (cached) {
-            setProvinces(JSON.parse(cached));
+            const list = JSON.parse(cached).filter((p) =>
+              ALLOWED_PROVINCE_SLUGS.includes(p.slug)
+            );
+            setProvinces(list);
             return;
           }
         } catch {}
@@ -288,19 +303,21 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const filtered = provinces.filter((p) => {
-    const q = search.toLowerCase().trim();
-    const pNameEn = getProvinceName(p, "en");
-    const pDescEn = getProvinceDesc(p, "en");
-    const matchSearch =
-      !q ||
-      p.name.toLowerCase().includes(q) ||
-      pNameEn.toLowerCase().includes(q) ||
-      (p.description && p.description.toLowerCase().includes(q)) ||
-      (pDescEn && pDescEn.toLowerCase().includes(q));
-    const matchRegion = region === "all" || p.region === region;
-    return matchSearch && matchRegion;
-  });
+  const filtered = provinces
+    .filter((p) => ALLOWED_PROVINCE_SLUGS.includes(p.slug))
+    .filter((p) => {
+      const q = search.toLowerCase().trim();
+      const pNameEn = getProvinceName(p, "en");
+      const pDescEn = getProvinceDesc(p, "en");
+      const matchSearch =
+        !q ||
+        p.name.toLowerCase().includes(q) ||
+        pNameEn.toLowerCase().includes(q) ||
+        (p.description && p.description.toLowerCase().includes(q)) ||
+        (pDescEn && pDescEn.toLowerCase().includes(q));
+      const matchRegion = region === "all" || p.region === region;
+      return matchSearch && matchRegion;
+    });
 
   // Tự động trượt slide tỉnh thành mỗi 3s — dừng khi hover/chạm hoặc khi
   // danh sách quá ngắn (không cần cuộn). Cuộn hết thì quay lại đầu.
@@ -780,10 +797,10 @@ export default function HomePage() {
                       <div className="home-hero__app-card">
                         <div
                           className="home-hero__app-card-thumb"
-                          style={{ backgroundImage: `url('/dien-bien-nui-rung.jpg')` }}
+                          style={{ backgroundImage: `url('/auth-bg.jpg')` }}
                         />
                         <div className="home-hero__app-card-info">
-                          <div className="home-hero__app-card-name">Cần Thơ</div>
+                          <div className="home-hero__app-card-name">TP. Hồ Chí Minh</div>
                           <div className="home-hero__app-card-region">{isVi ? "Miền Nam" : "South"}</div>
                         </div>
                       </div>
