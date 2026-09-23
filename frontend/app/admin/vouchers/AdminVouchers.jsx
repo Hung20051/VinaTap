@@ -20,8 +20,12 @@ import {
   ChevronRight,
   Filter,
   Sparkles,
+  UserCheck,
+  CheckSquare,
+  Square,
+  Loader2,
 } from "lucide-react";
-import { voucherAPI } from "@/lib/api";
+import { voucherAPI, userAPI } from "@/lib/api";
 import "./AdminVouchers.css";
 
 const PAGE_SIZE = 8;
@@ -53,9 +57,14 @@ export default function AdminVouchers() {
     expires_at: "",
   });
 
-  // Form Tặng Voucher
+  // Form Tặng Voucher Cho Tài Khoản Bất Kỳ
   const [sendTarget, setSendTarget] = useState("all"); // 'all' | 'users'
-  const [targetUserIds, setTargetUserIds] = useState("");
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [userSearchQuery, setUserSearchQuery] = useState("");
+  const [userRoleFilter, setUserRoleFilter] = useState("all"); // 'all' | 'customer' | 'admin'
+  const [sendWithNotification, setSendWithNotification] = useState(true);
+  const [usersList, setUsersList] = useState([]);
+  const [usersLoading, setUsersLoading] = useState(false);
   const [sending, setSending] = useState(false);
 
   const showToast = (message, type = "success") => {
@@ -73,6 +82,21 @@ export default function AdminVouchers() {
       showToast("Không thể tải danh sách voucher", "error");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadUsers = async () => {
+    if (usersList.length > 0) return;
+    setUsersLoading(true);
+    try {
+      const res = await userAPI.getAll({ limit: 500 });
+      if (res && res.users) {
+        setUsersList(res.users);
+      }
+    } catch (err) {
+      console.error("Lỗi nạp danh sách tài khoản:", err);
+    } finally {
+      setUsersLoading(false);
     }
   };
 
@@ -97,8 +121,8 @@ export default function AdminVouchers() {
         ...formData,
         expires_at: formData.is_permanent ? null : formData.expires_at,
       };
-      await voucherAPI.createAdmin(payload);
-      showToast("🎉 Đã tạo Mã Voucher mới thành công!");
+      const res = await voucherAPI.createAdmin(payload);
+      showToast(`🎉 Đã tạo Mã Voucher "${payload.code}" thành công!`);
       setCreateModalOpen(false);
       setFormData({
         code: "",
@@ -113,6 +137,11 @@ export default function AdminVouchers() {
         expires_at: "",
       });
       fetchVouchers();
+
+      // Gợi ý tặng ngay cho tài khoản
+      if (res && res.voucher) {
+        handleOpenSendModal(res.voucher);
+      }
     } catch (err) {
       alert(err.message || "Lỗi tạo Voucher");
     }
@@ -131,33 +160,74 @@ export default function AdminVouchers() {
     }
   };
 
+  const handleOpenSendModal = (v) => {
+    setSelectedVoucher(v);
+    setSendTarget("all");
+    setSelectedUserIds([]);
+    setUserSearchQuery("");
+    setUserRoleFilter("all");
+    setSendWithNotification(true);
+    setSendModalOpen(true);
+    loadUsers();
+  };
+
+  const handleToggleSelectUser = (id) => {
+    setSelectedUserIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAllFilteredUsers = (filtered) => {
+    const filteredIds = filtered.map((u) => u.id);
+    const allSelected = filteredIds.length > 0 && filteredIds.every((id) => selectedUserIds.includes(id));
+    if (allSelected) {
+      setSelectedUserIds((prev) => prev.filter((id) => !filteredIds.includes(id)));
+    } else {
+      setSelectedUserIds((prev) => [...new Set([...prev, ...filteredIds])]);
+    }
+  };
+
   const handleSendVoucher = async (e) => {
     e.preventDefault();
     if (!selectedVoucher) return;
 
+    if (sendTarget === "users" && selectedUserIds.length === 0) {
+      alert("⚠️ Vui lòng chọn ít nhất một tài khoản nhận Voucher!");
+      return;
+    }
+
     setSending(true);
     try {
-      const userIds = targetUserIds
-        .split(",")
-        .map((s) => parseInt(s.trim()))
-        .filter(Boolean);
-
       const res = await voucherAPI.sendToUsers({
         voucherId: selectedVoucher.id,
         targetType: sendTarget,
-        userIds,
-        sendNotification: true,
+        userIds: selectedUserIds,
+        sendNotification: sendWithNotification,
       });
 
-      showToast(`🎁 Đã tặng thành công cho ${res.count} khách hàng!`);
+      showToast(`🎁 Đã tặng thành công Voucher "${selectedVoucher.code}" cho ${res.count} tài khoản!`);
       setSendModalOpen(false);
       fetchVouchers();
     } catch (err) {
-      alert(err.message || "Lỗi tặng Voucher");
+      alert(err.message || "Lỗi khi tặng Voucher");
     } finally {
       setSending(false);
     }
   };
+
+  // Filtered Users for Send Modal
+  const filteredUsers = usersList.filter((u) => {
+    if (userRoleFilter === "customer" && u.role === "admin") return false;
+    if (userRoleFilter === "admin" && u.role !== "admin") return false;
+    const q = userSearchQuery.toLowerCase().trim();
+    if (!q) return true;
+    return (
+      (u.name && u.name.toLowerCase().includes(q)) ||
+      (u.email && u.email.toLowerCase().includes(q)) ||
+      (u.phone && u.phone.includes(q)) ||
+      String(u.id) === q
+    );
+  });
 
   // Filter & Search Logic
   const filteredVouchers = vouchers.filter((v) => {
@@ -364,10 +434,8 @@ export default function AdminVouchers() {
                       {!v.isExpired && (
                         <button
                           className="btn-lux-gift"
-                          onClick={() => {
-                            router.push(`/admin/notifications?type=promo&voucherId=${v.id}`);
-                          }}
-                          title="Tặng Voucher cho khách qua thông báo"
+                          onClick={() => handleOpenSendModal(v)}
+                          title="Tặng / Gán Voucher cho tài khoản"
                         >
                           <Gift size={12} /> <span>Tặng</span>
                         </button>
@@ -524,6 +592,243 @@ export default function AdminVouchers() {
                 </button>
                 <button type="submit" className="btn-submit-create">
                   <Plus size={16} /> Tạo Voucher Mới
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 🎁 MODAL TẶNG / GÁN VOUCHER CHO TÀI KHOẢN BẤT KỲ */}
+      {sendModalOpen && selectedVoucher && (
+        <div className="admin-modal-overlay" onClick={() => setSendModalOpen(false)}>
+          <div className="admin-modal-card send-voucher-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-handle-bar" />
+            <div className="modal-header-row">
+              <div>
+                <h3>🎁 Tặng / Gán Voucher Cho Tài Khoản</h3>
+                <p className="modal-header-sub">
+                  Gán mã ưu đãi trực tiếp vào Ví của bất kỳ tài khoản nào
+                </p>
+              </div>
+              <button className="admin-modal-close" onClick={() => setSendModalOpen(false)}>
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Voucher preview banner */}
+            <div className="send-voucher-preview-banner">
+              <div className="preview-badge">
+                {selectedVoucher.discountText || `Giảm ${selectedVoucher.discount_value}%`}
+              </div>
+              <div className="preview-info">
+                <div className="preview-code-row">
+                  <code>{selectedVoucher.code}</code>
+                  <span className="preview-title">{selectedVoucher.title}</span>
+                </div>
+                <div className="preview-meta">
+                  <span>Đơn tối thiểu: <strong>{selectedVoucher.min_order_amount > 0 ? formatMoney(selectedVoucher.min_order_amount) : "0đ"}</strong></span>
+                  <span>•</span>
+                  <span>Hạn dùng: <strong>{selectedVoucher.isPermanent ? "Vĩnh viễn" : new Date(selectedVoucher.expires_at).toLocaleDateString("vi-VN")}</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <form onSubmit={handleSendVoucher} className="voucher-send-form">
+              {/* Target selection */}
+              <div className="form-group">
+                <label className="send-section-label">1. Chọn Đối Tượng Nhận Voucher:</label>
+                <div className="send-target-selector">
+                  <label className={`target-option ${sendTarget === "all" ? "selected" : ""}`}>
+                    <input
+                      type="radio"
+                      name="sendTarget"
+                      checked={sendTarget === "all"}
+                      onChange={() => setSendTarget("all")}
+                    />
+                    <div className="target-text">
+                      <strong>🌐 Toàn Bộ Khách Hàng (@ALL Users)</strong>
+                      <span>Gán voucher cho tất cả tài khoản người dùng đang hoạt động</span>
+                    </div>
+                  </label>
+
+                  <label className={`target-option ${sendTarget === "users" ? "selected" : ""}`}>
+                    <input
+                      type="radio"
+                      name="sendTarget"
+                      checked={sendTarget === "users"}
+                      onChange={() => {
+                        setSendTarget("users");
+                        loadUsers();
+                      }}
+                    />
+                    <div className="target-text">
+                      <strong>👥 Chọn Tài Khoản Bất Kỳ (Multi-Select)</strong>
+                      <span>Tìm kiếm và tích chọn một hoặc nhiều tài khoản cụ thể</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              {/* User picker when sendTarget === "users" */}
+              {sendTarget === "users" && (
+                <div className="admin-user-picker-wrapper">
+                  <div className="user-picker-controls">
+                    <div className="picker-search-box">
+                      <Search size={14} className="picker-search-icon" />
+                      <input
+                        type="text"
+                        placeholder="Tìm theo tên, email, SĐT hoặc ID..."
+                        value={userSearchQuery}
+                        onChange={(e) => setUserSearchQuery(e.target.value)}
+                      />
+                      {userSearchQuery && (
+                        <button
+                          type="button"
+                          className="picker-clear-btn"
+                          onClick={() => setUserSearchQuery("")}
+                        >
+                          <X size={12} />
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="picker-filter-row">
+                      <div className="picker-role-tabs">
+                        <button
+                          type="button"
+                          className={`picker-tab ${userRoleFilter === "all" ? "active" : ""}`}
+                          onClick={() => setUserRoleFilter("all")}
+                        >
+                          Tất cả
+                        </button>
+                        <button
+                          type="button"
+                          className={`picker-tab ${userRoleFilter === "customer" ? "active" : ""}`}
+                          onClick={() => setUserRoleFilter("customer")}
+                        >
+                          Khách hàng
+                        </button>
+                        <button
+                          type="button"
+                          className={`picker-tab ${userRoleFilter === "admin" ? "active" : ""}`}
+                          onClick={() => setUserRoleFilter("admin")}
+                        >
+                          Admin
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        className="btn-select-all-filtered"
+                        onClick={() => handleSelectAllFilteredUsers(filteredUsers)}
+                      >
+                        {filteredUsers.length > 0 && filteredUsers.every((u) => selectedUserIds.includes(u.id))
+                          ? "Bỏ chọn tất cả"
+                          : `Chọn tất cả (${filteredUsers.length})`}
+                      </button>
+                    </div>
+
+                    <div className="picker-counter-badge">
+                      Đã chọn: <strong>{selectedUserIds.length}</strong> / {usersList.length} tài khoản
+                    </div>
+                  </div>
+
+                  {/* Scrollable list */}
+                  <div className="picker-user-list">
+                    {usersLoading ? (
+                      <div className="picker-loading">Đang tải danh sách tài khoản...</div>
+                    ) : filteredUsers.length === 0 ? (
+                      <div className="picker-empty">Không tìm thấy tài khoản nào khớp.</div>
+                    ) : (
+                      filteredUsers.map((u) => {
+                        const isSelected = selectedUserIds.includes(u.id);
+                        return (
+                          <div
+                            key={u.id}
+                            className={`picker-user-card ${isSelected ? "selected" : ""}`}
+                            onClick={() => handleToggleSelectUser(u.id)}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => {}}
+                              className="picker-checkbox"
+                            />
+                            <div className="picker-user-avatar">
+                              {u.avatar_url ? (
+                                <img src={u.avatar_url} alt={u.name} />
+                              ) : (
+                                <span>{(u.name || "U")[0].toUpperCase()}</span>
+                              )}
+                            </div>
+                            <div className="picker-user-details">
+                              <div className="picker-user-name-row">
+                                <span className="p-name">{u.name}</span>
+                                <span className={`p-role-badge role-${u.role || "customer"}`}>
+                                  {u.role === "admin" ? "Admin" : "Khách"}
+                                </span>
+                              </div>
+                              <div className="picker-user-sub">
+                                <span className="p-email">{u.email}</span>
+                                {u.phone && <span className="p-phone">• {u.phone}</span>}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Notification toggle */}
+              <div className="send-notification-opt">
+                <label className="checkbox-custom-label">
+                  <input
+                    type="checkbox"
+                    checked={sendWithNotification}
+                    onChange={(e) => setSendWithNotification(e.target.checked)}
+                  />
+                  <span>🔔 Tự động gửi thông báo chuông kèm mã ưu đãi đến tài khoản nhận</span>
+                </label>
+              </div>
+
+              {/* Modal actions */}
+              <div className="modal-footer-row">
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={() => setSendModalOpen(false)}
+                >
+                  Hủy bỏ
+                </button>
+                <button
+                  type="submit"
+                  className="btn-submit-send"
+                  disabled={sending || (sendTarget === "users" && selectedUserIds.length === 0)}
+                >
+                  {sending ? (
+                    "Đang xử lý tặng..."
+                  ) : (
+                    <>
+                      <Gift size={16} /> Xác Nhận Tặng ({sendTarget === "all" ? "Tất cả" : `${selectedUserIds.length} tài khoản`})
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <div className="send-modal-alt-link">
+                <span>Cần soạn thông báo chi tiết tùy chỉnh?</span>{" "}
+                <button
+                  type="button"
+                  className="alt-link-btn"
+                  onClick={() => {
+                    setSendModalOpen(false);
+                    router.push(`/admin/notifications?type=promo&voucherId=${selectedVoucher.id}`);
+                  }}
+                >
+                  Mở Trung Tâm Gửi Thông Báo ➔
                 </button>
               </div>
             </form>

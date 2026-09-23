@@ -28,6 +28,12 @@ const OFFICIAL_DEFAULT_BANK_CONFIG = {
   accountName: "VINATAP VIETNAM CO LTD",
 };
 
+const formatMoney = (amount) =>
+  new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount || 0);
+
 export default function CheckoutModal({
   isOpen = true,
   items = [],
@@ -51,9 +57,12 @@ export default function CheckoutModal({
 
   const [paymentMethod, setPaymentMethod] = useState("vietqr"); // 'vietqr' | 'cod'
   const [voucherCode, setVoucherCode] = useState(
-    initialVoucher || initialVoucherCode || "",
+    (initialVoucher || initialVoucherCode || "").trim().toUpperCase(),
   );
   const [walletVouchers, setWalletVouchers] = useState([]);
+  const [manualCodeInput, setManualCodeInput] = useState("");
+  const [applyingCode, setApplyingCode] = useState(false);
+  const [voucherSuccessMsg, setVoucherSuccessMsg] = useState("");
   const [shipRule, setShipRule] = useState(
     shippingRule || { base_fee: 30000, free_shipping_threshold: 500000 },
   );
@@ -67,6 +76,16 @@ export default function CheckoutModal({
   const [pollingTimedOut, setPollingTimedOut] = useState(false);
   const [checkingManual, setCheckingManual] = useState(false);
 
+  // Nạp lại Ví voucher của khách hàng
+  const fetchWallet = async () => {
+    try {
+      const data = await voucherAPI.getMyWallet();
+      setWalletVouchers(data.myVouchers || []);
+    } catch {
+      setWalletVouchers([]);
+    }
+  };
+
   // 🔄 TỰ ĐỘNG RESET TRẠNG THÁI KHI ĐÓNG/MỞ MODAL HOẶC KHI GIỎ HÀNG THAY ĐỔI
   useEffect(() => {
     if (!isOpen) {
@@ -76,8 +95,58 @@ export default function CheckoutModal({
       setPollingTimedOut(false);
       setCheckingManual(false);
       setSubmitting(false);
+    } else {
+      let saved = "";
+      try {
+        saved = localStorage.getItem("vinatap_active_voucher") || "";
+      } catch {}
+      const target = (initialVoucherCode || initialVoucher || saved || "").trim().toUpperCase();
+      if (target) {
+        setVoucherCode(target);
+      }
+      fetchWallet();
     }
-  }, [isOpen]);
+  }, [isOpen, initialVoucher, initialVoucherCode]);
+
+  useEffect(() => {
+    const handleWalletUpdated = () => fetchWallet();
+    const handleApplyVoucher = (e) => {
+      const code = (e.detail?.code || "").trim().toUpperCase();
+      if (code) {
+        setVoucherCode(code);
+      }
+      fetchWallet();
+    };
+    window.addEventListener("vinatap:wallet-updated", handleWalletUpdated);
+    window.addEventListener("vinatap:apply-voucher", handleApplyVoucher);
+    return () => {
+      window.removeEventListener("vinatap:wallet-updated", handleWalletUpdated);
+      window.removeEventListener("vinatap:apply-voucher", handleApplyVoucher);
+    };
+  }, []);
+
+  const handleApplyManualCode = async (e) => {
+    if (e) e.preventDefault();
+    const clean = manualCodeInput.trim().toUpperCase();
+    if (!clean) return;
+    setApplyingCode(true);
+    setErrorMsg("");
+    try {
+      await voucherAPI.claim({ code: clean });
+      await fetchWallet();
+      setVoucherCode(clean);
+      setVoucherSuccessMsg(`🎉 Đã áp dụng mã Voucher: ${clean}`);
+      setTimeout(() => setVoucherSuccessMsg(""), 4000);
+      setManualCodeInput("");
+      try {
+        localStorage.setItem("vinatap_active_voucher", clean);
+      } catch {}
+    } catch (err) {
+      setErrorMsg(err.message || "Mã Voucher không hợp lệ hoặc đã hết hạn");
+    } finally {
+      setApplyingCode(false);
+    }
+  };
 
   const handleCloseModal = () => {
     setCreatedOrder(null);
@@ -240,15 +309,22 @@ export default function CheckoutModal({
 
   let discount = 0;
   let isFreeshipVoucher = false;
+  let voucherMinOrderWarning = null;
   const cleanV = voucherCode.trim().toUpperCase();
 
-  if (cleanV) {
-    // 🎟️ Tìm Voucher chính xác trong Ví để tính tiền theo đúng Loại giảm giá (Percent / Amount / Freeship)
-    const selectedVoucher = walletVouchers.find(
-      (v) => (v.code || "").trim().toUpperCase() === cleanV,
-    );
+  const selectedVoucher = cleanV
+    ? walletVouchers.find((v) => (v.code || "").trim().toUpperCase() === cleanV)
+    : null;
 
-    if (selectedVoucher) {
+  if (selectedVoucher) {
+    if (
+      selectedVoucher.min_order_amount > 0 &&
+      subtotal < Number(selectedVoucher.min_order_amount)
+    ) {
+      const minText = formatMoney(selectedVoucher.min_order_amount);
+      const diffText = formatMoney(Number(selectedVoucher.min_order_amount) - subtotal);
+      voucherMinOrderWarning = `Voucher "${cleanV}" yêu cầu đơn từ ${minText} (Cần thêm ${diffText} để được giảm giá)`;
+    } else {
       if (selectedVoucher.discount_type === "freeship") {
         isFreeshipVoucher = true;
         discount = 0;
@@ -331,6 +407,10 @@ export default function CheckoutModal({
       });
 
       if (res.order) {
+        try {
+          localStorage.removeItem("vinatap_active_voucher");
+        } catch {}
+        window.dispatchEvent(new CustomEvent("vinatap:wallet-updated"));
         setCreatedOrder(res.order);
         if (onSuccess) onSuccess(res.order);
       }
@@ -353,11 +433,6 @@ export default function CheckoutModal({
     setCopiedText(key);
     setTimeout(() => setCopiedText(null), 2000);
   };
-  const formatMoney = (amount) =>
-    new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(amount);
 
   if (!isOpen) return null;
 
@@ -543,21 +618,99 @@ export default function CheckoutModal({
                 </div>
 
                 <div className="voucher-section">
-                  <label className="voucher-lbl">
-                    <Ticket size={14} /> Mã Voucher Ví Của Bạn:
-                  </label>
+                  <div className="voucher-header-row">
+                    <label className="voucher-lbl">
+                      <Ticket size={14} /> Mã Voucher Ưu Đãi:
+                    </label>
+                  </div>
                   <select
                     className="voucher-select"
                     value={voucherCode}
-                    onChange={(e) => setVoucherCode(e.target.value)}
+                    onChange={(e) => {
+                      const newCode = e.target.value.trim().toUpperCase();
+                      setVoucherCode(newCode);
+                      if (newCode) {
+                        try {
+                          localStorage.setItem("vinatap_active_voucher", newCode);
+                        } catch {}
+                      } else {
+                        try {
+                          localStorage.removeItem("vinatap_active_voucher");
+                        } catch {}
+                      }
+                    }}
                   >
                     <option value="">-- Không sử dụng Voucher --</option>
+                    {cleanV && !walletVouchers.some((v) => (v.code || "").toUpperCase() === cleanV) && (
+                      <option value={cleanV}>
+                        🎟️ {cleanV} (Đang áp dụng)
+                      </option>
+                    )}
                     {walletVouchers.map((v) => (
-                      <option key={v.code} value={v.code}>
-                        🎟️ {v.code} ({v.title} - {v.discountText})
+                      <option key={v.code} value={v.code} disabled={v.isExpired}>
+                        🎟️ {v.code} ({v.title || v.name} - {v.discountText}){v.isExpired ? " [HẾT HẠN]" : ""}
                       </option>
                     ))}
                   </select>
+
+                  {/* Nhập mã khuyến mãi thủ công */}
+                  <div className="checkout-manual-voucher-row">
+                    <input
+                      type="text"
+                      className="checkout-manual-voucher-input"
+                      placeholder="Nhập mã giảm giá khác..."
+                      value={manualCodeInput}
+                      onChange={(e) => setManualCodeInput(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="btn-apply-checkout-voucher"
+                      disabled={applyingCode || !manualCodeInput.trim()}
+                      onClick={handleApplyManualCode}
+                    >
+                      {applyingCode ? <Loader2 size={13} className="animate-spin" /> : "Áp dụng"}
+                    </button>
+                  </div>
+
+                  {/* Thông báo áp dụng thành công */}
+                  {voucherSuccessMsg && (
+                    <div className="checkout-voucher-alert is-success">
+                      <CheckCircle size={13} />
+                      <span>{voucherSuccessMsg}</span>
+                    </div>
+                  )}
+
+                  {/* Cảnh báo chưa đủ điều kiện đơn tối thiểu */}
+                  {voucherMinOrderWarning && (
+                    <div className="checkout-voucher-alert is-warning">
+                      <AlertCircle size={13} />
+                      <span>{voucherMinOrderWarning}</span>
+                    </div>
+                  )}
+
+                  {/* Thẻ hiển thị voucher đang áp dụng hợp lệ */}
+                  {cleanV && !voucherMinOrderWarning && (discount > 0 || isFreeshipVoucher) && (
+                    <div className="checkout-voucher-applied-pill">
+                      <CheckCircle size={13} className="text-green" />
+                      <span>
+                        Đang áp dụng: <strong>{cleanV}</strong> (
+                        {isFreeshipVoucher ? "Free Ship" : `Giảm -${formatMoney(discount)}`})
+                      </span>
+                      <button
+                        type="button"
+                        className="btn-remove-active-voucher"
+                        onClick={() => {
+                          setVoucherCode("");
+                          try {
+                            localStorage.removeItem("vinatap_active_voucher");
+                          } catch {}
+                        }}
+                        title="Bỏ dùng mã này"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* BẢNG TÍNH TIỀN */}

@@ -180,31 +180,124 @@ const Voucher = {
     }
   },
 
+  // 🎁 Khách hàng nhận / lưu Voucher (từ thông báo hoặc mã giới thiệu)
+  async claimVoucher({ userId, voucherId, code }) {
+    if (!userId) {
+      throw new Error("Người dùng chưa đăng nhập");
+    }
+
+    let voucher = null;
+    if (voucherId) {
+      const [rows] = await db.execute(`SELECT * FROM vouchers WHERE id = ? LIMIT 1`, [voucherId]);
+      if (rows.length > 0) voucher = rows[0];
+    }
+
+    if (!voucher && code) {
+      const cleanCode = (code || "").trim().toUpperCase();
+      const [rows] = await db.execute(`SELECT * FROM vouchers WHERE UPPER(code) = ? LIMIT 1`, [cleanCode]);
+      if (rows.length > 0) voucher = rows[0];
+    }
+
+    if (!voucher) {
+      throw new Error("Không tìm thấy mã Voucher hợp lệ");
+    }
+
+    if (voucher.status !== "active") {
+      throw new Error("Mã Voucher này hiện không hoạt động");
+    }
+
+    if (voucher.expires_at && new Date(voucher.expires_at) < new Date()) {
+      throw new Error("Mã Voucher này đã hết hạn sử dụng");
+    }
+
+    if (voucher.usage_limit && voucher.used_count >= voucher.usage_limit) {
+      throw new Error("Mã Voucher này đã hết lượt sử dụng trên hệ thống");
+    }
+
+    // Kiểm tra xem user đã có voucher này trong ví chưa
+    const [exist] = await db.execute(
+      `SELECT id, status FROM user_vouchers WHERE user_id = ? AND voucher_id = ? LIMIT 1`,
+      [userId, voucher.id],
+    );
+
+    if (exist.length > 0) {
+      if (exist[0].status === "used") {
+        return {
+          success: false,
+          alreadyUsed: true,
+          message: `Bạn đã sử dụng mã Voucher "${voucher.code}" trước đó rồi!`,
+          voucher: this.formatVoucher(voucher),
+        };
+      }
+      return {
+        success: true,
+        alreadyClaimed: true,
+        message: `Mã Voucher "${voucher.code}" đã có sẵn trong Ví của bạn rồi!`,
+        voucher: this.formatVoucher(voucher),
+      };
+    }
+
+    // Lưu vào ví user
+    await db.execute(
+      `INSERT INTO user_vouchers (user_id, voucher_id, status) VALUES (?, ?, 'available')`,
+      [userId, voucher.id],
+    );
+
+    const formatted = this.formatVoucher(voucher);
+    return {
+      success: true,
+      newlyClaimed: true,
+      message: `🎉 Đã nhận thành công Voucher "${voucher.code}" (${formatted.discountText}) vào Ví của bạn!`,
+      voucher: formatted,
+    };
+  },
+
   // 👑 Admin tặng Voucher cho danh sách User
-  async sendToUsers(voucherId, targetType, userIds = []) {
+  async sendToUsers(voucherId, targetType, userIds = [], groupTarget = null) {
     let targetUserIds = [];
     if (targetType === "all") {
-      const [users] = await db.execute(`SELECT id FROM users WHERE status = 'active' AND role != 'admin'`);
+      const [users] = await db.execute(`SELECT id FROM users WHERE status = 'active'`);
       targetUserIds = users.map((u) => u.id);
+    } else if (targetType === "group" && groupTarget) {
+      let query = "";
+      if (groupTarget === "new_7days") {
+        query = `SELECT id FROM users WHERE status = 'active' AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)`;
+      } else if (groupTarget === "activated_nfc") {
+        query = `SELECT DISTINCT owner_user_id AS id FROM nfc_cards WHERE owner_user_id IS NOT NULL AND status = 'active'`;
+      } else if (groupTarget === "unactivated_nfc") {
+        query = `SELECT id FROM users WHERE status = 'active' AND id NOT IN (SELECT owner_user_id FROM nfc_cards WHERE owner_user_id IS NOT NULL)`;
+      } else if (groupTarget === "admin") {
+        query = `SELECT id FROM users WHERE role = 'admin' AND status = 'active'`;
+      }
+      if (query) {
+        const [targetUsers] = await db.execute(query);
+        targetUserIds = targetUsers.map((u) => u.id).filter(Boolean);
+      }
     } else {
-      targetUserIds = userIds;
+      const list = Array.isArray(userIds) ? userIds : [userIds];
+      targetUserIds = [...new Set(list.map((id) => parseInt(id, 10)).filter((id) => !isNaN(id) && id > 0))];
     }
 
     if (targetUserIds.length === 0) return { count: 0, recipientIds: [] };
 
     const recipientIds = [];
     let count = 0;
-    for (const uId of targetUserIds) {
+    // Batch insert theo chunks 100
+    const chunkSize = 100;
+    for (let i = 0; i < targetUserIds.length; i += chunkSize) {
+      const chunk = targetUserIds.slice(i, i + chunkSize);
+      const placeholders = chunk.map(() => "(?, ?, 'available')").join(", ");
+      const values = chunk.flatMap((uId) => [uId, voucherId]);
       try {
         const [res] = await db.execute(
-          `INSERT IGNORE INTO user_vouchers (user_id, voucher_id, status) VALUES (?, ?, 'available')`,
-          [uId, voucherId],
+          `INSERT IGNORE INTO user_vouchers (user_id, voucher_id, status) VALUES ${placeholders}`,
+          values,
         );
-        if (res.affectedRows > 0) {
-          recipientIds.push(uId);
-          count++;
-        }
-      } catch (e) {}
+        count += res.affectedRows || 0;
+      } catch (err) {
+        console.error("Batch insert user_vouchers error:", err);
+      }
+      chunk.forEach((uId) => recipientIds.push(uId));
     }
     return { count, recipientIds };
   },

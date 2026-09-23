@@ -630,8 +630,9 @@ export default function HomePage() {
                 {t(lang, "heroEyebrow")}
               </div>
               <h1 className="home-hero__title">
-                {t(lang, "heroTitleLine1")}
-                <br />
+                <span className="home-hero__title-line">
+                  {t(lang, "heroTitleLine1")}
+                </span>
                 <span className="home-hero__title-accent">
                   {t(lang, "heroTitleAccent")}
                 </span>
@@ -771,7 +772,7 @@ export default function HomePage() {
                   <div className="home-about__stat-label">{t(lang, "aboutStatLayers")}</div>
                 </div>
                 <div>
-                  <div className="home-about__stat-value">2025</div>
+                  <div className="home-about__stat-value">2026</div>
                   <div className="home-about__stat-label">{t(lang, "aboutStatYear")}</div>
                 </div>
               </div>

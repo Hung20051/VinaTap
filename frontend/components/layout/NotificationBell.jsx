@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import {
   Bell,
   CheckCheck,
@@ -19,8 +19,12 @@ import {
   Sparkles,
   Inbox,
   Filter,
+  CheckCircle,
+  Ticket,
+  Loader2,
+  ShoppingCart,
 } from "lucide-react";
-import { notificationAPI } from "@/lib/api";
+import { notificationAPI, voucherAPI } from "@/lib/api";
 import { getUser } from "@/lib/auth";
 import "./NotificationBell.css";
 
@@ -47,6 +51,7 @@ const formatTime = (isoString) => {
 
 export default function NotificationBell() {
   const router = useRouter();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
@@ -55,7 +60,29 @@ export default function NotificationBell() {
   const [user, setUser] = useState(null);
   const [filterTab, setFilterTab] = useState("all"); // 'all' | 'unread' | 'promo' | 'system'
   const [bannerDismissedId, setBannerDismissedId] = useState(null);
+  const [claimedVoucherCodes, setClaimedVoucherCodes] = useState(new Set());
+  const [claimingCode, setClaimingCode] = useState(null);
+  const [bellToast, setBellToast] = useState(null);
   const dropdownRef = useRef(null);
+
+  const showBellToast = (message, type = "success", voucher = null) => {
+    setBellToast({ message, type, voucher });
+    setTimeout(() => setBellToast(null), 4500);
+  };
+
+  const loadWallet = async () => {
+    const currentUser = getUser();
+    if (!currentUser) return;
+    try {
+      const data = await voucherAPI.getMyWallet();
+      if (data && data.myVouchers) {
+        const codes = new Set(data.myVouchers.map((v) => (v.code || "").toUpperCase()));
+        setClaimedVoucherCodes(codes);
+      }
+    } catch (e) {
+      // ignore
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -64,6 +91,7 @@ export default function NotificationBell() {
 
     if (u) {
       loadNotifications();
+      loadWallet();
     }
 
     const handleUserUpdate = (e) => {
@@ -71,23 +99,32 @@ export default function NotificationBell() {
       setUser(nextUser);
       if (nextUser) {
         loadNotifications();
+        loadWallet();
       } else {
         setNotifications([]);
         setUnreadCount(0);
+        setClaimedVoucherCodes(new Set());
       }
     };
 
+    const handleWalletUpdate = () => {
+      loadWallet();
+    };
+
     window.addEventListener("vinatap:user-updated", handleUserUpdate);
+    window.addEventListener("vinatap:wallet-updated", handleWalletUpdate);
 
     // Tự động làm mới mỗi 45 giây nếu đã đăng nhập
     const interval = setInterval(() => {
       if (getUser()) {
         loadNotifications();
+        loadWallet();
       }
     }, 45000);
 
     return () => {
       window.removeEventListener("vinatap:user-updated", handleUserUpdate);
+      window.removeEventListener("vinatap:wallet-updated", handleWalletUpdate);
       clearInterval(interval);
     };
   }, []);
@@ -126,10 +163,137 @@ export default function NotificationBell() {
     }
   };
 
-  const handleItemClick = (n) => {
+  // 🎁 Nhận Voucher từ thông báo & lưu vào ví cá nhân
+  const handleClaimVoucher = async (n, e) => {
+    if (e) e.stopPropagation();
+    const payload = n.payload || {};
+    const code = payload.voucher_code;
+    const voucherId = payload.voucher_id;
+
+    if (!code && !voucherId) return;
+
+    setClaimingCode(code || String(voucherId));
+    try {
+      const res = await voucherAPI.claim({ voucherId, code });
+
+      // Đánh dấu đã đọc thông báo này
+      if (!n.is_read) {
+        handleMarkAsRead(n.id);
+      }
+
+      // Cập nhật tập hợp mã đã nhận
+      if (code) {
+        setClaimedVoucherCodes((prev) => new Set([...prev, code.toUpperCase()]));
+      }
+
+      // Báo toast cho người dùng
+      showBellToast(
+        res.alreadyClaimed
+          ? `🎟️ ${res.message}`
+          : `🎉 ${res.message || `Đã nhận thành công Voucher ${code} vào Ví!`}`,
+        res.alreadyClaimed ? "info" : "success",
+        res.voucher
+      );
+
+      // Bắn event để Ví Voucher Modal & Checkout tự nạp lại
+      window.dispatchEvent(
+        new CustomEvent("vinatap:wallet-updated", { detail: res.voucher })
+      );
+    } catch (err) {
+      showBellToast(err.message || "Không thể nhận Voucher này", "error");
+    } finally {
+      setClaimingCode(null);
+    }
+  };
+
+  // 🛍️ Nhận Voucher & Áp dụng ngay vào giỏ hàng / thanh toán
+  const handleClaimAndApplyVoucher = async (n, e) => {
+    if (e) e.stopPropagation();
+    const payload = n.payload || {};
+    const code = payload.voucher_code;
+    const voucherId = payload.voucher_id;
+
+    if (!code && !voucherId) return;
+
+    const currentUser = user || getUser();
+    if (!currentUser) {
+      setOpen(false);
+      window.location.href = "/auth?redirect=/shop";
+      return;
+    }
+
+    setClaimingCode(code || String(voucherId));
+    try {
+      const res = await voucherAPI.claim({ voucherId, code });
+
+      // Đánh dấu đã đọc thông báo này
+      if (!n.is_read) {
+        handleMarkAsRead(n.id);
+      }
+
+      const finalCode = (code || res.voucher?.code || "").toUpperCase();
+
+      // Cập nhật tập hợp mã đã nhận
+      if (finalCode) {
+        setClaimedVoucherCodes((prev) => new Set([...prev, finalCode]));
+        try {
+          localStorage.setItem("vinatap_active_voucher", finalCode);
+        } catch {}
+      }
+
+      // Báo toast cho người dùng
+      showBellToast(
+        res.alreadyClaimed
+          ? `🎟️ Đã kích hoạt Voucher "${finalCode}" để thanh toán!`
+          : `🎉 ${res.message || `Đã nhận thành công Voucher ${finalCode} và kích hoạt thanh toán!`}`,
+        "success",
+        res.voucher
+      );
+
+      // Bắn event để Ví Voucher Modal & Checkout tự nạp lại
+      window.dispatchEvent(
+        new CustomEvent("vinatap:wallet-updated", { detail: res.voucher })
+      );
+
+      // Bắn event để ShopPage & CheckoutModal lập tức áp dụng mã này
+      window.dispatchEvent(
+        new CustomEvent("vinatap:apply-voucher", {
+          detail: { code: finalCode, voucher: res.voucher },
+        })
+      );
+
+      // Đóng dropdown thông báo
+      setOpen(false);
+
+      // Điều hướng hoặc mở thanh toán
+      if (pathname === "/shop") {
+        window.dispatchEvent(
+          new CustomEvent("vinatap:voucher-shop-focused", {
+            detail: { code: finalCode, voucher: res.voucher },
+          })
+        );
+      } else {
+        router.push(`/shop?voucher=${encodeURIComponent(finalCode)}`);
+      }
+    } catch (err) {
+      showBellToast(err.message || "Không thể nhận Voucher này", "error");
+    } finally {
+      setClaimingCode(null);
+    }
+  };
+
+  const handleItemClick = async (n) => {
     if (!n.is_read) {
       handleMarkAsRead(n.id);
     }
+
+    const payload = n.payload || {};
+    // Nếu là thông báo tặng Voucher -> Click vào sẽ TỰ ĐỘNG nhận và áp dụng vào thanh toán!
+    if (n.type === "promo" && (payload.voucher_code || payload.voucher_id)) {
+      await handleClaimAndApplyVoucher(n);
+      return;
+    }
+
     if (n.link) {
       setOpen(false);
       const targetLink =
@@ -262,6 +426,23 @@ export default function NotificationBell() {
                 </div>
               </div>
 
+              {/* Floating Bell Toast Feedback */}
+              {bellToast && (
+                <div className={`notif-bell-toast toast-${bellToast.type}`}>
+                  <span>{bellToast.message}</span>
+                  <button
+                    type="button"
+                    className="btn-toast-view-wallet"
+                    onClick={() => {
+                      setOpen(false);
+                      window.dispatchEvent(new CustomEvent("vinatap:open-voucher-wallet"));
+                    }}
+                  >
+                    Mở Ví ➔
+                  </button>
+                </div>
+              )}
+
               {/* Filter Tabs */}
               <div className="notif-tabs-bar">
                 <button
@@ -358,34 +539,85 @@ export default function NotificationBell() {
                           <p className="notif-item-text">{n.content}</p>
 
                           {/* DYNAMIC CARD RENDER: PROMO VOUCHER CARD */}
-                          {isPromo && payload.voucher_code && (
+                          {isPromo && (payload.voucher_code || payload.voucher_id) && (
                             <div className="notif-voucher-box">
                               <div className="voucher-code-wrap">
                                 <span className="voucher-label">MÃ VOUCHER:</span>
                                 <code className="voucher-code">
-                                  {payload.voucher_code}
+                                  {payload.voucher_code || "ƯU ĐÃI VINATAP"}
                                 </code>
                               </div>
 
                               <div className="voucher-actions">
-                                <button
-                                  type="button"
-                                  className="btn-copy-code"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    copyVoucher(payload.voucher_code);
-                                  }}
-                                >
-                                  {copiedCode === payload.voucher_code ? (
-                                    <>
-                                      <Check size={12} /> Đã chép
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Copy size={12} /> Sao chép
-                                    </>
-                                  )}
-                                </button>
+                                {payload.voucher_code && (
+                                  <button
+                                    type="button"
+                                    className="btn-copy-code"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      copyVoucher(payload.voucher_code);
+                                    }}
+                                    title="Sao chép mã"
+                                  >
+                                    {copiedCode === payload.voucher_code ? (
+                                      <>
+                                        <Check size={12} /> Đã chép
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Copy size={12} /> Sao chép
+                                      </>
+                                    )}
+                                  </button>
+                                )}
+
+                                {/* Nút Nhận Voucher vào Ví hoặc Nhãn Đã có trong Ví */}
+                                {payload.voucher_code && claimedVoucherCodes.has(payload.voucher_code.toUpperCase()) ? (
+                                  <div className="voucher-status-group">
+                                    <span className="voucher-claimed-badge">
+                                      <CheckCircle size={12} /> Đã trong Ví
+                                    </span>
+                                    <button
+                                      type="button"
+                                      className="btn-use-voucher-checkout"
+                                      onClick={(e) => handleClaimAndApplyVoucher(n, e)}
+                                      title="Dùng voucher này để mua sắm & thanh toán ngay"
+                                    >
+                                      <ShoppingCart size={11} /> Dùng ngay
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="btn-open-wallet"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setOpen(false);
+                                        window.dispatchEvent(new CustomEvent("vinatap:open-voucher-wallet"));
+                                      }}
+                                      title="Mở Ví Voucher"
+                                    >
+                                      <Ticket size={11} /> Ví
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    className="btn-claim-voucher"
+                                    disabled={claimingCode === (payload.voucher_code || String(payload.voucher_id))}
+                                    onClick={(e) => handleClaimAndApplyVoucher(n, e)}
+                                    title="Nhận và tự động áp dụng vào thanh toán ngay"
+                                  >
+                                    {claimingCode === (payload.voucher_code || String(payload.voucher_id)) ? (
+                                      <>
+                                        <Loader2 size={12} className="spin" /> Đang nhận...
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Gift size={12} /> Nhận &amp; Dùng ngay
+                                      </>
+                                    )}
+                                  </button>
+                                )}
+
                                 {payload.discount_amount && (
                                   <span className="voucher-discount-badge">
                                     {payload.discount_amount}

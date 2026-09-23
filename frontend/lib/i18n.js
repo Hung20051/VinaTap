@@ -142,13 +142,13 @@ export const dict = {
 
     // Hero
     heroEyebrow: "Khám phá Việt Nam",
-    heroTitleLine1: "Mang cả Việt Nam",
-    heroTitleAccent: "vào lòng bàn tay bạn",
-    heroDesc: "Sưu tầm 34 mảnh ghép NFC theo từng tỉnh thành, ghép thành bản đồ treo tường, và lưu giữ kỷ niệm mỗi chuyến đi trong album ảnh có AI viết caption giúp bạn.",
-    heroBtnActivate: "Kích hoạt mảnh NFC",
-    heroBtnExplore: "Khám phá tỉnh thành",
-    heroHighlightTitle: "34 mảnh ghép",
-    heroHighlightSub: "Mỗi tỉnh 1 mảnh, sưu tầm trọn bộ bản đồ",
+    heroTitleLine1: "Chạm một điểm đến",
+    heroTitleAccent: "giữ trọn một hành trình",
+    heroDesc: "Sưu tầm những chiếc thẻ NFC mang dấu ấn của từng điểm đến Việt Nam. Chỉ với một cú chạm, bạn có thể khám phá câu chuyện địa phương, xem nội dung về văn hóa – du lịch và lưu giữ hình ảnh, ghi chú của riêng mình sau mỗi hành trình.",
+    heroBtnActivate: "Chạm thẻ NFC",
+    heroBtnExplore: "Khám phá điểm đến",
+    heroHighlightTitle: "Thẻ theo từng điểm đến",
+    heroHighlightSub: "Mỗi thẻ là một nơi bạn đã đi qua và một câu chuyện để lưu giữ.",
     heroPhoneTitle: "Album Đà Nẵng",
     heroPhoneSub: "12 ảnh · AI caption",
     heroCardActivate: "Kích hoạt NFC",
@@ -163,8 +163,8 @@ export const dict = {
 
     // About
     aboutEyebrow: "Giới thiệu",
-    aboutHeading: "Mỗi tỉnh thành là một mảnh ghép, một câu chuyện",
-    aboutDescription: "VinaTap kết hợp một mảnh ghép NFC vật lý với trải nghiệm web tương tác: quét NFC để xem thông tin tỉnh, chỉ đường tới địa danh, và mở album ảnh cá nhân được AI tự viết caption — biến việc sưu tầm quà lưu niệm thành một hành trình khám phá.",
+    aboutHeading: "Mỗi điểm đến là một tấm thẻ, một hành trình đáng nhớ.",
+    aboutDescription: "VinaTap kết hợp thẻ NFC vật lý với trải nghiệm web tương tác, cho phép bạn chạm thẻ để khám phá thông tin về điểm đến, văn hóa địa phương, địa danh nổi bật và lưu lại hình ảnh, ghi chú cá nhân sau mỗi chuyến đi.",
     aboutStatProvinces: "Tỉnh thành",
     aboutStatLayers: "Lớp trải nghiệm",
     aboutStatYear: "Năm ra mắt",
@@ -480,13 +480,13 @@ export const dict = {
 
     // Hero
     heroEyebrow: "Discover Vietnam",
-    heroTitleLine1: "Bring all of Vietnam",
-    heroTitleAccent: "into your palm",
-    heroDesc: "Collect 34 NFC tiles across Vietnam's provinces, assemble a wall map, and preserve memories in photo albums with AI-powered captions.",
-    heroBtnActivate: "Activate NFC Tile",
-    heroBtnExplore: "Explore Provinces",
-    heroHighlightTitle: "34 Map Tiles",
-    heroHighlightSub: "1 tile per province, assemble the entire map",
+    heroTitleLine1: "Touch a destination",
+    heroTitleAccent: "keep a whole journey",
+    heroDesc: "Collect NFC cards marked with Vietnam's destinations. With just a tap, explore local stories, cultural and travel content, and preserve your own photos and notes after every journey.",
+    heroBtnActivate: "Tap NFC Card",
+    heroBtnExplore: "Explore Destinations",
+    heroHighlightTitle: "Cards by Destination",
+    heroHighlightSub: "Every card is a place you visited and a story to preserve.",
     heroPhoneTitle: "Da Nang Album",
     heroPhoneSub: "12 photos · AI caption",
     heroCardActivate: "Activate NFC",
@@ -501,8 +501,8 @@ export const dict = {
 
     // About
     aboutEyebrow: "About Us",
-    aboutHeading: "Every province is a tile, a story to tell",
-    aboutDescription: "VinaTap blends a physical NFC tile with an interactive web experience: tap NFC to view province info, get directions, and open personal albums with AI captions — turning travel souvenirs into a lifelong journey of discovery.",
+    aboutHeading: "Every destination is a card, a memorable journey",
+    aboutDescription: "VinaTap combines physical NFC cards with an interactive web experience, allowing you to tap the card to explore destination information, local culture, famous landmarks, and save personal photos and notes after every trip.",
     aboutStatProvinces: "Provinces",
     aboutStatLayers: "Experience Layers",
     aboutStatYear: "Launch Year",

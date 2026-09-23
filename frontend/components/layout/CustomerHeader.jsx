@@ -47,11 +47,17 @@ export default function CustomerHeader({ onToggleDrawer, isDrawerOpen }) {
         setUserDropdownOpen(false);
       }
     };
+    const handleOpenWallet = () => {
+      setVoucherWalletOpen(true);
+    };
+
+    window.addEventListener("vinatap:open-voucher-wallet", handleOpenWallet);
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       window.removeEventListener("vinatap:user-updated", handleUserUpdated);
       window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+      window.removeEventListener("vinatap:open-voucher-wallet", handleOpenWallet);
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);

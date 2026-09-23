@@ -202,9 +202,13 @@ export default function AdminNotifications() {
     if (notifType === "system") {
       payload = { m_start: mStart, m_end: mEnd };
     } else if (notifType === "promo") {
+      const curV = dbVouchers.find((v) => String(v.id) === String(selectedVoucherId));
       payload = {
+        voucher_id: selectedVoucherId,
         voucher_code: voucherCode,
         discount_amount: discountAmount,
+        discount_type: curV?.discount_type || "percent",
+        title: curV?.title || "",
         expiry_date: expiryDate,
       };
     } else if (notifType === "feature") {
@@ -242,6 +246,7 @@ export default function AdminNotifications() {
         await voucherAPI.sendToUsers({
           voucherId: selectedVoucherId,
           targetType: recipientType,
+          groupTarget: groupTarget,
           userIds: selectedUserIds,
           sendNotification: false,
         });

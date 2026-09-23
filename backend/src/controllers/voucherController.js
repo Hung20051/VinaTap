@@ -1,5 +1,6 @@
 const Voucher = require("../models/Voucher");
 const Notification = require("../models/Notification");
+const db = require("../config/db");
 
 // 🛍️ Lấy Ví Voucher của khách hàng đang đăng nhập
 exports.getMyWallet = async (req, res) => {
@@ -20,6 +21,24 @@ exports.redeemCode = async (req, res) => {
     }
     const voucher = await Voucher.redeemCode(req.user.id, code);
     res.json({ message: "Đã lưu Voucher vào Ví thành công!", voucher });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+// 🎁 Khách hàng nhận / lưu Voucher từ thông báo hoặc click nhận
+exports.claimVoucher = async (req, res) => {
+  try {
+    const { voucherId, code } = req.body;
+    if (!voucherId && !code) {
+      return res.status(400).json({ message: "Thiếu thông tin mã Voucher cần nhận" });
+    }
+    const result = await Voucher.claimVoucher({
+      userId: req.user.id,
+      voucherId,
+      code,
+    });
+    res.json(result);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -53,31 +72,48 @@ exports.createVoucher = async (req, res) => {
 // 👑 Admin: Tặng Voucher cho Khách Hàng + Bắn Thông Báo 🔔
 exports.sendVoucherToUsers = async (req, res) => {
   try {
-    const { voucherId, targetType, userIds, sendNotification = true } = req.body;
+    const { voucherId, targetType, userIds, groupTarget, sendNotification = true } = req.body;
     if (!voucherId) {
       return res.status(400).json({ message: "Thiếu mã Voucher cần tặng" });
     }
 
-    const { count, recipientIds } = await Voucher.sendToUsers(voucherId, targetType, userIds);
+    const [vRows] = await db.execute(`SELECT * FROM vouchers WHERE id = ? LIMIT 1`, [voucherId]);
+    if (vRows.length === 0) {
+      return res.status(404).json({ message: "Không tìm thấy thông tin Voucher" });
+    }
+    const voucher = Voucher.formatVoucher(vRows[0]);
+
+    const { count, recipientIds } = await Voucher.sendToUsers(voucherId, targetType, userIds, groupTarget);
 
     // Tự động bắn thông báo cho đúng các khách hàng nhận được quà
     if (sendNotification && recipientIds && recipientIds.length > 0) {
       await Notification.send({
-        recipient_type: "users",
-        user_ids: recipientIds,
+        recipient_type: targetType === "all" ? "all" : (targetType === "group" ? "group" : "users"),
+        group_target: groupTarget || null,
+        user_ids: targetType === "users" ? recipientIds : undefined,
         type: "promo",
-        title: "🎁 Bạn Nhận Được Voucher Quà Tặng Mới!",
-        content: `Chúc mừng bạn! VinaTap vừa tặng bạn 1 Voucher ưu đãi mới vào Ví Voucher. Mở Ví xem ngay!`,
+        title: `🎁 Quà Tặng: Voucher ${voucher.discountText || voucher.title}!`,
+        content: `Chúc mừng bạn! VinaTap vừa tặng bạn Voucher "${voucher.code}" (${voucher.discountText || voucher.title}) vào Ví Voucher. Nhận ngay để mua sắm!`,
+        payload: {
+          voucher_id: voucher.id,
+          voucher_code: voucher.code,
+          discount_amount: voucher.discountText,
+          discount_type: voucher.discount_type,
+          title: voucher.title,
+        },
         link: "/shop",
         created_by: req.user.id,
       });
     }
 
     res.json({
-      message: `Đã tặng Voucher thành công cho ${count} khách hàng!`,
+      message: `Đã tặng Voucher thành công cho ${count} tài khoản!`,
       count,
+      recipientIds,
+      voucher,
     });
   } catch (err) {
+    console.error("sendVoucherToUsers error:", err);
     res.status(500).json({ message: err.message });
   }
 };

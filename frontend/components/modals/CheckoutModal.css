@@ -348,6 +348,111 @@
   box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
 }
 
+.checkout-manual-voucher-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.checkout-manual-voucher-input {
+  flex: 1;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.checkout-manual-voucher-input:focus {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.1);
+}
+
+.btn-apply-checkout-voucher {
+  padding: 0.45rem 0.85rem;
+  background: #ea580c;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-apply-checkout-voucher:hover:not(:disabled) {
+  background: #c2410c;
+}
+
+.btn-apply-checkout-voucher:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.checkout-voucher-alert {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-top: 3px;
+}
+
+.checkout-voucher-alert.is-success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+
+.checkout-voucher-alert.is-warning {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+
+.checkout-voucher-applied-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.btn-remove-active-voucher {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btn-remove-active-voucher:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
 /* ─── 6. PRICE SUMMARY BOX ──────────────────────────────────── */
 .price-summary-box {
   background: #f8fafc;

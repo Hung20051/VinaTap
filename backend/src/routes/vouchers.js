@@ -4,6 +4,7 @@ const { protect, requireAdmin } = require("../middleware/auth");
 const {
   getMyWallet,
   redeemCode,
+  claimVoucher,
   getAllVouchers,
   createVoucher,
   sendVoucherToUsers,
@@ -13,6 +14,7 @@ const {
 // Customer routes
 router.get("/my-wallet", protect, getMyWallet);
 router.post("/redeem", protect, redeemCode);
+router.post("/claim", protect, claimVoucher);
 
 // Admin routes
 router.get("/", protect, requireAdmin, getAllVouchers);

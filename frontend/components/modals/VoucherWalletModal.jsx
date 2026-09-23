@@ -33,6 +33,30 @@ export default function VoucherWalletModal({ isOpen, onClose, onSelectVoucher })
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleUpdate = () => fetchWallet();
+    window.addEventListener("vinatap:wallet-updated", handleUpdate);
+    return () => window.removeEventListener("vinatap:wallet-updated", handleUpdate);
+  }, []);
+
+  const handleUseVoucher = (code) => {
+    const cleanCode = (code || "").trim().toUpperCase();
+    if (!cleanCode) return;
+    try {
+      localStorage.setItem("vinatap_active_voucher", cleanCode);
+    } catch {}
+    window.dispatchEvent(
+      new CustomEvent("vinatap:apply-voucher", { detail: { code: cleanCode } })
+    );
+    if (onSelectVoucher) {
+      onSelectVoucher(cleanCode);
+    }
+    onClose();
+    if (typeof window !== "undefined" && window.location.pathname !== "/shop") {
+      window.location.href = `/shop?voucher=${encodeURIComponent(cleanCode)}`;
+    }
+  };
+
   if (!isOpen) return null;
 
   const formatDate = (dateStr) => {
@@ -98,15 +122,13 @@ export default function VoucherWalletModal({ isOpen, onClose, onSelectVoucher })
                         <span>Đơn tối thiểu: <strong>{formatMoney(v.min_order_amount)}</strong></span>
                       )}
                     </div>
-                    {onSelectVoucher && !v.isExpired && (
+                    {!v.isExpired && (
                       <button
+                        type="button"
                         className="btn-use-voucher"
-                        onClick={() => {
-                          onSelectVoucher(v.code);
-                          onClose();
-                        }}
+                        onClick={() => handleUseVoucher(v.code)}
                       >
-                        Dùng Ngay
+                        Dùng Ngay ➔
                       </button>
                     )}
                   </div>

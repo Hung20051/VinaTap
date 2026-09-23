@@ -23,6 +23,8 @@ import {
   Package,
   ShieldAlert,
   X,
+  Ticket,
+  Gift,
 } from "lucide-react";
 import Logo from "@/components/layout/Logo";
 import CheckoutModal from "@/components/modals/CheckoutModal";
@@ -35,7 +37,7 @@ import "./ShopPage.css";
 
 export default function ShopPage() {
   const searchParams = useSearchParams();
-  const initialVoucherCode = searchParams.get("voucher") || "";
+  const initialVoucherCode = (searchParams.get("voucher") || "").trim().toUpperCase();
 
   const [user, setUser] = useState(null);
   const [userAdmin, setUserAdmin] = useState(false);
@@ -44,6 +46,8 @@ export default function ShopPage() {
   const [cart, setCart] = useState([]);
   const [cartModalOpen, setCartModalOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [activeVoucherCode, setActiveVoucherCode] = useState(initialVoucherCode);
+  const [appliedVoucherToast, setAppliedVoucherToast] = useState("");
   const [dbProducts, setDbProducts] = useState([]);
   const [shippingRule, setShippingRule] = useState({
     base_fee: 30000,
@@ -57,11 +61,55 @@ export default function ShopPage() {
     setUserAdmin(isAdmin());
     setLang(getLang());
 
+    // Nạp mã voucher từ searchParams hoặc localStorage
+    const urlVoucher = (searchParams?.get("voucher") || "").trim().toUpperCase();
+    let savedVoucher = "";
+    try {
+      savedVoucher = (localStorage.getItem("vinatap_active_voucher") || "").trim().toUpperCase();
+    } catch {}
+
+    const targetCode = urlVoucher || savedVoucher;
+    if (targetCode) {
+      setActiveVoucherCode(targetCode);
+      try {
+        localStorage.setItem("vinatap_active_voucher", targetCode);
+      } catch {}
+    }
+
     const handleUserUpdated = (e) => {
       setUser(e.detail);
       setUserAdmin(isAdmin());
     };
     window.addEventListener("vinatap:user-updated", handleUserUpdated);
+
+    // Lắng nghe sự kiện kích hoạt Voucher từ Thông báo hoặc Ví
+    const handleApplyVoucher = (e) => {
+      const code = (e.detail?.code || "").trim().toUpperCase();
+      if (code) {
+        setActiveVoucherCode(code);
+        setAppliedVoucherToast(`Đã nhận Voucher "${code}" và áp dụng vào thanh toán!`);
+        setTimeout(() => setAppliedVoucherToast(""), 5000);
+      }
+    };
+
+    const handleShopFocused = (e) => {
+      const code = (e.detail?.code || "").trim().toUpperCase();
+      if (code) {
+        setActiveVoucherCode(code);
+        setAppliedVoucherToast(`Đã kích hoạt Voucher "${code}" cho đơn hàng!`);
+        setTimeout(() => setAppliedVoucherToast(""), 5000);
+        // Nếu đã có hàng trong giỏ, tự động mở Thanh toán
+        setCart((currentCart) => {
+          if (currentCart && currentCart.length > 0) {
+            setCheckoutOpen(true);
+          }
+          return currentCart;
+        });
+      }
+    };
+
+    window.addEventListener("vinatap:apply-voucher", handleApplyVoucher);
+    window.addEventListener("vinatap:voucher-shop-focused", handleShopFocused);
 
     const handleClickOutside = (e) => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
@@ -93,9 +141,11 @@ export default function ShopPage() {
 
     return () => {
       window.removeEventListener("vinatap:user-updated", handleUserUpdated);
+      window.removeEventListener("vinatap:apply-voucher", handleApplyVoucher);
+      window.removeEventListener("vinatap:voucher-shop-focused", handleShopFocused);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [searchParams]);
 
   const getStandardPrice = (p) => {
     const priceNum = Number(p.price || 0);
@@ -460,6 +510,61 @@ export default function ShopPage() {
         </div>
       </div>
 
+      {/* ─── VOUCHER BANNER / TOAST FEEDBACK ───────────────────────── */}
+      {appliedVoucherToast && (
+        <div className="shop-voucher-toast" role="status">
+          <Gift size={18} className="voucher-toast-icon" />
+          <span>{appliedVoucherToast}</span>
+          <button
+            type="button"
+            className="btn-toast-close"
+            onClick={() => setAppliedVoucherToast("")}
+          >
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
+      {activeVoucherCode && (
+        <div className="shop-active-voucher-strip">
+          <div className="active-voucher-strip-inner">
+            <div className="active-voucher-left">
+              <span className="voucher-tag-pill">
+                <Ticket size={14} /> VOUCHER ĐANG ÁP DỤNG
+              </span>
+              <strong className="active-voucher-code-text">{activeVoucherCode}</strong>
+              <span className="active-voucher-desc">
+                Ưu đãi sẽ được tự động tính vào tổng tiền khi bạn mở thanh toán!
+              </span>
+            </div>
+            <div className="active-voucher-actions">
+              {cart.length > 0 && (
+                <button
+                  type="button"
+                  className="btn-voucher-quick-checkout"
+                  onClick={() => setCheckoutOpen(true)}
+                >
+                  Thanh Toán Ngay ➔
+                </button>
+              )}
+              <button
+                type="button"
+                className="btn-voucher-remove"
+                onClick={() => {
+                  setActiveVoucherCode("");
+                  try {
+                    localStorage.removeItem("vinatap_active_voucher");
+                  } catch {}
+                }}
+                title="Hủy áp dụng mã này"
+              >
+                Gỡ mã
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ─── 2. MAIN PRODUCTS SHOWCASE ─────────────────────────────── */}
       <main className="shop-container">
         {filteredProducts.length === 0 ? (
@@ -569,7 +674,7 @@ export default function ShopPage() {
           onClose={() => setCheckoutOpen(false)}
           cart={cart}
           onClearCart={clearCart}
-          initialVoucherCode={initialVoucherCode}
+          initialVoucherCode={activeVoucherCode}
           shippingRule={shippingRule}
           user={user}
         />

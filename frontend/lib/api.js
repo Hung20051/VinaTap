@@ -562,6 +562,11 @@ export const voucherAPI = {
       method: "POST",
       body: JSON.stringify({ code }),
     }),
+  claim: (body) =>
+    request("/vouchers/claim", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
   getAdminList: () => request("/vouchers"),
   createAdmin: (body) =>
     request("/vouchers", {
