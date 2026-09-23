@@ -44,6 +44,7 @@ import { useRouter } from "next/navigation";
 import { useReveal } from "@/hooks/useReveal";
 import { getLang } from "@/lib/prefs";
 import { t, getProvinceName, getProvinceDesc } from "@/lib/i18n";
+import { getProvinceCover } from "@/lib/provinceGuideData";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import "@/styles/home.css";
 
@@ -203,9 +204,12 @@ export default function HomePage() {
       .getAll()
       .then((d) => {
         const rawList = d?.provinces || [];
-        const list = rawList.filter((p) =>
-          ALLOWED_PROVINCE_SLUGS.includes(p.slug)
-        );
+        const list = rawList
+          .filter((p) => ALLOWED_PROVINCE_SLUGS.includes(p.slug))
+          .map((p) => ({
+            ...p,
+            thumbnail_url: getProvinceCover(p) || p.thumbnail_url,
+          }));
         setProvinces(list);
         if (list.length > 0) {
           try {
@@ -218,9 +222,12 @@ export default function HomePage() {
         try {
           const cached = sessionStorage.getItem("vinatap_cached_provinces");
           if (cached) {
-            const list = JSON.parse(cached).filter((p) =>
-              ALLOWED_PROVINCE_SLUGS.includes(p.slug)
-            );
+            const list = JSON.parse(cached)
+              .filter((p) => ALLOWED_PROVINCE_SLUGS.includes(p.slug))
+              .map((p) => ({
+                ...p,
+                thumbnail_url: getProvinceCover(p) || p.thumbnail_url,
+              }));
             setProvinces(list);
             return;
           }
@@ -1152,9 +1159,9 @@ export default function HomePage() {
                       >
                         <div className="home-provinces__card">
                           <div className="home-provinces__card-thumb">
-                            {p.thumbnail_url ? (
+                            {(getProvinceCover(p) || p.thumbnail_url) ? (
                               <img
-                                src={p.thumbnail_url}
+                                src={getProvinceCover(p) || p.thumbnail_url}
                                 alt={displayName}
                                 loading="lazy"
                               />

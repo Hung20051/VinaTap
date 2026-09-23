@@ -227,11 +227,22 @@ export const PROVINCE_IMAGE_OVERRIDES = {
   "hà nội": "/provinces/ha-noi.jpg",
 };
 
-export function getProvinceCover(province) {
-  if (!province) return "";
-  const slug = (province.slug || "").toLowerCase().trim();
-  const name = (province.name || "").toLowerCase().trim();
-  return PROVINCE_IMAGE_OVERRIDES[slug] || PROVINCE_IMAGE_OVERRIDES[name] || "";
+export function getProvinceCover(province, fallback = "") {
+  if (!province) return fallback;
+  if (typeof province === "string") {
+    const key = province.toLowerCase().trim();
+    return PROVINCE_IMAGE_OVERRIDES[key] || fallback;
+  }
+  const slug = (province.slug || province.province_slug || "").toLowerCase().trim();
+  const name = (province.name || province.province_name || "").toLowerCase().trim();
+  return (
+    PROVINCE_IMAGE_OVERRIDES[slug] ||
+    PROVINCE_IMAGE_OVERRIDES[name] ||
+    province.cover_image_url ||
+    province.thumbnail_url ||
+    province.image ||
+    fallback
+  );
 }
 
 export const LANDMARK_IMAGE_OVERRIDES = {

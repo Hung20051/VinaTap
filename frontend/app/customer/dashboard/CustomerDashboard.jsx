@@ -29,6 +29,7 @@ import { albumAPI, nfcAPI, authAPI, provinceAPI } from "@/lib/api";
 import { getUser, updateUser, clearAuth, isAdmin, isLoggedIn } from "@/lib/auth";
 import { applyStoredTheme, getLang } from "@/lib/prefs";
 import { t, getProvinceName } from "@/lib/i18n";
+import { getProvinceCover } from "@/lib/provinceGuideData";
 import TransferModal from "@/components/modals/TransferModal";
 import GiftNotificationBanner from "@/components/ui/GiftNotificationBanner";
 import "@/styles/dashboard.css";
@@ -501,8 +502,8 @@ export default function CustomerDashboard() {
                 return (
                   <div key={card.id} className="holo-travel-card is-unlocked">
                     <div className="card-media-wrap">
-                      {card.thumbnail_url ? (
-                        <img src={card.thumbnail_url} alt={card.province_name} loading="lazy" />
+                      {(getProvinceCover(card.province_slug || card.slug || card.province_name, card.thumbnail_url) || card.thumbnail_url) ? (
+                        <img src={getProvinceCover(card.province_slug || card.slug || card.province_name, card.thumbnail_url) || card.thumbnail_url} alt={card.province_name} loading="lazy" />
                       ) : (
                         <div className="card-thumb-empty">
                           <MapPin size={36} />
@@ -634,9 +635,9 @@ export default function CustomerDashboard() {
                 return (
                   <div key={province.id} className={`holo-travel-card ${isUnlocked ? "is-unlocked" : "is-locked"}`}>
                     <div className="card-media-wrap">
-                      {province.thumbnail_url ? (
+                      {(getProvinceCover(province) || province.thumbnail_url) ? (
                         <img
-                          src={province.thumbnail_url}
+                          src={getProvinceCover(province) || province.thumbnail_url}
                           alt={province.name}
                           loading="lazy"
                           className={isUnlocked ? "" : "is-locked-img"}

@@ -31,7 +31,7 @@ import {
 
 import Dino404 from "@/components/ui/Dino404";
 import DinoLoader from "@/components/ui/DinoLoader";
-import { getLandmarkThumbnail, getFoodImage } from "@/lib/provinceGuideData";
+import { getLandmarkThumbnail, getFoodImage, getProvinceCover } from "@/lib/provinceGuideData";
 import "./TapPage.css";
 
 const REGION_BADGES = {
@@ -118,7 +118,10 @@ export default function TapPage() {
     try {
       const res = await nfcAPI.tap(token);
       const c = res.card;
-      setCard(c);
+      setCard({
+        ...c,
+        thumbnail_url: getProvinceCover(c?.province_slug || c?.slug || c?.province_name, c?.thumbnail_url) || c?.thumbnail_url,
+      });
       setLandmarks(
         (c.landmarks || []).map((lm) => ({
           ...lm,
