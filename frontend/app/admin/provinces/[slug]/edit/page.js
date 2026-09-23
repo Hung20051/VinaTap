@@ -289,10 +289,19 @@ export default function AdminProvinceVisualEditor() {
           <span className="mia-breadcrumb-current">{province.name}</span>
         </div>
 
-        {/* ─── SECTION 1: HERO (ẢNH 1) ────────────────────────── */}
+        {/* ─── SECTION 1: HERO (ẢNH BÌA CHÍNH TO NHẤT) ────────────────────────── */}
         <section className="mia-hero-section admin-editable-block">
           <div className="mia-hero-left">
-            <div className="mia-hero-img-wrap">
+            <div
+              className="mia-hero-img-wrap admin-hero-img-wrap"
+              title="Bấm vào đây để thay đổi ảnh bìa chính (Hero)"
+              onClick={() =>
+                setEditingModal({
+                  type: "heroImg",
+                  item: { thumbnail_url: province.thumbnail_url },
+                })
+              }
+            >
               <img
                 src={
                   province.thumbnail_url ||
@@ -301,18 +310,12 @@ export default function AdminProvinceVisualEditor() {
                 alt={province.name}
                 className="mia-hero-img"
               />
-              <button
-                type="button"
-                className="admin-edit-badge"
-                onClick={() =>
-                  setEditingModal({
-                    type: "heroImg",
-                    item: { thumbnail_url: province.thumbnail_url },
-                  })
-                }
-              >
-                <Camera size={14} /> Thay ảnh bìa chính
-              </button>
+              <div className="admin-hero-overlay">
+                <div className="admin-hero-badge-btn">
+                  <Camera size={18} />
+                  <span>Đổi ảnh bìa chính (Hero)</span>
+                </div>
+              </div>
             </div>
           </div>
           <div className="mia-hero-right">
@@ -340,6 +343,19 @@ export default function AdminProvinceVisualEditor() {
                   placeholder="Nhập mô tả truyền cảm hứng du lịch cho tỉnh thành này..."
                 />
               </div>
+              <button
+                type="button"
+                className="admin-hero-change-link"
+                onClick={() =>
+                  setEditingModal({
+                    type: "heroImg",
+                    item: { thumbnail_url: province.thumbnail_url },
+                  })
+                }
+              >
+                <Camera size={15} />
+                <span>Bấm để thay đổi ảnh bìa to nhất bên trái</span>
+              </button>
             </div>
           </div>
         </section>
@@ -1108,7 +1124,7 @@ function AdminEditItemModal({ modalData, onSave, onClose, onUploadFile, onSaveHe
         <div className="admin-modal-header">
           <h3>
             {type === "heroImg"
-              ? "Thay Ảnh Bìa Toàn Cảnh"
+              ? "Thay Ảnh Bìa Toàn Cảnh (Hero Banner)"
               : type === "landmark"
               ? "Chỉnh Sửa Địa Danh Tham Quan"
               : type === "food"
@@ -1123,6 +1139,12 @@ function AdminEditItemModal({ modalData, onSave, onClose, onUploadFile, onSaveHe
         </div>
 
         <form onSubmit={handleSubmit} className="admin-modal-form">
+          {type === "heroImg" && (
+            <p style={{ margin: "0 0 10px", fontSize: "0.88rem", color: "#64748b", lineHeight: 1.5 }}>
+              💡 Đây là ảnh đại diện lớn nhất nằm ở đầu cẩm nang du lịch của tỉnh thành. Bạn có thể dán đường dẫn ảnh hoặc tải tệp ảnh trực tiếp từ máy tính.
+            </p>
+          )}
+
           {/* Tên / Tiêu đề */}
           {type !== "heroImg" && (
             <div className="admin-form-group">
@@ -1157,7 +1179,9 @@ function AdminEditItemModal({ modalData, onSave, onClose, onUploadFile, onSaveHe
 
           {/* Ảnh URL & Upload */}
           <div className="admin-form-group">
-            <label>Link ảnh đại diện / Thumbnail:</label>
+            <label>
+              {type === "heroImg" ? "Đường dẫn ảnh bìa (URL) hoặc Tải từ máy tính:" : "Link ảnh đại diện / Thumbnail:"}
+            </label>
             <div className="admin-input-upload-row">
               <input
                 type="url"
@@ -1168,7 +1192,7 @@ function AdminEditItemModal({ modalData, onSave, onClose, onUploadFile, onSaveHe
               />
               <label className="admin-btn-file-upload">
                 <Upload size={14} />
-                <span>{uploading ? "Đang tải..." : "Tải ảnh"}</span>
+                <span>{uploading ? "Đang tải..." : "Tải ảnh từ máy"}</span>
                 <input type="file" accept="image/*" onChange={handleFileChange} hidden />
               </label>
             </div>
