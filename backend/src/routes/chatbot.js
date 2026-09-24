@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  chatProvince,
   createSession,
   sendMessage,
   getSession,
@@ -11,7 +12,10 @@ const {
 const { protect } = require("../middleware/auth");
 const { chatMessageLimiter } = require("../middleware/rateLimit");
 
-// Tất cả chatbot đều cần đăng nhập
+// ─── CHATBOT PUBLIC DÀNH CHO TRANG TỈNH THÀNH (Guest & Customer) ───
+router.post("/province-chat", chatMessageLimiter, chatProvince);
+
+// ─── CHATBOT THEO SESSION / DATABASE (Cần đăng nhập) ───────────────
 router.get("/sessions", protect, getMySessions);
 router.post("/sessions", protect, createSession);
 router.get("/sessions/:sessionId", protect, getSession);

@@ -10,6 +10,7 @@ import Dino404 from "@/components/ui/Dino404";
 import DinoLoader from "@/components/ui/DinoLoader";
 import { getProvinceGuideData, getProvinceCover } from "@/lib/provinceGuideData";
 import GuideArticleModal from "./components/GuideArticleModal";
+import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import {
   ChevronRight,
   MapPin,
@@ -471,6 +472,13 @@ export default function ProvincePage() {
           onClose={() => setSelectedItem(null)}
         />
       )}
+
+      {/* ─── 10. THỔ ĐỊA AI CHATBOT VÙNG ĐẤT ─────────────────── */}
+      <ProvinceChatbot
+        province={province}
+        spots={landmarks}
+        specialties={province?.specialties}
+      />
     </div>
   );
 }

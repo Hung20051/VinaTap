@@ -478,6 +478,11 @@ export const userAPI = {
 
 // ─── CHATBOT ──────────────────────────────────────────────────
 export const chatbotAPI = {
+  chatProvince: (data) =>
+    request("/chatbot/province-chat", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
   createSession: (album_id) =>
     request("/chatbot/sessions", {
       method: "POST",

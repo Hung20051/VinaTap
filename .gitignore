@@ -44,3 +44,9 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# ─── PROMPTS & AUDIT NOTES (TÀI LIỆU REVIEW / AUDIT TẠM) ────────
+prompt_*.md
+prompts_*.md
+*prompt*.md
+*audit*.md
