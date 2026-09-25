@@ -9,14 +9,17 @@ const CACHE_TTL_MS = 60 * 60 * 1000; // 1 giờ
 const imageSearchCache = new Map();
 
 // Dọn dẹp cache hết hạn định kỳ
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, item] of responseCache.entries()) {
-    if (now - item.timestamp > CACHE_TTL_MS) {
-      responseCache.delete(key);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [key, item] of responseCache.entries()) {
+      if (now - item.timestamp > CACHE_TTL_MS) {
+        responseCache.delete(key);
+      }
     }
-  }
-}, 15 * 60 * 1000);
+  },
+  15 * 60 * 1000,
+);
 
 /**
  * Trích xuất thực thể cốt lõi (loại bỏ ngoặc phụ, phụ đề, từ mô tả góc nhìn...)
@@ -37,7 +40,7 @@ function extractCoreEntity(keyword) {
   // Loại bỏ các từ phụ chi tiết gây nhiễu kết quả tìm kiếm
   clean = clean.replace(
     /^(cổng tam quan|cổng chính|khuôn viên|toàn cảnh|bảo tháp|tượng phật|gian chính|góc nhìn|bàn ăn|bát|tô|đĩa|ảnh chụp|hình ảnh|danh thắng|khu du lịch)\s+(của\s+|về\s+)?/i,
-    ""
+    "",
   );
   return clean.trim();
 }
@@ -68,7 +71,10 @@ function isTitleRelevant(searchKey, pageTitle) {
   }
 
   const sNorm = sLower
-    .replace(/^(chùa|đền|di tích|tháp|hồ|núi|bãi biển|cầu|món|phở|bún|bánh|lăng|nhà thờ)\s+/i, "")
+    .replace(
+      /^(chùa|đền|di tích|tháp|hồ|núi|bãi biển|cầu|món|phở|bún|bánh|lăng|nhà thờ)\s+/i,
+      "",
+    )
     .trim();
   const words = sNorm.split(/\s+/).filter((w) => w.length >= 2);
   if (words.length === 0) return true;
@@ -83,8 +89,13 @@ function isTitleRelevant(searchKey, pageTitle) {
  */
 function isAuthenticUploadedImage(url) {
   if (!url || typeof url !== "string") return false;
-  if (url.includes("images.unsplash.com") || url.includes("example.com")) return false;
-  return url.startsWith("http://") || url.startsWith("https://") || url.startsWith("/uploads/");
+  if (url.includes("images.unsplash.com") || url.includes("example.com"))
+    return false;
+  return (
+    url.startsWith("http://") ||
+    url.startsWith("https://") ||
+    url.startsWith("/uploads/")
+  );
 }
 
 /**
@@ -152,13 +163,19 @@ async function getRealTravelImage(keyword, provinceName = "") {
     const searchTermsVi = [cleanKey, `${cleanKey} ${provinceName}`.trim()];
     for (const term of searchTermsVi) {
       const searchUrl = `https://vi.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(term)}&gsrlimit=5&prop=pageimages&pithumbsize=960&format=json`;
-      const res = await fetch(searchUrl, { signal: AbortSignal.timeout(3500) }).then((r) => r.json());
+      const res = await fetch(searchUrl, {
+        signal: AbortSignal.timeout(3500),
+      }).then((r) => r.json());
       if (res.query && res.query.pages) {
         // Ưu tiên bài viết có title trùng khớp nhất với từ khóa
         const pages = Object.values(res.query.pages);
         pages.sort((a, b) => {
-          const aExact = a.title.toLowerCase().includes(cleanKey.toLowerCase()) ? 1 : 0;
-          const bExact = b.title.toLowerCase().includes(cleanKey.toLowerCase()) ? 1 : 0;
+          const aExact = a.title.toLowerCase().includes(cleanKey.toLowerCase())
+            ? 1
+            : 0;
+          const bExact = b.title.toLowerCase().includes(cleanKey.toLowerCase())
+            ? 1
+            : 0;
           return bExact - aExact;
         });
 
@@ -182,11 +199,19 @@ async function getRealTravelImage(keyword, provinceName = "") {
     const commonsTerms = [cleanKey, `${cleanKey} ${provinceName}`.trim()];
     for (const cTerm of commonsTerms) {
       const commonsUrl = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrsearch=${encodeURIComponent(cTerm)}&gsrlimit=4&prop=imageinfo&iiprop=url&iiurlwidth=960&format=json`;
-      const resCommons = await fetch(commonsUrl, { signal: AbortSignal.timeout(3500) }).then((r) => r.json());
+      const resCommons = await fetch(commonsUrl, {
+        signal: AbortSignal.timeout(3500),
+      }).then((r) => r.json());
       if (resCommons.query && resCommons.query.pages) {
         for (const page of Object.values(resCommons.query.pages)) {
-          if (page.title && isTitleRelevant(cleanKey, page.title) && page.imageinfo && page.imageinfo[0]) {
-            const thumbUrl = page.imageinfo[0].thumburl || page.imageinfo[0].url;
+          if (
+            page.title &&
+            isTitleRelevant(cleanKey, page.title) &&
+            page.imageinfo &&
+            page.imageinfo[0]
+          ) {
+            const thumbUrl =
+              page.imageinfo[0].thumburl || page.imageinfo[0].url;
             if (isValidPhoto(thumbUrl)) {
               imageSearchCache.set(cacheKey, thumbUrl);
               return thumbUrl;
@@ -231,14 +256,19 @@ async function resolveMarkdownImages(content, provinceData) {
       continue;
     }
 
-    const searchKeyword = rawUrl.startsWith("auto:") ? rawUrl.replace(/^auto:/, "") : alt;
-    
+    const searchKeyword = rawUrl.startsWith("auto:")
+      ? rawUrl.replace(/^auto:/, "")
+      : alt;
+
     // 1. Ưu tiên tìm trong Cơ sở dữ liệu VinaTap trước (ảnh custom upload)
     let realImgUrl = findImageInDatabase(searchKeyword, provinceData);
 
     // 2. Nếu Database chưa có ảnh upload, tìm kiếm trên Internet với bộ lọc kiểm duyệt chuẩn xác
     if (!realImgUrl) {
-      realImgUrl = await getRealTravelImage(searchKeyword, provinceData?.name || "");
+      realImgUrl = await getRealTravelImage(
+        searchKeyword,
+        provinceData?.name || "",
+      );
     }
 
     if (realImgUrl) {
@@ -265,18 +295,20 @@ const buildProvinceSystemPrompt = (provinceData = {}, userInfo = null) => {
     : `- Khách hàng: Khách vãng lai (Guest - chưa đăng nhập)`;
 
   // Danh sách địa danh có trong DB (chỉ liệt kê tên, không gán link stock unsplash)
-  const landmarkList = Array.isArray(provinceData.landmarks) && provinceData.landmarks.length > 0
-    ? provinceData.landmarks
-        .map((lm) => `- ${lm.name}: ${lm.description || ""}`)
-        .join("\n")
-    : "";
+  const landmarkList =
+    Array.isArray(provinceData.landmarks) && provinceData.landmarks.length > 0
+      ? provinceData.landmarks
+          .map((lm) => `- ${lm.name}: ${lm.description || ""}`)
+          .join("\n")
+      : "";
 
   // Danh sách món ăn có trong DB (chỉ liệt kê tên, không gán link stock unsplash)
-  const foodList = Array.isArray(provinceData.foods) && provinceData.foods.length > 0
-    ? provinceData.foods
-        .map((fd) => `- ${fd.title}: ${fd.description || ""}`)
-        .join("\n")
-    : "";
+  const foodList =
+    Array.isArray(provinceData.foods) && provinceData.foods.length > 0
+      ? provinceData.foods
+          .map((fd) => `- ${fd.title}: ${fd.description || ""}`)
+          .join("\n")
+      : "";
 
   return `Bạn là "Trợ Lý Du Lịch Thổ Địa VinaTap" — Chuyên gia cẩm nang bản địa am hiểu sâu sắc, văn minh, lịch thiệp và tin cậy của vùng đất ${pName} (${pRegion}) và 34 tỉnh thành Việt Nam.
 
@@ -336,16 +368,23 @@ const chatProvince = async (req, res) => {
     } = req.body;
 
     if (!message || !message.trim()) {
-      return res.status(400).json({ message: "Nội dung tin nhắn không được để trống" });
+      return res
+        .status(400)
+        .json({ message: "Nội dung tin nhắn không được để trống" });
     }
 
     const trimmedMsg = message.trim();
     if (trimmedMsg.length > 4000) {
-      return res.status(400).json({ message: "Tin nhắn quá dài (tối đa 4.000 ký tự)" });
+      return res
+        .status(400)
+        .json({ message: "Tin nhắn quá dài (tối đa 4.000 ký tự)" });
     }
 
     // Lấy thêm dữ liệu địa danh và món ăn từ Database nếu có provinceSlug
-    let fullProvinceData = { ...provinceData, name: provinceName || provinceData.name };
+    let fullProvinceData = {
+      ...provinceData,
+      name: provinceName || provinceData.name,
+    };
     if (provinceSlug) {
       try {
         const [provRows] = await db.execute(
@@ -356,8 +395,10 @@ const chatProvince = async (req, res) => {
           const prov = provRows[0];
           fullProvinceData.name = prov.name;
           fullProvinceData.region = prov.region;
-          fullProvinceData.description = prov.description || fullProvinceData.description;
-          fullProvinceData.specialties = prov.specialties || fullProvinceData.specialties;
+          fullProvinceData.description =
+            prov.description || fullProvinceData.description;
+          fullProvinceData.specialties =
+            prov.specialties || fullProvinceData.specialties;
 
           // Lấy landmarks kèm thumbnail
           const [landmarks] = await db.execute(
@@ -374,7 +415,10 @@ const chatProvince = async (req, res) => {
           fullProvinceData.foods = foods;
         }
       } catch (dbErr) {
-        console.warn("Could not fetch extra province media from DB:", dbErr.message);
+        console.warn(
+          "Could not fetch extra province media from DB:",
+          dbErr.message,
+        );
       }
     }
 
@@ -385,7 +429,8 @@ const chatProvince = async (req, res) => {
     const formattedHistory = (Array.isArray(history) ? history : [])
       .slice(-12)
       .map((msg) => ({
-        role: msg.role === "assistant" || msg.role === "model" ? "model" : "user",
+        role:
+          msg.role === "assistant" || msg.role === "model" ? "model" : "user",
         parts: [{ text: msg.content || msg.text || "" }],
       }))
       .filter((item) => item.parts[0].text.trim().length > 0);
@@ -408,7 +453,9 @@ const chatProvince = async (req, res) => {
   } catch (err) {
     console.error("chatProvince Error:", err);
     res.status(500).json({
-      message: err.message || "Trợ lý AI đang bận trong giây lát, bạn vui lòng thử lại nhé!",
+      message:
+        err.message ||
+        "Trợ lý AI đang bận trong giây lát, bạn vui lòng thử lại nhé!",
     });
   }
 };

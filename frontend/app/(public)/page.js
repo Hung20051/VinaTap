@@ -46,6 +46,7 @@ import { getLang } from "@/lib/prefs";
 import { t, getProvinceName, getProvinceDesc } from "@/lib/i18n";
 import { getProvinceCover } from "@/lib/provinceGuideData";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import Interactive3DCardShowcase from "@/components/ui/Interactive3DCardShowcase";
 import "@/styles/home.css";
 
 const REGION_LABEL = {
@@ -213,7 +214,10 @@ export default function HomePage() {
         setProvinces(list);
         if (list.length > 0) {
           try {
-            sessionStorage.setItem("vinatap_cached_provinces", JSON.stringify(list));
+            sessionStorage.setItem(
+              "vinatap_cached_provinces",
+              JSON.stringify(list),
+            );
           } catch {}
         }
       })
@@ -273,7 +277,8 @@ export default function HomePage() {
     };
 
     window.addEventListener("vinatap:lang-updated", handleLangUpdated);
-    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () =>
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
   }, []);
 
   // Slide tự động cho "Tỉnh thành nổi bật"
@@ -380,7 +385,9 @@ export default function HomePage() {
     // 1. Kiểm tra trùng khớp câu hỏi mẫu trong FAQ_DATA
     const list = FAQ_DATA[lang] || FAQ_DATA.vi;
     const exactMatch = list.find(
-      (item) => item.q.toLowerCase() === qLower || qLower.includes(item.q.toLowerCase()),
+      (item) =>
+        item.q.toLowerCase() === qLower ||
+        qLower.includes(item.q.toLowerCase()),
     );
     if (exactMatch) return exactMatch.a;
 
@@ -398,70 +405,110 @@ export default function HomePage() {
     }
 
     // Chủ đề: Cách đặt mua / Shop / Mua ở đâu
-    if (/mua|đặt hàng|order|cửa hàng|shop|ở đâu|làm sao để mua|làm thế nào để mua|buy|purchase|where to buy/i.test(qLower)) {
+    if (
+      /mua|đặt hàng|order|cửa hàng|shop|ở đâu|làm sao để mua|làm thế nào để mua|buy|purchase|where to buy/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Để đặt mua thẻ VinaTap, bạn làm theo 3 bước cực kỳ đơn giản:\n1. Bấm vào mục 'Sản phẩm' trên thanh điều hướng phía trên.\n2. Chọn thẻ tỉnh thành hoặc các gói Combo 3 thẻ (139k), Combo 5 thẻ (239k) bạn yêu thích rồi bấm 'Mua ngay'.\n3. Điền địa chỉ nhận hàng và chọn thanh toán qua mã QR PayOS hoặc thanh toán tiền mặt khi nhận hàng (COD) là hoàn tất ạ!"
         : "To buy VinaTap cards, follow 3 easy steps:\n1. Click 'Shop' in the navigation bar.\n2. Select your desired province cards or 3-card (139k) / 5-card (239k) combos and click 'Buy Now'.\n3. Enter your delivery address and choose payment via PayOS QR or Cash on Delivery (COD)!";
     }
 
     // Chủ đề: Thanh toán / Chuyển khoản / PayOS / COD
-    if (/thanh toán|chuyển khoản|payos|cod|tiền mặt|ngân hàng|atm|quét mã|ví|payment|pay/i.test(qLower)) {
+    if (
+      /thanh toán|chuyển khoản|payos|cod|tiền mặt|ngân hàng|atm|quét mã|ví|payment|pay/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "VinaTap hỗ trợ 2 hình thức thanh toán an toàn và tiện lợi:\n1. Chuyển khoản trực tuyến PayOS: Quét mã VietQR tự động xác nhận ngay tức thì, tương thích với mọi app ngân hàng và ví điện tử.\n2. Thanh toán khi nhận hàng (COD): Nhận hàng tận tay, kiểm tra thẻ rồi mới thanh toán tiền mặt cho bưu tá."
         : "VinaTap supports 2 secure payment methods:\n1. Online QR Transfer via PayOS: Scan VietQR for instant automatic confirmation with all banks and e-wallets.\n2. Cash on Delivery (COD): Receive and inspect your physical cards before paying cash.";
     }
 
     // Chủ đề: Phí vận chuyển / Giao hàng / Freeship / Mất bao lâu
-    if (/ship|vận chuyển|giao hàng|phí ship|freeship|miễn phí ship|bao lâu|mấy ngày|delivery|shipping/i.test(qLower)) {
+    if (
+      /ship|vận chuyển|giao hàng|phí ship|freeship|miễn phí ship|bao lâu|mấy ngày|delivery|shipping/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Chính sách giao hàng của VinaTap:\n• Phí vận chuyển tiêu chuẩn toàn quốc: 30.000đ.\n• Miễn phí vận chuyển (Freeship): Tự động áp dụng cho đơn hàng từ 500.000đ trở lên.\n• Thời gian giao hàng: Khoảng 2 - 4 ngày làm việc trên toàn quốc."
         : "VinaTap Delivery Policy:\n• Standard nationwide shipping: 30,000 VND.\n• Free Shipping: Automatically applied for orders from 500,000 VND.\n• Delivery time: Usually 2 - 4 business days nationwide.";
     }
 
     // Chủ đề: Công nghệ NFC / Cách hoạt động / Có cần tải app không
-    if (/nfc|hoạt động|như thế nào|ra sao|cách dùng|sử dụng|cài app|tải app|quét mã|chạm thẻ|how it works/i.test(qLower)) {
+    if (
+      /nfc|hoạt động|như thế nào|ra sao|cách dùng|sử dụng|cài app|tải app|quét mã|chạm thẻ|how it works/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Thẻ VinaTap sử dụng chip NFC chuẩn ISO NXP thông minh:\n• Bạn chỉ cần chạm nhẹ mặt sau điện thoại vào thẻ, album du lịch của tỉnh thành đó sẽ tự động mở ngay trên trình duyệt web điện thoại.\n• Hoàn toàn không cần tải app, không cần quét mã QR."
         : "VinaTap uses smart ISO-certified NXP NFC chips:\n• Simply tap the back of your phone to the physical tile, and that province's travel album opens instantly in your mobile web browser.\n• No app download required and no QR scanning needed.";
     }
 
     // Chủ đề: Điện thoại tương thích / iPhone / Android / Máy không có NFC
-    if (/điện thoại|iphone|android|samsung|thiết bị|máy nào|hỗ trợ|không có nfc|tương thích|phone|device|compatible/i.test(qLower)) {
+    if (
+      /điện thoại|iphone|android|samsung|thiết bị|máy nào|hỗ trợ|không có nfc|tương thích|phone|device|compatible/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Hầu hết smartphone hiện nay đều tương thích hoàn hảo:\n• iPhone: Từ iPhone 7 trở lên (đặc biệt từ iPhone Xr/Xs trở lên tự động nhận thẻ ngay mà không cần thao tác gì thêm).\n• Android: Mọi điện thoại có trang bị NFC (Samsung, Xiaomi, Oppo, Pixel...).\n• Nếu máy không có NFC: Mỗi thẻ đều có mã Serial dự phòng in kèm — bạn chỉ cần nhập mã trên web là mở album bình thường!"
         : "Most modern smartphones are fully compatible:\n• iPhone: iPhone 7 and above (iPhone Xr/Xs and newer read automatically in background).\n• Android: Any smartphone with NFC enabled (Samsung, Xiaomi, Oppo, etc.).\n• Phones without NFC: Every card includes a printed backup Serial Code so you can open the album on the web anytime!";
     }
 
     // Chủ đề: Kích hoạt thẻ / Tạo album / Đăng ảnh / Quản lý
-    if (/kích hoạt|activate|tạo album|up ảnh|đăng ảnh|lưu ảnh|tải ảnh|video|album|serial|nhập serial/i.test(qLower)) {
+    if (
+      /kích hoạt|activate|tạo album|up ảnh|đăng ảnh|lưu ảnh|tải ảnh|video|album|serial|nhập serial/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Quy trình kích hoạt và tạo album rất nhanh chóng:\n1. Chạm thẻ vào điện thoại lần đầu (hoặc nhập mã Serial in trên thẻ tại trang 'Kích hoạt').\n2. Đăng nhập để xác nhận quyền sở hữu thẻ.\n3. Bạn có thể tự do đặt tên album, tải lên các bức ảnh/video đẹp nhất, viết nhật ký hành trình để lưu giữ kỷ niệm du lịch trọn đời!"
         : "Activating and creating an album takes under a minute:\n1. Tap the card to your phone for the first time (or enter the backup serial code on the 'Activate' page).\n2. Sign in to confirm ownership.\n3. Name your album, upload your travel photos/videos, write memories, and keep them alive forever on your map!";
     }
 
     // Chủ đề: Quyền riêng tư / Bảo mật / Ai xem được
-    if (/riêng tư|bảo mật|ai xem|công khai|lộ ảnh|private|public|privacy|security/i.test(qLower)) {
+    if (
+      /riêng tư|bảo mật|ai xem|công khai|lộ ảnh|private|public|privacy|security/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Bạn nắm toàn quyền kiểm soát album của mình:\n• Chế độ Riêng tư (mặc định): Chỉ bạn và những người được bạn cấp quyền mới xem được ảnh & video.\n• Chế độ Công khai: Bất kỳ ai chạm thẻ cũng có thể chiêm ngưỡng album của bạn.\nDữ liệu được mã hóa và lưu trữ an toàn trên nền tảng đám mây."
         : "You have 100% control over your albums:\n• Private mode (default): Only you and authorized guests can view your media.\n• Public mode: Anyone tapping the physical card can see your travel stories.\nAll photos are securely encrypted and stored on cloud servers.";
     }
 
     // Chủ đề: Chuyển nhượng / Tặng thẻ
-    if (/chuyển nhượng|tặng|cho người khác|đổi chủ|sang tên|bán lại|transfer|gift/i.test(qLower)) {
+    if (
+      /chuyển nhượng|tặng|cho người khác|đổi chủ|sang tên|bán lại|transfer|gift/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Bạn hoàn toàn có thể tặng hoặc chuyển nhượng thẻ cho bạn bè:\n• Vào mục quản lý thẻ trong Dashboard, chọn 'Chuyển nhượng'.\n• Nhập email người nhận. Hệ thống sẽ gửi email xác nhận cho họ.\n• Khi người nhận bấm xác nhận, quyền sở hữu thẻ và album sẽ được chuyển sang tài khoản mới một cách an toàn."
         : "You can easily gift or transfer card ownership:\n• Go to your card dashboard and click 'Transfer'.\n• Enter the recipient's email address.\n• Once they confirm via the email link, full card ownership and album access transfer securely to their account.";
     }
 
     // Chủ đề: Bảo hành / Đổi trả / Hỏng chip
-    if (/bảo hành|đổi trả|hỏng|lỗi|chip hỏng|1 đổi 1|chống nước|30 ngày|warranty|guarantee|defect/i.test(qLower)) {
+    if (
+      /bảo hành|đổi trả|hỏng|lỗi|chip hỏng|1 đổi 1|chống nước|30 ngày|warranty|guarantee|defect/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Chính sách bảo hành chính hãng của VinaTap:\n• Đổi mới 1-1 miễn phí trong 30 ngày đầu nếu chip NFC gặp lỗi kỹ thuật từ nhà sản xuất.\n• Thẻ được chế tạo với vật liệu chống nước, chống xước cao cấp.\n• Mã serial dự phòng in trên thẻ đảm bảo bạn không bao giờ mất dữ liệu album dù thẻ có bị thất lạc."
         : "Official VinaTap Warranty Policy:\n• Free 1-to-1 replacement within 30 days for any technical chip defect.\n• Waterproof and scratch-resistant build quality.\n• Backup serial codes guarantee your memories are never lost.";
     }
 
     // Chủ đề: Dự án VinaTap là gì / Ý nghĩa / Giới thiệu
-    if (/vinatap|dự án|là gì|giới thiệu|ý nghĩa|ý tưởng|sứ mệnh|mục đích|about|what is/i.test(qLower)) {
+    if (
+      /vinatap|dự án|là gì|giới thiệu|ý nghĩa|ý tưởng|sứ mệnh|mục đích|about|what is/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "VinaTap là dự án công nghệ du lịch kết hợp giữa thẻ NFC vật lý thông minh và nền tảng bản đồ số hóa 34 tỉnh thành Việt Nam.\nMục tiêu của VinaTap là giúp mọi người lưu giữ kỷ niệm du lịch thực tế, biến hành trình khám phá đất nước thành bộ sưu tập di sản sống động và gắn kết bạn bè, gia đình."
         : "VinaTap is an innovative travel-tech project that connects physical smart NFC tiles with an interactive digital travel map across Vietnam's 34 provinces.\nOur mission is to help travelers preserve authentic journey memories and celebrate the heritage and beauty of Vietnam.";
@@ -475,7 +522,9 @@ export default function HomePage() {
     }
 
     // 3. Nếu không trúng intent cụ thể, tính điểm từ khóa khớp tốt nhất trong FAQ_DATA
-    const keywords = qLower.split(/[^\p{L}\p{N}]+/u).filter((word) => word.length > 1);
+    const keywords = qLower
+      .split(/[^\p{L}\p{N}]+/u)
+      .filter((word) => word.length > 1);
     const scoredList = list
       .map((item) => ({
         item,
@@ -581,7 +630,11 @@ export default function HomePage() {
                       <div className="home-navbar__dropdown-divider" />
 
                       <Link
-                        href={user.role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
+                        href={
+                          user.role === "admin"
+                            ? "/admin/dashboard"
+                            : "/customer/dashboard"
+                        }
                         className="home-navbar__dropdown-item"
                         onClick={() => setUserDropdownOpen(false)}
                       >
@@ -665,9 +718,7 @@ export default function HomePage() {
                   {t(lang, "heroTitleAccent")}
                 </span>
               </h1>
-              <p className="home-hero__desc">
-                {t(lang, "heroDesc")}
-              </p>
+              <p className="home-hero__desc">{t(lang, "heroDesc")}</p>
               <div className="home-hero__cta-row">
                 <button
                   type="button"
@@ -690,7 +741,9 @@ export default function HomePage() {
                   <Puzzle size={20} strokeWidth={2.2} />
                 </div>
                 <div>
-                  <div className="home-hero__highlight-title">{t(lang, "heroHighlightTitle")}</div>
+                  <div className="home-hero__highlight-title">
+                    {t(lang, "heroHighlightTitle")}
+                  </div>
                   <div className="home-hero__highlight-sub">
                     {t(lang, "heroHighlightSub")}
                   </div>
@@ -741,7 +794,11 @@ export default function HomePage() {
                     <div className="home-hero__app-logo">
                       <img src="/logo.png" alt="VinaTap" />
                     </div>
-                    <Menu size={14} strokeWidth={2.2} className="home-hero__app-menu" />
+                    <Menu
+                      size={14}
+                      strokeWidth={2.2}
+                      className="home-hero__app-menu"
+                    />
                   </div>
 
                   {/* App Hero Banner */}
@@ -760,21 +817,35 @@ export default function HomePage() {
                   {/* App Search Bar */}
                   <div className="home-hero__app-search">
                     <Search size={11} strokeWidth={2.4} />
-                    <span>{isVi ? "Tìm tỉnh thành, địa danh..." : "Search destination..."}</span>
+                    <span>
+                      {isVi
+                        ? "Tìm tỉnh thành, địa danh..."
+                        : "Search destination..."}
+                    </span>
                   </div>
 
                   {/* Filter Pills */}
                   <div className="home-hero__app-pills">
-                    <span className="home-hero__app-pill is-active">{isVi ? "Tất cả" : "All"}</span>
-                    <span className="home-hero__app-pill">{isVi ? "Miền Bắc" : "North"}</span>
-                    <span className="home-hero__app-pill">{isVi ? "Miền Trung" : "Central"}</span>
-                    <span className="home-hero__app-pill">{isVi ? "Miền Nam" : "South"}</span>
+                    <span className="home-hero__app-pill is-active">
+                      {isVi ? "Tất cả" : "All"}
+                    </span>
+                    <span className="home-hero__app-pill">
+                      {isVi ? "Miền Bắc" : "North"}
+                    </span>
+                    <span className="home-hero__app-pill">
+                      {isVi ? "Miền Trung" : "Central"}
+                    </span>
+                    <span className="home-hero__app-pill">
+                      {isVi ? "Miền Nam" : "South"}
+                    </span>
                   </div>
 
                   {/* Featured Section */}
                   <div className="home-hero__app-section">
                     <div className="home-hero__app-section-header">
-                      <span>{isVi ? "Tỉnh thành nổi bật" : "Featured Destinations"}</span>
+                      <span>
+                        {isVi ? "Tỉnh thành nổi bật" : "Featured Destinations"}
+                      </span>
                       <ArrowRight size={11} />
                     </div>
 
@@ -782,22 +853,32 @@ export default function HomePage() {
                       <div className="home-hero__app-card">
                         <div
                           className="home-hero__app-card-thumb"
-                          style={{ backgroundImage: `url('/hue-cau-truong-tien.jpg')` }}
+                          style={{
+                            backgroundImage: `url('/hue-cau-truong-tien.jpg')`,
+                          }}
                         />
                         <div className="home-hero__app-card-info">
-                          <div className="home-hero__app-card-name">Đà Nẵng</div>
-                          <div className="home-hero__app-card-region">{isVi ? "Miền Trung" : "Central"}</div>
+                          <div className="home-hero__app-card-name">
+                            Đà Nẵng
+                          </div>
+                          <div className="home-hero__app-card-region">
+                            {isVi ? "Miền Trung" : "Central"}
+                          </div>
                         </div>
                       </div>
 
                       <div className="home-hero__app-card">
                         <div
                           className="home-hero__app-card-thumb"
-                          style={{ backgroundImage: `url('/bac-ninh-quan-ho.jpg')` }}
+                          style={{
+                            backgroundImage: `url('/bac-ninh-quan-ho.jpg')`,
+                          }}
                         />
                         <div className="home-hero__app-card-info">
                           <div className="home-hero__app-card-name">Hà Nội</div>
-                          <div className="home-hero__app-card-region">{isVi ? "Miền Bắc" : "North"}</div>
+                          <div className="home-hero__app-card-region">
+                            {isVi ? "Miền Bắc" : "North"}
+                          </div>
                         </div>
                       </div>
 
@@ -807,8 +888,12 @@ export default function HomePage() {
                           style={{ backgroundImage: `url('/auth-bg.jpg')` }}
                         />
                         <div className="home-hero__app-card-info">
-                          <div className="home-hero__app-card-name">TP. Hồ Chí Minh</div>
-                          <div className="home-hero__app-card-region">{isVi ? "Miền Nam" : "South"}</div>
+                          <div className="home-hero__app-card-name">
+                            TP. Hồ Chí Minh
+                          </div>
+                          <div className="home-hero__app-card-region">
+                            {isVi ? "Miền Nam" : "South"}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -845,13 +930,23 @@ export default function HomePage() {
                   </div>
                   <div className="home-hero__nfc-card-center">
                     <div className="home-hero__nfc-card-badge">
-                      <span className="home-hero__nfc-card-badge-vn">VIỆT NAM</span>
-                      <span className="home-hero__nfc-card-badge-sub">34 TỈNH THÀNH</span>
-                      <span className="home-hero__nfc-card-badge-line">1 HÀNH TRÌNH</span>
+                      <span className="home-hero__nfc-card-badge-vn">
+                        VIỆT NAM
+                      </span>
+                      <span className="home-hero__nfc-card-badge-sub">
+                        34 TỈNH THÀNH
+                      </span>
+                      <span className="home-hero__nfc-card-badge-line">
+                        1 HÀNH TRÌNH
+                      </span>
                     </div>
                   </div>
                   <div className="home-hero__nfc-card-bottom">
-                    <Radio size={15} strokeWidth={2.4} className="home-hero__nfc-icon" />
+                    <Radio
+                      size={15}
+                      strokeWidth={2.4}
+                      className="home-hero__nfc-icon"
+                    />
                   </div>
                 </div>
 
@@ -869,8 +964,12 @@ export default function HomePage() {
                   <Radio size={15} strokeWidth={2.4} />
                 </div>
                 <div>
-                  <div className="home-hero__badge-title">{t(lang, "heroCardActivate")}</div>
-                  <div className="home-hero__badge-desc">{t(lang, "heroCardTapOpen")}</div>
+                  <div className="home-hero__badge-title">
+                    {t(lang, "heroCardActivate")}
+                  </div>
+                  <div className="home-hero__badge-desc">
+                    {t(lang, "heroCardTapOpen")}
+                  </div>
                 </div>
               </div>
 
@@ -879,8 +978,12 @@ export default function HomePage() {
                   <Sparkles size={15} strokeWidth={2.4} />
                 </div>
                 <div>
-                  <div className="home-hero__badge-title">{t(lang, "heroCardAiCaption")}</div>
-                  <div className="home-hero__badge-desc">{t(lang, "heroCardAiDesc")}</div>
+                  <div className="home-hero__badge-title">
+                    {t(lang, "heroCardAiCaption")}
+                  </div>
+                  <div className="home-hero__badge-desc">
+                    {t(lang, "heroCardAiDesc")}
+                  </div>
                 </div>
               </div>
 
@@ -889,8 +992,12 @@ export default function HomePage() {
                   <Camera size={15} strokeWidth={2.4} />
                 </div>
                 <div>
-                  <div className="home-hero__badge-title">{t(lang, "heroCardMemories")}</div>
-                  <div className="home-hero__badge-desc">{t(lang, "heroCardMemoriesDesc")}</div>
+                  <div className="home-hero__badge-title">
+                    {t(lang, "heroCardMemories")}
+                  </div>
+                  <div className="home-hero__badge-desc">
+                    {t(lang, "heroCardMemoriesDesc")}
+                  </div>
                 </div>
               </div>
             </div>
@@ -919,18 +1026,8 @@ export default function HomePage() {
         {/* ─── About (full-screen) ─── */}
         <RevealSection id="about" className="home-about">
           <div className="container home-about__grid">
-            <div className="home-about__icons-grid">
-              {[
-                { icon: Puzzle, label: t(lang, "aboutIconPhysical") },
-                { icon: Globe, label: t(lang, "aboutIconWeb") },
-                { icon: Camera, label: t(lang, "aboutIconAi") },
-                { icon: Gamepad2, label: t(lang, "aboutIconGamification") },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} className="home-about__icon-tile">
-                  <Icon size={26} strokeWidth={2} />
-                  <span className="home-about__icon-label">{label}</span>
-                </div>
-              ))}
+            <div className="home-about__showcase-wrap">
+              <Interactive3DCardShowcase lang={lang} />
             </div>
 
             <div>
@@ -938,24 +1035,26 @@ export default function HomePage() {
                 <span className="home-eyebrow__dash" />
                 {t(lang, "aboutEyebrow")}
               </div>
-              <h2 className="home-about__title">
-                {t(lang, "aboutHeading")}
-              </h2>
-              <p className="home-about__desc">
-                {t(lang, "aboutDescription")}
-              </p>
+              <h2 className="home-about__title">{t(lang, "aboutHeading")}</h2>
+              <p className="home-about__desc">{t(lang, "aboutDescription")}</p>
               <div className="home-about__stats">
                 <div>
                   <div className="home-about__stat-value">34+</div>
-                  <div className="home-about__stat-label">{t(lang, "aboutStatProvinces")}</div>
+                  <div className="home-about__stat-label">
+                    {t(lang, "aboutStatProvinces")}
+                  </div>
                 </div>
                 <div>
                   <div className="home-about__stat-value">3</div>
-                  <div className="home-about__stat-label">{t(lang, "aboutStatLayers")}</div>
+                  <div className="home-about__stat-label">
+                    {t(lang, "aboutStatLayers")}
+                  </div>
                 </div>
                 <div>
                   <div className="home-about__stat-value">2026</div>
-                  <div className="home-about__stat-label">{t(lang, "aboutStatYear")}</div>
+                  <div className="home-about__stat-label">
+                    {t(lang, "aboutStatYear")}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1010,10 +1109,7 @@ export default function HomePage() {
                   badge: null,
                 },
               ].map((tier) => (
-                <div
-                  key={tier.name}
-                  className="home-pricing__card"
-                >
+                <div key={tier.name} className="home-pricing__card">
                   {tier.badge && (
                     <span className="home-pricing__badge">{tier.badge}</span>
                   )}
@@ -1103,7 +1199,13 @@ export default function HomePage() {
                   padding: "2.5rem 1rem",
                 }}
               >
-                <p style={{ color: "var(--color-text-secondary, #666)", margin: 0, fontSize: "1rem" }}>
+                <p
+                  style={{
+                    color: "var(--color-text-secondary, #666)",
+                    margin: 0,
+                    fontSize: "1rem",
+                  }}
+                >
                   {lang === "vi"
                     ? "Không thể kết nối đến máy chủ Backend để tải danh sách tỉnh thành."
                     : "Unable to connect to Backend server to load provinces."}
@@ -1125,9 +1227,7 @@ export default function HomePage() {
                 </button>
               </div>
             ) : !filtered.length ? (
-              <p className="home-provinces__empty">
-                {t(lang, "provEmpty")}
-              </p>
+              <p className="home-provinces__empty">{t(lang, "provEmpty")}</p>
             ) : (
               <div
                 className="home-provinces__carousel"
@@ -1159,7 +1259,7 @@ export default function HomePage() {
                       >
                         <div className="home-provinces__card">
                           <div className="home-provinces__card-thumb">
-                            {(getProvinceCover(p) || p.thumbnail_url) ? (
+                            {getProvinceCover(p) || p.thumbnail_url ? (
                               <img
                                 src={getProvinceCover(p) || p.thumbnail_url}
                                 alt={displayName}
@@ -1171,7 +1271,8 @@ export default function HomePage() {
                               </div>
                             )}
                             <span className="home-provinces__region-badge">
-                              {REGION_LABEL[lang]?.[p.region] || REGION_LABEL.vi[p.region]}
+                              {REGION_LABEL[lang]?.[p.region] ||
+                                REGION_LABEL.vi[p.region]}
                             </span>
                           </div>
                           <div className="home-provinces__card-body">
@@ -1261,7 +1362,11 @@ export default function HomePage() {
             </p>
             <div className="home-policy__action">
               <Link href="/policy" className="home-policy__action-link">
-                <span>{lang === "vi" ? "Xem toàn bộ chính sách chi tiết" : "View full detailed policies"}</span>
+                <span>
+                  {lang === "vi"
+                    ? "Xem toàn bộ chính sách chi tiết"
+                    : "View full detailed policies"}
+                </span>
                 <ArrowRight size={15} />
               </Link>
             </div>
@@ -1348,9 +1453,7 @@ export default function HomePage() {
                 size={38}
                 onClick={scrollToSection("home")}
               />
-              <p className="home-footer__brand-desc">
-                {t(lang, "footerDesc")}
-              </p>
+              <p className="home-footer__brand-desc">{t(lang, "footerDesc")}</p>
               <div className="home-footer__socials">
                 <a
                   href="#"

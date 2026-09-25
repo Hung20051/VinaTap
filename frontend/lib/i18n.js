@@ -77,7 +77,8 @@ export const dict = {
 
     // ─── ACCOUNT SETTINGS ───
     accountTitle: "👤 Tài khoản",
-    accountSubtitle: "Thông tin cá nhân — địa chỉ dùng để nhận thẻ NFC khi đặt hàng.",
+    accountSubtitle:
+      "Thông tin cá nhân — địa chỉ dùng để nhận thẻ NFC khi đặt hàng.",
     profileName: "Họ và tên",
     displayName: "Tên hiển thị",
     profileEmail: "Email",
@@ -87,8 +88,10 @@ export const dict = {
     profilePhone: "Số điện thoại",
     profilePhonePlaceholder: "VD: 0912 345 678",
     profileAddress: "Địa chỉ nhận hàng",
-    profileAddressPlaceholder: "Số nhà, đường, phường/xã, tỉnh/thành — dùng để ship thẻ NFC",
-    profileSaveNote: "Thông tin này được dùng để giao thẻ NFC vật lý tới bạn khi đặt hàng.",
+    profileAddressPlaceholder:
+      "Số nhà, đường, phường/xã, tỉnh/thành — dùng để ship thẻ NFC",
+    profileSaveNote:
+      "Thông tin này được dùng để giao thẻ NFC vật lý tới bạn khi đặt hàng.",
     saveChanges: "Lưu thay đổi",
     saving: "Đang lưu...",
     savedSuccess: "Đã lưu thành công",
@@ -120,7 +123,8 @@ export const dict = {
     // ─── ABOUT SETTINGS ───
     aboutTitle: "ℹ️ Về VinaTap",
     aboutSubtitle: "Nền tảng lưu trữ kỷ niệm bằng thẻ NFC thông minh",
-    aboutDesc: "VinaTap giúp bạn lưu giữ từng khoảng khắc đáng nhớ qua từng thẻ NFC bản đồ Việt Nam.",
+    aboutDesc:
+      "VinaTap giúp bạn lưu giữ từng khoảng khắc đáng nhớ qua từng thẻ NFC bản đồ Việt Nam.",
     appVersion: "Phiên bản ứng dụng",
     developer: "Phát triển bởi",
 
@@ -144,11 +148,13 @@ export const dict = {
     heroEyebrow: "Khám phá Việt Nam",
     heroTitleLine1: "Chạm một điểm đến",
     heroTitleAccent: "giữ trọn một hành trình",
-    heroDesc: "Sưu tầm những chiếc thẻ NFC mang dấu ấn của từng điểm đến Việt Nam. Chỉ với một cú chạm, bạn có thể khám phá câu chuyện địa phương, xem nội dung về văn hóa – du lịch và lưu giữ hình ảnh, ghi chú của riêng mình sau mỗi hành trình.",
+    heroDesc:
+      "Sưu tầm những chiếc thẻ NFC mang dấu ấn của từng điểm đến Việt Nam. Chỉ với một cú chạm, bạn có thể khám phá câu chuyện địa phương, xem nội dung về văn hóa – du lịch và lưu giữ hình ảnh, ghi chú của riêng mình sau mỗi hành trình.",
     heroBtnActivate: "Chạm thẻ NFC",
     heroBtnExplore: "Khám phá điểm đến",
     heroHighlightTitle: "Thẻ theo từng điểm đến",
-    heroHighlightSub: "Mỗi thẻ là một nơi bạn đã đi qua và một câu chuyện để lưu giữ.",
+    heroHighlightSub:
+      "Mỗi thẻ là một nơi bạn đã đi qua và một câu chuyện để lưu giữ.",
     heroPhoneTitle: "Khám phá Việt Nam",
     heroPhoneSub: "qua từng điểm đến",
     heroCardActivate: "Chạm thẻ NFC",
@@ -167,7 +173,8 @@ export const dict = {
     // About
     aboutEyebrow: "Giới thiệu",
     aboutHeading: "Mỗi điểm đến là một tấm thẻ, một hành trình đáng nhớ.",
-    aboutDescription: "VinaTap kết hợp thẻ NFC vật lý với trải nghiệm web tương tác, cho phép bạn chạm thẻ để khám phá thông tin về điểm đến, văn hóa địa phương, địa danh nổi bật và lưu lại hình ảnh, ghi chú cá nhân sau mỗi chuyến đi.",
+    aboutDescription:
+      "VinaTap kết hợp thẻ NFC vật lý với trải nghiệm web tương tác, cho phép bạn chạm thẻ để khám phá thông tin về điểm đến, văn hóa địa phương, địa danh nổi bật và lưu lại hình ảnh, ghi chú cá nhân sau mỗi chuyến đi.",
     aboutStatProvinces: "Tỉnh thành",
     aboutStatLayers: "Lớp trải nghiệm",
     aboutStatYear: "Năm ra mắt",
@@ -212,30 +219,40 @@ export const dict = {
     policyEyebrow: "Chính sách",
     policyTitle: "Cam kết & Quyền lợi khách hàng",
     policy1Title: "Bảo hành 1-1 trong 30 ngày",
-    policy1Desc: "Đổi mới miễn phí 100% nếu thẻ hoặc chip NFC gặp lỗi kỹ thuật từ nhà sản xuất trong vòng 30 ngày đầu.",
+    policy1Desc:
+      "Đổi mới miễn phí 100% nếu thẻ hoặc chip NFC gặp lỗi kỹ thuật từ nhà sản xuất trong vòng 30 ngày đầu.",
     policy2Title: "Bảo mật & Quyền riêng tư",
-    policy2Desc: "Toàn quyền kiểm soát album riêng tư hoặc công khai. Mọi hình ảnh và video kỷ niệm được mã hóa lưu trữ an toàn trên đám mây.",
+    policy2Desc:
+      "Toàn quyền kiểm soát album riêng tư hoặc công khai. Mọi hình ảnh và video kỷ niệm được mã hóa lưu trữ an toàn trên đám mây.",
     policy3Title: "Giao hàng & Freeship từ 500k",
-    policy3Desc: "Giao hàng tận nơi toàn quốc từ 2 - 4 ngày. Miễn phí vận chuyển tự động áp dụng cho đơn hàng từ 500.000đ.",
+    policy3Desc:
+      "Giao hàng tận nơi toàn quốc từ 2 - 4 ngày. Miễn phí vận chuyển tự động áp dụng cho đơn hàng từ 500.000đ.",
     policy4Title: "Chuyển nhượng & Tặng thẻ",
-    policy4Desc: "Toàn quyền tặng hoặc chuyển nhượng quyền sở hữu thẻ và album kỷ niệm cho người thân qua email xác thực an toàn.",
+    policy4Desc:
+      "Toàn quyền tặng hoặc chuyển nhượng quyền sở hữu thẻ và album kỷ niệm cho người thân qua email xác thực an toàn.",
     policy5Title: "Thanh toán VietQR & COD",
-    policy5Desc: "Hỗ trợ quét mã VietQR tự động qua cổng PayOS minh bạch, hoặc kiểm tra hàng và thanh toán tiền mặt khi nhận hàng (COD).",
+    policy5Desc:
+      "Hỗ trợ quét mã VietQR tự động qua cổng PayOS minh bạch, hoặc kiểm tra hàng và thanh toán tiền mặt khi nhận hàng (COD).",
     policy6Title: "Cam kết chất lượng di sản",
-    policy6Desc: "Thẻ vật lý chống nước, chống xước bền bỉ. Nội dung danh lam thắng cảnh 34 tỉnh thành được tra cứu và kiểm duyệt kỹ lưỡng.",
-    policyDisclaimer: "VinaTap cam kết đồng hành và bảo vệ tối đa quyền lợi của khách hàng trong suốt hành trình sưu tầm và khám phá di sản Việt Nam.",
+    policy6Desc:
+      "Thẻ vật lý chống nước, chống xước bền bỉ. Nội dung danh lam thắng cảnh 34 tỉnh thành được tra cứu và kiểm duyệt kỹ lưỡng.",
+    policyDisclaimer:
+      "VinaTap cam kết đồng hành và bảo vệ tối đa quyền lợi của khách hàng trong suốt hành trình sưu tầm và khám phá di sản Việt Nam.",
 
     // FAQ
     faqEyebrow: "Hỏi đáp",
     faqTitle: "Những điều bạn cần biết",
     faqBotName: "Trợ lý VinaTap",
     faqBotStatus: "Đang sẵn sàng hỗ trợ",
-    faqBotGreeting: "Chào bạn! Mình là Trợ lý VinaTap. Mình có thể giải đáp chi tiết về giá thẻ & combo, cách đặt mua, công nghệ NFC, album kỷ niệm và bảo hành.",
+    faqBotGreeting:
+      "Chào bạn! Mình là Trợ lý VinaTap. Mình có thể giải đáp chi tiết về giá thẻ & combo, cách đặt mua, công nghệ NFC, album kỷ niệm và bảo hành.",
     faqPlaceholder: "Hỏi về giá thẻ, combo, cách mua, NFC, bảo hành...",
-    faqNoAnswer: "Mình có thể hỗ trợ bạn về giá thẻ (1 thẻ 49k, combo 3 thẻ 139k, 5 thẻ 239k), cách thức đặt mua, công nghệ chạm NFC hoặc bảo hành thẻ. Bạn hãy thử chọn câu hỏi nhanh bên trên hoặc nhập từ khóa nhé!",
+    faqNoAnswer:
+      "Mình có thể hỗ trợ bạn về giá thẻ (1 thẻ 49k, combo 3 thẻ 139k, 5 thẻ 239k), cách thức đặt mua, công nghệ chạm NFC hoặc bảo hành thẻ. Bạn hãy thử chọn câu hỏi nhanh bên trên hoặc nhập từ khóa nhé!",
 
     // Footer
-    footerDesc: "Bản đồ du lịch NFC Việt Nam — sưu tầm, khám phá, lưu giữ kỷ niệm từng chuyến đi.",
+    footerDesc:
+      "Bản đồ du lịch NFC Việt Nam — sưu tầm, khám phá, lưu giữ kỷ niệm từng chuyến đi.",
     footerProductCol: "Sản phẩm",
     footerExploreCol: "Khám phá",
     footerCompanyCol: "Công ty",
@@ -300,7 +317,8 @@ export const dict = {
     regionSouth: "Miền Nam",
     regionIsland: "Hải Đảo",
     emptyTilesTitle: "Bạn chưa có thẻ NFC nào",
-    emptyTilesDesc: "Chạm thẻ NFC vào điện thoại hoặc kích hoạt mã thẻ để mở khóa địa danh đầu tiên trên bản đồ!",
+    emptyTilesDesc:
+      "Chạm thẻ NFC vào điện thoại hoặc kích hoạt mã thẻ để mở khóa địa danh đầu tiên trên bản đồ!",
     btnActivateNow: "Kích hoạt ngay",
     btnBuyNewCards: "Mua thẻ mới",
     noFilterResults: "Không tìm thấy địa danh nào phù hợp với bộ lọc hiện tại.",
@@ -428,8 +446,10 @@ export const dict = {
     profilePhone: "Phone number",
     profilePhonePlaceholder: "e.g., 0912 345 678",
     profileAddress: "Shipping address",
-    profileAddressPlaceholder: "Street, ward, city/province — for physical card delivery",
-    profileSaveNote: "This info is used to deliver physical NFC cards to your address.",
+    profileAddressPlaceholder:
+      "Street, ward, city/province — for physical card delivery",
+    profileSaveNote:
+      "This info is used to deliver physical NFC cards to your address.",
     saveChanges: "Save changes",
     saving: "Saving...",
     savedSuccess: "Saved successfully",
@@ -461,7 +481,8 @@ export const dict = {
     // ─── ABOUT SETTINGS ───
     aboutTitle: "ℹ️ About VinaTap",
     aboutSubtitle: "Smart NFC memory collection platform",
-    aboutDesc: "VinaTap helps you preserve precious memories through Vietnam map tiles.",
+    aboutDesc:
+      "VinaTap helps you preserve precious memories through Vietnam map tiles.",
     appVersion: "App version",
     developer: "Developed by",
 
@@ -485,11 +506,13 @@ export const dict = {
     heroEyebrow: "Discover Vietnam",
     heroTitleLine1: "Touch a destination",
     heroTitleAccent: "keep a whole journey",
-    heroDesc: "Collect NFC cards marked with Vietnam's destinations. With just a tap, explore local stories, cultural and travel content, and preserve your own photos and notes after every journey.",
+    heroDesc:
+      "Collect NFC cards marked with Vietnam's destinations. With just a tap, explore local stories, cultural and travel content, and preserve your own photos and notes after every journey.",
     heroBtnActivate: "Tap NFC Card",
     heroBtnExplore: "Explore Destinations",
     heroHighlightTitle: "Cards by Destination",
-    heroHighlightSub: "Every card is a place you visited and a story to preserve.",
+    heroHighlightSub:
+      "Every card is a place you visited and a story to preserve.",
     heroPhoneTitle: "Discover Vietnam",
     heroPhoneSub: "across every destination",
     heroCardActivate: "Tap NFC Card",
@@ -508,7 +531,8 @@ export const dict = {
     // About
     aboutEyebrow: "About Us",
     aboutHeading: "Every destination is a card, a memorable journey",
-    aboutDescription: "VinaTap combines physical NFC cards with an interactive web experience, allowing you to tap the card to explore destination information, local culture, famous landmarks, and save personal photos and notes after every trip.",
+    aboutDescription:
+      "VinaTap combines physical NFC cards with an interactive web experience, allowing you to tap the card to explore destination information, local culture, famous landmarks, and save personal photos and notes after every trip.",
     aboutStatProvinces: "Provinces",
     aboutStatLayers: "Experience Layers",
     aboutStatYear: "Launch Year",
@@ -553,30 +577,40 @@ export const dict = {
     policyEyebrow: "Policies",
     policyTitle: "Commitments & Customer Rights",
     policy1Title: "30-Day 1-to-1 Warranty",
-    policy1Desc: "100% free replacement if the card or NFC chip has any technical defect within the first 30 days.",
+    policy1Desc:
+      "100% free replacement if the card or NFC chip has any technical defect within the first 30 days.",
     policy2Title: "Privacy & Data Security",
-    policy2Desc: "Complete control over private or public albums. All travel photos and videos are securely encrypted in cloud storage.",
+    policy2Desc:
+      "Complete control over private or public albums. All travel photos and videos are securely encrypted in cloud storage.",
     policy3Title: "Shipping & Free Delivery from 500k",
-    policy3Desc: "Nationwide delivery in 2-4 days. Free shipping is automatically applied for orders from 500,000 VND.",
+    policy3Desc:
+      "Nationwide delivery in 2-4 days. Free shipping is automatically applied for orders from 500,000 VND.",
     policy4Title: "Card Transfer & Gifting",
-    policy4Desc: "Full ownership of cards and travel albums can be easily gifted or transferred via verified email.",
+    policy4Desc:
+      "Full ownership of cards and travel albums can be easily gifted or transferred via verified email.",
     policy5Title: "Secure VietQR & COD Payment",
-    policy5Desc: "Supports transparent instant VietQR via PayOS gateway, or inspect cards and pay cash on delivery (COD).",
+    policy5Desc:
+      "Supports transparent instant VietQR via PayOS gateway, or inspect cards and pay cash on delivery (COD).",
     policy6Title: "Heritage Quality Guarantee",
-    policy6Desc: "Physical cards are waterproof and scratch-resistant. Cultural landmarks and regional travel information are thoroughly verified.",
-    policyDisclaimer: "VinaTap is dedicated to supporting and protecting our customers throughout your journey of collecting and exploring Vietnam's heritage.",
+    policy6Desc:
+      "Physical cards are waterproof and scratch-resistant. Cultural landmarks and regional travel information are thoroughly verified.",
+    policyDisclaimer:
+      "VinaTap is dedicated to supporting and protecting our customers throughout your journey of collecting and exploring Vietnam's heritage.",
 
     // FAQ
     faqEyebrow: "FAQ",
     faqTitle: "Things You Need To Know",
     faqBotName: "VinaTap Assistant",
     faqBotStatus: "Ready to help",
-    faqBotGreeting: "Hello! I am VinaTap Assistant. I can help answer questions about card prices & combos, ordering, NFC technology, photo albums, and warranty.",
+    faqBotGreeting:
+      "Hello! I am VinaTap Assistant. I can help answer questions about card prices & combos, ordering, NFC technology, photo albums, and warranty.",
     faqPlaceholder: "Ask about card prices, combos, ordering, NFC, warranty...",
-    faqNoAnswer: "I can help with card prices (1 card 49k, combo 3 cards 139k, 5 cards 239k), ordering instructions, NFC tap technology, or warranty. Please try one of the quick suggestions above or type your question!",
+    faqNoAnswer:
+      "I can help with card prices (1 card 49k, combo 3 cards 139k, 5 cards 239k), ordering instructions, NFC tap technology, or warranty. Please try one of the quick suggestions above or type your question!",
 
     // Footer
-    footerDesc: "Vietnam Smart NFC Travel Map — collect, explore, and preserve memories from every trip.",
+    footerDesc:
+      "Vietnam Smart NFC Travel Map — collect, explore, and preserve memories from every trip.",
     footerProductCol: "Products",
     footerExploreCol: "Explore",
     footerCompanyCol: "Company",
@@ -641,7 +675,8 @@ export const dict = {
     regionSouth: "Southern",
     regionIsland: "Islands",
     emptyTilesTitle: "You don't have any tiles yet",
-    emptyTilesDesc: "Tap your NFC card to your phone or enter the serial code to unlock your first province on the map!",
+    emptyTilesDesc:
+      "Tap your NFC card to your phone or enter the serial code to unlock your first province on the map!",
     btnActivateNow: "Activate Now",
     btnBuyNewCards: "Buy New Cards",
     noFilterResults: "No locations found matching current filters.",
@@ -720,7 +755,7 @@ export const PROVINCES_EN = {
     description:
       "The vibrant port city of red flamboyant blooms, the emerald waters of Cat Ba Archipelago, Do Son beach, and a renowned street food tour haven.",
   },
-  "hue": {
+  hue: {
     name: "Hue",
     description:
       "The poetic imperial citadel along the Perfume River, royal palace complexes, UNESCO royal court music (Nha Nhac), and exquisite gastronomy.",
@@ -869,7 +904,7 @@ export const PROVINCE_BY_NAME_EN = {
   "Quảng Ninh": PROVINCES_EN["quang-ninh"],
   "Lâm Đồng": PROVINCES_EN["lam-dong"],
   "Hải Phòng": PROVINCES_EN["hai-phong"],
-  "Huế": PROVINCES_EN["hue"],
+  Huế: PROVINCES_EN["hue"],
   "Cần Thơ": PROVINCES_EN["can-tho"],
   "Bắc Ninh": PROVINCES_EN["bac-ninh"],
   "Hưng Yên": PROVINCES_EN["hung-yen"],
@@ -902,11 +937,11 @@ export const PROVINCE_BY_NAME_EN = {
 export const getProvinceName = (item, lang = "vi") => {
   if (!item) return "";
   const viName =
-    typeof item === "string" ? item : (item.name || item.province_name || "");
+    typeof item === "string" ? item : item.name || item.province_name || "";
   if (lang !== "en") return viName;
 
   const slug =
-    typeof item === "object" ? (item.slug || item.province_slug) : null;
+    typeof item === "object" ? item.slug || item.province_slug : null;
   if (slug && PROVINCES_EN[slug]?.name) {
     return PROVINCES_EN[slug].name;
   }
@@ -930,4 +965,3 @@ export const getProvinceDesc = (item, lang = "vi") => {
   }
   return viDesc || "Discover famous landmarks here";
 };
-
