@@ -358,6 +358,29 @@ export default function HomePage() {
     track.scrollBy({ left: dir * 264, behavior: "smooth" });
   };
 
+  // Slide cho "Chính sách" (Policy carousel)
+  const policyTrackRef = useRef(null);
+  const [policyActiveIndex, setPolicyActiveIndex] = useState(0);
+
+  const scrollPolicyTrack = (dir) => {
+    const track = policyTrackRef.current;
+    if (!track) return;
+    const cardStep = track.firstElementChild?.offsetWidth
+      ? track.firstElementChild.offsetWidth + 24
+      : 300;
+    track.scrollBy({ left: dir * cardStep, behavior: "smooth" });
+  };
+
+  const handlePolicyScroll = () => {
+    const track = policyTrackRef.current;
+    if (!track) return;
+    const cardStep = track.firstElementChild?.offsetWidth
+      ? track.firstElementChild.offsetWidth + 24
+      : 300;
+    const index = Math.round(track.scrollLeft / cardStep);
+    setPolicyActiveIndex(Math.max(0, Math.min(index, 5)));
+  };
+
   const handleLogout = () => {
     clearAuth();
     // Hard reload thay vì chỉ setUser(null) tại chỗ — đảm bảo Next.js
@@ -720,17 +743,10 @@ export default function HomePage() {
               </h1>
               <p className="home-hero__desc">{t(lang, "heroDesc")}</p>
               <div className="home-hero__cta-row">
-                <button
-                  type="button"
-                  className="home-btn-teal"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  {t(lang, "heroBtnActivate")}
-                </button>
                 <a
                   href="#provinces"
                   onClick={scrollToSection("provinces")}
-                  className="home-btn-outline-ink"
+                  className="home-btn-teal"
                 >
                   {t(lang, "heroBtnExplore")}
                 </a>
@@ -1315,46 +1331,90 @@ export default function HomePage() {
                 {t(lang, "policyTitle")}
               </h2>
             </div>
-            <div className="home-policy__grid">
-              {[
-                {
-                  icon: ShieldCheck,
-                  title: t(lang, "policy1Title"),
-                  desc: t(lang, "policy1Desc"),
-                },
-                {
-                  icon: Lock,
-                  title: t(lang, "policy2Title"),
-                  desc: t(lang, "policy2Desc"),
-                },
-                {
-                  icon: Truck,
-                  title: t(lang, "policy3Title"),
-                  desc: t(lang, "policy3Desc"),
-                },
-                {
-                  icon: Gift,
-                  title: t(lang, "policy4Title"),
-                  desc: t(lang, "policy4Desc"),
-                },
-                {
-                  icon: CreditCard,
-                  title: t(lang, "policy5Title"),
-                  desc: t(lang, "policy5Desc"),
-                },
-                {
-                  icon: Sparkles,
-                  title: t(lang, "policy6Title"),
-                  desc: t(lang, "policy6Desc"),
-                },
-              ].map(({ icon: Icon, title, desc }) => (
-                <div key={title} className="home-policy__card">
-                  <div className="home-policy__icon">
-                    <Icon size={20} strokeWidth={2.2} />
+            <div className="home-policy__carousel">
+              <button
+                type="button"
+                aria-label="Previous Policy"
+                onClick={() => scrollPolicyTrack(-1)}
+                className="home-policy__nav-btn home-policy__nav-btn--prev"
+              >
+                <ChevronLeft size={18} strokeWidth={2.4} />
+              </button>
+
+              <div
+                ref={policyTrackRef}
+                onScroll={handlePolicyScroll}
+                className="home-policy__track"
+              >
+                {[
+                  {
+                    icon: ShieldCheck,
+                    title: t(lang, "policy1Title"),
+                    desc: t(lang, "policy1Desc"),
+                  },
+                  {
+                    icon: Lock,
+                    title: t(lang, "policy2Title"),
+                    desc: t(lang, "policy2Desc"),
+                  },
+                  {
+                    icon: Truck,
+                    title: t(lang, "policy3Title"),
+                    desc: t(lang, "policy3Desc"),
+                  },
+                  {
+                    icon: Gift,
+                    title: t(lang, "policy4Title"),
+                    desc: t(lang, "policy4Desc"),
+                  },
+                  {
+                    icon: CreditCard,
+                    title: t(lang, "policy5Title"),
+                    desc: t(lang, "policy5Desc"),
+                  },
+                  {
+                    icon: Sparkles,
+                    title: t(lang, "policy6Title"),
+                    desc: t(lang, "policy6Desc"),
+                  },
+                ].map(({ icon: Icon, title, desc }) => (
+                  <div key={title} className="home-policy__card">
+                    <div className="home-policy__icon">
+                      <Icon size={20} strokeWidth={2.2} />
+                    </div>
+                    <div className="home-policy__title">{title}</div>
+                    <p className="home-policy__desc">{desc}</p>
                   </div>
-                  <div className="home-policy__title">{title}</div>
-                  <p className="home-policy__desc">{desc}</p>
-                </div>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                aria-label="Next Policy"
+                onClick={() => scrollPolicyTrack(1)}
+                className="home-policy__nav-btn home-policy__nav-btn--next"
+              >
+                <ChevronRight size={18} strokeWidth={2.4} />
+              </button>
+            </div>
+
+            <div className="home-policy__dots">
+              {[0, 1, 2, 3, 4, 5].map((idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  aria-label={`Slide ${idx + 1}`}
+                  className={`home-policy__dot ${policyActiveIndex === idx ? "is-active" : ""}`}
+                  onClick={() => {
+                    const track = policyTrackRef.current;
+                    if (!track) return;
+                    const cardStep = track.firstElementChild?.offsetWidth
+                      ? track.firstElementChild.offsetWidth + 24
+                      : 300;
+                    track.scrollTo({ left: idx * cardStep, behavior: "smooth" });
+                    setPolicyActiveIndex(idx);
+                  }}
+                />
               ))}
             </div>
             <p className="home-policy__disclaimer">
