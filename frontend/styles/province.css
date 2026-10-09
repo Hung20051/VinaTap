@@ -690,7 +690,255 @@
   background: #e2e8f0;
 }
 
-/* ─── 8. RESPONSIVE MEDIA QUERIES ───────────────────────────── */
+/* ─── 8. DỊCH VỤ & TOUR TRẢI NGHIỆM GỢI Ý (AFFILIATE) ───────── */
+.mia-affiliate-section {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.75rem 1.5rem 2rem;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+}
+
+.mia-affiliate-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #ea580c;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.mia-affiliate-badge-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.mia-affiliate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.mia-affiliate-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.mia-affiliate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1);
+  border-color: #fdba74;
+}
+
+.mia-affiliate-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.mia-affiliate-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.mia-affiliate-card:hover .mia-affiliate-img-wrap img {
+  transform: scale(1.05);
+}
+
+.mia-affiliate-tag-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35);
+  letter-spacing: 0.02em;
+}
+
+.mia-affiliate-discount-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.mia-affiliate-body {
+  padding: 1.25rem 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.mia-affiliate-category {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.mia-affiliate-dot {
+  color: #cbd5e1;
+}
+
+.mia-affiliate-provider {
+  color: #0284c7;
+  font-weight: 700;
+  background: #e0f2fe;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.mia-affiliate-title {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.35;
+  margin: 0.55rem 0 0.45rem;
+  letter-spacing: -0.01em;
+}
+
+.mia-affiliate-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0.85rem;
+}
+
+.mia-affiliate-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #d97706;
+  font-size: 0.82rem;
+}
+
+.mia-affiliate-reviews {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.mia-affiliate-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mia-affiliate-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 0.82rem;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.mia-affiliate-check {
+  color: #16a34a;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.mia-affiliate-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px dashed #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mia-affiliate-pricing {
+  display: flex;
+  flex-direction: column;
+}
+
+.mia-affiliate-price-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.mia-affiliate-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.mia-affiliate-price-main {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #ea580c;
+  letter-spacing: -0.02em;
+}
+
+.mia-affiliate-price-old {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.mia-affiliate-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  color: #ffffff;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.mia-affiliate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(234, 88, 12, 0.45);
+  color: #ffffff;
+}
+
+/* ─── 9. RESPONSIVE MEDIA QUERIES ───────────────────────────── */
 @media (max-width: 1024px) {
   .mia-hero-section {
     grid-template-columns: 1fr;
@@ -715,5 +963,19 @@
   }
   .mia-culinary-grid--featured-only .mia-food-featured-card {
     height: 220px;
+  }
+  .mia-affiliate-section {
+    padding: 1.25rem 1rem;
+  }
+  .mia-affiliate-grid {
+    grid-template-columns: 1fr;
+  }
+  .mia-affiliate-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .mia-affiliate-btn {
+    width: 100%;
   }
 }

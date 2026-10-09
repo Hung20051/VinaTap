@@ -8,7 +8,11 @@ import { provinceAPI } from "@/lib/api";
 import { isLoggedIn, clearAuth, getUser } from "@/lib/auth";
 import Dino404 from "@/components/ui/Dino404";
 import DinoLoader from "@/components/ui/DinoLoader";
-import { getProvinceGuideData, getProvinceCover } from "@/lib/provinceGuideData";
+import {
+  getProvinceGuideData,
+  getProvinceCover,
+  getProvinceAffiliates,
+} from "@/lib/provinceGuideData";
 import GuideArticleModal from "./components/GuideArticleModal";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import {
@@ -19,6 +23,11 @@ import {
   Compass,
   ArrowRight,
   Sparkles,
+  Ticket,
+  ExternalLink,
+  Star,
+  CheckCircle,
+  ShieldCheck,
 } from "lucide-react";
 import "@/styles/province.css";
 
@@ -87,10 +96,17 @@ export default function ProvincePage() {
     );
   }
 
-  const guideData = getProvinceGuideData(province, landmarks, foods, articles, festivals);
+  const guideData = getProvinceGuideData(
+    province,
+    landmarks,
+    foods,
+    articles,
+    festivals,
+  );
   const pName = province.name || "Việt Nam";
   const hasCulinaryList = guideData.culinary.list.length > 0;
   const hasReviewList = guideData.reviews.list.length > 0;
+  const affiliateList = getProvinceAffiliates(slug);
 
   // Ảnh bìa chính
   const heroImage =
@@ -117,11 +133,7 @@ export default function ProvincePage() {
         <section className="mia-hero-section">
           <div className="mia-hero-left">
             <div className="mia-hero-img-wrap">
-              <img
-                src={heroImage}
-                alt={pName}
-                className="mia-hero-img"
-              />
+              <img src={heroImage} alt={pName} className="mia-hero-img" />
             </div>
           </div>
           <div className="mia-hero-right">
@@ -134,6 +146,8 @@ export default function ProvincePage() {
             </div>
           </div>
         </section>
+
+
 
         {/* ─── 4. ĐIỂM THAM QUAN NỔI TIẾNG (ẢNH 1 & 2) ────────── */}
         <section className="mia-section">
@@ -154,7 +168,12 @@ export default function ProvincePage() {
                 className="mia-card-img-large"
                 onClick={() => setSelectedItem(l)}
               >
-                <img src={l.image} alt={l.name} className="mia-card-bg-img" loading="lazy" />
+                <img
+                  src={l.image}
+                  alt={l.name}
+                  className="mia-card-bg-img"
+                  loading="lazy"
+                />
                 <div className="mia-card-gradient" />
                 <h3 className="mia-card-title">{l.name}</h3>
               </div>
@@ -174,9 +193,14 @@ export default function ProvincePage() {
             </button>
           </div>
 
-          <div className={`mia-culinary-grid ${hasCulinaryList ? "" : "mia-culinary-grid--featured-only"}`}>
+          <div
+            className={`mia-culinary-grid ${hasCulinaryList ? "" : "mia-culinary-grid--featured-only"}`}
+          >
             {/* Cột trái: bài viết món ngon dạng list (cuộn dọc có giới hạn) */}
-            <div className="mia-food-list-col mia-scroll-y-box" style={{ maxHeight: "380px" }}>
+            <div
+              className="mia-food-list-col mia-scroll-y-box"
+              style={{ maxHeight: "380px" }}
+            >
               {guideData.culinary.list.map((item) => (
                 <div
                   key={item.id}
@@ -214,23 +238,27 @@ export default function ProvincePage() {
             </div>
 
             {/* Cột phải: 1 Card ảnh lớn món đặc sản tiêu biểu */}
-            {guideData.culinary.featuredSub && guideData.culinary.featuredSub.id !== guideData.culinary.featuredMain?.id && (
-              <div
-                className="mia-food-featured-card"
-                onClick={() => setSelectedItem(guideData.culinary.featuredSub)}
-              >
-                <img
-                  src={guideData.culinary.featuredSub.image}
-                  alt={guideData.culinary.featuredSub.title}
-                  className="mia-card-bg-img"
-                  loading="lazy"
-                />
-                <div className="mia-card-gradient" />
-                <h3 className="mia-card-title">
-                  {guideData.culinary.featuredSub.title}
-                </h3>
-              </div>
-            )}
+            {guideData.culinary.featuredSub &&
+              guideData.culinary.featuredSub.id !==
+                guideData.culinary.featuredMain?.id && (
+                <div
+                  className="mia-food-featured-card"
+                  onClick={() =>
+                    setSelectedItem(guideData.culinary.featuredSub)
+                  }
+                >
+                  <img
+                    src={guideData.culinary.featuredSub.image}
+                    alt={guideData.culinary.featuredSub.title}
+                    className="mia-card-bg-img"
+                    loading="lazy"
+                  />
+                  <div className="mia-card-gradient" />
+                  <h3 className="mia-card-title">
+                    {guideData.culinary.featuredSub.title}
+                  </h3>
+                </div>
+              )}
           </div>
         </section>
 
@@ -243,7 +271,9 @@ export default function ProvincePage() {
                 className="mia-guide-top-img-card"
                 onClick={() =>
                   setSelectedItem({
-                    title: guideData.guides.transport.articles[0]?.title || "Di chuyển",
+                    title:
+                      guideData.guides.transport.articles[0]?.title ||
+                      "Di chuyển",
                     image: guideData.guides.transport.image,
                     desc: "Cẩm nang các phương tiện di chuyển nhanh chóng, an toàn và thuận tiện nhất.",
                   })
@@ -259,9 +289,14 @@ export default function ProvincePage() {
                 <h3 className="mia-guide-col-title">
                   {guideData.guides.transport.title}
                 </h3>
-                <span className="mia-guide-see-all">({guideData.guides.transport.articles.length} bài)</span>
+                <span className="mia-guide-see-all">
+                  ({guideData.guides.transport.articles.length} bài)
+                </span>
               </div>
-              <ul className="mia-guide-article-list mia-scroll-y-box" style={{ maxHeight: "240px" }}>
+              <ul
+                className="mia-guide-article-list mia-scroll-y-box"
+                style={{ maxHeight: "240px" }}
+              >
                 {guideData.guides.transport.articles.map((art, i) => (
                   <li
                     key={art.id || i}
@@ -269,7 +304,9 @@ export default function ProvincePage() {
                       setSelectedItem({
                         title: art.title,
                         image: guideData.guides.transport.image,
-                        desc: art.desc || "Kinh nghiệm và mẹo di chuyển hữu ích cho chuyến du lịch trọn vẹn.",
+                        desc:
+                          art.desc ||
+                          "Kinh nghiệm và mẹo di chuyển hữu ích cho chuyến du lịch trọn vẹn.",
                       })
                     }
                   >
@@ -285,7 +322,9 @@ export default function ProvincePage() {
                 className="mia-guide-top-img-card"
                 onClick={() =>
                   setSelectedItem({
-                    title: guideData.guides.itineraries.articles[0]?.title || "Gợi ý lịch trình",
+                    title:
+                      guideData.guides.itineraries.articles[0]?.title ||
+                      "Gợi ý lịch trình",
                     image: guideData.guides.itineraries.image,
                     desc: "Lịch trình du lịch được thiết kế tối ưu thời gian và chi phí cho du khách.",
                   })
@@ -301,9 +340,14 @@ export default function ProvincePage() {
                 <h3 className="mia-guide-col-title">
                   {guideData.guides.itineraries.title}
                 </h3>
-                <span className="mia-guide-see-all">({guideData.guides.itineraries.articles.length} bài)</span>
+                <span className="mia-guide-see-all">
+                  ({guideData.guides.itineraries.articles.length} bài)
+                </span>
               </div>
-              <ul className="mia-guide-article-list mia-scroll-y-box" style={{ maxHeight: "240px" }}>
+              <ul
+                className="mia-guide-article-list mia-scroll-y-box"
+                style={{ maxHeight: "240px" }}
+              >
                 {guideData.guides.itineraries.articles.map((art, i) => (
                   <li
                     key={art.id || i}
@@ -311,7 +355,9 @@ export default function ProvincePage() {
                       setSelectedItem({
                         title: art.title,
                         image: guideData.guides.itineraries.image,
-                        desc: art.desc || "Gợi ý lịch trình du lịch khám phá chi tiết từ sáng đến đêm.",
+                        desc:
+                          art.desc ||
+                          "Gợi ý lịch trình du lịch khám phá chi tiết từ sáng đến đêm.",
                       })
                     }
                   >
@@ -327,7 +373,9 @@ export default function ProvincePage() {
                 className="mia-guide-top-img-card"
                 onClick={() =>
                   setSelectedItem({
-                    title: guideData.guides.tips.articles[0]?.title || "Kinh nghiệm đi tự túc",
+                    title:
+                      guideData.guides.tips.articles[0]?.title ||
+                      "Kinh nghiệm đi tự túc",
                     image: guideData.guides.tips.image,
                     desc: "Kinh nghiệm và mẹo du lịch tự túc tiết kiệm, an toàn và đáng nhớ.",
                   })
@@ -343,9 +391,14 @@ export default function ProvincePage() {
                 <h3 className="mia-guide-col-title">
                   {guideData.guides.tips.title}
                 </h3>
-                <span className="mia-guide-see-all">({guideData.guides.tips.articles.length} bài)</span>
+                <span className="mia-guide-see-all">
+                  ({guideData.guides.tips.articles.length} bài)
+                </span>
               </div>
-              <ul className="mia-guide-article-list mia-scroll-y-box" style={{ maxHeight: "240px" }}>
+              <ul
+                className="mia-guide-article-list mia-scroll-y-box"
+                style={{ maxHeight: "240px" }}
+              >
                 {guideData.guides.tips.articles.map((art, i) => (
                   <li
                     key={art.id || i}
@@ -353,7 +406,9 @@ export default function ProvincePage() {
                       setSelectedItem({
                         title: art.title,
                         image: guideData.guides.tips.image,
-                        desc: art.desc || "Tổng hợp những bí kíp bỏ túi không thể bỏ qua khi du lịch.",
+                        desc:
+                          art.desc ||
+                          "Tổng hợp những bí kíp bỏ túi không thể bỏ qua khi du lịch.",
                       })
                     }
                   >
@@ -364,6 +419,113 @@ export default function ProvincePage() {
             </div>
           </div>
         </section>
+
+        {/* ─── 6.5. DỊCH VỤ & VÉ TOUR TRẢI NGHIỆM GỢI Ý (AFFILIATE PARTNERS) ── */}
+        {affiliateList && affiliateList.length > 0 && (
+          <section className="mia-section mia-affiliate-section">
+            <div className="mia-section-header">
+              <div>
+                <div className="mia-affiliate-eyebrow">
+                  <Sparkles size={14} />
+                  <span>Dịch vụ & Tiện ích đặt trước</span>
+                </div>
+                <h2 className="mia-section-title">
+                  Trải nghiệm & Tour du lịch nổi bật
+                </h2>
+              </div>
+              <div className="mia-affiliate-badge-verified">
+                <ShieldCheck size={16} />
+                <span>Đối tác chính thức qua Klook</span>
+              </div>
+            </div>
+
+            <div className="mia-affiliate-grid">
+              {affiliateList.map((item) => (
+                <div key={item.id} className="mia-affiliate-card">
+                  <div className="mia-affiliate-img-wrap">
+                    <img src={item.image} alt={item.title} loading="lazy" />
+                    {item.badge && (
+                      <span className="mia-affiliate-tag-badge">
+                        {item.badge}
+                      </span>
+                    )}
+                    {item.discount && (
+                      <span className="mia-affiliate-discount-badge">
+                        {item.discount}
+                      </span>
+                    )}
+                  </div>
+                  <div className="mia-affiliate-body">
+                    <div className="mia-affiliate-category">
+                      <Ticket size={14} />
+                      <span>{item.category}</span>
+                      <span className="mia-affiliate-dot">•</span>
+                      <span className="mia-affiliate-provider">
+                        {item.provider}
+                      </span>
+                    </div>
+
+                    <h3 className="mia-affiliate-title">{item.title}</h3>
+
+                    {item.rating && (
+                      <div className="mia-affiliate-rating">
+                        <div className="mia-affiliate-stars">
+                          <Star size={13} fill="#f59e0b" stroke="#f59e0b" />
+                          <strong>{item.rating}</strong>
+                        </div>
+                        <span className="mia-affiliate-reviews">
+                          ({item.reviewCount})
+                        </span>
+                      </div>
+                    )}
+
+                    {item.features && item.features.length > 0 && (
+                      <ul className="mia-affiliate-features">
+                        {item.features.map((feat, fIdx) => (
+                          <li key={fIdx}>
+                            <CheckCircle
+                              size={13}
+                              className="mia-affiliate-check"
+                            />
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    <div className="mia-affiliate-footer">
+                      <div className="mia-affiliate-pricing">
+                        <span className="mia-affiliate-price-label">
+                          Giá ưu đãi từ
+                        </span>
+                        <div className="mia-affiliate-price-row">
+                          <span className="mia-affiliate-price-main">
+                            {item.price}
+                          </span>
+                          {item.originalPrice && (
+                            <span className="mia-affiliate-price-old">
+                              {item.originalPrice}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <a
+                        href={item.affiliateUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mia-affiliate-btn"
+                      >
+                        <span>{item.btnText || "Đặt vé ngay"}</span>
+                        <ExternalLink size={15} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* ─── 7. GÓC REVIEW TRẢI NGHIỆM (ẢNH 3 & 4) ─────────── */}
         <section className="mia-section">
@@ -377,9 +539,14 @@ export default function ProvincePage() {
             </button>
           </div>
 
-          <div className={`mia-culinary-grid ${hasReviewList ? "" : "mia-culinary-grid--featured-only"}`}>
+          <div
+            className={`mia-culinary-grid ${hasReviewList ? "" : "mia-culinary-grid--featured-only"}`}
+          >
             {/* Cột trái: các bài review dạng list (cuộn dọc) */}
-            <div className="mia-food-list-col mia-scroll-y-box" style={{ maxHeight: "380px" }}>
+            <div
+              className="mia-food-list-col mia-scroll-y-box"
+              style={{ maxHeight: "380px" }}
+            >
               {guideData.reviews.list.map((item) => (
                 <div
                   key={item.id}
@@ -417,23 +584,25 @@ export default function ProvincePage() {
             </div>
 
             {/* Cột phải: 1 Card ảnh lớn review chèo SUP/trải nghiệm */}
-            {guideData.reviews.featuredSub && guideData.reviews.featuredSub.id !== guideData.reviews.featuredMain?.id && (
-              <div
-                className="mia-food-featured-card"
-                onClick={() => setSelectedItem(guideData.reviews.featuredSub)}
-              >
-                <img
-                  src={guideData.reviews.featuredSub.image}
-                  alt={guideData.reviews.featuredSub.title}
-                  className="mia-card-bg-img"
-                  loading="lazy"
-                />
-                <div className="mia-card-gradient" />
-                <h3 className="mia-card-title">
-                  {guideData.reviews.featuredSub.title}
-                </h3>
-              </div>
-            )}
+            {guideData.reviews.featuredSub &&
+              guideData.reviews.featuredSub.id !==
+                guideData.reviews.featuredMain?.id && (
+                <div
+                  className="mia-food-featured-card"
+                  onClick={() => setSelectedItem(guideData.reviews.featuredSub)}
+                >
+                  <img
+                    src={guideData.reviews.featuredSub.image}
+                    alt={guideData.reviews.featuredSub.title}
+                    className="mia-card-bg-img"
+                    loading="lazy"
+                  />
+                  <div className="mia-card-gradient" />
+                  <h3 className="mia-card-title">
+                    {guideData.reviews.featuredSub.title}
+                  </h3>
+                </div>
+              )}
           </div>
         </section>
 
@@ -456,7 +625,12 @@ export default function ProvincePage() {
                 className="mia-card-img-large"
                 onClick={() => setSelectedItem(fe)}
               >
-                <img src={fe.image} alt={fe.title} className="mia-card-bg-img" loading="lazy" />
+                <img
+                  src={fe.image}
+                  alt={fe.title}
+                  className="mia-card-bg-img"
+                  loading="lazy"
+                />
                 <div className="mia-card-gradient" />
                 <h3 className="mia-card-title">{fe.title}</h3>
               </div>
@@ -479,6 +653,7 @@ export default function ProvincePage() {
         spots={landmarks}
         specialties={province?.specialties}
       />
+
     </div>
   );
 }

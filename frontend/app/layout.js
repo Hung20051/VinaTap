@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import TrafficTracker from "@/components/layout/TrafficTracker";
+import Script from "next/script";
 
 export const metadata = {
   title: "VinaTap — Bản Đồ Du Lịch NFC Việt Nam",
@@ -32,6 +33,12 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7715734145505240"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         <TrafficTracker />
@@ -40,3 +47,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
