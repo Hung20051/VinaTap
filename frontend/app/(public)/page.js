@@ -86,7 +86,7 @@ const TRENDING_HERO_STORIES = [
     titleVi: "Cẩm nang toàn diện 34 Tỉnh Thành Việt Nam",
     link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
     meta: "Heritage & Travel Guide",
-    metaVi: "Di sản & Thẻ sưu tập NFC",
+    metaVi: "Di sản & Cẩm nang du lịch",
     img: "/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg",
   },
   {
@@ -1803,7 +1803,7 @@ export default function HomePage() {
                       loading="lazy"
                     />
                   </div>
-                  <h4 className="vnn-region-main__title">
+                  <h4 className={`vnn-region-main__title vnn-region-main__title--${reg.regionId}`}>
                     {lang === "vi" ? reg.featured.titleVi : reg.featured.title}
                   </h4>
                   <p className="vnn-region-main__desc">

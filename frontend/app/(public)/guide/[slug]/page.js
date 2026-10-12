@@ -585,12 +585,7 @@ function GuideDetailContent() {
             </div>
           </div>
 
-          <div className="guide-nav__right">
-            <Link href="/shop" className="guide-btn-nfc">
-              <CreditCard size={15} />
-              <span>Sưu Tầm Thẻ NFC TP.HCM</span>
-            </Link>
-          </div>
+          <div className="guide-nav__right" />
         </div>
       </nav>
 
@@ -762,42 +757,6 @@ function GuideDetailContent() {
           </p>
         </section>
 
-        {/* ─── VINATAP NFC FOIL CARD BANNER ────────────────────────── */}
-        <section className="guide-nfc-card">
-          <div className="guide-nfc-card__content">
-            <div className="guide-nfc-badge">
-              <Sparkles size={13} />
-              <span>BỘ SƯU TẬP ĐỘC QUYỀN VINATAP</span>
-            </div>
-            <h2 className="guide-nfc-title">
-              Sở Hữu Thẻ NFC Du Lịch TP. Hồ Chí Minh
-            </h2>
-            <p className="guide-nfc-desc">
-              Chạm thẻ NFC VinaTap vào điện thoại để mở khóa toàn bộ bản đồ tương
-              tác, hướng dẫn viên âm thanh AI, danh sách quán ăn bản địa bí mật
-              và lưu lại album ảnh kỷ niệm trọn đời.
-            </p>
-            <Link href="/shop" className="guide-nfc-cta">
-              <CreditCard size={16} />
-              <span>Khám Phá Bộ Sưu Tập Thẻ Ngay</span>
-              <ArrowRight size={16} />
-            </Link>
-          </div>
-
-          <div className="guide-nfc-visual">
-            <div className="guide-nfc-foil-card">
-              <div className="guide-nfc-foil-chip" />
-              <div>
-                <div className="guide-nfc-foil-text">VinaTap NFC Pass</div>
-                <div
-                  style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.8)" }}
-                >
-                  TP. HỒ CHÍ MINH • #079
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* ─── THANH LỌC DANH MỤC (STICKY QUICK-NAV) ──────────────── */}
         <section className="guide-quicknav-sticky">
@@ -1005,16 +964,19 @@ function GuideDetailContent() {
               </div>
             </Link>
 
-            <Link href="/shop" className="guide-related-card">
+            <Link
+              href="/province/ha-noi"
+              className="guide-related-card"
+            >
               <img
-                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80"
-                alt="Bộ sưu tập VinaTap"
+                src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"
+                alt="Ẩm thực Hà Nội"
                 className="guide-related-img"
               />
               <div className="guide-related-content">
-                <div className="guide-related-tag">Sản Phẩm Độc Quyền</div>
+                <div className="guide-related-tag">Khám Phá Miền Bắc</div>
                 <div className="guide-related-title">
-                  Trọn Bộ 34 Thẻ NFC Tỉnh Thành Việt Nam Kèm Hộp Quà Cao Cấp
+                  Top 8 Món Ăn Nhất Định Phải Thử Khi Đến Thủ Đô Hà Nội
                 </div>
               </div>
             </Link>

@@ -4056,11 +4056,19 @@
   display: flex;
   flex-direction: column;
 }
+.vnn-region-col .vnn-section-head {
+  margin-bottom: 16px;
+}
+.vnn-region-col .vnn-section-head__bar {
+  flex: none;
+  width: 90px;
+  margin-left: 14px;
+}
 .vnn-region-main {
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .vnn-region-main__img-wrap {
   width: 100%;
@@ -4080,15 +4088,23 @@
   transform: scale(1.04);
 }
 .vnn-region-main__title {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  color: #111827;
   margin: 0 0 8px 0;
   line-height: 1.25;
-  transition: color 0.2s ease;
+  transition: opacity 0.2s ease;
+}
+.vnn-region-main__title--north {
+  color: #7c3aed;
+}
+.vnn-region-main__title--central {
+  color: #b45309;
+}
+.vnn-region-main__title--south {
+  color: #111827;
 }
 .vnn-region-main:hover .vnn-region-main__title {
-  color: #00c2cb;
+  opacity: 0.85;
 }
 .vnn-region-main__desc {
   font-size: 0.86rem;
@@ -4099,25 +4115,23 @@
 .vnn-region-minis {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 14px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 .vnn-region-mini-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
-  padding-top: 8px;
-  border-top: 1px solid #f3f4f6;
   transition: transform 0.2s ease;
 }
 .vnn-region-mini-item:hover {
   transform: translateX(3px);
 }
 .vnn-region-mini-item__thumb {
-  width: 60px;
-  height: 44px;
-  border-radius: 3px;
+  width: 64px;
+  height: 48px;
+  border-radius: 4px;
   object-fit: cover;
   flex-shrink: 0;
   background: #f1f5f9;
