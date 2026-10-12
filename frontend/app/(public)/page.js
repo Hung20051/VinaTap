@@ -74,7 +74,7 @@ const TRENDING_HERO_STORIES = [
     badge: "#TRENDING",
     title: "Plan Your Vietnam Trip with Just One Prompt",
     titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một câu lệnh AI",
-    link: "/province/ninh-binh",
+    link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
     meta: "AI Travel Assistant",
     metaVi: "Trợ lý du lịch Thổ Địa AI",
     img: "/guide/hcmc/Plan-Your-Vietnam-Trip-with-Just-One-Prompt.jpg",
@@ -483,7 +483,7 @@ const LATEST_ARTICLES_ITEMS = [
     meta: "Welcome To Vietnam - April 1, 2026",
     metaVi: "Welcome To Vietnam • 1 Tháng 4, 2026",
     img: "/guide/hcmc/Plan-Your-Vietnam-Trip-with-Just-One-Prompt.jpg",
-    link: "/province/ninh-binh",
+    link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
   },
   {
     badge: "#TRENDING",
@@ -578,7 +578,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 4, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-2.jpg",
-        link: "/province/ninh-binh",
+        link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
       },
       {
         id: "insp-3",

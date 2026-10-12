@@ -45,7 +45,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 4, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-2.jpg",
-        link: "/province/ninh-binh",
+        link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
       },
       {
         id: "insp-3",
