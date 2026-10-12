@@ -303,15 +303,15 @@ const MEGA_MENUS_DATA = {
 };
 
 export default function AoDaiArticlePage() {
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState("vi");
   const [activeMenu, setActiveMenu] = useState(null);
   const menuTimeoutRef = useRef(null);
 
   useEffect(() => {
     setLang(getLang());
-    const onStorage = () => setLang(getLang());
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    const handleLang = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLang);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLang);
   }, []);
 
   const isVi = lang === "vi";
@@ -334,13 +334,19 @@ export default function AoDaiArticlePage() {
         <Link
           href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
           className="vnn-top-banner__link"
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", display: "block", width: "100%" }}
         >
-          <img
-            src="/guide/top-banner-companion.png"
-            alt="Free AI Travel Assistant - AI Companion"
-            className="vnn-top-banner__img"
-          />
+          <div className="vnn-top-banner__inner">
+            <img
+              src="/guide/top-banner-companion.png"
+              alt={
+                isVi
+                  ? "Trợ lý Du lịch AI VinaTap - Đồng hành mọi chuyến đi"
+                  : "Free AI Travel Assistant - AI Companion"
+              }
+              className="vnn-top-banner__img"
+            />
+          </div>
         </Link>
       </div>
 

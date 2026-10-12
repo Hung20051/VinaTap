@@ -1974,7 +1974,7 @@ export default function HomePage() {
                     <div className="vnn-video-player-header">
                       <div className="vnn-video-player-avatar">
                         <img
-                          src="/guide/hcmc/Vietnamnomad-logo-by-Welcome-to-Vietnam-official.png"
+                          src="/logo.png"
                           alt="VinaTap"
                         />
                       </div>
