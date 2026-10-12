@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import HeaderSearch from "@/components/ui/HeaderSearch";
 import {
   Search,
   ChevronDown,
@@ -439,14 +440,7 @@ export default function PlanYourVietnamTripPage() {
           </ul>
 
           <div className="vnn-navbar__actions">
-            <button
-              type="button"
-              className="vnn-navbar__search-btn"
-              onClick={() => setSearchModalOpen(true)}
-              aria-label="Tìm kiếm"
-            >
-              <Search size={18} />
-            </button>
+            <HeaderSearch />
           </div>
         </div>
 

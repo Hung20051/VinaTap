@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import HeaderSearch from "@/components/ui/HeaderSearch";
 import {
   Map,
   Smartphone,
@@ -1441,16 +1442,7 @@ export default function HomePage() {
             </ul>
 
             <div className="vnn-navbar__actions">
-              <button
-                type="button"
-                className="vnn-search-btn"
-                onClick={() => setSearchModalOpen(true)}
-                aria-label="Tìm kiếm nhanh điểm đến"
-                title="Tìm kiếm nhanh điểm đến"
-              >
-                <Search size={18} />
-              </button>
-
+              <HeaderSearch />
               <LanguageSwitch variant="navbar" />
             </div>
 

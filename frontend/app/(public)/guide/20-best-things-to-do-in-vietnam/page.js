@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import HeaderSearch from "@/components/ui/HeaderSearch";
 import { getLang } from "@/lib/prefs";
 import {
   Search,
@@ -856,15 +857,8 @@ export default function TwentyBestThingsPage() {
           </ul>
 
           <div className="vnn-navbar__actions">
+            <HeaderSearch />
             <LanguageSwitch variant="navbar" />
-            <button
-              type="button"
-              className="vnn-search-btn"
-              onClick={() => setSearchOpen(true)}
-              aria-label={isVi ? "Tìm kiếm cẩm nang" : "Search guide"}
-            >
-              <Search size={18} />
-            </button>
           </div>
         </div>
 

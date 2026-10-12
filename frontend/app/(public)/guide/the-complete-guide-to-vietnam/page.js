@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import { getLang } from "@/lib/prefs";
@@ -478,15 +479,8 @@ export default function CompleteGuideToVietnamPage() {
           </ul>
 
           <div className="vnn-navbar__actions">
+            <HeaderSearch />
             <LanguageSwitch variant="navbar" />
-            <button
-              type="button"
-              className="vnn-navbar__search-btn"
-              onClick={() => setSearchModalOpen(true)}
-              aria-label={lang === "vi" ? "Tìm kiếm cẩm nang" : "Search guide"}
-            >
-              <Search size={18} />
-            </button>
           </div>
         </div>
 

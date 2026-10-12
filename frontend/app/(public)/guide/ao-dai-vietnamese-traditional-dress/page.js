@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import HeaderSearch from "@/components/ui/HeaderSearch";
 import { getLang } from "@/lib/prefs";
 import {
   Search,
@@ -304,8 +305,6 @@ const MEGA_MENUS_DATA = {
 export default function AoDaiArticlePage() {
   const [lang, setLang] = useState("en");
   const [activeMenu, setActiveMenu] = useState(null);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const menuTimeoutRef = useRef(null);
 
   useEffect(() => {
@@ -417,14 +416,7 @@ export default function AoDaiArticlePage() {
           </nav>
 
           <div className="vnn-navbar__actions">
-            <button
-              type="button"
-              className="vnn-search-icon-btn"
-              onClick={() => setSearchOpen(true)}
-              aria-label="Search"
-            >
-              <Search size={18} />
-            </button>
+            <HeaderSearch />
             <div className="vnn-navbar__lang">
               <LanguageSwitch />
             </div>
@@ -468,36 +460,6 @@ export default function AoDaiArticlePage() {
           </div>
         )}
       </header>
-
-      {/* ─── SEARCH MODAL ─── */}
-      {searchOpen && (
-        <div className="vnn-search-modal-backdrop" onClick={() => setSearchOpen(false)}>
-          <div className="vnn-search-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="vnn-search-modal__header">
-              <Search size={22} className="vnn-search-modal__icon" />
-              <input
-                type="text"
-                className="vnn-search-modal__input"
-                placeholder={
-                  isVi
-                    ? "Tìm kiếm cẩm nang, điểm đến, trải nghiệm..."
-                    : "Search guides, destinations, things to do..."
-                }
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                autoFocus
-              />
-              <button
-                type="button"
-                className="vnn-search-modal__close"
-                onClick={() => setSearchOpen(false)}
-              >
-                <X size={20} />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ─── MAIN CONTENT ─── */}
       <main>
@@ -1317,7 +1279,7 @@ export default function AoDaiArticlePage() {
               </p>
             </div>
 
-            {/* Choosing appropriate undergarments */}
+            {/* Choosing appropriate undergarments (Hình 1) */}
             <div className="ad-subitem">
               <h3 className="ad-subitem__title">
                 {isVi
@@ -1327,84 +1289,210 @@ export default function AoDaiArticlePage() {
               <p className="ad-subitem__p">
                 {isVi ? (
                   <>
-                    Do tà <em>áo dài</em> truyền thống thường được may bằng chất liệu lụa
-                    mỏng nhẹ, ôm sát phần ngực, eo và xẻ tà cao ở hai bên hông, việc lựa
-                    chọn nội y không đường may cùng tông màu da (nude) là yếu tố vô cùng
-                    quan trọng. Điều này giúp tổng thể trang phục luôn giữ được nét đoan
-                    trang, thanh lịch và kín đáo, đồng thời tôn lên trọn vẹn những đường
-                    cong duyên dáng của người phụ nữ.
+                    Bởi tà <em>áo dài</em> được may từ chất liệu lụa mềm mại và thướt
+                    tha, việc lựa chọn nội y mặc bên trong là điều vô cùng quan trọng
+                    cần lưu ý. Khi diện áo dài màu trắng hoặc sáng màu, tốt nhất nên
+                    tránh các màu tương phản mạnh như đen hoặc đỏ. Bạn nên ưu tiên chọn
+                    nội y màu da (nude) không quá chật để tránh để lộ những đường hằn
+                    không mong muốn và tôn vinh trọn vẹn nét đoan trang của tà quốc
+                    phục.
                   </>
                 ) : (
                   <>
-                    Since the traditional <em>ao dai</em> is made of light silk or
-                    flowing fabrics and features a snug fit around the chest and waist
-                    with high slits along the hips, selecting seamless and skin-tone
-                    undergarments is essential. This ensures the outfit remains elegant,
-                    refined, and modest while highlighting the graceful curves of the
-                    wearer.
+                    Because the <em>ao dai</em> is made from silky and flowy material,
+                    it is important to be mindful when choosing the undergarments to
+                    wear underneath. When wearing a white or bright-colored{" "}
+                    <em>ao dai</em>, it is best to avoid highly contrasting colors
+                    such as black or red. It is recommended to wear nude-colored
+                    undergarments that are not too tight in order to avoid revealing
+                    unflattering features and to maximize the traditional dress
+                    experience.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Combining accessories (Hình 1) */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi ? "Kết hợp phụ kiện truyền thống" : "Combining accessories"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Nếu bạn dự định chụp một bộ ảnh trong tà <em>áo dài</em>, việc kết
+                    hợp cùng những phụ kiện mang tính biểu tượng của Việt Nam là một ý
+                    tưởng tuyệt vời. Sự kết hợp giữa <em>áo dài</em> và <em>nón lá</em>{" "}
+                    (chiếc nón lá truyền thống) luôn là lựa chọn hàng đầu. Phụ nữ cũng
+                    thường cầm một bó hoa sen, hoa loa kèn nhỏ hoặc xách một chiếc làn
+                    cói mộc mạc làm đạo cụ. Bông tai và vòng cổ ngọc trai là những món
+                    trang sức lý tưởng giúp tôn lên vẻ quý phái, thanh lịch và nét nữ
+                    tính dịu dàng.
+                  </>
+                ) : (
+                  <>
+                    If you&apos;re planning a photoshoot in <em>ao dai</em>, it can be
+                    a great idea to pair it with symbolic Vietnamese items. The
+                    combination of <em>ao dai</em> and <em>non la</em> (traditional
+                    conical hat) is a popular choice. It&apos;s also common to see
+                    women hold a small bouquet of flowers or carry a reed shopping
+                    basket as props. Pearl earrings and necklaces are ideal
+                    accessories to enhance the elegance and femininity of the dress.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* FEATURED PHOTO 5: INCENSE VILLAGE (HÌNH 1 & 2) */}
+            <figure className="ad-figure">
+              <div className="ad-figure__img-wrap">
+                <picture>
+                  <source
+                    srcSet="/guide/ao-dai/ao-dai-incense.webp"
+                    type="image/webp"
+                  />
+                  <img
+                    src="/guide/ao-dai/ao-dai-incense.jpg"
+                    alt="The ao dai and the non la are two iconic symbols associated with Vietnamese women"
+                    className="ad-figure__img"
+                    loading="lazy"
+                  />
+                </picture>
+              </div>
+              <figcaption className="ad-figure__caption">
+                {isVi
+                  ? "Áo dài và nón lá là hai biểu tượng gắn liền với nét đẹp duyên dáng của phụ nữ Việt Nam."
+                  : "The ao dai and the non la are two iconic symbols associated with Vietnamese women."}
+              </figcaption>
+            </figure>
+
+            {/* Ao dai museum (Hình 2 & 3) */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi ? "Bảo tàng Áo dài" : "Ao dai museum"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Bảo tàng duy nhất dành riêng cho việc trưng bày <em>áo dài</em>{" "}
+                    không do nhà nước quản lý, mà thuộc sở hữu tư nhân của nhà thiết kế
+                    tâm huyết Sĩ Hoàng. Tọa lạc tại thành phố Thủ Đức,{" "}
+                    <Link href="/province/ho-chi-minh">TP. Hồ Chí Minh</Link>, bảo tàng
+                    này trưng bày hơn 300 mẫu thiết kế áo dài độc đáo cho công chúng
+                    chiêm ngưỡng. Du khách đến đây còn có thể tham gia các buổi workshop
+                    làm áo dài để hiểu sâu hơn về từng công đoạn, từ lựa chọn vải cho đến
+                    tự tay may chiếc áo dài của riêng mình.
+                  </>
+                ) : (
+                  <>
+                    The only known museum dedicated to the display of the{" "}
+                    <em>ao dai</em> is not run by the government, but is privately
+                    owned by a passionate designer named Sy Hoang. Located in Thu Duc,{" "}
+                    <Link href="/province/ho-chi-minh">Ho Chi Minh City</Link>, this
+                    museum showcases more than 300 designs of <em>ao dai</em> to the
+                    general public. Visitors can also participate in an{" "}
+                    <em>ao dai</em>-making workshop to gain an understanding of each
+                    step of the process, from selecting materials to sewing their own
+                    dress.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Not mistake ao dai for cheongsam (Hình 3 & 4) */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi
+                  ? "Phân biệt áo dài với sườn xám"
+                  : "Not mistake ao dai for cheongsam"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Nhiều người lầm tưởng rằng <em>áo dài</em> là một biến thể phỏng theo
+                    sườn xám (<em>cheongsam</em>) – trang phục truyền thống của Trung
+                    Quốc. Tuy nhiên, điều này hoàn toàn không chính xác. Mặc dù có những
+                    điểm tương đồng ở hai vạt áo dài, <em>áo dài</em> có nguồn gốc lịch
+                    sử lâu đời hơn sườn xám và mang phom dáng kết cấu độc bản hoàn toàn
+                    riêng biệt. Vì vậy, nếu bạn là một người đam mê văn hóa và thời
+                    trang, hãy lưu ý rằng <em>áo dài</em> không hề bắt nguồn từ sườn
+                    xám.
+                  </>
+                ) : (
+                  <>
+                    Many people mistakenly believe that <em>ao dai</em> is an
+                    adaptation of cheongsam, a Chinese traditional dress. However,
+                    this is not accurate. Although there are similarities in the long
+                    flaps, <em>ao dai</em> predates cheongsam and has its own unique
+                    form. Therefore, if you are a culture and fashion enthusiast,
+                    it&apos;s important to be aware that <em>ao dai</em> did not
+                    originate from cheongsam.
                   </>
                 )}
               </p>
             </div>
           </section>
 
-          {/* ─── EXPLORE MORE GUIDES ─── */}
+          {/* ─── RELATED ARTICLES (HÌNH 3 & 4) ─── */}
           <section className="ad-related-section">
             <h3 className="ad-related-title">
-              {isVi ? "Khám phá thêm cẩm nang du lịch" : "Explore More Guides"}
+              {isVi ? "Bài viết liên quan" : "Related Articles"}
             </h3>
             <div className="ad-related-grid">
-              <Link
-                href="/guide/the-complete-guide-to-vietnam"
-                className="cg-explore-card"
-              >
-                <div className="cg-explore-card__img-wrap">
-                  <img
-                    src="/guide/megamenu/inspired-3.jpg"
-                    alt="The Complete Guide to Vietnam"
-                    className="cg-explore-card__img"
-                  />
-                </div>
-                <h4 className="cg-explore-card__title">
-                  {isVi
-                    ? "Cẩm nang du lịch toàn diện Việt Nam"
-                    : "The Complete Guide to Vietnam"}
-                </h4>
-              </Link>
-
-              <Link
-                href="/guide/20-best-things-to-do-in-vietnam"
-                className="cg-explore-card"
-              >
-                <div className="cg-explore-card__img-wrap">
-                  <img
-                    src="/guide/megamenu/inspired-4.jpg"
-                    alt="20 Best Things to Do in Vietnam"
-                    className="cg-explore-card__img"
-                  />
-                </div>
-                <h4 className="cg-explore-card__title">
-                  {isVi
-                    ? "20 trải nghiệm tuyệt vời nhất tại Việt Nam"
-                    : "20 Best Things to Do in Vietnam"}
-                </h4>
-              </Link>
-
+              {/* Card 1 */}
               <Link
                 href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
-                className="cg-explore-card"
+                className="ad-related-card"
               >
-                <div className="cg-explore-card__img-wrap">
+                <div className="ad-related-card__img-wrap">
                   <img
                     src="/guide/megamenu/inspired-1.jpg"
                     alt="15 best places to visit in Vietnam in 2026"
-                    className="cg-explore-card__img"
+                    className="ad-related-card__img"
                   />
                 </div>
-                <h4 className="cg-explore-card__title">
+                <h4 className="ad-related-card__title">
                   {isVi
                     ? "15 địa điểm đẹp nhất Việt Nam năm 2026"
                     : "15 best places to visit in Vietnam in 2026"}
+                </h4>
+              </Link>
+
+              {/* Card 2 */}
+              <Link
+                href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+                className="ad-related-card"
+              >
+                <div className="ad-related-card__img-wrap">
+                  <img
+                    src="/guide/megamenu/inspired-2.jpg"
+                    alt="Plan Your Vietnam Trip with Just One Prompt"
+                    className="ad-related-card__img"
+                  />
+                </div>
+                <h4 className="ad-related-card__title">
+                  {isVi
+                    ? "Lên kế hoạch du lịch Việt Nam chỉ với một prompt"
+                    : "Plan Your Vietnam Trip with Just One Prompt"}
+                </h4>
+              </Link>
+
+              {/* Card 3 */}
+              <Link
+                href="/guide/the-complete-guide-to-vietnam"
+                className="ad-related-card"
+              >
+                <div className="ad-related-card__img-wrap">
+                  <img
+                    src="/guide/megamenu/inspired-3.jpg"
+                    alt="The Complete Guide to Vietnam"
+                    className="ad-related-card__img"
+                  />
+                </div>
+                <h4 className="ad-related-card__title">
+                  {isVi
+                    ? "Cẩm nang du lịch toàn diện Việt Nam"
+                    : "The Complete Guide to Vietnam"}
                 </h4>
               </Link>
             </div>
