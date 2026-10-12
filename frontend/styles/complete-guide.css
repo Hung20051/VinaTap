@@ -401,6 +401,124 @@
   color: #0284c7;
 }
 
+/* ─── BEST TIME TO VISIT SECTION (HÌNH 3) ─── */
+.cg-best-time-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  margin: 32px auto 16px auto;
+  max-width: 520px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cg-best-time-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+}
+
+.cg-best-time-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─── VISAS SECTION (HÌNH 4 & 5) ─── */
+.cg-visa-map-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  margin: 32px auto 28px auto;
+  max-width: 680px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cg-visa-map-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+}
+
+.cg-visa-map-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cg-visa-list-header {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #111827;
+  margin: 28px 0 14px 0;
+}
+
+.cg-visa-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cg-visa-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.cg-visa-list li::before {
+  content: "•";
+  position: absolute;
+  left: 6px;
+  top: 0;
+  font-size: 20px;
+  color: #00aab2;
+  line-height: 1.5;
+}
+
+.cg-visa-list strong {
+  color: #111827;
+  font-weight: 700;
+}
+
+.cg-official-note {
+  background: #f8fafc;
+  border-left: 4px solid #00c2cb;
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #475569;
+  margin: 22px 0 28px 0;
+}
+
+.cg-official-note a {
+  color: #00aab2;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.cg-official-note a:hover {
+  color: #0284c7;
+}
+
+/* ─── MONEY & TRANSPORTATION SECTIONS (HÌNH 5) ─── */
+.cg-card-feature {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 24px 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
 /* ─── HIGHLIGHT CARDS GRID ─── */
 .cg-highlights-grid {
   display: grid;

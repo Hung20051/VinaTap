@@ -511,7 +511,7 @@ export default function TheCompleteGuideToVietnamPage() {
 
       {/* ─── 4. MAIN EDITORIAL CONTAINER (HÌNH 1, 2, 3, 4, 5) ─── */}
       <main className="cg-container">
-        {/* QUICK NAVIGATION PILLS (HÌNH 1 & 2) */}
+        {/* QUICK NAVIGATION PILLS (HÌNH 1, 2, 3, 4, 5) */}
         <div className="cg-quick-pills">
           <a href="#travel-guide" className="cg-quick-pill">
             <Compass size={16} />
@@ -520,6 +520,18 @@ export default function TheCompleteGuideToVietnamPage() {
           <a href="#destinations" className="cg-quick-pill">
             <MapPin size={16} />
             <span>{isVi ? "Điểm đến" : "Destinations"}</span>
+          </a>
+          <a href="#best-time" className="cg-quick-pill">
+            <Calendar size={16} />
+            <span>{isVi ? "Thời điểm lý tưởng" : "Best time"}</span>
+          </a>
+          <a href="#visas" className="cg-quick-pill">
+            <span>🇻🇳</span>
+            <span>{isVi ? "Thị thực" : "Visas"}</span>
+          </a>
+          <a href="#essentials" className="cg-quick-pill">
+            <span>💡</span>
+            <span>{isVi ? "Tiện ích & Đi lại" : "Essentials"}</span>
           </a>
           <a href="#itineraries" className="cg-quick-pill">
             <Calendar size={16} />
@@ -706,40 +718,57 @@ export default function TheCompleteGuideToVietnamPage() {
             </div>
           </div>
 
-          {/* 2. CENTRAL VIETNAM */}
+          {/* 2. CENTRAL VIETNAM (HÌNH 1) */}
           <div className="cg-region-item">
             <h3 className="cg-region-item__title">
               {isVi ? "2. Miền Trung Việt Nam" : "2. Central Vietnam"}
             </h3>
             <div className="cg-region-item__layout">
               <div className="cg-region-item__img-wrap">
-                <img
-                  src="/guide/the-complete-guide/central-vietnam.jpg"
-                  alt="Central Vietnam - Da Nang & Hoi An"
-                  className="cg-region-item__img"
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    srcSet="/guide/the-complete-guide/central-vietnam.webp"
+                    type="image/webp"
+                  />
+                  <img
+                    src="/guide/the-complete-guide/central-vietnam.jpg"
+                    alt="Central Vietnam - Hue Imperial City"
+                    className="cg-region-item__img"
+                    loading="lazy"
+                  />
+                </picture>
               </div>
               <div className="cg-region-item__desc">
                 <p>
                   {isVi ? (
                     <>
-                      Miền Trung Việt Nam là dải đất duyên hải hẹp kẹp giữa dãy Trường Sơn hùng vĩ và Biển Đông, bao gồm các thành phố di sản và bãi biển danh tiếng như <Link href="/province/thua-thien-hue">Huế</Link>, <Link href="/province/da-nang">Đà Nẵng</Link>, <Link href="/province/quang-nam">Hội An</Link>, Quy Nhơn và <Link href="/province/khanh-hoa">Nha Trang</Link>, cùng vùng cao nguyên <Link href="/province/lam-dong">Đà Lạt</Link>.
+                      Miền Trung Việt Nam bao gồm 11 tỉnh và thành phố: Thanh Hóa, Nghệ An, Hà Tĩnh, Huế, Quảng Trị, Đà Nẵng, Quảng Ngãi, Khánh Hòa, Gia Lai, Lâm Đồng và Đắk Lắk.
                     </>
                   ) : (
                     <>
-                      Central Vietnam is a narrow coastal strip framed by the Annamite Mountain Range and the East Sea, home to renowned heritage cities and world-class beaches such as <Link href="/province/thua-thien-hue">Hue</Link>, <Link href="/province/da-nang">Da Nang</Link>, <Link href="/province/quang-nam">Hoi An</Link>, Quy Nhon, <Link href="/province/khanh-hoa">Nha Trang</Link>, and the misty plateau of <Link href="/province/lam-dong">Da Lat</Link>.
+                      Central Vietnam consists of 11 provinces and cities: Thanh Hoa, Nghe An, Ha Tinh, Hue, Quang Tri, Da Nang, Quang Ngai, Khanh Hoa, Gia Lai, Lam Dong, and Dak Lak.
                     </>
                   )}
                 </p>
                 <p>
                   {isVi ? (
                     <>
-                      Khu vực này sở hữu mật độ di sản thế giới UNESCO cao nhất cả nước, nổi bật với Cố đô Huế, Phố cổ Hội An và Thánh địa Mỹ Sơn, cùng những bãi biển cát trắng mịn trải dài bất tận và ẩm thực cay nồng, đậm đà khó quên.
+                      Các điểm du lịch nổi tiếng bao gồm Cố đô Huế, <Link href="/province/da-nang">Đà Nẵng</Link>, <Link href="/province/quang-nam">Phố cổ Hội An</Link>, Phong Nha – Kẻ Bàng (Quảng Bình / Quảng Trị), Nha Trang (Khánh Hòa), Quy Nhơn (Gia Lai), <Link href="/province/lam-dong">Đà Lạt</Link> (Lâm Đồng). Khu vực này trải dài dọc theo bờ biển và vùng Tây Nguyên, kết hợp giữa các bãi biển, di sản lịch sử văn hóa và vùng cao nguyên có khí hậu mát mẻ.
                     </>
                   ) : (
                     <>
-                      The region boasts the highest concentration of UNESCO World Heritage Sites in Vietnam, featuring the Imperial Citadel of Hue, the ancient lantern town of Hoi An, and My Son Sanctuary, coupled with pristine white-sand shorelines and exquisite spicy cuisine.
+                      Famous tourist destinations include Hue's Imperial City, <Link href="/province/da-nang">Da Nang</Link>, <Link href="/province/quang-nam">Hoi An Ancient Town</Link>, Phong Nha–Ke Bang (Quang Tri), Nha Trang (Khanh Hoa), Quy Nhon (Gia Lai), <Link href="/province/lam-dong">Da Lat</Link> (Lam Dong). This region stretches along the coastline and the Central Highlands, combining beaches, historical heritage, and cool-climate highlands.
+                    </>
+                  )}
+                </p>
+                <p>
+                  {isVi ? (
+                    <>
+                      Miền Trung có khí hậu nhiệt đới gió mùa với hai mùa chính. Mùa khô (từ tháng 1 đến tháng 8) nhìn chung nhiều nắng và ấm áp, đặc biệt là dọc theo bờ biển. Mùa mưa (từ tháng 9 đến tháng 12) mang theo những cơn mưa rào lớn và đôi khi có bão, đặc biệt ở khu vực ven biển miền Trung. Vùng Tây Nguyên có nhiệt độ mát mẻ quanh năm nhờ độ cao địa hình.
+                    </>
+                  ) : (
+                    <>
+                      Central Vietnam has a tropical monsoon climate with two main seasons. The dry season (January to August) is generally sunny and warm, especially along the coast. The rainy season (September to December) brings heavy showers and occasional typhoons, particularly to the central coast. The Central Highlands enjoy cooler temperatures year-round due to higher elevation.
                     </>
                   )}
                 </p>
@@ -747,40 +776,57 @@ export default function TheCompleteGuideToVietnamPage() {
             </div>
           </div>
 
-          {/* 3. SOUTHERN VIETNAM */}
+          {/* 3. SOUTHERN VIETNAM (HÌNH 2) */}
           <div className="cg-region-item">
             <h3 className="cg-region-item__title">
               {isVi ? "3. Miền Nam Việt Nam" : "3. Southern Vietnam"}
             </h3>
             <div className="cg-region-item__layout">
               <div className="cg-region-item__img-wrap">
-                <img
-                  src="/guide/the-complete-guide/southern-vietnam.jpg"
-                  alt="Southern Vietnam - Ho Chi Minh City & Mekong"
-                  className="cg-region-item__img"
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    srcSet="/guide/the-complete-guide/southern-vietnam.webp"
+                    type="image/webp"
+                  />
+                  <img
+                    src="/guide/the-complete-guide/southern-vietnam.jpg"
+                    alt="Southern Vietnam - Mekong Delta canal boat"
+                    className="cg-region-item__img"
+                    loading="lazy"
+                  />
+                </picture>
               </div>
               <div className="cg-region-item__desc">
                 <p>
                   {isVi ? (
                     <>
-                      Miền Nam Việt Nam là đầu tàu kinh tế năng động và vựa lúa trù phú của đất nước, bao gồm siêu đô thị <Link href="/province/ho-chi-minh">TP. Hồ Chí Minh</Link> (Sài Gòn), bán đảo <Link href="/province/ba-ria-vung-tau">Vũng Tàu</Link>, đồi cát <Link href="/province/binh-thuan">Mũi Né</Link>, miền sông nước <Link href="/province/can-tho">Cần Thơ</Link> và đảo ngọc <Link href="/province/kien-giang">Phú Quốc</Link>.
+                      Miền Nam Việt Nam bao gồm 8 tỉnh và thành phố: TP. Hồ Chí Minh, Đồng Nai, Tây Ninh, Vĩnh Long, Đồng Tháp, Cà Mau, An Giang và Cần Thơ.
                     </>
                   ) : (
                     <>
-                      Southern Vietnam is the economic powerhouse and lush agricultural bowl of the nation, comprising the vibrant metropolis of <Link href="/province/ho-chi-minh">Ho Chi Minh City</Link>, coastal <Link href="/province/ba-ria-vung-tau">Vung Tau</Link>, desert dunes of <Link href="/province/binh-thuan">Mui Ne</Link>, floating markets of <Link href="/province/can-tho">Can Tho</Link>, and paradise island of <Link href="/province/kien-giang">Phu Quoc</Link>.
+                      Southern Vietnam consists of 8 provinces and cities: Ho Chi Minh City, Dong Nai, Tay Ninh, Vinh Long, Dong Thap, Ca Mau, An Giang, and Can Tho.
                     </>
                   )}
                 </p>
                 <p>
                   {isVi ? (
                     <>
-                      Với khí hậu nhiệt đới gió mùa nắng ấm quanh năm (chia làm 2 mùa: mùa khô từ tháng 12 đến tháng 4 và mùa mưa từ tháng 5 đến tháng 11), Miền Nam luôn đón chào du khách bằng sự nồng hậu, phóng khoáng cùng nhịp sống sôi động cả ngày lẫn đêm.
+                      Các điểm đến du lịch nổi tiếng bao gồm các địa danh đô thị sôi động của <Link href="/province/ho-chi-minh">TP. Hồ Chí Minh</Link>, <Link href="/province/ba-ria-vung-tau">Vũng Tàu</Link>, Núi Bà Đen (Tây Ninh), Chợ nổi Cái Răng (Cần Thơ), Rừng tràm Trà Sư &amp; Núi Sam (An Giang), Vườn quốc gia Tràm Chim (Đồng Tháp) và Mũi Cà Mau. Khu vực này sở hữu các thành phố nhộn nhịp, đồng bằng màu mỡ trù phú, vùng ngập nước nhiệt đới và hệ thống sông rạch mênh mông của Đồng bằng sông Cửu Long.
                     </>
                   ) : (
                     <>
-                      With a warm tropical climate year-round (split into dry season from December to April and rainy season from May to November), the South welcomes travelers with warm hospitality, fruitful waterways, and buzzing 24/7 urban energy.
+                      Famous tourist destinations include <Link href="/province/ho-chi-minh">Ho Chi Minh City</Link>'s vibrant urban landmarks, <Link href="/province/ba-ria-vung-tau">Vung Tau</Link>, Ba Den Mountain (Tay Ninh), Cai Rang Floating Market (Can Tho), Tra Su Forest &amp; Sam Mountain (An Giang), Tram Chim National Park (Dong Thap), and Cape Ca Mau. The region features bustling cities, fertile river plains, tropical wetlands, and the extensive waterways of the Mekong River Delta.
+                    </>
+                  )}
+                </p>
+                <p>
+                  {isVi ? (
+                    <>
+                      Miền Nam có hai mùa rõ rệt. Mùa khô (từ tháng 12 đến tháng 4) ấm áp, độ ẩm tương đối thấp và lý tưởng cho du lịch. Mùa mưa (từ tháng 5 đến tháng 11) mang đến những cơn mưa rào nhiệt đới ngắn nhưng dữ dội, với lượng mưa cao nhất từ tháng 6 đến tháng 9. Nhiệt độ luôn ấm áp quanh năm, thường dao động trong khoảng 25–35°C.
+                    </>
+                  ) : (
+                    <>
+                      Southern Vietnam has two primary seasons. The dry season (December to April) is warm, relatively less humid, and ideal for travel. The rainy season (May to November) brings short but intense tropical showers, with peak rainfall from June to September. Temperatures remain warm throughout the year, typically ranging from 25–35°C.
                     </>
                   )}
                 </p>
@@ -789,7 +835,220 @@ export default function TheCompleteGuideToVietnamPage() {
           </div>
         </section>
 
-        {/* ─── SECTION 4: ITINERARIES ─── */}
+        {/* ─── SECTION 4: BEST TIME TO VISIT VIETNAM (HÌNH 3) ─── */}
+        <section id="best-time" className="cg-section">
+          <div className="cg-section__header">
+            <h2 className="cg-section__title">
+              {isVi ? "Thời điểm lý tưởng nhất để du lịch Việt Nam" : "Best time to visit Vietnam"}
+            </h2>
+          </div>
+
+          <p className="cg-paragraph">
+            {isVi ? (
+              <>
+                Do lãnh thổ trải dài và địa hình đa dạng, khí hậu Việt Nam có sự khác biệt rõ rệt giữa các vùng miền. Trong khi miền Bắc và miền Nam có mưa nhiều vào mùa hè, dải duyên hải miền Trung lại nhận nhiều mưa hơn vào mùa đông. Nhìn chung, thời điểm tuyệt vời nhất để khám phá Việt Nam là từ tháng 12 đến tháng 4 năm sau, khi thời tiết mát mẻ, khô ráo và cũng là mùa cao điểm du lịch.
+              </>
+            ) : (
+              <>
+                Due to Vietnam's extensive territory and varied terrain, the climate differs significantly across regions. While the North and South regions experience heavy rains in the summer, the coastal regions receive more rain in the winter. Overall, the best time to explore Vietnam is from December to April, when the weather is cool and dry, also the peak tourist season.
+              </>
+            )}
+          </p>
+
+          {/* BEST TIME TO VISIT MAP CARD (HÌNH 3) */}
+          <div className="cg-best-time-card">
+            <picture>
+              <source
+                srcSet="/guide/the-complete-guide/best-time-map.webp"
+                type="image/webp"
+              />
+              <img
+                src="/guide/the-complete-guide/best-time-map.png"
+                alt="Map of the best times to visit cities in Vietnam"
+                className="cg-best-time-img"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <p className="cg-map-caption">
+            {isVi
+              ? "Bản đồ thời điểm lý tưởng nhất để ghé thăm từng thành phố và điểm đến tại Việt Nam"
+              : "Map of the best times to visit cities across Vietnam"}
+          </p>
+        </section>
+
+        {/* ─── SECTION 5: VISAS (HÌNH 4 & 5) ─── */}
+        <section id="visas" className="cg-section">
+          <div className="cg-section__header">
+            <h2 className="cg-section__title">
+              {isVi ? "Thị thực (Visas)" : "Visas"}
+            </h2>
+          </div>
+
+          <p className="cg-paragraph">
+            {isVi ? (
+              <>
+                Việt Nam miễn thị thực nhập cảnh cho công dân của nhiều quốc gia, đồng thời thủ tục cấp Thị thực điện tử (e-Visa) hiện nay rất nhanh chóng, thuận tiện và hoàn toàn trực tuyến. Dưới đây là danh sách các quốc gia được miễn thị thực và thời gian lưu trú cho phép tương ứng.
+              </>
+            ) : (
+              <>
+                Vietnam offers visa-free entry to many countries, and the e-Visa process is now fast, simple, and fully online. Below is the list of countries eligible for visa-free entry and their permitted length of stay.
+              </>
+            )}
+          </p>
+
+          {/* WORLD VISA EXEMPTION MAP (HÌNH 4) */}
+          <div className="cg-visa-map-card">
+            <picture>
+              <source
+                srcSet="/guide/the-complete-guide/visa-world-map.webp"
+                type="image/webp"
+              />
+              <img
+                src="/guide/the-complete-guide/visa-world-map.png"
+                alt="World map of visa-exempt countries for Vietnam"
+                className="cg-visa-map-img"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+
+          {/* LIST OF VISA-EXEMPT COUNTRIES (HÌNH 4) */}
+          <h4 className="cg-visa-list-header">
+            {isVi
+              ? "Danh sách các quốc gia được miễn thị thực du lịch Việt Nam:"
+              : "List of visa-exempt countries for travel to Vietnam:"}
+          </h4>
+
+          <ul className="cg-visa-list">
+            <li>
+              <strong>{isVi ? "14 ngày:" : "14 days:"}</strong> Myanmar, Brunei.
+            </li>
+            <li>
+              <strong>{isVi ? "21 ngày:" : "21 days:"}</strong> The Philippines.
+            </li>
+            <li>
+              <strong>{isVi ? "30 ngày:" : "30 days:"}</strong> Thailand, Indonesia, Singapore, Malaysia, Cambodia, Laos, Kyrgyzstan, Kazakhstan, Belarus.
+            </li>
+            <li>
+              <strong>{isVi ? "45 ngày:" : "45 days:"}</strong> Germany, France, Italy, Spain, United Kingdom, Russia, Japan, South Korea, Denmark, Sweden, Norway, Finland, Belgium, Bulgaria, Croatia, Czech Republic, Hungary, Luxembourg, Netherlands, Poland, Romania, Slovakia, Slovenia, Switzerland.
+            </li>
+            <li>
+              <strong>{isVi ? "90 ngày:" : "90 days:"}</strong> Chile, Panama.
+            </li>
+          </ul>
+
+          <div className="cg-official-note">
+            <strong>{isVi ? "Lưu ý:" : "Note:"}</strong>{" "}
+            {isVi ? (
+              <>
+                Chính sách miễn thị thực có thể được điều chỉnh theo thời gian. Bạn có thể kiểm tra các thông tin cập nhật mới nhất tại cổng thông tin chính thức:{" "}
+                <a
+                  href="https://evisa.gov.vn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  https://evisa.gov.vn/
+                </a>
+              </>
+            ) : (
+              <>
+                Visa exemption policies may change. You can check the latest updates at the official website:{" "}
+                <a
+                  href="https://evisa.gov.vn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  https://evisa.gov.vn/
+                </a>
+              </>
+            )}
+          </div>
+
+          {/* E-VISA SUBSECTION (HÌNH 5) */}
+          <p className="cg-paragraph">
+            {isVi ? (
+              <>
+                Đối với những du khách không thuộc các quốc gia được miễn thị thực, việc xin e-Visa Việt Nam rất dễ dàng. Việt Nam cấp thị thực điện tử cho công dân của tất cả các quốc gia và vùng lãnh thổ, với thời gian lưu trú lên đến 90 ngày. Lệ phí cấp e-Visa là 25 USD cho thị thực nhập cảnh một lần và 50 USD cho thị thực nhập cảnh nhiều lần. Đăng ký trực tiếp tại trang web chính thức của{" "}
+                <a
+                  href="https://evisa.gov.vn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Cục Quản lý Xuất nhập cảnh Việt Nam (Vietnam Immigration Department)
+                </a>
+                .
+              </>
+            ) : (
+              <>
+                For those not from visa-exempt countries, obtaining a Vietnam e-visa is easy. Vietnam offers electronic visas to citizens of all countries and territories, allowing a stay of up to 90 days. The e-visa fee is $25 for a single-entry visa and $50 for a multiple-entry visa. Apply at the official website of the{" "}
+                <a
+                  href="https://evisa.gov.vn/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Vietnam Immigration Department
+                </a>
+                .
+              </>
+            )}
+          </p>
+        </section>
+
+        {/* ─── SECTION 6: MONEY AND EXCHANGE (HÌNH 5) ─── */}
+        <section id="essentials" className="cg-section">
+          <div className="cg-section__header">
+            <h2 className="cg-section__title">
+              {isVi ? "Tiền tệ và đổi ngoại tệ" : "Money and exchange"}
+            </h2>
+          </div>
+
+          <p className="cg-paragraph">
+            {isVi ? (
+              <>
+                Đơn vị tiền tệ chính thức tại Việt Nam là Đồng Việt Nam, thường gọi là "đồng" (VND). Hiện có 10 mệnh giá phổ biến lưu hành từ 500 đồng cho đến mệnh giá lớn nhất là 500.000 đồng. Tỷ giá quy đổi hiện tại khoảng 1 USD tương đương 26.000 đồng, điều đó có nghĩa là tờ tiền có mệnh giá cao nhất 500.000 đồng tương đương khoảng 19 USD.
+              </>
+            ) : (
+              <>
+                The currency used in Vietnam is the Vietnamese dong, or the 'dong'. There are 10 common denominations ranging from 500 dong to the highest denomination of 500,000 dong. The current exchange rate is approximately 1 US dollar equals about 26,000 dong, meaning the highest denomination of 500,000 dong is roughly equivalent to 19 US dollars.
+              </>
+            )}
+          </p>
+        </section>
+
+        {/* ─── SECTION 7: TRANSPORTATION (HÌNH 5) ─── */}
+        <section className="cg-section">
+          <div className="cg-section__header">
+            <h2 className="cg-section__title">
+              {isVi ? "Phương tiện di chuyển" : "Transportation"}
+            </h2>
+          </div>
+
+          <p className="cg-paragraph">
+            {isVi ? (
+              <>
+                Việt Nam có mạng lưới giao thông tương đối phát triển, bao gồm hệ thống các sân bay quốc tế và nội địa, tuyến đường sắt Bắc – Nam cùng mạng lưới đường bộ rộng khắp.
+              </>
+            ) : (
+              <>
+                Vietnam has a relatively well-developed transportation network, including international and domestic airports, the North-South railway, and extensive road networks.
+              </>
+            )}
+          </p>
+          <p className="cg-paragraph">
+            {isVi ? (
+              <>
+                Việt Nam hiện có 22 sân bay dân dụng, trong đó có 11 sân bay quốc tế. Các cảng hàng không lớn nhất gồm Tân Sơn Nhất (TP. Hồ Chí Minh), Nội Bài (Hà Nội) và Đà Nẵng (TP. Đà Nẵng), đóng vai trò là những cửa ngõ quốc tế quan trọng đón du khách khắp bốn phương.
+              </>
+            ) : (
+              <>
+                Vietnam has 22 civilian airports, with 11 international airports. The largest are Tan Son Nhat in Ho Chi Minh City, Noi Bai in Hanoi, and Da Nang in Da Nang, serving as major gateways for tourists.
+              </>
+            )}
+          </p>
+        </section>
+
+        {/* ─── SECTION 8: ITINERARIES ─── */}
         <section id="itineraries" className="cg-section">
           <div className="cg-section__header">
             <h2 className="cg-section__title">
@@ -824,7 +1083,7 @@ export default function TheCompleteGuideToVietnamPage() {
           </div>
         </section>
 
-        {/* ─── SECTION 5: FOOD ─── */}
+        {/* ─── SECTION 9: FOOD ─── */}
         <section id="food" className="cg-section">
           <div className="cg-section__header">
             <h2 className="cg-section__title">
