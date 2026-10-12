@@ -12,6 +12,7 @@
 }
 
 /* ─── HERO HEADER SECTION (HÌNH 1) ─── */
+.complete-guide-hero,
 .cg-hero {
   position: relative;
   width: 100%;
@@ -24,6 +25,7 @@
   overflow: hidden;
 }
 
+.complete-guide-hero__bg,
 .cg-hero__bg {
   position: absolute;
   top: 0;
@@ -36,6 +38,7 @@
   transform: scale(1.02);
 }
 
+.complete-guide-hero__overlay,
 .cg-hero__overlay {
   position: absolute;
   inset: 0;
@@ -48,6 +51,7 @@
   z-index: 1;
 }
 
+.complete-guide-hero__content,
 .cg-hero__content {
   position: relative;
   z-index: 2;
@@ -60,6 +64,7 @@
   gap: 18px;
 }
 
+.complete-guide-hero__badges,
 .cg-hero__badges {
   display: flex;
   align-items: center;
@@ -68,6 +73,7 @@
   justify-content: center;
 }
 
+.complete-guide-hero__badge,
 .cg-hero__badge {
   display: inline-flex;
   align-items: center;
@@ -84,6 +90,7 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
+.complete-guide-hero__title,
 .cg-hero__title {
   font-size: clamp(32px, 5.2vw, 54px);
   font-weight: 800;
@@ -95,6 +102,7 @@
   max-width: 860px;
 }
 
+.complete-guide-hero__meta,
 .cg-hero__meta {
   display: flex;
   align-items: center;
@@ -106,15 +114,18 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
+.complete-guide-hero__author,
 .cg-hero__author {
   font-weight: 600;
 }
 
+.complete-guide-hero__date,
 .cg-hero__date {
   opacity: 0.88;
 }
 
 /* ─── MAIN EDITORIAL CONTAINER ─── */
+.complete-guide-container,
 .cg-container {
   max-width: 840px;
   margin: 0 auto;
@@ -122,6 +133,7 @@
 }
 
 /* ─── QUICK NAVIGATION PILLS (HÌNH 1 & 2) ─── */
+.complete-guide-quick-pills,
 .cg-quick-pills {
   display: flex;
   align-items: center;
@@ -131,6 +143,7 @@
   margin: 12px 0 28px 0;
 }
 
+.complete-guide-quick-pill,
 .cg-quick-pill {
   display: inline-flex;
   align-items: center;
@@ -148,6 +161,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
+.complete-guide-quick-pill:hover,
 .cg-quick-pill:hover {
   background: #f0fdfa;
   border-color: #00c2cb;
@@ -157,12 +171,14 @@
 }
 
 /* ─── CTA BUTTON (HÌNH 2) ─── */
+.complete-guide-cta-wrap,
 .cg-cta-wrap {
   display: flex;
   justify-content: center;
   margin: 0 0 44px 0;
 }
 
+.complete-guide-cta-btn,
 .cg-cta-btn {
   display: inline-flex;
   align-items: center;
@@ -181,6 +197,7 @@
   transition: all 0.25s ease;
 }
 
+.complete-guide-cta-btn:hover,
 .cg-cta-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(0, 194, 203, 0.42);
@@ -224,6 +241,7 @@
 }
 
 /* ─── YOUTUBE VIDEO CARD (HÌNH 2 & 3) ─── */
+.complete-guide-video-card,
 .cg-video-card {
   position: relative;
   width: 100%;
@@ -235,6 +253,7 @@
   aspect-ratio: 16 / 9;
 }
 
+.complete-guide-video-cover,
 .cg-video-cover {
   position: relative;
   width: 100%;
@@ -242,6 +261,7 @@
   cursor: pointer;
 }
 
+.complete-guide-video-img,
 .cg-video-img {
   width: 100%;
   height: 100%;
@@ -249,18 +269,63 @@
   display: block;
 }
 
+.complete-guide-video-overlay,
 .cg-video-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background 0.2s ease;
 }
 
+.complete-guide-video-cover:hover .complete-guide-video-overlay,
 .cg-video-cover:hover .cg-video-overlay {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.complete-guide-video-center-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.25);
+  transition: background 0.2s ease;
+}
+
+.complete-guide-video-cover:hover .complete-guide-video-center-btn {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.complete-guide-video-play-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(0, 194, 203, 0.92);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 194, 203, 0.45);
+  transition: transform 0.2s ease;
+}
+
+.complete-guide-video-cover:hover .complete-guide-video-play-icon {
+  transform: scale(1.1);
+}
+
+.complete-guide-video-badge-banner {
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .cg-video-play-btn {
@@ -285,6 +350,179 @@
   width: 100%;
   height: 100%;
   border: none;
+}
+
+/* ─── FIGURES & MAPS ─── */
+.complete-guide-figure,
+.cg-figure {
+  margin: 32px 0;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.complete-guide-figure img,
+.cg-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.complete-guide-figure figcaption,
+.cg-figure figcaption {
+  font-size: 14px;
+  color: #64748b;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* ─── BODY & ARTICLE TYPOGRAPHY ─── */
+.complete-guide-body {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #374151;
+}
+
+.complete-guide-body p {
+  margin-bottom: 22px;
+}
+
+.complete-guide-body h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 44px 0 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+.complete-guide-body h4 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 28px 0 12px 0;
+}
+
+.complete-guide-body a {
+  color: #00aab2;
+  font-weight: 600;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.complete-guide-body a:hover {
+  color: #0284c7;
+}
+
+/* ─── LISTS & CALLOUTS ─── */
+.complete-guide-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 18px 0 28px;
+}
+
+.complete-guide-list li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 12px;
+  line-height: 1.65;
+}
+
+.complete-guide-list li::before {
+  content: "•";
+  position: absolute;
+  left: 10px;
+  color: #00c2cb;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.complete-guide-callout {
+  background: #f0fdfa;
+  border-left: 4px solid #00c2cb;
+  padding: 18px 22px;
+  border-radius: 0 10px 10px 0;
+  margin: 28px 0;
+}
+
+.complete-guide-callout p {
+  margin: 0;
+  color: #134e4a;
+  font-size: 15px;
+}
+
+/* ─── COST VOTING POLL ─── */
+.complete-guide-poll-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+  margin: 36px 0;
+  text-align: center;
+}
+
+.complete-guide-poll-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 10px;
+}
+
+.complete-guide-poll-desc {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 24px;
+}
+
+.complete-guide-poll-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.complete-guide-poll-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 6px;
+}
+
+.complete-guide-poll-btn:hover {
+  border-color: #00c2cb;
+  background: #f0fdfa;
+  color: #00c2cb;
+}
+
+.complete-guide-poll-btn.voted {
+  background: #00c2cb;
+  border-color: #00c2cb;
+  color: #ffffff;
+}
+
+.complete-guide-poll-votes {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.complete-guide-poll-btn.voted .complete-guide-poll-votes {
+  color: #e0f2fe;
 }
 
 /* ─── REGIONAL MAP SECTION (HÌNH 4) ─── */
