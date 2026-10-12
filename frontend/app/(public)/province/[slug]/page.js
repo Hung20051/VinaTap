@@ -147,8 +147,6 @@ export default function ProvincePage() {
           </div>
         </section>
 
-
-
         {/* ─── 4. ĐIỂM THAM QUAN NỔI TIẾNG (ẢNH 1 & 2) ────────── */}
         <section className="mia-section">
           <div className="mia-section-header">
@@ -653,7 +651,6 @@ export default function ProvincePage() {
         spots={landmarks}
         specialties={province?.specialties}
       />
-
     </div>
   );
 }

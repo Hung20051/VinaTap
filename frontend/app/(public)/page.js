@@ -53,7 +53,6 @@ import { getLang } from "@/lib/prefs";
 import { t, getProvinceName, getProvinceDesc } from "@/lib/i18n";
 import { getProvinceCover } from "@/lib/provinceGuideData";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
-import Interactive3DCardShowcase from "@/components/ui/Interactive3DCardShowcase";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import "@/styles/home.css";
 
@@ -62,6 +61,7 @@ const TRENDING_HERO_STORIES = [
   {
     id: "15-places",
     badge: "#TRENDING",
+    badgeVi: "#XU HƯỚNG",
     title: "15 best places to visit in Vietnam in 2026",
     titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
     link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
@@ -72,6 +72,7 @@ const TRENDING_HERO_STORIES = [
   {
     id: "plan-trip",
     badge: "#TRENDING",
+    badgeVi: "#XU HƯỚNG",
     title: "Plan Your Vietnam Trip with Just One Prompt",
     titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một câu lệnh AI",
     link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
@@ -82,9 +83,10 @@ const TRENDING_HERO_STORIES = [
   {
     id: "complete-guide",
     badge: "#TRENDING",
+    badgeVi: "#XU HƯỚNG",
     title: "The Complete Guide to Vietnam",
     titleVi: "Cẩm nang toàn diện 34 Tỉnh Thành Việt Nam",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+    link: "/guide/the-complete-guide-to-vietnam",
     meta: "Heritage & Travel Guide",
     metaVi: "Di sản & Cẩm nang du lịch",
     img: "/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg",
@@ -92,6 +94,7 @@ const TRENDING_HERO_STORIES = [
   {
     id: "things-to-do",
     badge: "#TRENDING",
+    badgeVi: "#XU HƯỚNG",
     title: "20 Best Things to Do in Vietnam",
     titleVi: "20 trải nghiệm nhất định phải thử khi đến Việt Nam",
     link: "/province/ha-noi",
@@ -102,6 +105,7 @@ const TRENDING_HERO_STORIES = [
   {
     id: "ao-dai",
     badge: "FEATURED ARTICLES",
+    badgeVi: "BÀI NỔI BẬT",
     title: "Ao Dai – Vietnamese Traditional Dress",
     titleVi: "Áo Dài – Quốc phục & Nét đẹp duyên dáng văn hóa Việt",
     link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
@@ -114,11 +118,12 @@ const TRENDING_HERO_STORIES = [
 // ─── BE INSPIRED STORIES (SCREENSHOT 1) ───
 const BE_INSPIRED_FEATURED = {
   title: "3-week Vietnam Itinerary",
-  titleVi: "3-week Vietnam Itinerary",
+  titleVi: "Lịch trình 3 tuần xuyên Việt hoàn hảo",
   meta: "VinaTap - July 20, 2025",
   metaVi: "VinaTap • 20 Tháng 7, 2025",
   desc: "Discover our 3-week Vietnam itinerary, featuring 7 must-visit destinations. This guide includes detailed maps, routes, and cost breakdowns to help you plan your trip.",
-  descVi: "Discover our 3-week Vietnam itinerary, featuring 7 must-visit destinations. This guide includes detailed maps, routes, and cost breakdowns to help you plan your trip.",
+  descVi:
+    "Khám phá lịch trình 3 tuần xuyên Việt trọn vẹn qua 7 điểm đến hàng đầu. Cẩm nang bao gồm bản đồ lộ trình chi tiết và bảng dự toán chi phí du lịch.",
   img: "/guide/hcmc/3-week-vietnam-itinerary.jpg",
   link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
 };
@@ -126,41 +131,41 @@ const BE_INSPIRED_FEATURED = {
 const BE_INSPIRED_COMPACT = [
   {
     title: "8 must-try foods in Hanoi",
-    titleVi: "8 must-try foods in Hanoi",
+    titleVi: "8 món ngon nhất định phải thử tại Hà Nội",
     date: "May 19, 2025",
-    dateVi: "May 19, 2025",
+    dateVi: "19 Tháng 5, 2025",
     img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
     link: "/province/ha-noi",
   },
   {
     title: "10 best things to do in Ho Chi Minh City",
-    titleVi: "10 best things to do in Ho Chi Minh City",
+    titleVi: "10 trải nghiệm tuyệt nhất ở TP. Hồ Chí Minh",
     date: "May 5, 2025",
-    dateVi: "May 5, 2025",
+    dateVi: "5 Tháng 5, 2025",
     img: "/guide/hcmc/hcmc-10-things-bitexco.jpg",
     link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
   },
   {
     title: "12 must-try foods in Ho Chi Minh City",
-    titleVi: "12 must-try foods in Ho Chi Minh City",
+    titleVi: "12 món ăn đường phố phải thử ở Sài Gòn",
     date: "April 25, 2025",
-    dateVi: "April 25, 2025",
+    dateVi: "25 Tháng 4, 2025",
     img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Goi-Cuon.jpg",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
+    link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
   },
   {
     title: "12 best attractions in Ho Chi Minh City",
-    titleVi: "12 best attractions in Ho Chi Minh City",
+    titleVi: "12 điểm tham quan nổi tiếng ở TP. Hồ Chí Minh",
     date: "April 18, 2025",
-    dateVi: "April 18, 2025",
+    dateVi: "18 Tháng 4, 2025",
     img: "/guide/hcmc/hcmc-12-attractions-sunset.jpg",
     link: "/province/ho-chi-minh",
   },
   {
     title: "5 best Vung Tau beaches",
-    titleVi: "5 best Vung Tau beaches",
+    titleVi: "5 bãi biển đẹp nhất tại Vũng Tàu",
     date: "April 9, 2025",
-    dateVi: "April 9, 2025",
+    dateVi: "9 Tháng 4, 2025",
     img: "/guide/hcmc/vung-tau-beaches-peninsula.jpg",
     link: "/province/hai-phong",
   },
@@ -171,28 +176,28 @@ const TOP_DESTINATIONS_DATA = [
   {
     id: "hcmc",
     name: "Ho Chi Minh City",
-    nameVi: "Ho Chi Minh City",
+    nameVi: "TP. Hồ Chí Minh",
     img: "/guide/hcmc/top-dest-hcmc.jpg",
     link: "/province/ho-chi-minh",
   },
   {
     id: "danang",
     name: "Da Nang",
-    nameVi: "Da Nang",
+    nameVi: "Đà Nẵng",
     img: "/guide/hcmc/top-dest-danang.jpg",
     link: "/province/da-nang",
   },
   {
     id: "hanoi",
     name: "Hanoi",
-    nameVi: "Hanoi",
+    nameVi: "Hà Nội",
     img: "/guide/hcmc/top-dest-hanoi.jpg",
     link: "/province/ha-noi",
   },
   {
     id: "hoian",
     name: "Hoi An",
-    nameVi: "Hoi An",
+    nameVi: "Hội An",
     img: "/guide/hcmc/top-dest-hoian.jpg",
     link: "/province/da-nang",
   },
@@ -203,26 +208,27 @@ const REGIONAL_DESTINATIONS_DATA = [
   {
     regionId: "north",
     regionName: "NORTHERN VIETNAM",
-    regionNameVi: "NORTHERN VIETNAM",
+    regionNameVi: "MIỀN BẮC VIỆT NAM",
     barColorClass: "vnn-section-head__bar--purple",
     featured: {
       title: "Hanoi",
-      titleVi: "Hanoi",
+      titleVi: "Hà Nội",
       desc: "Follow this guide and you will understand why Hanoi is a perfect coming together of the timeless cultural value of the old and the dynamic and colorful vibes of the new.",
-      descVi: "Follow this guide and you will understand why Hanoi is a perfect coming together of the timeless cultural value of the old and the dynamic and colorful vibes of the new.",
+      descVi:
+        "Theo chân cẩm nang này bạn sẽ hiểu vì sao Hà Nội là sự hòa quyện hoàn hảo giữa nét văn hóa cổ kính ngàn năm và nhịp sống trẻ trung, hiện đại.",
       img: "/guide/hcmc/region-north-hanoi.jpg",
       link: "/province/ha-noi",
     },
     minis: [
       {
         title: "Hanoi Tourist Map",
-        titleVi: "Hanoi Tourist Map",
+        titleVi: "Bản đồ du lịch Hà Nội",
         img: "/guide/hcmc/region-north-map.jpg",
         link: "/province/ha-noi",
       },
       {
         title: "Ha Giang",
-        titleVi: "Ha Giang",
+        titleVi: "Hà Giang - Cao nguyên đá",
         img: "/guide/hcmc/region-north-hagiang.jpg",
         link: "/province/ha-noi",
       },
@@ -231,26 +237,27 @@ const REGIONAL_DESTINATIONS_DATA = [
   {
     regionId: "central",
     regionName: "CENTRAL VIETNAM",
-    regionNameVi: "CENTRAL VIETNAM",
+    regionNameVi: "MIỀN TRUNG VIỆT NAM",
     barColorClass: "vnn-section-head__bar--orange",
     featured: {
       title: "Da Nang",
-      titleVi: "Da Nang",
+      titleVi: "Đà Nẵng",
       desc: "This is an all-in-one Da Nang travel guide. Learn about the most necessary information about Da Nang tourism such as attractions, dishes, hotels, restaurants, and more.",
-      descVi: "This is an all-in-one Da Nang travel guide. Learn about the most necessary information about Da Nang tourism such as attractions, dishes, hotels, restaurants, and more.",
+      descVi:
+        "Cẩm nang toàn diện về du lịch Đà Nẵng: đầy đủ thông tin điểm đến, món ngon đặc sản, khách sạn và các trải nghiệm khó quên.",
       img: "/guide/hcmc/region-central-danang.jpg",
       link: "/province/da-nang",
     },
     minis: [
       {
         title: "The 10 best attractions in Da Nang",
-        titleVi: "The 10 best attractions in Da Nang",
+        titleVi: "10 điểm tham quan đẹp nhất Đà Nẵng",
         img: "/guide/hcmc/region-central-10things.jpg",
         link: "/province/da-nang",
       },
       {
         title: "Nha Trang",
-        titleVi: "Nha Trang",
+        titleVi: "Nha Trang - Vịnh biển ngọc",
         img: "/guide/hcmc/region-central-nhatrang.jpg",
         link: "/province/da-nang",
       },
@@ -259,26 +266,27 @@ const REGIONAL_DESTINATIONS_DATA = [
   {
     regionId: "south",
     regionName: "SOUTHERN VIETNAM",
-    regionNameVi: "SOUTHERN VIETNAM",
+    regionNameVi: "MIỀN NAM VIỆT NAM",
     barColorClass: "vnn-section-head__bar--cyan",
     featured: {
       title: "Ho Chi Minh City",
-      titleVi: "Ho Chi Minh City",
+      titleVi: "TP. Hồ Chí Minh",
       desc: "Ho Chi Minh City, or as it is often called intimately by the locals as Saigon, is one of the sought-after destinations while travelling in Vietnam. Saigon of the modern times attracts people not for the spectacular natural landscapes but for its dynamic lifestyle – where endless options of activities are going to tie your heart.",
-      descVi: "Ho Chi Minh City, or as it is often called intimately by the locals as Saigon, is one of the sought-after destinations while travelling in Vietnam. Saigon of the modern times attracts people not for the spectacular natural landscapes but for its dynamic lifestyle – where endless options of activities are going to tie your heart.",
+      descVi:
+        "TP. Hồ Chí Minh (Sài Gòn) luôn là điểm đến hấp dẫn du khách bởi lối sống năng động, ẩm thực phong phú và nhịp sống phồn hoa cả ngày lẫn đêm.",
       img: "/guide/hcmc/region-south-hcmc.jpg",
       link: "/province/ho-chi-minh",
     },
     minis: [
       {
         title: "Ho Chi Minh City Tourist Map",
-        titleVi: "Ho Chi Minh City Tourist Map",
+        titleVi: "Bản đồ du lịch TP.HCM",
         img: "/guide/hcmc/region-south-map.jpg",
         link: "/province/ho-chi-minh",
       },
       {
         title: "12 best attractions in Ho Chi Minh City",
-        titleVi: "12 best attractions in Ho Chi Minh City",
+        titleVi: "12 điểm tham quan ở Sài Gòn",
         img: "/guide/hcmc/region-south-12attractions.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
@@ -292,15 +300,16 @@ const VIDEO_PLAYLIST_ITEMS = [
     id: "video-1",
     youtubeId: "BvP3G1Xfth8",
     title: "Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
-    titleVi: "Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
+    titleVi:
+      "Cẩm nang du lịch Việt Nam: Thời tiết, Visa, Điểm đến & Kinh nghiệm",
     duration: "21:35",
     img: "/guide/hcmc/video-player-sapa-cover.jpg",
   },
   {
     id: "video-2",
     youtubeId: "Nm0T5lPAT7U",
-    title: "Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in",
-    titleVi: "Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in",
+    title: "Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in Vietnam",
+    titleVi: "Hội An: Cẩm nang khám phá khu phố cổ lung linh đèn lồng",
     duration: "14:23",
     img: "/guide/hcmc/video-card-hoian.jpg",
   },
@@ -308,7 +317,7 @@ const VIDEO_PLAYLIST_ITEMS = [
     id: "video-3",
     youtubeId: "BvP3G1Xfth8",
     title: "Da Nang: A Guide to Visiting the Most Livable City in Vietnam",
-    titleVi: "Da Nang: A Guide to Visiting the Most Livable City in Vietnam",
+    titleVi: "Đà Nẵng: Hướng dẫn khám phá thành phố đáng sống nhất Việt Nam",
     duration: "12:41",
     img: "/guide/hcmc/region-central-danang.jpg",
   },
@@ -316,7 +325,7 @@ const VIDEO_PLAYLIST_ITEMS = [
     id: "video-4",
     youtubeId: "1WdDnbnwTcI",
     title: "Hue: A Guide to Visiting the Ancient Capital of Vietnam",
-    titleVi: "Hue: A Guide to Visiting the Ancient Capital of Vietnam",
+    titleVi: "Huế: Hành trình khám phá di sản Cố đô cổ kính ngàn năm",
     duration: "13:14",
     img: "/guide/hcmc/video-card-hue.jpg",
   },
@@ -324,7 +333,7 @@ const VIDEO_PLAYLIST_ITEMS = [
     id: "video-5",
     youtubeId: "2QbOPAKrsg4",
     title: "10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
-    titleVi: "10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
+    titleVi: "10 địa điểm du lịch tuyệt nhất Việt Nam được 7.050 du khách bình chọn",
     duration: "09:53",
     img: "/guide/hcmc/video-card-best10.jpg",
   },
@@ -332,7 +341,7 @@ const VIDEO_PLAYLIST_ITEMS = [
     id: "video-6",
     youtubeId: "BvP3G1Xfth8",
     title: "Da Lat: A Guide to Visiting Vietnam's Little Paris",
-    titleVi: "Da Lat: A Guide to Visiting Vietnam's Little Paris",
+    titleVi: "Đà Lạt: Cẩm nang vi vu tiểu Paris ngập tràn sắc hoa và sương mù",
     duration: "11:15",
     img: "/guide/megamenu/dest-2-dalat.jpg",
   },
@@ -340,7 +349,7 @@ const VIDEO_PLAYLIST_ITEMS = [
     id: "video-7",
     youtubeId: "BvP3G1Xfth8",
     title: "Nha Trang: A Guide to Visiting Vietnam's Sea Paradise",
-    titleVi: "Nha Trang: A Guide to Visiting Vietnam's Sea Paradise",
+    titleVi: "Nha Trang: Cẩm nang du lịch vịnh biển thiên đường xanh ngắt",
     duration: "11:37",
     img: "/guide/hcmc/region-central-nhatrang.jpg",
   },
@@ -348,25 +357,35 @@ const VIDEO_PLAYLIST_ITEMS = [
 
 const VIDEO_BOTTOM_CARDS = [
   {
-    title: "[Video] Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
+    title:
+      "[Video] Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
+    titleVi:
+      "[Video] Cẩm nang du lịch Việt Nam: Khí hậu, Visa, Điểm đến & Ẩm thực",
     duration: "00:21:35",
     img: "/guide/hcmc/video-card-vietnam.jpg",
     youtubeId: "BvP3G1Xfth8",
   },
   {
     title: "[Video] Hue: A Guide to Visiting the Ancient Capital of Vietnam",
+    titleVi: "[Video] Huế: Cẩm nang khám phá di sản Cố đô trầm mặc",
     duration: "00:13:14",
     img: "/guide/hcmc/video-card-hue.jpg",
     youtubeId: "1WdDnbnwTcI",
   },
   {
-    title: "[Video] 10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
+    title:
+      "[Video] 10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
+    titleVi:
+      "[Video] 10 điểm đến đẹp nhất Việt Nam do hơn 7.000 du khách bình chọn",
     duration: "00:09:53",
     img: "/guide/hcmc/video-card-best10.jpg",
     youtubeId: "2QbOPAKrsg4",
   },
   {
-    title: "[Video] Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in Vietnam",
+    title:
+      "[Video] Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in Vietnam",
+    titleVi:
+      "[Video] Hội An: Hướng dẫn khám phá phố cổ lung linh đèn lồng",
     duration: "00:14:23",
     img: "/guide/hcmc/video-card-hoian.jpg",
     youtubeId: "Nm0T5lPAT7U",
@@ -379,7 +398,8 @@ const FOODS_TO_TRY_ITEMS = [
     title: "8 must-try foods in Hanoi",
     titleVi: "8 món ăn nhất định phải thử tại Hà Nội",
     desc: "Discover 8 must-try dishes in Hanoi, where tradition, care, and handmade cooking define a vibrant and authentic food culture.",
-    descVi: "Khám phá 8 món ăn tinh hoa ẩm thực phố cổ Hà Nội, nơi truyền thống và sự chăm chút tạo nên hương vị khó quên.",
+    descVi:
+      "Khám phá 8 món ăn tinh hoa ẩm thực phố cổ Hà Nội, nơi truyền thống và sự chăm chút tạo nên hương vị khó quên.",
     img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
     link: "/province/ha-noi",
   },
@@ -387,15 +407,17 @@ const FOODS_TO_TRY_ITEMS = [
     title: "12 must-try foods in Ho Chi Minh City",
     titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
     desc: "Ho Chi Minh City is a paradise for food lovers, where every street corner offers a delicious surprise. Here's a guide to 12 signature dishes you absolutely must try to get the full experience.",
-    descVi: "Sài Gòn là thiên đường của những tín đồ ẩm thực. Cẩm nang 12 món ăn đường phố đặc trưng nhất định phải nếm thử.",
+    descVi:
+      "Sài Gòn là thiên đường của những tín đồ ẩm thực. Cẩm nang 12 món ăn đường phố đặc trưng nhất định phải nếm thử.",
     img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Goi-Cuon.jpg",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
+    link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
   },
   {
     title: "Pho",
     titleVi: "Phở – Quốc hồn quốc túy",
     desc: "Pho in the heart of Vietnamese people is more than just a universal dish but a cultural monument that we take pride in, a reminder of how rich and unique our heritage is, and an intimate image that we hold on to as a piece of our soul.",
-    descVi: "Phở không chỉ là món ăn quốc hồn quốc túy mà còn là niềm tự hào văn hóa gắn liền với ký ức và tâm hồn người Việt.",
+    descVi:
+      "Phở không chỉ là món ăn quốc hồn quốc túy mà còn là niềm tự hào văn hóa gắn liền với ký ức và tâm hồn người Việt.",
     img: "/guide/hcmc/Top-Hanoi-foods-Pho-Vietnamnomad.jpg",
     link: "/province/ha-noi",
   },
@@ -403,7 +425,8 @@ const FOODS_TO_TRY_ITEMS = [
     title: "7 must-try foods in Vung Tau",
     titleVi: "7 món ăn nhất định phải thử ở Vũng Tàu",
     desc: "Vung Tau is a favorite destination for both domestic and international travelers, not only for its convenient location but also for its incredibly diverse and unique cuisine. Here are seven must-try local dishes to enjoy during your visit.",
-    descVi: "Vũng Tàu không chỉ hấp dẫn bởi biển xanh mà còn bởi ẩm thực hải sản và bánh khọt trứ danh.",
+    descVi:
+      "Vũng Tàu không chỉ hấp dẫn bởi biển xanh mà còn bởi ẩm thực hải sản và bánh khọt trứ danh.",
     img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Xeo.jpg",
     link: "/province/hai-phong",
   },
@@ -411,7 +434,8 @@ const FOODS_TO_TRY_ITEMS = [
     title: "5 must-try Nha Trang dishes",
     titleVi: "5 món ăn phải nếm khi đến Nha Trang",
     desc: "From aromatic broths to grilled delights, Nha Trang's food is a perfect celebration of coastal flavors and fresh local catches.",
-    descVi: "Nem nướng, bún chả cá, bánh căn và hải sản tươi rói tôn vinh nét đậm đà ẩm thực vịnh biển miền Trung.",
+    descVi:
+      "Nem nướng, bún chả cá, bánh căn và hải sản tươi rói tôn vinh nét đậm đà ẩm thực vịnh biển miền Trung.",
     img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
     link: "/province/da-nang",
   },
@@ -423,7 +447,8 @@ const THINGS_TO_DO_ITEMS = [
     title: "The 10 best attractions in Da Nang",
     titleVi: "10 điểm đến đẹp nhất Đà Nẵng",
     desc: "Da Nang is the most famous coastal city in Vietnam as it is endowed with stunning natural assets and has invested in modern infrastructures. Here are the 10 best attractions in Da Nang.",
-    descVi: "Khám phá thành phố biển đáng sống nhất Việt Nam: Cầu Rồng, Ngũ Hành Sơn, Bà Nà Hills và bãi biển Mỹ Khê tuyệt đẹp.",
+    descVi:
+      "Khám phá thành phố biển đáng sống nhất Việt Nam: Cầu Rồng, Ngũ Hành Sơn, Bà Nà Hills và bãi biển Mỹ Khê tuyệt đẹp.",
     img: "/guide/hcmc/region-central-10things.jpg",
     link: "/province/da-nang",
   },
@@ -431,7 +456,8 @@ const THINGS_TO_DO_ITEMS = [
     title: "20 Best Things to Do in Vietnam",
     titleVi: "20 trải nghiệm nhất định phải thử ở Việt Nam",
     desc: "Here are 20 things to do in Vietnam to make the most out of your time and still guarantee the best experience about the landscapes, people and cuisine.",
-    descVi: "20 trải nghiệm tuyệt vời nhất giúp bạn tận hưởng trọn vẹn cảnh sắc thiên nhiên, văn hóa và con người Việt Nam.",
+    descVi:
+      "20 trải nghiệm tuyệt vời nhất giúp bạn tận hưởng trọn vẹn cảnh sắc thiên nhiên, văn hóa và con người Việt Nam.",
     img: "/guide/hcmc/20-Best-Things-to-Do-in-Vietnam.jpg",
     link: "/province/ha-noi",
   },
@@ -469,6 +495,7 @@ const TRAVEL_PILLARS = [
 const LATEST_ARTICLES_ITEMS = [
   {
     badge: "#TRENDING",
+    badgeVi: "#XU HƯỚNG",
     title: "15 best places to visit in Vietnam in 2026",
     titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
     meta: "VinaTap - June 16, 2026",
@@ -478,6 +505,7 @@ const LATEST_ARTICLES_ITEMS = [
   },
   {
     badge: "#TRENDING",
+    badgeVi: "#XU HƯỚNG",
     title: "Plan Your Vietnam Trip with Just One Prompt",
     titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một câu lệnh AI",
     meta: "VinaTap - April 1, 2026",
@@ -487,15 +515,17 @@ const LATEST_ARTICLES_ITEMS = [
   },
   {
     badge: "#TRENDING",
+    badgeVi: "#XU HƯỚNG",
     title: "The Complete Guide to Vietnam",
     titleVi: "Cẩm nang toàn diện 34 Tỉnh Thành Việt Nam",
     meta: "VinaTap - January 9, 2026",
     metaVi: "VinaTap • 9 Tháng 1, 2026",
     img: "/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+    link: "/guide/the-complete-guide-to-vietnam",
   },
   {
     badge: "MEMBERSHIP",
+    badgeVi: "LƯU TRÚ",
     title: "Accommodation in Vietnam",
     titleVi: "Khách sạn & Nơi lưu trú tại Việt Nam",
     meta: "VinaTap - December 16, 2025",
@@ -505,6 +535,7 @@ const LATEST_ARTICLES_ITEMS = [
   },
   {
     badge: "HO CHI MINH CITY",
+    badgeVi: "TP. HỒ CHÍ MINH",
     title: "Where to Stay in Ho Chi Minh City",
     titleVi: "Khách sạn & Khu vực nên ở tại TP. Hồ Chí Minh",
     meta: "VinaTap - November 26, 2025",
@@ -514,6 +545,7 @@ const LATEST_ARTICLES_ITEMS = [
   },
   {
     badge: "WEATHER",
+    badgeVi: "THỜI TIẾT",
     title: "Vietnam Weather Map for September",
     titleVi: "Bản đồ dự báo thời tiết du lịch Việt Nam",
     meta: "VinaTap - November 12, 2025",
@@ -553,7 +585,7 @@ const POPULAR_POSTS_ITEMS = [
     title: "15 Must-Try Vietnamese Dishes",
     titleVi: "15 món ăn Việt Nam nhất định phải thử",
     img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
+    link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
   },
 ];
 
@@ -588,7 +620,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "9 Tháng 1, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-3.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/the-complete-guide-to-vietnam",
       },
       {
         id: "insp-4",
@@ -740,7 +772,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "26 Tháng 4, 2025",
         badge: "Articles",
         img: "/guide/megamenu/eat-2-hcmc.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
+        link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
       },
       {
         id: "eat-3",
@@ -820,6 +852,21 @@ const MEGA_MENUS_DATA = {
   },
 };
 
+const getBadgeLabel = (badge, isVi) => {
+  if (!isVi || !badge) return badge;
+  const b = badge.toLowerCase();
+  if (b.includes("trending")) return "#Xu hướng";
+  if (b.includes("destinations") || b.includes("destination")) return "Điểm đến";
+  if (b.includes("featured")) return "Bài viết nổi bật";
+  if (b.includes("article")) return "Bài viết";
+  if (b.includes("central")) return "Miền Trung";
+  if (b.includes("itinerary")) return "Lịch trình";
+  if (b.includes("eat") || b.includes("drink")) return "Ẩm thực";
+  if (b.includes("hanoi")) return "Hà Nội";
+  if (b.includes("membership") || b.includes("accommodation")) return "Lưu trú";
+  if (b.includes("weather")) return "Thời tiết";
+  return badge;
+};
 
 const REGION_LABEL = {
   vi: {
@@ -1191,13 +1238,21 @@ export default function HomePage() {
     if (exactMatch) return exactMatch.a;
 
     // 2. Nhận diện ý định theo các chủ đề chính của VinaTap (Intent Recognition)
-    if (/lên kế hoạch|lịch trình|kế hoạch|gợi ý|plan|itinerary|schedule/i.test(qLower)) {
+    if (
+      /lên kế hoạch|lịch trình|kế hoạch|gợi ý|plan|itinerary|schedule/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "Để lên kế hoạch du lịch với AI Prompt:\n1. Nhập câu lệnh mong muốn (ví dụ: 'Lên lịch trình 3 ngày 2 đêm ở Đà Nẵng').\n2. AI sẽ tự động đề xuất lịch trình theo từng buổi, kèm địa điểm tham quan và quán ăn nổi tiếng nhất!"
         : "To plan a trip with AI Prompt:\n1. Type your request (e.g., 'Plan a 3-day itinerary in Da Nang').\n2. The AI will instantly generate a tailored daily schedule with top sights and local eateries!";
     }
 
-    if (/điểm đến|tỉnh thành|nơi nào|chơi ở đâu|tham quan|destination|places/i.test(qLower)) {
+    if (
+      /điểm đến|tỉnh thành|nơi nào|chơi ở đâu|tham quan|destination|places/i.test(
+        qLower,
+      )
+    ) {
       return isVi
         ? "VinaTap hiện có cẩm nang số chi tiết cho 34 tỉnh thành trọng điểm du lịch Việt Nam (Hà Nội, Sài Gòn, Đà Nẵng, Ninh Bình, Hải Phòng...).\nBạn có thể nhấp vào mục 'Điểm Đến' trên thanh điều hướng để khám phá ngay!"
         : "VinaTap covers comprehensive guides for 34 iconic destinations across Vietnam (Hanoi, Saigon, Da Nang, Ninh Binh, Hai Phong...).\nClick 'Destinations' in the top menu to explore!";
@@ -1294,7 +1349,17 @@ export default function HomePage() {
         </div>
 
         {/* ─── 2. EDITORIAL NAVBAR (VIETNAMNOMAD WITH HOVER MEGAMENUS) ─── */}
-        <header className="vnn-navbar" onMouseLeave={handleMenuLeave}>
+        <header
+          className="vnn-navbar"
+          onMouseLeave={handleMenuLeave}
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 9999,
+            background: "#ffffff",
+            width: "100%",
+          }}
+        >
           <div className="vnn-navbar__inner">
             <Link href="/" className="vnn-navbar__brand">
               <div className="vnn-navbar__brand-vinatap">
@@ -1406,7 +1471,9 @@ export default function HomePage() {
                     >
                       <div className="vnn-megamenu__thumb">
                         <img src={item.img} alt={item.title} loading="eager" />
-                        <span className="vnn-megamenu__badge">{item.badge}</span>
+                        <span className="vnn-megamenu__badge">
+                          {getBadgeLabel(item.badge, lang === "vi")}
+                        </span>
                       </div>
                       <h4 className="vnn-megamenu__title">
                         {lang === "vi" ? item.titleVi : item.title}
@@ -1445,7 +1512,9 @@ export default function HomePage() {
         <section className="vnn-ticker-section">
           <div className="vnn-ticker">
             <div className="vnn-ticker__left">
-              <span className="vnn-ticker__badge">#TRENDING</span>
+              <span className="vnn-ticker__badge">
+                {lang === "vi" ? "#XU HƯỚNG" : "#TRENDING"}
+              </span>
               <Link
                 href={TRENDING_HERO_STORIES[trendingIndex].link}
                 className="vnn-ticker__text"
@@ -1461,7 +1530,7 @@ export default function HomePage() {
                 className="vnn-ticker__btn"
                 onClick={() =>
                   setTrendingIndex((prev) =>
-                    prev === 0 ? TRENDING_HERO_STORIES.length - 1 : prev - 1
+                    prev === 0 ? TRENDING_HERO_STORIES.length - 1 : prev - 1,
                   )
                 }
                 aria-label="Previous trending article"
@@ -1472,8 +1541,8 @@ export default function HomePage() {
                 type="button"
                 className="vnn-ticker__btn"
                 onClick={() =>
-                  setTrendingIndex((prev) =>
-                    (prev + 1) % TRENDING_HERO_STORIES.length
+                  setTrendingIndex(
+                    (prev) => (prev + 1) % TRENDING_HERO_STORIES.length,
                   )
                 }
                 aria-label="Next trending article"
@@ -1499,7 +1568,11 @@ export default function HomePage() {
               />
               <div className="vnn-card-main__overlay" />
               <div className="vnn-card-main__body">
-                <span className="vnn-card-badge">{TRENDING_HERO_STORIES[0].badge}</span>
+                <span className="vnn-card-badge">
+                  {lang === "vi"
+                    ? (TRENDING_HERO_STORIES[0].badgeVi || TRENDING_HERO_STORIES[0].badge)
+                    : TRENDING_HERO_STORIES[0].badge}
+                </span>
                 <h2 className="vnn-card-main__title">
                   {lang === "vi"
                     ? TRENDING_HERO_STORIES[0].titleVi
@@ -1527,7 +1600,11 @@ export default function HomePage() {
                 />
                 <div className="vnn-card-sub__overlay" />
                 <div className="vnn-card-sub__body">
-                  <span className="vnn-card-badge">{TRENDING_HERO_STORIES[1].badge}</span>
+                  <span className="vnn-card-badge">
+                    {lang === "vi"
+                      ? (TRENDING_HERO_STORIES[1].badgeVi || TRENDING_HERO_STORIES[1].badge)
+                      : TRENDING_HERO_STORIES[1].badge}
+                  </span>
                   <h3 className="vnn-card-sub__title">
                     {lang === "vi"
                       ? TRENDING_HERO_STORIES[1].titleVi
@@ -1548,7 +1625,11 @@ export default function HomePage() {
                 />
                 <div className="vnn-card-sub__overlay" />
                 <div className="vnn-card-sub__body">
-                  <span className="vnn-card-badge">{TRENDING_HERO_STORIES[2].badge}</span>
+                  <span className="vnn-card-badge">
+                    {lang === "vi"
+                      ? (TRENDING_HERO_STORIES[2].badgeVi || TRENDING_HERO_STORIES[2].badge)
+                      : TRENDING_HERO_STORIES[2].badge}
+                  </span>
                   <h3 className="vnn-card-sub__title">
                     {lang === "vi"
                       ? TRENDING_HERO_STORIES[2].titleVi
@@ -1569,7 +1650,11 @@ export default function HomePage() {
                 />
                 <div className="vnn-card-sub__overlay" />
                 <div className="vnn-card-sub__body">
-                  <span className="vnn-card-badge">{TRENDING_HERO_STORIES[3].badge}</span>
+                  <span className="vnn-card-badge">
+                    {lang === "vi"
+                      ? (TRENDING_HERO_STORIES[3].badgeVi || TRENDING_HERO_STORIES[3].badge)
+                      : TRENDING_HERO_STORIES[3].badge}
+                  </span>
                   <h3 className="vnn-card-sub__title">
                     {lang === "vi"
                       ? TRENDING_HERO_STORIES[3].titleVi
@@ -1591,7 +1676,9 @@ export default function HomePage() {
                 <div className="vnn-card-sub__overlay" />
                 <div className="vnn-card-sub__body">
                   <span className="vnn-card-badge vnn-card-badge--featured">
-                    {TRENDING_HERO_STORIES[4].badge}
+                    {lang === "vi"
+                      ? (TRENDING_HERO_STORIES[4].badgeVi || TRENDING_HERO_STORIES[4].badge)
+                      : TRENDING_HERO_STORIES[4].badge}
                   </span>
                   <h3 className="vnn-card-sub__title">
                     {lang === "vi"
@@ -1611,7 +1698,7 @@ export default function HomePage() {
             <div className="vnn-inspired-left-col">
               <div className="vnn-section-head">
                 <h3 className="vnn-section-head__title">
-                  {lang === "vi" ? "BE INSPIRED" : "BE INSPIRED"}
+                  {lang === "vi" ? "GỢI Ý CẢM HỨNG" : "BE INSPIRED"}
                 </h3>
                 <span className="vnn-section-head__bar vnn-section-head__bar--red" />
               </div>
@@ -1679,7 +1766,7 @@ export default function HomePage() {
             <div className="vnn-connect-col">
               <div className="vnn-section-head">
                 <h3 className="vnn-section-head__title">
-                  {lang === "vi" ? "CONNECT WITH US" : "CONNECT WITH US"}
+                  {lang === "vi" ? "KẾT NỐI VỚI CHÚNG TÔI" : "CONNECT WITH US"}
                 </h3>
                 <span className="vnn-section-head__bar vnn-section-head__bar--green" />
               </div>
@@ -1694,7 +1781,10 @@ export default function HomePage() {
                   aria-label="Facebook Fanpage"
                   title="Facebook"
                 >
-                  <Facebook size={26} className="vnn-social-icon vnn-social-icon--fb" />
+                  <Facebook
+                    size={26}
+                    className="vnn-social-icon vnn-social-icon--fb"
+                  />
                 </a>
 
                 <a
@@ -1705,7 +1795,10 @@ export default function HomePage() {
                   aria-label="Instagram"
                   title="Instagram"
                 >
-                  <Instagram size={26} className="vnn-social-icon vnn-social-icon--ig" />
+                  <Instagram
+                    size={26}
+                    className="vnn-social-icon vnn-social-icon--ig"
+                  />
                 </a>
 
                 <a
@@ -1716,7 +1809,10 @@ export default function HomePage() {
                   aria-label="YouTube Channel"
                   title="YouTube"
                 >
-                  <Youtube size={26} className="vnn-social-icon vnn-social-icon--yt" />
+                  <Youtube
+                    size={26}
+                    className="vnn-social-icon vnn-social-icon--yt"
+                  />
                 </a>
               </div>
 
@@ -1726,7 +1822,7 @@ export default function HomePage() {
                 onClick={() => setAiCompanionOpen(true)}
                 role="button"
                 tabIndex={0}
-                title="TRAVEL SMARTER WITH AI-COMPANION"
+                title={lang === "vi" ? "DU LỊCH THÔNG MINH VỚI TRỢ LÝ ẢO AI" : "TRAVEL SMARTER WITH AI-COMPANION"}
               >
                 <img
                   src="/guide/hcmc/ai-companion-sidebar-banner.jpg"
@@ -1744,18 +1840,14 @@ export default function HomePage() {
           <div className="vnn-destinations-container">
             <div className="vnn-section-head">
               <h3 className="vnn-section-head__title">
-                {lang === "vi" ? "TOP DESTINATIONS" : "TOP DESTINATIONS"}
+                {lang === "vi" ? "ĐIỂM ĐẾN HÀNG ĐẦU" : "TOP DESTINATIONS"}
               </h3>
               <span className="vnn-section-head__bar vnn-section-head__bar--cyan" />
             </div>
 
             <div className="vnn-destinations-grid" ref={topDestTrackRef}>
               {TOP_DESTINATIONS_DATA.map((dest) => (
-                <Link
-                  key={dest.id}
-                  href={dest.link}
-                  className="vnn-dest-card"
-                >
+                <Link key={dest.id} href={dest.link} className="vnn-dest-card">
                   <img
                     src={dest.img}
                     alt={dest.name}
@@ -1800,13 +1892,12 @@ export default function HomePage() {
                   <h3 className="vnn-section-head__title">
                     {lang === "vi" ? reg.regionNameVi : reg.regionName}
                   </h3>
-                  <span className={`vnn-section-head__bar ${reg.barColorClass}`} />
+                  <span
+                    className={`vnn-section-head__bar ${reg.barColorClass}`}
+                  />
                 </div>
 
-                <Link
-                  href={reg.featured.link}
-                  className="vnn-region-main"
-                >
+                <Link href={reg.featured.link} className="vnn-region-main">
                   <div className="vnn-region-main__img-wrap">
                     <img
                       src={reg.featured.img}
@@ -1815,7 +1906,9 @@ export default function HomePage() {
                       loading="lazy"
                     />
                   </div>
-                  <h4 className={`vnn-region-main__title vnn-region-main__title--${reg.regionId}`}>
+                  <h4
+                    className={`vnn-region-main__title vnn-region-main__title--${reg.regionId}`}
+                  >
                     {lang === "vi" ? reg.featured.titleVi : reg.featured.title}
                   </h4>
                   <p className="vnn-region-main__desc">
@@ -1895,7 +1988,9 @@ export default function HomePage() {
                       </div>
                       <div>
                         <div className="vnn-video-player-title-text">
-                          {lang === "vi" ? activeVideo.titleVi : activeVideo.title}
+                          {lang === "vi"
+                            ? activeVideo.titleVi
+                            : activeVideo.title}
                         </div>
                         <div className="vnn-video-player-author">VinaTap</div>
                       </div>
@@ -1923,7 +2018,11 @@ export default function HomePage() {
                         className="vnn-video-player-yt-badge"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <span>{lang === "vi" ? "Xem trên YouTube" : "Watch on YouTube"}</span>
+                        <span>
+                          {lang === "vi"
+                            ? "Xem trên YouTube"
+                            : "Watch on YouTube"}
+                        </span>
                       </a>
                     </div>
                   </div>
@@ -1977,7 +2076,9 @@ export default function HomePage() {
                   key={card.title}
                   className="vnn-video-card"
                   onClick={() => {
-                    const match = VIDEO_PLAYLIST_ITEMS.find((v) => v.youtubeId === card.youtubeId);
+                    const match = VIDEO_PLAYLIST_ITEMS.find(
+                      (v) => v.youtubeId === card.youtubeId,
+                    );
                     if (match) setActiveVideo(match);
                     setIsVideoPlaying(true);
                     const el = document.getElementById("videos");
@@ -1999,7 +2100,7 @@ export default function HomePage() {
                     </span>
                   </div>
                   <h4 className="vnn-video-card__title">
-                    {card.title}
+                    {lang === "vi" ? (card.titleVi || card.title) : card.title}
                   </h4>
                 </div>
               ))}
@@ -2163,7 +2264,9 @@ export default function HomePage() {
                         loading="lazy"
                       />
                     </div>
-                    <span className="vnn-latest-card__badge">{item.badge}</span>
+                    <span className="vnn-latest-card__badge">
+                      {lang === "vi" ? (item.badgeVi || item.badge) : item.badge}
+                    </span>
                     <h4 className="vnn-latest-card__title">
                       {lang === "vi" ? item.titleVi : item.title}
                     </h4>
@@ -2344,7 +2447,7 @@ export default function HomePage() {
                     {lang === "vi" ? "Điểm đến tuyệt nhất" : "Best places"}
                   </Link>
                   <Link
-                    href="/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods"
+                    href="/guide/12-must-try-foods-in-ho-chi-minh-city"
                     className="vnn-clean-footer__link"
                   >
                     {lang === "vi" ? "Món ăn ngon nhất" : "Best dishes"}
@@ -2410,16 +2513,20 @@ export default function HomePage() {
                   <Link href="/#faq" className="vnn-clean-footer__link">
                     {lang === "vi" ? "Cộng đồng xê dịch" : "Our community"}
                   </Link>
-                  <Link href="/policy#support" className="vnn-clean-footer__link">
+                  <Link
+                    href="/policy#support"
+                    className="vnn-clean-footer__link"
+                  >
                     {lang === "vi" ? "Hợp tác đồng hành" : "Partner with us"}
                   </Link>
                 </div>
               </div>
             </div>
 
-            {/* Copyright Line */}
             <div className="vnn-clean-footer__bottom">
-              © 2026 VinaTap. All rights reserved.
+              {lang === "vi"
+                ? "© 2026 VinaTap. Đã đăng ký bản quyền."
+                : "© 2026 VinaTap. All rights reserved."}
             </div>
           </div>
         </footer>
@@ -2451,7 +2558,7 @@ export default function HomePage() {
                       const match = provinces.find((p) =>
                         p.name
                           .toLowerCase()
-                          .includes(searchModalText.toLowerCase().trim())
+                          .includes(searchModalText.toLowerCase().trim()),
                       );
                       if (match) {
                         router.push(`/province/${match.slug}`);
@@ -2479,7 +2586,7 @@ export default function HomePage() {
                           .includes(searchModalText.toLowerCase().trim()) ||
                         p.slug
                           .toLowerCase()
-                          .includes(searchModalText.toLowerCase().trim())
+                          .includes(searchModalText.toLowerCase().trim()),
                     )
                     .slice(0, 6)
                     .map((p) => (

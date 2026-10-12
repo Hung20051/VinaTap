@@ -72,7 +72,8 @@ const HCMC_GUIDE_ITEMS = [
   {
     id: 3,
     num: "03",
-    title: "Thưởng Thức Cà Phê Bệt & Check-in Nhà Thờ Đức Bà - Bưu Điện Trung Tâm",
+    title:
+      "Thưởng Thức Cà Phê Bệt & Check-in Nhà Thờ Đức Bà - Bưu Điện Trung Tâm",
     subTitle: "Nét văn hóa đời sống bình dị và di sản kiến trúc Pháp cổ kính",
     category: "Văn hóa & Đời sống",
     categoryKey: "culture",
@@ -88,12 +89,12 @@ const HCMC_GUIDE_ITEMS = [
   {
     id: 4,
     num: "04",
-    title: "Khám Phá Thiên Đường Ẩm Thực Đường Phố (Bánh Mì, Cơm Tấm, Hủ Tiếu, Bánh Xèo)",
+    title:
+      "Khám Phá Thiên Đường Ẩm Thực Đường Phố (Bánh Mì, Cơm Tấm, Hủ Tiếu, Bánh Xèo)",
     subTitle: "Thiên đường ăn vặt với hàng trăm món ngon đậm đà bản sắc",
     category: "Ẩm thực Bản địa",
     categoryKey: "food",
-    image:
-      "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg",
+    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg",
     desc: "Sài Gòn là thánh địa ẩm thực đường phố, nơi hội tụ hương vị khắp ba miền và cộng đồng người Hoa, Khmer. Từ ổ bánh mì giòn rụm pate thơm phức, dĩa cơm tấm sườn bì chả đậm đà mỡ hành, đến tô hủ tiếu Nam Vang thanh ngọt và bánh xèo vàng ươm cuốn rau rừng. Bạn có thể ghé chợ Bến Thành, phố ẩm thực Hồ Thị Kỷ hoặc các con hẻm ăn vặt trứ danh để thưởng thức trọn vẹn tinh hoa này.",
     tip: "Đi cùng một 'chiếc bụng đói' và đổi sẵn tiền mặt lẻ mệnh giá 20k - 50k để dễ dàng mua sắm tại các quầy hàng rong tấp nập.",
     cost: "25.000 - 80.000 VNĐ / món (~$1 - $3 USD)",
@@ -106,7 +107,8 @@ const HCMC_GUIDE_ITEMS = [
     id: 5,
     num: "05",
     title: "Thám Hiểm Hệ Thống Địa Đạo Củ Chi Huyền Thoại",
-    subTitle: "Kỳ tích ngầm hơn 250km được mệnh danh là 'Thành phố trong lòng đất'",
+    subTitle:
+      "Kỳ tích ngầm hơn 250km được mệnh danh là 'Thành phố trong lòng đất'",
     category: "Lịch sử & Di sản",
     categoryKey: "history",
     image:
@@ -121,7 +123,8 @@ const HCMC_GUIDE_ITEMS = [
   {
     id: 6,
     num: "06",
-    title: "Trải Nghiệm Du Thuyền & Saigon Waterbus Ngắm Hoàng Hôn Sông Sài Gòn",
+    title:
+      "Trải Nghiệm Du Thuyền & Saigon Waterbus Ngắm Hoàng Hôn Sông Sài Gòn",
     subTitle: "Thưởng ngoạn vẻ đẹp đô thị từ góc nhìn sông nước êm ả",
     category: "Ngắm cảnh & Trải nghiệm",
     categoryKey: "sightseeing",
@@ -173,7 +176,8 @@ const HCMC_GUIDE_ITEMS = [
     id: 9,
     num: "09",
     title: "Lạc Bước Vào Khu Phố Người Hoa Chợ Lớn & Thăm Chùa Bà Thiên Hậu",
-    subTitle: "Di sản văn hóa hơn 300 năm với kiến trúc cổ kính và ẩm thực phong phú",
+    subTitle:
+      "Di sản văn hóa hơn 300 năm với kiến trúc cổ kính và ẩm thực phong phú",
     category: "Văn hóa & Đời sống",
     categoryKey: "culture",
     image:
@@ -188,8 +192,10 @@ const HCMC_GUIDE_ITEMS = [
   {
     id: 10,
     num: "10",
-    title: "Chiêm Ngưỡng Nhà Thờ Tân Định (Nhà Thờ Màu Hồng) & Nhà Hát Thành Phố",
-    subTitle: "Kiến trúc Gothic diễm lệ và sân khấu nghệ thuật xiếc tre À Ố Show",
+    title:
+      "Chiêm Ngưỡng Nhà Thờ Tân Định (Nhà Thờ Màu Hồng) & Nhà Hát Thành Phố",
+    subTitle:
+      "Kiến trúc Gothic diễm lệ và sân khấu nghệ thuật xiếc tre À Ố Show",
     category: "Nghệ thuật & Sân khấu",
     categoryKey: "arts",
     image:
@@ -198,7 +204,8 @@ const HCMC_GUIDE_ITEMS = [
     tip: "Chụp ảnh Nhà thờ Tân Định đẹp nhất từ phía quán cà phê Cộng đối diện để lấy trọn đỉnh tháp chuông vươn cao trên nền trời xanh.",
     cost: "Tham quan ngoài miễn phí | Vé À Ố Show: 800.000 - 1.600.000 VNĐ",
     hours: "Nhà thờ: 08:00 - 17:00 | Nhà hát: Theo lịch biểu diễn",
-    address: "289 Hai Bà Trưng, Phường 8, Quận 3 & 07 Công Trường Lam Sơn, Quận 1",
+    address:
+      "289 Hai Bà Trưng, Phường 8, Quận 3 & 07 Công Trường Lam Sơn, Quận 1",
     mapsQuery: "Nhà thờ Tân Định Quận 3",
   },
 ];
@@ -216,9 +223,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Cơm tấm, món cơm nấu từ hạt gạo tấm vỡ, là nhịp đập của ẩm thực Sài Gòn — món ăn biểu tượng mà bạn nhất định không thể bỏ lỡ khi ghé thăm thành phố. Dù cho bữa sáng sớm, bữa trưa chắc dạ hay cơn đói lúc nửa đêm, đĩa cơm tấm luôn thỏa mãn vị giác trọn vẹn. Combo kinh điển bao gồm sườn heo cốt lết ướp sả mật ong nướng than hoa thơm lừng, bì heo dai giòn, chả trứng chưng bùi béo và một quả trứng ốp-la lòng đào. Tất cả phủ đều mỡ hành óng ả, tóp mỡ giòn rụm, đồ chua và chan thìa nước mắm chua ngọt keo đặc sóng sánh.",
     tip: "Gọi thêm một chén canh khổ qua dồn thịt thanh mát hoặc canh cải chua để trung hòa độ ngậy và thăng hoa vị giác.",
     places: [
-      { name: "Cơm Tấm Mộc", address: "85 Lý Tự Trọng, Bến Thành, Quận 1", price: "95.000 VNĐ (~$3.65 USD)" },
-      { name: "Cơm Tấm Chị Hằng", address: "28 Đỗ Quang Đẩu, Phạm Ngũ Lão, Quận 1", price: "82.000 VNĐ" },
-      { name: "Cơm Tấm Ba Ghiền", address: "84 Đặng Văn Ngữ, Phú Nhuận", price: "85.000 - 110.000 VNĐ" }
+      {
+        name: "Cơm Tấm Mộc",
+        address: "85 Lý Tự Trọng, Bến Thành, Quận 1",
+        price: "95.000 VNĐ (~$3.65 USD)",
+      },
+      {
+        name: "Cơm Tấm Chị Hằng",
+        address: "28 Đỗ Quang Đẩu, Phạm Ngũ Lão, Quận 1",
+        price: "82.000 VNĐ",
+      },
+      {
+        name: "Cơm Tấm Ba Ghiền",
+        address: "84 Đặng Văn Ngữ, Phú Nhuận",
+        price: "85.000 - 110.000 VNĐ",
+      },
     ],
     cost: "45.000 - 95.000 VNĐ (~$1.8 - $3.8 USD)",
     hours: "06:30 - 23:00 (Nhiều quán bán 24/7)",
@@ -236,9 +255,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Bánh mì Sài Gòn không đơn thuần là một chiếc sandwich, mà là một sự bùng nổ hương vị gói trọn trong ổ bánh giòn tan. Xuất phát từ thời thuộc địa Pháp, bánh mì đã được người Việt biến hóa thành nét văn hóa đường phố độc nhất vô nhị. Ổ bánh giòn rụm bên ngoài, xốp mềm bên trong, quét đều pate gan béo ngậy, bơ vàng thơm nức, kẹp đầy chả lụa, jambon, xá xíu, xíu mại hoặc thịt heo nướng, ăn cùng dưa leo, ngò rí, đồ chua giòn ngọt và vài lát ớt hiểm cay nồng chan nước sốt bí truyền.",
     tip: "Bánh mì Huỳnh Hoa rất dày nhân và đầy đặn, một ổ có thể đủ cho hai người ăn vừa bụng. Hãy chuẩn bị xếp hàng nhẹ vào giờ tan tầm.",
     places: [
-      { name: "Bánh Mì Huỳnh Hoa", address: "26 Lê Thị Riêng, Bến Thành, Quận 1", price: "68.000 VNĐ" },
-      { name: "Bánh Mì Phố Cổ 159", address: "31/1 Tôn Thất Tùng, Phạm Ngũ Lão, Quận 1", price: "49.000 VNĐ" },
-      { name: "Bánh Mì Bảy Hổ", address: "19 Huỳnh Khương Ninh, Đa Kao, Quận 1", price: "25.000 - 35.000 VNĐ" }
+      {
+        name: "Bánh Mì Huỳnh Hoa",
+        address: "26 Lê Thị Riêng, Bến Thành, Quận 1",
+        price: "68.000 VNĐ",
+      },
+      {
+        name: "Bánh Mì Phố Cổ 159",
+        address: "31/1 Tôn Thất Tùng, Phạm Ngũ Lão, Quận 1",
+        price: "49.000 VNĐ",
+      },
+      {
+        name: "Bánh Mì Bảy Hổ",
+        address: "19 Huỳnh Khương Ninh, Đa Kao, Quận 1",
+        price: "25.000 - 35.000 VNĐ",
+      },
     ],
     cost: "25.000 - 68.000 VNĐ (~$1 - $2.7 USD)",
     hours: "06:00 - 22:30",
@@ -256,9 +287,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Ngắm người đầu bếp chiên bánh xèo trên những chiếc chảo gang lớn là một trải nghiệm thị giác lẫn thính giác kỳ thú. Bột gạo pha nghệ vàng óng và nước cốt dừa béo thơm đổ xèo xèo vào chảo nóng, láng mỏng tang. Phần nhân gồm tôm đất tươi ngọt, thịt ba rọi béo mềm và giá đỗ được cuộn khéo léo bên trong lớp vỏ mỏng giòn rụm như bánh quế. Khi ăn, xé miếng bánh xèo nóng hổi, cuốn cùng cải bẹ xanh, xà lách và đủ loại rau rừng thơm lừng, chấm ngập trong nước mắm tỏi ớt chua ngọt.",
     tip: "Đừng ngại dùng tay để cuốn bánh xèo và rau sống — đó là cách ăn truyền thống mang lại sự tương tác và ngon miệng nhất!",
     places: [
-      { name: "Nhà Hàng Hoàng Tâm", address: "TK22/1 Nguyễn Cảnh Chân, Cầu Kho, Quận 1", price: "179.000 VNĐ (Phần lớn)" },
-      { name: "Bánh Xèo 46A", address: "46A Đinh Công Tráng, Tân Định, Quận 1", price: "90.000 - 150.000 VNĐ" },
-      { name: "Bánh Xèo Ăn Là Ghiền", address: "74 Sương Nguyệt Ánh, Bến Thành, Quận 1", price: "75.000 - 140.000 VNĐ" }
+      {
+        name: "Nhà Hàng Hoàng Tâm",
+        address: "TK22/1 Nguyễn Cảnh Chân, Cầu Kho, Quận 1",
+        price: "179.000 VNĐ (Phần lớn)",
+      },
+      {
+        name: "Bánh Xèo 46A",
+        address: "46A Đinh Công Tráng, Tân Định, Quận 1",
+        price: "90.000 - 150.000 VNĐ",
+      },
+      {
+        name: "Bánh Xèo Ăn Là Ghiền",
+        address: "74 Sương Nguyệt Ánh, Bến Thành, Quận 1",
+        price: "75.000 - 140.000 VNĐ",
+      },
     ],
     cost: "70.000 - 180.000 VNĐ (~$2.8 - $7.2 USD)",
     hours: "10:00 - 22:00",
@@ -276,9 +319,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Khi bạn muốn thưởng thức một món ăn nhẹ nhàng, ít calo nhưng ngập tràn độ tươi mát thì gỏi cuốn và bò bía là chân ái. Gỏi cuốn gói ghém tôm đỏ au luộc ngọt thịt, thịt ba chỉ, bún tươi, hẹ xanh trong lớp bánh tráng dẻo dai, chấm cùng tương bơ đậu phộng đặc sánh thơm lừng hoặc mắm nêm đậm đà. Bò bía kiểu người Hoa lại giòn ngọt nhờ củ sắn xào chín, tép khô rang giòn, lạp xưởng chiên thái mỏng và rau thơm, cuộn gọn trong chiếc bánh tráng xinh xắn.",
     tip: "Thích hợp làm món ăn xế chiều từ 15:00 - 17:00 tại các hàng gánh vỉa hè hoặc các khu chợ truyền thống như chợ Bến Thành, chợ Tân Định.",
     places: [
-      { name: "Gỏi Cuốn Hạnh", address: "420A Hai Bà Trưng, Tân Định, Quận 1", price: "15.000 VNĐ / cuốn" },
-      { name: "Quầy Gỏi Cuốn Chợ Bến Thành", address: "Khu ẩm thực Chợ Bến Thành, Quận 1", price: "15.000 - 20.000 VNĐ / cuốn" },
-      { name: "Bò Bía Công Viên Lê Văn Tám", address: "Cổng đường Hai Bà Trưng, Quận 3", price: "6.000 - 10.000 VNĐ / cuốn" }
+      {
+        name: "Gỏi Cuốn Hạnh",
+        address: "420A Hai Bà Trưng, Tân Định, Quận 1",
+        price: "15.000 VNĐ / cuốn",
+      },
+      {
+        name: "Quầy Gỏi Cuốn Chợ Bến Thành",
+        address: "Khu ẩm thực Chợ Bến Thành, Quận 1",
+        price: "15.000 - 20.000 VNĐ / cuốn",
+      },
+      {
+        name: "Bò Bía Công Viên Lê Văn Tám",
+        address: "Cổng đường Hai Bà Trưng, Quận 3",
+        price: "6.000 - 10.000 VNĐ / cuốn",
+      },
     ],
     cost: "10.000 - 25.000 VNĐ / cuốn (~$0.4 - $1 USD)",
     hours: "11:00 - 20:00",
@@ -296,9 +351,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Bạn thèm steak và trứng phục vụ ngay trên chảo gang nóng rực? Bò né là câu trả lời xuất sắc nhất. Từng lát thịt bò mềm ướp sốt đậm đà, kết hợp cùng trứng ốp-la lòng đào, pate gan béo bùi, xúc xích, phô mai và viên xíu mại. Tên gọi 'bò né' xuất phát từ việc thực khách phải hơi ngả người né những giọt dầu sôi lách tách khi chảo gang hình chú bò được bưng ra bàn. Dùng ổ bánh mì nóng giòn xé từng miếng quẹt sạch phần sốt thơm nức, kèm đĩa salad xà lách dưa leo chua ngọt giải ngấy.",
     tip: "Xịt một chút nước tương Maggi và tương ớt cay nồng lên lòng đỏ trứng, trộn đều với pate để làm sốt chấm bánh mì siêu ngon.",
     places: [
-      { name: "Bò Né Ba Ngon", address: "18 Đinh Tiên Hoàng, Đa Kao, Quận 1", price: "68.000 VNĐ" },
-      { name: "Bò Né Bà Nui", address: "94 Nguyễn Thái Bình, Nguyễn Thái Bình, Quận 1", price: "68.000 VNĐ" },
-      { name: "Bò Né Cô Long", address: "Đường Đoàn Văn Bơ, Quận 4", price: "55.000 - 70.000 VNĐ" }
+      {
+        name: "Bò Né Ba Ngon",
+        address: "18 Đinh Tiên Hoàng, Đa Kao, Quận 1",
+        price: "68.000 VNĐ",
+      },
+      {
+        name: "Bò Né Bà Nui",
+        address: "94 Nguyễn Thái Bình, Nguyễn Thái Bình, Quận 1",
+        price: "68.000 VNĐ",
+      },
+      {
+        name: "Bò Né Cô Long",
+        address: "Đường Đoàn Văn Bơ, Quận 4",
+        price: "55.000 - 70.000 VNĐ",
+      },
     ],
     cost: "45.000 - 75.000 VNĐ (~$1.8 - $3 USD)",
     hours: "07:00 - 13:00 & 16:30 - 22:00",
@@ -316,9 +383,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Nếu muốn thấu hiểu chiều sâu của văn hóa mì nước phương Nam, hãy bắt đầu bằng một tô hủ tiếu. Sợi hủ tiếu trong suốt, dai sần sật chan trong làn nước lèo ngọt thanh ninh từ xương ống heo, mực nướng và củ cải. Bạn có thể chọn ăn hủ tiếu nước truyền thống hoặc hủ tiếu khô trộn nước sốt tương đen đậm đà kèm chén súp riêng. Topping phong phú gồm tôm tươi bóc vỏ, thịt nạc, thịt băm, gan heo béo bùi, trứng cút và tỏi phi vàng rộm thơm lừng.",
     tip: "Hãy gọi phiên bản 'hủ tiếu khô' — sợi hủ tiếu ngấm đẫm sốt trộn xì dầu và tỏi phi giòn tan, kèm theo một chén nước dùng xí quách ninh nhừ.",
     places: [
-      { name: "Hủ Tiếu Mỹ Tho Thanh Xuân", address: "62 Tôn Thất Thiệp, Bến Nghé, Quận 1", price: "75.000 VNĐ" },
-      { name: "Hủ Tiếu Nam Vang Nhân Quán", address: "122 Nguyễn Trãi, Phường 3, Quận 5", price: "85.000 VNĐ" },
-      { name: "Hủ Tiếu Cả Cần", address: "110 Hùng Vương, Phường 9, Quận 5", price: "80.000 - 110.000 VNĐ" }
+      {
+        name: "Hủ Tiếu Mỹ Tho Thanh Xuân",
+        address: "62 Tôn Thất Thiệp, Bến Nghé, Quận 1",
+        price: "75.000 VNĐ",
+      },
+      {
+        name: "Hủ Tiếu Nam Vang Nhân Quán",
+        address: "122 Nguyễn Trãi, Phường 3, Quận 5",
+        price: "85.000 VNĐ",
+      },
+      {
+        name: "Hủ Tiếu Cả Cần",
+        address: "110 Hùng Vương, Phường 9, Quận 5",
+        price: "80.000 - 110.000 VNĐ",
+      },
     ],
     cost: "50.000 - 95.000 VNĐ (~$2 - $3.8 USD)",
     hours: "06:00 - 23:00",
@@ -336,9 +415,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Bún riêu Sài Gòn là bữa tiệc của màu sắc và vị giác: sắc đỏ rực rỡ của cà chua xào, miếng riêu cua đồng bông xốp thơm lừng nổi bồng bềnh, đậu hũ chiên vàng ươm mọng nước, huyết heo mềm mướt và chả lụa hoặc ốc bươu giòn sần sật. Nước dùng có vị chua thanh mát dịu từ me chín kết hợp với độ ngọt tự nhiên từ cua đồng giã nhuyễn. Dùng kèm dĩa rau muống chẻ xanh mướt, hoa chuối thái sợi, chanh tươi và thìa mắm tôm nguyên chất dậy mùi quyến rũ.",
     tip: "Mắm tôm là linh hồn không thể thiếu: hãy cho nửa thìa mắm tôm cùng vài lát ớt tươi vào tô bún để cảm nhận trọn vẹn hương vị nồng nàn đặc trưng.",
     places: [
-      { name: "Bún Riêu Gánh Chợ Bến Thành", address: "163 Lê Thánh Tôn, Bến Thành, Quận 1", price: "65.000 VNĐ" },
-      { name: "Bún Riêu Gốc Nguyễn Cảnh Chân", address: "TK18/5 Nguyễn Cảnh Chân, Cầu Kho, Quận 1", price: "75.000 VNĐ" },
-      { name: "Bún Riêu Cua Ốc 66", address: "66 Nguyễn Thái Bình, Quận 1", price: "55.000 - 70.000 VNĐ" }
+      {
+        name: "Bún Riêu Gánh Chợ Bến Thành",
+        address: "163 Lê Thánh Tôn, Bến Thành, Quận 1",
+        price: "65.000 VNĐ",
+      },
+      {
+        name: "Bún Riêu Gốc Nguyễn Cảnh Chân",
+        address: "TK18/5 Nguyễn Cảnh Chân, Cầu Kho, Quận 1",
+        price: "75.000 VNĐ",
+      },
+      {
+        name: "Bún Riêu Cua Ốc 66",
+        address: "66 Nguyễn Thái Bình, Quận 1",
+        price: "55.000 - 70.000 VNĐ",
+      },
     ],
     cost: "45.000 - 75.000 VNĐ (~$1.8 - $3 USD)",
     hours: "07:00 - 21:00",
@@ -356,9 +447,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Bún mắm là tuyệt tác ẩm thực phản ánh trù phú của đồng bằng sông Cửu Long. Nước lèo được nấu từ mắm cá linh hoặc cá sặc ủ kỹ, lọc lấy nước cốt trong veo rồi ninh cùng sả đập dập thơm lừng, ớt cay và cà tím ngọt mềm. Một tô bún mắm đầy đặn với tôm sú tươi ngọt, mực ống giòn sần sật, cá lóc phi-lê và những miếng heo quay giòn rụm đậm vị. Điểm độc đáo nhất là dĩa rau 'miệt vườn' ăn kèm phong phú nhất Việt Nam: rau đắng, bông súng, kèo nèo, bắp chuối và giá đỗ tươi.",
     tip: "Nếu là lần đầu ăn mắm, hãy nặn nhiều chanh tươi vào tô nước dùng để làm dịu mùi mắm và làm nổi bật vị ngọt thanh của hải sản.",
     places: [
-      { name: "Bún Mắm Miền Tây", address: "124 Trần Khắc Chân, Tân Định, Quận 1", price: "50.000 VNĐ" },
-      { name: "Dì Sáu Miền Tây", address: "25/22 Tôn Thất Tùng, Phạm Ngũ Lão, Quận 1", price: "59.000 VNĐ" },
-      { name: "Bún Mắm 173", address: "173 Cô Giang, Phường Cô Giang, Quận 1", price: "60.000 - 80.000 VNĐ" }
+      {
+        name: "Bún Mắm Miền Tây",
+        address: "124 Trần Khắc Chân, Tân Định, Quận 1",
+        price: "50.000 VNĐ",
+      },
+      {
+        name: "Dì Sáu Miền Tây",
+        address: "25/22 Tôn Thất Tùng, Phạm Ngũ Lão, Quận 1",
+        price: "59.000 VNĐ",
+      },
+      {
+        name: "Bún Mắm 173",
+        address: "173 Cô Giang, Phường Cô Giang, Quận 1",
+        price: "60.000 - 80.000 VNĐ",
+      },
     ],
     cost: "50.000 - 75.000 VNĐ (~$2 - $3 USD)",
     hours: "08:00 - 21:30",
@@ -372,13 +475,26 @@ const HCMC_FOOD_ITEMS = [
     subTitle: "Món bún trộn khô thơm lừng mùi khói sả và mỡ hành béo ngậy",
     category: "Món Sợi & Nước",
     categoryKey: "noodles",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
+    image:
+      "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
     desc: "Món bún khô lý tưởng cho những trưa hè nhiệt đới Sài Gòn. Tô bún gồm những dải thịt heo thái mỏng ướp sả cây, mật ong, tiêu sọ được nướng xém cạnh trên than hoa hồng rực tỏa khói thơm ngào ngạt, đặt cạnh cuốn chả giò chiên giòn rụm rôm rốp. Nền bún trắng tươi điểm xuyết xà lách, rau thơm cắt nhỏ, đậu phộng rang giã dập, mỡ hành óng ả và đồ chua cà rốt củ cải. Khi rưới chén nước mắm chua ngọt pha tỏi ớt lên rồi trộn đều, bạn sẽ cảm nhận sự hòa quyện tuyệt vời của mọi giác quan.",
     tip: "Thêm một chút tương ớt rim và đồ chua để tăng độ giòn bùi cho từng đũa bún.",
     places: [
-      { name: "Bún Thịt Nướng Chả Giò", address: "01 Nguyễn Trung Trực, Bến Thành, Quận 1", price: "70.000 VNĐ" },
-      { name: "Quán Bún Thịt Nướng Mạc Đĩnh Chi", address: "88 Mạc Đĩnh Chi, Đa Kao, Quận 1", price: "48.000 VNĐ" },
-      { name: "Bún Thịt Nướng Chị Tuyền", address: "175 Cô Giang, Quận 1", price: "65.000 - 85.000 VNĐ" }
+      {
+        name: "Bún Thịt Nướng Chả Giò",
+        address: "01 Nguyễn Trung Trực, Bến Thành, Quận 1",
+        price: "70.000 VNĐ",
+      },
+      {
+        name: "Quán Bún Thịt Nướng Mạc Đĩnh Chi",
+        address: "88 Mạc Đĩnh Chi, Đa Kao, Quận 1",
+        price: "48.000 VNĐ",
+      },
+      {
+        name: "Bún Thịt Nướng Chị Tuyền",
+        address: "175 Cô Giang, Quận 1",
+        price: "65.000 - 85.000 VNĐ",
+      },
     ],
     cost: "45.000 - 75.000 VNĐ (~$1.8 - $3 USD)",
     hours: "07:30 - 21:00",
@@ -396,9 +512,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "'Đi ăn ốc' ở Sài Gòn không chỉ là ăn uống, mà là cả một phong cách sống giao lưu bè bạn. Đủ loại ốc hương xào bơ tỏi thơm lừng chấm bánh mì, sò lông nướng mỡ hành rắc đậu phộng bùi béo, nghêu hấp sả ớt thái lát cay nồng ấm bụng, sò huyết xào me chua ngọt keo đặc hay càng ghẹ rang muối ớt. Các quán ốc vỉa hè lúc nào cũng rộn rã tiếng cụng ly bia hơi, tiếng cười đùa rôm rả và hương thơm nức mũi lan tỏa khắp các góc phố đêm.",
     tip: "Khu ốc đường Vĩnh Khánh (Quận 4) hoặc hẻm ốc Bàn Cờ (Quận 3) sau 18:30 tối là thiên đường ẩm thực đêm sống động nhất.",
     places: [
-      { name: "Ốc Oanh", address: "534 Vĩnh Khánh, Phường 8, Quận 4", price: "80.000 - 150.000 VNĐ / dĩa" },
-      { name: "Ốc Đào", address: "Hẻm 212B Nguyễn Trãi, Nguyễn Cư Trinh, Quận 1", price: "70.000 - 140.000 VNĐ / dĩa" },
-      { name: "Ốc Như", address: "650/4/29 Điện Biên Phủ, Phường 11, Quận 10", price: "60.000 - 120.000 VNĐ / dĩa" }
+      {
+        name: "Ốc Oanh",
+        address: "534 Vĩnh Khánh, Phường 8, Quận 4",
+        price: "80.000 - 150.000 VNĐ / dĩa",
+      },
+      {
+        name: "Ốc Đào",
+        address: "Hẻm 212B Nguyễn Trãi, Nguyễn Cư Trinh, Quận 1",
+        price: "70.000 - 140.000 VNĐ / dĩa",
+      },
+      {
+        name: "Ốc Như",
+        address: "650/4/29 Điện Biên Phủ, Phường 11, Quận 10",
+        price: "60.000 - 120.000 VNĐ / dĩa",
+      },
     ],
     cost: "60.000 - 160.000 VNĐ / dĩa (~$2.5 - $6.5 USD)",
     hours: "15:00 - 01:00 sáng hôm sau",
@@ -416,9 +544,21 @@ const HCMC_FOOD_ITEMS = [
     desc: "Xôi mặn là món ăn cứu cánh tuyệt vời cho bất kỳ ai đang vội vã buổi sáng hoặc tìm món ấm bụng sau một đêm vui chơi. Hạt nếp dẻo thơm được đồ chín mềm, gói trong lá chuối xanh ngắt giữ nguyên hơi nóng nghi ngút. Bên trên phủ đầy lạp xưởng chiên xắt lát, chà bông heo (ruốc), pate gan mịn màng béo ngậy, thịt gà xé đậm đà, trứng cút chiên vàng, hành phi thơm nức và chan một chút nước sốt tương ngọt ngào. Tiện lợi, đậm đà và ngon lành đến miếng cuối cùng.",
     tip: "Thưởng thức khi xôi còn nóng hổi. Các quầy xôi vỉa hè lâu năm trước cổng chợ Bà Chiểu hoặc góc ngã tư thường có công thức nước sốt ngon nhất.",
     places: [
-      { name: "Xôi Gà Bà Chiểu", address: "Chợ Bà Chiểu, Đường Bùi Hữu Nghĩa, Bình Thạnh", price: "30.000 - 45.000 VNĐ" },
-      { name: "Xôi Bát Bửu Chợ Lớn", address: "Khu vực Chợ Lớn, Quận 5", price: "25.000 - 35.000 VNĐ" },
-      { name: "Xôi Mặn Cô Lan", address: "Ngã tư Nguyễn Trãi - Lê Hồng Phong, Quận 5", price: "20.000 - 30.000 VNĐ" }
+      {
+        name: "Xôi Gà Bà Chiểu",
+        address: "Chợ Bà Chiểu, Đường Bùi Hữu Nghĩa, Bình Thạnh",
+        price: "30.000 - 45.000 VNĐ",
+      },
+      {
+        name: "Xôi Bát Bửu Chợ Lớn",
+        address: "Khu vực Chợ Lớn, Quận 5",
+        price: "25.000 - 35.000 VNĐ",
+      },
+      {
+        name: "Xôi Mặn Cô Lan",
+        address: "Ngã tư Nguyễn Trãi - Lê Hồng Phong, Quận 5",
+        price: "20.000 - 30.000 VNĐ",
+      },
     ],
     cost: "15.000 - 45.000 VNĐ (~$0.6 - $1.8 USD)",
     hours: "06:00 - 10:00 & 17:00 - 23:30",
@@ -432,13 +572,26 @@ const HCMC_FOOD_ITEMS = [
     subTitle: "Thức uống đại diện cho linh hồn và nhịp đập thành phố",
     category: "Đồ Uống & Tráng Miệng",
     categoryKey: "drinks",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da.jpg",
+    image:
+      "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da.jpg",
     desc: "Chúng ta kết lại danh sách với thức uống đã định hình phong cách sống của người Sài Gòn: cà phê sữa đá. Từng giọt cà phê Robusta rang đậm nhỏ giọt tí tách từ phin nhôm xuống lớp sữa đặc ngọt ngào béo ngậy dưới đáy ly thủy tinh. Khi khuấy đều và rót ngập đá bi mát lạnh, vị đắng đậm đà hòa quyện với vị béo ngọt và cảm giác sảng khoái đánh thức tức thì mọi giác quan. Người Sài Gòn nhâm nhi ly cà phê sữa đá ở mọi lúc, mọi nơi — từ chiếc ghế nhựa vỉa hè ngắm phố phường đến quán sân vườn lãng mạn.",
     tip: "Dùng ống hút khuấy thật đều tay cho sữa đặc tan hết và đá bi tan nhẹ một chút để đạt được vị cân bằng thanh mát hoàn hảo.",
     places: [
-      { name: "Cà Phê Vợt Cheo Leo (Từ năm 1938)", address: "109/36 Nguyễn Thiện Thuật, Quận 3", price: "20.000 VNĐ" },
-      { name: "Cà Phê Bệt Công Viên 30/4", address: "Đường Alexandre de Rhodes, Bến Nghé, Quận 1", price: "15.000 - 25.000 VNĐ" },
-      { name: "Cà Phê Vợt Ba Lù Chợ Lớn", address: "Chợ Phùng Hưng, Quận 5", price: "18.000 - 22.000 VNĐ" }
+      {
+        name: "Cà Phê Vợt Cheo Leo (Từ năm 1938)",
+        address: "109/36 Nguyễn Thiện Thuật, Quận 3",
+        price: "20.000 VNĐ",
+      },
+      {
+        name: "Cà Phê Bệt Công Viên 30/4",
+        address: "Đường Alexandre de Rhodes, Bến Nghé, Quận 1",
+        price: "15.000 - 25.000 VNĐ",
+      },
+      {
+        name: "Cà Phê Vợt Ba Lù Chợ Lớn",
+        address: "Chợ Phùng Hưng, Quận 5",
+        price: "18.000 - 22.000 VNĐ",
+      },
     ],
     cost: "15.000 - 35.000 VNĐ (~$0.6 - $1.4 USD)",
     hours: "06:00 - 22:30 (Cà phê bệt mở cả ngày)",
@@ -471,7 +624,6 @@ const FOODS_CATEGORIES = [
 ];
 
 function GuideDetailContent() {
-
   const params = useParams();
   const searchParams = useSearchParams();
 
@@ -487,9 +639,24 @@ function GuideDetailContent() {
 
   useEffect(() => {
     if (params?.slug?.includes("15-best-places")) {
-      window.location.href = "/guide/15-best-places-to-visit-in-vietnam-in-2026";
+      window.location.href =
+        "/guide/15-best-places-to-visit-in-vietnam-in-2026";
+      return;
     }
-  }, [params?.slug]);
+    if (
+      params?.slug === "12-must-try-foods-in-ho-chi-minh-city" ||
+      searchParams?.get("tab") === "foods"
+    ) {
+      window.location.href =
+        "/guide/12-must-try-foods-in-ho-chi-minh-city";
+      return;
+    }
+    if (params?.slug === "10-best-things-to-do-in-ho-chi-minh-city") {
+      window.location.href =
+        "/guide/10-best-things-to-do-in-ho-chi-minh-city";
+      return;
+    }
+  }, [params?.slug, searchParams]);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [bookmarkedIds, setBookmarkedIds] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
@@ -653,7 +820,7 @@ function GuideDetailContent() {
                 }`}
                 onClick={() =>
                   showToast(
-                    `Bạn đã lưu ${bookmarkedIds.length} địa điểm trong Sổ tay VinaTap`
+                    `Bạn đã lưu ${bookmarkedIds.length} địa điểm trong Sổ tay VinaTap`,
                   )
                 }
               >
@@ -725,8 +892,12 @@ function GuideDetailContent() {
                 <span className="guide-hero-chip">
                   {isFoodsTab ? "12 Món Ăn Tuyệt Kỹ" : "Top 10 Trải Nghiệm"}
                 </span>
-                <span className="guide-hero-chip">Địa chỉ thật &amp; Giá chuẩn</span>
-                <span className="guide-hero-chip">Hỗ trợ dẫn đường Google Maps</span>
+                <span className="guide-hero-chip">
+                  Địa chỉ thật &amp; Giá chuẩn
+                </span>
+                <span className="guide-hero-chip">
+                  Hỗ trợ dẫn đường Google Maps
+                </span>
               </div>
               <p className="guide-hero-caption">
                 {isFoodsTab
@@ -742,27 +913,28 @@ function GuideDetailContent() {
           <p>
             {isFoodsTab ? (
               <>
-                Không có cách nào hiểu một thành phố nhanh hơn là ngồi xuống chiếc ghế
-                nhựa con con bên hè phố và thưởng thức những món ăn trứ danh. Ẩm thực
-                TP. Hồ Chí Minh phóng khoáng như chính con người nơi đây: đậm đà, tươi
-                mới, ngập tràn rau ghém và nước chấm phong phú. Dưới đây là{" "}
-                <strong>12 món ăn biểu tượng nhất</strong> kèm địa chỉ những quán gia
-                truyền lâu năm do VinaTap thẩm định kỹ lưỡng.
+                Không có cách nào hiểu một thành phố nhanh hơn là ngồi xuống
+                chiếc ghế nhựa con con bên hè phố và thưởng thức những món ăn
+                trứ danh. Ẩm thực TP. Hồ Chí Minh phóng khoáng như chính con
+                người nơi đây: đậm đà, tươi mới, ngập tràn rau ghém và nước chấm
+                phong phú. Dưới đây là{" "}
+                <strong>12 món ăn biểu tượng nhất</strong> kèm địa chỉ những
+                quán gia truyền lâu năm do VinaTap thẩm định kỹ lưỡng.
               </>
             ) : (
               <>
-                <strong>Thành phố Hồ Chí Minh</strong> có một nguồn năng lượng sống
-                mãnh liệt mà bạn khó tìm thấy ở bất cứ nơi nào khác. Đó là âm thanh rộn
-                rã của tiếng xe cộ buổi sớm, là hương thơm nồng nàn từ những xe đẩy
-                bánh mì góc phố, là sự kiêu hãnh của những tòa tháp kính bên cạnh
-                những công trình thuộc địa cổ kính. Dù bạn chỉ có 24 giờ quá cảnh hay
-                một tuần thảnh thơi, <strong>10 trải nghiệm đặc sắc</strong> dưới đây
-                giúp bạn cảm nhận sâu sắc nhất từng nhịp thở của thành phố.
+                <strong>Thành phố Hồ Chí Minh</strong> có một nguồn năng lượng
+                sống mãnh liệt mà bạn khó tìm thấy ở bất cứ nơi nào khác. Đó là
+                âm thanh rộn rã của tiếng xe cộ buổi sớm, là hương thơm nồng nàn
+                từ những xe đẩy bánh mì góc phố, là sự kiêu hãnh của những tòa
+                tháp kính bên cạnh những công trình thuộc địa cổ kính. Dù bạn
+                chỉ có 24 giờ quá cảnh hay một tuần thảnh thơi,{" "}
+                <strong>10 trải nghiệm đặc sắc</strong> dưới đây giúp bạn cảm
+                nhận sâu sắc nhất từng nhịp thở của thành phố.
               </>
             )}
           </p>
         </section>
-
 
         {/* ─── THANH LỌC DANH MỤC (STICKY QUICK-NAV) ──────────────── */}
         <section className="guide-quicknav-sticky">
@@ -790,7 +962,11 @@ function GuideDetailContent() {
           {filteredItems.map((item) => {
             const isSaved = bookmarkedIds.includes(item.id);
             return (
-              <article key={item.id} id={`item-${item.id}`} className="guide-card">
+              <article
+                key={item.id}
+                id={`item-${item.id}`}
+                className="guide-card"
+              >
                 <div className="guide-card__grid">
                   {/* Cột ảnh */}
                   <div
@@ -818,7 +994,9 @@ function GuideDetailContent() {
                       <h2 className="guide-card__title">
                         {item.num}. {item.title}
                       </h2>
-                      <div className="guide-card__subtitle">{item.subTitle}</div>
+                      <div className="guide-card__subtitle">
+                        {item.subTitle}
+                      </div>
                       <p className="guide-card__desc">{item.desc}</p>
 
                       {/* Box Mẹo bản địa */}
@@ -881,7 +1059,9 @@ function GuideDetailContent() {
                           <MapPin size={15} />
                           <div>
                             <div>Địa chỉ gợi ý:</div>
-                            <span className="guide-fact-val">{item.address}</span>
+                            <span className="guide-fact-val">
+                              {item.address}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -892,7 +1072,7 @@ function GuideDetailContent() {
                       <div className="guide-card__address-group">
                         <a
                           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                            item.mapsQuery || item.address
+                            item.mapsQuery || item.address,
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -936,7 +1116,13 @@ function GuideDetailContent() {
               <Compass size={13} />
               <span>KHÁM PHÁ TIẾP TỤC CÙNG VINATAP</span>
             </div>
-            <h3 style={{ fontSize: "1.45rem", fontWeight: 800, margin: "0.5rem 0 1rem" }}>
+            <h3
+              style={{
+                fontSize: "1.45rem",
+                fontWeight: 800,
+                margin: "0.5rem 0 1rem",
+              }}
+            >
               Cẩm Nang Du Lịch Các Tỉnh Thành Nổi Bật Khác
             </h3>
           </div>
@@ -970,10 +1156,7 @@ function GuideDetailContent() {
               </div>
             </Link>
 
-            <Link
-              href="/province/ha-noi"
-              className="guide-related-card"
-            >
+            <Link href="/province/ha-noi" className="guide-related-card">
               <img
                 src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"
                 alt="Ẩm thực Hà Nội"
@@ -1020,7 +1203,13 @@ function GuideDetailContent() {
               className="guide-lightbox__img"
             />
             <div className="guide-lightbox__meta">
-              <h3 style={{ fontSize: "1.2rem", fontWeight: 700, marginBottom: "4px" }}>
+              <h3
+                style={{
+                  fontSize: "1.2rem",
+                  fontWeight: 700,
+                  marginBottom: "4px",
+                }}
+              >
                 #{lightboxItem.num}. {lightboxItem.title}
               </h3>
               <p style={{ fontSize: "0.9rem", color: "#94a3b8" }}>
@@ -1038,8 +1227,17 @@ export default function GuideDetailPage() {
   return (
     <Suspense
       fallback={
-        <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <div style={{ color: "#00c2cb", fontWeight: 700 }}>Đang tải cẩm nang VinaTap...</div>
+        <div
+          style={{
+            minHeight: "60vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ color: "#00c2cb", fontWeight: 700 }}>
+            Đang tải cẩm nang VinaTap...
+          </div>
         </div>
       }
     >
@@ -1047,4 +1245,3 @@ export default function GuideDetailPage() {
     </Suspense>
   );
 }
-
