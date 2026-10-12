@@ -1275,102 +1275,73 @@ export default function CompleteGuideToVietnamPage() {
             </Link>
           </div>
 
-          {/* ─── PHẦN 11: BÀI VIẾT LIÊN QUAN ─── */}
-          <div className="vnn-biggrid-header">
-            <h3 className="vnn-biggrid-header-title">
-              {lang === "vi" ? "Bài Viết Nổi Bật Khác" : "Other Featured Articles"}
+          {/* ─── OTHER POSTS SECTION (HÌNH 5) ─── */}
+          <section className="ad-related-section" style={{ borderTop: "1px solid #e5e7eb", marginTop: "50px", paddingTop: "40px", borderBottom: "1px solid #e5e7eb", paddingBottom: "50px", marginBottom: "40px" }}>
+            <h3 className="ad-related-title" style={{ fontFamily: '"Playfair Display", Georgia, "Times New Roman", serif', fontSize: "28px", fontWeight: "700" }}>
+              {lang === "vi" ? "Bài viết khác" : "Other Posts"}
             </h3>
-          </div>
-
-          <div className="vnn-biggrid-4">
-            {/* Card 1 (Large left): 15 Best Places */}
-            <Link href="/guide/15-best-places-to-visit-in-vietnam-in-2026" className="vnn-biggrid-item">
-              <img
-                src="/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg"
-                alt={
-                  lang === "vi"
-                    ? "15 điểm đến tuyệt nhất Việt Nam năm 2026"
-                    : "15 Best Places to Visit in Vietnam in 2026"
-                }
-                className="vnn-biggrid-img"
-                loading="lazy"
-              />
-              <div className="vnn-biggrid-overlay" />
-              <div className="vnn-biggrid-text">
-                <h4 className="vnn-biggrid-title">
+            <div className="ad-related-grid">
+              {/* Card 1: 15 best places */}
+              <Link
+                href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
+                className="ad-related-card"
+              >
+                <div className="ad-related-card__img-wrap">
+                  <img
+                    src="/guide/megamenu/inspired-1.jpg"
+                    alt="15 best places to visit in Vietnam in 2026"
+                    className="ad-related-card__img"
+                    loading="lazy"
+                  />
+                </div>
+                <h4 className="ad-related-card__title">
                   {lang === "vi"
                     ? "15 điểm đến tuyệt nhất Việt Nam năm 2026"
-                    : "15 Best Places to Visit in Vietnam in 2026"}
+                    : "15 best places to visit in Vietnam in 2026"}
                 </h4>
-              </div>
-            </Link>
+              </Link>
 
-            {/* Card 2 (Right row 1): Plan Trip With AI */}
-            <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt" className="vnn-biggrid-item">
-              <img
-                src="/guide/hcmc/Plan-Your-Vietnam-Trip-with-Just-One-Prompt.jpg"
-                alt={
-                  lang === "vi"
-                    ? "Lên kế hoạch du lịch bằng AI"
-                    : "Plan Your Vietnam Trip with AI"
-                }
-                className="vnn-biggrid-img"
-                loading="lazy"
-              />
-              <div className="vnn-biggrid-overlay" />
-              <div className="vnn-biggrid-text">
-                <h4 className="vnn-biggrid-title">
+              {/* Card 2: Plan Your Vietnam Trip */}
+              <Link
+                href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+                className="ad-related-card"
+              >
+                <div className="ad-related-card__img-wrap">
+                  <img
+                    src="/guide/megamenu/inspired-2.jpg"
+                    alt="Plan Your Vietnam Trip with Just One Prompt"
+                    className="ad-related-card__img"
+                    loading="lazy"
+                  />
+                </div>
+                <h4 className="ad-related-card__title">
                   {lang === "vi"
-                    ? "Lên kế hoạch du lịch bằng AI"
-                    : "Plan Your Vietnam Trip with AI"}
+                    ? "Lên kế hoạch du lịch Việt Nam chỉ với một prompt"
+                    : "Plan Your Vietnam Trip with Just One Prompt"}
                 </h4>
-              </div>
-            </Link>
+              </Link>
 
-            {/* Card 3 (Right row 2): 10 Best Things in HCMC */}
-            <Link href="/guide/10-best-things-to-do-in-ho-chi-minh-city" className="vnn-biggrid-item">
-              <img
-                src="/guide/megamenu/todo-2-hcmc.jpg"
-                alt={
-                  lang === "vi"
-                    ? "10 trải nghiệm tuyệt nhất tại TP.HCM"
-                    : "10 Best Things to Do in Ho Chi Minh City"
-                }
-                className="vnn-biggrid-img"
-                loading="lazy"
-              />
-              <div className="vnn-biggrid-overlay" />
-              <div className="vnn-biggrid-text">
-                <h4 className="vnn-biggrid-title">
+              {/* Card 3: 20 Best Things to Do */}
+              <Link
+                href="/guide/20-best-things-to-do-in-vietnam"
+                className="ad-related-card"
+              >
+                <div className="ad-related-card__img-wrap">
+                  <img
+                    src="/guide/megamenu/inspired-4.jpg"
+                    alt="20 Best Things to Do in Vietnam"
+                    className="ad-related-card__img"
+                    loading="lazy"
+                  />
+                </div>
+                <h4 className="ad-related-card__title">
                   {lang === "vi"
-                    ? "10 trải nghiệm tuyệt nhất tại TP.HCM"
-                    : "10 Best Things to Do in Ho Chi Minh City"}
-                </h4>
-              </div>
-            </Link>
-
-            {/* Card 4 (Right row 3): 20 Best Things in Vietnam */}
-            <Link href="/guide/20-best-things-to-do-in-vietnam" className="vnn-biggrid-item">
-              <img
-                src="/guide/megamenu/inspired-4.jpg"
-                alt={
-                  lang === "vi"
-                    ? "20 trải nghiệm nhất định phải thử tại Việt Nam"
-                    : "20 Best Things to Do in Vietnam"
-                }
-                className="vnn-biggrid-img"
-                loading="lazy"
-              />
-              <div className="vnn-biggrid-overlay" />
-              <div className="vnn-biggrid-text">
-                <h4 className="vnn-biggrid-title">
-                  {lang === "vi"
-                    ? "20 trải nghiệm nhất định phải thử"
+                    ? "20 trải nghiệm tuyệt nhất tại Việt Nam"
                     : "20 Best Things to Do in Vietnam"}
                 </h4>
-              </div>
-            </Link>
-          </div>
+              </Link>
+            </div>
+          </section>
         </div>
       </main>
 
