@@ -1016,8 +1016,8 @@ export default function TheCompleteGuideToVietnamPage() {
           </p>
         </section>
 
-        {/* ─── SECTION 7: TRANSPORTATION (HÌNH 5) ─── */}
-        <section className="cg-section">
+        {/* ─── SECTION 7: TRANSPORTATION (HÌNH 1, 2, 3, 4) ─── */}
+        <section id="transportation" className="cg-section">
           <div className="cg-section__header">
             <h2 className="cg-section__title">
               {isVi ? "Phương tiện di chuyển" : "Transportation"}
@@ -1046,9 +1046,140 @@ export default function TheCompleteGuideToVietnamPage() {
               </>
             )}
           </p>
+
+          {/* AIRPORTS MAP CARD (HÌNH 1 & 2) */}
+          <div className="cg-transport-map-card">
+            <picture>
+              <source
+                srcSet="/guide/the-complete-guide/airports-map.webp"
+                type="image/webp"
+              />
+              <img
+                src="/guide/the-complete-guide/airports-map.png"
+                alt="Map of airports in Vietnam"
+                className="cg-transport-map-img"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <p className="cg-map-caption">
+            {isVi
+              ? "Bản đồ các sân bay quốc tế và nội địa tại Việt Nam"
+              : "Map of international and domestic airports in Vietnam"}
+          </p>
+
+          {/* RAILWAY SECTION (HÌNH 3) */}
+          <p className="cg-paragraph" style={{ marginTop: "32px" }}>
+            {isVi ? (
+              <>
+                Tuyến đường sắt Bắc – Nam trải dài 1.726 km từ Hà Nội đến TP. Hồ Chí Minh. Dù là một hệ thống đường sắt đã có tuổi đời gần 90 năm, di chuyển bằng tàu hỏa mang lại trải nghiệm vô cùng cuốn hút nhờ cảnh quan thiên nhiên tuyệt đẹp suốt dọc hành trình. Điểm hạn chế của tuyến đường sắt này là tốc độ còn chậm, với thời gian di chuyển từ Hà Nội vào TP. Hồ Chí Minh mất khoảng 30 giờ.
+              </>
+            ) : (
+              <>
+                The North-South railway stretches 1,726 kilometers from Hanoi to Ho Chi Minh City. Despite being an aging railway system of nearly 90 years old, travelling by train offers a uniquely captivating experience thanks to the scenic views along the way. One drawback of this railway route is its slow speed, with the journey from Hanoi to Ho Chi Minh City taking approximately 30 hours.
+              </>
+            )}
+          </p>
+
+          {/* RAILWAY STATIONS MAP CARD (HÌNH 3) */}
+          <div className="cg-transport-map-card">
+            <picture>
+              <source
+                srcSet="/guide/the-complete-guide/railway-map.webp"
+                type="image/webp"
+              />
+              <img
+                src="/guide/the-complete-guide/railway-map.png"
+                alt="Map of railway stations in Vietnam"
+                className="cg-transport-map-img"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <p className="cg-map-caption">
+            {isVi
+              ? "Bản đồ tuyến đường sắt Bắc – Nam và các ga tàu hỏa tại Việt Nam"
+              : "Map of the North-South railway and train stations in Vietnam"}
+          </p>
+
+          {/* ROAD NETWORK & BUSES SECTION (HÌNH 4) */}
+          <p className="cg-paragraph" style={{ marginTop: "32px" }}>
+            {isVi ? (
+              <>
+                Mạng lưới đường bộ của Việt Nam kết nối hầu hết các tỉnh thành, với Quốc lộ 1A và đường cao tốc Bắc – Nam là những tuyến huyết mạch chính. Tuy nhiên, nhiều đoạn đường vẫn còn hẹp và xuống cấp, do đó việc tự lái xe không được khuyến khích đối với du khách chưa quen với giao thông Việt Nam. Đối với các điểm đến trong bán kính 300 km, xe khách giường nằm hoặc limousine là lựa chọn thuận tiện và tiết kiệm.
+              </>
+            ) : (
+              <>
+                Vietnam's road network spans provinces, with National Route 1A and the North-South Expressway serving as major arteries. However, numerous roads are narrow and suffer from deterioration, making self-driving not recommended for tourists unfamiliar with Vietnamese roads. For destinations within a 300-kilometer radius, buses offer a convenient and economical transportation option.
+              </>
+            )}
+          </p>
+
+          {/* HIGHLIGHTS & TRAVEL ROUTES MAP CARD (HÌNH 4 & 5) */}
+          <div className="cg-transport-map-card">
+            <picture>
+              <source
+                srcSet="/guide/the-complete-guide/travel-routes-map.webp"
+                type="image/webp"
+              />
+              <img
+                src="/guide/the-complete-guide/travel-routes-map.png"
+                alt="Map of highlights and travel routes in Vietnam"
+                className="cg-transport-map-img"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+          <p className="cg-map-caption">
+            {isVi
+              ? "Bản đồ các tuyến di chuyển và điểm đến nổi bật tại Việt Nam"
+              : "Map of highlights and major travel routes in Vietnam"}
+          </p>
         </section>
 
-        {/* ─── SECTION 8: ITINERARIES ─── */}
+        {/* ─── SECTION 8: INTERNET (HÌNH 5) ─── */}
+        <section id="internet" className="cg-section">
+          <div className="cg-section__header">
+            <h2 className="cg-section__title">
+              {isVi ? "Internet & Kết nối" : "Internet"}
+            </h2>
+          </div>
+
+          <p className="cg-paragraph">
+            {isVi ? (
+              <>
+                Tại Việt Nam, Wi-Fi có mặt ở khắp mọi nơi, từ nhà hàng, quán cà phê, khách sạn cho đến các quán ăn vỉa hè. Các địa điểm công cộng như sân bay, nhà ga, bến xe cũng cung cấp truy cập Wi-Fi miễn phí. Tuy nhiên, nếu bạn muốn duy trì kết nối Internet liên tục, bạn nên mua một thẻ SIM du lịch khi đến nơi. Các gói cước tiêu chuẩn thường có giá khoảng 7 USD/tháng (khoảng 180.000đ), cung cấp 4GB dữ liệu tốc độ cao mỗi ngày. Các loại SIM này được bán rất tiện lợi tại các quầy sân bay.
+              </>
+            ) : (
+              <>
+                In Vietnam, Wi-Fi is everywhere, from restaurants, cafes, and hotels to roadside eateries. Public spots like airports, train stations, or bus terminals also provide free Wi-Fi access. However, if you want to maintain continuous connectivity, you can purchase a SIM during your stay. Standard packages typically cost around $7 per month, offering 4GB of daily internet usage. SIMs are conveniently sold at airports.
+              </>
+            )}
+          </p>
+        </section>
+
+        {/* ─── SECTION 9: COST OF TRAVELING IN VIETNAM (HÌNH 5) ─── */}
+        <section id="costs" className="cg-section">
+          <div className="cg-section__header">
+            <h2 className="cg-section__title">
+              {isVi ? "Chi phí du lịch tại Việt Nam" : "Cost of traveling in Vietnam"}
+            </h2>
+          </div>
+
+          <p className="cg-paragraph">
+            {isVi ? (
+              <>
+                Du lịch Việt Nam có mức chi phí vô cùng phải chăng. Theo khảo sát từ cộng đồng Welcome to Vietnam của chúng tôi, chi phí trung bình cho một chuyến du lịch 3 tuần dao động từ 750 đến 1.500 USD (khoảng 19 đến 39 triệu đồng). Cần lưu ý rằng chi phí tại các đô thị lớn như Hà Nội và TP. Hồ Chí Minh có xu hướng cao hơn so với các điểm đến khác trên khắp đất nước.
+              </>
+            ) : (
+              <>
+                Traveling in Vietnam is notably affordable. According to a survey conducted in our Welcome to Vietnam community, the average cost for a 3-week trip ranges from 750 to 1,500 US dollars. It's worth noting that expenses in major cities like Hanoi and Ho Chi Minh City tend to be higher compared to other destinations in the country.
+              </>
+            )}
+          </p>
+        </section>
+
+        {/* ─── SECTION 10: ITINERARIES ─── */}
         <section id="itineraries" className="cg-section">
           <div className="cg-section__header">
             <h2 className="cg-section__title">
@@ -1083,7 +1214,7 @@ export default function TheCompleteGuideToVietnamPage() {
           </div>
         </section>
 
-        {/* ─── SECTION 9: FOOD ─── */}
+        {/* ─── SECTION 11: FOOD ─── */}
         <section id="food" className="cg-section">
           <div className="cg-section__header">
             <h2 className="cg-section__title">

@@ -402,7 +402,8 @@
 }
 
 /* ─── BEST TIME TO VISIT SECTION (HÌNH 3) ─── */
-.cg-best-time-card {
+.cg-best-time-card,
+.cg-transport-map-card {
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.08);
@@ -414,12 +415,14 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.cg-best-time-card:hover {
+.cg-best-time-card:hover,
+.cg-transport-map-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
 }
 
-.cg-best-time-img {
+.cg-best-time-img,
+.cg-transport-map-img {
   width: 100%;
   height: auto;
   display: block;
