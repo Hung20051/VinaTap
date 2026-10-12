@@ -2546,6 +2546,7 @@ export default function HomePage() {
           province={{ name: isVi ? "Việt Nam" : "Vietnam", slug: "viet-nam" }}
           isOpen={aiCompanionOpen}
           onToggleOpen={setAiCompanionOpen}
+          hideFab={true}
         />
       </div>
     </>

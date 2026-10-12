@@ -93,6 +93,7 @@ export default function ProvinceChatbot({
   specialties = "",
   isOpen: externalIsOpen,
   onToggleOpen,
+  hideFab = false,
 }) {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
@@ -294,7 +295,7 @@ export default function ProvinceChatbot({
   return (
     <>
       {/* ─── NÚT NỔI FAB (BONG BÓNG GÓC MÀN HÌNH) ────────────────── */}
-      {!isOpen && (
+      {!isOpen && !hideFab && (
         <button
           type="button"
           className="prov-ai-fab-btn"
