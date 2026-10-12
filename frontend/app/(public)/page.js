@@ -577,106 +577,56 @@ const ALLOWED_PROVINCE_SLUGS = [
 const FAQ_DATA = {
   vi: [
     {
-      q: "Giá thẻ và các gói combo bao nhiêu?",
-      category: "pricing",
-      a: "Bảng giá chính thức của thẻ NFC VinaTap:\n• 1 thẻ lẻ (tỉnh thành bất kỳ): 49.000đ / thẻ.\n• Combo 3 thẻ tự chọn: 139.000đ (tiết kiệm so với mua lẻ, rất được yêu thích).\n• Combo 5 thẻ (bộ 5 tỉnh): 239.000đ (ưu đãi theo gói).\n• Trọn bộ 34 thẻ toàn quốc: 1.400.000đ (kèm hộp quà kỷ niệm cao cấp).\nMỗi thẻ đều có quyền kích hoạt và lưu trữ album ảnh AI trọn đời. Bạn có thể ghé mục 'Sản phẩm' trên thanh menu để đặt mua ngay nhé!",
-    },
-    {
-      q: "Cách thức đặt mua và thanh toán ra sao?",
-      category: "order",
-      a: "Bạn chỉ cần vào mục 'Sản phẩm' trên thanh menu, chọn thẻ lẻ tỉnh thành hoặc combo mong muốn rồi bấm 'Mua ngay'.\nVinaTap hỗ trợ 2 hình thức thanh toán an toàn:\n1. Quét mã QR PayOS tự động qua tài khoản ngân hàng / ví điện tử.\n2. Thanh toán tiền mặt khi nhận hàng (COD).",
-    },
-    {
-      q: "Phí ship và chính sách Freeship như thế nào?",
-      category: "shipping",
-      a: "Chính sách giao hàng của VinaTap:\n• Phí vận chuyển tiêu chuẩn toàn quốc: 30.000đ.\n• Miễn phí vận chuyển (Freeship): Tự động áp dụng cho đơn hàng từ 500.000đ trở lên.\nThời gian giao hàng từ 2 - 4 ngày làm việc trên toàn quốc.",
-    },
-    {
-      q: "Thẻ NFC hoạt động ra sao, có cần tải app không?",
-      category: "nfc",
-      a: "Mỗi thẻ NFC có gắn 1 chip thông minh NXP chuẩn ISO bên trong. Chỉ cần chạm nhẹ mặt sau điện thoại vào thẻ NFC, album ảnh của tỉnh đó sẽ mở ngay trên trình duyệt web.\n• Hoàn toàn không cần tải app.\n• Không cần quét mã QR.",
-    },
-    {
-      q: "Điện thoại nào có thể sử dụng được thẻ NFC?",
-      category: "device",
-      a: "Hầu hết smartphone hiện đại đều hỗ trợ:\n• iPhone: Từ iPhone 7 trở lên (đặc biệt iPhone Xr/Xs trở lên tự động nhận thẻ ngay).\n• Android: Mọi dòng máy Samsung, Xiaomi, Oppo, Pixel... có hỗ trợ NFC.\n• Nếu điện thoại không có NFC: Mỗi thẻ đều có mã Serial dự phòng in kèm để bạn nhập trên web và xem album bình thường.",
-    },
-    {
-      q: "Ai là người tạo album và kích hoạt thẻ?",
-      category: "album",
-      a: "Người đầu tiên chạm thẻ (hoặc nhập mã serial dự phòng) sẽ trở thành chủ nhân của thẻ NFC. Bạn có thể tự đặt tên album, tải lên ảnh, video kỷ niệm và viết nhật ký chuyến đi ngay sau khi kích hoạt.",
-    },
-    {
-      q: "Nội dung album ảnh có riêng tư không?",
-      category: "privacy",
-      a: "Bạn tự quyết định hoàn toàn:\n• Chế độ Riêng tư (mặc định): Chỉ bạn (và những người được bạn cấp quyền) mới có thể xem ảnh và video.\n• Chế độ Công khai: Bất kỳ ai chạm vào thẻ cũng có thể chiêm ngưỡng album hành trình của bạn.",
-    },
-    {
-      q: "Tôi có thể tặng hoặc chuyển nhượng thẻ không?",
-      category: "transfer",
-      a: "Có ạ! Trong trang quản lý thẻ, bạn chỉ cần chọn 'Chuyển nhượng', nhập email người nhận. Khi họ xác nhận qua email, toàn bộ quyền sở hữu thẻ và album kỷ niệm sẽ được chuyển sang tài khoản của họ an toàn.",
-    },
-    {
-      q: "Chính sách bảo hành và đổi trả thế nào?",
-      category: "warranty",
-      a: "VinaTap bảo hành chip chính hãng:\n• Đổi mới 1-1 miễn phí trong 30 ngày nếu chip NFC gặp lỗi kỹ thuật từ nhà sản xuất.\n• Thẻ được phủ lớp chống xước và chống nước bền bỉ.\n• Luôn có mã serial dự phòng in trên thẻ đảm bảo bạn không bao giờ mất quyền truy cập.",
-    },
-    {
-      q: "Dự án VinaTap là gì và có ý nghĩa gì?",
+      q: "VinaTap là nền tảng gì?",
       category: "about",
-      a: "VinaTap là dự án tiên phong số hóa di sản du lịch Việt Nam, kết hợp giữa thẻ NFC 3D vật lý và nền tảng bản đồ du lịch số 34 tỉnh thành. VinaTap giúp bạn lưu giữ kỷ niệm thực tế của từng chuyến đi và truyền cảm hứng khám phá vẻ đẹp đất nước.",
+      a: "VinaTap là cổng thông tin cẩm nang du lịch số hiện đại và trợ lý AI thông minh đồng hành cùng bạn khám phá 34 tỉnh thành khắp dải đất hình chữ S Việt Nam.\n• Cung cấp gợi ý điểm đến nổi bật, lịch trình chi tiết và đặc sản ẩm thực từng vùng miền.\n• Tích hợp trợ lý du lịch AI hỗ trợ giải đáp 24/7.",
+    },
+    {
+      q: "Làm thế nào để lên kế hoạch du lịch bằng AI Prompt?",
+      category: "ai",
+      a: "Bạn chỉ cần gửi 1 câu hỏi hoặc yêu cầu cho Trợ lý ảo AI (ví dụ: 'Lên lịch trình 3 ngày 2 đêm tại Đà Nẵng với ngân sách 3 triệu'). AI sẽ tự động phân tích và tạo lịch trình hoàn chỉnh từ điểm vui chơi, thời gian di chuyển đến địa chỉ ăn uống nổi tiếng.",
+    },
+    {
+      q: "Cẩm nang 34 tỉnh thành cung cấp những thông tin gì?",
+      category: "destination",
+      a: "Mỗi trang cẩm nang tỉnh thành bao gồm:\n• Giới thiệu tổng quan & nét đặc trưng văn hóa.\n• Danh sách các điểm tham quan biểu tượng kèm bản đồ.\n• Top món ngon đặc sản địa phương phải thử.\n• Gợi ý lịch trình du lịch từ 1 đến 3 ngày tối ưu thời gian.",
+    },
+    {
+      q: "Trợ lý ảo Thổ Địa AI hỗ trợ được những gì?",
+      category: "features",
+      a: "Thổ Địa AI là người bạn đồng hành bản địa am hiểu sâu sắc về du lịch Việt Nam:\n• Gợi ý quán ăn ngon chuẩn vị bản xứ.\n• Tư vấn thời điểm du lịch đẹp nhất trong năm.\n• Dự báo thời tiết, phương tiện di chuyển và chi phí dự kiến.\n• Hỗ trợ song ngữ cả Tiếng Việt và Tiếng Anh.",
+    },
+    {
+      q: "Nền tảng VinaTap có thu phí sử dụng không?",
+      category: "free",
+      a: "Toàn bộ cẩm nang du lịch 34 tỉnh thành, các bài viết kinh nghiệm và tính năng trò chuyện với Trợ lý ảo AI trên VinaTap đều hoàn toàn MIỄN PHÍ dành cho cộng đồng du lịch.",
     },
   ],
   en: [
     {
-      q: "How much do the NFC cards and combos cost?",
-      category: "pricing",
-      a: "Official VinaTap Pricing:\n• Single Card (any province): 49,000 VND.\n• Combo 3 Cards: 139,000 VND (popular choice, saves compared to single).\n• Combo 5 Cards: 239,000 VND (package savings).\n• Full 34-Province Set: 1,400,000 VND (includes premium gift box).\nEach card includes lifetime AI album activation. Visit the 'Shop' section to order yours!",
-    },
-    {
-      q: "How can I order and what payment methods are accepted?",
-      category: "order",
-      a: "Go to 'Shop' in the navigation bar, choose your favorite province cards or combos, and click 'Buy Now'.\nWe accept:\n1. Instant QR transfer via PayOS (all banks & e-wallets).\n2. Cash on Delivery (COD).",
-    },
-    {
-      q: "What are the shipping fees and Freeship policy?",
-      category: "shipping",
-      a: "VinaTap Shipping Policy:\n• Standard nationwide delivery fee: 30,000 VND.\n• Free Shipping (Freeship): Automatically applied for orders from 500,000 VND.\nDelivery time is typically 2-4 business days across Vietnam.",
-    },
-    {
-      q: "How does the NFC card work? Is an app required?",
-      category: "nfc",
-      a: "Each card embeds an ISO standard NXP smart NFC chip. Just tap the back of your smartphone to the card, and the province album opens directly in your mobile browser.\n• No app download required.\n• No QR scan needed.",
-    },
-    {
-      q: "Which smartphones are compatible with VinaTap NFC?",
-      category: "device",
-      a: "Most modern smartphones work seamlessly:\n• iPhone: iPhone 7 and above (iPhone Xr/Xs and newer read automatically without opening any app).\n• Android: Any Samsung, Xiaomi, Oppo, Pixel with NFC.\n• If your phone doesn't have NFC: Every card has a printed backup Serial Code to access your album on the web anytime.",
-    },
-    {
-      q: "Who activates and creates the photo album?",
-      category: "album",
-      a: "The first person to tap the card or enter the backup serial becomes the verified owner. You can name your album, upload photos/videos, and write travel memories immediately after activation.",
-    },
-    {
-      q: "Is album content kept private?",
-      category: "privacy",
-      a: "You have 100% control:\n• Private mode (default): Only you and people you invite can view media.\n• Public mode: Anyone tapping the card can see your travel stories.\nAll photos are encrypted and securely stored in cloud servers.",
-    },
-    {
-      q: "Can I gift or transfer card ownership to someone else?",
-      category: "transfer",
-      a: "Yes! In your card dashboard, select 'Transfer', enter the recipient's email address. Once they confirm via email, full card ownership and album access transfer safely to them.",
-    },
-    {
-      q: "What is the warranty and return policy?",
-      category: "warranty",
-      a: "VinaTap provides an official warranty:\n• Free 1-to-1 replacement within 30 days for any NFC chip manufacturing defect.\n• Scratch-resistant and waterproof physical cards.\n• Backup serial codes guarantee you never lose access.",
-    },
-    {
-      q: "What is the VinaTap project?",
+      q: "What is VinaTap?",
       category: "about",
-      a: "VinaTap is an innovative travel-tech project bridging physical NFC collection tiles with a digital travel heritage map across Vietnam's 34 provinces. It helps travelers preserve real trip memories and celebrate Vietnamese culture.",
+      a: "VinaTap is a premier digital travel guide and AI-powered companion exploring Vietnam's 34 diverse provinces.\n• Provides comprehensive destination guides, curated itineraries, and authentic culinary insights.\n• Features a real-time AI travel assistant available 24/7.",
+    },
+    {
+      q: "How to plan a Vietnam trip with AI Prompt?",
+      category: "ai",
+      a: "Simply ask our AI Assistant (e.g. 'Plan a 3-day itinerary in Hanoi with a $150 budget'). The AI will generate a tailored schedule covering iconic sights, estimated travel times, and must-try local eateries.",
+    },
+    {
+      q: "What is included in the 34 Province Guides?",
+      category: "destination",
+      a: "Each province guide features:\n• Cultural overview and key travel highlights.\n• Curated list of iconic attractions with visual guides.\n• Top authentic local dishes you must taste.\n• Practical 1-to-3-day travel itineraries.",
+    },
+    {
+      q: "How does the Thổ Địa AI Assistant work?",
+      category: "features",
+      a: "Thổ Địa AI acts as your local insider with deep knowledge of Vietnam:\n• Recommends authentic street food spots.\n• Advises best travel seasons and weather forecasts.\n• Suggests transportation tips and budgeting.\n• Fully supports both Vietnamese and English.",
+    },
+    {
+      q: "Is VinaTap free to use?",
+      category: "free",
+      a: "Yes! All 34 provincial travel guides, editorial articles, and interactive AI chat features on VinaTap are 100% free for travelers worldwide.",
     },
   ],
 };
@@ -938,134 +888,41 @@ export default function HomePage() {
     );
     if (exactMatch) return exactMatch.a;
 
-    // 2. Nhận diện ý định theo các chủ đề chính của dự án VinaTap (Intent Recognition)
-
-    // Chủ đề: Giá cả / Các gói combo / Chi phí
-    if (
-      /giá|bao nhiêu|nhiêu tiền|bao tiền|bảng giá|chi phí|combo|mua bao nhiêu|đắt|rẻ|tiền lẻ|price|pricing|cost|how much|tier|package/i.test(
-        qLower,
-      )
-    ) {
+    // 2. Nhận diện ý định theo các chủ đề chính của VinaTap (Intent Recognition)
+    if (/lên kế hoạch|lịch trình|kế hoạch|gợi ý|plan|itinerary|schedule/i.test(qLower)) {
       return isVi
-        ? "Bảng giá chính thức của thẻ NFC VinaTap:\n• 1 thẻ lẻ (tỉnh thành bất kỳ): 49.000đ / thẻ.\n• Combo 3 thẻ tự chọn: 139.000đ (tiết kiệm so với mua lẻ, rất được yêu thích).\n• Combo 5 thẻ (bộ 5 tỉnh): 239.000đ (ưu đãi theo gói).\n• Trọn bộ 34 thẻ toàn quốc: 1.400.000đ (kèm hộp quà kỷ niệm cao cấp).\nMỗi thẻ đều có quyền kích hoạt và lưu trữ album ảnh AI trọn đời. Bạn có thể ghé mục 'Sản phẩm' trên thanh menu để chọn thẻ và đặt mua ngay nhé!"
-        : "Here is the official VinaTap NFC card pricing:\n• Single Card (any province): 49,000 VND.\n• Combo 3 Cards: 139,000 VND (popular choice, saves compared to single).\n• Combo 5 Cards: 239,000 VND (package discount).\n• Complete 34-Province Set: 1,400,000 VND (includes premium gift box).\nAll cards come with lifetime AI album activation. You can visit the 'Shop' section in the menu to order now!";
+        ? "Để lên kế hoạch du lịch với AI Prompt:\n1. Nhập câu lệnh mong muốn (ví dụ: 'Lên lịch trình 3 ngày 2 đêm ở Đà Nẵng').\n2. AI sẽ tự động đề xuất lịch trình theo từng buổi, kèm địa điểm tham quan và quán ăn nổi tiếng nhất!"
+        : "To plan a trip with AI Prompt:\n1. Type your request (e.g., 'Plan a 3-day itinerary in Da Nang').\n2. The AI will instantly generate a tailored daily schedule with top sights and local eateries!";
     }
 
-    // Chủ đề: Cách đặt mua / Shop / Mua ở đâu
-    if (
-      /mua|đặt hàng|order|cửa hàng|shop|ở đâu|làm sao để mua|làm thế nào để mua|buy|purchase|where to buy/i.test(
-        qLower,
-      )
-    ) {
+    if (/điểm đến|tỉnh thành|nơi nào|chơi ở đâu|tham quan|destination|places/i.test(qLower)) {
       return isVi
-        ? "Để đặt mua thẻ VinaTap, bạn làm theo 3 bước cực kỳ đơn giản:\n1. Bấm vào mục 'Sản phẩm' trên thanh điều hướng phía trên.\n2. Chọn thẻ tỉnh thành hoặc các gói Combo 3 thẻ (139k), Combo 5 thẻ (239k) bạn yêu thích rồi bấm 'Mua ngay'.\n3. Điền địa chỉ nhận hàng và chọn thanh toán qua mã QR PayOS hoặc thanh toán tiền mặt khi nhận hàng (COD) là hoàn tất ạ!"
-        : "To buy VinaTap cards, follow 3 easy steps:\n1. Click 'Shop' in the navigation bar.\n2. Select your desired province cards or 3-card (139k) / 5-card (239k) combos and click 'Buy Now'.\n3. Enter your delivery address and choose payment via PayOS QR or Cash on Delivery (COD)!";
+        ? "VinaTap hiện có cẩm nang số chi tiết cho 34 tỉnh thành trọng điểm du lịch Việt Nam (Hà Nội, Sài Gòn, Đà Nẵng, Ninh Bình, Hải Phòng...).\nBạn có thể nhấp vào mục 'Điểm Đến' trên thanh điều hướng để khám phá ngay!"
+        : "VinaTap covers comprehensive guides for 34 iconic destinations across Vietnam (Hanoi, Saigon, Da Nang, Ninh Binh, Hai Phong...).\nClick 'Destinations' in the top menu to explore!";
     }
 
-    // Chủ đề: Thanh toán / Chuyển khoản / PayOS / COD
-    if (
-      /thanh toán|chuyển khoản|payos|cod|tiền mặt|ngân hàng|atm|quét mã|ví|payment|pay/i.test(
-        qLower,
-      )
-    ) {
+    if (/món ăn|ẩm thực|đặc sản|ăn gì|food|dish|cuisine|eat/i.test(qLower)) {
       return isVi
-        ? "VinaTap hỗ trợ 2 hình thức thanh toán an toàn và tiện lợi:\n1. Chuyển khoản trực tuyến PayOS: Quét mã VietQR tự động xác nhận ngay tức thì, tương thích với mọi app ngân hàng và ví điện tử.\n2. Thanh toán khi nhận hàng (COD): Nhận hàng tận tay, kiểm tra thẻ rồi mới thanh toán tiền mặt cho bưu tá."
-        : "VinaTap supports 2 secure payment methods:\n1. Online QR Transfer via PayOS: Scan VietQR for instant automatic confirmation with all banks and e-wallets.\n2. Cash on Delivery (COD): Receive and inspect your physical cards before paying cash.";
+        ? "Mỗi cẩm nang tỉnh thành đều có tuyển tập món ngon bản xứ (như Phở, Bún Chả tại Hà Nội; Bánh Mì, Cơm Tấm tại Sài Gòn).\nBạn hãy vào mục 'Ẩm Thực' trên menu để xem gợi ý món ăn ngon nhất nhé!"
+        : "Each destination guide features curated local specialties (such as Pho and Bun Cha in Hanoi; Banh Mi and Broken Rice in Saigon).\nVisit the 'Eat & Drink' menu to discover the best dishes!";
     }
 
-    // Chủ đề: Phí vận chuyển / Giao hàng / Freeship / Mất bao lâu
-    if (
-      /ship|vận chuyển|giao hàng|phí ship|freeship|miễn phí ship|bao lâu|mấy ngày|delivery|shipping/i.test(
-        qLower,
-      )
-    ) {
+    if (/ai|thổ địa|trợ lý|bot|assistant/i.test(qLower)) {
       return isVi
-        ? "Chính sách giao hàng của VinaTap:\n• Phí vận chuyển tiêu chuẩn toàn quốc: 30.000đ.\n• Miễn phí vận chuyển (Freeship): Tự động áp dụng cho đơn hàng từ 500.000đ trở lên.\n• Thời gian giao hàng: Khoảng 2 - 4 ngày làm việc trên toàn quốc."
-        : "VinaTap Delivery Policy:\n• Standard nationwide shipping: 30,000 VND.\n• Free Shipping: Automatically applied for orders from 500,000 VND.\n• Delivery time: Usually 2 - 4 business days nationwide.";
+        ? "Trợ lý ảo Thổ Địa AI sẵn sàng giải đáp mọi thắc mắc du lịch của bạn 24/7 từ thời tiết, kinh nghiệm ăn chơi đến mẹo tiết kiệm chi phí. Bạn có thể bấm nút 'Hỏi Thổ Địa AI' ở góc dưới màn hình để trò chuyện trực tiếp nhé!"
+        : "Our Thổ Địa AI assistant is ready 24/7 to answer all your travel queries regarding weather, local dining, and budgeting tips. Click 'Ask Thổ Địa AI' at the bottom right to start chatting!";
     }
 
-    // Chủ đề: Công nghệ NFC / Cách hoạt động / Có cần tải app không
-    if (
-      /nfc|hoạt động|như thế nào|ra sao|cách dùng|sử dụng|cài app|tải app|quét mã|chạm thẻ|how it works/i.test(
-        qLower,
-      )
-    ) {
+    if (/vinatap|dự án|là gì|giới thiệu|ý nghĩa|about|what is/i.test(qLower)) {
       return isVi
-        ? "Thẻ VinaTap sử dụng chip NFC chuẩn ISO NXP thông minh:\n• Bạn chỉ cần chạm nhẹ mặt sau điện thoại vào thẻ, album du lịch của tỉnh thành đó sẽ tự động mở ngay trên trình duyệt web điện thoại.\n• Hoàn toàn không cần tải app, không cần quét mã QR."
-        : "VinaTap uses smart ISO-certified NXP NFC chips:\n• Simply tap the back of your phone to the physical tile, and that province's travel album opens instantly in your mobile web browser.\n• No app download required and no QR scanning needed.";
+        ? "VinaTap là cổng thông tin cẩm nang du lịch số hiện đại và trợ lý AI thông minh đồng hành cùng bạn khám phá vẻ đẹp, văn hóa và ẩm thực 34 tỉnh thành Việt Nam."
+        : "VinaTap is a premier digital travel guide and AI companion dedicated to celebrating the culture, landscapes, and cuisine of Vietnam's 34 provinces.";
     }
 
-    // Chủ đề: Điện thoại tương thích / iPhone / Android / Máy không có NFC
-    if (
-      /điện thoại|iphone|android|samsung|thiết bị|máy nào|hỗ trợ|không có nfc|tương thích|phone|device|compatible/i.test(
-        qLower,
-      )
-    ) {
+    if (/chào|hi|hello|alo|ơi|bạn ơi|hey/i.test(qLower)) {
       return isVi
-        ? "Hầu hết smartphone hiện nay đều tương thích hoàn hảo:\n• iPhone: Từ iPhone 7 trở lên (đặc biệt từ iPhone Xr/Xs trở lên tự động nhận thẻ ngay mà không cần thao tác gì thêm).\n• Android: Mọi điện thoại có trang bị NFC (Samsung, Xiaomi, Oppo, Pixel...).\n• Nếu máy không có NFC: Mỗi thẻ đều có mã Serial dự phòng in kèm — bạn chỉ cần nhập mã trên web là mở album bình thường!"
-        : "Most modern smartphones are fully compatible:\n• iPhone: iPhone 7 and above (iPhone Xr/Xs and newer read automatically in background).\n• Android: Any smartphone with NFC enabled (Samsung, Xiaomi, Oppo, etc.).\n• Phones without NFC: Every card includes a printed backup Serial Code so you can open the album on the web anytime!";
-    }
-
-    // Chủ đề: Kích hoạt thẻ / Tạo album / Đăng ảnh / Quản lý
-    if (
-      /kích hoạt|activate|tạo album|up ảnh|đăng ảnh|lưu ảnh|tải ảnh|video|album|serial|nhập serial/i.test(
-        qLower,
-      )
-    ) {
-      return isVi
-        ? "Quy trình kích hoạt và tạo album rất nhanh chóng:\n1. Chạm thẻ vào điện thoại lần đầu (hoặc nhập mã Serial in trên thẻ tại trang 'Kích hoạt').\n2. Đăng nhập để xác nhận quyền sở hữu thẻ.\n3. Bạn có thể tự do đặt tên album, tải lên các bức ảnh/video đẹp nhất, viết nhật ký hành trình để lưu giữ kỷ niệm du lịch trọn đời!"
-        : "Activating and creating an album takes under a minute:\n1. Tap the card to your phone for the first time (or enter the backup serial code on the 'Activate' page).\n2. Sign in to confirm ownership.\n3. Name your album, upload your travel photos/videos, write memories, and keep them alive forever on your map!";
-    }
-
-    // Chủ đề: Quyền riêng tư / Bảo mật / Ai xem được
-    if (
-      /riêng tư|bảo mật|ai xem|công khai|lộ ảnh|private|public|privacy|security/i.test(
-        qLower,
-      )
-    ) {
-      return isVi
-        ? "Bạn nắm toàn quyền kiểm soát album của mình:\n• Chế độ Riêng tư (mặc định): Chỉ bạn và những người được bạn cấp quyền mới xem được ảnh & video.\n• Chế độ Công khai: Bất kỳ ai chạm thẻ cũng có thể chiêm ngưỡng album của bạn.\nDữ liệu được mã hóa và lưu trữ an toàn trên nền tảng đám mây."
-        : "You have 100% control over your albums:\n• Private mode (default): Only you and authorized guests can view your media.\n• Public mode: Anyone tapping the physical card can see your travel stories.\nAll photos are securely encrypted and stored on cloud servers.";
-    }
-
-    // Chủ đề: Chuyển nhượng / Tặng thẻ
-    if (
-      /chuyển nhượng|tặng|cho người khác|đổi chủ|sang tên|bán lại|transfer|gift/i.test(
-        qLower,
-      )
-    ) {
-      return isVi
-        ? "Bạn hoàn toàn có thể tặng hoặc chuyển nhượng thẻ cho bạn bè:\n• Vào mục quản lý thẻ trong Dashboard, chọn 'Chuyển nhượng'.\n• Nhập email người nhận. Hệ thống sẽ gửi email xác nhận cho họ.\n• Khi người nhận bấm xác nhận, quyền sở hữu thẻ và album sẽ được chuyển sang tài khoản mới một cách an toàn."
-        : "You can easily gift or transfer card ownership:\n• Go to your card dashboard and click 'Transfer'.\n• Enter the recipient's email address.\n• Once they confirm via the email link, full card ownership and album access transfer securely to their account.";
-    }
-
-    // Chủ đề: Bảo hành / Đổi trả / Hỏng chip
-    if (
-      /bảo hành|đổi trả|hỏng|lỗi|chip hỏng|1 đổi 1|chống nước|30 ngày|warranty|guarantee|defect/i.test(
-        qLower,
-      )
-    ) {
-      return isVi
-        ? "Chính sách bảo hành chính hãng của VinaTap:\n• Đổi mới 1-1 miễn phí trong 30 ngày đầu nếu chip NFC gặp lỗi kỹ thuật từ nhà sản xuất.\n• Thẻ được chế tạo với vật liệu chống nước, chống xước cao cấp.\n• Mã serial dự phòng in trên thẻ đảm bảo bạn không bao giờ mất dữ liệu album dù thẻ có bị thất lạc."
-        : "Official VinaTap Warranty Policy:\n• Free 1-to-1 replacement within 30 days for any technical chip defect.\n• Waterproof and scratch-resistant build quality.\n• Backup serial codes guarantee your memories are never lost.";
-    }
-
-    // Chủ đề: Dự án VinaTap là gì / Ý nghĩa / Giới thiệu
-    if (
-      /vinatap|dự án|là gì|giới thiệu|ý nghĩa|ý tưởng|sứ mệnh|mục đích|about|what is/i.test(
-        qLower,
-      )
-    ) {
-      return isVi
-        ? "VinaTap là dự án công nghệ du lịch kết hợp giữa thẻ NFC vật lý thông minh và nền tảng bản đồ số hóa 34 tỉnh thành Việt Nam.\nMục tiêu của VinaTap là giúp mọi người lưu giữ kỷ niệm du lịch thực tế, biến hành trình khám phá đất nước thành bộ sưu tập di sản sống động và gắn kết bạn bè, gia đình."
-        : "VinaTap is an innovative travel-tech project that connects physical smart NFC tiles with an interactive digital travel map across Vietnam's 34 provinces.\nOur mission is to help travelers preserve authentic journey memories and celebrate the heritage and beauty of Vietnam.";
-    }
-
-    // Chủ đề: Chào hỏi
-    if (/chào|hi|hello|alo|ơi|bạn ơi|bot|hey/i.test(qLower)) {
-      return isVi
-        ? "Chào bạn! Mình là Trợ lý ảo của VinaTap. Mình có thể hỗ trợ bạn thông tin về giá thẻ (1 thẻ 49k, combo 3 thẻ 139k, 5 thẻ 239k), cách thức đặt mua, công nghệ chạm NFC hay chính sách bảo hành. Bạn cần mình giải đáp điều gì cứ nhắn nhé!"
-        : "Hello! I am VinaTap Assistant. I can help you with pricing (1 card 49k, combo 3 cards 139k, 5 cards 239k), ordering, NFC technology, or warranty. How can I help you today?";
+        ? "Chào bạn! Mình là Trợ lý ảo VinaTap. Mình có thể giúp bạn gợi ý điểm đến, lên lịch trình du lịch hoặc tìm món ngon đặc sản. Bạn cần mình hỗ trợ thông tin gì cứ nhắn nhé!"
+        : "Hello! I am your VinaTap Travel Assistant. I can help you find destinations, plan itineraries, or recommend authentic foods. What would you like to explore today?";
     }
 
     // 3. Nếu không trúng intent cụ thể, tính điểm từ khóa khớp tốt nhất trong FAQ_DATA
@@ -1138,16 +995,9 @@ export default function HomePage() {
         <header className="vnn-navbar">
           <div className="vnn-navbar__inner">
             <Link href="/" className="vnn-navbar__brand">
-              <img
-                src="/guide/hcmc/Vietnamnomad-logo-by-Welcome-to-Vietnam-official.png"
-                alt="Welcome to Vietnam"
-                className="vnn-navbar__brand-logo"
-              />
-              <div className="vnn-navbar__brand-divider" />
               <div className="vnn-navbar__brand-vinatap">
-                <Logo size={28} showText={false} noLink href={null} as="span" />
+                <Logo size={32} showText={false} noLink href={null} as="span" />
                 <span>VinaTap</span>
-                <span className="vnn-navbar__brand-badge">NFC</span>
               </div>
             </Link>
 
@@ -1219,13 +1069,13 @@ export default function HomePage() {
                     <Compass size={16} className="vnn-dropdown__item-icon" />
                     <span>{lang === "vi" ? "10 Điều Tuyệt Nhất Ở Sài Gòn" : "10 Best Things in HCMC"}</span>
                   </Link>
-                  <Link href="/shop" className="vnn-dropdown__item">
-                    <CreditCard size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Chạm Thẻ NFC Lưu Album Kỷ Niệm" : "Tap NFC Cards Experience"}</span>
-                  </Link>
+                  <a href="#provinces" onClick={scrollToSection("provinces")} className="vnn-dropdown__item">
+                    <Map size={16} className="vnn-dropdown__item-icon" />
+                    <span>{lang === "vi" ? "Cẩm Nang Du Lịch 34 Tỉnh Thành" : "34 Destinations Travel Guide"}</span>
+                  </a>
                   <a href="#about" onClick={scrollToSection("about")} className="vnn-dropdown__item">
                     <Sparkles size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Trải Nghiệm Thẻ 3D Tương Tác" : "Interactive 3D Cards"}</span>
+                    <span>{lang === "vi" ? "Hỏi Đáp Du Lịch Cùng Thổ Địa AI" : "Chat with Thổ Địa AI Assistant"}</span>
                   </a>
                 </div>
               </li>
@@ -1265,14 +1115,6 @@ export default function HomePage() {
                   </Link>
                 </div>
               </li>
-
-              {/* THẺ NFC STORE */}
-              <li className="vnn-navbar__item">
-                <Link href="/shop" className="vnn-navbar__link" style={{ color: "#00c2cb" }}>
-                  <ShoppingBag size={15} />
-                  <span>{lang === "vi" ? "Thẻ NFC" : "NFC SHOP"}</span>
-                </Link>
-              </li>
             </ul>
 
             <div className="vnn-navbar__actions">
@@ -1287,92 +1129,6 @@ export default function HomePage() {
               </button>
 
               <LanguageSwitch variant="navbar" />
-
-              {user ? (
-                <div className="home-navbar__user-wrap" ref={userMenuRef}>
-                  <button
-                    type="button"
-                    className="home-navbar__user-badge-btn"
-                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    aria-label="User menu"
-                  >
-                    <div className="home-navbar__avatar">
-                      {user.avatar_url ? (
-                        <img src={user.avatar_url} alt={user.name} />
-                      ) : (
-                        <span>{user.name?.[0]?.toUpperCase() || "U"}</span>
-                      )}
-                    </div>
-                    <span className="home-navbar__user-name">{user.name}</span>
-                    <ChevronDown
-                      size={14}
-                      className={`home-navbar__chevron ${userDropdownOpen ? "is-open" : ""}`}
-                    />
-                  </button>
-
-                  {userDropdownOpen && (
-                    <div className="home-navbar__user-dropdown">
-                      <div className="home-navbar__dropdown-info">
-                        <strong>{user.name}</strong>
-                        <span>{user.email}</span>
-                      </div>
-                      <div className="home-navbar__dropdown-divider" />
-                      <Link
-                        href={user.role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
-                        className="home-navbar__dropdown-item"
-                        onClick={() => setUserDropdownOpen(false)}
-                      >
-                        <User size={16} />
-                        <span>{user.role === "admin" ? t(lang, "adminPortal") : t(lang, "myCollection")}</span>
-                      </Link>
-                      {user.role !== "admin" && (
-                        <>
-                          <Link
-                            href="/customer/orders"
-                            className="home-navbar__dropdown-item"
-                            onClick={() => setUserDropdownOpen(false)}
-                          >
-                            <Package size={16} />
-                            <span>{t(lang, "myOrders")}</span>
-                          </Link>
-                          <Link
-                            href="/shop"
-                            className="home-navbar__dropdown-item"
-                            onClick={() => setUserDropdownOpen(false)}
-                          >
-                            <ShoppingBag size={16} />
-                            <span>{t(lang, "nfcStore")}</span>
-                          </Link>
-                          <Link
-                            href="/settings/account"
-                            className="home-navbar__dropdown-item"
-                            onClick={() => setUserDropdownOpen(false)}
-                          >
-                            <Settings size={16} />
-                            <span>{t(lang, "accountSettings")}</span>
-                          </Link>
-                        </>
-                      )}
-                      <div className="home-navbar__dropdown-divider" />
-                      <button
-                        type="button"
-                        className="home-navbar__dropdown-item text-danger"
-                        onClick={() => {
-                          setUserDropdownOpen(false);
-                          handleLogout();
-                        }}
-                      >
-                        <LogOut size={16} />
-                        <span>{t(lang, "logout")}</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Link href="/auth" className="home-navbar__login-btn">
-                  {t(lang, "signIn")}
-                </Link>
-              )}
             </div>
           </div>
         </header>
@@ -2147,12 +1903,9 @@ export default function HomePage() {
         <footer className="vnn-clean-footer">
           <div className="vnn-clean-footer__container">
             <div className="vnn-clean-footer__logo-wrap">
-              <Link href="/">
-                <img
-                  src="/guide/hcmc/Vietnamnomad-logo-by-Welcome-to-Vietnam-official.png"
-                  alt="Welcome to Vietnam"
-                  className="vnn-clean-footer__logo"
-                />
+              <Link href="/" className="vnn-clean-footer__brand-link">
+                <Logo size={32} showText={false} noLink href={null} as="span" />
+                <span>VinaTap</span>
               </Link>
             </div>
 
@@ -2286,8 +2039,11 @@ export default function HomePage() {
                   >
                     {lang === "vi" ? "Khách sạn lưu trú" : "Accommodation"}
                   </Link>
-                  <Link href="/shop" className="vnn-clean-footer__link">
-                    {lang === "vi" ? "Hội viên VinaTap" : "Membership"}
+                  <Link
+                    href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+                    className="vnn-clean-footer__link"
+                  >
+                    {lang === "vi" ? "Kinh nghiệm du lịch" : "Travel Tips"}
                   </Link>
                   <Link
                     href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
@@ -2321,7 +2077,7 @@ export default function HomePage() {
 
             {/* Copyright Line */}
             <div className="vnn-clean-footer__bottom">
-              © 2026 Welcome to Vietnam. All rights reserved.
+              © 2026 VinaTap. All rights reserved.
             </div>
           </div>
         </footer>

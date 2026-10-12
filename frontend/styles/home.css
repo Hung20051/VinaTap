@@ -2996,39 +2996,22 @@
 .vnn-navbar__brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
-}
-.vnn-navbar__brand-logo {
-  height: 38px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-}
-.vnn-navbar__brand-divider {
-  width: 1px;
-  height: 24px;
-  background: #e2e8f0;
 }
 .vnn-navbar__brand-vinatap {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-weight: 800;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   color: #0d1f2d;
   letter-spacing: -0.02em;
+  transition: color 0.2s ease;
 }
-.vnn-navbar__brand-badge {
-  font-size: 0.68rem;
-  font-weight: 800;
+.vnn-navbar__brand-vinatap:hover {
   color: #00c2cb;
-  background: #e6f8f8;
-  padding: 2px 8px;
-  border-radius: 4px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 .vnn-navbar__menu {
   display: flex;
@@ -4609,6 +4592,20 @@
 .vnn-clean-footer__logo-wrap {
   margin-bottom: 18px;
   text-align: center;
+}
+.vnn-clean-footer__brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0d1f2d;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: color 0.2s ease;
+}
+.vnn-clean-footer__brand-link:hover {
+  color: #00c2cb;
 }
 .vnn-clean-footer__logo {
   height: 48px;
