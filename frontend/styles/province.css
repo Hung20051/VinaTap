@@ -1,448 +1,508 @@
 /* ================================================================
-   CẨM NANG DU LỊCH TỈNH THÀNH (CHUẨN BỐ CỤC MIA.VN)
-   Phong cách hiện đại, trực quan, tạp chí du lịch số cao cấp
+   CẨM NANG DU LỊCH TỈNH THÀNH (VIETNAMNOMAD UI/UX EDITORIAL STYLE)
+   Lấy cảm hứng từ VietnamNomad: Bố cục tạp chí, màu Cyan #00c2cb,
+   Coral #ff5757, Nền sáng #f8f5f4, Danh sách món ăn đánh số #1-#8.
    ================================================================ */
 
-.mia-page-wrapper {
-  background-color: #f8fafc;
+.vnn-province-page {
+  background-color: #f8f5f4;
   min-height: 100vh;
-  color: #1e293b;
+  color: #0d1f2d;
   font-family: inherit;
   padding-bottom: 5rem;
 }
 
-.mia-main-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.25rem 1.25rem 3rem;
+/* ─── 1. TOP NAVBAR TRÊN TRANG CẨM NANG ─────────────────────── */
+.vnn-prov-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #eaeaea;
+  box-shadow: 0 2px 10px rgba(13, 31, 45, 0.04);
 }
 
-/* ─── 1. BREADCRUMB ────────────────────────────────────────── */
-.mia-breadcrumb {
+.vnn-prov-navbar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vnn-prov-navbar__left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.vnn-prov-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #556270;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #f0f2f4;
+  transition: all 0.2s ease;
+}
+
+.vnn-prov-back-link:hover {
+  background: #e6f8f8;
+  color: #008891;
+}
+
+.vnn-prov-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vnn-prov-shop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #00c2cb;
+  padding: 6px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 194, 203, 0.25);
+  transition: all 0.2s ease;
+}
+
+.vnn-prov-shop-btn:hover {
+  background: #00aab2;
+  transform: translateY(-1px);
+}
+
+/* ─── 2. CONTAINER CHÍNH ───────────────────────────────────── */
+.vnn-prov-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+/* ─── 3. BREADCRUMB ────────────────────────────────────────── */
+.vnn-breadcrumb {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: #64748b;
   margin-bottom: 1.5rem;
   padding: 0.25rem 0;
 }
 
-.mia-breadcrumb-item {
+.vnn-breadcrumb-item {
   color: #64748b;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.mia-breadcrumb-item:hover {
-  color: #ea580c;
+.vnn-breadcrumb-item:hover {
+  color: #00c2cb;
 }
 
-.mia-breadcrumb-sep {
+.vnn-breadcrumb-sep {
   color: #cbd5e1;
 }
 
-.mia-breadcrumb-current {
-  color: #0f172a;
+.vnn-breadcrumb-current {
+  color: #0d1f2d;
   font-weight: 700;
 }
 
-/* ─── 2. HERO INTRO 2-COLUMN ────────────────────────────────── */
-.mia-hero-section {
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 1.5rem;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 1rem;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
-  border: 1px solid #f1f5f9;
-  margin-bottom: 2.75rem;
-  align-items: stretch;
+/* ─── 4. ARTICLE EDITORIAL HEADER (VIETNAMNOMAD HERO) ──────── */
+.vnn-article-header {
+  margin-bottom: 2rem;
 }
 
-.mia-hero-left {
+.vnn-article-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #e6f8f8;
+  color: #008891;
+  border: 1px solid rgba(0, 194, 203, 0.35);
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.vnn-article-title {
+  font-size: clamp(2rem, 3.5vw, 2.85rem);
+  font-weight: 900;
+  color: #0d1f2d;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.vnn-article-meta {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.86rem;
+  color: #6c757d;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.mia-hero-img-wrap {
+.vnn-article-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.vnn-article-meta-dot {
+  color: #cbd5e1;
+}
+
+/* ─── 5. HERO COVER IMAGE & CAPTION ────────────────────────── */
+.vnn-hero-banner {
+  margin-bottom: 2.75rem;
+}
+
+.vnn-hero-cover-wrap {
   width: 100%;
-  min-height: 320px;
-  max-height: 380px;
-  border-radius: 16px;
+  height: clamp(340px, 45vw, 520px);
+  border-radius: 18px;
   overflow: hidden;
+  box-shadow: 0 8px 30px rgba(13, 31, 45, 0.08);
   position: relative;
   background: #e2e8f0;
 }
 
-.mia-hero-img {
+.vnn-hero-cover-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mia-hero-img-wrap:hover .mia-hero-img {
-  transform: scale(1.03);
+.vnn-hero-caption {
+  margin-top: 0.75rem;
+  font-size: 0.86rem;
+  color: #64748b;
+  font-style: italic;
+  text-align: center;
 }
 
-.mia-hero-right {
+/* ─── 6. EDITORIAL INTRO BOX ───────────────────────────────── */
+.vnn-lead-story {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 16px rgba(13, 31, 45, 0.04);
+  margin-bottom: 3.5rem;
+  position: relative;
+  border-left: 5px solid #00c2cb;
+}
+
+.vnn-lead-story p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #2c3842;
+  margin: 0;
+}
+
+/* ─── 7. SECTIONS & HEADINGS ───────────────────────────────── */
+.vnn-section {
+  margin-bottom: 3.75rem;
+}
+
+.vnn-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #eaeaea;
+  position: relative;
+}
+
+.vnn-section-head::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: #00c2cb;
+}
+
+.vnn-section-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0d1f2d;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.vnn-section-sub {
+  font-size: 0.88rem;
+  color: #6c757d;
+  margin-top: 4px;
+}
+
+/* ─── 8. NUMBERED FOOD LIST (TOP MUST-TRY FOODS) ───────────── */
+.vnn-food-numbered-list {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 1.5rem 1.75rem;
-  background: #fdfbf7;
-  border-radius: 16px;
-  border: 1px dashed #fed7aa;
+  gap: 1.75rem;
 }
 
-.mia-hero-title {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #0f172a;
-  margin: 0 0 1rem;
-  line-height: 1.2;
-  letter-spacing: -0.5px;
-}
-
-.mia-hero-desc p {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.75;
-  color: #475569;
-  text-align: justify;
-}
-
-/* ─── 3. SECTIONS & HEADERS ─────────────────────────────────── */
-.mia-section {
-  margin-bottom: 3.25rem;
-}
-
-.mia-section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
-
-.mia-section-title {
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 0;
-  letter-spacing: -0.3px;
-  position: relative;
-}
-
-.mia-see-all-btn {
-  background: none;
-  border: none;
-  color: #ea580c;
-  font-size: 0.92rem;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.mia-see-all-btn:hover {
-  background: #fff7ed;
-  text-decoration: underline;
-}
-
-/* ─── 4. GRID & SCROLLABLE ROWS (ĐIỂM THAM QUAN / LỄ HỘI) ──── */
-.mia-grid-3 {
+.vnn-food-card {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-}
-
-.mia-grid-scroll-x {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  gap: 1.25rem !important;
-  padding-bottom: 0.75rem !important;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-.mia-grid-scroll-x > * {
-  flex: 0 0 340px !important;
-  min-width: 300px !important;
-  max-width: 380px !important;
-}
-
-.mia-grid-scroll-x::-webkit-scrollbar {
-  height: 6px;
-}
-.mia-grid-scroll-x::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 9999px;
-}
-.mia-grid-scroll-x::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 9999px;
-}
-.mia-grid-scroll-x::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* ─── VERTICAL BOUNDED SCROLL BOX ────────────────────────────── */
-.mia-scroll-y-box {
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding-right: 4px;
-}
-
-.mia-scroll-y-box::-webkit-scrollbar {
-  width: 5px;
-}
-.mia-scroll-y-box::-webkit-scrollbar-track {
-  background: #f8fafc;
-  border-radius: 4px;
-}
-.mia-scroll-y-box::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-.mia-scroll-y-box::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-.mia-card-img-large {
-  position: relative;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  background: #ffffff;
   border-radius: 18px;
-  overflow: hidden;
-  height: 240px;
+  padding: 1.25rem;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 16px rgba(13, 31, 45, 0.04);
   cursor: pointer;
-  background: #e2e8f0;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mia-card-img-large:hover {
+.vnn-food-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  border-color: #00c2cb;
+  box-shadow: 0 14px 30px rgba(0, 194, 203, 0.12);
 }
 
-.mia-card-bg-img {
+.vnn-food-img-wrap {
+  width: 100%;
+  height: 200px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  background: #eef7f8;
+}
+
+.vnn-food-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
-.mia-card-img-large:hover .mia-card-bg-img {
+.vnn-food-card:hover .vnn-food-img {
   transform: scale(1.06);
 }
 
-.mia-card-gradient {
+.vnn-food-number-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #00c2cb;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vnn-food-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 0.5rem;
+}
+
+.vnn-food-name {
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: #0d1f2d;
+  margin: 0 0 0.5rem;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+
+.vnn-food-card:hover .vnn-food-name {
+  color: #00aab2;
+}
+
+.vnn-food-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #556270;
+  margin-bottom: 0.85rem;
+}
+
+.vnn-food-address {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  color: #e02424;
+  font-weight: 600;
+  background: #fff5f5;
+  padding: 4px 10px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.vnn-food-address svg {
+  color: #ff5757;
+  flex-shrink: 0;
+}
+
+.vnn-food-card-action {
+  margin-top: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #00c2cb;
+}
+
+/* ─── 9. LANDMARKS & ATTRACTIONS (HORIZONTAL CAROUSEL / GRID) ─ */
+.vnn-landmarks-grid {
+  display: flex;
+  gap: 1.4rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.75rem;
+  scrollbar-width: none;
+}
+
+.vnn-landmarks-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.vnn-landmark-card {
+  flex: 0 0 310px;
+  scroll-snap-align: start;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  height: 250px;
+  cursor: pointer;
+  background: #0d1f2d;
+  box-shadow: 0 4px 18px rgba(13, 31, 45, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vnn-landmark-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(13, 31, 45, 0.16);
+}
+
+.vnn-landmark-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.vnn-landmark-card:hover .vnn-landmark-img {
+  transform: scale(1.08);
+}
+
+.vnn-landmark-gradient {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(15, 23, 42, 0.88) 0%,
-    rgba(15, 23, 42, 0.4) 45%,
+    rgba(13, 31, 45, 0.92) 0%,
+    rgba(13, 31, 45, 0.35) 50%,
     transparent 100%
   );
-  pointer-events: none;
 }
 
-.mia-card-title {
+.vnn-landmark-title {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 1.1rem 1.2rem;
+  padding: 1.25rem;
   margin: 0;
   color: #ffffff;
-  font-size: 1.05rem;
-  font-weight: 700;
-  line-height: 1.4;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-  z-index: 2;
-}
-
-/* ─── 5. CULINARY & REVIEW 3-COLUMN GRID ───────────────────── */
-.mia-culinary-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr 1fr;
-  gap: 1.25rem;
-}
-
-/* Khi không có bài dạng danh sách, đưa các card nổi bật về từ cột đầu,
-   tránh để trống cả một cột ở bên trái. */
-.mia-culinary-grid--featured-only {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.mia-culinary-grid--featured-only .mia-food-list-col {
-  display: none;
-}
-
-/* Không có cột danh sách để làm mốc chiều cao, nên cố định chiều cao card
-   để ảnh không giãn theo tỷ lệ gốc khi chỉ còn hai card nổi bật. */
-.mia-culinary-grid--featured-only .mia-food-featured-card {
-  height: 300px;
-}
-
-.mia-food-list-col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.mia-food-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 8px 10px;
-  border: 1px solid #f1f5f9;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.mia-food-item:hover {
-  transform: translateX(4px);
-  border-color: #fed7aa;
-  background: #fffaf5;
-  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.08);
-}
-
-.mia-food-thumb {
-  width: 78px;
-  height: 64px;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #e2e8f0;
-}
-
-.mia-food-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.mia-food-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.mia-food-title {
-  margin: 0 0 5px;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #1e293b;
+  font-size: 1.12rem;
+  font-weight: 800;
   line-height: 1.35;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-.mia-food-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.74rem;
-  color: #94a3b8;
-}
-
-.mia-food-featured-card {
-  position: relative;
-  border-radius: 18px;
-  overflow: hidden;
-  height: 100%;
-  min-height: 290px;
-  cursor: pointer;
-  background: #e2e8f0;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.mia-food-featured-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-}
-
-.mia-food-featured-card:hover .mia-card-bg-img {
-  transform: scale(1.06);
-}
-
-/* ─── 6. BỘ 3 CẨM NANG (DI CHUYỂN, LỊCH TRÌNH, KINH NGHIỆM) ── */
-.mia-guides-3col {
+/* ─── 10. BỘ 3 CẨM NANG BỎ TÚI (3-COLUMNS EDITORIAL) ──────── */
+.vnn-guides-3col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.35rem;
+  gap: 1.5rem;
 }
 
-.mia-guide-column {
+.vnn-guide-col {
   background: #ffffff;
-  border-radius: 20px;
-  padding: 1rem;
-  border: 1px solid #f1f5f9;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  border-radius: 18px;
+  padding: 1.25rem;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 16px rgba(13, 31, 45, 0.04);
   display: flex;
   flex-direction: column;
 }
 
-.mia-guide-top-img-card {
+.vnn-guide-col-img-wrap {
   width: 100%;
-  height: 175px;
-  border-radius: 14px;
+  height: 170px;
+  border-radius: 12px;
   overflow: hidden;
-  cursor: pointer;
   margin-bottom: 1rem;
-  background: #e2e8f0;
+  cursor: pointer;
+  background: #eef7f8;
 }
 
-.mia-guide-top-img-card img {
+.vnn-guide-col-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s ease;
 }
 
-.mia-guide-top-img-card:hover img {
+.vnn-guide-col-img-wrap:hover img {
   transform: scale(1.05);
 }
 
-.mia-guide-header {
+.vnn-guide-col-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.85rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #f8fafc;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid #f8f5f4;
 }
 
-.mia-guide-col-title {
+.vnn-guide-col-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #0d1f2d;
   margin: 0;
 }
 
-.mia-guide-see-all {
+.vnn-guide-col-count {
   font-size: 0.82rem;
   font-weight: 700;
-  color: #ea580c;
-  cursor: pointer;
+  color: #00c2cb;
 }
 
-.mia-guide-see-all:hover {
-  text-decoration: underline;
-}
-
-.mia-guide-article-list {
+.vnn-guide-article-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -451,13 +511,12 @@
   gap: 0.65rem;
 }
 
-.mia-guide-article-list li {
+.vnn-guide-article-list li {
   font-size: 0.88rem;
   line-height: 1.45;
   color: #334155;
   cursor: pointer;
   padding: 4px 0;
-  position: relative;
   transition: all 0.2s ease;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -465,255 +524,125 @@
   overflow: hidden;
 }
 
-.mia-guide-article-list li:hover {
-  color: #ea580c;
+.vnn-guide-article-list li:hover {
+  color: #00c2cb;
   transform: translateX(3px);
 }
 
-/* ─── 7. MODAL XEM CHI TIẾT BÀI VIẾT / ĐỊA DANH ─────────────── */
-.mia-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ─── 11. GÓC REVIEW TRẢI NGHIỆM ──────────────────────────── */
+.vnn-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.vnn-review-card {
+  background: #ffffff;
+  border-radius: 16px;
   padding: 1.25rem;
-  animation: modalFadeIn 0.25s ease forwards;
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.mia-modal-container {
-  background: #ffffff;
-  width: 100%;
-  max-width: 580px;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
-  position: relative;
-  animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes modalScaleUp {
-  from {
-    transform: scale(0.94) translateY(20px);
-  }
-  to {
-    transform: scale(1) translateY(0);
-  }
-}
-
-.mia-modal-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #0f172a;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 16px rgba(13, 31, 45, 0.04);
   cursor: pointer;
-  z-index: 10;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-.mia-modal-close:hover {
-  background: #ffffff;
-  transform: rotate(90deg) scale(1.1);
+.vnn-review-card:hover {
+  transform: translateY(-4px);
+  border-color: #00c2cb;
+  box-shadow: 0 12px 28px rgba(0, 194, 203, 0.1);
 }
 
-.mia-modal-image-wrap {
-  position: relative;
+.vnn-review-thumb {
   width: 100%;
-  height: 250px;
-  background: #0f172a;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 0.85rem;
 }
 
-.mia-modal-img {
+.vnn-review-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.mia-modal-img-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(15, 23, 42, 0.9) 0%,
-    rgba(15, 23, 42, 0.3) 50%,
-    transparent 100%
-  );
-}
-
-.mia-modal-img-title {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1.25rem;
-  margin: 0;
-  color: #ffffff;
-  font-size: 1.25rem;
-  font-weight: 800;
-  line-height: 1.35;
-}
-
-.mia-modal-body {
-  padding: 1.5rem;
-}
-
-.mia-modal-title {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #0f172a;
-  margin: 0 0 0.85rem;
-}
-
-.mia-modal-meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 1rem;
-}
-
-.mia-meta-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  background: #f1f5f9;
-  border-radius: 8px;
-  font-size: 0.78rem;
-  color: #475569;
-  font-weight: 600;
-}
-
-.mia-meta-tag.is-badge {
-  background: #fff7ed;
-  color: #ea580c;
-  border: 1px solid #fed7aa;
-}
-
-.mia-modal-address {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 10px 12px;
-  background: #fffaf5;
-  border: 1px solid #fed7aa;
-  border-radius: 12px;
-  font-size: 0.86rem;
-  color: #334155;
-  line-height: 1.45;
-  margin-bottom: 1.15rem;
-}
-
-.mia-modal-desc {
-  font-size: 0.93rem;
-  line-height: 1.65;
-  color: #334155;
-  margin-bottom: 1.5rem;
-}
-
-.mia-modal-desc p {
-  margin: 0 0 0.65rem;
-}
-
-.mia-modal-subdesc {
-  font-size: 0.88rem;
-  color: #64748b;
-  font-style: italic;
-}
-
-.mia-modal-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.mia-btn-direction {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 18px;
-  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.92rem;
+.vnn-review-title {
+  font-size: 0.98rem;
   font-weight: 700;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.35);
-  transition: all 0.2s ease;
+  color: #0d1f2d;
+  margin: 0 0 0.4rem;
+  line-height: 1.4;
 }
 
-.mia-btn-direction:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(234, 88, 12, 0.45);
+.vnn-review-meta {
+  font-size: 0.78rem;
+  color: #8c97a0;
 }
 
-.mia-btn-share {
+/* ─── 12. LỄ HỘI BẢN ĐỊA ─────────────────────────────────── */
+.vnn-festivals-grid {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 11px 16px;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #475569;
-  font-size: 0.92rem;
-  font-weight: 600;
-  border-radius: 12px;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+
+.vnn-festivals-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.vnn-festival-card {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+  border-radius: 18px;
+  overflow: hidden;
+  height: 220px;
+  position: relative;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(13, 31, 45, 0.08);
 }
 
-.mia-btn-share:hover {
-  background: #e2e8f0;
+.vnn-festival-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-/* ─── 8. RESPONSIVE MEDIA QUERIES ───────────────────────────── */
-@media (max-width: 1024px) {
-  .mia-hero-section {
-    grid-template-columns: 1fr;
-  }
-  .mia-culinary-grid {
-    grid-template-columns: 1fr;
-  }
-  .mia-guides-3col {
-    grid-template-columns: 1fr;
-  }
+.vnn-festival-card:hover .vnn-festival-img {
+  transform: scale(1.06);
 }
 
-@media (max-width: 768px) {
-  .mia-grid-3 {
+/* ─── 13. RESPONSIVE BREAKPOINTS ──────────────────────────── */
+@media (max-width: 900px) {
+  .vnn-food-card {
     grid-template-columns: 1fr;
   }
-  .mia-card-img-large {
-    height: 200px;
-  }
-  .mia-food-featured-card {
-    min-height: 220px;
-  }
-  .mia-culinary-grid--featured-only .mia-food-featured-card {
+  .vnn-food-img-wrap {
     height: 220px;
+  }
+  .vnn-guides-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .vnn-prov-container {
+    padding: 1rem 0.85rem 3rem;
+  }
+  .vnn-article-title {
+    font-size: 1.85rem;
+  }
+  .vnn-hero-cover-wrap {
+    height: 260px;
+  }
+  .vnn-food-card {
+    padding: 1rem;
+  }
+  .vnn-landmark-card {
+    flex: 0 0 260px;
+    height: 210px;
   }
 }

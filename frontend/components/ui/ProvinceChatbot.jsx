@@ -87,8 +87,22 @@ const ChatMessageBubble = memo(function ChatMessageBubble({ message, userAvatar,
   );
 });
 
-export default function ProvinceChatbot({ province, spots = [], specialties = "" }) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function ProvinceChatbot({
+  province,
+  spots = [],
+  specialties = "",
+  isOpen: externalIsOpen,
+  onToggleOpen,
+}) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+  const setIsOpen = (val) => {
+    if (onToggleOpen) {
+      onToggleOpen(typeof val === "function" ? val(isOpen) : val);
+    } else {
+      setInternalIsOpen(val);
+    }
+  };
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");

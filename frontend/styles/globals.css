@@ -69,68 +69,80 @@ select {
   font: inherit;
 }
 
-/* ─── BIẾN MÀU ────────────────────────────────────────────── */
+/* ─── BIẾN MÀU & THIẾT KẾ (VIETNAMNOMAD UI/UX PALETTE) ─── */
 :root {
-  /* Brand */
-  --primary: #e85d04;
-  --primary-dark: #c44b00;
-  --primary-light: #fff1eb;
+  /* Brand: VietnamNomad Signature Cyan / Turquoise */
+  --primary: #00c2cb;
+  --primary-dark: #00aab2;
+  --primary-hover: #00939a;
+  --primary-light: #e6f8f8;
+  --primary-subtle: #f0fbfb;
+  --primary-rgb: 0, 194, 203;
 
-  /* Backgrounds */
-  --bg-page: #fafafa;
+  /* Accent: VietnamNomad Coral Red & Sunset Amber */
+  --accent-coral: #ff5757;
+  --accent-coral-dark: #dd3333;
+  --accent-orange: #ff9334;
+  --accent-gold: #fcb900;
+
+  /* Backgrounds: Fresh & Airy Editorial Travel Palette */
+  --bg-page: #f8f5f4;
   --bg-card: #ffffff;
-  --bg-overlay: rgba(0, 0, 0, 0.45);
+  --bg-muted: #f4f4f4;
+  --bg-overlay: rgba(13, 31, 45, 0.45);
   --bg-danger-light: #fee2e2;
 
-  /* Text */
-  --text-primary: #1a1a1a;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
+  /* Text: Rich Deep Slate & Editorial Greys */
+  --text-primary: #0d1f2d;
+  --text-secondary: #5f6b76;
+  --text-muted: #8c97a0;
+  --text-dark-grey: #787e84;
   --text-white: #ffffff;
 
-  /* Border */
-  --border: #e5e7eb;
-  --border-focus: #e85d04;
+  /* Borders */
+  --border: #e8e8e8;
+  --border-light: #f0f0f0;
+  --border-focus: #00c2cb;
 
   /* Status */
-  --success: #16a34a;
-  --danger: #dc2626;
-  --warning: #d97706;
-  --info: #2563eb;
+  --success: #11b494;
+  --danger: #ff5757;
+  --warning: #ff9334;
+  --info: #00c2cb;
 
-  /* Shadow */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  /* Shadow: Soft, elevated editorial travel feel */
+  --shadow-sm: 0 2px 6px rgba(13, 31, 45, 0.04);
+  --shadow-md: 0 6px 18px rgba(13, 31, 45, 0.07);
+  --shadow-lg: 0 12px 32px rgba(13, 31, 45, 0.1);
+  --shadow-pill: 0 2px 10px rgba(0, 194, 203, 0.2);
 
-  /* Spacing */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  /* Spacing & Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 }
 
-/* ─── DARK THEME ──────────────────────────────────────────────
-   Bật bằng cách gắn data-theme="dark" lên <html> (xem lib/prefs.js).
-   Chỉ override các biến — mọi nơi trong code dùng var(--...) sẽ tự
-   đổi màu theo, không cần sửa từng component. Những chỗ còn hard-code
-   mã hex trực tiếp (vd sidebar dashboard cố tình luôn tối) sẽ không
-   đổi theo theme này. */
+/* ─── DARK THEME ────────────────────────────────────────────── */
 html[data-theme="dark"] {
-  --bg-page: #0f172a;
-  --bg-card: #1e293b;
-  --bg-overlay: rgba(0, 0, 0, 0.65);
-  --bg-danger-light: rgba(220, 38, 38, 0.15);
+  --bg-page: #0b141d;
+  --bg-card: #132230;
+  --bg-muted: #1a2c3d;
+  --bg-overlay: rgba(0, 0, 0, 0.75);
+  --bg-danger-light: rgba(255, 87, 87, 0.15);
 
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #f8fafc;
+  --text-secondary: #a3b2bf;
+  --text-muted: #6f8090;
   --text-white: #ffffff;
 
-  --border: #334155;
-  --border-focus: #e85d04;
+  --border: #233647;
+  --border-light: #1c2b38;
+  --border-focus: #00c2cb;
 
-  --primary-light: rgba(232, 93, 4, 0.15);
+  --primary-light: rgba(0, 194, 203, 0.16);
+  --primary-subtle: rgba(0, 194, 203, 0.08);
 }
 
 body {
@@ -215,7 +227,7 @@ body {
 }
 .badge-primary {
   background: var(--primary-light);
-  color: var(--primary);
+  color: var(--primary-dark);
 }
 .badge-success {
   background: #dcfce7;
@@ -224,6 +236,69 @@ body {
 .badge-danger {
   background: #fee2e2;
   color: var(--danger);
+}
+
+/* ─── VIETNAMNOMAD EDITORIAL HELPERS ─────────────────────── */
+.vnn-pill-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vnn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: 1px solid #dcdcdc;
+  background-color: #f4f4f4;
+  color: #0d1f2d;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.vnn-pill:hover {
+  background-color: #e6f8f8;
+  border-color: #b3eaea;
+  color: #008891;
+}
+
+.vnn-pill.is-active,
+.vnn-pill.active {
+  background-color: #e6f8f8;
+  color: #00767e;
+  border-color: #00c2cb;
+  font-weight: 600;
+}
+
+.vnn-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vnn-badge-teal {
+  background-color: #e6f8f8;
+  color: #008891;
+  border: 1px solid rgba(0, 194, 203, 0.3);
+}
+
+.vnn-badge-coral {
+  background-color: #ffe8e8;
+  color: #e02424;
+  border: 1px solid rgba(255, 87, 87, 0.3);
 }
 
 /* ─── NAVBAR ──────────────────────────────────────────────── */

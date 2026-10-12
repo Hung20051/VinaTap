@@ -20,16 +20,24 @@ const pool = mysql.createPool({
   timezone: "+07:00",
 });
 
-// Test kết nối khi khởi động
-pool
-  .getConnection()
-  .then((conn) => {
-    console.log("✅ MySQL connected:", process.env.DB_NAME);
-    conn.release();
-  })
-  .catch((err) => {
-    console.error("❌ MySQL connection failed:", err.message);
-    process.exit(1);
-  });
+// Test kết nối khi khởi động (có cơ chế thử lại nếu đang bận/khởi động)
+async function testConnection(retries = 3, delay = 2000) {
+  for (let i = 1; i <= retries; i++) {
+    try {
+      const conn = await pool.getConnection();
+      console.log("✅ MySQL connected:", process.env.DB_NAME);
+      conn.release();
+      return;
+    } catch (err) {
+      console.warn(`⚠️ MySQL connection attempt ${i}/${retries} failed:`, err.message);
+      if (i < retries) {
+        await new Promise((res) => setTimeout(res, delay));
+      } else {
+        console.error("❌ MySQL connection failed permanently:", err.message);
+      }
+    }
+  }
+}
+testConnection();
 
 module.exports = pool;

@@ -8,8 +8,49 @@ export default function Logo({
   style,
   onClick,
   href = "/",
+  as,
+  noLink = false,
 }) {
-  const width = Math.round(size * 1.38);
+  const numericSize =
+    typeof size === "number"
+      ? size
+      : size === "small"
+      ? 24
+      : size === "large"
+      ? 40
+      : 28;
+  const width = Math.round(numericSize * 1.38);
+
+  const inner = (
+    <>
+      <Image
+        src="/logo.png"
+        alt="VinaTap"
+        width={width}
+        height={numericSize}
+        priority
+        style={{
+          width: "auto",
+          height: `${numericSize}px`,
+          maxHeight: `${numericSize}px`,
+          objectFit: "contain",
+          flexShrink: 0,
+          display: "block",
+        }}
+      />
+      {showText && <span>VinaTap</span>}
+    </>
+  );
+
+  if (noLink || !href || as === "span" || as === "div") {
+    const Tag = as || "span";
+    return (
+      <Tag className={className} style={style} onClick={onClick}>
+        {inner}
+      </Tag>
+    );
+  }
+
   return (
     <Link
       href={href}
@@ -18,22 +59,7 @@ export default function Logo({
       onClick={onClick}
       suppressHydrationWarning
     >
-      <Image
-        src="/logo.png"
-        alt="VinaTap"
-        width={width}
-        height={size}
-        priority
-        style={{
-          width: "auto",
-          height: `${size}px`,
-          maxHeight: `${size}px`,
-          objectFit: "contain",
-          flexShrink: 0,
-          display: "block",
-        }}
-      />
-      {showText && <span>VinaTap</span>}
+      {inner}
     </Link>
   );
 }

@@ -220,7 +220,217 @@ export const DANANG_GUIDE_DATA = {
   ],
 };
 
+export const HCMC_GUIDE_DATA = {
+  landmarks: [
+    {
+      id: "reunification",
+      name: "Dinh Độc Lập (Hội Trường Thống Nhất)",
+      category: "attraction",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg",
+      address: "135 Nam Kỳ Khởi Nghĩa, Phường Bến Thành, Quận 1, TP.HCM",
+      desc: "Kiệt tác kiến trúc lịch sử kết hợp giữa hiện đại và phương Đông, chứng nhân thời khắc 30/4/1975.",
+    },
+    {
+      id: "war-museum",
+      name: "Bảo Tàng Chứng Tích Chiến Tranh",
+      category: "attraction",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-War-Remnants-Museum-Vietnamnomad.jpg",
+      address: "28 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, TP.HCM",
+      desc: "Lưu giữ hơn 20.000 tài liệu hiện vật về chiến tranh và khát vọng hòa bình được đánh giá cao nhất châu Á.",
+    },
+    {
+      id: "cu-chi",
+      name: "Địa Đạo Củ Chi",
+      category: "attraction",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Cu-Chi-Tunnels-Vietnamnomad.jpg",
+      address: "Ấp Phú Hiệp, Xã Phú Mỹ Hưng, Huyện Củ Chi, TP.HCM",
+      desc: "Hệ thống đường hầm ngầm hơn 250km được mệnh danh là 'thành phố trong lòng đất'.",
+    },
+    {
+      id: "tan-dinh",
+      name: "Nhà Thờ Tân Định (Nhà Thờ Màu Hồng)",
+      category: "temple",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Tan-Dinh-Church-Vietnamnomad.jpg",
+      address: "289 Hai Bà Trưng, Phường 8, Quận 3, TP.HCM",
+      desc: "Công trình tôn giáo diễm lệ màu hồng pastel phong cách Gothic kết hợp Roman và Baroque.",
+    },
+    {
+      id: "diamond-notredame",
+      name: "Nhà Thờ Đức Bà & Bưu Điện Trung Tâm",
+      category: "attraction",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-the-Diamond-Plaza-Vietnamnomad.jpg",
+      address: "Công trường Công xã Paris, Phường Bến Nghé, Quận 1, TP.HCM",
+      desc: "Biểu tượng kiến trúc Pháp cổ kính cùng văn hóa cà phê bệt nổi tiếng của người Sài Gòn.",
+    },
+    {
+      id: "bach-dang",
+      name: "Ga Tàu Thủy Bạch Đằng (Saigon Waterbus)",
+      category: "attraction",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bach-Dang-Bus-Station-Vietnamnomad.jpg",
+      address: "10B Tôn Đức Thắng, Phường Bến Nghé, Quận 1, TP.HCM",
+      desc: "Trải nghiệm du ngoạn ngắm hoàng hôn và đường chân trời thành phố trên sông Sài Gòn.",
+    },
+    {
+      id: "opera-house",
+      name: "Nhà Hát Thành Phố (Saigon Opera House)",
+      category: "attraction",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Saigon-Opera-House-Vietnamnomad.jpg",
+      address: "07 Công Trường Lam Sơn, Bến Nghé, Quận 1, TP.HCM",
+      desc: "Kiến trúc Tân cổ điển Pháp khánh thành năm 1900, thánh đường của xiếc tre À Ố Show.",
+    },
+    {
+      id: "bui-vien",
+      name: "Phố Đi Bộ Bùi Viện",
+      category: "attraction",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bui-Vien-Street-Vietnamnomad.jpg",
+      address: "Đường Bùi Viện, Phường Phạm Ngũ Lão, Quận 1, TP.HCM",
+      desc: "Tọa độ nightlife náo nhiệt rực rỡ bậc nhất thành phố với âm nhạc và ẩm thực quốc tế.",
+    },
+    {
+      id: "chinatown",
+      name: "Khu Phố Người Hoa Chợ Lớn & Chùa Bà Thiên Hậu",
+      category: "temple",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Chinatown-Vietnamnomad.jpg",
+      address: "710 Nguyễn Trãi, Phường 11, Quận 5, TP.HCM",
+      desc: "Di sản hơn 300 năm với những vòng nhang trầm khổng lồ và ẩm thực gia truyền nức tiếng.",
+    },
+  ],
+
+  culinary: {
+    list: [
+      {
+        id: "hcm-c1",
+        title: "Bánh Xèo Nam Bộ giòn rụm cuốn rau rừng",
+        date: "12/08/2026",
+        views: "115,420",
+        image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Xeo.jpg",
+        address: "Bánh xèo 46A Đinh Công Tráng, Bánh xèo Mười Xiềm",
+        desc: "Bánh xèo vàng ươm nhân tôm thịt giá đỗ cuốn bánh tráng rau rừng chấm nước mắm tỏi ớt.",
+      },
+      {
+        id: "hcm-c2",
+        title: "Hủ Tiếu Nam Vang đậm đà nước dùng thanh ngọt",
+        date: "10/08/2026",
+        views: "98,110",
+        image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Hu-Tieu.jpg",
+        address: "Hủ tiếu Nhân Quán, Hủ tiếu Quỳnh",
+        desc: "Sợi hủ tiếu dai ngọt ăn kèm tôm, thịt băm, trứng cút và tỏi phi thơm nức mũi.",
+      },
+      {
+        id: "hcm-c3",
+        title: "Bún Thịt Nướng Chả Giò giòn tan nước mắm chua ngọt",
+        date: "05/08/2026",
+        views: "89,930",
+        image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
+        address: "Bún thịt nướng Chị Tuyền, Bún thịt nướng Kiều Bảo",
+        desc: "Thịt nướng thơm lừng kết hợp chả giò giòn rụm và rau thơm mát lành.",
+      },
+      {
+        id: "hcm-c4",
+        title: "Bò Né chảo gang xèo xèo cùng trứng ốp la béo ngậy",
+        date: "01/08/2026",
+        views: "75,200",
+        image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bo-Ne.jpg",
+        address: "Bò né Cô Ba, Bò né Lệ Hồng",
+        desc: "Bò mềm thơm chấm bánh mì giòn nóng hổi cho bữa sáng đầy năng lượng.",
+      },
+      {
+        id: "hcm-c5",
+        title: "Ốc Sài Gòn đêm thơm lừng bơ tỏi và muối ớt",
+        date: "28/07/2026",
+        views: "92,400",
+        image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Shellfish.jpg",
+        address: "Ốc Oanh (Vĩnh Khánh), Ốc Đào (Nguyễn Trãi)",
+        desc: "Hàng chục món ốc chế biến xào me, nướng mỡ hành đậm đà nét văn hóa đêm.",
+      },
+      {
+        id: "hcm-c6",
+        title: "Cà phê sữa đá Sài Gòn nét văn hóa đường phố trứ danh",
+        date: "20/07/2026",
+        views: "135,800",
+        image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da.jpg",
+        address: "Cà phê bệt Nhà thờ Đức Bà, Cà phê Cheo Leo",
+        desc: "Ly cà phê đậm đà thơm béo đá mát lạnh gắn liền với nhịp sống hối hả.",
+      },
+    ],
+    featuredMain: {
+      id: "hcm-f1",
+      title: "Cơm Tấm Sườn Bì Chả Sài Gòn - Hương vị huyền thoại phương Nam",
+      image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg",
+      address: "Cơm tấm Ba Ghiền (84 Đặng Văn Ngữ), Cơm tấm Phúc Lộc Thọ",
+      desc: "Hạt tấm dẻo bùi ăn cùng miếng sườn nướng mỡ hành óng ánh, chả trứng béo ngậy.",
+    },
+    featuredSub: {
+      id: "hcm-f2",
+      title: "Bánh Mì Sài Gòn - Món ăn đường phố ngon nhất thế giới",
+      image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Mi.jpg",
+      address: "Bánh mì Huỳnh Hoa (26 Lê Thị Riêng), Bánh mì Bảy Hổ",
+      desc: "Vỏ bánh giòn rụm kẹp pate béo, bơ vàng, chả lụa và đồ chua giòn thơm.",
+    },
+  },
+
+  guides: {
+    transport: {
+      title: "Di chuyển",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bach-Dang-Bus-Station-Vietnamnomad.jpg",
+      articles: [
+        { id: "t1", title: "Trải nghiệm Saigon Waterbus từ bến Bạch Đằng đi Linh Đông", link: "#" },
+        { id: "t2", title: "Cẩm nang đi Metro số 1 Bến Thành - Suối Tiên chi tiết", link: "#" },
+        { id: "t3", title: "Kinh nghiệm thuê xe máy tự túc dạo quanh các quận trung tâm", link: "#" },
+      ],
+    },
+    itineraries: {
+      title: "Gợi ý lịch trình",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg",
+      articles: [
+        { id: "i1", title: "Lịch trình 24 giờ khám phá trọn vẹn những điểm hot nhất Sài Gòn", link: "#" },
+        { id: "i2", title: "Tour 2 ngày 1 đêm: Di sản lịch sử, ẩm thực chợ đêm và du thuyền", link: "#" },
+      ],
+    },
+    tips: {
+      title: "Kinh nghiệm bản địa",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da-Vietnamnomad.jpg",
+      articles: [
+        { id: "tp1", title: "Mẹo tránh kẹt xe và chọn thời gian du lịch TP.HCM đẹp nhất", link: "#" },
+        { id: "tp2", title: "Bỏ túi top các khu phố ẩm thực đêm ngon - bổ - rẻ", link: "#" },
+      ],
+    },
+  },
+
+  reviews: {
+    list: [
+      {
+        id: "r1",
+        title: "Review một ngày làm người Sài Gòn: Cà phê bệt, waterbus và phố đi bộ",
+        date: "14/06/2026",
+        views: "68,180",
+        image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bui-Vien-Street-Vietnamnomad.jpg",
+        desc: "Chuyến đi thú vị với chi phí cực kỳ tiết kiệm nhưng đầy ắp kỷ niệm đẹp.",
+      },
+    ],
+    featuredMain: {
+      id: "rf1",
+      title: "10 Điều Tuyệt Nhất Nên Làm & Trải Nghiệm Tại TP. Hồ Chí Minh",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg",
+      desc: "Tổng hợp toàn diện từ các danh lam thắng cảnh, quán ăn ngon đến kinh nghiệm du lịch.",
+    },
+  },
+
+  festivals: [
+    {
+      id: "fe1",
+      title: "Lễ hội Sông nước TP. Hồ Chí Minh",
+      image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bach-Dang-Bus-Station-Vietnamnomad.jpg",
+      date: "Tháng 6 hàng năm",
+      desc: "Sự kiện văn hóa du lịch quy mô lớn tôn vinh vẻ đẹp lịch sử sông Sài Gòn.",
+    },
+  ],
+};
+
 export const PROVINCE_IMAGE_OVERRIDES = {
+  "ho-chi-minh": "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg",
+  "tp. hồ chí minh": "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg",
+  "hồ chí minh": "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg",
   "hai-phong": "/provinces/hai-phong.jpg",
   "hải phòng": "/provinces/hai-phong.jpg",
   "ha-noi": "/provinces/ha-noi.jpg",
@@ -369,7 +579,13 @@ export function getProvinceGuideData(
 
   // 1. LANDMARKS
   let landmarks = [];
-  if (dbLandmarks && dbLandmarks.length > 0) {
+  if (
+    province?.slug === "ho-chi-minh" ||
+    province?.slug === "ho-chi-minh-city" ||
+    province?.slug === "tp-ho-chi-minh"
+  ) {
+    landmarks = HCMC_GUIDE_DATA.landmarks;
+  } else if (dbLandmarks && dbLandmarks.length > 0) {
     landmarks = dbLandmarks.map((l, i) => {
       const cleanName = (l.name || "").toLowerCase().trim();
       let overrideImg = null;
@@ -401,7 +617,13 @@ export function getProvinceGuideData(
 
   // 2. FOODS (QUÁN ĂN & MÓN NGON)
   let culinary = null;
-  if (dbFoods && dbFoods.length > 0) {
+  if (
+    province?.slug === "ho-chi-minh" ||
+    province?.slug === "ho-chi-minh-city" ||
+    province?.slug === "tp-ho-chi-minh"
+  ) {
+    culinary = HCMC_GUIDE_DATA.culinary;
+  } else if (dbFoods && dbFoods.length > 0) {
     const feat = dbFoods.filter((f) => f.is_featured);
     const nonFeat = dbFoods.filter((f) => !f.is_featured);
 
@@ -451,7 +673,13 @@ export function getProvinceGuideData(
 
   // 3. ARTICLES (Transport, Itineraries, Tips)
   let guides = null;
-  if (dbArticles && dbArticles.length > 0) {
+  if (
+    province?.slug === "ho-chi-minh" ||
+    province?.slug === "ho-chi-minh-city" ||
+    province?.slug === "tp-ho-chi-minh"
+  ) {
+    guides = HCMC_GUIDE_DATA.guides;
+  } else if (dbArticles && dbArticles.length > 0) {
     const transportArts = dbArticles.filter((a) => a.category === "transport");
     const itinArts = dbArticles.filter((a) => a.category === "itinerary");
     const tipsArts = dbArticles.filter((a) => a.category === "tips");
@@ -494,54 +722,68 @@ export function getProvinceGuideData(
 
   // 4. REVIEWS (GÓC REVIEW TRẢI NGHIỆM)
   let reviews = null;
-  const reviewArts = (dbArticles || []).filter((a) => a.category === "review");
-  if (reviewArts.length > 0) {
-    const featRev = reviewArts.filter((r) => r.is_featured);
-    const nonFeatRev = reviewArts.filter((r) => !r.is_featured);
+  if (
+    province?.slug === "ho-chi-minh" ||
+    province?.slug === "ho-chi-minh-city" ||
+    province?.slug === "tp-ho-chi-minh"
+  ) {
+    reviews = HCMC_GUIDE_DATA.reviews;
+  } else {
+    const reviewArts = (dbArticles || []).filter((a) => a.category === "review");
+    if (reviewArts.length > 0) {
+      const featRev = reviewArts.filter((r) => r.is_featured);
+      const nonFeatRev = reviewArts.filter((r) => !r.is_featured);
 
-    const rMainRaw =
-      featRev[0] ||
-      (nonFeatRev.length >= 2 ? nonFeatRev[nonFeatRev.length - 2] : reviewArts[0]);
-    const rSubRaw =
-      featRev[1] ||
-      (nonFeatRev.length >= 1 ? nonFeatRev[nonFeatRev.length - 1] : (reviewArts.length > 1 ? reviewArts[1] : null));
-    
-    const listRevRaw =
-      featRev.length > 0
-        ? nonFeatRev
-        : nonFeatRev.length > 2
-        ? nonFeatRev.slice(0, nonFeatRev.length - 2)
-        : nonFeatRev;
+      const rMainRaw =
+        featRev[0] ||
+        (nonFeatRev.length >= 2 ? nonFeatRev[nonFeatRev.length - 2] : reviewArts[0]);
+      const rSubRaw =
+        featRev[1] ||
+        (nonFeatRev.length >= 1 ? nonFeatRev[nonFeatRev.length - 1] : (reviewArts.length > 1 ? reviewArts[1] : null));
+      
+      const listRevRaw =
+        featRev.length > 0
+          ? nonFeatRev
+          : nonFeatRev.length > 2
+          ? nonFeatRev.slice(0, nonFeatRev.length - 2)
+          : nonFeatRev;
 
-    reviews = {
-      list: listRevRaw.map((r, i) => ({
-        id: r.id || `r-${i}`,
-        title: r.title,
-        date: r.published_date || r.date || "01/01/2026",
-        views: r.view_count || r.views || null,
-        image: getArticleImage(r, "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80"),
-        desc: r.description || r.desc || "",
-      })),
-      featuredMain: {
-        id: rMainRaw.id || "rmain",
-        title: rMainRaw.title,
-        image: getArticleImage(rMainRaw, "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80"),
-        desc: rMainRaw.description || rMainRaw.desc || "",
-      },
-      featuredSub: rSubRaw && rSubRaw.id !== rMainRaw?.id ? {
-        id: rSubRaw.id || "rsub",
-        title: rSubRaw.title,
-        image: getArticleImage(rSubRaw, "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80"),
-        desc: rSubRaw.description || rSubRaw.desc || "",
-      } : null,
-    };
-  } else if (province?.slug === "da-nang") {
-    reviews = DANANG_GUIDE_DATA.reviews;
+      reviews = {
+        list: listRevRaw.map((r, i) => ({
+          id: r.id || `r-${i}`,
+          title: r.title,
+          date: r.published_date || r.date || "01/01/2026",
+          views: r.view_count || r.views || null,
+          image: getArticleImage(r, "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80"),
+          desc: r.description || r.desc || "",
+        })),
+        featuredMain: {
+          id: rMainRaw.id || "rmain",
+          title: rMainRaw.title,
+          image: getArticleImage(rMainRaw, "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80"),
+          desc: rMainRaw.description || rMainRaw.desc || "",
+        },
+        featuredSub: rSubRaw && rSubRaw.id !== rMainRaw?.id ? {
+          id: rSubRaw.id || "rsub",
+          title: rSubRaw.title,
+          image: getArticleImage(rSubRaw, "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80"),
+          desc: rSubRaw.description || rSubRaw.desc || "",
+        } : null,
+      };
+    } else if (province?.slug === "da-nang") {
+      reviews = DANANG_GUIDE_DATA.reviews;
+    }
   }
 
   // 5. FESTIVALS
   let festivals = null;
-  if (dbFestivals && dbFestivals.length > 0) {
+  if (
+    province?.slug === "ho-chi-minh" ||
+    province?.slug === "ho-chi-minh-city" ||
+    province?.slug === "tp-ho-chi-minh"
+  ) {
+    festivals = HCMC_GUIDE_DATA.festivals;
+  } else if (dbFestivals && dbFestivals.length > 0) {
     festivals = dbFestivals.map((fe, i) => ({
       id: fe.id || `fe-${i}`,
       title: fe.title,

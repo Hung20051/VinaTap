@@ -1,25 +1,33 @@
-/* ─── LINEAR / GITHUB GLOBAL TOP HEADER ──────────── */
+/* ─── VIETNAMNOMAD INSPIRED GLOBAL TOP HEADER ──────────── */
 
 .linear-top-header {
   position: sticky;
   top: 0;
   z-index: 999;
   width: 100%;
-  height: 60px;
-  background: #0f172a;
-  border-bottom: 1px solid #1e293b;
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #eaeaea;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1.25rem;
-  color: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 0 1.5rem;
+  color: #0d1f2d;
+  box-shadow: 0 2px 10px rgba(13, 31, 45, 0.05);
+  transition: all 0.25s ease;
+}
+
+html[data-theme="dark"] .linear-top-header {
+  background: #111e2b;
+  border-bottom: 1px solid #223444;
+  color: #f8fafc;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 640px) {
   .linear-top-header {
-    padding: 0 0.75rem;
-    height: 56px;
+    padding: 0 0.85rem;
+    height: 58px;
   }
 }
 
@@ -27,17 +35,17 @@
 .header-region-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   min-width: 0;
 }
 
 .header-btn-hamburger {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #ffffff;
+  background: #f4f6f8;
+  border: 1px solid #e2e8f0;
+  color: #0d1f2d;
   width: 38px;
   height: 38px;
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,9 +54,16 @@
   transition: all 0.2s ease;
 }
 
+html[data-theme="dark"] .header-btn-hamburger {
+  background: #1a2a38;
+  border-color: #2b3e50;
+  color: #f8fafc;
+}
+
 .header-btn-hamburger:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: #e6f8f8;
+  border-color: #00c2cb;
+  color: #008891;
 }
 
 .header-logo-brand {
@@ -56,17 +71,21 @@
   align-items: center;
   gap: 8px;
   text-decoration: none;
-  color: #ffffff;
+  color: #0d1f2d;
   font-weight: 800;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   letter-spacing: -0.02em;
   flex-shrink: 0;
   line-height: 1;
 }
 
+html[data-theme="dark"] .header-logo-brand {
+  color: #ffffff;
+}
+
 .header-logo-brand img {
   width: auto !important;
-  height: 28px !important;
+  height: 32px !important;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
@@ -75,37 +94,49 @@
 .header-logo-brand span {
   font-family: "Kalam", cursive;
   font-weight: 700;
-  font-size: 1.35rem;
-  color: #ffffff;
+  font-size: 1.45rem;
+  color: #00c2cb;
   letter-spacing: -0.01em;
   line-height: 1;
 }
 
 .header-breadcrumb-divider {
-  color: rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
   font-size: 1.1rem;
+}
+
+html[data-theme="dark"] .header-breadcrumb-divider {
+  color: #475569;
 }
 
 .header-breadcrumb {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   white-space: nowrap;
 }
 
 .bc-parent {
-  color: rgba(255, 255, 255, 0.6);
+  color: #64748b;
   font-weight: 500;
 }
 
+html[data-theme="dark"] .bc-parent {
+  color: #94a3b8;
+}
+
 .bc-slash {
-  color: rgba(255, 255, 255, 0.3);
+  color: #cbd5e1;
 }
 
 .bc-page {
-  color: #ffffff;
+  color: #0d1f2d;
   font-weight: 700;
+}
+
+html[data-theme="dark"] .bc-page {
+  color: #f8fafc;
 }
 
 @media (max-width: 768px) {
@@ -197,13 +228,13 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 36px;
-  padding: 0 12px;
-  background: rgba(234, 88, 12, 0.15);
-  border: 1px solid rgba(234, 88, 12, 0.4);
-  color: #fdba74;
-  border-radius: 8px;
-  font-size: 0.82rem;
+  height: 38px;
+  padding: 0 14px;
+  background: #fff5f5;
+  border: 1px solid #ffd4d4;
+  color: #ff5757;
+  border-radius: 9999px;
+  font-size: 0.84rem;
   font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
@@ -213,18 +244,18 @@
 }
 
 .btn-header-shop {
-  background: rgba(2, 132, 199, 0.15);
-  border-color: rgba(2, 132, 199, 0.4);
-  color: #38bdf8;
+  background: #e6f8f8;
+  border-color: #b3eaea;
+  color: #008891;
 }
 
 .btn-header-voucher:hover {
-  background: rgba(234, 88, 12, 0.25);
+  background: #ff5757;
   color: #ffffff;
 }
 
 .btn-header-shop:hover {
-  background: rgba(2, 132, 199, 0.25);
+  background: #00c2cb;
   color: #ffffff;
 }
 
@@ -238,31 +269,41 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #1e293b;
-  border: 1px solid #334155;
-  color: #ffffff;
-  padding: 4px 10px 4px 4px;
-  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0d1f2d;
+  padding: 4px 12px 4px 5px;
+  border-radius: 9999px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
+html[data-theme="dark"] .header-user-badge-btn {
+  background: #1a2a38;
+  border-color: #2b3e50;
+  color: #f8fafc;
+}
+
 .header-user-badge-btn:hover {
-  background: #334155;
-  border-color: #475569;
+  border-color: #00c2cb;
+  background: #f8fbfb;
+}
+
+html[data-theme="dark"] .header-user-badge-btn:hover {
+  background: #233647;
 }
 
 .header-avatar-circle {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: #0284c7;
+  background: #00c2cb;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -394,12 +435,12 @@
 }
 
 .dropdown-item:hover {
-  background: #f8fafc;
-  color: #0d9488;
+  background: #f0fbfb;
+  color: #00c2cb;
 }
 
 .dropdown-item:hover svg {
-  color: #0d9488;
+  color: #00c2cb;
 }
 
 .dropdown-item.text-danger {
