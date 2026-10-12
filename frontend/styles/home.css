@@ -3879,45 +3879,42 @@
 .vnn-social-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 18px;
-}
-.vnn-social-stats--single {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 12px;
   margin-bottom: 18px;
 }
 .vnn-social-stat-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  padding: 14px 6px 12px;
+  border-radius: 6px;
+  padding: 16px 8px;
+  min-height: 64px;
   text-align: center;
   text-decoration: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.vnn-social-stat-card--fb-only {
-  width: 90px;
-  height: 75px;
-  padding: 0;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(24, 119, 242, 0.08);
-}
-.vnn-social-stat-card--fb-only .vnn-social-icon--fb {
-  margin-bottom: 0;
-}
 .vnn-social-stat-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
+.vnn-social-stat-card--fb:hover {
+  border-color: #1877f2;
+  background: #f0f6ff;
+}
+.vnn-social-stat-card--ig:hover {
+  border-color: #e1306c;
+  background: #fff0f5;
+}
+.vnn-social-stat-card--yt:hover {
+  border-color: #ff0000;
+  background: #fff5f5;
+}
 .vnn-social-icon {
-  margin-bottom: 6px;
+  margin-bottom: 0;
 }
 .vnn-social-icon--fb {
   color: #1877f2;

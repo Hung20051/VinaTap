@@ -1684,16 +1684,39 @@ export default function HomePage() {
                 <span className="vnn-section-head__bar vnn-section-head__bar--green" />
               </div>
 
-              {/* Thẻ Facebook kết nối mạng xã hội (căn giữa) */}
-              <div className="vnn-social-stats vnn-social-stats--single">
+              {/* 3 icon mạng xã hội Facebook, Instagram, Youtube */}
+              <div className="vnn-social-stats">
                 <a
                   href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="vnn-social-stat-card vnn-social-stat-card--fb-only"
+                  className="vnn-social-stat-card vnn-social-stat-card--fb"
                   aria-label="Facebook Fanpage"
+                  title="Facebook"
                 >
-                  <Facebook size={28} className="vnn-social-icon vnn-social-icon--fb" />
+                  <Facebook size={26} className="vnn-social-icon vnn-social-icon--fb" />
+                </a>
+
+                <a
+                  href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="vnn-social-stat-card vnn-social-stat-card--ig"
+                  aria-label="Instagram"
+                  title="Instagram"
+                >
+                  <Instagram size={26} className="vnn-social-icon vnn-social-icon--ig" />
+                </a>
+
+                <a
+                  href="https://www.youtube.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="vnn-social-stat-card vnn-social-stat-card--yt"
+                  aria-label="YouTube Channel"
+                  title="YouTube"
+                >
+                  <Youtube size={26} className="vnn-social-icon vnn-social-icon--yt" />
                 </a>
               </div>
 
