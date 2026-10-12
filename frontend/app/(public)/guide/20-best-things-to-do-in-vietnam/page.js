@@ -433,14 +433,14 @@ const THINGS_ITEMS = [
       "Talking about history, during the course of a thousand-year feudal regime, Hue served as the former capital of the Nguyen Dynasty in the 19th and early 20th centuries. There still remains spectacular royal architecture from that era, including a collection of well-preserved palaces and tombs of royalty, each with its own unique layout and architectural design, designed to meet the strict requirements of Feng Shui principles. The site was recognized by UNESCO in 1994. To fully explore the immense complex and experience its solemn yet peaceful atmosphere, a full day is recommended."
     ],
     "paragraphsVi": [
-      "Cố đô Huế từng là kinh đô của triều đại phong kiến nhà Nguyễn trong suốt hơn một thế kỷ. Quần thể di tích Đại Nội Huế lưu giữ những cung điện vàng son, lăng tẩm uy nghiêm và đền miếu cổ kính bên dòng sông Hương thơ mộng. Đến với Huế, bạn còn có dịp thưởng thức Nhã nhạc Cung đình – di sản văn hóa phi vật thể của nhân loại, cùng nền ẩm thực cung đình cầu kỳ, tinh tế bậc nhất."
+      "Nhắc về dòng chảy lịch sử qua hàng ngàn năm phong kiến, Cố đô Huế từng là kinh đô của triều đại nhà Nguyễn trong thế kỷ 19 và đầu thế kỷ 20. Nơi đây lưu giữ quần thể kiến trúc hoàng gia tráng lệ gồm các cung điện nguy nga và lăng tẩm hoàng gia được bảo tồn nguyên vẹn, mỗi công trình mang một bố cục và thiết kế độc đáo, tuân thủ nghiêm ngặt các nguyên tắc Phong Thủy. Quần thể di tích được UNESCO công nhận vào năm 1994. Để khám phá trọn vẹn khu di tích rộng lớn và cảm nhận bầu không khí trang nghiêm mà thanh bình nơi đây, bạn nên dành trọn một ngày."
     ]
   },
   {
     "id": "10-saigon-nightlife",
     "num": 10,
     "titleEn": "10. Enjoy the nightlife in the unsleeping city – Saigon",
-    "titleVi": "10. Trải nghiệm nhịp sống đêm sôi động tại thành phố không ngủ – Sài Gòn",
+    "titleVi": "10. Tận hưởng nhịp sống đêm tại thành phố không ngủ – Sài Gòn",
     "img": "/guide/20-best-things/10-saigon-nightlife.jpg",
     "webp": "/guide/20-best-things/10-saigon-nightlife.webp",
     "alt": "Saigon vibrant nightlife street",
@@ -449,14 +449,14 @@ const THINGS_ITEMS = [
       "Saigoneers work hard, but they also know how to fully enjoy life. Saigon's nights are full of activities to suit every mood, from the bustling backpacker street of Bui Vien, to rooftop beer gardens and hidden cocktail bars. The city also offers countless options of delicious local street food to cater to all palates. Saigon at night is unmatched in energy, making it the perfect place to embrace a young, wild, and free spirit."
     ],
     "paragraphsVi": [
-      "TP. Hồ Chí Minh khi đêm về khoác lên mình vẻ đẹp hoa lệ và tràn đầy năng lượng. Từ phố đi bộ Nguyễn Huệ, phố Tây Bùi Viện sầm uất, đến những quán bar sân thượng tầng cao ngắm nhìn toàn cảnh Landmark 81 và sông Sài Gòn lấp lánh ánh đèn, thành phố mang lại trải nghiệm về đêm không bao giờ vơi cạn sự hào hứng."
+      "Người Sài Gòn làm việc hết mình, nhưng cũng biết cách tận hưởng cuộc sống trọn vẹn. Đêm Sài Gòn luôn ngập tràn hoạt động phù hợp với mọi tâm trạng, từ con phố Tây Bùi Viện náo nhiệt, đến các quán bia sân thượng lộng gió và những quán cocktail ẩn mình. Thành phố còn mang đến vô số lựa chọn ẩm thực đường phố thơm ngon chiều lòng mọi khẩu vị. Sài Gòn về đêm sở hữu nguồn năng lượng bất tận, là điểm đến hoàn hảo để đón nhận tinh thần trẻ trung, phóng khoáng và tự do."
     ]
   },
   {
     "id": "11-phu-quoc",
     "num": 11,
     "titleEn": "11. Visit Phu Quoc Island",
-    "titleVi": "11. Nghỉ dưỡng tại Đảo Ngọc Phú Quốc",
+    "titleVi": "11. Khám phá Đảo Ngọc Phú Quốc",
     "img": "/guide/20-best-things/11-phu-quoc.jpg",
     "webp": "/guide/20-best-things/11-phu-quoc.webp",
     "alt": "Phu Quoc Island tropical beach paradise",
@@ -465,14 +465,14 @@ const THINGS_ITEMS = [
       "No matter how much time you have to spend in Vietnam, Phu Quoc should definitely be added to your travel list. It offers direct international flights and a visa-free stay of up to 30 days. Phu Quoc boasts a diverse marine life, making it an ideal location for diving, and there are also numerous hidden waterfalls in its lush forests waiting to be explored. You can even take a look at traditional fish sauce-making villages to see the unique condiment being made. In addition to its natural beauty, Phu Quoc also has a rich history and cultural festivals that cannot be found anywhere else. This island is truly a paradise for sea lovers, not only for its own charm, but also for the collection of unspoiled remote islands that surround it, in case you want to extend your stay."
     ],
     "paragraphsVi": [
-      "Phú Quốc là hòn đảo lớn nhất Việt Nam, được thiên nhiên ưu ái với những bãi biển cát trắng mịn màng như Bãi Sao, Bãi Khem cùng làn nước biển ấm áp quanh năm. Nơi đây sở hữu các khu nghỉ dưỡng sang trọng đẳng cấp quốc tế, tuyến cáp treo vượt biển dài nhất thế giới Hòn Thơm và những làng chài bình dị, mang đến kỳ nghỉ nhiệt đới hoàn hảo."
+      "Dù bạn có bao nhiêu thời gian cho chuyến đi Việt Nam, Phú Quốc chắc chắn là điểm đến không thể bỏ qua trong danh sách của bạn. Hòn đảo có các chuyến bay quốc tế thẳng và chính sách miễn thị thực lên tới 30 ngày. Phú Quốc sở hữu hệ sinh vật biển phong phú lý tưởng cho hoạt động lặn biển, cùng nhiều thác nước ẩn mình trong những cánh rừng xanh tươi đang chờ bạn khám phá. Bạn còn có thể ghé thăm các làng nghề làm nước mắm truyền thống để tận mắt chứng kiến quy trình làm ra loại gia vị độc đáo này. Bên cạnh vẻ đẹp thiên nhiên, Phú Quốc còn có bề dày lịch sử và các lễ hội văn hóa đặc sắc. Hòn đảo thực sự là thiên đường cho những ai yêu biển, không chỉ bởi vẻ quyến rũ riêng mà còn bởi chuỗi đảo hoang sơ tuyệt đẹp bao quanh nếu bạn muốn kéo dài kỳ nghỉ."
     ]
   },
   {
     "id": "12-quang-binh",
     "num": 12,
     "titleEn": "12. Explore the land of caves – Quang Binh",
-    "titleVi": "12. Thám hiểm vương quốc hang động kỳ vĩ – Quảng Bình",
+    "titleVi": "12. Thám hiểm vương quốc hang động – Quảng Bình",
     "img": "/guide/20-best-things/12-quang-binh.jpg",
     "webp": "/guide/20-best-things/12-quang-binh.webp",
     "alt": "Quang Binh cave Phong Nha Ke Bang National Park",
@@ -482,14 +482,15 @@ const THINGS_ITEMS = [
       "Entering the land of caves is a giant leap into the wonderland that you won't want to miss."
     ],
     "paragraphsVi": [
-      "Vườn quốc gia Phong Nha – Kẻ Bàng tại Quảng Bình là Di sản Thiên nhiên Thế giới nổi tiếng với hệ thống hang động đá vôi cổ nhất châu Á. Nơi đây có Hang Sơn Đoòng – hang động tự nhiên lớn nhất thế giới, cùng Động Thiên Đường, Động Phong Nha và Hang Én tráng lệ với hệ thống thạch nhũ lung linh kỳ ảo."
+      "Quảng Bình, đặc biệt là Vườn quốc gia Phong Nha – Kẻ Bàng, là ngôi nhà của vô số hang động với muôn hình vạn trạng và kích cỡ khác nhau. Nơi đây có những hang động dễ tiếp cận phù hợp cho mọi lứa tuổi và thể lực, bao gồm Động Phong Nha, Động Thiên Đường, Hang Tối cùng nhiều hang khác. Bạn có thể chèo thuyền len lỏi vào sâu trong hang để chiêm ngưỡng những khối thạch nhũ tráng lệ do Mẹ Thiên Nhiên kiến tạo. Với những ai tìm kiếm trải nghiệm thử thách hơn, các tour trekking chuyên nghiệp được tổ chức bài bản để đảm bảo an toàn tuyệt đối. Một số lựa chọn nổi tiếng nhất bao gồm Hang Én, Hang Tú Làn và hang động tự nhiên lớn nhất thế giới – Hang Sơn Đoòng. Nơi đây là bài kiểm tra thực sự cho giới hạn của bạn khi băng qua rừng nguyên sinh, lội sông ngầm, cắm trại trong lòng hang kỳ vĩ và chiêm ngưỡng một trong những kỳ quan thiên nhiên vĩ đại nhất hành tinh.",
+      "Bước vào vương quốc hang động là bước chân vào chốn thần tiên kỳ ảo mà bạn chắc chắn không muốn bỏ lỡ."
     ]
   },
   {
     "id": "13-sapa",
     "num": 13,
     "titleEn": "13. Fall in love in Sapa",
-    "titleVi": "13. Đắm say cảnh sắc mây ngàn tại Sa Pa",
+    "titleVi": "13. Say đắm trước vẻ đẹp mộng mơ của Sa Pa",
     "img": "/guide/20-best-things/13-sapa.jpg",
     "webp": "/guide/20-best-things/13-sapa.webp",
     "alt": "Sapa terraced rice fields and mountain landscape",
@@ -498,14 +499,14 @@ const THINGS_ITEMS = [
       "Sapa is a city that holds a special place in the hearts of many Vietnamese people, and is often a must-see destination for travelers. It's no surprise, given the city's breathtaking landscapes and unique cultural influences. While the center of Sapa has modern amenities to accommodate tourists, the surrounding villages have maintained their traditional beauty and customs. Sapa is a popular destination for couples, thanks to its chilly and misty weather (with occasional snow in the winter) and an abundance of seasonal flowers, creating a romantic atmosphere. It is also home to the highest peak in Indochina, nicknamed \"the roof of Indochina\" – Fansipan Peak. Sapa offers a unique and different experience compared to other highland cities you may have visited."
     ],
     "paragraphsVi": [
-      "Tọa lạc ở độ cao hơn 1.600m, Sa Pa quanh năm chìm trong sương mù mờ ảo với khí hậu mát mẻ ôn đới. Đến Sa Pa, bạn sẽ được chiêm ngưỡng đỉnh Fansipan – 'Nóc nhà Đông Dương', những thung lũng ruộng bậc thang uốn lượn tại bản Cát Cát, Tả Van và tìm hiểu phong tục đậm đà bản sắc của đồng bào dân tộc H'Mông, Dao đỏ."
+      "Sa Pa giữ một vị trí đặc biệt trong trái tim của nhiều người Việt Nam và luôn là điểm đến không thể bỏ lỡ của du khách. Điều này không hề bất ngờ trước cảnh quan ngoạn mục cùng sự giao thoa văn hóa độc đáo nơi đây. Trong khi trung tâm Sa Pa có đầy đủ tiện nghi hiện đại phục vụ du khách, các bản làng xung quanh vẫn gìn giữ vẹn nguyên nét đẹp truyền thống và phong tục tập quán lâu đời. Sa Pa là điểm hẹn lý tưởng cho các cặp đôi nhờ tiết trời se lạnh trong sương mờ (đôi khi có tuyết rơi vào mùa đông) và muôn hoa khoe sắc rực rỡ, tạo nên bầu không khí vô cùng lãng mạn. Nơi đây còn sở hữu đỉnh Fansipan – 'Nóc nhà Đông Dương'. Sa Pa mang lại trải nghiệm độc đáo và khác biệt hoàn toàn so với bất kỳ thành phố vùng cao nào bạn từng ghé thăm."
     ]
   },
   {
     "id": "14-cat-ba",
     "num": 14,
-    "titleEn": "14. Explore Cat Ba Island & Lan Ha Bay",
-    "titleVi": "14. Khám phá Đảo Cát Bà & Vịnh Lan Hạ thơ mộng",
+    "titleEn": "14. Explore Cat Ba Island",
+    "titleVi": "14. Khám phá Đảo Cát Bà",
     "img": "/guide/20-best-things/14-cat-ba.jpg",
     "webp": "/guide/20-best-things/14-cat-ba.webp",
     "alt": "Lan Ha Bay Cat Ba Island serene emerald water",
@@ -514,14 +515,14 @@ const THINGS_ITEMS = [
       "Cat Ba Island is the largest island in Lan Ha Bay, which is located just beyond Ha Long Bay and boasts similarly stunning scenery. Visitors can participate in a variety of water activities such as fishing, kayaking, swimming, and sunbathing on isolated islands in the bay. For a break from the ocean, they can explore Monkey Island or Trung Trang Cave, which contains historic Vietnamese artifacts. Finally, they can take a trip up to the hilltop fortress for a breathtaking panoramic view of the island and its fishing villages at sunset. Don't miss out on this hidden gem."
     ],
     "paragraphsVi": [
-      "Vịnh Lan Hạ nằm phía nam vịnh Hạ Long và bao quanh quần đảo Cát Bà, sở hữu vẻ đẹp hoang sơ, yên bình với hơn 400 hòn đảo lớn nhỏ phủ kín thảm thực vật xanh ngắt. Chèo thuyền kayak luồn qua Hang Sáng – Hang Tối, khám phá làng chài cổ Cái Bèo hay tắm biển tại những bãi cát tự nhiên vắng vẻ là những trải nghiệm tuyệt vời."
+      "Đảo Cát Bà là hòn đảo lớn nhất trên Vịnh Lan Hạ, nằm liền kề Vịnh Hạ Long và sở hữu cảnh sắc thiên nhiên kỳ vĩ không hề kém cạnh. Du khách có thể tham gia nhiều hoạt động dưới nước như câu cá, chèo thuyền kayak, bơi lội và tắm nắng trên những hòn đảo vắng thanh bình giữa vịnh. Đổi gió rời xa mặt biển, bạn có thể khám phá Đảo Khỉ hoặc Hang Trung Trang – nơi lưu giữ những dấu tích lịch sử quý giá. Cuối cùng, hãy lên Pháo đài Thần công trên đỉnh đồi để ngắm nhìn toàn cảnh hòn đảo và các làng chài lúc hoàng hôn buông xuống. Đừng bỏ lỡ viên ngọc ẩn giấu tuyệt vời này."
     ]
   },
   {
     "id": "15-quy-nhon",
     "num": 15,
     "titleEn": "15. Immerse yourself in Quy Nhon",
-    "titleVi": "15. Khám phá vẻ đẹp hoang sơ của biển Quy Nhơn",
+    "titleVi": "15. Đắm mình trong vẻ đẹp thành phố biển Quy Nhơn",
     "img": "/guide/20-best-things/15-quy-nhon.jpg",
     "webp": "/guide/20-best-things/15-quy-nhon.webp",
     "alt": "Quy Nhon coastline Eo Gio Ky Co",
@@ -530,14 +531,14 @@ const THINGS_ITEMS = [
       "Quy Nhon is a rising coastal city in Vietnam that is gaining recognition for its stunning beauty. The city is peaceful yet offers fascinating surprises, from its empty sandy beaches to its unique statues and monasteries. Ky Co Beach and Eo Gio are two must-visit attractions with a small entrance fee. Quy Nhon provides a comfortable atmosphere with open spaces and public areas where you can sit and relax while enjoying the ocean breeze. The city also offers enjoyable travel, with wide, newly-built roads along the shoreline. Additionally, the seafood noodles in Quy Nhon are exceptional, as seafood is freshly caught from the sea. As Quy Nhon continues to become more popular, we suggest visiting this city before it becomes too touristy."
     ],
     "paragraphsVi": [
-      "Quy Nhơn là thành phố biển miền Trung hiền hòa, nổi tiếng với con đường ven biển tuyệt đẹp, bãi biển Kỳ Co trong vắt màu ngọc lam và eo biển lộng gió Eo Gió được ví như 'Jeju của Việt Nam'. Ẩm thực hải sản tươi ngon giá cả phải chăng cùng tính cách thân thiện của người dân xứ Nẫu luôn để lại ấn tượng sâu đậm."
+      "Quy Nhơn là thành phố biển đang lên của Việt Nam, ngày càng được nhiều du khách biết đến bởi vẻ đẹp ngoạn mục. Thành phố mang lại cảm giác bình yên nhưng luôn đem đến những bất ngờ thú vị, từ những bãi cát vắng người đến các bức tượng độc đáo và chùa chiền thanh tịnh. Bãi Kỳ Co và Eo Gió là hai điểm đến nhất định phải ghé thăm với chi phí vé vào cổng rất nhỏ. Quy Nhơn mang lại bầu không khí thư thái với không gian thoáng đãng và các khu vực công cộng nơi bạn có thể ngồi thảnh thơi đón gió biển. Đi lại trong thành phố cũng rất thuận tiện với các cung đường ven biển mới mở rộng rãi. Ngoài ra, món bún chả cá và hải sản tại Quy Nhơn ngon xuất sắc vì hải sản được đánh bắt tươi rói mỗi ngày. Khi Quy Nhơn đang ngày càng thu hút khách du lịch, hãy đến trải nghiệm ngay trước khi nơi đây trở nên quá đông đúc."
     ]
   },
   {
     "id": "16-mu-cang-chai",
     "num": 16,
     "titleEn": "16. Visit the terraced rice fields in Mu Cang Chai",
-    "titleVi": "16. Chiêm ngưỡng kỳ quan ruộng bậc thang Mù Cang Chải",
+    "titleVi": "16. Chiêm ngưỡng ruộng bậc thang Mù Cang Chải",
     "img": "/guide/20-best-things/16-mu-cang-chai.jpg",
     "webp": "/guide/20-best-things/16-mu-cang-chai.webp",
     "alt": "Mu Cang Chai golden terraced rice fields",
@@ -546,31 +547,40 @@ const THINGS_ITEMS = [
       "Mu Cang Chai is a small mountain village in northwest Vietnam known for its agriculture, particularly terrace farming. Visit during the summer or autumn (July to October) to see the lush rice terraces turn into enchanting golden fields. The area is also home to the thriving Black H'mong people, an indigenous ethnic tribe known for their vibrant traditional clothing. Observing them as they harvest the crops gives a glimpse into the rich culture of the town. If you want to see stunning paddy fields on hillsides, Mu Cang Chai is a must-visit."
     ],
     "paragraphsVi": [
-      "Mù Cang Chải là kiệt tác nghệ thuật tạo tác từ bàn tay cần cù của đồng bào dân tộc vùng cao. Vào mùa lúa chín (tháng 9 – tháng 10), cả sườn đồi trùng điệp được nhuộm một màu vàng óng ả rực rỡ dưới nắng thu, tạo nên bức tranh thiên nhiên kỳ vĩ say đắm lòng người."
+      "Mù Cang Chải là một vùng núi non vùng Tây Bắc Việt Nam nổi tiếng với nền nông nghiệp canh tác ruộng bậc thang độc đáo. Ghé thăm nơi đây vào mùa hè hoặc mùa thu (từ tháng 7 đến tháng 10) để tận mắt thấy những thửa ruộng bậc thang xanh mướt chuyển mình thành thảm lúa vàng óng ả mê hoặc. Vùng đất này còn là nơi sinh sống của đồng bào dân tộc H'Mông Đen với những bộ trang phục thổ cẩm rực rỡ sắc màu. Ngắm nhìn họ trong mùa thu hoạch mang lại cái nhìn sâu sắc về nét đẹp văn hóa vùng cao. Nếu bạn muốn chiêm ngưỡng những thửa ruộng bậc thang tuyệt mỹ uốn lượn quanh sườn núi, Mù Cang Chải là điểm đến không thể bỏ qua."
     ]
   },
   {
     "id": "17-dalat",
     "num": 17,
     "titleEn": "17. Find a relaxing moment in Dalat",
-    "titleVi": "17. Tìm khoảng lặng bình yên tại thành phố ngàn hoa Đà Lạt",
+    "titleVi": "17. Tìm khoảng lặng bình yên tại Đà Lạt",
     "img": "/guide/20-best-things/17-dalat.jpg",
     "webp": "/guide/20-best-things/17-dalat.webp",
     "alt": "Dalat pine forests flower gardens and mist",
     "provinceLink": "/province/lam-dong",
     "paragraphsEn": [
       "Dalat is a highly sought-after getaway destination that captivates our hearts no matter how many times we visit. That's why we want to highly recommend you visit this city of flowers and pines. Although it has become quite touristy in recent times, it is so spacious that you can easily find quiet spots for yourself. A recommended itinerary for your trip would be:",
+      "1. Rent a motorbike and explore the scenic roads that wind through the oval-shaped pine hills.",
+      "2. Make a list of the many excellent coffee shops in Dalat that you would like to visit, each offering unique and Instagram-worthy decor.",
+      "3. Stay at a cozy homestay with a scenic view, a specialty of Dalat, and gaze at the illuminated farms on the horizon. If you're feeling adventurous, treat yourself to a glass of wine and some chocolate.",
+      "4. Snuggle into the comfortable bed and have a good night's sleep while listening to the wind sing.",
       "Dalat is where you can immerse yourself in nature and appreciate the slow pace of life."
     ],
     "paragraphsVi": [
-      "Nằm trên cao nguyên Lâm Viên, Đà Lạt được mệnh danh là thành phố của mùa xuân vĩnh cửu với rừng thông bạt ngàn, những căn biệt thự Pháp cổ kính và ngàn hoa đua nở quanh năm. Đây là nơi lý tưởng để dạo bước bên hồ Xuân Hương, nhâm nhi tách cà phê ấm nóng tại các quán cafe thơ mộng và tận hưởng không khí se lạnh trong lành."
+      "Đà Lạt là điểm đến nghỉ dưỡng được săn đón hàng đầu, luôn chiếm trọn trái tim chúng tôi dù đã ghé thăm biết bao lần. Đó là lý do chúng tôi nhiệt tình khuyên bạn nên đến với thành phố của ngàn hoa và rừng thông này. Dù thời gian gần đây đã phát triển du lịch khá nhiều, thành phố vẫn rất rộng lớn để bạn dễ dàng tìm thấy những góc tĩnh lặng cho riêng mình. Một gợi ý lịch trình tuyệt vời cho chuyến đi của bạn là:",
+      "1. Thuê một chiếc xe máy và khám phá những cung đường thơ mộng uốn lượn giữa đồi thông chập chùng hình oval.",
+      "2. Lên danh sách những quán cà phê tuyệt vời tại Đà Lạt bạn muốn ghé thăm, mỗi quán đều sở hữu phong cách độc đáo và góc check-in tuyệt đẹp.",
+      "3. Nghỉ tại một căn homestay ấm cúng có view thung lũng thơ mộng – nét đặc trưng của Đà Lạt – và ngắm nhìn những nhà lồng rực sáng phía chân trời. Nếu muốn chút thi vị, hãy tự thưởng cho mình một ly rượu vang và chút socola ngọt ngào.",
+      "4. Cuộn mình trong chiếc giường êm ái và tận hưởng giấc ngủ ngon lành trong tiếng gió reo rì rào.",
+      "Đà Lạt chính là nơi bạn hòa mình vào thiên nhiên và trân quý từng khoảnh khắc của nhịp sống chậm rãi."
     ]
   },
   {
     "id": "18-tam-coc-ninh-binh",
     "num": 18,
     "titleEn": "18. Admire Tam Coc, Ninh Binh",
-    "titleVi": "18. Du ngoạn danh thắng Tam Cốc – Tràng An, Ninh Bình",
+    "titleVi": "18. Chiêm ngưỡng vẻ đẹp Tam Cốc, Ninh Bình",
     "img": "/guide/20-best-things/18-tam-coc-ninh-binh.jpg",
     "webp": "/guide/20-best-things/18-tam-coc-ninh-binh.webp",
     "alt": "Tam Coc Ninh Binh karst landscape and river boats",
@@ -579,7 +589,7 @@ const THINGS_ITEMS = [
       "It is hard to describe Tam Coc in words. This place seems straight out of a fairy tale and is best viewed from a rowing boat, with water splashing against the sides and oars. You'll journey through breathtaking karst mountains, surrounded by lush paddy fields and stunning lotus and water lily ponds. Along the way, you'll encounter grottos filled with sparkling stalactites. After the boat ride, you'll reach Bai Dinh Pagoda, one of the largest pagodas in Vietnam and a true representation of Buddhist tradition. Here, you can relax and admire the grandeur of nature or get lost in your own book in this hidden fairy site. Tam Coc is considered \"Ha Long Bay on land\" and is sure to attract more attention from travelers in the future. So, add it to your itinerary."
     ],
     "paragraphsVi": [
-      "Được mệnh danh là 'Vịnh Hạ Long trên cạn', Ninh Bình sở hữu Quần thể danh thắng Tràng An – Tam Cốc được UNESCO vinh danh là Di sản Văn hóa và Thiên nhiên Thế giới. Ngồi trên chiếc thuyền nan trôi nhẹ theo dòng sông Ngô Đồng, luồn qua ba hang động kỳ ảo và ngắm nhìn những vách núi đá vôi sừng sững bên cánh đồng lúa chín là khoảnh khắc thanh bình khó quên."
+      "Thật khó để diễn tả Tam Cốc bằng lời. Nơi đây tựa như bước ra từ một câu chuyện cổ tích và đẹp nhất khi được chiêm ngưỡng từ một chiếc thuyền nan, với tiếng nước khua róc rách mạn thuyền. Bạn sẽ lướt qua những dãy núi đá vôi kỳ vĩ, bao quanh bởi những cánh đồng lúa xanh mướt và những đầm sen, súng ngát hương. Dọc đường đi, bạn sẽ khám phá các hang động lung linh với muôn vàn thạch nhũ lấp lánh. Sau chuyến du ngoạn bằng thuyền, bạn có thể ghé thăm Chùa Bái Đính – một trong những ngôi chùa lớn nhất Việt Nam và là biểu tượng sâu sắc của truyền thống Phật giáo. Tại đây, bạn có thể thư thái ngắm nhìn sự hùng vĩ của thiên nhiên hay thả hồn vào một cuốn sách nơi chốn tiên cảnh ẩn mình. Tam Cốc được ví như 'Vịnh Hạ Long trên cạn' và chắc chắn sẽ ngày càng thu hút du khách. Hãy thêm điểm đến này vào lịch trình của bạn."
     ]
   },
   {
@@ -615,6 +625,89 @@ const THINGS_ITEMS = [
     ]
   }
 ];
+
+function renderParagraphContent(text, isVi) {
+  if (typeof text !== "string") return text;
+
+  // Check for numbered sub-steps like "1. Rent a motorbike..."
+  const numMatch = text.match(/^(\d+\.\s)(.*)$/);
+  if (numMatch) {
+    return (
+      <div className="things-item__substep">
+        <span className="things-item__substep-num">{numMatch[1]}</span>
+        <span>{numMatch[2]}</span>
+      </div>
+    );
+  }
+
+  const keywordMap = isVi
+    ? [
+        { key: "Cố đô Huế", href: "/province/thua-thien-hue" },
+        { key: "Huế", href: "/province/thua-thien-hue" },
+        { key: "Phú Quốc", href: "/province/kien-giang" },
+        { key: "Vườn quốc gia Phong Nha – Kẻ Bàng", href: "/province/quang-binh" },
+        { key: "Quảng Bình", href: "/province/quang-binh" },
+        { key: "Sa Pa", href: "/province/lao-cai" },
+        { key: "Đảo Cát Bà", href: "/province/hai-phong" },
+        { key: "Cát Bà", href: "/province/hai-phong" },
+        { key: "Quy Nhơn", href: "/province/binh-dinh" },
+        { key: "Mù Cang Chải", href: "/province/yen-bai" },
+        { key: "Đà Lạt", href: "/province/lam-dong" },
+        { key: "Tam Cốc", href: "/province/ninh-binh" },
+        { key: "Nha Trang", href: "/province/khanh-hoa" },
+        { key: "Hà Giang", href: "/province/ha-giang" },
+        { key: "Hội An", href: "/province/da-nang" },
+        { key: "Côn Đảo", href: "/province/ba-ria-vung-tau" },
+        { key: "Vịnh Hạ Long", href: "/province/quang-ninh" },
+        { key: "Đồng bằng sông Cửu Long", href: "/province/can-tho" },
+        { key: "Bà Nà Hills", href: "/province/da-nang" },
+        { key: "Hà Nội", href: "/province/ha-noi" },
+        { key: "Địa đạo Củ Chi", href: "/province/ho-chi-minh" },
+        { key: "Sài Gòn", href: "/province/ho-chi-minh" },
+      ]
+    : [
+        { key: "Hue", href: "/province/thua-thien-hue" },
+        { key: "Phu Quoc", href: "/province/kien-giang" },
+        { key: "Phong Nha-Ke Bang National Park", href: "/province/quang-binh" },
+        { key: "Quang Binh", href: "/province/quang-binh" },
+        { key: "Sapa", href: "/province/lao-cai" },
+        { key: "Cat Ba Island", href: "/province/hai-phong" },
+        { key: "Quy Nhon", href: "/province/binh-dinh" },
+        { key: "Mu Cang Chai", href: "/province/yen-bai" },
+        { key: "Dalat", href: "/province/lam-dong" },
+        { key: "Tam Coc", href: "/province/ninh-binh" },
+        { key: "Nha Trang", href: "/province/khanh-hoa" },
+        { key: "Ha Giang", href: "/province/ha-giang" },
+        { key: "Hoi An", href: "/province/da-nang" },
+        { key: "Con Dao", href: "/province/ba-ria-vung-tau" },
+        { key: "Ha Long Bay", href: "/province/quang-ninh" },
+        { key: "Mekong Delta", href: "/province/can-tho" },
+        { key: "Ba Na Hills", href: "/province/da-nang" },
+        { key: "Hanoi", href: "/province/ha-noi" },
+        { key: "Cu Chi Tunnels", href: "/province/ho-chi-minh" },
+        { key: "Saigon", href: "/province/ho-chi-minh" },
+      ];
+
+  for (const item of keywordMap) {
+    const idx = text.indexOf(item.key);
+    if (idx !== -1) {
+      const before = text.slice(0, idx);
+      const match = text.slice(idx, idx + item.key.length);
+      const after = text.slice(idx + item.key.length);
+      return (
+        <>
+          {before}
+          <Link href={item.href} className="things-inline-link">
+            {match}
+          </Link>
+          {after}
+        </>
+      );
+    }
+  }
+
+  return text;
+}
 
 export default function TwentyBestThingsPage() {
   const [lang, setLang] = useState("en");
@@ -887,16 +980,25 @@ export default function TwentyBestThingsPage() {
                 </div>
                 <div className="things-item__desc">
                   {(isVi ? item.paragraphsVi : item.paragraphsEn).map(
-                    (p, pIdx) => (
-                      <p key={pIdx}>{p}</p>
-                    )
-                  )}
-                  {item.provinceLink && (
-                    <p style={{ marginTop: "10px" }}>
-                      <Link href={item.provinceLink} className="inline-flex items-center gap-1 text-sm font-semibold text-teal-700 hover:text-teal-900">
-                        <span>{isVi ? "Khám phá thêm điểm đến >" : "Explore destination details >"}</span>
-                      </Link>
-                    </p>
+                    (p, pIdx) => {
+                      if (
+                        p.startsWith("1. ") ||
+                        p.startsWith("2. ") ||
+                        p.startsWith("3. ") ||
+                        p.startsWith("4. ")
+                      ) {
+                        return (
+                          <div key={pIdx}>
+                            {renderParagraphContent(p, isVi)}
+                          </div>
+                        );
+                      }
+                      return (
+                        <p key={pIdx}>
+                          {renderParagraphContent(p, isVi)}
+                        </p>
+                      );
+                    }
                   )}
                 </div>
               </div>
