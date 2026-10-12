@@ -64,7 +64,7 @@ const TRENDING_HERO_STORIES = [
     badge: "#TRENDING",
     title: "15 best places to visit in Vietnam in 2026",
     titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+    link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
     meta: "Welcome To Vietnam - June 16, 2026",
     metaVi: "Welcome To Vietnam • 16 Tháng 6, 2026",
     img: "/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg",
@@ -474,7 +474,7 @@ const LATEST_ARTICLES_ITEMS = [
     meta: "Welcome To Vietnam - June 16, 2026",
     metaVi: "Welcome To Vietnam • 16 Tháng 6, 2026",
     img: "/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+    link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
   },
   {
     badge: "#TRENDING",
@@ -568,7 +568,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "16 Tháng 6, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-1.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
       },
       {
         id: "insp-2",

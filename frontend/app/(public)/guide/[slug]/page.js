@@ -484,6 +484,12 @@ function GuideDetailContent() {
 
   const [activeTab, setActiveTab] = useState(initialTab);
   const [activeCategory, setActiveCategory] = useState("all");
+
+  useEffect(() => {
+    if (params?.slug?.includes("15-best-places")) {
+      window.location.href = "/guide/15-best-places-to-visit-in-vietnam-in-2026";
+    }
+  }, [params?.slug]);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [bookmarkedIds, setBookmarkedIds] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
