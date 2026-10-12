@@ -138,6 +138,42 @@
   line-height: 1.4;
 }
 
+.ad-subitem__title--bold {
+  font-weight: 700;
+  color: #111827;
+  font-size: 18px;
+}
+
+.ad-bullet-list {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin: 14px 0 22px;
+}
+
+.ad-bullet-item {
+  font-size: 16px;
+  color: #374151;
+  line-height: 1.85;
+  margin-bottom: 8px;
+}
+
+.ad-bullet-item strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.ad-bullet-item a {
+  color: #0d9488;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.ad-bullet-item a:hover {
+  color: #0f766e;
+}
+
 .ad-subitem__p {
   font-size: 16px;
   color: #374151;

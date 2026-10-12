@@ -917,54 +917,434 @@ export default function AoDaiArticlePage() {
               )}
             </p>
 
-            <div className="ad-practice-grid">
-              <div className="ad-practice-card">
-                <h4 className="ad-practice-card__title">
-                  <Heart size={18} />
-                  {isVi ? "Lễ cưới hỏi truyền thống" : "Weddings & Engagements"}
-                </h4>
-                <p className="ad-practice-card__desc">
-                  {isVi
-                    ? "Tại lễ dạm ngõ, ăn hỏi và rước dâu, cô dâu chú rể cùng hai họ đều diện áo dài truyền thống với sắc đỏ, vàng, trắng thêu họa tiết long phụng trang nhã."
-                    : "During Vietnamese engagement and wedding ceremonies, the bride, groom, and family members proudly wear elaborate ceremonial ao dai embroidered with dragons, phoenixes, or floral motifs."}
-                </p>
-              </div>
+            {/* 1. Wearing the ao dai as a uniform */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi
+                  ? "Mặc áo dài như đồng phục (Học sinh & Công sở)"
+                  : "Wearing the ao dai as a uniform"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Việc lựa chọn <em>áo dài</em> làm đồng phục là nỗ lực của các nhà
+                    quản lý nhằm gìn giữ nét đẹp truyền thống trong thế hệ trẻ. Áo dài
+                    chủ yếu được mặc tại các trường trung học phổ thông và đại học,
+                    thường mang sắc trắng tinh khôi, kết hợp cùng quần trắng hoặc đen.
+                    Gần đây, nhiều doanh nghiệp và cơ quan chính phủ như ngân hàng, hãng
+                    hàng không cũng lựa chọn áo dài làm hình ảnh đại diện thương hiệu.
+                  </>
+                ) : (
+                  <>
+                    The choice of the <em>ao dai</em> as a uniform is an effort made by
+                    those in power to sustain its tradition among the younger
+                    generation. It is mostly worn in high schools and universities,
+                    typically in white, and can be paired with either white or black
+                    trousers. Recently, various companies and government
+                    organizations, such as banks and airlines, have also selected it as
+                    a symbol of their institutions.
+                  </>
+                )}
+              </p>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Điều này đóng góp to lớn vào việc bảo tồn và duy trì quốc phục trong
+                    thời kỳ hội nhập và giao thoa mạnh mẽ với các xu hướng thời trang
+                    phương Tây hiện đại.
+                  </>
+                ) : (
+                  <>
+                    This greatly contributes to the preservation of the dress during a
+                    period of rapid adaptation and integration with Western fashion
+                    styles.
+                  </>
+                )}
+              </p>
+            </div>
 
-              <div className="ad-practice-card">
-                <h4 className="ad-practice-card__title">
-                  <Calendar size={18} />
-                  {isVi ? "Dịp Tết Nguyên Đán" : "Lunar New Year (Tet Holiday)"}
-                </h4>
-                <p className="ad-practice-card__desc">
-                  {isVi
-                    ? "Vào dịp đầu xuân năm mới, dạo phố du xuân, viếng chùa đầu năm và chúc Tết trong tà áo dài rực rỡ đã trở thành nét đẹp văn hóa không thể thiếu của mọi thế hệ."
-                    : "During the first days of Spring, strolling down festive streets, visiting temples, and wishing elders Happy New Year in vibrant ao dai has become an indispensable tradition for generations."}
-                </p>
+            {/* FEATURED PHOTO 3: STUDENTS & PHOENIX FLOWERS (HÌNH 1 & 2) */}
+            <figure className="ad-figure">
+              <div className="ad-figure__img-wrap">
+                <picture>
+                  <source
+                    srcSet="/guide/ao-dai/ao-dai-students.webp"
+                    type="image/webp"
+                  />
+                  <img
+                    src="/guide/ao-dai/ao-dai-students.jpg"
+                    alt="The ao dai is not just a costume, but also holds many cherished memories for generations of students"
+                    className="ad-figure__img"
+                    loading="lazy"
+                  />
+                </picture>
               </div>
+              <figcaption className="ad-figure__caption">
+                {isVi
+                  ? "Tà áo dài không chỉ là một bộ trang phục, mà còn lưu giữ vô vàn ký ức tươi đẹp của biết bao thế hệ học sinh."
+                  : "The ao dai is not just a costume, but also holds many cherished memories for generations of students."}
+              </figcaption>
+            </figure>
 
-              <div className="ad-practice-card">
-                <h4 className="ad-practice-card__title">
-                  <Sparkles size={18} />
-                  {isVi ? "Đồng phục nữ sinh trung học" : "High School Uniforms"}
-                </h4>
-                <p className="ad-practice-card__desc">
-                  {isVi
-                    ? "Tà áo dài trắng tinh khôi bay trong gió chiều tan trường là hình ảnh biểu tượng gắn liền với nét đẹp ngây thơ, thuần khiết của nữ sinh Việt Nam."
-                    : "The pure white ao dai flowing gently on school bicycles after class remains one of the most poetic and timeless symbols of Vietnamese youth and education."}
-                </p>
-              </div>
+            {/* 2. Wearing the ao dai in engagement and wedding ceremonies */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi
+                  ? "Mặc áo dài trong lễ ăn hỏi và cưới xin"
+                  : "Wearing the ao dai in engagement and wedding ceremonies"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Từ bao đời nay, <em>áo dài</em> luôn là phần không thể thiếu trong các
+                    nghi lễ hôn lễ truyền thống của người Việt. Cô dâu và chú rể thường
+                    khoác lên mình những bộ áo dài sắc màu rực rỡ như đỏ, hồng hoặc
+                    trắng, tượng trưng cho tình yêu vĩnh cửu và hạnh phúc viên mãn. Khi
+                    được diện làm trang phục cưới, áo dài thường được thêu tỉ mỉ hình
+                    rồng phượng – hai linh vật thiêng liêng mang lại may mắn, bình an
+                    trong văn hóa phương Đông, với niềm tin sẽ che chở cho hôn nhân bền
+                    chặt. Chiếc <em>khăn đóng</em> truyền thống cũng được đội đầu để hoàn
+                    thiện bộ lễ phục, biểu trưng cho sự gắn kết khăng khít của đôi lứa.
+                    Không chỉ cô dâu chú rể, hai bên gia đình và đội bê tráp cũng chọn
+                    áo dài để thể hiện sự trang trọng, tôn nghiêm.
+                  </>
+                ) : (
+                  <>
+                    For many years, the <em>ao dai</em> has been an integral part of
+                    Vietnamese wedding ceremonies. Brides and grooms wear brightly
+                    colored versions in red, pink, or white, symbolizing eternal love
+                    and happiness. When worn as a wedding dress, it is often
+                    embroidered with images of dragons and phoenixes, which are
+                    considered sacred and powerful mascots in Eastern culture. The
+                    belief is that they will protect the marriage forever. The
+                    traditional turban (<em>khan dong</em>) is also worn to complete the
+                    custom. This term translates directly to &quot;framed turban&quot;,
+                    representing the tightly knotted relationship between the couple. Not
+                    only the bride and groom, but also the entire wedding party often
+                    choose to wear the <em>ao dai</em> to show formality.
+                  </>
+                )}
+              </p>
+            </div>
 
-              <div className="ad-practice-card">
-                <h4 className="ad-practice-card__title">
-                  <Compass size={18} />
-                  {isVi ? "Ngoại giao & Hội nghị quốc tế" : "Diplomatic & State Events"}
-                </h4>
-                <p className="ad-practice-card__desc">
-                  {isVi
-                    ? "Tại các diễn đàn ngoại giao, hội nghị thượng đỉnh quốc tế (như APEC) và các cuộc gặp cấp cao, áo dài luôn là quốc phục đại diện cho thể diện quốc gia."
-                    : "At global diplomatic summits, cultural exchanges, and official receptions, the ao dai represents Vietnam's sovereign pride, poise, and dignified elegance on the world stage."}
-                </p>
-              </div>
+            {/* 3. Wearing the ao dai during the Tet holidays and other special occasions */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi
+                  ? "Mặc áo dài dịp Tết Nguyên Đán và các sự kiện đặc biệt"
+                  : "Wearing the ao dai during the Tet holidays and other special occasions"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Tết Nguyên Đán là ngày lễ cổ truyền trọng đại nhất trong năm của
+                    người Việt. Do đó, việc quốc phục được lựa chọn để diện trong dịp này
+                    là điều vô cùng tự nhiên và thiêng liêng. Ý nghĩa ban đầu của việc
+                    mặc áo dài ngày Tết là để trang trọng chào đón khoảnh khắc chuyển
+                    giao năm mới và viếng chùa đầu xuân. Tuy nhiên theo thời gian, mọi
+                    người còn diện áo dài nhiều hơn để chụp ảnh kỷ niệm du xuân. Người
+                    Việt rất thích lưu lại những bức hình rực rỡ, và tà <em>áo dài</em>{" "}
+                    càng làm cho những bức ảnh thêm lung linh sắc xuân. Dù với lý do
+                    nào, việc trang phục truyền thống xuất hiện ngày càng phổ biến và các
+                    giá trị văn hóa được hồi sinh mạnh mẽ trong giới trẻ là một tín hiệu
+                    vô cùng đáng tự hào.
+                  </>
+                ) : (
+                  <>
+                    Tet, or Lunar New Year, is the most significant holiday in
+                    Vietnam. It is, therefore, understandable that Vietnam&apos;s
+                    traditional and national dress was chosen to be worn during this
+                    time. The original purpose of wearing it during these holidays was
+                    to formally celebrate the transition of the year. However, over
+                    time, people have started wearing it more for photography
+                    purposes. Vietnamese people love taking photos, and the{" "}
+                    <em>ao dai</em> adds more color to them. Regardless of the reason,
+                    it is important to see the traditional dress appearing more
+                    frequently and the cultural values it holds once again thriving
+                    among the young Vietnamese.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* 4. Wearing the ao dai in daily life */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi
+                  ? "Mặc áo dài trong đời sống thường nhật"
+                  : "Wearing the ao dai in daily life"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Từng có thời gian <em>áo dài</em> ít được mặc thường xuyên trong đời
+                    sống hàng ngày do sự lên ngôi của trang phục phương Tây. Tuy nhiên,
+                    tà áo dài đã có sự trở lại ngoạn mục sau thành công vang dội của bộ
+                    phim điện ảnh &quot;Cô Ba Sài Gòn&quot; (The Tailor) năm 2017. Bộ phim đã
+                    tôn vinh sâu sắc vẻ đẹp của trang phục truyền thống cùng những mẫu
+                    thiết kế đột phá của nhà thiết kế tài năng Thủy Nguyễn. Tác phẩm
+                    nhanh chóng tạo nên một cơn sốt, kéo theo ngày càng nhiều người nổi
+                    tiếng và giới trẻ chọn diện <em>áo dài</em> cách tân tại các hội
+                    nghị, sự kiện truyền thông và buổi gặp gỡ cộng đồng như một cách
+                    khẳng định phong cách thời trang tinh tế, dẫn đầu xu hướng.
+                  </>
+                ) : (
+                  <>
+                    There was a time when the <em>ao dai</em> was not widely worn due
+                    to the popularity of Western wear. However, it saw a resurgence in
+                    popularity after the release of the Vietnamese movie &quot;Co Ba
+                    Sai Gon&quot; (The Tailor) in 2017. The film prominently featured
+                    the traditional dress and its outstanding designs by talented
+                    designer Thuy Nguyen, who played an important role in reviving its
+                    beauty. The film quickly became a hit, and along with it, more and
+                    more celebrities started wearing the <em>ao dai</em> to
+                    conferences, press events, and public events as a way to showcase
+                    their fashion sense and trendiness.
+                  </>
+                )}
+              </p>
+            </div>
+          </section>
+
+          {/* ─── SECTION: THE MAKING OF AO DAI (HÌNH 3 & 4) ─── */}
+          <section>
+            <h2 className="ad-section-heading">
+              {isVi ? "Nghệ thuật may đo áo dài" : "The making of ao dai"}
+            </h2>
+
+            <p className="ad-section-intro">
+              {isVi ? (
+                <>
+                  Để một chiếc áo dài ôm trọn đường nét duyên dáng của cơ thể người mặc,
+                  cách tuyệt vời nhất là đặt may riêng theo số đo của chính mình. Bản
+                  thân quá trình may đo một chiếc <em>áo dài</em> cũng là một trải
+                  nghiệm vô cùng thú vị.
+                </>
+              ) : (
+                <>
+                  For the dress to fit gracefully on a person, it should be best to
+                  customize your own. The process of making the <em>ao dai</em> is fun
+                  itself.
+                </>
+              )}
+            </p>
+
+            {/* Choosing materials */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi ? "Lựa chọn chất liệu vải" : "Choosing materials"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Tùy thuộc vào dịp sử dụng, mục đích và sở thích cá nhân, bạn có thể
+                    lựa chọn nhiều loại chất liệu vải khác nhau. Thông thường nhất,{" "}
+                    <em>áo dài</em> nữ được may từ lụa tơ tằm (<em>lụa</em>), trong khi
+                    vải gấm hoa (<em>gấm</em>) thường được ưa chuộng cho nam giới. Hiện
+                    nay, áo dài hiện đại có vô vàn sự lựa chọn phong phú như vải đũi,
+                    voan, chiffon và cả ren cao cấp. Người dân bản địa rất thích dạo qua
+                    các chợ vải truyền thống để tự tay sờ, cảm nhận độ mềm mại của từng
+                    thước vải trước khi mang đến tiệm may.
+                  </>
+                ) : (
+                  <>
+                    It depends on the occasion, purpose, and personal preference, which
+                    allows you to choose different types of materials. Most commonly,
+                    the <em>ao dai</em> for women is made from silk (<em>lua</em>), while
+                    brocade (<em>gam</em>) is often used for men. A wider selection of
+                    fabrics is now available for the modern <em>ao dai</em>, including
+                    linen, chiffon, and even lace. Local people enjoy visiting the
+                    fabric market to touch and feel the material to make sure it&apos;s
+                    what they want before bringing it to the tailor.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Measuring and tailoring */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi ? "Đo đạc và may đo thủ công" : "Measuring and tailoring"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Tại tiệm may, thợ may sẽ dùng thước dây (<em>thước dây</em>) lấy số
+                    đo tỉ mỉ từng chi tiết trên cơ thể bạn. Mọi góc cạnh đều được chăm
+                    chút cẩn thận, từ vòng cổ, vai, ngực, hạ eo cho đến chiều dài chính
+                    xác của tay áo và tà áo. Toàn bộ quy trình đo chỉ mất khoảng 5 phút.
+                    Thợ may sẽ xác nhận lại phom dáng bạn mong muốn, các chi tiết hoa văn
+                    đặc biệt và hẹn ngày bạn có thể đến nhận áo. Tùy thuộc vào độ phức
+                    tạp của mẫu thiết kế, danh tiếng của nhà may và mùa cao điểm, thời
+                    gian hoàn thành có thể từ vài ngày đến một tháng. Chi phí may cũng
+                    dao động linh hoạt từ vài trăm nghìn đến vài triệu đồng (VND).
+                  </>
+                ) : (
+                  <>
+                    At the tailor, your measurements will be taken with a stripe ruler
+                    (<em>thuoc day</em>). Every aspect will be taken seriously and
+                    carefully noted, such as the exact length of the sleeves. The entire
+                    measuring process takes only about five minutes. The tailor will
+                    confirm the style you want and any special requirements, and
+                    finally tell you the day when you can pick up your dress. Depending
+                    on the complexity of the design, the popularity of the{" "}
+                    <em>ao dai</em> house, and the high/low season, it can take
+                    anywhere from a few days to a month. The corresponding price also
+                    varies from a few hundred thousand to millions (VND).
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Where to tailor */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi ? "Địa chỉ may áo dài uy tín" : "Where to tailor"}
+              </h3>
+              <ul className="ad-bullet-list">
+                <li className="ad-bullet-item">
+                  <strong>Ao Dai Custom Tailors</strong> (96 Nguyễn Thái Học,{" "}
+                  <Link href="/province/quang-nam">Hội An</Link>)
+                </li>
+                <li className="ad-bullet-item">
+                  <strong>Áo Dài Xưa &amp; Nay</strong> (601 Nguyễn Đình Chiểu, Quận 3,{" "}
+                  <Link href="/province/ho-chi-minh">TP. Hồ Chí Minh</Link>)
+                </li>
+                <li className="ad-bullet-item">
+                  <strong>Bambou Silk Tailors</strong> (06 Nhà Chung, Quận Hoàn Kiếm,{" "}
+                  <Link href="/province/ha-noi">Hà Nội</Link>)
+                </li>
+                <li className="ad-bullet-item">
+                  <strong>Tiệm may Áo dài Minh Tân</strong> (57 Nguyễn Sinh Cung,{" "}
+                  <Link href="/province/thua-thien-hue">Huế</Link>)
+                </li>
+              </ul>
+            </div>
+
+            {/* Ready-made ao dai */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi ? "Áo dài may sẵn tiện lợi" : "Ready-made ao dai"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Để đáp ứng nhu cầu trang phục thường ngày và du lịch ngắn ngày, áo
+                    dài hiện nay được sản xuất may sẵn với số lượng lớn. Mặc dù phom
+                    dáng có thể không ôm khít hoàn hảo như may đo riêng, nhưng nếu bạn
+                    chỉ có nhu cầu mặc đi dạo phố, chụp ảnh du lịch thì áo dài may sẵn
+                    là giải pháp vô cùng nhanh chóng. Bạn chỉ cần chọn kiểu dáng yêu
+                    thích và có thể mặc ngay. Những mẫu áo dài may sẵn này cũng có giá
+                    thành phải chăng hơn, dao động từ vài trăm nghìn đồng. Ngoài ra, bạn
+                    cũng có thể thuê áo dài tại các điểm du lịch – một lựa chọn rất phổ
+                    biến để tiết kiệm chi phí và thời gian.
+                  </>
+                ) : (
+                  <>
+                    To meet the demand for daily wear, the dress is now manufactured in
+                    large quantities. Although it may not fit perfectly, if you only
+                    plan to wear it for leisure, travel, or photography, a ready made
+                    version will suffice. Simply choose your favorite design, and you
+                    can put it on right away. These ready-made <em>ao dai</em> are also
+                    more affordable, ranging from a few hundred thousand Vietnamese
+                    Dong. Additionally, you can rent one, which is a common option for
+                    performances or photography to save time and money.
+                  </>
+                )}
+              </p>
+            </div>
+          </section>
+
+          {/* FEATURED PHOTO 4: HOI AN BLUE AO DAI (HÌNH 4 & 5) */}
+          <figure className="ad-figure">
+            <div className="ad-figure__img-wrap">
+              <picture>
+                <source
+                  srcSet="/guide/ao-dai/ao-dai-custom-fit.webp"
+                  type="image/webp"
+                />
+                <img
+                  src="/guide/ao-dai/ao-dai-custom-fit.jpg"
+                  alt="For a perfect fit, it's recommended to customize your ao dai"
+                  className="ad-figure__img"
+                  loading="lazy"
+                />
+              </picture>
+            </div>
+            <figcaption className="ad-figure__caption">
+              {isVi
+                ? "Để có được tà áo dài vừa vặn hoàn hảo nhất, bạn nên đặt may đo riêng cho chính mình."
+                : "For a perfect fit, it's recommended to customize your ao dai."}
+            </figcaption>
+          </figure>
+
+          {/* ─── SECTION: TIPS AND FACTS ABOUT AO DAI (HÌNH 5) ─── */}
+          <section>
+            <h2 className="ad-section-heading">
+              {isVi
+                ? "Mẹo và những điều thú vị về áo dài"
+                : "Tips and facts about ao dai"}
+            </h2>
+
+            {/* Ao dai is worn by both genders */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi
+                  ? "Áo dài dành cho cả nam và nữ"
+                  : "Ao dai is worn by both genders"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Một sự thật thú vị là <em>áo dài</em> ban đầu được sáng tạo và từng
+                    là trang phục truyền thống của nam giới Việt Nam, đặc biệt là các
+                    quan lại trong triều đình phong kiến. Theo dòng thời gian, truyền
+                    thống mặc áo dài ở nam giới dần ít phổ biến hơn trong đời sống hàng
+                    ngày. Chiếc <em>áo dài</em> nam có thiết kế hai vạt dài quá đầu gối,
+                    cài cúc bên nách phải, thường được may bằng chất liệu vải gấm cứng
+                    cáp, sang trọng.
+                  </>
+                ) : (
+                  <>
+                    It is a fact that the <em>ao dai</em> was originally created for and
+                    was once the traditional costume of Vietnamese men, particularly
+                    royal officers. Over time, however, the tradition of wearing it has
+                    declined in men&apos;s daily life. The <em>ao dai</em> for men
+                    features two flaps that reach below the knee and are buttoned on the
+                    right side, typically sewn with brocade fabric.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Choosing appropriate undergarments */}
+            <div className="ad-subitem">
+              <h3 className="ad-subitem__title">
+                {isVi
+                  ? "Lựa chọn nội y phù hợp khi mặc áo dài"
+                  : "Choosing appropriate undergarments"}
+              </h3>
+              <p className="ad-subitem__p">
+                {isVi ? (
+                  <>
+                    Do tà <em>áo dài</em> truyền thống thường được may bằng chất liệu lụa
+                    mỏng nhẹ, ôm sát phần ngực, eo và xẻ tà cao ở hai bên hông, việc lựa
+                    chọn nội y không đường may cùng tông màu da (nude) là yếu tố vô cùng
+                    quan trọng. Điều này giúp tổng thể trang phục luôn giữ được nét đoan
+                    trang, thanh lịch và kín đáo, đồng thời tôn lên trọn vẹn những đường
+                    cong duyên dáng của người phụ nữ.
+                  </>
+                ) : (
+                  <>
+                    Since the traditional <em>ao dai</em> is made of light silk or
+                    flowing fabrics and features a snug fit around the chest and waist
+                    with high slits along the hips, selecting seamless and skin-tone
+                    undergarments is essential. This ensures the outfit remains elegant,
+                    refined, and modest while highlighting the graceful curves of the
+                    wearer.
+                  </>
+                )}
+              </p>
             </div>
           </section>
 
