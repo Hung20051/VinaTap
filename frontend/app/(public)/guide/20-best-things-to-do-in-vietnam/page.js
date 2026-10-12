@@ -1,0 +1,1031 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import Logo from "@/components/layout/Logo";
+import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import { getLang } from "@/lib/prefs";
+import {
+  Search,
+  ChevronDown,
+  Sparkles,
+  Compass,
+  MapPin,
+  Calendar,
+  Utensils,
+  X,
+  Facebook,
+  Instagram,
+  Youtube,
+  ArrowRight,
+} from "lucide-react";
+import "@/styles/home.css";
+import "@/styles/complete-guide.css";
+import "@/styles/twenty-best-things.css";
+
+// ─── MEGAMENUS DATA ───
+const MEGA_MENUS_DATA = {
+  inspired: {
+    items: [
+      {
+        id: "insp-1",
+        title: "15 best places to visit in Vietnam in 2026",
+        titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
+        date: "June 16, 2026",
+        dateVi: "16 Tháng 6, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-1.jpg",
+        link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
+      },
+      {
+        id: "insp-2",
+        title: "Plan Your Vietnam Trip with Just One Prompt",
+        titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một prompt",
+        date: "April 1, 2026",
+        dateVi: "1 Tháng 4, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-2.jpg",
+        link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
+      },
+      {
+        id: "insp-3",
+        title: "The Complete Guide to Vietnam",
+        titleVi: "Cẩm nang du lịch toàn diện Việt Nam",
+        date: "January 9, 2026",
+        dateVi: "9 Tháng 1, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-3.jpg",
+        link: "/guide/the-complete-guide-to-vietnam",
+      },
+      {
+        id: "insp-4",
+        title: "20 Best Things to Do in Vietnam",
+        titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
+        date: "January 1, 2025",
+        dateVi: "1 Tháng 1, 2025",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-4.jpg",
+        link: "/guide/20-best-things-to-do-in-vietnam",
+      },
+      {
+        id: "insp-5",
+        title: "Ao Dai – Vietnamese Traditional Dress",
+        titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
+        date: "January 1, 2025",
+        dateVi: "1 Tháng 1, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/inspired-5.jpg",
+        link: "/province/thua-thien-hue",
+      },
+    ],
+  },
+  destinations: {
+    items: [
+      {
+        id: "dest-1",
+        title: "Ho Chi Minh City",
+        titleVi: "TP. Hồ Chí Minh",
+        date: "June 25, 2025",
+        dateVi: "25 Tháng 6, 2025",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-1-hcmc.jpg",
+        link: "/province/ho-chi-minh",
+      },
+      {
+        id: "dest-2",
+        title: "Da Lat",
+        titleVi: "Đà Lạt",
+        date: "June 20, 2025",
+        dateVi: "20 Tháng 6, 2025",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-2-dalat.jpg",
+        link: "/province/lam-dong",
+      },
+      {
+        id: "dest-3",
+        title: "Hoi An",
+        titleVi: "Hội An",
+        date: "June 15, 2025",
+        dateVi: "15 Tháng 6, 2025",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-3-hoian.jpg",
+        link: "/province/da-nang",
+      },
+      {
+        id: "dest-4",
+        title: "Da Nang",
+        titleVi: "Đà Nẵng",
+        date: "June 10, 2025",
+        dateVi: "10 Tháng 6, 2025",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-4-danang.jpg",
+        link: "/province/da-nang",
+      },
+      {
+        id: "dest-5",
+        title: "Hanoi",
+        titleVi: "Hà Nội",
+        date: "June 5, 2025",
+        dateVi: "5 Tháng 6, 2025",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-5-hanoi.jpg",
+        link: "/province/ha-noi",
+      },
+    ],
+  },
+  thingsToDo: {
+    items: [
+      {
+        id: "todo-1",
+        title: "Vietnam 3-Week Itinerary",
+        titleVi: "Lịch trình 3 tuần khám phá Việt Nam",
+        date: "January 20, 2026",
+        dateVi: "20 Tháng 1, 2026",
+        badge: "Things to Do",
+        img: "/guide/megamenu/todo-1-3week.jpg",
+        link: "/guide/the-complete-guide-to-vietnam",
+      },
+      {
+        id: "todo-2",
+        title: "10 Best Things to Do in HCMC",
+        titleVi: "10 trải nghiệm tuyệt nhất tại TP.HCM",
+        date: "January 15, 2026",
+        dateVi: "15 Tháng 1, 2026",
+        badge: "Things to Do",
+        img: "/guide/megamenu/todo-2-hcmc.jpg",
+        link: "/province/ho-chi-minh",
+      },
+      {
+        id: "todo-3",
+        title: "10 Best Things to Do in Nha Trang",
+        titleVi: "10 trải nghiệm tuyệt nhất tại Nha Trang",
+        date: "January 10, 2026",
+        dateVi: "10 Tháng 1, 2026",
+        badge: "Things to Do",
+        img: "/guide/megamenu/todo-3-nhatrang.jpg",
+        link: "/province/khanh-hoa",
+      },
+      {
+        id: "todo-4",
+        title: "20 Best Things to Do in Vietnam",
+        titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
+        date: "January 5, 2026",
+        dateVi: "5 Tháng 1, 2026",
+        badge: "Things to Do",
+        img: "/guide/megamenu/todo-4-vietnam.jpg",
+        link: "/guide/20-best-things-to-do-in-vietnam",
+      },
+      {
+        id: "todo-5",
+        title: "10 Best Things to Do in Dalat",
+        titleVi: "10 trải nghiệm tuyệt nhất tại Đà Lạt",
+        date: "January 1, 2026",
+        dateVi: "1 Tháng 1, 2026",
+        badge: "Things to Do",
+        img: "/guide/megamenu/todo-5-dalat.jpg",
+        link: "/province/lam-dong",
+      },
+    ],
+  },
+  eatAndDrink: {
+    items: [
+      {
+        id: "eat-1",
+        title: "Hanoi Street Food Guide",
+        titleVi: "Cẩm nang ẩm thực đường phố Hà Nội",
+        date: "March 15, 2026",
+        dateVi: "15 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-1-hanoi.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-2",
+        title: "Saigon Culinary Highlights",
+        titleVi: "Tinh hoa ẩm thực Sài Gòn",
+        date: "March 10, 2026",
+        dateVi: "10 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-2-hcmc.jpg",
+        link: "/province/ho-chi-minh",
+      },
+      {
+        id: "eat-3",
+        title: "Top 10 Vietnamese Pho Varieties",
+        titleVi: "Top 10 món phở ngon nhất Việt Nam",
+        date: "March 5, 2026",
+        dateVi: "5 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-3-pho.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-4",
+        title: "Seafood Feast in Vung Tau",
+        titleVi: "Hải sản tươi ngon Vũng Tàu",
+        date: "March 1, 2026",
+        dateVi: "1 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-4-vungtau.jpg",
+        link: "/province/ba-ria-vung-tau",
+      },
+      {
+        id: "eat-5",
+        title: "Nha Trang Coastal Delicacies",
+        titleVi: "Ẩm thực biển đảo Nha Trang",
+        date: "February 25, 2026",
+        dateVi: "25 Tháng 2, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-5-nhatrang.jpg",
+        link: "/province/khanh-hoa",
+      },
+    ],
+  },
+  itineraries: {
+    items: [
+      {
+        id: "itin-1",
+        title: "3-Week Vietnam Grand Tour",
+        titleVi: "Hành trình 3 tuần xuyên Việt đỉnh cao",
+        date: "February 20, 2026",
+        dateVi: "20 Tháng 2, 2026",
+        badge: "Itineraries",
+        img: "/guide/megamenu/itin-1-3week.jpg",
+        link: "/guide/the-complete-guide-to-vietnam",
+      },
+      {
+        id: "itin-2",
+        title: "10-Day Northern Vietnam Highlights",
+        titleVi: "10 ngày khám phá tinh hoa miền Bắc",
+        date: "February 15, 2026",
+        dateVi: "15 Tháng 2, 2026",
+        badge: "Itineraries",
+        img: "/guide/megamenu/itin-2-10days.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "itin-3",
+        title: "2-Week Heritage Trail: Hue to Hoi An",
+        titleVi: "2 tuần con đường di sản: Huế đến Hội An",
+        date: "February 10, 2026",
+        dateVi: "10 Tháng 2, 2026",
+        badge: "Itineraries",
+        img: "/guide/megamenu/itin-3-2weeks.jpg",
+        link: "/province/da-nang",
+      },
+      {
+        id: "itin-4",
+        title: "1-Month Complete Vietnam Odyssey",
+        titleVi: "1 tháng khám phá trọn vẹn dải đất hình chữ S",
+        date: "February 5, 2026",
+        dateVi: "5 Tháng 2, 2026",
+        badge: "Itineraries",
+        img: "/guide/megamenu/itin-4-1month.jpg",
+        link: "/guide/the-complete-guide-to-vietnam",
+      },
+    ],
+  },
+};
+
+// ─── 20 ITEMS DATA ───
+const THINGS_ITEMS = [
+  {
+    "id": "1-hoi-an",
+    "num": 1,
+    "titleEn": "1. Visit one of the most beautiful ancient towns in the world: Hoi An",
+    "titleVi": "1. Khám phá một trong những phố cổ đẹp nhất thế giới: Hội An",
+    "img": "/guide/20-best-things/1-hoi-an.jpg",
+    "webp": "/guide/20-best-things/1-hoi-an.webp",
+    "alt": "Hoi An Ancient Town with lanterns and boats on Hoai River",
+    "provinceLink": "/province/da-nang",
+    "paragraphsEn": [
+      "Hoi An, a UNESCO World Heritage Site located in Central Vietnam, is well-known for its rich cultural influences from China, Japan, and France, which can be seen in its architectural attractions and residential housing. This ancient town offers a unique blend of bustling shophouses and the relaxed lifestyle of the local people. In Hoi An, you can enjoy a variety of cuisine, including some of the best dishes in the country, such as mi Quang and cao lau. The town is also a shopping paradise, offering tailored suits, unique patterned clothing, handcrafted items, and much more. To truly experience Hoi An, rent a bicycle and explore the town, where you'll be amazed by the small surprises hidden in every alleyway and corner. Although small in size, Hoi An has much to offer."
+    ],
+    "paragraphsVi": [
+      "Hội An, di sản văn hóa thế giới được UNESCO công nhận tại miền Trung Việt Nam, nổi tiếng với sự giao thoa văn hóa đặc sắc từ Trung Hoa, Nhật Bản và Pháp thể hiện qua kiến trúc cổ kính và những nếp nhà truyền thống. Phố cổ mang đến nét quyến rũ hài hòa giữa những dãy nhà buôn sầm uất và nhịp sống thanh bình, thư thái của người dân địa phương. Tại Hội An, bạn có thể thưởng thức nền ẩm thực phong phú bậc nhất cả nước với các món trứ danh như mì Quảng và cao lầu. Nơi đây cũng là thiên đường mua sắm đồ thủ công mỹ nghệ, may mặc lấy ngay và lồng đèn rực rỡ. Để cảm nhận trọn vẹn vẻ đẹp phố cổ, hãy thuê một chiếc xe đạp dạo quanh từng ngõ nhỏ rêu phong."
+    ]
+  },
+  {
+    "id": "2-con-dao",
+    "num": 2,
+    "titleEn": "2. Embrace the tranquility on Con Dao Islands",
+    "titleVi": "2. Tận hưởng sự thanh bình hoang sơ tại Côn Đảo",
+    "img": "/guide/20-best-things/2-con-dao.jpg",
+    "webp": "/guide/20-best-things/2-con-dao.webp",
+    "alt": "Con Dao Islands pristine coastline and turquoise sea",
+    "provinceLink": "/province/ba-ria-vung-tau",
+    "paragraphsEn": [
+      "Con Dao is a secluded destination off the Southern Coast and is easily accessible from Ho Chi Minh City (Saigon). Despite being underappreciated, Con Dao is a hidden paradise, offering a tropical island with turquoise coastlines that are both beautiful and quaint. In the eyes of the locals, however, Con Dao is a historical witness, home to the Con Dao Prison, also known as “Hell on Earth” to the prisoners of war who were held there. Vietnamese people now travel to Con Dao as part of their spiritual journey, often visiting the graveyards of iconic national heroes. As a result, the beautiful beaches are left to nature lovers. If you're a culture vulture who wants the best of both worlds – tourism and history – then Con Dao is the place to be."
+    ],
+    "paragraphsVi": [
+      "Côn Đảo là quần đảo biệt lập ngoài khơi bờ biển phía Nam, dễ dàng tiếp cận từ TP. Hồ Chí Minh. Nơi đây được ví như một thiên đường ẩn mình với những bãi biển xanh ngọc bích phẳng lặng, bờ cát vàng mịn màng cùng hệ sinh thái biển nguyên sơ. Bên cạnh vẻ đẹp thiên nhiên ngoạn mục, Côn Đảo còn là một chứng nhân lịch sử thiêng liêng với Di tích Nhà tù Côn Đảo và Nghĩa trang Hàng Dương – nơi yên nghỉ của hàng vạn chiến sĩ cách mạng kiên trung. Côn Đảo mang đến sự hòa quyện trọn vẹn giữa du lịch nghỉ dưỡng biển đảo đẳng cấp và chiều sâu lịch sử tâm linh sâu sắc."
+    ]
+  },
+  {
+    "id": "3-ha-long-bay",
+    "num": 3,
+    "titleEn": "3. Stay at least one night in Ha Long Bay",
+    "titleVi": "3. Nghỉ dưỡng ít nhất một đêm trên du thuyền Vịnh Hạ Long",
+    "img": "/guide/20-best-things/3-ha-long-bay.jpg",
+    "webp": "/guide/20-best-things/3-ha-long-bay.webp",
+    "alt": "Ha Long Bay majestic limestone karsts at sunrise",
+    "provinceLink": "/province/quang-ninh",
+    "paragraphsEn": [
+      "Visiting Ha Long Bay is a must-do while traveling in Vietnam. To fully embrace the mystique and majesty of the bay, we suggest you stay on a cruise ship for at least one night. The cruise will take you through the meandering waterways, allowing you to get up close to the giant limestone formations. You can watch the sunrise and sunset from the boat, surrounded by thousands of limestone karsts of all shapes and sizes. The boat provides beds, food, and other necessities. If you're looking for more active activities, you can go kayaking or swim in the bay. This trip is a treat for nature lovers, providing an enjoyable and immersive experience.",
+      "For travelers who want to explore different cruise routes and overnight options, you can find more details here."
+    ],
+    "paragraphsVi": [
+      "Khám phá Vịnh Hạ Long là trải nghiệm không thể bỏ lỡ khi đến Việt Nam. Để cảm nhận trọn vẹn vẻ đẹp kỳ vĩ và huyền ảo của kỳ quan thiên nhiên thế giới, bạn nhất định nên trải nghiệm ngủ đêm trên du thuyền. Du thuyền sẽ đưa bạn len lỏi qua làn nước xanh màu ngọc bích, chiêm ngưỡng cận cảnh hàng ngàn đảo đá vôi tráng lệ với muôn hình vạn trạng.",
+      "Thức giấc đón bình minh huyền ảo giữa vịnh biển hay ngắm hoàng hôn buông xuống từ boong tàu là những khoảnh khắc vô giá. Bạn còn có thể chèo kayak khám phá các hang động kỳ bí, bơi lội giữa làn nước trong vắt hoặc câu mực đêm trên biển."
+    ]
+  },
+  {
+    "id": "4-mekong-delta",
+    "num": 4,
+    "titleEn": "4. Experience floating markets in the Mekong Delta",
+    "titleVi": "4. Trải nghiệm nét văn hóa chợ nổi độc đáo tại miền Tây sông nước",
+    "img": "/guide/20-best-things/4-mekong-delta.jpg",
+    "webp": "/guide/20-best-things/4-mekong-delta.webp",
+    "alt": "Bustling floating market boats in the Mekong Delta",
+    "provinceLink": "/province/can-tho",
+    "paragraphsEn": [
+      "Compared to other parts of Vietnam, the Mekong Delta may seem a bit lacking in natural landscapes, but it is rich in unique trade customs and practices. The well-linked system of water bodies allows sellers and buyers to sell their fresh produce. Merchants from all over the region gather here at dawn to prepare for a busy day of trade. The best time to experience authentic vibes is around 6 AM to 7 AM. Nowhere else can you eat a bowl of hu tieu on a canoe while watching the motorboats crisscrossing by and be served food from boat to boat. The noise of the mini boats' engines and the clear calls of the vendor ladies create a lively and bustling atmosphere, truly reflecting life in the Mekong Delta."
+    ],
+    "paragraphsVi": [
+      "Đồng bằng sông Cửu Long sở hữu nét văn hóa giao thương đường thủy độc nhất vô nhị. Mạng lưới sông ngòi, kênh rạch chằng chịt đã hình thành nên những khu chợ nổi tấp nập từ tờ mờ sáng. Thời điểm tuyệt vời nhất để ghé thăm là từ 6h đến 7h sáng. Không gì thi vị bằng việc ngồi trên xuồng ba lá bồng bềnh, thưởng thức một tô hủ tiếu nóng hổi, nhâm nhi ly cà phê sáng và ngắm nhìn những chiếc ghe đầy ắp trái cây tươi ngon cùng tiếng rao vang vọng sông nước."
+    ]
+  },
+  {
+    "id": "5-golden-bridge",
+    "num": 5,
+    "titleEn": "5. See the Golden Bridge",
+    "titleVi": "5. Chiêm ngưỡng Cầu Vàng Bà Nà Hills kỳ vĩ",
+    "img": "/guide/20-best-things/5-golden-bridge.jpg",
+    "webp": "/guide/20-best-things/5-golden-bridge.webp",
+    "alt": "Golden Bridge held by giant stone hands in Da Nang",
+    "provinceLink": "/province/da-nang",
+    "paragraphsEn": [
+      "The bridge at Ba Na Hills (Da Nang) is an attraction that doesn't cross any rivers. Recently added to the complex, it has garnered attention not only from travelers, but also from the architectural community due to its eccentric design. The pedestrian bridge hovers over 1,400 meters above sea level, offering a breathtaking view of both the mountains and the sea. One special feature of the bridge is its 150-meter length of metallic yellow paint, adorned with flowers, which inspired its name. The highlight of the attraction is the weathered and mossy-looking hands supporting the bridge, a metaphorical representation of nature's protection. Walking on the bridge in the early morning mist creates a sense of walking on clouds. The combination of landscapes and architecture makes it a must-see photography experience."
+    ],
+    "paragraphsVi": [
+      "Cây cầu tại Bà Nà Hills (Đà Nẵng) là một kiệt tác kiến trúc thu hút sự chú ý của truyền thông toàn cầu. Nằm ở độ cao hơn 1.400 mét so với mực nước biển, cây cầu đi bộ dài 150 mét dát vàng rực rỡ uốn lượn mềm mại giữa mây ngàn. Điểm nhấn ấn tượng nhất là hai bàn tay đá khổng lồ rêu phong nâng đỡ thân cầu, tượng trưng cho bàn tay của thần núi bảo bọc con người. Dạo bước trên cầu giữa làn sương sớm bồng bềnh tựa như đang bước đi trên chốn bồng lai tiên cảnh."
+    ]
+  },
+  {
+    "id": "6-pho-hanoi",
+    "num": 6,
+    "titleEn": "6. Eat a bowl of Pho in Hanoi",
+    "titleVi": "6. Thưởng thức một tô Phở chuẩn vị tại Hà Nội",
+    "img": "/guide/20-best-things/6-pho-hanoi.jpg",
+    "webp": "/guide/20-best-things/6-pho-hanoi.webp",
+    "alt": "Steaming hot bowl of authentic Hanoi beef pho with scallions",
+    "provinceLink": "/province/ha-noi",
+    "paragraphsEn": [
+      "Pho can be found anywhere in Vietnam, but there’s nothing like eating pho in Hanoi. Pho Hanoi has its own charm: the broth is light and has no side veggies. The right bowl of pho should have lots of blanched green onions and a side egg (chen trung tran), accompanied by deep-fried Vietnamese-style churros (banh quay). Hanoi boasts pho vendors that have been operating for generations. Some of the most authentic places consist of just a simple pair of bamboo yokes and a couple of small stools. They open very early in the morning (4 AM to 5 AM) or late at night (1 AM to 2 AM). So, the best feeling is to snuggle down in your warm jacket while waiting for a steaming bowl of pho in the chilly weather of the capital city. Make sure you don’t miss out."
+    ],
+    "paragraphsVi": [
+      "Phở có mặt ở khắp mọi miền đất nước, nhưng không đâu sánh bằng việc thưởng thức một bát phở nóng hổi ngay giữa lòng Hà Nội. Phở Hà Nội có nước dùng trong, ngọt thanh từ xương hầm kỹ, thơm nức mùi gừng nướng, hoa hồi và thảo quả. Tô phở chuẩn vị có thật nhiều hành lá xắt nhỏ, ăn kèm quẩy giòn tan hoặc trứng chần béo ngậy. Thưởng thức phở sáng trên những chiếc ghế con nơi góc phố cổ trong tiết trời se lạnh của Thủ đô là một trải nghiệm ẩm thực đỉnh cao khó quên."
+    ]
+  },
+  {
+    "id": "7-cu-chi-tunnels",
+    "num": 7,
+    "titleEn": "7. Visit the Cu Chi Tunnels",
+    "titleVi": "7. Khám phá Di tích Địa đạo Củ Chi huyền thoại",
+    "img": "/guide/20-best-things/7-cu-chi-tunnels.jpg",
+    "webp": "/guide/20-best-things/7-cu-chi-tunnels.webp",
+    "alt": "Cu Chi Tunnels historical shelter entrance in the forest",
+    "provinceLink": "/province/ho-chi-minh",
+    "paragraphsEn": [
+      "A mere 70 km from Ho Chi Minh City (Saigon) lies the renowned historical destination – Cu Chi Tunnels, attracting millions of visitors annually. This network of over 200 kilometers of tunnels, known as the \"underground city\", was designed with functional spaces such as meeting rooms, emergency rooms, kitchens, and more. It took over 20 years to complete the system, which is divided into three levels, with the deepest reaching 12 meters. During the war, all daily and military activities took place within these tunnels. When visiting Cu Chi Tunnels, you will have the opportunity to explore a portion of the tunnels (which have been expanded for tourists' safety) and gain an understanding of the living and combat conditions faced by Vietnamese soldiers and what contributed to their victory. You can also try the unique snacks that used to serve as the main diet of the tunnel dwellers. Come and find out!"
+    ],
+    "paragraphsVi": [
+      "Cách trung tâm TP. Hồ Chí Minh khoảng 70 km, Địa đạo Củ Chi là di tích lịch sử nổi tiếng toàn cầu thu hút hàng triệu du khách mỗi năm. Hệ thống địa đạo dài hơn 200 km trong lòng đất như một 'thành phố ngầm' hoàn chỉnh với phòng hội họp, trạm cứu thương, bếp Hoàng Cầm, kho chứa và khu sinh hoạt. Trực tiếp chui vào những đoạn đường hầm và nếm thử món khoai mì chấm muối mè sẽ giúp bạn thấu hiểu ý chí kiên cường và tài trí phi thường của quân dân Việt Nam."
+    ]
+  },
+  {
+    "id": "8-ca-phe-sua-da",
+    "num": 8,
+    "titleEn": "8. Drink a cup of Ca Phe Sua Da in Saigon",
+    "titleVi": "8. Nhâm nhi ly Cà phê sữa đá đặc trưng Sài Gòn",
+    "img": "/guide/20-best-things/8-ca-phe-sua-da.jpg",
+    "webp": "/guide/20-best-things/8-ca-phe-sua-da.webp",
+    "alt": "Iced milk coffee Ca Phe Sua Da in Saigon",
+    "provinceLink": "/province/ho-chi-minh",
+    "paragraphsEn": [
+      "It's often said that Saigon is a multicultural city, gathering the highlights of cuisine from across the country and lacking its own specialty. However, we would argue that Saigon excels in one particular dish: milk coffee (ca phe sua). Coffee shops are abundant in Saigon, but the best ca phe sua recipes all have one thing in common: strong black coffee made from high-quality beans, mixed with condensed milk, and served over ice (ca phe sua da). It's no exaggeration to say that this drink is beloved by the Vietnamese people and can be considered the national drink. It's delicious any time of day, goes well with all types of food, and serves as a perfect wake-up call. You can even customize your cup by asking for more or less milk. One sip of this amazing drink will surely leave you in awe."
+    ],
+    "paragraphsVi": [
+      "Cà phê sữa đá Sài Gòn đã được nhiều tạp chí ẩm thực danh giá thế giới bầu chọn là một trong những thức uống cà phê ngon nhất hành tinh. Cà phê nguyên chất đậm đà được pha phin truyền thống, hòa quyện cùng vị ngọt béo ngậy của sữa đặc và đá viên mát lạnh. Ngồi bên một quán cà phê vỉa hè ven đường rợp bóng cây, lắng nghe nhịp sống đô thị sôi động của Sài Gòn và nhâm nhi ly cà phê là phong cách sống đặc sắc của người dân phương Nam."
+    ]
+  },
+  {
+    "id": "9-hue-citadel",
+    "num": 9,
+    "titleEn": "9. Visit the Imperial Citadel of Hue",
+    "titleVi": "9. Tham quan Quần thể Di tích Cố đô Huế",
+    "img": "/guide/20-best-things/9-hue-citadel.jpg",
+    "webp": "/guide/20-best-things/9-hue-citadel.webp",
+    "alt": "Imperial Citadel of Hue ancient architecture",
+    "provinceLink": "/province/thua-thien-hue",
+    "paragraphsEn": [
+      "Talking about history, during the course of a thousand-year feudal regime, Hue served as the former capital of the Nguyen Dynasty in the 19th and early 20th centuries. There still remains spectacular royal architecture from that era, including a collection of well-preserved palaces and tombs of royalty, each with its own unique layout and architectural design, designed to meet the strict requirements of Feng Shui principles. The site was recognized by UNESCO in 1994. To fully explore the immense complex and experience its solemn yet peaceful atmosphere, a full day is recommended."
+    ],
+    "paragraphsVi": [
+      "Cố đô Huế từng là kinh đô của triều đại phong kiến nhà Nguyễn trong suốt hơn một thế kỷ. Quần thể di tích Đại Nội Huế lưu giữ những cung điện vàng son, lăng tẩm uy nghiêm và đền miếu cổ kính bên dòng sông Hương thơ mộng. Đến với Huế, bạn còn có dịp thưởng thức Nhã nhạc Cung đình – di sản văn hóa phi vật thể của nhân loại, cùng nền ẩm thực cung đình cầu kỳ, tinh tế bậc nhất."
+    ]
+  },
+  {
+    "id": "10-saigon-nightlife",
+    "num": 10,
+    "titleEn": "10. Enjoy the nightlife in the unsleeping city – Saigon",
+    "titleVi": "10. Trải nghiệm nhịp sống đêm sôi động tại thành phố không ngủ – Sài Gòn",
+    "img": "/guide/20-best-things/10-saigon-nightlife.jpg",
+    "webp": "/guide/20-best-things/10-saigon-nightlife.webp",
+    "alt": "Saigon vibrant nightlife street",
+    "provinceLink": "/province/ho-chi-minh",
+    "paragraphsEn": [
+      "Saigoneers work hard, but they also know how to fully enjoy life. Saigon's nights are full of activities to suit every mood, from the bustling backpacker street of Bui Vien, to rooftop beer gardens and hidden cocktail bars. The city also offers countless options of delicious local street food to cater to all palates. Saigon at night is unmatched in energy, making it the perfect place to embrace a young, wild, and free spirit."
+    ],
+    "paragraphsVi": [
+      "TP. Hồ Chí Minh khi đêm về khoác lên mình vẻ đẹp hoa lệ và tràn đầy năng lượng. Từ phố đi bộ Nguyễn Huệ, phố Tây Bùi Viện sầm uất, đến những quán bar sân thượng tầng cao ngắm nhìn toàn cảnh Landmark 81 và sông Sài Gòn lấp lánh ánh đèn, thành phố mang lại trải nghiệm về đêm không bao giờ vơi cạn sự hào hứng."
+    ]
+  },
+  {
+    "id": "11-phu-quoc",
+    "num": 11,
+    "titleEn": "11. Visit Phu Quoc Island",
+    "titleVi": "11. Nghỉ dưỡng tại Đảo Ngọc Phú Quốc",
+    "img": "/guide/20-best-things/11-phu-quoc.jpg",
+    "webp": "/guide/20-best-things/11-phu-quoc.webp",
+    "alt": "Phu Quoc Island tropical beach paradise",
+    "provinceLink": "/province/kien-giang",
+    "paragraphsEn": [
+      "No matter how much time you have to spend in Vietnam, Phu Quoc should definitely be added to your travel list. It offers direct international flights and a visa-free stay of up to 30 days. Phu Quoc boasts a diverse marine life, making it an ideal location for diving, and there are also numerous hidden waterfalls in its lush forests waiting to be explored. You can even take a look at traditional fish sauce-making villages to see the unique condiment being made. In addition to its natural beauty, Phu Quoc also has a rich history and cultural festivals that cannot be found anywhere else. This island is truly a paradise for sea lovers, not only for its own charm, but also for the collection of unspoiled remote islands that surround it, in case you want to extend your stay."
+    ],
+    "paragraphsVi": [
+      "Phú Quốc là hòn đảo lớn nhất Việt Nam, được thiên nhiên ưu ái với những bãi biển cát trắng mịn màng như Bãi Sao, Bãi Khem cùng làn nước biển ấm áp quanh năm. Nơi đây sở hữu các khu nghỉ dưỡng sang trọng đẳng cấp quốc tế, tuyến cáp treo vượt biển dài nhất thế giới Hòn Thơm và những làng chài bình dị, mang đến kỳ nghỉ nhiệt đới hoàn hảo."
+    ]
+  },
+  {
+    "id": "12-quang-binh",
+    "num": 12,
+    "titleEn": "12. Explore the land of caves – Quang Binh",
+    "titleVi": "12. Thám hiểm vương quốc hang động kỳ vĩ – Quảng Bình",
+    "img": "/guide/20-best-things/12-quang-binh.jpg",
+    "webp": "/guide/20-best-things/12-quang-binh.webp",
+    "alt": "Quang Binh cave Phong Nha Ke Bang National Park",
+    "provinceLink": "/province/quang-binh",
+    "paragraphsEn": [
+      "Quang Binh, specifically Phong Nha-Ke Bang National Park, is home to a vast array of caves of varying shapes and sizes. There are several \"baby caves\" that cater to all ages and physical abilities, including Phong Nha Cave, Paradise Cave, Dark Cave, among others. You can take a rowing boat to venture deep into the caves and admire the stunning formations of stalactites, a creation of Mother Nature. For those seeking a more challenging experience, professionally organized treks are available for your safety. Some of the most popular options include Hang En (Swallow Cave), Hang Tu Lan (Tu Lan Cave), and the world's largest cave, Son Doong Cave. This cave is a true test of one's limits, as you will trek through the pristine forest, cross underground rivers, camp in massive caves, and witness one of the planet's greatest natural wonders.",
+      "Entering the land of caves is a giant leap into the wonderland that you won't want to miss."
+    ],
+    "paragraphsVi": [
+      "Vườn quốc gia Phong Nha – Kẻ Bàng tại Quảng Bình là Di sản Thiên nhiên Thế giới nổi tiếng với hệ thống hang động đá vôi cổ nhất châu Á. Nơi đây có Hang Sơn Đoòng – hang động tự nhiên lớn nhất thế giới, cùng Động Thiên Đường, Động Phong Nha và Hang Én tráng lệ với hệ thống thạch nhũ lung linh kỳ ảo."
+    ]
+  },
+  {
+    "id": "13-sapa",
+    "num": 13,
+    "titleEn": "13. Fall in love in Sapa",
+    "titleVi": "13. Đắm say cảnh sắc mây ngàn tại Sa Pa",
+    "img": "/guide/20-best-things/13-sapa.jpg",
+    "webp": "/guide/20-best-things/13-sapa.webp",
+    "alt": "Sapa terraced rice fields and mountain landscape",
+    "provinceLink": "/province/lao-cai",
+    "paragraphsEn": [
+      "Sapa is a city that holds a special place in the hearts of many Vietnamese people, and is often a must-see destination for travelers. It's no surprise, given the city's breathtaking landscapes and unique cultural influences. While the center of Sapa has modern amenities to accommodate tourists, the surrounding villages have maintained their traditional beauty and customs. Sapa is a popular destination for couples, thanks to its chilly and misty weather (with occasional snow in the winter) and an abundance of seasonal flowers, creating a romantic atmosphere. It is also home to the highest peak in Indochina, nicknamed \"the roof of Indochina\" – Fansipan Peak. Sapa offers a unique and different experience compared to other highland cities you may have visited."
+    ],
+    "paragraphsVi": [
+      "Tọa lạc ở độ cao hơn 1.600m, Sa Pa quanh năm chìm trong sương mù mờ ảo với khí hậu mát mẻ ôn đới. Đến Sa Pa, bạn sẽ được chiêm ngưỡng đỉnh Fansipan – 'Nóc nhà Đông Dương', những thung lũng ruộng bậc thang uốn lượn tại bản Cát Cát, Tả Van và tìm hiểu phong tục đậm đà bản sắc của đồng bào dân tộc H'Mông, Dao đỏ."
+    ]
+  },
+  {
+    "id": "14-cat-ba",
+    "num": 14,
+    "titleEn": "14. Explore Cat Ba Island & Lan Ha Bay",
+    "titleVi": "14. Khám phá Đảo Cát Bà & Vịnh Lan Hạ thơ mộng",
+    "img": "/guide/20-best-things/14-cat-ba.jpg",
+    "webp": "/guide/20-best-things/14-cat-ba.webp",
+    "alt": "Lan Ha Bay Cat Ba Island serene emerald water",
+    "provinceLink": "/province/hai-phong",
+    "paragraphsEn": [
+      "Cat Ba Island is the largest island in Lan Ha Bay, which is located just beyond Ha Long Bay and boasts similarly stunning scenery. Visitors can participate in a variety of water activities such as fishing, kayaking, swimming, and sunbathing on isolated islands in the bay. For a break from the ocean, they can explore Monkey Island or Trung Trang Cave, which contains historic Vietnamese artifacts. Finally, they can take a trip up to the hilltop fortress for a breathtaking panoramic view of the island and its fishing villages at sunset. Don't miss out on this hidden gem."
+    ],
+    "paragraphsVi": [
+      "Vịnh Lan Hạ nằm phía nam vịnh Hạ Long và bao quanh quần đảo Cát Bà, sở hữu vẻ đẹp hoang sơ, yên bình với hơn 400 hòn đảo lớn nhỏ phủ kín thảm thực vật xanh ngắt. Chèo thuyền kayak luồn qua Hang Sáng – Hang Tối, khám phá làng chài cổ Cái Bèo hay tắm biển tại những bãi cát tự nhiên vắng vẻ là những trải nghiệm tuyệt vời."
+    ]
+  },
+  {
+    "id": "15-quy-nhon",
+    "num": 15,
+    "titleEn": "15. Immerse yourself in Quy Nhon",
+    "titleVi": "15. Khám phá vẻ đẹp hoang sơ của biển Quy Nhơn",
+    "img": "/guide/20-best-things/15-quy-nhon.jpg",
+    "webp": "/guide/20-best-things/15-quy-nhon.webp",
+    "alt": "Quy Nhon coastline Eo Gio Ky Co",
+    "provinceLink": "/province/binh-dinh",
+    "paragraphsEn": [
+      "Quy Nhon is a rising coastal city in Vietnam that is gaining recognition for its stunning beauty. The city is peaceful yet offers fascinating surprises, from its empty sandy beaches to its unique statues and monasteries. Ky Co Beach and Eo Gio are two must-visit attractions with a small entrance fee. Quy Nhon provides a comfortable atmosphere with open spaces and public areas where you can sit and relax while enjoying the ocean breeze. The city also offers enjoyable travel, with wide, newly-built roads along the shoreline. Additionally, the seafood noodles in Quy Nhon are exceptional, as seafood is freshly caught from the sea. As Quy Nhon continues to become more popular, we suggest visiting this city before it becomes too touristy."
+    ],
+    "paragraphsVi": [
+      "Quy Nhơn là thành phố biển miền Trung hiền hòa, nổi tiếng với con đường ven biển tuyệt đẹp, bãi biển Kỳ Co trong vắt màu ngọc lam và eo biển lộng gió Eo Gió được ví như 'Jeju của Việt Nam'. Ẩm thực hải sản tươi ngon giá cả phải chăng cùng tính cách thân thiện của người dân xứ Nẫu luôn để lại ấn tượng sâu đậm."
+    ]
+  },
+  {
+    "id": "16-mu-cang-chai",
+    "num": 16,
+    "titleEn": "16. Visit the terraced rice fields in Mu Cang Chai",
+    "titleVi": "16. Chiêm ngưỡng kỳ quan ruộng bậc thang Mù Cang Chải",
+    "img": "/guide/20-best-things/16-mu-cang-chai.jpg",
+    "webp": "/guide/20-best-things/16-mu-cang-chai.webp",
+    "alt": "Mu Cang Chai golden terraced rice fields",
+    "provinceLink": "/province/yen-bai",
+    "paragraphsEn": [
+      "Mu Cang Chai is a small mountain village in northwest Vietnam known for its agriculture, particularly terrace farming. Visit during the summer or autumn (July to October) to see the lush rice terraces turn into enchanting golden fields. The area is also home to the thriving Black H'mong people, an indigenous ethnic tribe known for their vibrant traditional clothing. Observing them as they harvest the crops gives a glimpse into the rich culture of the town. If you want to see stunning paddy fields on hillsides, Mu Cang Chai is a must-visit."
+    ],
+    "paragraphsVi": [
+      "Mù Cang Chải là kiệt tác nghệ thuật tạo tác từ bàn tay cần cù của đồng bào dân tộc vùng cao. Vào mùa lúa chín (tháng 9 – tháng 10), cả sườn đồi trùng điệp được nhuộm một màu vàng óng ả rực rỡ dưới nắng thu, tạo nên bức tranh thiên nhiên kỳ vĩ say đắm lòng người."
+    ]
+  },
+  {
+    "id": "17-dalat",
+    "num": 17,
+    "titleEn": "17. Find a relaxing moment in Dalat",
+    "titleVi": "17. Tìm khoảng lặng bình yên tại thành phố ngàn hoa Đà Lạt",
+    "img": "/guide/20-best-things/17-dalat.jpg",
+    "webp": "/guide/20-best-things/17-dalat.webp",
+    "alt": "Dalat pine forests flower gardens and mist",
+    "provinceLink": "/province/lam-dong",
+    "paragraphsEn": [
+      "Dalat is a highly sought-after getaway destination that captivates our hearts no matter how many times we visit. That's why we want to highly recommend you visit this city of flowers and pines. Although it has become quite touristy in recent times, it is so spacious that you can easily find quiet spots for yourself. A recommended itinerary for your trip would be:",
+      "Dalat is where you can immerse yourself in nature and appreciate the slow pace of life."
+    ],
+    "paragraphsVi": [
+      "Nằm trên cao nguyên Lâm Viên, Đà Lạt được mệnh danh là thành phố của mùa xuân vĩnh cửu với rừng thông bạt ngàn, những căn biệt thự Pháp cổ kính và ngàn hoa đua nở quanh năm. Đây là nơi lý tưởng để dạo bước bên hồ Xuân Hương, nhâm nhi tách cà phê ấm nóng tại các quán cafe thơ mộng và tận hưởng không khí se lạnh trong lành."
+    ]
+  },
+  {
+    "id": "18-tam-coc-ninh-binh",
+    "num": 18,
+    "titleEn": "18. Admire Tam Coc, Ninh Binh",
+    "titleVi": "18. Du ngoạn danh thắng Tam Cốc – Tràng An, Ninh Bình",
+    "img": "/guide/20-best-things/18-tam-coc-ninh-binh.jpg",
+    "webp": "/guide/20-best-things/18-tam-coc-ninh-binh.webp",
+    "alt": "Tam Coc Ninh Binh karst landscape and river boats",
+    "provinceLink": "/province/ninh-binh",
+    "paragraphsEn": [
+      "It is hard to describe Tam Coc in words. This place seems straight out of a fairy tale and is best viewed from a rowing boat, with water splashing against the sides and oars. You'll journey through breathtaking karst mountains, surrounded by lush paddy fields and stunning lotus and water lily ponds. Along the way, you'll encounter grottos filled with sparkling stalactites. After the boat ride, you'll reach Bai Dinh Pagoda, one of the largest pagodas in Vietnam and a true representation of Buddhist tradition. Here, you can relax and admire the grandeur of nature or get lost in your own book in this hidden fairy site. Tam Coc is considered \"Ha Long Bay on land\" and is sure to attract more attention from travelers in the future. So, add it to your itinerary."
+    ],
+    "paragraphsVi": [
+      "Được mệnh danh là 'Vịnh Hạ Long trên cạn', Ninh Bình sở hữu Quần thể danh thắng Tràng An – Tam Cốc được UNESCO vinh danh là Di sản Văn hóa và Thiên nhiên Thế giới. Ngồi trên chiếc thuyền nan trôi nhẹ theo dòng sông Ngô Đồng, luồn qua ba hang động kỳ ảo và ngắm nhìn những vách núi đá vôi sừng sững bên cánh đồng lúa chín là khoảnh khắc thanh bình khó quên."
+    ]
+  },
+  {
+    "id": "19-nha-trang",
+    "num": 19,
+    "titleEn": "19. Visit Nha Trang",
+    "titleVi": "19. Nghỉ dưỡng bên vịnh biển xanh ngắt Nha Trang",
+    "img": "/guide/20-best-things/19-nha-trang.jpg",
+    "webp": "/guide/20-best-things/19-nha-trang.webp",
+    "alt": "Nha Trang tropical bay beach and resorts",
+    "provinceLink": "/province/khanh-hoa",
+    "paragraphsEn": [
+      "Nha Trang may not be new, but it remains one of the most popular beach cities in the country due to its pleasant weather, warm water, and resort facilities that stretch along the shoreline. The best reason to visit Nha Trang is to completely relax and lounge on the beach while sipping cocktails and enjoying the sun. There is a wide range of food options available, including both local and international dishes. In Nha Trang, you can also experience the unique experience of a mud bath, which is said to have healing properties. You can also see the influence of the Champa culture through the Cham towers. Overall, it's a place to have fun and unwind."
+    ],
+    "paragraphsVi": [
+      "Nha Trang là thiên đường nghỉ dưỡng ven biển hàng đầu Đông Nam Á với bãi biển cát mịn trải dài, nắng ấm quanh năm và hệ sinh thái san hô phong phú tại Vịnh Nha Trang. Du khách có thể trải nghiệm lặn biển ngắm san hô tại Hòn Mun, tắm bùn khoáng nóng thư giãn hay vui chơi tại công viên giải trí VinWonders trên đảo Hòn Tre."
+    ]
+  },
+  {
+    "id": "20-ha-giang",
+    "num": 20,
+    "titleEn": "20. Marvel in Ha Giang",
+    "titleVi": "20. Chinh phục kỳ quan Cao nguyên đá Hà Giang",
+    "img": "/guide/20-best-things/20-ha-giang.jpg",
+    "webp": "/guide/20-best-things/20-ha-giang.webp",
+    "alt": "Ha Giang spectacular mountain pass and Nho Que river",
+    "provinceLink": "/province/ha-giang",
+    "paragraphsEn": [
+      "Ha Giang is the final frontier of Northern Vietnam, renowned for the Dong Van Karst Plateau Geopark, the legendary Ma Pi Leng Pass, and the emerald Nho Que River winding deep below the canyons. Conquering the winding roads of Ha Giang is considered by adventurers to be the ultimate motorcycle road trip in Southeast Asia, offering jaw-dropping mountain views and authentic ethnic minority culture."
+    ],
+    "paragraphsVi": [
+      "Hà Giang – mảnh đất địa đầu cực Bắc của Tổ quốc – sở hữu Công viên địa chất toàn cầu Cao nguyên đá Đồng Văn hùng vĩ, Đèo Mã Pí Lèng hiểm trở bậc nhất và dòng sông Nho Quế xanh như ngọc uốn lượn dưới hẻm vực Tu Sản sâu hun hút. Chinh phục cung đường đèo Hà Giang mang đến cảm xúc choáng ngợp trước thiên nhiên kỳ vĩ cùng vẻ đẹp mộc mạc của hoa tam giác mạch và nụ cười rạng rỡ của trẻ em vùng cao."
+    ]
+  }
+];
+
+export default function TwentyBestThingsPage() {
+  const [lang, setLang] = useState("en");
+  const isVi = lang === "vi";
+
+  useEffect(() => {
+    setLang(getLang());
+    const handleStorage = () => setLang(getLang());
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const menuTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleMouseEnter = (menuKey) => {
+    if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
+    setActiveMenu(menuKey);
+  };
+
+  const handleMouseLeave = () => {
+    menuTimeoutRef.current = setTimeout(() => {
+      setActiveMenu(null);
+    }, 200);
+  };
+
+  return (
+    <div className="vnn-page">
+      {/* ─── PROVINCE CHATBOT AI COMPANION ─── */}
+      <ProvinceChatbot
+        province={{
+          name: isVi ? "Việt Nam" : "Vietnam",
+          nameVi: "Việt Nam",
+          slug: "vietnam",
+        }}
+      />
+
+      {/* ─── TOP AD / HEADER BANNER ─── */}
+      <div className="cg-top-banner">
+        <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt">
+          <picture>
+            <source
+              media="(max-width: 768px)"
+              srcSet="/guide/hcmc/Vietnamnomad-header-banner-mobile-2026.jpg"
+            />
+            <img
+              src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
+              alt="Free AI Travel Assistant - AI Companion Vietnam"
+              className="cg-top-banner-img"
+            />
+          </picture>
+        </Link>
+      </div>
+
+      {/* ─── MAIN NAVIGATION BAR ─── */}
+      <header className={`vnn-nav ${isScrolled ? "vnn-nav--sticky" : ""}`}>
+        <div className="vnn-nav__inner">
+          <div className="vnn-nav__left">
+            <Link href="/" className="vnn-nav__logo">
+              <Logo />
+            </Link>
+          </div>
+
+          <nav className="vnn-nav__center">
+            {/* BE INSPIRED */}
+            <div
+              className="vnn-nav__item"
+              onMouseEnter={() => handleMouseEnter("inspired")}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                className={`vnn-nav__link ${activeMenu === "inspired" ? "vnn-nav__link--active" : ""}`}
+              >
+                {isVi ? "CẢM HỨNG" : "BE INSPIRED"}
+                <ChevronDown className="vnn-nav__arrow" />
+              </button>
+            </div>
+
+            {/* DESTINATIONS */}
+            <div
+              className="vnn-nav__item"
+              onMouseEnter={() => handleMouseEnter("destinations")}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                className={`vnn-nav__link ${activeMenu === "destinations" ? "vnn-nav__link--active" : ""}`}
+              >
+                {isVi ? "ĐIỂM ĐẾN" : "DESTINATIONS"}
+                <ChevronDown className="vnn-nav__arrow" />
+              </button>
+            </div>
+
+            {/* THINGS TO DO */}
+            <div
+              className="vnn-nav__item"
+              onMouseEnter={() => handleMouseEnter("thingsToDo")}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                className={`vnn-nav__link ${activeMenu === "thingsToDo" ? "vnn-nav__link--active" : ""}`}
+              >
+                {isVi ? "TRẢI NGHIỆM" : "THINGS TO DO"}
+                <ChevronDown className="vnn-nav__arrow" />
+              </button>
+            </div>
+
+            {/* EAT & DRINK */}
+            <div
+              className="vnn-nav__item"
+              onMouseEnter={() => handleMouseEnter("eatAndDrink")}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                className={`vnn-nav__link ${activeMenu === "eatAndDrink" ? "vnn-nav__link--active" : ""}`}
+              >
+                {isVi ? "ẨM THỰC" : "EAT & DRINK"}
+                <ChevronDown className="vnn-nav__arrow" />
+              </button>
+            </div>
+
+            {/* ITINERARIES */}
+            <div
+              className="vnn-nav__item"
+              onMouseEnter={() => handleMouseEnter("itineraries")}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button
+                className={`vnn-nav__link ${activeMenu === "itineraries" ? "vnn-nav__link--active" : ""}`}
+              >
+                {isVi ? "LỊCH TRÌNH" : "ITINERARIES"}
+                <ChevronDown className="vnn-nav__arrow" />
+              </button>
+            </div>
+          </nav>
+
+          <div className="vnn-nav__right">
+            <button
+              className="vnn-nav__icon-btn"
+              onClick={() => setSearchOpen(!searchOpen)}
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5 text-gray-700" />
+            </button>
+            <div className="ml-2">
+              <LanguageSwitch />
+            </div>
+          </div>
+        </div>
+
+        {/* ─── MEGAMENU DROPDOWN ─── */}
+        {activeMenu && MEGA_MENUS_DATA[activeMenu] && (
+          <div
+            className="vnn-megamenu"
+            onMouseEnter={() => handleMouseEnter(activeMenu)}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="vnn-megamenu__grid">
+              {MEGA_MENUS_DATA[activeMenu].items.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.link}
+                  className="vnn-megamenu__card"
+                  onClick={() => setActiveMenu(null)}
+                >
+                  <div className="vnn-megamenu__img-wrap">
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="vnn-megamenu__img"
+                    />
+                  </div>
+                  <div className="vnn-megamenu__body">
+                    <h4 className="vnn-megamenu__title">
+                      {isVi ? item.titleVi : item.title}
+                    </h4>
+                    <span className="vnn-megamenu__date">
+                      {isVi ? item.dateVi : item.date}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* ─── HERO SECTION (HÌNH 1) ─── */}
+      <section
+        className="things-hero"
+        style={{
+          backgroundImage: "url('/guide/hcmc/20-Best-Things-to-Do-in-Vietnam.jpg')",
+        }}
+      >
+        <div className="things-hero__overlay" />
+        <div className="things-hero__content">
+          <div className="things-hero__badges">
+            <span className="things-badge">#TRENDING</span>
+            <span className="things-badge">FEATURED ARTICLES</span>
+            <span className="things-badge">THINGS TO DO</span>
+          </div>
+          <h1 className="things-hero__title">
+            {isVi ? "20 trải nghiệm tuyệt nhất tại Việt Nam" : "20 Best Things to Do in Vietnam"}
+          </h1>
+          <p className="things-hero__meta">
+            {isVi ? "Bởi Welcome to Vietnam • 1 Tháng 1, 2025" : "By Welcome to Vietnam • January 1, 2025"}
+          </p>
+        </div>
+      </section>
+
+      {/* ─── MAIN CONTENT CONTAINER ─── */}
+      <main className="things-container">
+        {/* ACTION BUTTON (HÌNH 1) */}
+        <div className="things-action-wrap">
+          <Link
+            href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+            className="things-create-trip-btn"
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>
+              {isVi
+                ? "Tạo chuyến du lịch Việt Nam chỉ trong vài giây"
+                : "Create your Vietnam trip in seconds"}
+            </span>
+          </Link>
+        </div>
+
+        {/* INTRO PARAGRAPH (HÌNH 1 & 2) */}
+        <p className="things-intro">
+          {isVi ? (
+            <>
+              Rất nhiều du khách đến Việt Nam với dự định một kỳ nghỉ ngắn ngày nhưng cuối cùng lại ở lại lâu hơn dự kiến. Đất nước này quá đỗi quyến rũ – có vô vàn cảnh đẹp để thưởng ngoạn, hoạt động thú vị để trải nghiệm và món ăn ngon để thưởng thức đến mức gần như không thể gói gọn tất cả vào một lịch trình ba tuần. Để giúp bạn, chúng tôi đã chọn lọc 20 điều tuyệt vời nhất bạn không nên bỏ lỡ khi khám phá Việt Nam, giúp bạn tận dụng tối đa thời gian và có được những trải nghiệm đáng nhớ nhất về thiên nhiên, văn hóa và con người nơi đây.
+            </>
+          ) : (
+            <>
+              Many people travel to Vietnam intending to take a short holiday but end up staying longer than planned. The country is to blame – there are so many sights to see, activities to enjoy, and foods to try that it's nearly impossible to fit everything into a three-week itinerary. To help, we've highlighted 20 things you shouldn't miss while exploring Vietnam. This way, you can make the most of your time while having the best possible experience with the landscapes, people, and cuisine.
+            </>
+          )}
+        </p>
+
+        {/* ─── 20 ITEMS LIST (HÌNH 2, 3, 4, 5) ─── */}
+        <div className="things-list">
+          {THINGS_ITEMS.map((item) => (
+            <article key={item.id} id={item.id} className="things-item">
+              <h2 className="things-item__title">
+                {isVi ? item.titleVi : item.titleEn}
+              </h2>
+              <div className="things-item__layout">
+                <div className="things-item__img-wrap">
+                  <picture>
+                    <source srcSet={item.webp} type="image/webp" />
+                    <img
+                      src={item.img}
+                      alt={item.alt}
+                      className="things-item__img"
+                      loading="lazy"
+                    />
+                  </picture>
+                </div>
+                <div className="things-item__desc">
+                  {(isVi ? item.paragraphsVi : item.paragraphsEn).map(
+                    (p, pIdx) => (
+                      <p key={pIdx}>{p}</p>
+                    )
+                  )}
+                  {item.provinceLink && (
+                    <p style={{ marginTop: "10px" }}>
+                      <Link href={item.provinceLink} className="inline-flex items-center gap-1 text-sm font-semibold text-teal-700 hover:text-teal-900">
+                        <span>{isVi ? "Khám phá thêm điểm đến >" : "Explore destination details >"}</span>
+                      </Link>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* ─── RELATED GUIDES SECTION ─── */}
+        <section className="cg-explore-more" style={{ marginTop: "60px" }}>
+          <h2 className="cg-explore-more__title">
+            {isVi ? "Các bài viết hướng dẫn du lịch nổi bật khác" : "Other Featured Vietnam Travel Guides"}
+          </h2>
+          <div className="cg-explore-grid">
+            <Link
+              href="/guide/the-complete-guide-to-vietnam"
+              className="cg-explore-card"
+            >
+              <div className="cg-explore-card__img-wrap">
+                <img
+                  src="/guide/megamenu/inspired-3.jpg"
+                  alt="The Complete Guide to Vietnam"
+                  className="cg-explore-card__img"
+                />
+              </div>
+              <h3 className="cg-explore-card__title">
+                {isVi ? "Cẩm nang du lịch toàn diện Việt Nam" : "The Complete Guide to Vietnam"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
+              className="cg-explore-card"
+            >
+              <div className="cg-explore-card__img-wrap">
+                <img
+                  src="/guide/megamenu/inspired-1.jpg"
+                  alt="15 best places to visit in Vietnam in 2026"
+                  className="cg-explore-card__img"
+                />
+              </div>
+              <h3 className="cg-explore-card__title">
+                {isVi
+                  ? "15 địa điểm đẹp nhất Việt Nam năm 2026"
+                  : "15 best places to visit in Vietnam in 2026"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+              className="cg-explore-card"
+            >
+              <div className="cg-explore-card__img-wrap">
+                <img
+                  src="/guide/megamenu/inspired-2.jpg"
+                  alt="Plan Your Vietnam Trip with Just One Prompt"
+                  className="cg-explore-card__img"
+                />
+              </div>
+              <h3 className="cg-explore-card__title">
+                {isVi
+                  ? "Lên kế hoạch du lịch Việt Nam chỉ với một prompt"
+                  : "Plan Your Vietnam Trip with Just One Prompt"}
+              </h3>
+            </Link>
+          </div>
+        </section>
+      </main>
+
+      {/* ─── FOOTER ─── */}
+      <footer className="cg-footer">
+        <div className="cg-footer__inner">
+          <div className="cg-footer__col">
+            <Link href="/" className="cg-footer__logo">
+              <Logo />
+            </Link>
+            <p className="cg-footer__tagline">
+              {isVi
+                ? "Nền tảng cẩm nang du lịch thông minh và đồng hành AI hàng đầu tại Việt Nam."
+                : "Vietnam's leading smart travel guide and AI companion platform."}
+            </p>
+          </div>
+          <div className="cg-footer__col">
+            <h4 className="cg-footer__heading">
+              {isVi ? "Khám phá" : "Explore"}
+            </h4>
+            <ul className="cg-footer__links">
+              <li>
+                <Link href="/guide/15-best-places-to-visit-in-vietnam-in-2026">
+                  {isVi ? "15 Điểm đến 2026" : "15 Best Places 2026"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/guide/20-best-things-to-do-in-vietnam">
+                  {isVi ? "20 Trải nghiệm hàng đầu" : "20 Best Things to Do"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/guide/the-complete-guide-to-vietnam">
+                  {isVi ? "Cẩm nang toàn diện" : "The Complete Guide"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt">
+                  {isVi ? "Lập kế hoạch với AI" : "AI Trip Planner"}
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="cg-footer__col">
+            <h4 className="cg-footer__heading">
+              {isVi ? "Theo dõi chúng tôi" : "Follow Us"}
+            </h4>
+            <div className="cg-footer__socials">
+              <a href="#" className="cg-footer__social-btn" aria-label="Facebook">
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a href="#" className="cg-footer__social-btn" aria-label="Instagram">
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href="#" className="cg-footer__social-btn" aria-label="YouTube">
+                <Youtube className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="cg-footer__bottom">
+          <p>© 2026 Welcome to Vietnam. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}

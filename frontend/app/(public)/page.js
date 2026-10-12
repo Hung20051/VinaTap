@@ -97,7 +97,7 @@ const TRENDING_HERO_STORIES = [
     badgeVi: "#XU HƯỚNG",
     title: "20 Best Things to Do in Vietnam",
     titleVi: "20 trải nghiệm nhất định phải thử khi đến Việt Nam",
-    link: "/province/ha-noi",
+    link: "/guide/20-best-things-to-do-in-vietnam",
     meta: "Top Highlights",
     metaVi: "Điểm nhấn khám phá",
     img: "/guide/hcmc/20-Best-Things-to-Do-in-Vietnam.jpg",
@@ -459,7 +459,7 @@ const THINGS_TO_DO_ITEMS = [
     descVi:
       "20 trải nghiệm tuyệt vời nhất giúp bạn tận hưởng trọn vẹn cảnh sắc thiên nhiên, văn hóa và con người Việt Nam.",
     img: "/guide/hcmc/20-Best-Things-to-Do-in-Vietnam.jpg",
-    link: "/province/ha-noi",
+    link: "/guide/20-best-things-to-do-in-vietnam",
   },
 ];
 
@@ -630,7 +630,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 1, 2025",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-4.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/20-best-things-to-do-in-vietnam",
       },
       {
         id: "insp-5",
@@ -738,7 +738,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 1, 2025",
         badge: "#Trending",
         img: "/guide/megamenu/todo-4-vietnam.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/20-best-things-to-do-in-vietnam",
       },
       {
         id: "todo-5",

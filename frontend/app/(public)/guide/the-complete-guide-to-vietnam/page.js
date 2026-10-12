@@ -77,7 +77,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 1, 2025",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-4.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/20-best-things-to-do-in-vietnam",
       },
       {
         id: "insp-5",
@@ -185,7 +185,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 1, 2025",
         badge: "#Trending",
         img: "/guide/megamenu/todo-4-vietnam.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/20-best-things-to-do-in-vietnam",
       },
       {
         id: "todo-5",
@@ -1257,7 +1257,7 @@ export default function CompleteGuideToVietnamPage() {
             </Link>
 
             {/* Card 4 (Right row 3): 20 Best Things in Vietnam */}
-            <Link href="/province/ha-noi" className="vnn-biggrid-item">
+            <Link href="/guide/20-best-things-to-do-in-vietnam" className="vnn-biggrid-item">
               <img
                 src="/guide/megamenu/inspired-4.jpg"
                 alt={
