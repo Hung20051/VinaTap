@@ -366,7 +366,7 @@ export default function PlanYourVietnamTripPage() {
         <div className="vnn-top-banner__inner">
           <img
             src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
-            alt="Welcome to Vietnam AI Travel Assistant - AI Companion"
+            alt="VinaTap AI Travel Assistant - AI Companion"
             className="vnn-top-banner__img"
           />
         </div>
@@ -518,7 +518,7 @@ export default function PlanYourVietnamTripPage() {
             Plan Your Vietnam Trip with Just One Prompt
           </h1>
           <div className="plan-trip-hero__meta">
-            <span className="plan-trip-hero__author">By Welcome to Vietnam</span>
+            <span className="plan-trip-hero__author">By VinaTap</span>
             <span className="plan-trip-hero__date">April 1, 2026</span>
           </div>
         </div>
@@ -581,7 +581,7 @@ export default function PlanYourVietnamTripPage() {
                       Plan your Vietnam trip with just 1 prompt
                     </span>
                     <span className="plan-trip-video-channel-sub">
-                      Welcome To Vietnam
+                      VinaTap
                     </span>
                   </div>
                 </div>

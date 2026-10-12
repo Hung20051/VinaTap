@@ -65,8 +65,8 @@ const TRENDING_HERO_STORIES = [
     title: "15 best places to visit in Vietnam in 2026",
     titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
     link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
-    meta: "Welcome To Vietnam - June 16, 2026",
-    metaVi: "Welcome To Vietnam • 16 Tháng 6, 2026",
+    meta: "VinaTap - June 16, 2026",
+    metaVi: "VinaTap • 16 Tháng 6, 2026",
     img: "/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg",
   },
   {
@@ -115,8 +115,8 @@ const TRENDING_HERO_STORIES = [
 const BE_INSPIRED_FEATURED = {
   title: "3-week Vietnam Itinerary",
   titleVi: "3-week Vietnam Itinerary",
-  meta: "Welcome To Vietnam - July 20, 2025",
-  metaVi: "Welcome To Vietnam - July 20, 2025",
+  meta: "VinaTap - July 20, 2025",
+  metaVi: "VinaTap • 20 Tháng 7, 2025",
   desc: "Discover our 3-week Vietnam itinerary, featuring 7 must-visit destinations. This guide includes detailed maps, routes, and cost breakdowns to help you plan your trip.",
   descVi: "Discover our 3-week Vietnam itinerary, featuring 7 must-visit destinations. This guide includes detailed maps, routes, and cost breakdowns to help you plan your trip.",
   img: "/guide/hcmc/3-week-vietnam-itinerary.jpg",
@@ -471,8 +471,8 @@ const LATEST_ARTICLES_ITEMS = [
     badge: "#TRENDING",
     title: "15 best places to visit in Vietnam in 2026",
     titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
-    meta: "Welcome To Vietnam - June 16, 2026",
-    metaVi: "Welcome To Vietnam • 16 Tháng 6, 2026",
+    meta: "VinaTap - June 16, 2026",
+    metaVi: "VinaTap • 16 Tháng 6, 2026",
     img: "/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg",
     link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
   },
@@ -480,8 +480,8 @@ const LATEST_ARTICLES_ITEMS = [
     badge: "#TRENDING",
     title: "Plan Your Vietnam Trip with Just One Prompt",
     titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một câu lệnh AI",
-    meta: "Welcome To Vietnam - April 1, 2026",
-    metaVi: "Welcome To Vietnam • 1 Tháng 4, 2026",
+    meta: "VinaTap - April 1, 2026",
+    metaVi: "VinaTap • 1 Tháng 4, 2026",
     img: "/guide/hcmc/Plan-Your-Vietnam-Trip-with-Just-One-Prompt.jpg",
     link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
   },
@@ -489,8 +489,8 @@ const LATEST_ARTICLES_ITEMS = [
     badge: "#TRENDING",
     title: "The Complete Guide to Vietnam",
     titleVi: "Cẩm nang toàn diện 34 Tỉnh Thành Việt Nam",
-    meta: "Welcome To Vietnam - January 9, 2026",
-    metaVi: "Welcome To Vietnam • 9 Tháng 1, 2026",
+    meta: "VinaTap - January 9, 2026",
+    metaVi: "VinaTap • 9 Tháng 1, 2026",
     img: "/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg",
     link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
   },
@@ -498,8 +498,8 @@ const LATEST_ARTICLES_ITEMS = [
     badge: "MEMBERSHIP",
     title: "Accommodation in Vietnam",
     titleVi: "Khách sạn & Nơi lưu trú tại Việt Nam",
-    meta: "Welcome To Vietnam - December 16, 2025",
-    metaVi: "Welcome To Vietnam • 16 Tháng 12, 2025",
+    meta: "VinaTap - December 16, 2025",
+    metaVi: "VinaTap • 16 Tháng 12, 2025",
     img: "/guide/hcmc/accommodation-in-vietnam.jpg",
     link: "/province/da-nang",
   },
@@ -507,8 +507,8 @@ const LATEST_ARTICLES_ITEMS = [
     badge: "HO CHI MINH CITY",
     title: "Where to Stay in Ho Chi Minh City",
     titleVi: "Khách sạn & Khu vực nên ở tại TP. Hồ Chí Minh",
-    meta: "Welcome To Vietnam - November 26, 2025",
-    metaVi: "Welcome To Vietnam • 26 Tháng 11, 2025",
+    meta: "VinaTap - November 26, 2025",
+    metaVi: "VinaTap • 26 Tháng 11, 2025",
     img: "/guide/hcmc/region-south-hcmc.jpg",
     link: "/province/ho-chi-minh",
   },
@@ -516,8 +516,8 @@ const LATEST_ARTICLES_ITEMS = [
     badge: "WEATHER",
     title: "Vietnam Weather Map for September",
     titleVi: "Bản đồ dự báo thời tiết du lịch Việt Nam",
-    meta: "Welcome To Vietnam - November 12, 2025",
-    metaVi: "Welcome To Vietnam • 12 Tháng 11, 2025",
+    meta: "VinaTap - November 12, 2025",
+    metaVi: "VinaTap • 12 Tháng 11, 2025",
     img: "/guide/hcmc/vietnam-weather-map.jpg",
     link: "/province/ha-noi",
   },
@@ -1287,7 +1287,7 @@ export default function HomePage() {
           <div className="vnn-top-banner__inner">
             <img
               src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
-              alt="Welcome to Vietnam AI Travel Assistant - AI Companion"
+              alt="VinaTap AI Travel Assistant - AI Companion"
               className="vnn-top-banner__img"
             />
           </div>
@@ -1890,14 +1890,14 @@ export default function HomePage() {
                       <div className="vnn-video-player-avatar">
                         <img
                           src="/guide/hcmc/Vietnamnomad-logo-by-Welcome-to-Vietnam-official.png"
-                          alt="Welcome to Vietnam"
+                          alt="VinaTap"
                         />
                       </div>
                       <div>
                         <div className="vnn-video-player-title-text">
                           {lang === "vi" ? activeVideo.titleVi : activeVideo.title}
                         </div>
-                        <div className="vnn-video-player-author">Welcome To Vietnam</div>
+                        <div className="vnn-video-player-author">VinaTap</div>
                       </div>
                     </div>
 

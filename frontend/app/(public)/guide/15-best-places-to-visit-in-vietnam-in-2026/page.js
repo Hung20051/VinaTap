@@ -394,7 +394,7 @@ export default function BestPlaces2026Page() {
         <div className="vnn-top-banner__inner">
           <img
             src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
-            alt="Welcome to Vietnam AI Travel Assistant - AI Companion"
+            alt="VinaTap AI Travel Assistant - AI Companion"
             className="vnn-top-banner__img"
           />
         </div>
@@ -546,7 +546,7 @@ export default function BestPlaces2026Page() {
             15 best places to visit in Vietnam in 2026
           </h1>
           <div className="places-hero__meta">
-            <span className="places-hero__author">By Welcome to Vietnam</span>
+            <span className="places-hero__author">By VinaTap</span>
             <span className="places-hero__date">June 16, 2026</span>
           </div>
         </div>
