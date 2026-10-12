@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import { getLang } from "@/lib/prefs";
 import {
   Search,
   ChevronDown,
@@ -317,11 +319,23 @@ function renderTextWithLinks(text) {
 }
 
 export default function BestPlaces2026Page() {
+  const [lang, setLangState] = useState("vi");
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
   const megaMenuTimeoutRef = useRef(null);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [searchModalText, setSearchModalText] = useState("");
   const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
+
+  useEffect(() => {
+    setLangState(getLang());
+    const handleLangUpdated = (e) => {
+      setLangState(e.detail);
+    };
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+    };
+  }, []);
   const [companionInput, setCompanionInput] = useState("");
   const [companionMessages, setCompanionMessages] = useState([
     {
@@ -400,7 +414,7 @@ export default function BestPlaces2026Page() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "inspired" ? "is-active" : ""}`}
               >
-                <span>BE INSPIRED</span>
+                <span>{lang === "vi" ? "CẢM HỨNG" : "BE INSPIRED"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -414,7 +428,7 @@ export default function BestPlaces2026Page() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "destinations" ? "is-active" : ""}`}
               >
-                <span>DESTINATIONS</span>
+                <span>{lang === "vi" ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -428,7 +442,7 @@ export default function BestPlaces2026Page() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "things" ? "is-active" : ""}`}
               >
-                <span>THINGS TO DO</span>
+                <span>{lang === "vi" ? "TRẢI NGHIỆM" : "THINGS TO DO"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -442,7 +456,7 @@ export default function BestPlaces2026Page() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "eat" ? "is-active" : ""}`}
               >
-                <span>EAT & DRINK</span>
+                <span>{lang === "vi" ? "ẨM THỰC" : "EAT & DRINK"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -456,7 +470,7 @@ export default function BestPlaces2026Page() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "itineraries" ? "is-active" : ""}`}
               >
-                <span>ITINERARIES</span>
+                <span>{lang === "vi" ? "LỊCH TRÌNH" : "ITINERARIES"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -467,10 +481,11 @@ export default function BestPlaces2026Page() {
               type="button"
               className="vnn-navbar__search-btn"
               onClick={() => setSearchModalOpen(true)}
-              aria-label="Tìm kiếm cẩm nang"
+              aria-label={lang === "vi" ? "Tìm kiếm cẩm nang" : "Search guides"}
             >
               <Search size={18} />
             </button>
+            <LanguageSwitch variant="navbar" />
           </div>
         </div>
 
@@ -500,8 +515,12 @@ export default function BestPlaces2026Page() {
                       <span className="vnn-megamenu__badge">{item.badge}</span>
                     )}
                   </div>
-                  <h4 className="vnn-megamenu__title">{item.title}</h4>
-                  <p className="vnn-megamenu__date">{item.date}</p>
+                  <h4 className="vnn-megamenu__title">
+                    {lang === "vi" ? item.titleVi : item.title}
+                  </h4>
+                  <p className="vnn-megamenu__date">
+                    {lang === "vi" ? item.dateVi : item.date}
+                  </p>
                 </Link>
               ))}
             </div>
@@ -523,11 +542,17 @@ export default function BestPlaces2026Page() {
             <span className="places-hero__badge">FEATURED ARTICLES</span>
           </div>
           <h1 className="places-hero__title">
-            15 best places to visit in Vietnam in 2026
+            {lang === "vi"
+              ? "15 địa điểm đẹp nhất Việt Nam năm 2026"
+              : "15 best places to visit in Vietnam in 2026"}
           </h1>
           <div className="places-hero__meta">
-            <span className="places-hero__author">By VinaTap</span>
-            <span className="places-hero__date">June 16, 2026</span>
+            <span className="places-hero__author">
+              {lang === "vi" ? "Bởi VinaTap" : "By VinaTap"}
+            </span>
+            <span className="places-hero__date">
+              {lang === "vi" ? "16 Tháng 6, 2026" : "June 16, 2026"}
+            </span>
           </div>
         </div>
       </section>
@@ -542,57 +567,88 @@ export default function BestPlaces2026Page() {
             onClick={() => setAiCompanionOpen(true)}
           >
             <Sparkles size={16} />
-            <span>Create your Vietnam trip in seconds</span>
+            <span>
+              {lang === "vi"
+                ? "Lên kế hoạch du lịch Việt Nam chỉ trong vài giây"
+                : "Create your Vietnam trip in seconds"}
+            </span>
           </button>
         </div>
 
         {/* INTRO PARAGRAPHS */}
         <div className="places-intro-text">
-          <p>
-            Vietnam, a country with 34 provinces stretching over 1,650
-            kilometers in an S-shape, is a land blessed by Mother Nature with
-            diverse and abundant landscapes. Each region and town has its own
-            unique features in terms of geography, culture, cuisine, and people,
-            blending together into countless experiences that could take a
-            lifetime to fully explore. This diversity can sometimes overwhelm
-            those planning their visit.
-          </p>
-          <p>
-            Understanding this, we have compiled a list of the 15 most
-            recommended destinations to help travelers plan their trip more
-            easily while ensuring they experience the most distinctive aspects
-            of Vietnam. This list is based on over 8,000 votes from our community
-            (voting results can be found at the end of this article).
-          </p>
+          {lang === "vi" ? (
+            <>
+              <p>
+                Việt Nam, đất nước với 34 tỉnh thành trải dài hơn 1.650 km theo hình chữ S, là mảnh đất được thiên nhiên ưu đãi với vô vàn cảnh quan thiên nhiên đa dạng và phong phú. Mỗi vùng miền, mỗi địa danh đều mang những nét đặc trưng riêng về địa lý, văn hóa, ẩm thực và con người, hòa quyện tạo nên muôn vàn trải nghiệm mà có lẽ cần cả cuộc đời mới khám phá hết. Sự phong phú này đôi khi khiến du khách băn khoăn khi lựa chọn điểm đến.
+              </p>
+              <p>
+                Hiểu được điều đó, chúng tôi đã tổng hợp danh sách 15 điểm đến được khuyến cử hàng đầu để giúp du khách dễ dàng lên kế hoạch cho chuyến đi của mình mà vẫn đảm bảo trải nghiệm trọn vẹn những nét đặc sắc nhất của Việt Nam. Danh sách này được bình chọn dựa trên hơn 8.000 lượt yêu thích từ cộng đồng du khách quốc tế.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                Vietnam, a country with 34 provinces stretching over 1,650
+                kilometers in an S-shape, is a land blessed by Mother Nature with
+                diverse and abundant landscapes. Each region and town has its own
+                unique features in terms of geography, culture, cuisine, and people,
+                blending together into countless experiences that could take a
+                lifetime to fully explore. This diversity can sometimes overwhelm
+                those planning their visit.
+              </p>
+              <p>
+                Understanding this, we have compiled a list of the 15 most
+                recommended destinations to help travelers plan their trip more
+                easily while ensuring they experience the most distinctive aspects
+                of Vietnam. This list is based on over 8,000 votes from our community.
+              </p>
+            </>
+          )}
         </div>
 
         {/* 3D RELIEF MAP SECTION (SCREENSHOTS 2 & 3) */}
         <section className="places-map-section">
           <div className="places-map-card">
-            <img
-              src="/guide/15-best-places/vietnam-map-3d.jpg"
-              alt="15 Best Places to Visit in Vietnam - 3D Relief Travel Map"
-              className="places-map-img"
-              loading="eager"
-            />
-            <div className="places-map-banner">
-              15 BEST PLACES TO VISIT IN VIETNAM
-            </div>
+            <picture>
+              <source srcSet="/guide/15-best-places/vietnam-map-3d.webp" type="image/webp" />
+              <img
+                src="/guide/15-best-places/vietnam-map-3d.jpg"
+                alt="15 Best Places to Visit in Vietnam - 3D Relief Travel Map"
+                className="places-map-img"
+                loading="eager"
+              />
+            </picture>
           </div>
           <p className="places-map-caption">
-            15 best places to visit in Vietnam in 2026
+            {lang === "vi"
+              ? "Bản đồ 15 địa điểm đẹp nhất Việt Nam năm 2026"
+              : "15 best places to visit in Vietnam in 2026"}
           </p>
 
           <div className="places-map-subtext">
-            <p>
-              Create your own personalized map of Vietnam's best places to visit
-              with Triplon.
-            </p>
-            <p>
-              Simply open <a href="#ai-companion" onClick={(e) => { e.preventDefault(); setAiCompanionOpen(true); }}>Triplon.ai</a>, tell it what kind of trip you're
-              planning, save the destinations you'd like to explore, and download
-              your custom travel map as a PDF.
-            </p>
+            {lang === "vi" ? (
+              <>
+                <p>
+                  Tạo bản đồ du lịch cá nhân hóa các điểm đến tuyệt nhất Việt Nam cùng VinaTap.
+                </p>
+                <p>
+                  Mở Trợ lý AI Du lịch, chia sẻ mong muốn về chuyến đi, lưu lại các điểm bạn muốn khám phá và tải bản đồ hành trình riêng cho bạn.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  Create your own personalized map of Vietnam's best places to visit
+                  with VinaTap.
+                </p>
+                <p>
+                  Simply open AI Travel Companion, tell it what kind of trip you're
+                  planning, save the destinations you'd like to explore, and download
+                  your custom travel map.
+                </p>
+              </>
+            )}
             <div style={{ marginTop: "18px" }}>
               <button
                 type="button"
@@ -600,7 +656,10 @@ export default function BestPlaces2026Page() {
                 style={{ padding: "10px 26px", fontSize: "14px" }}
                 onClick={() => setAiCompanionOpen(true)}
               >
-                Create Your Map
+                <Sparkles size={15} />
+                <span>
+                  {lang === "vi" ? "Lên kế hoạch du lịch" : "Create Your Map"}
+                </span>
               </button>
             </div>
           </div>
@@ -615,7 +674,7 @@ export default function BestPlaces2026Page() {
               className="place-item"
             >
               <h2 className="place-item__title">
-                {item.number}. {item.title}
+                {item.number}. {lang === "vi" ? item.titleVi : item.title}
               </h2>
               <div className="place-item__layout">
                 <div className="place-item__img-wrap">

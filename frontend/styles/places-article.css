@@ -190,32 +190,18 @@
   border: 1px solid #e5e7eb;
   overflow: hidden;
   margin: 0 auto;
-  max-width: 640px;
+  max-width: 680px;
 }
 
 .places-map-img {
   width: 100%;
   height: auto;
   display: block;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  filter: contrast(1.03) brightness(1.01);
   transition: transform 0.4s ease;
 }
 
 .places-map-card:hover .places-map-img {
   transform: scale(1.015);
-}
-
-.places-map-banner {
-  background: #00c2cb;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  padding: 14px 20px;
-  text-align: center;
 }
 
 .places-map-caption {
