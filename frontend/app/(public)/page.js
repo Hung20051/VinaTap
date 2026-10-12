@@ -111,14 +111,14 @@ const TRENDING_HERO_STORIES = [
   },
 ];
 
-// ─── BE INSPIRED STORIES (SCREENSHOT 2) ───
+// ─── BE INSPIRED STORIES (SCREENSHOT 1) ───
 const BE_INSPIRED_FEATURED = {
   title: "3-week Vietnam Itinerary",
-  titleVi: "Lịch trình 3 tuần khám phá trọn vẹn Việt Nam",
+  titleVi: "3-week Vietnam Itinerary",
   meta: "Welcome To Vietnam - July 20, 2025",
-  metaVi: "Welcome To Vietnam • 20 Tháng 7, 2025",
+  metaVi: "Welcome To Vietnam - July 20, 2025",
   desc: "Discover our 3-week Vietnam itinerary, featuring 7 must-visit destinations. This guide includes detailed maps, routes, and cost breakdowns to help you plan your trip.",
-  descVi: "Khám phá lịch trình du lịch Việt Nam 3 tuần hoàn hảo qua 7 điểm đến không thể bỏ lỡ. Bao gồm bản đồ chi tiết, tuyến đường di chuyển tối ưu và dự toán chi phí cụ thể.",
+  descVi: "Discover our 3-week Vietnam itinerary, featuring 7 must-visit destinations. This guide includes detailed maps, routes, and cost breakdowns to help you plan your trip.",
   img: "/guide/hcmc/3-week-vietnam-itinerary.jpg",
   link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
 };
@@ -126,103 +126,103 @@ const BE_INSPIRED_FEATURED = {
 const BE_INSPIRED_COMPACT = [
   {
     title: "8 must-try foods in Hanoi",
-    titleVi: "8 món ăn nhất định phải thử tại Hà Nội",
+    titleVi: "8 must-try foods in Hanoi",
     date: "May 19, 2025",
-    dateVi: "19 Tháng 5, 2025",
+    dateVi: "May 19, 2025",
     img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
     link: "/province/ha-noi",
   },
   {
     title: "10 best things to do in Ho Chi Minh City",
-    titleVi: "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh",
+    titleVi: "10 best things to do in Ho Chi Minh City",
     date: "May 5, 2025",
-    dateVi: "5 Tháng 5, 2025",
+    dateVi: "May 5, 2025",
     img: "/guide/hcmc/hcmc-10-things-bitexco.jpg",
     link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
   },
   {
     title: "12 must-try foods in Ho Chi Minh City",
-    titleVi: "12 món ăn đường phố phải nếm ở Sài Gòn",
+    titleVi: "12 must-try foods in Ho Chi Minh City",
     date: "April 25, 2025",
-    dateVi: "25 Tháng 4, 2025",
+    dateVi: "April 25, 2025",
     img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Goi-Cuon.jpg",
     link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
   },
   {
     title: "12 best attractions in Ho Chi Minh City",
-    titleVi: "12 điểm tham quan nổi tiếng tại TP. Hồ Chí Minh",
+    titleVi: "12 best attractions in Ho Chi Minh City",
     date: "April 18, 2025",
-    dateVi: "18 Tháng 4, 2025",
+    dateVi: "April 18, 2025",
     img: "/guide/hcmc/hcmc-12-attractions-sunset.jpg",
     link: "/province/ho-chi-minh",
   },
   {
     title: "5 best Vung Tau beaches",
-    titleVi: "5 bãi biển đẹp nhất tại Vũng Tàu",
+    titleVi: "5 best Vung Tau beaches",
     date: "April 9, 2025",
-    dateVi: "9 Tháng 4, 2025",
+    dateVi: "April 9, 2025",
     img: "/guide/hcmc/vung-tau-beaches-peninsula.jpg",
     link: "/province/hai-phong",
   },
 ];
 
-// ─── TOP DESTINATIONS (SCREENSHOT 3) ───
+// ─── TOP DESTINATIONS (SCREENSHOT 2) ───
 const TOP_DESTINATIONS_DATA = [
   {
     id: "hcmc",
     name: "Ho Chi Minh City",
-    nameVi: "TP. Hồ Chí Minh",
+    nameVi: "Ho Chi Minh City",
     img: "/guide/hcmc/top-dest-hcmc.jpg",
     link: "/province/ho-chi-minh",
   },
   {
     id: "danang",
     name: "Da Nang",
-    nameVi: "Đà Nẵng",
+    nameVi: "Da Nang",
     img: "/guide/hcmc/top-dest-danang.jpg",
     link: "/province/da-nang",
   },
   {
     id: "hanoi",
     name: "Hanoi",
-    nameVi: "Hà Nội",
+    nameVi: "Hanoi",
     img: "/guide/hcmc/top-dest-hanoi.jpg",
     link: "/province/ha-noi",
   },
   {
     id: "hoian",
     name: "Hoi An",
-    nameVi: "Hội An",
+    nameVi: "Hoi An",
     img: "/guide/hcmc/top-dest-hoian.jpg",
     link: "/province/da-nang",
   },
 ];
 
-// ─── REGIONAL DESTINATIONS 3 COLUMNS (SCREENSHOT 4) ───
+// ─── REGIONAL DESTINATIONS 3 COLUMNS (SCREENSHOT 3) ───
 const REGIONAL_DESTINATIONS_DATA = [
   {
     regionId: "north",
     regionName: "NORTHERN VIETNAM",
-    regionNameVi: "MIỀN BẮC VIỆT NAM",
+    regionNameVi: "NORTHERN VIETNAM",
     barColorClass: "vnn-section-head__bar--purple",
     featured: {
       title: "Hanoi",
-      titleVi: "Thủ Đô Hà Nội",
+      titleVi: "Hanoi",
       desc: "Follow this guide and you will understand why Hanoi is a perfect coming together of the timeless cultural value of the old and the dynamic and colorful vibes of the new.",
-      descVi: "Khám phá nét đẹp nghìn năm văn hiến giao thoa cùng nhịp sống hiện đại, năng động và đầy màu sắc của Thủ đô Hà Nội.",
+      descVi: "Follow this guide and you will understand why Hanoi is a perfect coming together of the timeless cultural value of the old and the dynamic and colorful vibes of the new.",
       img: "/guide/hcmc/region-north-hanoi.jpg",
       link: "/province/ha-noi",
     },
     minis: [
       {
         title: "Hanoi Tourist Map",
-        titleVi: "Bản đồ du lịch Hà Nội",
+        titleVi: "Hanoi Tourist Map",
         img: "/guide/hcmc/region-north-map.jpg",
         link: "/province/ha-noi",
       },
       {
         title: "Ha Giang",
-        titleVi: "Hà Giang - Kỳ vĩ đá",
+        titleVi: "Ha Giang",
         img: "/guide/hcmc/region-north-hagiang.jpg",
         link: "/province/ha-noi",
       },
@@ -231,26 +231,26 @@ const REGIONAL_DESTINATIONS_DATA = [
   {
     regionId: "central",
     regionName: "CENTRAL VIETNAM",
-    regionNameVi: "MIỀN TRUNG VIỆT NAM",
+    regionNameVi: "CENTRAL VIETNAM",
     barColorClass: "vnn-section-head__bar--orange",
     featured: {
       title: "Da Nang",
-      titleVi: "Đà Nẵng",
+      titleVi: "Da Nang",
       desc: "This is an all-in-one Da Nang travel guide. Learn about the most necessary information about Da Nang tourism such as attractions, dishes, hotels, restaurants, and more.",
-      descVi: "Cẩm nang toàn diện về thành phố biển đáng sống nhất Việt Nam: Cầu Rồng, Ngũ Hành Sơn, Bà Nà Hills và ẩm thực miền Trung độc đáo.",
+      descVi: "This is an all-in-one Da Nang travel guide. Learn about the most necessary information about Da Nang tourism such as attractions, dishes, hotels, restaurants, and more.",
       img: "/guide/hcmc/region-central-danang.jpg",
       link: "/province/da-nang",
     },
     minis: [
       {
         title: "The 10 best attractions in Da Nang",
-        titleVi: "10 điểm đến đẹp nhất Đà Nẵng",
+        titleVi: "The 10 best attractions in Da Nang",
         img: "/guide/hcmc/region-central-10things.jpg",
         link: "/province/da-nang",
       },
       {
         title: "Nha Trang",
-        titleVi: "Nha Trang - Vịnh biển xanh",
+        titleVi: "Nha Trang",
         img: "/guide/hcmc/region-central-nhatrang.jpg",
         link: "/province/da-nang",
       },
@@ -259,26 +259,26 @@ const REGIONAL_DESTINATIONS_DATA = [
   {
     regionId: "south",
     regionName: "SOUTHERN VIETNAM",
-    regionNameVi: "MIỀN NAM VIỆT NAM",
+    regionNameVi: "SOUTHERN VIETNAM",
     barColorClass: "vnn-section-head__bar--cyan",
     featured: {
       title: "Ho Chi Minh City",
-      titleVi: "TP. Hồ Chí Minh",
+      titleVi: "Ho Chi Minh City",
       desc: "Ho Chi Minh City, or as it is often called intimately by the locals as Saigon, is one of the sought-after destinations while travelling in Vietnam. Saigon of the modern times attracts people not for the spectacular natural landscapes but for its dynamic lifestyle – where endless options of activities are going to tie your heart.",
-      descVi: "TP. Hồ Chí Minh (Sài Gòn hoa lệ) hấp dẫn du khách bằng nhịp sống không ngủ, chiều sâu lịch sử Dinh Độc Lập, ẩm thực đa dạng và tình người ấm áp.",
+      descVi: "Ho Chi Minh City, or as it is often called intimately by the locals as Saigon, is one of the sought-after destinations while travelling in Vietnam. Saigon of the modern times attracts people not for the spectacular natural landscapes but for its dynamic lifestyle – where endless options of activities are going to tie your heart.",
       img: "/guide/hcmc/region-south-hcmc.jpg",
       link: "/province/ho-chi-minh",
     },
     minis: [
       {
         title: "Ho Chi Minh City Tourist Map",
-        titleVi: "Bản đồ du lịch TP.HCM (Sài Gòn)",
+        titleVi: "Ho Chi Minh City Tourist Map",
         img: "/guide/hcmc/region-south-map.jpg",
         link: "/province/ho-chi-minh",
       },
       {
         title: "12 best attractions in Ho Chi Minh City",
-        titleVi: "12 điểm tham quan nổi tiếng tại TP.HCM",
+        titleVi: "12 best attractions in Ho Chi Minh City",
         img: "/guide/hcmc/region-south-12attractions.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
@@ -286,55 +286,63 @@ const REGIONAL_DESTINATIONS_DATA = [
   },
 ];
 
-// ─── VIDEO TRAVEL GUIDES (SCREENSHOT 5) ───
+// ─── VIDEO TRAVEL GUIDES (SCREENSHOT 4) ───
 const VIDEO_PLAYLIST_ITEMS = [
   {
     id: "video-1",
-    youtubeId: "e2X1MIR1KBo",
+    youtubeId: "BvP3G1Xfth8",
     title: "Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
-    titleVi: "Cẩm nang du lịch Việt Nam: Khí hậu, Visa, Điểm đến, Ẩm thực & Mẹo",
+    titleVi: "Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
     duration: "21:35",
     img: "/guide/hcmc/video-player-sapa-cover.jpg",
   },
   {
     id: "video-2",
-    youtubeId: "h33e14kY2xM",
-    title: "10 Best Places to Visit in Vietnam (Voted by 7,050 Travelers)",
-    titleVi: "10 Điểm đến tuyệt nhất Việt Nam (Bình chọn bởi 7.050 du khách)",
-    duration: "09:53",
-    img: "/guide/hcmc/video-card-best10.jpg",
-  },
-  {
-    id: "video-3",
-    youtubeId: "95X2pU0S5tM",
+    youtubeId: "Nm0T5lPAT7U",
     title: "Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in",
-    titleVi: "Hội An: Cẩm nang khám phá phố cổ đèn lồng đẹp nhất Việt Nam",
+    titleVi: "Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in",
     duration: "14:23",
     img: "/guide/hcmc/video-card-hoian.jpg",
   },
   {
-    id: "video-4",
-    youtubeId: "bUf7n1aG74k",
+    id: "video-3",
+    youtubeId: "BvP3G1Xfth8",
     title: "Da Nang: A Guide to Visiting the Most Livable City in Vietnam",
-    titleVi: "Đà Nẵng: Hành trình khám phá thành phố đáng sống nhất Việt Nam",
+    titleVi: "Da Nang: A Guide to Visiting the Most Livable City in Vietnam",
     duration: "12:41",
     img: "/guide/hcmc/region-central-danang.jpg",
   },
   {
-    id: "video-5",
-    youtubeId: "5C7yW6G3H1I",
+    id: "video-4",
+    youtubeId: "BvP3G1Xfth8",
     title: "Hue: A Guide to Visiting the Ancient Capital of Vietnam",
-    titleVi: "Huế: Cẩm nang du ngoạn Cố Đô và Sông Hương trầm mặc",
+    titleVi: "Hue: A Guide to Visiting the Ancient Capital of Vietnam",
     duration: "13:14",
     img: "/guide/hcmc/video-card-hue.jpg",
   },
   {
-    id: "video-6",
-    youtubeId: "qL0n8QZ8wY0",
+    id: "video-5",
+    youtubeId: "BvP3G1Xfth8",
     title: "Ho Chi Minh City: A Guide to Visit Vietnam's Largest City",
-    titleVi: "TP. Hồ Chí Minh: Trải nghiệm Sài Gòn phồn hoa và năng động",
-    duration: "16:02",
+    titleVi: "Ho Chi Minh City: A Guide to Visit Vietnam's Largest City",
+    duration: "14:03",
     img: "/guide/hcmc/region-south-hcmc.jpg",
+  },
+  {
+    id: "video-6",
+    youtubeId: "BvP3G1Xfth8",
+    title: "Da Lat: A Guide to Visiting Vietnam's Little Paris",
+    titleVi: "Da Lat: A Guide to Visiting Vietnam's Little Paris",
+    duration: "11:15",
+    img: "/guide/megamenu/dest-2-dalat.jpg",
+  },
+  {
+    id: "video-7",
+    youtubeId: "BvP3G1Xfth8",
+    title: "Nha Trang: A Guide to Visiting Vietnam's Sea Paradise",
+    titleVi: "Nha Trang: A Guide to Visiting Vietnam's Sea Paradise",
+    duration: "11:37",
+    img: "/guide/hcmc/region-central-nhatrang.jpg",
   },
 ];
 
@@ -343,25 +351,25 @@ const VIDEO_BOTTOM_CARDS = [
     title: "[Video] Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
     duration: "00:21:35",
     img: "/guide/hcmc/video-card-vietnam.jpg",
-    youtubeId: "e2X1MIR1KBo",
+    youtubeId: "BvP3G1Xfth8",
   },
   {
     title: "[Video] Hue: A Guide to Visiting the Ancient Capital of Vietnam",
     duration: "00:13:14",
     img: "/guide/hcmc/video-card-hue.jpg",
-    youtubeId: "5C7yW6G3H1I",
+    youtubeId: "BvP3G1Xfth8",
   },
   {
     title: "[Video] 10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
     duration: "00:09:53",
     img: "/guide/hcmc/video-card-best10.jpg",
-    youtubeId: "h33e14kY2xM",
+    youtubeId: "BvP3G1Xfth8",
   },
   {
     title: "[Video] Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in Vietnam",
     duration: "00:14:23",
     img: "/guide/hcmc/video-card-hoian.jpg",
-    youtubeId: "95X2pU0S5tM",
+    youtubeId: "Nm0T5lPAT7U",
   },
 ];
 
@@ -1667,7 +1675,7 @@ export default function HomePage() {
               {/* 3 Thẻ thống kê mạng xã hội */}
               <div className="vnn-social-stats">
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="vnn-social-stat-card"
@@ -1854,9 +1862,9 @@ export default function HomePage() {
                 {isVideoPlaying ? (
                   <iframe
                     className="vnn-video-player-iframe"
-                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1`}
+                    src={`https://www.youtube-nocookie.com/embed/${activeVideo.youtubeId}?autoplay=1&enablejsapi=1&rel=0`}
                     title={activeVideo.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                   />
                 ) : (
@@ -1865,13 +1873,46 @@ export default function HomePage() {
                     style={{ backgroundImage: `url(${activeVideo.img})` }}
                     onClick={() => setIsVideoPlaying(true)}
                   >
+                    <div className="vnn-video-player-header">
+                      <div className="vnn-video-player-avatar">
+                        <img
+                          src="/guide/hcmc/Vietnamnomad-logo-by-Welcome-to-Vietnam-official.png"
+                          alt="Welcome to Vietnam"
+                        />
+                      </div>
+                      <div>
+                        <div className="vnn-video-player-title-text">
+                          {lang === "vi" ? activeVideo.titleVi : activeVideo.title}
+                        </div>
+                        <div className="vnn-video-player-author">Welcome To Vietnam</div>
+                      </div>
+                    </div>
+
                     <button
                       type="button"
                       className="vnn-video-player-center-btn"
                       aria-label="Play Video"
                     >
-                      <Play size={24} fill="#ffffff" />
+                      <svg width="68" height="48" viewBox="0 0 68 48">
+                        <path
+                          d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z"
+                          fill="#ff0000"
+                        />
+                        <polygon points="45,24 27,14 27,34" fill="#ffffff" />
+                      </svg>
                     </button>
+
+                    <div className="vnn-video-player-footer">
+                      <a
+                        href={`https://www.youtube.com/watch?v=${activeVideo.youtubeId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="vnn-video-player-yt-badge"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <span>{lang === "vi" ? "Xem trên YouTube" : "Watch on YouTube"}</span>
+                      </a>
+                    </div>
                   </div>
                 )}
               </div>
@@ -2200,7 +2241,7 @@ export default function HomePage() {
             {/* Social Icons */}
             <div className="vnn-clean-footer__socials">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
