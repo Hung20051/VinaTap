@@ -549,6 +549,269 @@ const POPULAR_POSTS_ITEMS = [
   },
 ];
 
+const MEGA_MENUS_DATA = {
+  inspired: {
+    items: [
+      {
+        id: "insp-1",
+        title: "15 best places to visit in Vietnam in 2026",
+        titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
+        date: "June 15, 2026",
+        dateVi: "15 Tháng 6, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-1.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "insp-2",
+        title: "Plan Your Vietnam Trip with Just One Prompt",
+        titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một prompt",
+        date: "April 1, 2026",
+        dateVi: "1 Tháng 4, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-2.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "insp-3",
+        title: "The Complete Guide to Vietnam",
+        titleVi: "Cẩm nang du lịch toàn diện Việt Nam",
+        date: "January 9, 2026",
+        dateVi: "9 Tháng 1, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-3.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "insp-4",
+        title: "20 Best Things to Do in Vietnam",
+        titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
+        date: "January 1, 2026",
+        dateVi: "1 Tháng 1, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-4.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "insp-5",
+        title: "Ao Dai – Vietnamese Traditional Dress",
+        titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
+        date: "December 31, 2024",
+        dateVi: "31 Tháng 12, 2024",
+        badge: "Featured Articles",
+        img: "/guide/megamenu/inspired-5.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+    ],
+  },
+  destinations: {
+    items: [
+      {
+        id: "dest-1",
+        title: "Ho Chi Minh City",
+        titleVi: "Thành phố Hồ Chí Minh",
+        date: "April 19, 2025",
+        dateVi: "19 Tháng 4, 2025",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-1-hcmc.jpg",
+        link: "/province/ho-chi-minh",
+      },
+      {
+        id: "dest-2",
+        title: "Dalat",
+        titleVi: "Đà Lạt",
+        date: "November 14, 2024",
+        dateVi: "14 Tháng 11, 2024",
+        badge: "Central Vietnam",
+        img: "/guide/megamenu/dest-2-dalat.jpg",
+        link: "/province/lam-dong",
+      },
+      {
+        id: "dest-3",
+        title: "Hoi An",
+        titleVi: "Hội An",
+        date: "November 12, 2024",
+        dateVi: "12 Tháng 11, 2024",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-3-hoian.jpg",
+        link: "/province/quang-nam",
+      },
+      {
+        id: "dest-4",
+        title: "Da Nang",
+        titleVi: "Đà Nẵng",
+        date: "July 25, 2024",
+        dateVi: "25 Tháng 7, 2024",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-4-danang.jpg",
+        link: "/province/da-nang",
+      },
+      {
+        id: "dest-5",
+        title: "Hanoi",
+        titleVi: "Hà Nội",
+        date: "June 15, 2022",
+        dateVi: "15 Tháng 6, 2022",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-5-hanoi.jpg",
+        link: "/province/ha-noi",
+      },
+    ],
+  },
+  things: {
+    items: [
+      {
+        id: "todo-1",
+        title: "3-week Vietnam Itinerary",
+        titleVi: "Lịch trình 3 tuần xuyên Việt",
+        date: "July 20, 2025",
+        dateVi: "20 Tháng 7, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-1-3week.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "todo-2",
+        title: "10 best things to do in Ho Chi Minh City",
+        titleVi: "10 điều tuyệt nhất ở TP. Hồ Chí Minh",
+        date: "May 5, 2025",
+        dateVi: "5 Tháng 5, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-2-hcmc.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "todo-3",
+        title: "8 best things to do in Nha Trang",
+        titleVi: "8 hoạt động không thể bỏ qua tại Nha Trang",
+        date: "March 1, 2025",
+        dateVi: "1 Tháng 3, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-3-nhatrang.jpg",
+        link: "/province/khanh-hoa",
+      },
+      {
+        id: "todo-4",
+        title: "20 Best Things to Do in Vietnam",
+        titleVi: "20 trải nghiệm hàng đầu ở Việt Nam",
+        date: "January 1, 2025",
+        dateVi: "1 Tháng 1, 2025",
+        badge: "#Trending",
+        img: "/guide/megamenu/todo-4-vietnam.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "todo-5",
+        title: "The 15 best attractions in Dalat",
+        titleVi: "15 điểm tham quan tuyệt nhất Đà Lạt",
+        date: "July 21, 2024",
+        dateVi: "21 Tháng 7, 2024",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-5-dalat.jpg",
+        link: "/province/lam-dong",
+      },
+    ],
+  },
+  eat: {
+    items: [
+      {
+        id: "eat-1",
+        title: "8 must-try foods in Hanoi",
+        titleVi: "8 món ngon nhất định phải thử ở Hà Nội",
+        date: "May 19, 2025",
+        dateVi: "19 Tháng 5, 2025",
+        badge: "Hanoi",
+        img: "/guide/megamenu/eat-1-hanoi.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-2",
+        title: "12 must-try foods in Ho Chi Minh City",
+        titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
+        date: "April 29, 2025",
+        dateVi: "29 Tháng 4, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-2-hcmc.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
+      },
+      {
+        id: "eat-3",
+        title: "Pho",
+        titleVi: "Phở truyền thống",
+        date: "April 15, 2025",
+        dateVi: "15 Tháng 4, 2025",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-3-pho.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-4",
+        title: "7 must-try foods in Vung Tau",
+        titleVi: "7 món ăn tuyệt vời tại Vũng Tàu",
+        date: "April 1, 2025",
+        dateVi: "1 Tháng 4, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-4-vungtau.jpg",
+        link: "/province/ba-ria-vung-tau",
+      },
+      {
+        id: "eat-5",
+        title: "5 must-try Nha Trang dishes",
+        titleVi: "5 món đặc sản Nha Trang",
+        date: "February 17, 2025",
+        dateVi: "17 Tháng 2, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-5-nhatrang.jpg",
+        link: "/province/khanh-hoa",
+      },
+    ],
+  },
+  itineraries: {
+    items: [
+      {
+        id: "itin-1",
+        title: "3-week Vietnam Itinerary",
+        titleVi: "Lịch trình 3 tuần xuyên Việt",
+        date: "July 20, 2025",
+        dateVi: "20 Tháng 7, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/itin-1-3week.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "itin-2",
+        title: "10 Days in Vietnam",
+        titleVi: "Lịch trình 10 ngày tại Việt Nam",
+        date: "May 21, 2024",
+        dateVi: "21 Tháng 5, 2024",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-2-10days.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "itin-3",
+        title: "2 Weeks in Vietnam",
+        titleVi: "Lịch trình 2 tuần xuyên Việt",
+        date: "May 20, 2024",
+        dateVi: "20 Tháng 5, 2024",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-3-2weeks.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "itin-4",
+        title: "1 Month in Vietnam",
+        titleVi: "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam",
+        date: "May 18, 2024",
+        dateVi: "18 Tháng 5, 2024",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-4-1month.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+    ],
+  },
+};
+
 
 const REGION_LABEL = {
   vi: {
@@ -657,6 +920,25 @@ export default function HomePage() {
   const [activeVideo, setActiveVideo] = useState(VIDEO_PLAYLIST_ITEMS[0]);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const topDestTrackRef = useRef(null);
+
+  // VietnamNomad Magazine Megamenu states
+  const [activeMegaMenu, setActiveMegaMenu] = useState(null);
+  const megaMenuTimeoutRef = useRef(null);
+
+  const handleMenuEnter = (menuKey) => {
+    if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
+    setActiveMegaMenu(menuKey);
+  };
+
+  const handleMenuLeave = () => {
+    megaMenuTimeoutRef.current = setTimeout(() => {
+      setActiveMegaMenu(null);
+    }, 140);
+  };
+
+  const handleMegaMouseEnter = () => {
+    if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
+  };
 
   const scrollDestTrack = (dir) => {
     if (topDestTrackRef.current) {
@@ -991,8 +1273,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ─── 2. EDITORIAL NAVBAR (IMAGE 2) ─── */}
-        <header className="vnn-navbar">
+        {/* ─── 2. EDITORIAL NAVBAR (VIETNAMNOMAD WITH HOVER MEGAMENUS) ─── */}
+        <header className="vnn-navbar" onMouseLeave={handleMenuLeave}>
           <div className="vnn-navbar__inner">
             <Link href="/" className="vnn-navbar__brand">
               <div className="vnn-navbar__brand-vinatap">
@@ -1003,117 +1285,73 @@ export default function HomePage() {
 
             <ul className="vnn-navbar__menu">
               {/* BE INSPIRED */}
-              <li className="vnn-navbar__item">
-                <button type="button" className="vnn-navbar__link">
+              <li
+                className="vnn-navbar__item"
+                onMouseEnter={() => handleMenuEnter("inspired")}
+              >
+                <button
+                  type="button"
+                  className={`vnn-navbar__link ${activeMegaMenu === "inspired" ? "is-active" : ""}`}
+                >
                   <span>{lang === "vi" ? "Cảm Hứng" : "BE INSPIRED"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
                 </button>
-                <div className="vnn-dropdown">
-                  <Link href="/guide/10-best-things-to-do-in-ho-chi-minh-city" className="vnn-dropdown__item">
-                    <Sparkles size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "15 Điểm đến đẹp nhất 2026" : "15 Best Places to Visit 2026"}</span>
-                  </Link>
-                  <Link href="/guide/10-best-things-to-do-in-ho-chi-minh-city" className="vnn-dropdown__item">
-                    <Sparkles size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Áo Dài – Quốc Phục Việt Nam" : "Ao Dai Traditional Dress"}</span>
-                  </Link>
-                  <a href="#provinces" onClick={scrollToSection("provinces")} className="vnn-dropdown__item">
-                    <Compass size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Lên Kế Hoạch Với AI Prompt" : "Plan Trip With AI Prompt"}</span>
-                  </a>
-                </div>
               </li>
 
               {/* DESTINATIONS */}
-              <li className="vnn-navbar__item">
-                <button type="button" className="vnn-navbar__link">
+              <li
+                className="vnn-navbar__item"
+                onMouseEnter={() => handleMenuEnter("destinations")}
+              >
+                <button
+                  type="button"
+                  className={`vnn-navbar__link ${activeMegaMenu === "destinations" ? "is-active" : ""}`}
+                >
                   <span>{lang === "vi" ? "Điểm Đến" : "DESTINATIONS"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
                 </button>
-                <div className="vnn-dropdown" style={{ minWidth: "290px" }}>
-                  <Link href="/province/ha-noi" className="vnn-dropdown__item">
-                    <Map size={16} className="vnn-dropdown__item-icon" />
-                    <span>Thủ Đô Hà Nội (Nghìn Năm Văn Hiến)</span>
-                  </Link>
-                  <Link href="/province/ho-chi-minh" className="vnn-dropdown__item">
-                    <Map size={16} className="vnn-dropdown__item-icon" />
-                    <span>TP. Hồ Chí Minh (Sài Gòn Hoa Lệ)</span>
-                  </Link>
-                  <Link href="/province/da-nang" className="vnn-dropdown__item">
-                    <Map size={16} className="vnn-dropdown__item-icon" />
-                    <span>Đà Nẵng (Thành Phố Đáng Sống)</span>
-                  </Link>
-                  <Link href="/province/ninh-binh" className="vnn-dropdown__item">
-                    <Map size={16} className="vnn-dropdown__item-icon" />
-                    <span>Ninh Bình (Tràng An - Tam Cốc)</span>
-                  </Link>
-                  <Link href="/province/hai-phong" className="vnn-dropdown__item">
-                    <Map size={16} className="vnn-dropdown__item-icon" />
-                    <span>Hải Phòng (Đảo Ngọc Cát Bà)</span>
-                  </Link>
-                  <a href="#provinces" onClick={scrollToSection("provinces")} className="vnn-dropdown__item" style={{ borderTop: "1px solid #f3f4f6", color: "#00c2cb", fontWeight: 700 }}>
-                    <ArrowRight size={15} />
-                    <span>{lang === "vi" ? "Tất cả 34 Tỉnh Thành →" : "View All 34 Destinations →"}</span>
-                  </a>
-                </div>
               </li>
 
               {/* THINGS TO DO */}
-              <li className="vnn-navbar__item">
-                <button type="button" className="vnn-navbar__link">
+              <li
+                className="vnn-navbar__item"
+                onMouseEnter={() => handleMenuEnter("things")}
+              >
+                <button
+                  type="button"
+                  className={`vnn-navbar__link ${activeMegaMenu === "things" ? "is-active" : ""}`}
+                >
                   <span>{lang === "vi" ? "Trải Nghiệm" : "THINGS TO DO"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
                 </button>
-                <div className="vnn-dropdown">
-                  <Link href="/guide/10-best-things-to-do-in-ho-chi-minh-city" className="vnn-dropdown__item">
-                    <Compass size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "10 Điều Tuyệt Nhất Ở Sài Gòn" : "10 Best Things in HCMC"}</span>
-                  </Link>
-                  <a href="#provinces" onClick={scrollToSection("provinces")} className="vnn-dropdown__item">
-                    <Map size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Cẩm Nang Du Lịch 34 Tỉnh Thành" : "34 Destinations Travel Guide"}</span>
-                  </a>
-                  <a href="#about" onClick={scrollToSection("about")} className="vnn-dropdown__item">
-                    <Sparkles size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Hỏi Đáp Du Lịch Cùng Thổ Địa AI" : "Chat with Thổ Địa AI Assistant"}</span>
-                  </a>
-                </div>
               </li>
 
               {/* EAT & DRINK */}
-              <li className="vnn-navbar__item">
-                <button type="button" className="vnn-navbar__link">
+              <li
+                className="vnn-navbar__item"
+                onMouseEnter={() => handleMenuEnter("eat")}
+              >
+                <button
+                  type="button"
+                  className={`vnn-navbar__link ${activeMegaMenu === "eat" ? "is-active" : ""}`}
+                >
                   <span>{lang === "vi" ? "Ẩm Thực" : "EAT & DRINK"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
                 </button>
-                <div className="vnn-dropdown">
-                  <Link href="/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods" className="vnn-dropdown__item">
-                    <Sparkles size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "12 Món Ăn Phải Thử ở Sài Gòn" : "12 Must-Try Foods in HCMC"}</span>
-                  </Link>
-                  <Link href="/province/ha-noi" className="vnn-dropdown__item">
-                    <Sparkles size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Ẩm Thực Phố Cổ Hà Nội (Phở, Bún Chả)" : "Hanoi Old Quarter Street Food"}</span>
-                  </Link>
-                </div>
               </li>
 
               {/* ITINERARIES */}
-              <li className="vnn-navbar__item">
-                <button type="button" className="vnn-navbar__link">
+              <li
+                className="vnn-navbar__item"
+                onMouseEnter={() => handleMenuEnter("itineraries")}
+              >
+                <button
+                  type="button"
+                  className={`vnn-navbar__link ${activeMegaMenu === "itineraries" ? "is-active" : ""}`}
+                >
                   <span>{lang === "vi" ? "Lịch Trình" : "ITINERARIES"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
                 </button>
-                <div className="vnn-dropdown">
-                  <Link href="/province/ha-noi" className="vnn-dropdown__item">
-                    <Clock size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Hà Nội - Ninh Bình 3 Ngày 2 Đêm" : "Hanoi - Ninh Binh 3D2N"}</span>
-                  </Link>
-                  <Link href="/province/ho-chi-minh" className="vnn-dropdown__item">
-                    <Clock size={16} className="vnn-dropdown__item-icon" />
-                    <span>{lang === "vi" ? "Khám Phá Sài Gòn 2 Ngày 1 Đêm" : "Saigon Explorer 2D1N"}</span>
-                  </Link>
-                </div>
               </li>
             </ul>
 
@@ -1130,6 +1368,56 @@ export default function HomePage() {
 
               <LanguageSwitch variant="navbar" />
             </div>
+
+            {/* ─── HOVER MEGAMENU POPUP (HÌNH 1 - 5) ─── */}
+            {activeMegaMenu && MEGA_MENUS_DATA[activeMegaMenu] && (
+              <div
+                className="vnn-megamenu"
+                onMouseEnter={handleMegaMouseEnter}
+                onMouseLeave={handleMenuLeave}
+              >
+                <div className="vnn-megamenu__grid">
+                  {MEGA_MENUS_DATA[activeMegaMenu].items.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={item.link}
+                      className="vnn-megamenu__card"
+                      onClick={() => setActiveMegaMenu(null)}
+                    >
+                      <div className="vnn-megamenu__thumb">
+                        <img src={item.img} alt={item.title} loading="eager" />
+                        <span className="vnn-megamenu__badge">{item.badge}</span>
+                      </div>
+                      <h4 className="vnn-megamenu__title">
+                        {lang === "vi" ? item.titleVi : item.title}
+                      </h4>
+                      <span className="vnn-megamenu__date">
+                        {lang === "vi" ? item.dateVi : item.date}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="vnn-megamenu__footer">
+                  <div className="vnn-megamenu__nav-btns">
+                    <button
+                      type="button"
+                      className="vnn-megamenu__nav-btn"
+                      aria-label="Previous"
+                    >
+                      <ChevronLeft size={13} />
+                    </button>
+                    <button
+                      type="button"
+                      className="vnn-megamenu__nav-btn"
+                      aria-label="Next"
+                    >
+                      <ChevronRight size={13} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </header>
 
