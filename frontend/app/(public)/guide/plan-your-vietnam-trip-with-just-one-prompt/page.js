@@ -58,7 +58,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "9 Tháng 1, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-3.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/the-complete-guide-to-vietnam",
       },
       {
         id: "insp-4",
@@ -770,7 +770,7 @@ export default function PlanYourVietnamTripPage() {
               </Link>
 
               <Link
-                href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+                href="/guide/the-complete-guide-to-vietnam"
                 className="plan-trip-related__card"
               >
                 <div className="plan-trip-related__img-wrap">

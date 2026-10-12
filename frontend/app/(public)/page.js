@@ -84,7 +84,7 @@ const TRENDING_HERO_STORIES = [
     badge: "#TRENDING",
     title: "The Complete Guide to Vietnam",
     titleVi: "Cẩm nang toàn diện 34 Tỉnh Thành Việt Nam",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+    link: "/guide/the-complete-guide-to-vietnam",
     meta: "Heritage & Travel Guide",
     metaVi: "Di sản & Cẩm nang du lịch",
     img: "/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg",
@@ -492,7 +492,7 @@ const LATEST_ARTICLES_ITEMS = [
     meta: "VinaTap - January 9, 2026",
     metaVi: "VinaTap • 9 Tháng 1, 2026",
     img: "/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+    link: "/guide/the-complete-guide-to-vietnam",
   },
   {
     badge: "MEMBERSHIP",
@@ -588,7 +588,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "9 Tháng 1, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-3.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/the-complete-guide-to-vietnam",
       },
       {
         id: "insp-4",

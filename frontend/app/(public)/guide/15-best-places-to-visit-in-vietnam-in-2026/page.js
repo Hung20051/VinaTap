@@ -58,7 +58,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "9 Tháng 1, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-3.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/the-complete-guide-to-vietnam",
       },
       {
         id: "insp-4",
