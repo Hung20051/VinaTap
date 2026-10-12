@@ -720,6 +720,104 @@ const MEGA_MENUS_DATA = {
       },
     ],
   },
+  eat: {
+    items: [
+      {
+        id: "eat-1",
+        title: "8 must-try foods in Hanoi",
+        titleVi: "8 món ngon nhất định phải thử ở Hà Nội",
+        date: "May 19, 2025",
+        dateVi: "19 Tháng 5, 2025",
+        badge: "Hanoi",
+        img: "/guide/megamenu/eat-1-hanoi.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-2",
+        title: "12 must-try foods in Ho Chi Minh City",
+        titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
+        date: "April 26, 2025",
+        dateVi: "26 Tháng 4, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-2-hcmc.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
+      },
+      {
+        id: "eat-3",
+        title: "Pho",
+        titleVi: "Phở truyền thống",
+        date: "April 3, 2025",
+        dateVi: "3 Tháng 4, 2025",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-3-pho.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-4",
+        title: "7 must-try foods in Vung Tau",
+        titleVi: "7 món ăn tuyệt vời tại Vũng Tàu",
+        date: "April 1, 2025",
+        dateVi: "1 Tháng 4, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-4-vungtau.jpg",
+        link: "/province/hai-phong",
+      },
+      {
+        id: "eat-5",
+        title: "5 must-try Nha Trang dishes",
+        titleVi: "5 món đặc sản Nha Trang",
+        date: "February 17, 2025",
+        dateVi: "17 Tháng 2, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-5-nhatrang.jpg",
+        link: "/province/da-nang",
+      },
+    ],
+  },
+  itineraries: {
+    items: [
+      {
+        id: "itin-1",
+        title: "3-week Vietnam Itinerary",
+        titleVi: "Lịch trình 3 tuần xuyên Việt",
+        date: "July 20, 2025",
+        dateVi: "20 Tháng 7, 2025",
+        badge: "Articles",
+        img: "/guide/megamenu/itin-1-3week.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "itin-2",
+        title: "10 Days in Vietnam",
+        titleVi: "Lịch trình 10 ngày tại Việt Nam",
+        date: "May 21, 2024",
+        dateVi: "21 Tháng 5, 2024",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-2-10days.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "itin-3",
+        title: "2 Weeks in Vietnam",
+        titleVi: "Lịch trình 2 tuần xuyên Việt",
+        date: "May 20, 2024",
+        dateVi: "20 Tháng 5, 2024",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-3-2weeks.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "itin-4",
+        title: "1 Month in Vietnam",
+        titleVi: "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam",
+        date: "May 18, 2024",
+        dateVi: "18 Tháng 5, 2024",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-4-1month.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+    ],
+  },
 };
 
 
@@ -1256,10 +1354,6 @@ export default function HomePage() {
                 <button
                   type="button"
                   className={`vnn-navbar__link ${activeMegaMenu === "eat" ? "is-active" : ""}`}
-                  onClick={() => {
-                    const el = document.getElementById("foods-to-try");
-                    if (el) el.scrollIntoView({ behavior: "smooth" });
-                  }}
                 >
                   <span>{lang === "vi" ? "Ẩm Thực" : "EAT & DRINK"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
@@ -1271,13 +1365,13 @@ export default function HomePage() {
                 className="vnn-navbar__item"
                 onMouseEnter={() => handleMenuEnter("itineraries")}
               >
-                <Link
-                  href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+                <button
+                  type="button"
                   className={`vnn-navbar__link ${activeMegaMenu === "itineraries" ? "is-active" : ""}`}
                 >
                   <span>{lang === "vi" ? "Lịch Trình" : "ITINERARIES"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
-                </Link>
+                </button>
               </li>
             </ul>
 
