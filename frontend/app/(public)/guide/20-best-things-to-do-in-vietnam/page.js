@@ -76,7 +76,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 1, 2025",
         badge: "Articles",
         img: "/guide/megamenu/inspired-5.jpg",
-        link: "/province/thua-thien-hue",
+        link: "/guide/ao-dai-vietnamese-traditional-dress",
       },
     ],
   },

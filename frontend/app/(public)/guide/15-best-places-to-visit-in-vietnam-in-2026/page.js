@@ -78,7 +78,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "31 Tháng 12, 2024",
         badge: "Featured Articles",
         img: "/guide/megamenu/inspired-5.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/ao-dai-vietnamese-traditional-dress",
       },
     ],
   },
