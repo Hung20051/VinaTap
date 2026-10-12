@@ -417,9 +417,7 @@ export default function AoDaiArticlePage() {
 
           <div className="vnn-navbar__actions">
             <HeaderSearch />
-            <div className="vnn-navbar__lang">
-              <LanguageSwitch />
-            </div>
+            <LanguageSwitch variant="navbar" />
           </div>
         </div>
 

@@ -656,89 +656,188 @@ export default function CompleteGuideToVietnamPage() {
             </figcaption>
           </figure>
 
-          {/* 1. MIỀN BẮC */}
-          <h4>{lang === "vi" ? "1. Miền Bắc Việt Nam" : "1. Northern Vietnam"}</h4>
-          <figure className="complete-guide-figure">
-            <img
-              src="/guide/vietnam/northeast-vietnam.jpg"
-              alt="Miền Bắc Việt Nam - Vùng Đông Bắc và Tây Bắc hùng vĩ"
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.src = "/guide/hcmc/region-north-hagiang.jpg";
-              }}
-            />
-            <figcaption>
+          {/* Useful maps link */}
+          <div>
+            <Link
+              href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
+              className="cg-useful-maps-link"
+            >
               {lang === "vi"
-                ? "Thiên nhiên hùng vĩ miền Bắc: Rẻo cao Tây Bắc và Vịnh đảo Đông Bắc"
-                : "Northeast and Northwest Vietnam landscapes"}
-            </figcaption>
-          </figure>
-          <p>
-            {lang === "vi"
-              ? "Miền Bắc bao gồm các tỉnh thành trọng điểm như Thủ đô Hà Nội, Hải Phòng, Quảng Ninh, Lào Cai, Hà Giang, Ninh Bình, Cao Bằng... Nơi đây nổi tiếng với các di sản thế giới và danh lam thắng cảnh hàng đầu như Thủ đô Hà Nội ngàn năm văn hiến, Vịnh Hạ Long (Quang Ninh), Ruộng bậc thang Sa Pa, Cung đường đèo Mã Pí Lèng - Hà Giang, Quần thể danh thắng Tràng An (Ninh Bình) và Thác Bản Giốc."
-              : "Northern Vietnam consists of key provinces and cities including Hanoi, Hai Phong, Quang Ninh, Lao Cai, Ha Giang, Ninh Binh, and Cao Bang. Famous tourist highlights include Hanoi’s historic Old Quarter, UNESCO World Heritage Ha Long Bay, Sapa terraced rice fields, the dramatic Ha Giang Loop, and Trang An’s karst riverways."}
-          </p>
-          <p>
-            {lang === "vi"
-              ? "Miền Bắc có khí hậu 4 mùa rõ rệt: Mùa hè (tháng 5 - 9) nóng ẩm với những cơn mưa nhiệt đới; Mùa thu (tháng 9 - 11) tiết trời mát mẻ và lãng mạn nhất trong năm; Mùa đông (tháng 12 - 2) se lạnh và có sương mù bồng bềnh; Mùa xuân (tháng 3 - 4) ấm áp tràn ngập sắc hoa đào hoa mận."
-              : "Northern Vietnam enjoys four distinct seasons. Summer (May to September) is warm and humid with tropical rain. Autumn (September to November) is the most pleasant and scenic season. Winter (December to February) brings cool mists and crisp mountain breezes. Spring (March to April) welcomes mild weather and blooming blossoms."}
-          </p>
+                ? "Xem thêm bản đồ du lịch Việt Nam hữu ích >"
+                : "See more useful Vietnam travel maps >"}
+            </Link>
+          </div>
 
-          {/* 2. MIỀN TRUNG */}
-          <h4>{lang === "vi" ? "2. Miền Trung Việt Nam" : "2. Central Vietnam"}</h4>
-          <figure className="complete-guide-figure">
-            <img
-              src="/guide/vietnam/north-central-vietnam.jpg"
-              alt="Miền Trung Việt Nam - Duyên hải biển xanh và Di sản Cố đô"
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.src = "/guide/hcmc/region-central-danang.jpg";
-              }}
-            />
-            <figcaption>
-              {lang === "vi"
-                ? "Dải đất miền Trung: Nơi hội tụ di sản cổ kính và những bãi biển thiên đường"
-                : "Central Vietnam: Ancient heritage and pristine coastline"}
-            </figcaption>
-          </figure>
-          <p>
-            {lang === "vi"
-              ? "Miền Trung trải dài dọc biển Đông và cao nguyên đất đỏ, bao gồm Cố đô Huế, Đà Nẵng, Quảng Nam (Hội An), Quảng Bình (Phong Nha), Khánh Hòa (Nha Trang), Lâm Đồng (Đà Lạt)... Nơi đây tập trung mật độ di sản văn hóa và thiên nhiên đậm đặc: Cố đô Huế trang nghiêm, Cầu Vàng Bà Nà Hills, Phố cổ Hội An thơ mộng, Vườn quốc gia Phong Nha - Kẻ Bàng với những hang động lớn nhất hành tinh, thành phố ngàn hoa Đà Lạt và vịnh biển Nha Trang."
-              : "Central Vietnam spans a spectacular coastal strip and highlands, featuring Hue, Da Nang, Quang Nam (Hoi An), Quang Binh (Phong Nha), Khanh Hoa (Nha Trang), and Lam Dong (Dalat). Famous attractions include Hue’s Imperial City, Da Nang’s Golden Bridge, Hoi An Ancient Town, Phong Nha - Ke Bang karst caves, Dalat’s pine hills, and Nha Trang’s turquoise beaches."}
-          </p>
-          <p>
-            {lang === "vi"
-              ? "Khí hậu miền Trung mang tính chất nhiệt đới gió mùa chia thành 2 mùa: Mùa khô (tháng 1 - 8) trời trong xanh ngập tràn nắng vàng lý tưởng cho tắm biển; Mùa mưa (tháng 9 - 12) có lượng mưa lớn hơn."
-              : "Central Vietnam has a tropical monsoon climate with two main seasons: the Dry season (January to August) offering abundant sunshine perfect for beach holidays, and the Rainy season (September to December) with seasonal showers."}
-          </p>
+          {/* 1. MIỀN BẮC (MATCHING SCREENSHOT 5) */}
+          <h4 className="cg-region-heading">
+            {lang === "vi" ? "1. Miền Bắc Việt Nam" : "1. Northern Vietnam"}
+          </h4>
+          <div className="cg-region-layout">
+            <div className="cg-region-layout__media">
+              <img
+                src="/guide/the-complete-guide/northern-vietnam.jpg"
+                alt={lang === "vi" ? "Miền Bắc Việt Nam" : "Northern Vietnam"}
+                className="cg-region-layout__img"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = "/guide/vietnam/northeast-vietnam.jpg";
+                }}
+              />
+            </div>
+            <div className="cg-region-layout__content">
+              <p>
+                {lang === "vi"
+                  ? "Miền Bắc Việt Nam bao gồm 15 tỉnh và thành phố: Hà Nội, Hải Phòng, Bắc Ninh, Hưng Yên, Quảng Ninh, Lạng Sơn, Lào Cai, Điện Biên, Sơn La, Cao Bằng, Tuyên Quang, Thái Nguyên, Phú Thọ và Ninh Bình."
+                  : "Northern Vietnam consists of 15 provinces and cities: Hanoi, Hai Phong, Bac Ninh, Hung Yen, Quang Ninh, Lang Son, Lao Cai, Dien Bien, Son La, Cao Bang, Tuyen Quang, Thai Nguyen, Phu Tho, and Ninh Binh."}
+              </p>
+              <p>
+                {lang === "vi" ? (
+                  <>
+                    Các điểm đến du lịch nổi tiếng bao gồm{" "}
+                    <Link href="/province/ha-noi" className="cg-inline-link">
+                      Hà Nội
+                    </Link>
+                    ,{" "}
+                    <Link href="/province/quang-ninh" className="cg-inline-link">
+                      Vịnh Hạ Long (Quảng Ninh)
+                    </Link>
+                    , Sa Pa & Fansipan (Lào Cai), Quần thể Tràng An và Tam Cốc (Ninh Bình), Thác Bản Giốc (Cao Bằng), Mộc Châu (Sơn La) và Mai Châu (Hòa Bình). Khu vực này trải dài từ các đồng bằng châu thổ đến vùng núi phía Bắc hùng vĩ giáp ranh Trung Quốc và Lào, mang đến cảnh quan ấn tượng, ruộng bậc thang, núi đá vôi karst và văn hóa đa dạng đặc sắc.
+                  </>
+                ) : (
+                  <>
+                    Famous tourist destinations include{" "}
+                    <Link href="/province/ha-noi" className="cg-inline-link">
+                      Hanoi
+                    </Link>
+                    ,{" "}
+                    <Link href="/province/quang-ninh" className="cg-inline-link">
+                      Ha Long Bay (Quang Ninh)
+                    </Link>
+                    , Sapa & Fansipan (Lao Cai), Ninh Binh's Trang An and Tam Coc, Ban Gioc Waterfall (Cao Bang), Moc Chau (Son La), and Mai Chau (Hoa Binh). The region ranges from lowland deltas to majestic northern mountains bordering China and Laos, offering dramatic landscapes, terraced rice fields, limestone karsts, and rich cultural diversity.
+                  </>
+                )}
+              </p>
+              <p>
+                {lang === "vi"
+                  ? "Miền Bắc Việt Nam có sự kết hợp của 4 mùa rõ rệt: Mùa hè (tháng 5 đến tháng 9) nóng ẩm với lượng mưa lớn, trong khi mùa đông (tháng 11 đến tháng 2) se lạnh đến rét, nhiều mây và đặc trưng bởi mưa phùn ở đồng bằng. Vùng núi cao có thể ghi nhận nhiệt độ tiệm cận hoặc dưới 0°C trong những tháng rét nhất. Mùa xuân và mùa thu ôn hòa, dễ chịu, rất lý tưởng để du lịch khám phá."
+                  : "Northern Vietnam has a combination of four distinct seasons: Summer (May to September) is hot and humid with heavy rainfall, while winter (November to February) is cool to cold, often cloudy, and characterized by drizzle in the lowlands. Mountainous areas can experience temperatures approaching or even dropping below 0°C during the coldest months. Spring and autumn are mild and comfortable, making them ideal for travel."}
+              </p>
+            </div>
+          </div>
 
-          {/* 3. MIỀN NAM */}
-          <h4>{lang === "vi" ? "3. Miền Nam Việt Nam" : "3. Southern Vietnam"}</h4>
-          <figure className="complete-guide-figure">
-            <img
-              src="/guide/vietnam/mekong-delta.jpg"
-              alt="Miền Nam Việt Nam - Vùng Đồng Bằng Sông Cửu Long và Đảo Ngọc Phú Quốc"
-              loading="lazy"
-              onError={(e) => {
-                e.currentTarget.src = "/guide/hcmc/region-south-map.jpg";
-              }}
-            />
-            <figcaption>
-              {lang === "vi"
-                ? "Sông nước Miền Nam trù phú, Chợ nổi Cái Răng và Đảo Ngọc Phú Quốc"
-                : "Southern Vietnam: Mekong Delta floating markets and Phu Quoc island"}
-            </figcaption>
-          </figure>
-          <p>
-            {lang === "vi"
-              ? "Miền Nam là đầu tàu kinh tế sôi động với TP. Hồ Chí Minh hiện đại, Đồng Nai, Bà Rịa - Vũng Tàu, Cần Thơ, An Giang và Đảo Ngọc Phú Quốc (Kiên Giang). Du khách sẽ say đắm trước nhịp sống tràn đầy năng lượng tại Sài Gòn, trải nghiệm miệt vườn sông nước và chợ nổi Cái Răng trứ danh ở Cần Thơ, cùng những khu nghỉ dưỡng thiên đường tại Phú Quốc."
-              : "Southern Vietnam features the dynamic economic hub of Ho Chi Minh City, Dong Nai, Ba Ria - Vung Tau, Can Tho, and the tropical paradise of Phu Quoc Island. Highlights include Ho Chi Minh City’s modern skyscrapers and street food, Can Tho’s lively floating markets, and Phu Quoc’s powdery white beaches."}
-          </p>
-          <p>
-            {lang === "vi"
-              ? "Khí hậu miền Nam quanh năm ấm áp với nhiệt độ trung bình 27°C - 32°C chia làm 2 mùa: Mùa khô (tháng 12 - 4) nắng ráo tuyệt đẹp; Mùa mưa (tháng 5 - 11) với những cơn mưa rào nhanh chóng làm dịu mát không khí."
-              : "Southern Vietnam stays warm year-round with average temperatures between 27°C and 32°C. The dry season (December to April) brings clear skies, while the rainy season (May to November) features brief, refreshing afternoon showers."}
-          </p>
+          {/* 2. MIỀN TRUNG (MATCHING SCREENSHOT 5) */}
+          <h4 className="cg-region-heading">
+            {lang === "vi" ? "2. Miền Trung Việt Nam" : "2. Central Vietnam"}
+          </h4>
+          <div className="cg-region-layout">
+            <div className="cg-region-layout__media">
+              <img
+                src="/guide/the-complete-guide/central-vietnam.jpg"
+                alt={lang === "vi" ? "Miền Trung Việt Nam" : "Central Vietnam"}
+                className="cg-region-layout__img"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = "/guide/hcmc/region-central-danang.jpg";
+                }}
+              />
+            </div>
+            <div className="cg-region-layout__content">
+              <p>
+                {lang === "vi"
+                  ? "Miền Trung Việt Nam bao gồm 11 tỉnh và thành phố: Thanh Hóa, Nghệ An, Hà Tĩnh, Huế, Quảng Trị, Đà Nẵng, Quảng Ngãi, Khánh Hòa, Gia Lai, Lâm Đồng và Đắk Lắk."
+                  : "Central Vietnam consists of 11 provinces and cities: Thanh Hoa, Nghe An, Ha Tinh, Hue, Quang Tri, Da Nang, Quang Ngai, Khanh Hoa, Gia Lai, Lam Dong, and Dak Lak."}
+              </p>
+              <p>
+                {lang === "vi" ? (
+                  <>
+                    Các điểm đến du lịch nổi tiếng bao gồm Cố đô Huế,{" "}
+                    <Link href="/province/da-nang" className="cg-inline-link">
+                      Đà Nẵng
+                    </Link>
+                    ,{" "}
+                    <Link href="/province/quang-nam" className="cg-inline-link">
+                      Phố cổ Hội An
+                    </Link>
+                    , Phong Nha - Kẻ Bàng (Quảng Trị), Nha Trang (Khánh Hòa), Quy Nhơn (Gia Lai),{" "}
+                    <Link href="/province/lam-dong" className="cg-inline-link">
+                      Đà Lạt
+                    </Link>{" "}
+                    (Lâm Đồng). Dải đất miền Trung trải dài dọc theo bờ biển và vùng Tây Nguyên, kết hợp hài hòa giữa những bãi biển tuyệt đẹp, di sản lịch sử lâu đời và cao nguyên mát mẻ.
+                  </>
+                ) : (
+                  <>
+                    Famous tourist destinations include Hue's Imperial City,{" "}
+                    <Link href="/province/da-nang" className="cg-inline-link">
+                      Da Nang
+                    </Link>
+                    ,{" "}
+                    <Link href="/province/quang-nam" className="cg-inline-link">
+                      Hoi An Ancient Town
+                    </Link>
+                    , Phong Nha-Ke Bang (Quang Tri), Nha Trang (Khanh Hoa), Quy Nhon (Gia Lai),{" "}
+                    <Link href="/province/lam-dong" className="cg-inline-link">
+                      Da Lat
+                    </Link>{" "}
+                    (Lam Dong). This region stretches along the coastline and the Central Highlands, combining beaches, historical heritage, and cool-climate highlands.
+                  </>
+                )}
+              </p>
+              <p>
+                {lang === "vi"
+                  ? "Miền Trung có khí hậu nhiệt đới gió mùa với 2 mùa chính: Mùa khô (tháng 1 đến tháng 8) nói chung nhiều nắng và ấm áp, đặc biệt là dọc theo bờ biển. Mùa mưa (tháng 9 đến tháng 12) mang đến những cơn mưa lớn và thỉnh thoảng có bão, đặc biệt ở dải duyên hải miền Trung. Vùng Tây Nguyên quanh năm mát mẻ hơn nhờ độ cao địa hình."
+                  : "Central Vietnam has a tropical monsoon climate with two main seasons: The dry season (January to August) is generally sunny and warm, especially along the coast. The rainy season (September to December) brings heavy showers and occasional typhoons, particularly to the central coast. The Central Highlands enjoy cooler temperatures year-round due to higher elevation."}
+              </p>
+            </div>
+          </div>
+
+          {/* 3. MIỀN NAM (MATCHING 2-COLUMN LAYOUT) */}
+          <h4 className="cg-region-heading">
+            {lang === "vi" ? "3. Miền Nam Việt Nam" : "3. Southern Vietnam"}
+          </h4>
+          <div className="cg-region-layout">
+            <div className="cg-region-layout__media">
+              <img
+                src="/guide/the-complete-guide/southern-vietnam.jpg"
+                alt={lang === "vi" ? "Miền Nam Việt Nam" : "Southern Vietnam"}
+                className="cg-region-layout__img"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = "/guide/vietnam/mekong-delta.jpg";
+                }}
+              />
+            </div>
+            <div className="cg-region-layout__content">
+              <p>
+                {lang === "vi"
+                  ? "Miền Nam Việt Nam bao gồm các tỉnh thành năng động: TP. Hồ Chí Minh, Đồng Nai, Bà Rịa - Vũng Tàu, Bình Dương, Cần Thơ, An Giang, Kiên Giang (Phú Quốc), Bến Tre, Tiền Giang, Cà Mau và vùng đồng bằng sông Cửu Long trù phú."
+                  : "Southern Vietnam consists of dynamic provinces and cities: Ho Chi Minh City, Dong Nai, Ba Ria - Vung Tau, Binh Duong, Can Tho, An Giang, Kien Giang (Phu Quoc), Ben Tre, Tien Giang, Ca Mau, and the rich Mekong Delta."}
+              </p>
+              <p>
+                {lang === "vi" ? (
+                  <>
+                    Các điểm đến du lịch nổi tiếng bao gồm{" "}
+                    <Link href="/province/ho-chi-minh" className="cg-inline-link">
+                      TP. Hồ Chí Minh
+                    </Link>
+                    , Chợ nổi Cái Răng (Cần Thơ), Tây Ninh, cùng những bãi biển thiên đường tại Phú Quốc và Côn Đảo. Nơi đây kết hợp hài hòa giữa nhịp sống đô thị hiện đại, miệt vườn sông nước trĩu quả và kỳ nghỉ dưỡng biển đảo nhiệt đới.
+                  </>
+                ) : (
+                  <>
+                    Famous tourist destinations include{" "}
+                    <Link href="/province/ho-chi-minh" className="cg-inline-link">
+                      Ho Chi Minh City
+                    </Link>
+                    , Can Tho's floating markets, Tay Ninh, and the pristine beaches of Phu Quoc Island and Con Dao. The region combines modern urban life, endless orchards, and tropical island escapes.
+                  </>
+                )}
+              </p>
+              <p>
+                {lang === "vi"
+                  ? "Miền Nam có khí hậu nhiệt đới ấm áp quanh năm với nhiệt độ trung bình từ 27°C - 32°C. Mùa khô (tháng 12 đến tháng 4) ngập tràn nắng vàng rực rỡ; Mùa mưa (tháng 5 đến tháng 11) với những cơn mưa rào nhanh chóng làm dịu mát bầu không khí."
+                  : "Southern Vietnam features a warm tropical climate year-round with temperatures averaging 27°C - 32°C. The dry season (December to April) provides brilliant sunshine, while the rainy season (May to November) features quick, cooling afternoon showers."}
+              </p>
+            </div>
+          </div>
 
           {/* ─── PHẦN 2: THỜI ĐIỂM LÝ TƯỞNG NHẤT ─── */}
           <h2>

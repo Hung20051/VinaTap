@@ -689,6 +689,74 @@ export default function BestPlaces2026Page() {
           ))}
         </div>
 
+        {/* ─── RELATED ARTICLES SECTION (MATCHING SCREENSHOT 3) ─── */}
+        <section className="ad-related-section">
+          <h3 className="ad-related-title">
+            {lang === "vi" ? "Bài viết liên quan" : "Related Articles"}
+          </h3>
+          <div className="ad-related-grid">
+            {/* Card 1: Plan Your Vietnam Trip with Just One Prompt */}
+            <Link
+              href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+              className="ad-related-card"
+            >
+              <div className="ad-related-card__img-wrap">
+                <img
+                  src="/guide/megamenu/inspired-2.jpg"
+                  alt="Plan Your Vietnam Trip with Just One Prompt"
+                  className="ad-related-card__img"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="ad-related-card__title">
+                {lang === "vi"
+                  ? "Lên kế hoạch du lịch Việt Nam chỉ với một prompt"
+                  : "Plan Your Vietnam Trip with Just One Prompt"}
+              </h4>
+            </Link>
+
+            {/* Card 2: The Complete Guide to Vietnam */}
+            <Link
+              href="/guide/the-complete-guide-to-vietnam"
+              className="ad-related-card"
+            >
+              <div className="ad-related-card__img-wrap">
+                <img
+                  src="/guide/megamenu/inspired-3.jpg"
+                  alt="The Complete Guide to Vietnam"
+                  className="ad-related-card__img"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="ad-related-card__title">
+                {lang === "vi"
+                  ? "Cẩm nang du lịch toàn diện Việt Nam"
+                  : "The Complete Guide to Vietnam"}
+              </h4>
+            </Link>
+
+            {/* Card 3: 20 Best Things to Do in Vietnam */}
+            <Link
+              href="/guide/20-best-things-to-do-in-vietnam"
+              className="ad-related-card"
+            >
+              <div className="ad-related-card__img-wrap">
+                <img
+                  src="/guide/megamenu/inspired-4.jpg"
+                  alt="20 Best Things to Do in Vietnam"
+                  className="ad-related-card__img"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="ad-related-card__title">
+                {lang === "vi"
+                  ? "20 trải nghiệm tuyệt nhất tại Việt Nam"
+                  : "20 Best Things to Do in Vietnam"}
+              </h4>
+            </Link>
+          </div>
+        </section>
+
       </main>
 
       {/* ─── 7. FLOATING AI COMPANION BUTTON & MODAL (Hình 1) ─── */}

@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import HeaderSearch from "@/components/ui/HeaderSearch";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import { getLang } from "@/lib/prefs";
 import {
   Search,
   ChevronDown,
@@ -292,6 +294,7 @@ const MEGA_MENUS_DATA = {
 };
 
 export default function PlanYourVietnamTripPage() {
+  const [lang, setLang] = useState("vi");
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
   const megaMenuTimeoutRef = useRef(null);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -306,6 +309,13 @@ export default function PlanYourVietnamTripPage() {
         "Xin chào! Tôi là Trợ lý AI Du lịch VinaTap. Bạn có thể nhập 1 câu prompt đơn giản (ví dụ: 'Lên lịch trình 2 tuần khám phá vịnh Hạ Long, Hội An và miền Tây') để tôi lập kế hoạch tức thì!",
     },
   ]);
+
+  useEffect(() => {
+    setLang(getLang());
+    const handleLang = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLang);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLang);
+  }, []);
 
   const handleMenuEnter = (menuKey) => {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
@@ -346,12 +356,20 @@ export default function PlanYourVietnamTripPage() {
         onClick={() => setAiCompanionOpen(true)}
         role="button"
         tabIndex={0}
-        title="FREE AI TRAVEL ASSISTANT • AI COMPANION"
+        title={
+          lang === "vi"
+            ? "TRỢ LÝ DU LỊCH AI MIỄN PHÍ • BẠN ĐỒNG HÀNH THÔNG MINH"
+            : "FREE AI TRAVEL ASSISTANT • AI COMPANION"
+        }
       >
         <div className="vnn-top-banner__inner">
           <img
             src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
-            alt="VinaTap AI Travel Assistant - AI Companion"
+            alt={
+              lang === "vi"
+                ? "Trợ lý Du lịch AI VinaTap - Đồng hành mọi chuyến đi"
+                : "VinaTap AI Travel Assistant - AI Companion"
+            }
             className="vnn-top-banner__img"
           />
         </div>
@@ -377,7 +395,7 @@ export default function PlanYourVietnamTripPage() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "inspired" ? "is-active" : ""}`}
               >
-                <span>BE INSPIRED</span>
+                <span>{lang === "vi" ? "CẢM HỨNG" : "BE INSPIRED"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -391,7 +409,7 @@ export default function PlanYourVietnamTripPage() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "destinations" ? "is-active" : ""}`}
               >
-                <span>DESTINATIONS</span>
+                <span>{lang === "vi" ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -405,7 +423,7 @@ export default function PlanYourVietnamTripPage() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "things" ? "is-active" : ""}`}
               >
-                <span>THINGS TO DO</span>
+                <span>{lang === "vi" ? "TRẢI NGHIỆM" : "THINGS TO DO"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -419,7 +437,7 @@ export default function PlanYourVietnamTripPage() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "eat" ? "is-active" : ""}`}
               >
-                <span>EAT & DRINK</span>
+                <span>{lang === "vi" ? "ẨM THỰC" : "EAT & DRINK"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -433,7 +451,7 @@ export default function PlanYourVietnamTripPage() {
                 type="button"
                 className={`vnn-navbar__link ${activeMegaMenu === "itineraries" ? "is-active" : ""}`}
               >
-                <span>ITINERARIES</span>
+                <span>{lang === "vi" ? "LỊCH TRÌNH" : "ITINERARIES"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -441,6 +459,7 @@ export default function PlanYourVietnamTripPage() {
 
           <div className="vnn-navbar__actions">
             <HeaderSearch />
+            <LanguageSwitch variant="navbar" />
           </div>
         </div>
 
