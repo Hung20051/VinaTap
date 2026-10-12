@@ -411,69 +411,85 @@
   text-align: center;
 }
 
-/* ─── INTERACTIVE TRIP PROMPT BOX ─── */
-.plan-trip-prompt-box {
-  margin: 50px 0 20px 0;
-  background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
-  border: 1px solid #bae6fd;
-  border-radius: 16px;
-  padding: 32px 28px;
-  box-shadow: 0 10px 24px rgba(0, 194, 203, 0.08);
-}
-
-.plan-trip-prompt-box-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0 0 10px 0;
-}
-
-.plan-trip-prompt-box-desc {
-  font-size: 14.5px;
-  color: #475569;
-  margin-bottom: 20px;
-}
-
-.plan-trip-prompt-form {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.plan-trip-prompt-input {
-  flex: 1;
-  min-width: 260px;
-  padding: 13px 18px;
-  border-radius: 10px;
-  border: 1px solid #cbd5e1;
-  font-size: 15px;
-  background: #ffffff;
-  color: #1e293b;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-.plan-trip-prompt-input:focus {
-  outline: none;
-  border-color: #00c2cb;
-  box-shadow: 0 0 0 3px rgba(0, 194, 203, 0.2);
-}
-
-.plan-trip-prompt-submit {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 26px;
-  border-radius: 10px;
-  background: #00c2cb;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 600;
+/* ─── DIVIDER ─── */
+.plan-trip-divider {
   border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border-top: 1px solid #e5e7eb;
+  margin: 50px 0 36px 0;
 }
 
-.plan-trip-prompt-submit:hover {
-  background: #00aab2;
-  transform: translateY(-1px);
+/* ─── RELATED ARTICLES SECTION (HÌNH 2) ─── */
+.plan-trip-related {
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+.plan-trip-related__title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+  margin: 0 0 32px 0;
+  letter-spacing: -0.3px;
+}
+
+.plan-trip-related__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.plan-trip-related__card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.plan-trip-related__card:hover {
+  transform: translateY(-4px);
+}
+
+.plan-trip-related__img-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.plan-trip-related__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.plan-trip-related__card:hover .plan-trip-related__img {
+  transform: scale(1.05);
+}
+
+.plan-trip-related__card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin: 14px 0 0 0;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+
+.plan-trip-related__card:hover .plan-trip-related__card-title {
+  color: #00c2cb;
+}
+
+@media (max-width: 768px) {
+  .plan-trip-related__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }

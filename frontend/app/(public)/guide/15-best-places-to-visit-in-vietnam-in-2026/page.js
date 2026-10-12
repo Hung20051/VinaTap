@@ -33,7 +33,7 @@ const MEGA_MENUS_DATA = {
       {
         id: "insp-1",
         title: "15 best places to visit in Vietnam in 2026",
-        titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
+        titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
         date: "June 16, 2026",
         dateVi: "16 Tháng 6, 2026",
         badge: "#Trending",
@@ -87,7 +87,7 @@ const MEGA_MENUS_DATA = {
       {
         id: "dest-1",
         title: "Ho Chi Minh City",
-        titleVi: "TP. Hồ Chí Minh",
+        titleVi: "Thành phố Hồ Chí Minh",
         date: "April 19, 2025",
         dateVi: "19 Tháng 4, 2025",
         badge: "Destinations",
@@ -210,7 +210,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "26 Tháng 4, 2025",
         badge: "Articles",
         img: "/guide/megamenu/eat-2-hcmc.jpg",
-        link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
       },
       {
         id: "eat-3",
@@ -290,34 +290,6 @@ const MEGA_MENUS_DATA = {
   },
 };
 
-const CITY_NAMES_MAP = {
-  "Da Nang": { vi: "Đà Nẵng", en: "Da Nang" },
-  "Hoi An": { vi: "Hội An", en: "Hoi An" },
-  "Ha Long": { vi: "Hạ Long", en: "Ha Long" },
-  "Hanoi": { vi: "Hà Nội", en: "Hanoi" },
-  "Ninh Binh": { vi: "Ninh Bình", en: "Ninh Binh" },
-  "Ho Chi Minh City": { vi: "TP. Hồ Chí Minh", en: "Ho Chi Minh City" },
-  "Sapa": { vi: "Sa Pa", en: "Sapa" },
-  "Ha Giang": { vi: "Hà Giang", en: "Ha Giang" },
-};
-
-function formatBadge(badge, lang) {
-  if (!badge) return "";
-  if (lang !== "vi") return badge;
-  const map = {
-    "#Trending": "#Thịnh hành",
-    "#trending": "#Thịnh hành",
-    "Featured Articles": "Bài nổi bật",
-    "Destinations": "Điểm đến",
-    "Central Vietnam": "Miền Trung",
-    "Articles": "Bài viết",
-    "Itinerary": "Lịch trình",
-    "Eat & Drink": "Ẩm thực",
-    "Hanoi": "Hà Nội",
-  };
-  return map[badge] || badge;
-}
-
 // Helper function to turn markdown links [text](url) into React components
 function renderTextWithLinks(text) {
   const parts = [];
@@ -347,12 +319,23 @@ function renderTextWithLinks(text) {
 }
 
 export default function BestPlaces2026Page() {
-  const [lang, setLang] = useState("vi");
+  const [lang, setLangState] = useState("vi");
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
   const megaMenuTimeoutRef = useRef(null);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [searchModalText, setSearchModalText] = useState("");
   const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
+
+  useEffect(() => {
+    setLangState(getLang());
+    const handleLangUpdated = (e) => {
+      setLangState(e.detail);
+    };
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+    };
+  }, []);
   const [companionInput, setCompanionInput] = useState("");
   const [companionMessages, setCompanionMessages] = useState([
     {
@@ -361,24 +344,6 @@ export default function BestPlaces2026Page() {
         "Xin chào! Tôi là Trợ lý AI Du lịch VinaTap. Bạn muốn khám phá hoặc lên kế hoạch cho địa điểm nào trong danh sách 15 điểm đến tuyệt nhất Việt Nam 2026 này?",
     },
   ]);
-  const [votedPlace, setVotedPlace] = useState(null);
-  const [votes, setVotes] = useState({
-    "Da Nang": 1840,
-    "Hoi An": 1620,
-    "Ha Long": 1450,
-    "Hanoi": 1390,
-    "Ninh Binh": 1280,
-    "Ho Chi Minh City": 1150,
-    "Sapa": 980,
-    "Ha Giang": 920,
-  });
-
-  useEffect(() => {
-    setLang(getLang());
-    const handleLang = (e) => setLang(e.detail);
-    window.addEventListener("vinatap:lang-updated", handleLang);
-    return () => window.removeEventListener("vinatap:lang-updated", handleLang);
-  }, []);
 
   const handleMenuEnter = (menuKey) => {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
@@ -393,15 +358,6 @@ export default function BestPlaces2026Page() {
 
   const handleMegaMouseEnter = () => {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
-  };
-
-  const handleVote = (name) => {
-    if (votedPlace) return;
-    setVotedPlace(name);
-    setVotes((prev) => ({
-      ...prev,
-      [name]: (prev[name] || 500) + 1,
-    }));
   };
 
   const handleSendCompanion = (e) => {
@@ -427,12 +383,12 @@ export default function BestPlaces2026Page() {
         onClick={() => setAiCompanionOpen(true)}
         role="button"
         tabIndex={0}
-        title={lang === "vi" ? "TRỢ LÝ DU LỊCH AI MIỄN PHÍ • BẠN ĐỒNG HÀNH THÔNG MINH" : "FREE AI TRAVEL ASSISTANT • AI COMPANION"}
+        title="FREE AI TRAVEL ASSISTANT • AI COMPANION"
       >
         <div className="vnn-top-banner__inner">
           <img
             src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
-            alt={lang === "vi" ? "Trợ lý Du lịch AI VinaTap - Đồng hành mọi chuyến đi" : "VinaTap AI Travel Assistant - AI Companion"}
+            alt="VinaTap AI Travel Assistant - AI Companion"
             className="vnn-top-banner__img"
           />
         </div>
@@ -521,15 +477,15 @@ export default function BestPlaces2026Page() {
           </ul>
 
           <div className="vnn-navbar__actions">
-            <LanguageSwitch variant="navbar" />
             <button
               type="button"
               className="vnn-navbar__search-btn"
               onClick={() => setSearchModalOpen(true)}
-              aria-label={lang === "vi" ? "Tìm kiếm cẩm nang" : "Search guide"}
+              aria-label={lang === "vi" ? "Tìm kiếm cẩm nang" : "Search guides"}
             >
               <Search size={18} />
             </button>
+            <LanguageSwitch variant="navbar" />
           </div>
         </div>
 
@@ -551,21 +507,19 @@ export default function BestPlaces2026Page() {
                   <div className="vnn-megamenu__thumb">
                     <img
                       src={item.img}
-                      alt={lang === "vi" && item.titleVi ? item.titleVi : item.title}
+                      alt={item.title}
                       className="vnn-megamenu__img"
                       loading="lazy"
                     />
                     {item.badge && (
-                      <span className="vnn-megamenu__badge">
-                        {formatBadge(item.badge, lang)}
-                      </span>
+                      <span className="vnn-megamenu__badge">{item.badge}</span>
                     )}
                   </div>
                   <h4 className="vnn-megamenu__title">
-                    {lang === "vi" && item.titleVi ? item.titleVi : item.title}
+                    {lang === "vi" ? item.titleVi : item.title}
                   </h4>
                   <p className="vnn-megamenu__date">
-                    {lang === "vi" && item.dateVi ? item.dateVi : item.date}
+                    {lang === "vi" ? item.dateVi : item.date}
                   </p>
                 </Link>
               ))}
@@ -578,27 +532,23 @@ export default function BestPlaces2026Page() {
       <section className="places-hero">
         <img
           src="/guide/15-best-places/hero.jpg"
-          alt={lang === "vi" ? "15 điểm đến tuyệt nhất Việt Nam năm 2026 - Vịnh Hạ Long" : "15 best places to visit in Vietnam in 2026 - Ha Long Bay"}
+          alt="15 best places to visit in Vietnam in 2026 - Ha Long Bay"
           className="places-hero__bg"
         />
         <div className="places-hero__overlay" />
         <div className="places-hero__content">
           <div className="places-hero__badges">
-            <span className="places-hero__badge">
-              {lang === "vi" ? "#XU HƯỚNG" : "#TRENDING"}
-            </span>
-            <span className="places-hero__badge">
-              {lang === "vi" ? "BÀI NỔI BẬT" : "FEATURED ARTICLES"}
-            </span>
+            <span className="places-hero__badge">#TRENDING</span>
+            <span className="places-hero__badge">FEATURED ARTICLES</span>
           </div>
           <h1 className="places-hero__title">
             {lang === "vi"
-              ? "15 điểm đến tuyệt nhất Việt Nam năm 2026"
+              ? "15 địa điểm đẹp nhất Việt Nam năm 2026"
               : "15 best places to visit in Vietnam in 2026"}
           </h1>
           <div className="places-hero__meta">
             <span className="places-hero__author">
-              {lang === "vi" ? "Ban Biên Tập VinaTap" : "By VinaTap"}
+              {lang === "vi" ? "Bởi VinaTap" : "By VinaTap"}
             </span>
             <span className="places-hero__date">
               {lang === "vi" ? "16 Tháng 6, 2026" : "June 16, 2026"}
@@ -630,18 +580,10 @@ export default function BestPlaces2026Page() {
           {lang === "vi" ? (
             <>
               <p>
-                Việt Nam, đất nước với 34 tỉnh thành trải dài hơn 1.650 km hình chữ S,
-                là vùng đất được mẹ thiên nhiên ưu ái ban tặng cảnh quan trù phú và kỳ vĩ.
-                Mỗi vùng miền, mỗi cổ trấn đều mang trong mình bản sắc độc nhất vô nhị
-                về địa lý, văn hóa, ẩm thực và con người, hòa quyện thành vô vàn trải nghiệm
-                mà có dành cả đời cũng khó lòng khám phá hết. Sự phong phú này đôi khi
-                khiến du khách băn khoăn khi lên kế hoạch cho chuyến đi.
+                Việt Nam, đất nước với 34 tỉnh thành trải dài hơn 1.650 km theo hình chữ S, là mảnh đất được thiên nhiên ưu đãi với vô vàn cảnh quan thiên nhiên đa dạng và phong phú. Mỗi vùng miền, mỗi địa danh đều mang những nét đặc trưng riêng về địa lý, văn hóa, ẩm thực và con người, hòa quyện tạo nên muôn vàn trải nghiệm mà có lẽ cần cả cuộc đời mới khám phá hết. Sự phong phú này đôi khi khiến du khách băn khoăn khi lựa chọn điểm đến.
               </p>
               <p>
-                Thấu hiểu điều đó, chúng tôi đã tổng hợp danh sách 15 điểm đến đáng trải nghiệm
-                nhất giúp bạn dễ dàng lên lịch trình mà vẫn tận hưởng trọn vẹn tinh hoa của
-                dải đất hình chữ S. Danh sách này được bình chọn từ hơn 8.000 du khách khắp nơi
-                trong cộng đồng (kết quả bình chọn chi tiết ở cuối bài viết này).
+                Hiểu được điều đó, chúng tôi đã tổng hợp danh sách 15 điểm đến được khuyến cử hàng đầu để giúp du khách dễ dàng lên kế hoạch cho chuyến đi của mình mà vẫn đảm bảo trải nghiệm trọn vẹn những nét đặc sắc nhất của Việt Nam. Danh sách này được bình chọn dựa trên hơn 8.000 lượt yêu thích từ cộng đồng du khách quốc tế.
               </p>
             </>
           ) : (
@@ -659,8 +601,7 @@ export default function BestPlaces2026Page() {
                 Understanding this, we have compiled a list of the 15 most
                 recommended destinations to help travelers plan their trip more
                 easily while ensuring they experience the most distinctive aspects
-                of Vietnam. This list is based on over 8,000 votes from our community
-                (voting results can be found at the end of this article).
+                of Vietnam. This list is based on over 8,000 votes from our community.
               </p>
             </>
           )}
@@ -669,21 +610,19 @@ export default function BestPlaces2026Page() {
         {/* 3D RELIEF MAP SECTION (SCREENSHOTS 2 & 3) */}
         <section className="places-map-section">
           <div className="places-map-card">
-            <img
-              src="/guide/15-best-places/vietnam-map-3d.jpg"
-              alt={lang === "vi" ? "15 Điểm Đến Tuyệt Nhất Việt Nam - Bản Đồ Địa Hình 3D" : "15 Best Places to Visit in Vietnam - 3D Relief Travel Map"}
-              className="places-map-img"
-              loading="eager"
-            />
-            <div className="places-map-banner">
-              {lang === "vi"
-                ? "15 ĐIỂM ĐẾN TUYỆT NHẤT VIỆT NAM"
-                : "15 BEST PLACES TO VISIT IN VIETNAM"}
-            </div>
+            <picture>
+              <source srcSet="/guide/15-best-places/vietnam-map-3d.webp" type="image/webp" />
+              <img
+                src="/guide/15-best-places/vietnam-map-3d.jpg"
+                alt="15 Best Places to Visit in Vietnam - 3D Relief Travel Map"
+                className="places-map-img"
+                loading="eager"
+              />
+            </picture>
           </div>
           <p className="places-map-caption">
             {lang === "vi"
-              ? "15 điểm đến tuyệt nhất Việt Nam năm 2026"
+              ? "Bản đồ 15 địa điểm đẹp nhất Việt Nam năm 2026"
               : "15 best places to visit in Vietnam in 2026"}
           </p>
 
@@ -691,141 +630,71 @@ export default function BestPlaces2026Page() {
             {lang === "vi" ? (
               <>
                 <p>
-                  Tự tạo bản đồ du lịch cá nhân hóa các điểm đến tuyệt nhất Việt Nam cùng Trợ lý AI.
+                  Tạo bản đồ du lịch cá nhân hóa các điểm đến tuyệt nhất Việt Nam cùng VinaTap.
                 </p>
                 <p>
-                  Chỉ cần mở{" "}
-                  <a
-                    href="#ai-companion"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setAiCompanionOpen(true);
-                    }}
-                  >
-                    Trợ lý AI VinaTap
-                  </a>
-                  , chia sẻ phong cách du lịch bạn muốn, lưu lại các điểm đến yêu thích và
-                  tải bản đồ hành trình riêng dưới định dạng PDF.
+                  Mở Trợ lý AI Du lịch, chia sẻ mong muốn về chuyến đi, lưu lại các điểm bạn muốn khám phá và tải bản đồ hành trình riêng cho bạn.
                 </p>
-                <div style={{ marginTop: "18px" }}>
-                  <button
-                    type="button"
-                    className="places-cta-btn"
-                    style={{ padding: "10px 26px", fontSize: "14px" }}
-                    onClick={() => setAiCompanionOpen(true)}
-                  >
-                    Tạo bản đồ của bạn
-                  </button>
-                </div>
               </>
             ) : (
               <>
                 <p>
                   Create your own personalized map of Vietnam's best places to visit
-                  with Triplon.
+                  with VinaTap.
                 </p>
                 <p>
-                  Simply open{" "}
-                  <a
-                    href="#ai-companion"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setAiCompanionOpen(true);
-                    }}
-                  >
-                    Triplon.ai
-                  </a>
-                  , tell it what kind of trip you're planning, save the destinations you'd
-                  like to explore, and download your custom travel map as a PDF.
+                  Simply open AI Travel Companion, tell it what kind of trip you're
+                  planning, save the destinations you'd like to explore, and download
+                  your custom travel map.
                 </p>
-                <div style={{ marginTop: "18px" }}>
-                  <button
-                    type="button"
-                    className="places-cta-btn"
-                    style={{ padding: "10px 26px", fontSize: "14px" }}
-                    onClick={() => setAiCompanionOpen(true)}
-                  >
-                    Create Your Map
-                  </button>
-                </div>
               </>
             )}
+            <div style={{ marginTop: "18px" }}>
+              <button
+                type="button"
+                className="places-cta-btn"
+                style={{ padding: "10px 26px", fontSize: "14px" }}
+                onClick={() => setAiCompanionOpen(true)}
+              >
+                <Sparkles size={15} />
+                <span>
+                  {lang === "vi" ? "Lên kế hoạch du lịch" : "Create Your Map"}
+                </span>
+              </button>
+            </div>
           </div>
         </section>
 
         {/* ─── 5. THE 15 NUMBERED DESTINATIONS (SCREENSHOTS 4 & 5) ─── */}
         <div className="places-list">
-          {PLACES_ARTICLE_DATA.map((item) => {
-            const displayTitle = lang === "vi" && item.titleVi ? item.titleVi : item.title;
-            const paragraphsToRender = (lang === "vi" && item.paragraphsVi) ? item.paragraphsVi : item.paragraphs;
-
-            return (
-              <article
-                key={item.number}
-                id={`place-${item.number}`}
-                className="place-item"
-              >
-                <h2 className="place-item__title">
-                  {item.number}. {displayTitle}
-                </h2>
-                <div className="place-item__layout">
-                  <div className="place-item__img-wrap">
-                    <img
-                      src={item.image}
-                      alt={`${item.number}. ${displayTitle} - Vietnam Travel 2026`}
-                      className="place-item__img"
-                      loading={item.number <= 4 ? "eager" : "lazy"}
-                    />
-                  </div>
-                  <div className="place-item__desc">
-                    {paragraphsToRender.map((p, idx) => (
-                      <p key={idx}>{renderTextWithLinks(p)}</p>
-                    ))}
-                  </div>
+          {PLACES_ARTICLE_DATA.map((item) => (
+            <article
+              key={item.number}
+              id={`place-${item.number}`}
+              className="place-item"
+            >
+              <h2 className="place-item__title">
+                {item.number}. {lang === "vi" ? item.titleVi : item.title}
+              </h2>
+              <div className="place-item__layout">
+                <div className="place-item__img-wrap">
+                  <img
+                    src={item.image}
+                    alt={`${item.number}. ${item.title} - Vietnam Travel 2026`}
+                    className="place-item__img"
+                    loading={item.number <= 4 ? "eager" : "lazy"}
+                  />
                 </div>
-              </article>
-            );
-          })}
+                <div className="place-item__desc">
+                  {item.paragraphs.map((p, idx) => (
+                    <p key={idx}>{renderTextWithLinks(p)}</p>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
 
-        {/* ─── 6. COMMUNITY SURVEY / VOTING ─── */}
-        <section className="places-survey-card">
-          <h3 className="places-survey-title">
-            {lang === "vi"
-              ? "Điểm đến yêu thích nhất của bạn tại Việt Nam năm 2026 là gì?"
-              : "What is your favorite place in Vietnam in 2026?"}
-          </h3>
-          <p className="places-survey-subtitle">
-            {lang === "vi"
-              ? "Cùng hơn 8.000 du khách quốc tế và Việt Nam bình chọn cho điểm đến ấn tượng nhất!"
-              : "Join over 8,000 global travelers in voting for Vietnam’s most unforgettable destination!"}
-          </p>
-          <div className="places-survey-grid">
-            {Object.entries(votes).map(([city, count]) => {
-              const displayCity = lang === "vi" && CITY_NAMES_MAP[city]?.vi ? CITY_NAMES_MAP[city].vi : city;
-              return (
-                <button
-                  key={city}
-                  type="button"
-                  className={`places-survey-btn ${votedPlace === city ? "voted" : ""}`}
-                  onClick={() => handleVote(city)}
-                >
-                  <span>{displayCity}</span>
-                  <span className="places-survey-badge">
-                    {count.toLocaleString()} {lang === "vi" ? "lượt bình chọn" : "votes"}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          {votedPlace && (
-            <p style={{ marginTop: "16px", color: "#0d9488", fontWeight: 600, fontSize: "14px" }}>
-              {lang === "vi"
-                ? `✓ Cảm ơn bạn đã bình chọn cho ${CITY_NAMES_MAP[votedPlace]?.vi || votedPlace}!`
-                : `✓ Thank you for voting for ${votedPlace}!`}
-            </p>
-          )}
-        </section>
       </main>
 
       {/* ─── 7. FLOATING AI COMPANION BUTTON & MODAL (Hình 1) ─── */}
@@ -835,7 +704,7 @@ export default function BestPlaces2026Page() {
           className="vnn-floating-widget__btn"
           onClick={() => setAiCompanionOpen((prev) => !prev)}
           aria-label="Open AI Travel Companion"
-          title={lang === "vi" ? "Trợ lý Du lịch Thông minh VinaTap" : "AI Travel Companion - Smart Travel Assistant"}
+          title="AI Travel Companion - Trợ lý Du lịch Thông minh"
         >
           <span className="vnn-floating-widget__halo-outer" />
           <span className="vnn-floating-widget__halo-mid" />
@@ -855,7 +724,7 @@ export default function BestPlaces2026Page() {
 
       {/* Hộp Chat AI Travel Companion */}
       <ProvinceChatbot
-        province={{ name: lang === "vi" ? "Việt Nam" : "Vietnam", slug: "viet-nam" }}
+        province={{ name: "Việt Nam", slug: "viet-nam" }}
         isOpen={aiCompanionOpen}
         onToggleOpen={setAiCompanionOpen}
         hideFab={true}
@@ -869,11 +738,7 @@ export default function BestPlaces2026Page() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="vnn-search-modal__header">
-              <h3>
-                {lang === "vi"
-                  ? "Tìm kiếm cẩm nang & điểm đến"
-                  : "Search Guides & Destinations"}
-              </h3>
+              <h3>Tìm kiếm cẩm nang & điểm đến</h3>
               <button
                 type="button"
                 className="vnn-search-modal__close"
@@ -887,18 +752,14 @@ export default function BestPlaces2026Page() {
                 <Search size={18} className="vnn-search-icon" />
                 <input
                   type="text"
-                  placeholder={
-                    lang === "vi"
-                      ? "Nhập tên thành phố (Hà Nội, Hội An, Sapa, Đà Nẵng...)..."
-                      : "Search a city (Hanoi, Hoi An, Sapa, Da Nang...)..."
-                  }
+                  placeholder="Nhập tên thành phố (Hà Nội, Hội An, Sapa, Đà Nẵng...)..."
                   value={searchModalText}
                   onChange={(e) => setSearchModalText(e.target.value)}
                   autoFocus
                 />
               </div>
               <div className="vnn-search-quick-tags">
-                <span>{lang === "vi" ? "Gợi ý:" : "Suggestions:"}</span>
+                <span>Gợi ý:</span>
                 {["Hạ Long", "Hội An", "Đà Nẵng", "Ninh Bình", "Sapa", "Hà Giang"].map((tag) => (
                   <button
                     key={tag}
@@ -917,11 +778,7 @@ export default function BestPlaces2026Page() {
       {/* ─── 9. EDITORIAL FOOTER ─── */}
       <footer className="home-footer" style={{ marginTop: "60px" }}>
         <div className="home-footer__bottom">
-          <p>
-            {lang === "vi"
-              ? "© 2026 VinaTap. Tất cả quyền được bảo lưu. Cẩm nang du lịch 34 tỉnh thành Việt Nam."
-              : "© 2026 VinaTap. All rights reserved. Travel guide to 34 provinces of Vietnam."}
-          </p>
+          <p>© 2026 VinaTap. Tất cả quyền được bảo lưu. Cẩm nang du lịch 34 tỉnh thành Việt Nam.</p>
           <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
             <a
               href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
