@@ -9,15 +9,18 @@ export const DANANG_GUIDE_DATA = {
       id: "mikazuki",
       name: "Công viên nước Mikazuki Đà Nẵng",
       category: "attraction",
-      image: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80",
-      address: "Khu du lịch Xuân Thiều, Đ. Nguyễn Tất Thành, Q. Liên Chiểu, Đà Nẵng",
+      image:
+        "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80",
+      address:
+        "Khu du lịch Xuân Thiều, Đ. Nguyễn Tất Thành, Q. Liên Chiểu, Đà Nẵng",
       desc: "Tổ hợp công viên nước trong nhà và suối khoáng nóng chuẩn Onsen Nhật Bản lớn nhất miền Trung.",
     },
     {
       id: "mykhe",
       name: "Bãi biển Mỹ Khê Đà Nẵng",
       category: "beach",
-      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+      image:
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
       address: "Đường Võ Nguyên Giáp, Phước Mỹ, Sơn Trà, Đà Nẵng",
       desc: "Top bãi biển quyến rũ nhất hành tinh do Forbes bình chọn với bờ cát trắng mịn và làn nước trong xanh.",
     },
@@ -25,15 +28,18 @@ export const DANANG_GUIDE_DATA = {
       id: "suoiluong",
       name: "Khu du lịch Suối Lương Đà Nẵng",
       category: "attraction",
-      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80",
-      address: "Phường Hòa Hiệp Bắc, Liên Chiểu, Đà Nẵng (dưới chân đèo Hải Vân)",
+      image:
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80",
+      address:
+        "Phường Hòa Hiệp Bắc, Liên Chiểu, Đà Nẵng (dưới chân đèo Hải Vân)",
       desc: "Không gian sinh thái thiên nhiên xanh ngát với dòng suối mát lành và các nhà sàn dân tộc độc đáo.",
     },
     {
       id: "bana",
       name: "Cầu Vàng Bà Nà Hills",
       category: "attraction",
-      image: "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80",
+      image:
+        "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80",
       address: "Thôn An Sơn, Xã Hòa Ninh, Huyện Hòa Vang, Đà Nẵng",
       desc: "Kỳ quan kiến trúc bàn tay khổng lồ giữa mây ngàn và quần thể nghỉ dưỡng giải trí đẳng cấp quốc tế.",
     },
@@ -41,7 +47,8 @@ export const DANANG_GUIDE_DATA = {
       id: "nguhanhson",
       name: "Danh thắng Ngũ Hành Sơn",
       category: "temple",
-      image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+      image:
+        "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
       address: "81 Huyền Trân Công Chúa, Hòa Hải, Ngũ Hành Sơn, Đà Nẵng",
       desc: "Quần thể 5 ngọn núi đá vôi mang tên Kim Mộc Thủy Hỏa Thổ với hệ thống hang động và chùa chiền linh thiêng.",
     },
@@ -49,7 +56,8 @@ export const DANANG_GUIDE_DATA = {
       id: "caurong",
       name: "Cầu Rồng Đà Nẵng",
       category: "attraction",
-      image: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&q=80",
+      image:
+        "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&q=80",
       address: "Đường Nguyễn Văn Linh, Phước Ninh, Hải Châu, Đà Nẵng",
       desc: "Biểu tượng hiện đại của thành phố với màn phun lửa, phun nước rực rỡ vào mỗi dịp cuối tuần.",
     },
@@ -62,17 +70,21 @@ export const DANANG_GUIDE_DATA = {
         title: "Chip chip hấp sả - Đậm đà hương vị miền Trung",
         date: "08/07/2026",
         views: "128,632",
-        image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&q=80",
+        image:
+          "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&q=80",
         address: "Các quán hải sản ven biển đường Võ Nguyên Giáp & Hoàng Sa",
         desc: "Món ốc chip chip tươi ngọt hấp cùng sả ớt cay nồng, ăn kèm muối tiêu chanh chuẩn vị biển Đà Nẵng.",
       },
       {
         id: "c2",
-        title: "Lưu ngay list 10 quán bánh tráng kẹp Đà Nẵng càng ăn càng ghiền",
+        title:
+          "Lưu ngay list 10 quán bánh tráng kẹp Đà Nẵng càng ăn càng ghiền",
         date: "08/07/2026",
         views: "102,306",
-        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&q=80",
-        address: "Bánh tráng kẹp Dì Hoa (Núi Thành), Bánh tráng kẹp Dì Hoàng (K142/46/09 Điện Biên Phủ)",
+        image:
+          "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&q=80",
+        address:
+          "Bánh tráng kẹp Dì Hoa (Núi Thành), Bánh tráng kẹp Dì Hoàng (K142/46/09 Điện Biên Phủ)",
         desc: "Món ăn vặt trứ danh với nhân pate, trứng cút béo ngậy được nướng giòn rụm chấm nước sốt bò khô đặc sánh.",
       },
       {
@@ -80,32 +92,42 @@ export const DANANG_GUIDE_DATA = {
         title: "Top 11 quán bánh bèo Đà Nẵng ngon chuẩn vị nổi tiếng nhất",
         date: "09/09/2026",
         views: "98,889",
-        image: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
-        address: "Quán Bà Bé (100 Hoàng Văn Thụ), Quán Tâm (291 Nguyễn Chí Thanh)",
+        image:
+          "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
+        address:
+          "Quán Bà Bé (100 Hoàng Văn Thụ), Quán Tâm (291 Nguyễn Chí Thanh)",
         desc: "Bánh bèo chén bột gạo mềm mướt, phủ tôm chấy đỏ cam, mỡ hành thơm phức chan nước mắm chua ngọt.",
       },
       {
         id: "c4",
-        title: "Muốn tìm quán bánh tráng cuốn thịt heo Đà Nẵng chuẩn vị phải bỏ túi ngay danh sách này",
+        title:
+          "Muốn tìm quán bánh tráng cuốn thịt heo Đà Nẵng chuẩn vị phải bỏ túi ngay danh sách này",
         date: "05/06/2026",
         views: "98,277",
-        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80",
-        address: "Bánh tráng cuốn thịt heo Đại Lộc Nhỏ (27/2 Thái Phiên), Quán Mậu (35 Đỗ Thúc Tịnh)",
+        image:
+          "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80",
+        address:
+          "Bánh tráng cuốn thịt heo Đại Lộc Nhỏ (27/2 Thái Phiên), Quán Mậu (35 Đỗ Thúc Tịnh)",
         desc: "Thịt heo hai đầu da luộc mềm béo cuộn bánh tráng Đại Lộc, rau rừng tươi non chấm mắm nêm đậm đà.",
       },
     ],
     featuredMain: {
       id: "f1",
-      title: "Hải sản Năm Đảnh - Quán hải sản nổi tiếng nhất Đà Nẵng có ngon như lời đồn?",
-      image: "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=800&q=80",
+      title:
+        "Hải sản Năm Đảnh - Quán hải sản nổi tiếng nhất Đà Nẵng có ngon như lời đồn?",
+      image:
+        "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=800&q=80",
       address: "K139/H59/38 Trần Quang Khải, Thọ Quang, Sơn Trà, Đà Nẵng",
       desc: "Thiên đường hải sản đồng giá tươi rói nổi tiếng được đông đảo tín đồ ẩm thực săn đón khi tới Đà Nẵng.",
     },
     featuredSub: {
       id: "f2",
-      title: "Bê thui Cầu Mống - Đặc sản không thể bỏ qua trong hành trình trải nghiệm món ngon Đà Nẵng",
-      image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
-      address: "Bê thui Rô (895 Ngô Quyền), Bê thui Kim Chi (490 Trưng Nữ Vương)",
+      title:
+        "Bê thui Cầu Mống - Đặc sản không thể bỏ qua trong hành trình trải nghiệm món ngon Đà Nẵng",
+      image:
+        "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+      address:
+        "Bê thui Rô (895 Ngô Quyền), Bê thui Kim Chi (490 Trưng Nữ Vương)",
       desc: "Thịt bê quay than hồng da giòn thịt mềm ngọt thái lát mỏng chấm tương mè mắm cái trứ danh.",
     },
   },
@@ -113,35 +135,106 @@ export const DANANG_GUIDE_DATA = {
   guides: {
     transport: {
       title: "Di chuyển",
-      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80",
+      image:
+        "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80",
       articles: [
-        { id: "t1", title: "Top 6 nhà xe Đà Nẵng Sài Gòn tốt nhất 2026 cùng lịch trình, giá vé", link: "#" },
-        { id: "t2", title: "Hướng dẫn di chuyển từ TP.HCM đến Đà Nẵng thuận tiện nhất", link: "#" },
-        { id: "t3", title: "Di chuyển từ Hà Nội đến Đà Nẵng như thế nào nhanh và tiết kiệm?", link: "#" },
-        { id: "t4", title: "Top 9 hãng taxi Đà Nẵng uy tín, chuyên nghiệp và tận tâm nhất", link: "#" },
-        { id: "t5", title: "Review đoàn tàu chất lượng cao Hà Nội - Đà Nẵng SE19 và SE20", link: "#" },
+        {
+          id: "t1",
+          title:
+            "Top 6 nhà xe Đà Nẵng Sài Gòn tốt nhất 2026 cùng lịch trình, giá vé",
+          link: "#",
+        },
+        {
+          id: "t2",
+          title: "Hướng dẫn di chuyển từ TP.HCM đến Đà Nẵng thuận tiện nhất",
+          link: "#",
+        },
+        {
+          id: "t3",
+          title:
+            "Di chuyển từ Hà Nội đến Đà Nẵng như thế nào nhanh và tiết kiệm?",
+          link: "#",
+        },
+        {
+          id: "t4",
+          title:
+            "Top 9 hãng taxi Đà Nẵng uy tín, chuyên nghiệp và tận tâm nhất",
+          link: "#",
+        },
+        {
+          id: "t5",
+          title: "Review đoàn tàu chất lượng cao Hà Nội - Đà Nẵng SE19 và SE20",
+          link: "#",
+        },
       ],
     },
     itineraries: {
       title: "Gợi ý lịch trình",
-      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
+      image:
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
       articles: [
-        { id: "i1", title: "Lịch trình khám phá Bà Nà Hills tự túc trong 1 ngày trọn vẹn", link: "#" },
-        { id: "i2", title: "Lịch trình khám phá Đà Nẵng tự túc trong 1 ngày vô cùng thú vị", link: "#" },
-        { id: "i3", title: "Lịch trình Đà Nẵng 4N3Đ tự túc lý tưởng nhất cho nhóm bạn & gia đình", link: "#" },
-        { id: "i4", title: "Lịch trình du lịch Đà Nẵng 4 ngày 3 đêm chi tiết từ A đến Z", link: "#" },
-        { id: "i5", title: "Gợi ý lịch trình du lịch Đà Nẵng 3 ngày 2 đêm siêu chi tiết 2026", link: "#" },
+        {
+          id: "i1",
+          title: "Lịch trình khám phá Bà Nà Hills tự túc trong 1 ngày trọn vẹn",
+          link: "#",
+        },
+        {
+          id: "i2",
+          title:
+            "Lịch trình khám phá Đà Nẵng tự túc trong 1 ngày vô cùng thú vị",
+          link: "#",
+        },
+        {
+          id: "i3",
+          title:
+            "Lịch trình Đà Nẵng 4N3Đ tự túc lý tưởng nhất cho nhóm bạn & gia đình",
+          link: "#",
+        },
+        {
+          id: "i4",
+          title: "Lịch trình du lịch Đà Nẵng 4 ngày 3 đêm chi tiết từ A đến Z",
+          link: "#",
+        },
+        {
+          id: "i5",
+          title:
+            "Gợi ý lịch trình du lịch Đà Nẵng 3 ngày 2 đêm siêu chi tiết 2026",
+          link: "#",
+        },
       ],
     },
     tips: {
       title: "Kinh nghiệm đi tự túc",
-      image: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=600&q=80",
+      image:
+        "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=600&q=80",
       articles: [
-        { id: "tp1", title: "Kinh nghiệm đi Bà Nà Hills tự túc: Đi đâu, chơi gì, giá vé 2026", link: "#" },
-        { id: "tp2", title: "Kinh nghiệm đi bán đảo Sơn Trà tự túc bạn đã biết chưa?", link: "#" },
-        { id: "tp3", title: "Kinh nghiệm vui chơi vòng quay Mặt Trời Sun Wheel Đà Nẵng", link: "#" },
-        { id: "tp4", title: "Kinh nghiệm tham quan Chùa Nam Sơn Đà Nẵng, xem ngay kẻo lỡ", link: "#" },
-        { id: "tp5", title: "Kinh nghiệm đi Đà Nẵng mua gì về làm quà vừa tiết kiệm lại ý nghĩa?", link: "#" },
+        {
+          id: "tp1",
+          title:
+            "Kinh nghiệm đi Bà Nà Hills tự túc: Đi đâu, chơi gì, giá vé 2026",
+          link: "#",
+        },
+        {
+          id: "tp2",
+          title: "Kinh nghiệm đi bán đảo Sơn Trà tự túc bạn đã biết chưa?",
+          link: "#",
+        },
+        {
+          id: "tp3",
+          title: "Kinh nghiệm vui chơi vòng quay Mặt Trời Sun Wheel Đà Nẵng",
+          link: "#",
+        },
+        {
+          id: "tp4",
+          title: "Kinh nghiệm tham quan Chùa Nam Sơn Đà Nẵng, xem ngay kẻo lỡ",
+          link: "#",
+        },
+        {
+          id: "tp5",
+          title:
+            "Kinh nghiệm đi Đà Nẵng mua gì về làm quà vừa tiết kiệm lại ý nghĩa?",
+          link: "#",
+        },
       ],
     },
   },
@@ -153,7 +246,8 @@ export const DANANG_GUIDE_DATA = {
         title: "Cầu Rồng phun lửa mấy giờ, thứ mấy? Review chi tiết 2026",
         date: "03/01/2026",
         views: "74,452",
-        image: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80",
+        image:
+          "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80",
         desc: "Lịch phun lửa & phun nước vào 21:00 thứ Bảy, Chủ Nhật hàng tuần cùng những góc ngắm đẹp nhất.",
       },
       {
@@ -161,7 +255,8 @@ export const DANANG_GUIDE_DATA = {
         title: "Phá đảo khu vui chơi Fantasy Park Bà Nà Hills từ A đến Z",
         date: "15/10/2024",
         views: "59,496",
-        image: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?w=400&q=80",
+        image:
+          "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?w=400&q=80",
         desc: "Tổng hợp hơn 105 trò chơi mạo hiểm cảm giác mạnh đỉnh cao trong nhà lớn nhất Việt Nam.",
       },
       {
@@ -169,28 +264,35 @@ export const DANANG_GUIDE_DATA = {
         title: "Oanh tạc chợ Bắc Mỹ An thưởng thức trọn vẹn đặc sản Đà Nẵng",
         date: "09/11/2024",
         views: "44,532",
-        image: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
+        image:
+          "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
         desc: "Khu chợ thiên đường ẩm thực sinh viên với kem bơ cô Vân trứ danh, ốc hút và bánh căn giòn rụm.",
       },
       {
         id: "r4",
-        title: "Da Nang Downtown tổ hợp vui chơi giải trí đẳng cấp bên sông Hàn",
+        title:
+          "Da Nang Downtown tổ hợp vui chơi giải trí đẳng cấp bên sông Hàn",
         date: "05/09/2025",
         views: "37,512",
-        image: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80",
+        image:
+          "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80",
         desc: "Không gian đêm náo nhiệt với show nghệ thuật Rực rỡ sông Hàn và chợ đêm sầm uất Vui Phết.",
       },
     ],
     featuredMain: {
       id: "rf1",
-      title: "Top 7 khu vui chơi trẻ em ở Đà Nẵng an toàn, hấp dẫn cho gia đình",
-      image: "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80",
+      title:
+        "Top 7 khu vui chơi trẻ em ở Đà Nẵng an toàn, hấp dẫn cho gia đình",
+      image:
+        "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80",
       desc: "Những điểm vui chơi giải trí giáo dục bổ ích lý tưởng cho các gia đình có con nhỏ khi du lịch Đà Nẵng.",
     },
     featuredSub: {
       id: "rf2",
-      title: "Chèo SUP ở bãi Mân Thái, trải nghiệm cực mới lạ đón bình minh ở Đà Nẵng",
-      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+      title:
+        "Chèo SUP ở bãi Mân Thái, trải nghiệm cực mới lạ đón bình minh ở Đà Nẵng",
+      image:
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
       desc: "Thả mình trên ván chèo lênh đênh giữa biển ngắm mặt trời mọc rạng ngời dưới chân bán đảo Sơn Trà.",
     },
   },
@@ -443,8 +545,12 @@ export function getProvinceCover(province, fallback = "") {
     const key = province.toLowerCase().trim();
     return PROVINCE_IMAGE_OVERRIDES[key] || fallback;
   }
-  const slug = (province.slug || province.province_slug || "").toLowerCase().trim();
-  const name = (province.name || province.province_name || "").toLowerCase().trim();
+  const slug = (province.slug || province.province_slug || "")
+    .toLowerCase()
+    .trim();
+  const name = (province.name || province.province_name || "")
+    .toLowerCase()
+    .trim();
   return (
     PROVINCE_IMAGE_OVERRIDES[slug] ||
     PROVINCE_IMAGE_OVERRIDES[name] ||
@@ -500,7 +606,10 @@ export const FOOD_IMAGE_OVERRIDES = {
   "phở thìn": "/foods/pho-thin-lo-duc.jpg",
 };
 
-export function getFoodImage(food, fallback = "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80") {
+export function getFoodImage(
+  food,
+  fallback = "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
+) {
   if (!food) return fallback;
   const title = (food.title || food.name || "").toLowerCase().trim();
   for (const [key, val] of Object.entries(FOOD_IMAGE_OVERRIDES)) {
@@ -510,22 +619,29 @@ export function getFoodImage(food, fallback = "https://images.unsplash.com/photo
 }
 
 export const ARTICLE_IMAGE_OVERRIDES = {
-  "lên tầng 81 landmark 81 ngắm toàn cảnh sài gòn lung linh về đêm": "/reviews/landmark-81-ve-dem.jpg",
+  "lên tầng 81 landmark 81 ngắm toàn cảnh sài gòn lung linh về đêm":
+    "/reviews/landmark-81-ve-dem.jpg",
   "lên tầng 81 landmark 81": "/reviews/landmark-81-ve-dem.jpg",
   "landmark 81": "/reviews/landmark-81-ve-dem.jpg",
-  "chinh phục 486 bậc thang hang múa ngắm trọn mùa lúa chín tam cốc": "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
-  "chinh phục 486 bậc thang hang múa": "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
+  "chinh phục 486 bậc thang hang múa ngắm trọn mùa lúa chín tam cốc":
+    "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
+  "chinh phục 486 bậc thang hang múa":
+    "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
   "hang múa ngắm trọn mùa lúa chín": "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
   "hang múa": "/reviews/chinh-phuc-hang-mua-tam-coc.jpg",
-  "kinh nghiệm đi tuyến cáp treo cát bà vượt biển ngắm vịnh lan hạ": "/reviews/cap-treo-cat-ba.jpg",
+  "kinh nghiệm đi tuyến cáp treo cát bà vượt biển ngắm vịnh lan hạ":
+    "/reviews/cap-treo-cat-ba.jpg",
   "kinh nghiệm đi tuyến cáp treo cát bà": "/reviews/cap-treo-cat-ba.jpg",
   "tuyến cáp treo cát bà vượt biển": "/reviews/cap-treo-cat-ba.jpg",
   "cáp treo cát bà": "/reviews/cap-treo-cat-ba.jpg",
-  "check-in quán cà phê đường tàu hà nội - trải nghiệm độc nhất vô nhị": "/reviews/ca-phe-duong-tau-ha-noi.jpg",
-  "check-in quán cà phê đường tàu hà nội": "/reviews/ca-phe-duong-tau-ha-noi.jpg",
+  "check-in quán cà phê đường tàu hà nội - trải nghiệm độc nhất vô nhị":
+    "/reviews/ca-phe-duong-tau-ha-noi.jpg",
+  "check-in quán cà phê đường tàu hà nội":
+    "/reviews/ca-phe-duong-tau-ha-noi.jpg",
   "cà phê đường tàu hà nội": "/reviews/ca-phe-duong-tau-ha-noi.jpg",
   "cà phê đường tàu": "/reviews/ca-phe-duong-tau-ha-noi.jpg",
-  "thưởng thức cà phê trứng giảng - vị ngọt béo ấm nồng nức tiếng hà nội": "/reviews/ca-phe-trung-giang.jpg",
+  "thưởng thức cà phê trứng giảng - vị ngọt béo ấm nồng nức tiếng hà nội":
+    "/reviews/ca-phe-trung-giang.jpg",
   "thưởng thức cà phê trứng giảng": "/reviews/ca-phe-trung-giang.jpg",
   "cà phê trứng giảng": "/reviews/ca-phe-trung-giang.jpg",
   "cà phê trứng": "/reviews/ca-phe-trung-giang.jpg",
@@ -543,7 +659,8 @@ export function getArticleImage(art, fallback = "") {
 export const FESTIVAL_IMAGE_OVERRIDES = {
   "lễ hội cầu ngư đà nẵng": "/festivals/le-hoi-cau-ngu-da-nang.jpg",
   "lễ hội đua thuyền đà nẵng": "/festivals/le-hoi-dua-thuyen-da-nang.jpg",
-  "lễ hội quán thế âm ngũ hành sơn đà nẵng": "/festivals/le-hoi-quan-the-am-da-nang.jpg",
+  "lễ hội quán thế âm ngũ hành sơn đà nẵng":
+    "/festivals/le-hoi-quan-the-am-da-nang.jpg",
   "lễ hội sông nước tp. hồ chí minh": "/festivals/le-hoi-song-nuoc-tphcm.jpg",
   "lễ hội sông nước tphcm": "/festivals/le-hoi-song-nuoc-tphcm.jpg",
   "lễ hội sông nước": "/festivals/le-hoi-song-nuoc-tphcm.jpg",
@@ -556,7 +673,10 @@ export const FESTIVAL_IMAGE_OVERRIDES = {
   "gò đống đa": "/festivals/le-hoi-go-dong-da.jpg",
 };
 
-export function getFestivalImage(fe, fallback = "/festivals/le-hoi-cau-ngu-da-nang.jpg") {
+export function getFestivalImage(
+  fe,
+  fallback = "/festivals/le-hoi-cau-ngu-da-nang.jpg",
+) {
   if (!fe) return fallback;
   const title = (fe.title || fe.name || "").toLowerCase().trim();
   for (const [key, val] of Object.entries(FESTIVAL_IMAGE_OVERRIDES)) {
@@ -605,7 +725,10 @@ export function getProvinceGuideData(
           l.image ||
           `https://images.unsplash.com/photo-1528127269322-539801943592?w=800&q=80`,
         address: l.address || `${pName}, Việt Nam`,
-        desc: l.description || l.desc || `Danh lam thắng cảnh tiêu biểu tại ${pName}.`,
+        desc:
+          l.description ||
+          l.desc ||
+          `Danh lam thắng cảnh tiêu biểu tại ${pName}.`,
         maps_place_id: l.maps_place_id,
         latitude: l.latitude,
         longitude: l.longitude,
@@ -632,15 +755,17 @@ export function getProvinceGuideData(
       (nonFeat.length >= 2 ? nonFeat[nonFeat.length - 2] : dbFoods[0]);
     const fSubRaw =
       feat[1] ||
-      (nonFeat.length >= 1 ? nonFeat[nonFeat.length - 1] : dbFoods[1] || dbFoods[0]);
-    
+      (nonFeat.length >= 1
+        ? nonFeat[nonFeat.length - 1]
+        : dbFoods[1] || dbFoods[0]);
+
     // Nếu có feat thì list là nonFeat, nếu không có feat thì list loại trừ 2 món đã đưa lên card lớn
     const listRaw =
       feat.length > 0
         ? nonFeat
         : nonFeat.length > 2
-        ? nonFeat.slice(0, nonFeat.length - 2)
-        : nonFeat;
+          ? nonFeat.slice(0, nonFeat.length - 2)
+          : nonFeat;
 
     culinary = {
       list: listRaw.map((f, i) => ({
@@ -648,24 +773,38 @@ export function getProvinceGuideData(
         title: f.title,
         date: f.published_date || f.date || "01/01/2026",
         views: f.view_count || f.views || null,
-        image: getFoodImage(f, "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80"),
+        image: getFoodImage(
+          f,
+          "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
+        ),
         address: f.address || `${pName}`,
         desc: f.description || f.desc || "",
       })),
-      featuredMain: fMainRaw ? {
-        id: fMainRaw.id || "fmain",
-        title: fMainRaw.title,
-        image: getFoodImage(fMainRaw, "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=800&q=80"),
-        address: fMainRaw.address || `${pName}`,
-        desc: fMainRaw.description || fMainRaw.desc || "",
-      } : null,
-      featuredSub: fSubRaw && fSubRaw.id !== fMainRaw?.id ? {
-        id: fSubRaw.id || "fsub",
-        title: fSubRaw.title,
-        image: getFoodImage(fSubRaw, "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80"),
-        address: fSubRaw.address || `${pName}`,
-        desc: fSubRaw.description || fSubRaw.desc || "",
-      } : null,
+      featuredMain: fMainRaw
+        ? {
+            id: fMainRaw.id || "fmain",
+            title: fMainRaw.title,
+            image: getFoodImage(
+              fMainRaw,
+              "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=800&q=80",
+            ),
+            address: fMainRaw.address || `${pName}`,
+            desc: fMainRaw.description || fMainRaw.desc || "",
+          }
+        : null,
+      featuredSub:
+        fSubRaw && fSubRaw.id !== fMainRaw?.id
+          ? {
+              id: fSubRaw.id || "fsub",
+              title: fSubRaw.title,
+              image: getFoodImage(
+                fSubRaw,
+                "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+              ),
+              address: fSubRaw.address || `${pName}`,
+              desc: fSubRaw.description || fSubRaw.desc || "",
+            }
+          : null,
     };
   } else if (province?.slug === "da-nang") {
     culinary = DANANG_GUIDE_DATA.culinary;
@@ -687,7 +826,9 @@ export function getProvinceGuideData(
     guides = {
       transport: {
         title: "Di chuyển",
-        image: transportArts[0]?.image_url || "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80",
+        image:
+          transportArts[0]?.image_url ||
+          "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80",
         articles: transportArts.map((a, i) => ({
           id: a.id || `t-${i}`,
           title: a.title,
@@ -697,7 +838,9 @@ export function getProvinceGuideData(
       },
       itineraries: {
         title: "Gợi ý lịch trình",
-        image: itinArts[0]?.image_url || "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
+        image:
+          itinArts[0]?.image_url ||
+          "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
         articles: itinArts.map((a, i) => ({
           id: a.id || `i-${i}`,
           title: a.title,
@@ -707,7 +850,9 @@ export function getProvinceGuideData(
       },
       tips: {
         title: "Kinh nghiệm đi tự túc",
-        image: tipsArts[0]?.image_url || "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=600&q=80",
+        image:
+          tipsArts[0]?.image_url ||
+          "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=600&q=80",
         articles: tipsArts.map((a, i) => ({
           id: a.id || `tp-${i}`,
           title: a.title,
@@ -736,17 +881,23 @@ export function getProvinceGuideData(
 
       const rMainRaw =
         featRev[0] ||
-        (nonFeatRev.length >= 2 ? nonFeatRev[nonFeatRev.length - 2] : reviewArts[0]);
+        (nonFeatRev.length >= 2
+          ? nonFeatRev[nonFeatRev.length - 2]
+          : reviewArts[0]);
       const rSubRaw =
         featRev[1] ||
-        (nonFeatRev.length >= 1 ? nonFeatRev[nonFeatRev.length - 1] : (reviewArts.length > 1 ? reviewArts[1] : null));
-      
+        (nonFeatRev.length >= 1
+          ? nonFeatRev[nonFeatRev.length - 1]
+          : reviewArts.length > 1
+            ? reviewArts[1]
+            : null);
+
       const listRevRaw =
         featRev.length > 0
           ? nonFeatRev
           : nonFeatRev.length > 2
-          ? nonFeatRev.slice(0, nonFeatRev.length - 2)
-          : nonFeatRev;
+            ? nonFeatRev.slice(0, nonFeatRev.length - 2)
+            : nonFeatRev;
 
       reviews = {
         list: listRevRaw.map((r, i) => ({
@@ -754,21 +905,33 @@ export function getProvinceGuideData(
           title: r.title,
           date: r.published_date || r.date || "01/01/2026",
           views: r.view_count || r.views || null,
-          image: getArticleImage(r, "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80"),
+          image: getArticleImage(
+            r,
+            "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80",
+          ),
           desc: r.description || r.desc || "",
         })),
         featuredMain: {
           id: rMainRaw.id || "rmain",
           title: rMainRaw.title,
-          image: getArticleImage(rMainRaw, "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80"),
+          image: getArticleImage(
+            rMainRaw,
+            "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=800&q=80",
+          ),
           desc: rMainRaw.description || rMainRaw.desc || "",
         },
-        featuredSub: rSubRaw && rSubRaw.id !== rMainRaw?.id ? {
-          id: rSubRaw.id || "rsub",
-          title: rSubRaw.title,
-          image: getArticleImage(rSubRaw, "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80"),
-          desc: rSubRaw.description || rSubRaw.desc || "",
-        } : null,
+        featuredSub:
+          rSubRaw && rSubRaw.id !== rMainRaw?.id
+            ? {
+                id: rSubRaw.id || "rsub",
+                title: rSubRaw.title,
+                image: getArticleImage(
+                  rSubRaw,
+                  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+                ),
+                desc: rSubRaw.description || rSubRaw.desc || "",
+              }
+            : null,
       };
     } else if (province?.slug === "da-nang") {
       reviews = DANANG_GUIDE_DATA.reviews;
@@ -1065,4 +1228,38 @@ function getGenericFallback(pName, province) {
       },
     ],
   };
+}
+
+/**
+ * Danh sách Tour & Dịch vụ liên kết (Affiliate Klook, Agoda...) theo từng tỉnh thành
+ */
+export const AFFILIATE_EXPERIENCES = {
+  "ha-noi": [
+    {
+      id: "hn-klook-bus",
+      title: "Vé Xe Bus 2 Tầng Hà Nội từ City Sightseeing",
+      category: "Vé tham quan & Tour",
+      provider: "Klook",
+      badge: "Bán chạy nhất",
+      rating: "4.8",
+      reviewCount: "2.6k+ đã đặt",
+      price: "105.600đ",
+      originalPrice: "120.000đ",
+      discount: "-12%",
+      image:
+        "https://res.klook.com/image/upload/w_1265,h_791,c_fill,q_85/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/gxc5tz9mebxj96p7jf7d.webp",
+      features: [
+        "Ngắm nhìn 36 phố phường và hơn 20 danh thắng Hà Nội từ tầng 2 nóc mở",
+        "Thuyết minh Audio Guide đa ngôn ngữ tự động định vị GPS",
+        "Tự do lên xuống (Hop-on Hop-off) không giới hạn tại các điểm dừng nổi tiếng",
+      ],
+      affiliateUrl: "https://shorten.asia/TxC23sub",
+      btnText: "Đặt vé ngay qua Klook",
+    },
+  ],
+};
+
+export function getProvinceAffiliates(slug) {
+  if (!slug) return [];
+  return AFFILIATE_EXPERIENCES[slug] || [];
 }

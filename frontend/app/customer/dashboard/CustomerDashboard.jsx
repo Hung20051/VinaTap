@@ -26,7 +26,13 @@ import {
   Gift,
 } from "lucide-react";
 import { albumAPI, nfcAPI, authAPI, provinceAPI } from "@/lib/api";
-import { getUser, updateUser, clearAuth, isAdmin, isLoggedIn } from "@/lib/auth";
+import {
+  getUser,
+  updateUser,
+  clearAuth,
+  isAdmin,
+  isLoggedIn,
+} from "@/lib/auth";
 import { applyStoredTheme, getLang } from "@/lib/prefs";
 import { t, getProvinceName } from "@/lib/i18n";
 import { getProvinceCover } from "@/lib/provinceGuideData";
@@ -46,10 +52,24 @@ const TOTAL_PROVINCES = 34;
 
 // Hệ thống danh hiệu & cấp bậc thám hiểm
 function getExplorerRank(count, l = "vi") {
-  if (count >= 34) return { rank: l === "en" ? "Legendary Explorer" : "Đại Sứ Bản Đồ", level: 5, color: "#e11d48", icon: "👑" };
-  if (count >= 24) return { rank: l === "en" ? "Master Collector" : "Bậc Thầy Xê Dịch", level: 4, color: "#f59e0b", icon: "⭐" };
-  if (count >= 12) return { rank: t(l, "rankLevel3"), level: 3, color: "#8b5cf6", icon: "🧭" };
-  if (count >= 5) return { rank: t(l, "rankLevel2"), level: 2, color: "#3b82f6", icon: "🎒" };
+  if (count >= 34)
+    return {
+      rank: l === "en" ? "Legendary Explorer" : "Đại Sứ Bản Đồ",
+      level: 5,
+      color: "#e11d48",
+      icon: "👑",
+    };
+  if (count >= 24)
+    return {
+      rank: l === "en" ? "Master Collector" : "Bậc Thầy Xê Dịch",
+      level: 4,
+      color: "#f59e0b",
+      icon: "⭐",
+    };
+  if (count >= 12)
+    return { rank: t(l, "rankLevel3"), level: 3, color: "#8b5cf6", icon: "🧭" };
+  if (count >= 5)
+    return { rank: t(l, "rankLevel2"), level: 2, color: "#3b82f6", icon: "🎒" };
   return { rank: t(l, "rankLevel1"), level: 1, color: "#10b981", icon: "🌱" };
 }
 
@@ -88,7 +108,8 @@ export default function CustomerDashboard() {
 
     const handleLangUpdated = (e) => setLangState(e.detail);
     window.addEventListener("vinatap:lang-updated", handleLangUpdated);
-    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () =>
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
   }, [router]);
 
   useEffect(() => {
@@ -181,13 +202,13 @@ export default function CustomerDashboard() {
     const nameEn = getProvinceName(item, "en");
     const serial = isCard ? item.serial_code : "";
 
-    const matchRegion =
-      selectedRegion === "all" || region === selectedRegion;
+    const matchRegion = selectedRegion === "all" || region === selectedRegion;
     const matchSearch =
       !searchQuery.trim() ||
       name?.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
       nameEn?.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
-      (serial && serial.toLowerCase().includes(searchQuery.toLowerCase().trim()));
+      (serial &&
+        serial.toLowerCase().includes(searchQuery.toLowerCase().trim()));
 
     return matchRegion && matchSearch;
   });
@@ -232,9 +253,13 @@ export default function CustomerDashboard() {
                     }}
                   >
                     <span>{rankInfo.icon}</span>
-                    <span>Level {rankInfo.level}: {rankInfo.rank}</span>
+                    <span>
+                      Level {rankInfo.level}: {rankInfo.rank}
+                    </span>
                   </span>
-                  <span className="passport-id-tag">{t(lang, "passportIdTag")} #VN-{user?.id || 1}</span>
+                  <span className="passport-id-tag">
+                    {t(lang, "passportIdTag")} #VN-{user?.id || 1}
+                  </span>
                 </div>
 
                 <h1 className="passport-name">
@@ -247,7 +272,10 @@ export default function CustomerDashboard() {
             </div>
 
             <div className="passport-actions">
-              <Link href="/customer/activate" className="btn-passport-action is-primary">
+              <Link
+                href="/customer/activate"
+                className="btn-passport-action is-primary"
+              >
                 <Sparkles size={16} />
                 <span>{t(lang, "activateNewCard")}</span>
               </Link>
@@ -263,7 +291,8 @@ export default function CustomerDashboard() {
             <div className="passport-prog-meta">
               <span className="prog-label">{t(lang, "mapUnlockProgress")}</span>
               <span className="prog-stats">
-                <strong>{uniqueProvinceCount}</strong>/{TOTAL_PROVINCES} {t(lang, "provincesCount")} ({progressPct}%)
+                <strong>{uniqueProvinceCount}</strong>/{TOTAL_PROVINCES}{" "}
+                {t(lang, "provincesCount")} ({progressPct}%)
               </span>
             </div>
             <div className="passport-prog-track">
@@ -331,7 +360,9 @@ export default function CustomerDashboard() {
               onClick={() => setViewMode("collected")}
             >
               <Award size={15} />
-              <span>{t(lang, "tabOwnedCards")} ({cards.length})</span>
+              <span>
+                {t(lang, "tabOwnedCards")} ({cards.length})
+              </span>
             </button>
             <button
               type="button"
@@ -365,7 +396,9 @@ export default function CustomerDashboard() {
                 title={t(lang, "layoutSlider")}
               >
                 <GalleryHorizontalEnd size={16} />
-                <span className="layout-btn-text">{t(lang, "layoutSlider")}</span>
+                <span className="layout-btn-text">
+                  {t(lang, "layoutSlider")}
+                </span>
               </button>
               <button
                 type="button"
@@ -390,19 +423,19 @@ export default function CustomerDashboard() {
                     ? cards.length
                     : cards.filter((c) => c.region === key).length
                   : key === "all"
-                  ? allProvinces.length
-                  : allProvinces.filter((p) => p.region === key).length;
+                    ? allProvinces.length
+                    : allProvinces.filter((p) => p.region === key).length;
 
               const label =
                 key === "all"
                   ? t(lang, "allRegions")
                   : key === "north"
-                  ? t(lang, "regionNorth")
-                  : key === "central"
-                  ? t(lang, "regionCentral")
-                  : key === "south"
-                  ? t(lang, "regionSouth")
-                  : t(lang, "regionIsland");
+                    ? t(lang, "regionNorth")
+                    : key === "central"
+                      ? t(lang, "regionCentral")
+                      : key === "south"
+                        ? t(lang, "regionSouth")
+                        : t(lang, "regionIsland");
 
               return (
                 <button
@@ -449,11 +482,12 @@ export default function CustomerDashboard() {
                 <Compass size={48} />
               </div>
               <h3 className="empty-title">{t(lang, "emptyTilesTitle")}</h3>
-              <p className="empty-desc">
-                {t(lang, "emptyTilesDesc")}
-              </p>
+              <p className="empty-desc">{t(lang, "emptyTilesDesc")}</p>
               <div className="empty-actions">
-                <Link href="/customer/activate" className="btn-passport-action is-primary">
+                <Link
+                  href="/customer/activate"
+                  className="btn-passport-action is-primary"
+                >
                   <Plus size={16} />
                   <span>{t(lang, "btnActivateNow")}</span>
                 </Link>
@@ -481,7 +515,11 @@ export default function CustomerDashboard() {
         ) : (
           <div
             ref={sliderRef}
-            className={layoutMode === "slider" ? "cust-collect-slider" : "cust-collect-grid"}
+            className={
+              layoutMode === "slider"
+                ? "cust-collect-slider"
+                : "cust-collect-grid"
+            }
           >
             {filteredItems.map((item) => {
               const getRegionLabel = (r) => {
@@ -496,14 +534,31 @@ export default function CustomerDashboard() {
                 // ĐANG XEM DANH SÁCH THẺ ĐÃ MỞ KHÓA
                 const card = item;
                 const album = albumByCardId.get(card.id);
-                const regionInfo = REGION_CONFIG[card.region] || { label: card.region, icon: "📍" };
+                const regionInfo = REGION_CONFIG[card.region] || {
+                  label: card.region,
+                  icon: "📍",
+                };
                 const photoCount = album?.media_count || 0;
 
                 return (
                   <div key={card.id} className="holo-travel-card is-unlocked">
                     <div className="card-media-wrap">
-                      {(getProvinceCover(card.province_slug || card.slug || card.province_name, card.thumbnail_url) || card.thumbnail_url) ? (
-                        <img src={getProvinceCover(card.province_slug || card.slug || card.province_name, card.thumbnail_url) || card.thumbnail_url} alt={card.province_name} loading="lazy" />
+                      {getProvinceCover(
+                        card.province_slug || card.slug || card.province_name,
+                        card.thumbnail_url,
+                      ) || card.thumbnail_url ? (
+                        <img
+                          src={
+                            getProvinceCover(
+                              card.province_slug ||
+                                card.slug ||
+                                card.province_name,
+                              card.thumbnail_url,
+                            ) || card.thumbnail_url
+                          }
+                          alt={card.province_name}
+                          loading="lazy"
+                        />
                       ) : (
                         <div className="card-thumb-empty">
                           <MapPin size={36} />
@@ -514,7 +569,10 @@ export default function CustomerDashboard() {
                       <div className="card-media-gradient-overlay" />
 
                       {album?.status === "archived" ? (
-                        <div className="card-status-pill is-locked" style={{ background: "#dc2626", color: "#fff" }}>
+                        <div
+                          className="card-status-pill is-locked"
+                          style={{ background: "#dc2626", color: "#fff" }}
+                        >
                           <Lock size={12} />
                           <span>{t(lang, "albumArchived")}</span>
                         </div>
@@ -531,13 +589,17 @@ export default function CustomerDashboard() {
                       </div>
 
                       <div className="card-media-bottom-info">
-                        <span className="card-badge-province">📍 {getProvinceName(card, lang)}</span>
+                        <span className="card-badge-province">
+                          📍 {getProvinceName(card, lang)}
+                        </span>
                       </div>
                     </div>
 
                     <div className="card-content-wrap">
                       <div className="card-meta-top">
-                        <h3 className="card-province-title">{getProvinceName(card, lang)}</h3>
+                        <h3 className="card-province-title">
+                          {getProvinceName(card, lang)}
+                        </h3>
                         <div className="card-serial-chip">
                           <span className="chip-icon">🏷️</span>
                           <code>{card.serial_code}</code>
@@ -547,12 +609,17 @@ export default function CustomerDashboard() {
                       <div className="card-album-preview-meta">
                         {album ? (
                           album.status === "archived" ? (
-                            <span className="album-count-text" style={{ color: "#dc2626", fontWeight: 700 }}>
-                              ⚠️ {t(lang, "albumArchived")}: {album.locked_reason || "Policy Violation"}
+                            <span
+                              className="album-count-text"
+                              style={{ color: "#dc2626", fontWeight: 700 }}
+                            >
+                              ⚠️ {t(lang, "albumArchived")}:{" "}
+                              {album.locked_reason || "Policy Violation"}
                             </span>
                           ) : photoCount > 0 ? (
                             <span className="album-count-text">
-                              📸 <strong>{photoCount}</strong> {t(lang, "photosMemories")}
+                              📸 <strong>{photoCount}</strong>{" "}
+                              {t(lang, "photosMemories")}
                             </span>
                           ) : (
                             <span className="album-count-text is-empty">
@@ -566,18 +633,42 @@ export default function CustomerDashboard() {
                         )}
                       </div>
 
-                      <div className="card-action-bar" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                      <div
+                        className="card-action-bar"
+                        style={{
+                          display: "flex",
+                          gap: "8px",
+                          alignItems: "center",
+                        }}
+                      >
                         {album ? (
                           album.status === "archived" ? (
-                            <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta" style={{ flex: 1, background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
+                            <Link
+                              href={`/album/${album.share_code || album.id}`}
+                              className="btn-card-cta"
+                              style={{
+                                flex: 1,
+                                background: "#fee2e2",
+                                color: "#b91c1c",
+                                border: "1px solid #fca5a5",
+                              }}
+                            >
                               <Lock size={16} />
                               <span>{t(lang, "viewLockReason")}</span>
                               <ArrowRight size={15} className="arrow-icon" />
                             </Link>
                           ) : (
-                            <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta is-view-album" style={{ flex: 1 }}>
+                            <Link
+                              href={`/album/${album.share_code || album.id}`}
+                              className="btn-card-cta is-view-album"
+                              style={{ flex: 1 }}
+                            >
                               <Camera size={16} />
-                              <span>{photoCount > 0 ? `${t(lang, "openAlbum")} (${photoCount})` : t(lang, "uploadPhoto")}</span>
+                              <span>
+                                {photoCount > 0
+                                  ? `${t(lang, "openAlbum")} (${photoCount})`
+                                  : t(lang, "uploadPhoto")}
+                              </span>
                               <ArrowRight size={15} className="arrow-icon" />
                             </Link>
                           )
@@ -590,7 +681,11 @@ export default function CustomerDashboard() {
                             onClick={() => handleCreateAlbum(card)}
                           >
                             <Sparkles size={16} />
-                            <span>{creatingFor === card.id ? t(lang, "creatingAlbum") : t(lang, "createAlbum")}</span>
+                            <span>
+                              {creatingFor === card.id
+                                ? t(lang, "creatingAlbum")
+                                : t(lang, "createAlbum")}
+                            </span>
                             <ArrowRight size={15} className="arrow-icon" />
                           </button>
                         )}
@@ -598,7 +693,12 @@ export default function CustomerDashboard() {
                           type="button"
                           className="btn-card-gift"
                           title={t(lang, "giftCardTitle")}
-                          onClick={() => setTransferCard({ id: card.id, name: card.province_name })}
+                          onClick={() =>
+                            setTransferCard({
+                              id: card.id,
+                              name: card.province_name,
+                            })
+                          }
                           style={{
                             display: "inline-flex",
                             alignItems: "center",
@@ -627,17 +727,29 @@ export default function CustomerDashboard() {
                 // ĐANG XEM TOÀN BỘ 34 TỈNH THÀNH (BẢN ĐỒ KHÁM PHÁ)
                 const province = item;
                 const isUnlocked = unlockedProvinceIds.has(Number(province.id));
-                const matchedCard = cards.find((c) => Number(c.province_id) === Number(province.id));
-                const album = matchedCard ? albumByCardId.get(Number(matchedCard.id)) : null;
-                const regionInfo = REGION_CONFIG[province.region] || { label: province.region, icon: "📍" };
+                const matchedCard = cards.find(
+                  (c) => Number(c.province_id) === Number(province.id),
+                );
+                const album = matchedCard
+                  ? albumByCardId.get(Number(matchedCard.id))
+                  : null;
+                const regionInfo = REGION_CONFIG[province.region] || {
+                  label: province.region,
+                  icon: "📍",
+                };
                 const photoCount = album?.media_count || 0;
 
                 return (
-                  <div key={province.id} className={`holo-travel-card ${isUnlocked ? "is-unlocked" : "is-locked"}`}>
+                  <div
+                    key={province.id}
+                    className={`holo-travel-card ${isUnlocked ? "is-unlocked" : "is-locked"}`}
+                  >
                     <div className="card-media-wrap">
-                      {(getProvinceCover(province) || province.thumbnail_url) ? (
+                      {getProvinceCover(province) || province.thumbnail_url ? (
                         <img
-                          src={getProvinceCover(province) || province.thumbnail_url}
+                          src={
+                            getProvinceCover(province) || province.thumbnail_url
+                          }
                           alt={province.name}
                           loading="lazy"
                           className={isUnlocked ? "" : "is-locked-img"}
@@ -669,13 +781,17 @@ export default function CustomerDashboard() {
                       </div>
 
                       <div className="card-media-bottom-info">
-                        <span className="card-badge-province">📍 {getProvinceName(province, lang)}</span>
+                        <span className="card-badge-province">
+                          📍 {getProvinceName(province, lang)}
+                        </span>
                       </div>
                     </div>
 
                     <div className="card-content-wrap">
                       <div className="card-meta-top">
-                        <h3 className="card-province-title">{getProvinceName(province, lang)}</h3>
+                        <h3 className="card-province-title">
+                          {getProvinceName(province, lang)}
+                        </h3>
                         <p className="card-prov-desc">
                           {isUnlocked
                             ? `${t(lang, "cardSerialPrefix")}: ${matchedCard?.serial_code || "NFC-ACTIVE"}`
@@ -687,12 +803,17 @@ export default function CustomerDashboard() {
                         {isUnlocked ? (
                           album ? (
                             album.status === "archived" ? (
-                              <span className="album-count-text" style={{ color: "#dc2626", fontWeight: 700 }}>
-                                ⚠️ {t(lang, "albumArchived")}: {album.locked_reason || "Policy Violation"}
+                              <span
+                                className="album-count-text"
+                                style={{ color: "#dc2626", fontWeight: 700 }}
+                              >
+                                ⚠️ {t(lang, "albumArchived")}:{" "}
+                                {album.locked_reason || "Policy Violation"}
                               </span>
                             ) : photoCount > 0 ? (
                               <span className="album-count-text">
-                                📸 <strong>{photoCount}</strong> {t(lang, "photosMemories")}
+                                📸 <strong>{photoCount}</strong>{" "}
+                                {t(lang, "photosMemories")}
                               </span>
                             ) : (
                               <span className="album-count-text is-empty">
@@ -711,21 +832,47 @@ export default function CustomerDashboard() {
                         )}
                       </div>
 
-                      <div className="card-action-bar" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                      <div
+                        className="card-action-bar"
+                        style={{
+                          display: "flex",
+                          gap: "8px",
+                          alignItems: "center",
+                        }}
+                      >
                         {isUnlocked ? (
                           <>
                             {album ? (
                               album.status === "archived" ? (
-                                <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta" style={{ flex: 1, background: "#fee2e2", color: "#b91c1c", border: "1px solid #fca5a5" }}>
+                                <Link
+                                  href={`/album/${album.share_code || album.id}`}
+                                  className="btn-card-cta"
+                                  style={{
+                                    flex: 1,
+                                    background: "#fee2e2",
+                                    color: "#b91c1c",
+                                    border: "1px solid #fca5a5",
+                                  }}
+                                >
                                   <Lock size={16} />
                                   <span>{t(lang, "viewLockReason")}</span>
-                                  <ArrowRight size={15} className="arrow-icon" />
+                                  <ArrowRight
+                                    size={15}
+                                    className="arrow-icon"
+                                  />
                                 </Link>
                               ) : (
-                                <Link href={`/album/${album.share_code || album.id}`} className="btn-card-cta is-view-album" style={{ flex: 1 }}>
+                                <Link
+                                  href={`/album/${album.share_code || album.id}`}
+                                  className="btn-card-cta is-view-album"
+                                  style={{ flex: 1 }}
+                                >
                                   <Camera size={16} />
                                   <span>{t(lang, "openAlbum")}</span>
-                                  <ArrowRight size={15} className="arrow-icon" />
+                                  <ArrowRight
+                                    size={15}
+                                    className="arrow-icon"
+                                  />
                                 </Link>
                               )
                             ) : (
@@ -734,10 +881,16 @@ export default function CustomerDashboard() {
                                 className="btn-card-cta is-create-album"
                                 style={{ flex: 1 }}
                                 disabled={creatingFor === matchedCard?.id}
-                                onClick={() => matchedCard && handleCreateAlbum(matchedCard)}
+                                onClick={() =>
+                                  matchedCard && handleCreateAlbum(matchedCard)
+                                }
                               >
                                 <Sparkles size={16} />
-                                <span>{creatingFor === matchedCard?.id ? t(lang, "creatingAlbum") : t(lang, "createAlbum")}</span>
+                                <span>
+                                  {creatingFor === matchedCard?.id
+                                    ? t(lang, "creatingAlbum")
+                                    : t(lang, "createAlbum")}
+                                </span>
                                 <ArrowRight size={15} className="arrow-icon" />
                               </button>
                             )}
@@ -746,7 +899,12 @@ export default function CustomerDashboard() {
                                 type="button"
                                 className="btn-card-gift"
                                 title={t(lang, "giftCardTitle")}
-                                onClick={() => setTransferCard({ id: matchedCard.id, name: province.name })}
+                                onClick={() =>
+                                  setTransferCard({
+                                    id: matchedCard.id,
+                                    name: province.name,
+                                  })
+                                }
                                 style={{
                                   display: "inline-flex",
                                   alignItems: "center",
@@ -770,7 +928,11 @@ export default function CustomerDashboard() {
                             )}
                           </>
                         ) : (
-                          <Link href={`/shop`} className="btn-card-cta is-buy-unlock" style={{ flex: 1 }}>
+                          <Link
+                            href={`/shop`}
+                            className="btn-card-cta is-buy-unlock"
+                            style={{ flex: 1 }}
+                          >
                             <ShoppingBag size={16} />
                             <span>{t(lang, "buyUnlockCard")}</span>
                             <ArrowRight size={15} className="arrow-icon" />
