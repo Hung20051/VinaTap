@@ -180,10 +180,13 @@ export default function ProvinceChatbot({
       console.warn("Could not load chat history from LocalStorage", e);
     }
 
-    // Tin nhắn chào mở đầu chuẩn thổ địa bản xứ
+    // Tin nhắn chào mở đầu chuẩn AI Travel Companion
     const initialGreeting = {
       role: "assistant",
-      content: `👋 **Xin chào! Mình là Trợ lý Thổ Địa VinaTap tại ${pName}** 🌟\n\nMình có thể hỗ trợ bạn tìm hiểu về **lịch sử, địa danh, món ngon kèm chỉ đường Google Maps, khách sạn & nhà xe uy tín**. Bạn cần tư vấn thông tin gì về ${pName}?`,
+      content:
+        pSlug === "viet-nam" || pName === "Việt Nam"
+          ? `👋 **Xin chào! Mình là AI Travel Companion — Trợ lý Du lịch Thông minh VinaTap** 🌟\n\nMình có thể giúp bạn **lên lịch trình tức thì chỉ với một câu prompt** (Plan your Vietnam trip with just one prompt), gợi ý 34 tỉnh thành đẹp nhất, món ngon đặc sản kèm toạ độ Maps, khách sạn và phương tiện di chuyển tối ưu nhất.\n\nBạn muốn lên kế hoạch cho chuyến đi sắp tới như thế nào?`
+          : `👋 **Xin chào! Mình là AI Travel Companion tại ${pName}** 🌟\n\nMình có thể hỗ trợ bạn lên lịch trình, tìm hiểu địa danh nổi tiếng, quán ăn ngon đặc sản kèm chỉ đường Google Maps, khách sạn & phương tiện di chuyển tối ưu tại ${pName}. Bạn cần tư vấn thông tin gì hôm nay?`,
       timestamp: Date.now(),
     };
     setMessages([initialGreeting]);
@@ -270,7 +273,7 @@ export default function ProvinceChatbot({
     if (window.confirm(`Bạn có muốn xóa toàn bộ lịch sử trò chuyện về ${pName}?`)) {
       const resetGreeting = {
         role: "assistant",
-        content: `👋 **Chào bạn trở lại! Mình là Trợ lý Thổ Địa VinaTap tại ${pName}** 🌟\n\nBạn muốn tìm hiểu thêm điều gì mới về vùng đất này không?`,
+        content: `👋 **Chào bạn trở lại! Mình là AI Travel Companion tại ${pName}** 🌟\n\nBạn muốn lên lịch trình du lịch hoặc tìm hiểu thông tin địa danh nào tiếp theo?`,
         timestamp: Date.now(),
       };
       setMessages([resetGreeting]);
@@ -280,13 +283,13 @@ export default function ProvinceChatbot({
     }
   };
 
-  // Các gợi ý câu hỏi nhanh
+  // Các gợi ý câu hỏi nhanh (Chuẩn chủ đề Du lịch & Lập lịch trình 1 prompt)
   const quickPrompts = [
-    { label: "🍜 Quán ăn ngon + Maps", prompt: `${pName} có món gì ngon nhất và những quán ăn nào nổi tiếng kèm địa chỉ Google Maps?` },
-    { label: "📜 Lịch sử & Nguồn cội", prompt: `Kể cho mình nghe về lịch sử hình thành, sự kiện chiến tranh và nguồn gốc sáp nhập/tách tỉnh của ${pName}?` },
-    { label: "🏨 Chỗ ở & Nhà xe", prompt: `Tư vấn giúp mình các khách sạn/homestay đẹp và nhà xe uy tín đi đến ${pName}?` },
-    { label: "🚗 Lịch trình 2N1Đ", prompt: `Gợi ý lịch trình du lịch ${pName} 2 ngày 1 đêm tối ưu và chi tiết nhất?` },
+    { label: "✨ Lịch trình 1 prompt", prompt: `Lên giúp mình lịch trình du lịch ${pName} tối ưu và chi tiết nhất chỉ với 1 prompt?` },
+    { label: "🍜 Quán ăn ngon & Maps", prompt: `${pName} có món gì ngon nhất và những quán ăn nào nổi tiếng kèm địa chỉ Google Maps?` },
+    { label: "🚗 Phương tiện & Di chuyển", prompt: `Tư vấn phương tiện di chuyển (máy bay, tàu hỏa, xe khách) đến và đi lại tại ${pName}?` },
     { label: "📸 Điểm check-in đẹp", prompt: `Top những địa điểm check-in sống ảo đẹp và nổi tiếng nhất ở ${pName}?` },
+    { label: "🏨 Khách sạn & Homestay", prompt: `Gợi ý khách sạn hoặc homestay view đẹp, giá tốt và vị trí thuận tiện tại ${pName}?` },
   ];
 
   const userAvatar = currentUser?.avatar_url || currentUser?.avatar || null;
@@ -294,23 +297,31 @@ export default function ProvinceChatbot({
 
   return (
     <>
-      {/* ─── NÚT NỔI FAB (BONG BÓNG GÓC MÀN HÌNH) ────────────────── */}
+      {/* ─── NÚT NỔI FAB (BONG BÓNG GÓC MÀN HÌNH - CHUẨN GIAO DIỆN HÌNH 1) ─── */}
       {!isOpen && !hideFab && (
-        <button
-          type="button"
-          className="prov-ai-fab-btn"
-          onClick={() => setIsOpen(true)}
-          title={`Hỏi Thổ Địa AI ${pName}`}
-        >
-          <div className="prov-ai-fab-avatar">
-            <Sparkles size={18} />
-            <div className="prov-ai-pulse-ring" />
-          </div>
-          <div className="prov-ai-fab-text">
-            <span className="prov-ai-fab-title">Hỏi Thổ Địa AI ✨</span>
-            <span className="prov-ai-fab-sub">{pName}</span>
-          </div>
-        </button>
+        <div className="vnn-floating-widget">
+          <button
+            type="button"
+            className="vnn-floating-widget__btn"
+            onClick={() => setIsOpen(true)}
+            aria-label="Open AI Travel Companion"
+            title={`AI Travel Companion • ${pName}`}
+          >
+            <span className="vnn-floating-widget__halo-outer" />
+            <span className="vnn-floating-widget__halo-mid" />
+            <span className="vnn-floating-widget__avatar">
+              <img
+                src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
+                alt="AI Companion"
+                className="vnn-floating-widget__avatar-img"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+              />
+              <span className="vnn-floating-widget__pulse" />
+            </span>
+          </button>
+        </div>
       )}
 
       {/* ─── CỬA SỔ CHAT MODAL ───────────────────────────────────── */}
@@ -319,15 +330,15 @@ export default function ProvinceChatbot({
           {/* Header */}
           <div className="prov-ai-header">
             <div className="prov-ai-header-left">
-              <div className="prov-ai-header-icon">
+              <div className="prov-ai-header-icon" style={{ background: "rgba(0, 194, 203, 0.15)", color: "#00aab2" }}>
                 <Sparkles size={20} />
               </div>
               <div className="prov-ai-header-info">
                 <span className="prov-ai-header-name">
-                  Thổ Địa AI • {pName}
+                  AI Travel Companion • {pName}
                 </span>
                 <span className="prov-ai-online-badge">
-                  <span className="prov-ai-online-dot" /> Sẵn sàng hỗ trợ bạn
+                  <span className="prov-ai-online-dot" /> Trợ lý du lịch thông minh
                 </span>
               </div>
             </div>

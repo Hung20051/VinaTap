@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import {
   Search,
   ChevronDown,
@@ -787,85 +788,38 @@ export default function PlanYourVietnamTripPage() {
         </div>
       </main>
 
-      {/* ─── 5. FLOATING AI COMPANION BUTTON & DRAWER ─── */}
-      <button
-        type="button"
-        className="vnn-floating-widget__btn"
-        style={{
-          position: "fixed",
-          bottom: "28px",
-          right: "28px",
-          zIndex: 999,
-          background: "#ffffff",
-          borderRadius: "50%",
-          boxShadow: "0 0 20px 4px rgba(0, 194, 203, 0.45)",
-          border: "none",
-          cursor: "pointer",
-          width: "58px",
-          height: "58px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        onClick={() => setAiCompanionOpen((prev) => !prev)}
-        aria-label="Mở Trợ lý AI Du lịch"
-      >
-        <Bot size={28} color="#00aab2" />
-      </button>
-
-      {/* AI COMPANION MODAL / DRAWER */}
-      {aiCompanionOpen && (
-        <div id="chatbox-window">
-          <div id="chatbox-header">
-            <div className="chatbox-title">
-              <div className="chatbox-title-content">
-                <Bot size={20} />
-                <span>AI Travel Assistant • VinaTap</span>
-              </div>
-            </div>
-            <button
-              id="chatbox-close"
-              type="button"
-              onClick={() => setAiCompanionOpen(false)}
-            >
-              <X size={20} />
-            </button>
-          </div>
-
-          <div id="chatbox-messages">
-            {companionMessages.map((m, idx) => (
-              <div
-                key={idx}
-                style={{
-                  alignSelf: m.role === "user" ? "flex-end" : "flex-start",
-                  background: m.role === "user" ? "#00c2cb" : "#f1f5f9",
-                  color: m.role === "user" ? "#ffffff" : "#1e293b",
-                  padding: "10px 14px",
-                  borderRadius: "14px",
-                  maxWidth: "85%",
-                  fontSize: "14px",
-                  lineHeight: "1.5",
-                }}
-              >
-                {m.content}
-              </div>
-            ))}
-          </div>
-
-          <form id="chatbox-input" onSubmit={handleSendCompanion}>
-            <input
-              id="chat-input"
-              type="text"
-              placeholder="Nhập yêu cầu lịch trình..."
-              value={companionInput}
-              onChange={(e) => setCompanionInput(e.target.value)}
+      {/* ─── 5. FLOATING AI COMPANION BUTTON & MODAL (Hình 1) ─── */}
+      <div className="vnn-floating-widget">
+        <button
+          type="button"
+          className="vnn-floating-widget__btn"
+          onClick={() => setAiCompanionOpen((prev) => !prev)}
+          aria-label="Open AI Travel Companion"
+          title="AI Travel Companion - Trợ lý Du lịch Thông minh"
+        >
+          <span className="vnn-floating-widget__halo-outer" />
+          <span className="vnn-floating-widget__halo-mid" />
+          <span className="vnn-floating-widget__avatar">
+            <img
+              src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
+              alt="AI Companion"
+              className="vnn-floating-widget__avatar-img"
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
             />
-            <button id="chat-send" type="submit">
-              <Send size={16} />
-            </button>
-          </form>
-        </div>
-      )}
+            <span className="vnn-floating-widget__pulse" />
+          </span>
+        </button>
+      </div>
+
+      {/* Hộp Chat AI Travel Companion */}
+      <ProvinceChatbot
+        province={{ name: "Việt Nam", slug: "viet-nam" }}
+        isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
+        hideFab={true}
+      />
 
       {/* ─── 6. SEARCH MODAL ─── */}
       {searchModalOpen && (

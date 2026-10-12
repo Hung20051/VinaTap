@@ -2519,19 +2519,22 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Nút Trợ lý AI Du lịch Floating Widget (giống góc phải dưới hình 2) */}
+        {/* Nút Trợ lý AI Du lịch Floating Widget (chuẩn giao diện hình 1) */}
         <div className="vnn-floating-widget">
           <button
             type="button"
             className="vnn-floating-widget__btn"
             onClick={() => setAiCompanionOpen((prev) => !prev)}
             aria-label="Open AI Travel Companion"
+            title="AI Travel Companion - Trợ lý Du lịch Thông minh"
           >
-            <span className="vnn-floating-widget__pill">Tripion AI</span>
+            <span className="vnn-floating-widget__halo-outer" />
+            <span className="vnn-floating-widget__halo-mid" />
             <span className="vnn-floating-widget__avatar">
               <img
                 src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
                 alt="AI Companion"
+                className="vnn-floating-widget__avatar-img"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
                 }}
