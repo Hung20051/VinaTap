@@ -314,7 +314,7 @@ const VIDEO_PLAYLIST_ITEMS = [
   },
   {
     id: "video-4",
-    youtubeId: "BvP3G1Xfth8",
+    youtubeId: "1WdDnbnwTcI",
     title: "Hue: A Guide to Visiting the Ancient Capital of Vietnam",
     titleVi: "Hue: A Guide to Visiting the Ancient Capital of Vietnam",
     duration: "13:14",
@@ -322,11 +322,11 @@ const VIDEO_PLAYLIST_ITEMS = [
   },
   {
     id: "video-5",
-    youtubeId: "BvP3G1Xfth8",
-    title: "Ho Chi Minh City: A Guide to Visit Vietnam's Largest City",
-    titleVi: "Ho Chi Minh City: A Guide to Visit Vietnam's Largest City",
-    duration: "14:03",
-    img: "/guide/hcmc/region-south-hcmc.jpg",
+    youtubeId: "2QbOPAKrsg4",
+    title: "10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
+    titleVi: "10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
+    duration: "09:53",
+    img: "/guide/hcmc/video-card-best10.jpg",
   },
   {
     id: "video-6",
@@ -357,13 +357,13 @@ const VIDEO_BOTTOM_CARDS = [
     title: "[Video] Hue: A Guide to Visiting the Ancient Capital of Vietnam",
     duration: "00:13:14",
     img: "/guide/hcmc/video-card-hue.jpg",
-    youtubeId: "BvP3G1Xfth8",
+    youtubeId: "1WdDnbnwTcI",
   },
   {
     title: "[Video] 10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
     duration: "00:09:53",
     img: "/guide/hcmc/video-card-best10.jpg",
-    youtubeId: "BvP3G1Xfth8",
+    youtubeId: "2QbOPAKrsg4",
   },
   {
     title: "[Video] Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in Vietnam",
@@ -424,7 +424,7 @@ const THINGS_TO_DO_ITEMS = [
     titleVi: "10 điểm đến đẹp nhất Đà Nẵng",
     desc: "Da Nang is the most famous coastal city in Vietnam as it is endowed with stunning natural assets and has invested in modern infrastructures. Here are the 10 best attractions in Da Nang.",
     descVi: "Khám phá thành phố biển đáng sống nhất Việt Nam: Cầu Rồng, Ngũ Hành Sơn, Bà Nà Hills và bãi biển Mỹ Khê tuyệt đẹp.",
-    img: "/landmarks/hang-mua-dinh-ngoa-long.jpg",
+    img: "/guide/hcmc/region-central-10things.jpg",
     link: "/province/da-nang",
   },
   {
@@ -509,7 +509,7 @@ const LATEST_ARTICLES_ITEMS = [
     titleVi: "Khách sạn & Khu vực nên ở tại TP. Hồ Chí Minh",
     meta: "Welcome To Vietnam - November 26, 2025",
     metaVi: "Welcome To Vietnam • 26 Tháng 11, 2025",
-    img: "/reviews/landmark-81-ve-dem.jpg",
+    img: "/guide/hcmc/region-south-hcmc.jpg",
     link: "/province/ho-chi-minh",
   },
   {
@@ -528,7 +528,7 @@ const POPULAR_POSTS_ITEMS = [
   {
     title: "Ho Chi Minh City",
     titleVi: "TP. Hồ Chí Minh",
-    img: "/reviews/landmark-81-ve-dem.jpg",
+    img: "/guide/hcmc/region-south-hcmc.jpg",
     link: "/province/ho-chi-minh",
   },
   {
@@ -540,7 +540,7 @@ const POPULAR_POSTS_ITEMS = [
   {
     title: "Hanoi",
     titleVi: "Hà Nội",
-    img: "/reviews/ca-phe-duong-tau-ha-noi.jpg",
+    img: "/guide/hcmc/region-north-hanoi.jpg",
     link: "/province/ha-noi",
   },
   {
@@ -564,8 +564,8 @@ const MEGA_MENUS_DATA = {
         id: "insp-1",
         title: "15 best places to visit in Vietnam in 2026",
         titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
-        date: "June 15, 2026",
-        dateVi: "15 Tháng 6, 2026",
+        date: "June 16, 2026",
+        dateVi: "16 Tháng 6, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-1.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
@@ -578,7 +578,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 4, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-2.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/province/ninh-binh",
       },
       {
         id: "insp-3",
@@ -594,11 +594,11 @@ const MEGA_MENUS_DATA = {
         id: "insp-4",
         title: "20 Best Things to Do in Vietnam",
         titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
-        date: "January 1, 2026",
-        dateVi: "1 Tháng 1, 2026",
+        date: "January 1, 2025",
+        dateVi: "1 Tháng 1, 2025",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-4.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/province/ha-noi",
       },
       {
         id: "insp-5",
@@ -670,7 +670,7 @@ const MEGA_MENUS_DATA = {
     items: [
       {
         id: "todo-1",
-        title: "3-week Vietnam Itinerary",
+        title: "3 week Vietnam Itinerary",
         titleVi: "Lịch trình 3 tuần xuyên Việt",
         date: "July 20, 2025",
         dateVi: "20 Tháng 7, 2025",
@@ -717,104 +717,6 @@ const MEGA_MENUS_DATA = {
         badge: "Articles",
         img: "/guide/megamenu/todo-5-dalat.jpg",
         link: "/province/lam-dong",
-      },
-    ],
-  },
-  eat: {
-    items: [
-      {
-        id: "eat-1",
-        title: "8 must-try foods in Hanoi",
-        titleVi: "8 món ngon nhất định phải thử ở Hà Nội",
-        date: "May 19, 2025",
-        dateVi: "19 Tháng 5, 2025",
-        badge: "Hanoi",
-        img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
-      },
-      {
-        id: "eat-2",
-        title: "12 must-try foods in Ho Chi Minh City",
-        titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
-        date: "April 29, 2025",
-        dateVi: "29 Tháng 4, 2025",
-        badge: "Articles",
-        img: "/guide/megamenu/eat-2-hcmc.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city?tab=foods",
-      },
-      {
-        id: "eat-3",
-        title: "Pho",
-        titleVi: "Phở truyền thống",
-        date: "April 15, 2025",
-        dateVi: "15 Tháng 4, 2025",
-        badge: "Eat & Drink",
-        img: "/guide/megamenu/eat-3-pho.jpg",
-        link: "/province/ha-noi",
-      },
-      {
-        id: "eat-4",
-        title: "7 must-try foods in Vung Tau",
-        titleVi: "7 món ăn tuyệt vời tại Vũng Tàu",
-        date: "April 1, 2025",
-        dateVi: "1 Tháng 4, 2025",
-        badge: "Articles",
-        img: "/guide/megamenu/eat-4-vungtau.jpg",
-        link: "/province/ba-ria-vung-tau",
-      },
-      {
-        id: "eat-5",
-        title: "5 must-try Nha Trang dishes",
-        titleVi: "5 món đặc sản Nha Trang",
-        date: "February 17, 2025",
-        dateVi: "17 Tháng 2, 2025",
-        badge: "Articles",
-        img: "/guide/megamenu/eat-5-nhatrang.jpg",
-        link: "/province/khanh-hoa",
-      },
-    ],
-  },
-  itineraries: {
-    items: [
-      {
-        id: "itin-1",
-        title: "3-week Vietnam Itinerary",
-        titleVi: "Lịch trình 3 tuần xuyên Việt",
-        date: "July 20, 2025",
-        dateVi: "20 Tháng 7, 2025",
-        badge: "Articles",
-        img: "/guide/megamenu/itin-1-3week.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
-      },
-      {
-        id: "itin-2",
-        title: "10 Days in Vietnam",
-        titleVi: "Lịch trình 10 ngày tại Việt Nam",
-        date: "May 21, 2024",
-        dateVi: "21 Tháng 5, 2024",
-        badge: "Itinerary",
-        img: "/guide/megamenu/itin-2-10days.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
-      },
-      {
-        id: "itin-3",
-        title: "2 Weeks in Vietnam",
-        titleVi: "Lịch trình 2 tuần xuyên Việt",
-        date: "May 20, 2024",
-        dateVi: "20 Tháng 5, 2024",
-        badge: "Itinerary",
-        img: "/guide/megamenu/itin-3-2weeks.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
-      },
-      {
-        id: "itin-4",
-        title: "1 Month in Vietnam",
-        titleVi: "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam",
-        date: "May 18, 2024",
-        dateVi: "18 Tháng 5, 2024",
-        badge: "Itinerary",
-        img: "/guide/megamenu/itin-4-1month.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
     ],
   },
@@ -1079,6 +981,18 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setSearchModalOpen(false);
+      }
+    };
+    if (searchModalOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [searchModalOpen]);
+
   const filtered = provinces
     .filter((p) => ALLOWED_PROVINCE_SLUGS.includes(p.slug))
     .filter((p) => {
@@ -1342,6 +1256,10 @@ export default function HomePage() {
                 <button
                   type="button"
                   className={`vnn-navbar__link ${activeMegaMenu === "eat" ? "is-active" : ""}`}
+                  onClick={() => {
+                    const el = document.getElementById("foods-to-try");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                  }}
                 >
                   <span>{lang === "vi" ? "Ẩm Thực" : "EAT & DRINK"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
@@ -1353,13 +1271,13 @@ export default function HomePage() {
                 className="vnn-navbar__item"
                 onMouseEnter={() => handleMenuEnter("itineraries")}
               >
-                <button
-                  type="button"
+                <Link
+                  href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
                   className={`vnn-navbar__link ${activeMegaMenu === "itineraries" ? "is-active" : ""}`}
                 >
                   <span>{lang === "vi" ? "Lịch Trình" : "ITINERARIES"}</span>
                   <ChevronDown size={14} className="vnn-navbar__chevron" />
-                </button>
+                </Link>
               </li>
             </ul>
 
@@ -1672,39 +1590,16 @@ export default function HomePage() {
                 <span className="vnn-section-head__bar vnn-section-head__bar--green" />
               </div>
 
-              {/* 3 Thẻ thống kê mạng xã hội */}
-              <div className="vnn-social-stats">
+              {/* Thẻ Facebook kết nối mạng xã hội (căn giữa) */}
+              <div className="vnn-social-stats vnn-social-stats--single">
                 <a
                   href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="vnn-social-stat-card"
+                  className="vnn-social-stat-card vnn-social-stat-card--fb-only"
+                  aria-label="Facebook Fanpage"
                 >
-                  <Facebook size={22} className="vnn-social-icon vnn-social-icon--fb" />
-                  <span className="vnn-social-num">550,562</span>
-                  <span className="vnn-social-label">Fans</span>
-                </a>
-
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="vnn-social-stat-card"
-                >
-                  <Instagram size={22} className="vnn-social-icon vnn-social-icon--ig" />
-                  <span className="vnn-social-num">18,220</span>
-                  <span className="vnn-social-label">Followers</span>
-                </a>
-
-                <a
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="vnn-social-stat-card"
-                >
-                  <Youtube size={22} className="vnn-social-icon vnn-social-icon--yt" />
-                  <span className="vnn-social-num">5,530</span>
-                  <span className="vnn-social-label">Subscribers</span>
+                  <Facebook size={28} className="vnn-social-icon vnn-social-icon--fb" />
                 </a>
               </div>
 
@@ -1862,9 +1757,10 @@ export default function HomePage() {
                 {isVideoPlaying ? (
                   <iframe
                     className="vnn-video-player-iframe"
-                    src={`https://www.youtube-nocookie.com/embed/${activeVideo.youtubeId}?autoplay=1&enablejsapi=1&rel=0`}
+                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
                     title={activeVideo.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
                   />
                 ) : (
@@ -2012,7 +1908,7 @@ export default function HomePage() {
         </section>
 
         {/* ─── 9. FOODS TO TRY & THINGS TO DO (SCREENSHOT 2 OF PART 2) ─── */}
-        <section className="vnn-foods-things-section">
+        <section className="vnn-foods-things-section" id="foods-to-try">
           <div className="vnn-foods-things-container">
             {/* Left: FOODS TO TRY (Yellow bar) */}
             <div className="vnn-foods-col">

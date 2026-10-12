@@ -3,9 +3,8 @@ import TrafficTracker from "@/components/layout/TrafficTracker";
 import Script from "next/script";
 
 export const metadata = {
-  title: "VinaTap — Bản Đồ Du Lịch NFC Việt Nam",
-  description:
-    "Bộ sưu tập 34 thẻ NFC tỉnh thành Việt Nam và album ảnh kỷ niệm du lịch.",
+  title: "VinaTap",
+  description: "VinaTap — Cẩm nang du lịch và khám phá Việt Nam.",
 };
 
 export default function RootLayout({ children }) {
