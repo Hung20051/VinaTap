@@ -297,9 +297,6 @@ export default function PlanYourVietnamTripPage() {
   const [searchModalText, setSearchModalText] = useState("");
   const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const [promptInput, setPromptInput] = useState(
-    "I want to spend 3 weeks in Vietnam starting December 11, focusing on coastal cities."
-  );
   const [companionInput, setCompanionInput] = useState("");
   const [companionMessages, setCompanionMessages] = useState([
     {
@@ -324,19 +321,6 @@ export default function PlanYourVietnamTripPage() {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
   };
 
-  const handlePromptSubmit = (e) => {
-    e?.preventDefault();
-    if (!promptInput.trim()) return;
-    setCompanionMessages((prev) => [
-      ...prev,
-      { role: "user", content: promptInput.trim() },
-      {
-        role: "bot",
-        content: `Tôi đã phân tích prompt của bạn: "${promptInput.trim()}". Đang tạo lịch trình thông minh: Hà Nội (3 đêm) ➔ Hạ Long (1 đêm du thuyền) ➔ Đà Nẵng / Hội An (4 đêm) ➔ Nha Trang (3 đêm) ➔ TP. Hồ Chí Minh & Miền Tây (3 đêm). Bạn có muốn tải bản đồ PDF hoặc tùy chỉnh thêm không?`,
-      },
-    ]);
-    setAiCompanionOpen(true);
-  };
 
   const handleSendCompanion = (e) => {
     e?.preventDefault();
@@ -763,28 +747,61 @@ export default function PlanYourVietnamTripPage() {
             Note: Plans are for reference. Please verify details before traveling.
           </p>
 
-          {/* ─── INTERACTIVE TRIP PROMPT GENERATOR BOX ─── */}
-          <div className="plan-trip-prompt-box">
-            <h3 className="plan-trip-prompt-box-title">
-              Thử nghiệm AI Prompt Builder
-            </h3>
-            <p className="plan-trip-prompt-box-desc">
-              Nhập yêu cầu chuyến đi của bạn để Trợ lý AI tạo lịch trình cá nhân hóa ngay lập tức:
-            </p>
-            <form onSubmit={handlePromptSubmit} className="plan-trip-prompt-form">
-              <input
-                type="text"
-                className="plan-trip-prompt-input"
-                value={promptInput}
-                onChange={(e) => setPromptInput(e.target.value)}
-                placeholder="Ví dụ: Tôi muốn đi du lịch 10 ngày từ Hà Nội đến Hội An..."
-              />
-              <button type="submit" className="plan-trip-prompt-submit">
-                <Sparkles size={16} />
-                <span>Tạo lịch trình ngay</span>
-              </button>
-            </form>
-          </div>
+          <hr className="plan-trip-divider" />
+
+          {/* ─── RELATED ARTICLES (Hình 2) ─── */}
+          <section className="plan-trip-related">
+            <h2 className="plan-trip-related__title">Related Articles</h2>
+            <div className="plan-trip-related__grid">
+              <Link
+                href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
+                className="plan-trip-related__card"
+              >
+                <div className="plan-trip-related__img-wrap">
+                  <img
+                    src="/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg"
+                    alt="15 best places to visit in Vietnam in 2026"
+                    className="plan-trip-related__img"
+                  />
+                </div>
+                <h3 className="plan-trip-related__card-title">
+                  15 best places to visit in Vietnam in 2026
+                </h3>
+              </Link>
+
+              <Link
+                href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+                className="plan-trip-related__card"
+              >
+                <div className="plan-trip-related__img-wrap">
+                  <img
+                    src="/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg"
+                    alt="The Complete Guide to Vietnam"
+                    className="plan-trip-related__img"
+                  />
+                </div>
+                <h3 className="plan-trip-related__card-title">
+                  The Complete Guide to Vietnam
+                </h3>
+              </Link>
+
+              <Link
+                href="/province/ha-noi"
+                className="plan-trip-related__card"
+              >
+                <div className="plan-trip-related__img-wrap">
+                  <img
+                    src="/guide/hcmc/20-Best-Things-to-Do-in-Vietnam.jpg"
+                    alt="20 Best Things to Do in Vietnam"
+                    className="plan-trip-related__img"
+                  />
+                </div>
+                <h3 className="plan-trip-related__card-title">
+                  20 Best Things to Do in Vietnam
+                </h3>
+              </Link>
+            </div>
+          </section>
         </div>
       </main>
 
