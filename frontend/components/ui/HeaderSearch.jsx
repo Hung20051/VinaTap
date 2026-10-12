@@ -1,155 +1,153 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, X, ChevronRight, Sparkles } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { getLang } from "@/lib/prefs";
 
-// ─── SEARCH INDEX (ARTICLES + DESTINATIONS) ───
-const SEARCH_INDEX = [
+// ─── COMPREHENSIVE SEARCH INDEX MATCHING SCREENSHOT ───
+const SEARCH_POSTS = [
+  {
+    id: "eat-hanoi",
+    title: "8 must-try foods in Hanoi",
+    titleVi: "8 món ăn phải thử tại Hà Nội",
+    date: "May 19, 2025",
+    dateVi: "19 Tháng 5, 2025",
+    img: "/guide/megamenu/eat-1-hanoi.jpg",
+    link: "/province/ha-noi",
+    keywords: "8 must try foods in hanoi culinary bun cha pho street food bun dau",
+  },
+  {
+    id: "eat-dalat",
+    title: "8 must-try foods in Dalat",
+    titleVi: "8 món ăn phải thử tại Đà Lạt",
+    date: "July 22, 2024",
+    dateVi: "22 Tháng 7, 2024",
+    img: "/guide/megamenu/dest-2-dalat.jpg",
+    link: "/province/lam-dong",
+    keywords: "8 must try foods in dalat da lat banh trang nuong lau ga la e",
+  },
+  {
+    id: "eat-hoian",
+    title: "8 must-try foods in Hoi An",
+    titleVi: "8 món ăn phải thử tại Hội An",
+    date: "February 12, 2025",
+    dateVi: "12 Tháng 2, 2025",
+    img: "/guide/megamenu/dest-3-hoian.jpg",
+    link: "/province/quang-nam",
+    keywords: "8 must try foods in hoi an cao lau mi quang chicken rice",
+  },
+  {
+    id: "attractions-hue",
+    title: "Top 8 Must-Visit Attractions in Hue",
+    titleVi: "Top 8 điểm đến phải ghé thăm tại Huế",
+    date: "July 6, 2019",
+    dateVi: "6 Tháng 7, 2019",
+    img: "/guide/15-best-places/place-8-hue.jpg",
+    link: "/province/thua-thien-hue",
+    keywords: "top 8 must visit attractions in hue citadel thien mu tomb perfume river",
+  },
+  {
+    id: "eat-hcmc",
+    title: "12 must-try foods in Ho Chi Minh City",
+    titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
+    date: "April 26, 2025",
+    dateVi: "26 Tháng 4, 2025",
+    img: "/guide/megamenu/eat-2-hcmc.jpg",
+    link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
+    keywords: "12 must try foods in ho chi minh city saigon com tam banh mi pho",
+  },
+  {
+    id: "eat-vungtau",
+    title: "7 must-try foods in Vung Tau",
+    titleVi: "7 món ăn tuyệt vời tại Vũng Tàu",
+    date: "April 1, 2025",
+    dateVi: "1 Tháng 4, 2025",
+    img: "/guide/megamenu/eat-4-vungtau.jpg",
+    link: "/province/ba-ria-vung-tau",
+    keywords: "7 must try foods in vung tau banh khot seafood beach",
+  },
   {
     id: "ao-dai",
     title: "Ao Dai – Vietnamese Traditional Dress",
-    titleVi: "Áo Dài – Quốc phục & Nét đẹp duyên dáng Việt Nam",
-    type: "Featured Article",
-    typeVi: "Bài viết nổi bật",
+    titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
+    date: "December 31, 2024",
+    dateVi: "31 Tháng 12, 2024",
     img: "/guide/hcmc/Ao-Dai-Vietnamese-Traditional-Dress.jpg",
     link: "/guide/ao-dai-vietnamese-traditional-dress",
-    keywords: "ao dai national costume dress fashion culture le mur raglan hue hoi an",
+    keywords: "ao dai vietnamese traditional dress national costume le mur raglan",
   },
   {
     id: "20-best-things",
     title: "20 Best Things to Do in Vietnam",
     titleVi: "20 trải nghiệm tuyệt vời nhất tại Việt Nam",
-    type: "Guide",
-    typeVi: "Cẩm nang",
+    date: "January 1, 2025",
+    dateVi: "1 Tháng 1, 2025",
     img: "/guide/megamenu/inspired-4.jpg",
     link: "/guide/20-best-things-to-do-in-vietnam",
-    keywords: "20 best things to do activities explore highlights halong sapa hoi an",
-  },
-  {
-    id: "complete-guide",
-    title: "The Complete Guide to Vietnam",
-    titleVi: "Cẩm nang du lịch toàn diện Việt Nam",
-    type: "Comprehensive Guide",
-    typeVi: "Cẩm nang toàn diện",
-    img: "/guide/megamenu/inspired-3.jpg",
-    link: "/guide/the-complete-guide-to-vietnam",
-    keywords: "complete guide overview travel visa weather transport foods",
+    keywords: "20 best things to do in vietnam travel guide explore activities",
   },
   {
     id: "15-best-places",
     title: "15 best places to visit in Vietnam in 2026",
     titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
-    type: "Trending",
-    typeVi: "Thịnh hành",
+    date: "June 16, 2026",
+    dateVi: "16 Tháng 6, 2026",
     img: "/guide/megamenu/inspired-1.jpg",
     link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
-    keywords: "15 best places visit destinations travel 2026 north south central",
+    keywords: "15 best places to visit in vietnam 2026 trending destinations",
   },
   {
     id: "plan-trip",
     title: "Plan Your Vietnam Trip with Just One Prompt",
     titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một prompt",
-    type: "AI Planner",
-    typeVi: "Trợ lý AI",
+    date: "April 1, 2026",
+    dateVi: "1 Tháng 4, 2026",
     img: "/guide/megamenu/inspired-2.jpg",
     link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
-    keywords: "plan itinerary ai prompt travel schedule budget route",
+    keywords: "plan your vietnam trip with just one prompt ai travel assistant",
+  },
+  {
+    id: "complete-guide",
+    title: "The Complete Guide to Vietnam",
+    titleVi: "Cẩm nang du lịch toàn diện Việt Nam",
+    date: "January 9, 2026",
+    dateVi: "9 Tháng 1, 2026",
+    img: "/guide/megamenu/inspired-3.jpg",
+    link: "/guide/the-complete-guide-to-vietnam",
+    keywords: "the complete guide to vietnam everything you need to know",
   },
   {
     id: "hcmc-10-things",
     title: "10 best things to do in Ho Chi Minh City",
     titleVi: "10 điều tuyệt nhất ở TP. Hồ Chí Minh",
-    type: "City Guide",
-    typeVi: "Cẩm nang thành phố",
-    img: "/guide/megamenu/dest-1.jpg",
+    date: "May 5, 2025",
+    dateVi: "5 Tháng 5, 2025",
+    img: "/guide/megamenu/dest-1-hcmc.jpg",
     link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
-    keywords: "ho chi minh saigon district 1 ben thanh war remnants bui vien",
+    keywords: "10 best things to do in ho chi minh city saigon ben thanh",
   },
   {
-    id: "hcmc-food",
-    title: "12 Must Try Foods in Ho Chi Minh City",
-    titleVi: "12 món ngon nhất định phải thử tại TP. Hồ Chí Minh",
-    type: "Food & Drink",
-    typeVi: "Ẩm thực",
-    img: "/guide/megamenu/eat-4.jpg",
-    link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
-    keywords: "food cuisine saigon com tam banh mi pho hcmc street food",
-  },
-  // Key destinations
-  {
-    id: "dest-hoian",
-    title: "Hoi An Ancient Town",
-    titleVi: "Phố cổ Hội An",
-    type: "Destination",
-    typeVi: "Điểm đến",
-    img: "/guide/megamenu/dest-3.jpg",
-    link: "/province/quang-nam",
-    keywords: "hoi an quang nam lanterns tailor river boats heritage",
+    id: "nhatrang-8-things",
+    title: "8 best things to do in Nha Trang",
+    titleVi: "8 hoạt động không thể bỏ qua tại Nha Trang",
+    date: "March 1, 2025",
+    dateVi: "1 Tháng 3, 2025",
+    img: "/guide/megamenu/todo-3-nhatrang.jpg",
+    link: "/province/khanh-hoa",
+    keywords: "8 best things to do in nha trang islands beach vinpearl",
   },
   {
-    id: "dest-halong",
-    title: "Ha Long Bay",
-    titleVi: "Vịnh Hạ Long",
-    type: "Destination",
-    typeVi: "Điểm đến",
-    img: "/guide/megamenu/dest-2.jpg",
-    link: "/province/quang-ninh",
-    keywords: "ha long bay quang ninh karst unesco cruise islands",
+    id: "itinerary-3week",
+    title: "3-week Vietnam Itinerary",
+    titleVi: "Lịch trình 3 tuần xuyên Việt",
+    date: "July 20, 2025",
+    dateVi: "20 Tháng 7, 2025",
+    img: "/guide/megamenu/todo-1-3week.jpg",
+    link: "/guide/the-complete-guide-to-vietnam",
+    keywords: "3 week vietnam itinerary north south central route",
   },
-  {
-    id: "dest-danang",
-    title: "Da Nang",
-    titleVi: "Đà Nẵng",
-    type: "Destination",
-    typeVi: "Điểm đến",
-    img: "/guide/megamenu/dest-4.jpg",
-    link: "/province/da-nang",
-    keywords: "da nang golden bridge ba na hills my khe beach dragon bridge",
-  },
-  {
-    id: "dest-hanoi",
-    title: "Hanoi Capital",
-    titleVi: "Thủ đô Hà Nội",
-    type: "Destination",
-    typeVi: "Điểm đến",
-    img: "/guide/megamenu/dest-5.jpg",
-    link: "/province/ha-noi",
-    keywords: "hanoi old quarter hoan kiem french quarter egg coffee",
-  },
-  {
-    id: "dest-hue",
-    title: "Hue Imperial City",
-    titleVi: "Cố đô Huế",
-    type: "Destination",
-    typeVi: "Điểm đến",
-    img: "/guide/megamenu/eat-5.jpg",
-    link: "/province/thua-thien-hue",
-    keywords: "hue citadel imperial tomb perfume river ao dai royal",
-  },
-  {
-    id: "dest-ninhbinh",
-    title: "Ninh Binh & Trang An",
-    titleVi: "Ninh Bình & Tràng An",
-    type: "Destination",
-    typeVi: "Điểm đến",
-    img: "/guide/megamenu/inspired-2.jpg",
-    link: "/province/ninh-binh",
-    keywords: "ninh binh trang an tam coc hang mua boats rice fields",
-  },
-];
-
-const POPULAR_TAGS = [
-  { label: "Ao Dai", labelVi: "Áo Dài", link: "/guide/ao-dai-vietnamese-traditional-dress" },
-  { label: "20 Best Things", labelVi: "20 trải nghiệm", link: "/guide/20-best-things-to-do-in-vietnam" },
-  { label: "15 Best Places", labelVi: "15 điểm đến", link: "/guide/15-best-places-to-visit-in-vietnam-in-2026" },
-  { label: "Hoi An", labelVi: "Hội An", link: "/province/quang-nam" },
-  { label: "Ha Long Bay", labelVi: "Hạ Long", link: "/province/quang-ninh" },
-  { label: "Da Nang", labelVi: "Đà Nẵng", link: "/province/da-nang" },
-  { label: "Hanoi", labelVi: "Hà Nội", link: "/province/ha-noi" },
-  { label: "Ho Chi Minh City", labelVi: "TP. Hồ Chí Minh", link: "/province/ho-chi-minh" },
 ];
 
 function removeVietnameseTones(str) {
@@ -182,7 +180,7 @@ export default function HeaderSearch() {
   // Focus input when opened
   useEffect(() => {
     if (isOpen && inputRef.current) {
-      setTimeout(() => inputRef.current?.focus(), 50);
+      setTimeout(() => inputRef.current?.focus(), 60);
     }
   }, [isOpen]);
 
@@ -201,25 +199,63 @@ export default function HeaderSearch() {
     };
   }, [isOpen]);
 
-  // Filter items
-  const cleanQ = removeVietnameseTones(query.trim());
-  const results = cleanQ
-    ? SEARCH_INDEX.filter((item) => {
-        const titleEn = removeVietnameseTones(item.title);
-        const titleVi = removeVietnameseTones(item.titleVi);
-        const kw = removeVietnameseTones(item.keywords || "");
-        return (
-          titleEn.includes(cleanQ) ||
-          titleVi.includes(cleanQ) ||
-          kw.includes(cleanQ)
-        );
-      })
-    : [];
+  // Smart multi-token scoring search
+  const filteredResults = useMemo(() => {
+    const raw = query.trim();
+    if (!raw) {
+      // Default initial posts (matching screenshot order)
+      return SEARCH_POSTS.slice(0, 6);
+    }
+
+    const cleanQuery = removeVietnameseTones(raw);
+    const tokens = cleanQuery.split(/\s+/).filter(Boolean);
+
+    const scored = SEARCH_POSTS.map((item) => {
+      const titleEn = removeVietnameseTones(item.title);
+      const titleVi = removeVietnameseTones(item.titleVi);
+      const kw = removeVietnameseTones(item.keywords || "");
+      const fullText = `${titleEn} ${titleVi} ${kw}`;
+
+      let score = 0;
+      let matchedTokens = 0;
+
+      // Exact phrase match bonus
+      if (titleEn.includes(cleanQuery) || titleVi.includes(cleanQuery)) {
+        score += 50;
+      }
+      if (titleEn.startsWith(cleanQuery)) {
+        score += 30;
+      }
+
+      // Check each token
+      tokens.forEach((token) => {
+        if (titleEn.includes(token) || titleVi.includes(token)) {
+          score += 15;
+          matchedTokens++;
+        } else if (kw.includes(token)) {
+          score += 8;
+          matchedTokens++;
+        }
+      });
+
+      // Bonus if all tokens match
+      if (matchedTokens === tokens.length) {
+        score += 25;
+      }
+
+      return { item, score, matchedTokens };
+    });
+
+    return scored
+      .filter((s) => s.score > 0 && s.matchedTokens > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((s) => s.item);
+  }, [query]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (results.length > 0) {
-      router.push(results[0].link);
+    if (filteredResults.length > 0) {
+      router.push(filteredResults[0].link);
       setIsOpen(false);
       setQuery("");
     }
@@ -238,9 +274,10 @@ export default function HeaderSearch() {
         <Search size={18} />
       </button>
 
-      {/* Floating search dropdown (matches Image 5) */}
+      {/* Floating search dropdown (exact layout from screenshot) */}
       {isOpen && (
         <div className="vnn-search-dropdown">
+          {/* Top search input line */}
           <form onSubmit={handleSearchSubmit} className="vnn-search-dropdown__bar">
             <input
               ref={inputRef}
@@ -255,74 +292,75 @@ export default function HeaderSearch() {
                 type="button"
                 className="vnn-search-dropdown__clear"
                 onClick={() => setQuery("")}
-                aria-label="Clear"
+                aria-label="Clear input"
               >
-                <X size={16} />
+                <X size={15} />
               </button>
             )}
             <button type="submit" className="vnn-search-dropdown__submit">
               <span>{isVi ? "Tìm kiếm" : "Search"}</span>
-              <span className="vnn-search-dropdown__arrow">&gt;</span>
+              <span style={{ fontSize: "12px", marginLeft: "2px" }}>&gt;</span>
             </button>
           </form>
 
+          {/* Posts container */}
           <div className="vnn-search-dropdown__body">
-            {query.trim() ? (
-              results.length > 0 ? (
-                results.slice(0, 6).map((item) => (
+            <div className="vnn-search-dropdown__posts-label">
+              {isVi ? "Bài viết" : "Posts"}
+            </div>
+
+            {filteredResults.length > 0 ? (
+              <div className="vnn-search-dropdown__grid">
+                {filteredResults.slice(0, 6).map((post) => (
                   <Link
-                    key={item.id}
-                    href={item.link}
-                    className="vnn-search-dropdown__item"
+                    key={post.id}
+                    href={post.link}
+                    className="vnn-search-post-card"
                     onClick={() => {
                       setIsOpen(false);
                       setQuery("");
                     }}
                   >
                     <img
-                      src={item.img}
-                      alt={item.title}
-                      className="vnn-search-dropdown__item-thumb"
+                      src={post.img}
+                      alt={post.title}
+                      className="vnn-search-post-card__thumb"
+                      loading="lazy"
                     />
-                    <div className="vnn-search-dropdown__item-info">
-                      <h5 className="vnn-search-dropdown__item-title">
-                        {isVi ? item.titleVi : item.title}
+                    <div className="vnn-search-post-card__info">
+                      <h5 className="vnn-search-post-card__title">
+                        {isVi ? post.titleVi : post.title}
                       </h5>
-                      <span className="vnn-search-dropdown__item-meta">
-                        {isVi ? item.typeVi : item.type}
-                      </span>
+                      <p className="vnn-search-post-card__date">
+                        {isVi ? post.dateVi : post.date}
+                      </p>
                     </div>
-                    <ChevronRight size={14} style={{ color: "#9ca3af" }} />
                   </Link>
-                ))
-              ) : (
-                <div className="vnn-search-dropdown__empty">
-                  <p>
-                    {isVi
-                      ? `Không tìm thấy kết quả cho "${query}"`
-                      : `No results found for "${query}"`}
-                  </p>
-                </div>
-              )
+                ))}
+              </div>
             ) : (
-              <div className="vnn-search-dropdown__quick">
-                <span className="vnn-search-dropdown__quick-label">
-                  {isVi ? "Tìm kiếm phổ biến:" : "Popular searches:"}
-                </span>
-                <div className="vnn-search-dropdown__tags">
-                  {POPULAR_TAGS.map((tag) => (
-                    <Link
-                      key={tag.link}
-                      href={tag.link}
-                      className="vnn-search-dropdown__tag"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {isVi ? tag.labelVi : tag.label}
-                    </Link>
-                  ))}
-                </div>
+              <div className="vnn-search-dropdown__empty">
+                <p>
+                  {isVi
+                    ? `Không tìm thấy bài viết cho "${query}"`
+                    : `No posts found for "${query}"`}
+                </p>
               </div>
             )}
+          </div>
+
+          {/* Bottom View all results */}
+          <div className="vnn-search-dropdown__footer">
+            <Link
+              href="/guide/the-complete-guide-to-vietnam"
+              className="vnn-search-dropdown__view-all"
+              onClick={() => {
+                setIsOpen(false);
+                setQuery("");
+              }}
+            >
+              {isVi ? "Xem tất cả kết quả" : "View all results"}
+            </Link>
           </div>
         </div>
       )}
