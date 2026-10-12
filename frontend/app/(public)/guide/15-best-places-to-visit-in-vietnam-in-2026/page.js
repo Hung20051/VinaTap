@@ -330,17 +330,6 @@ export default function BestPlaces2026Page() {
         "Xin chào! Tôi là Trợ lý AI Du lịch VinaTap. Bạn muốn khám phá hoặc lên kế hoạch cho địa điểm nào trong danh sách 15 điểm đến tuyệt nhất Việt Nam 2026 này?",
     },
   ]);
-  const [votedPlace, setVotedPlace] = useState(null);
-  const [votes, setVotes] = useState({
-    "Da Nang": 1840,
-    "Hoi An": 1620,
-    "Ha Long": 1450,
-    "Hanoi": 1390,
-    "Ninh Binh": 1280,
-    "Ho Chi Minh City": 1150,
-    "Sapa": 980,
-    "Ha Giang": 920,
-  });
 
   const handleMenuEnter = (menuKey) => {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
@@ -355,15 +344,6 @@ export default function BestPlaces2026Page() {
 
   const handleMegaMouseEnter = () => {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
-  };
-
-  const handleVote = (name) => {
-    if (votedPlace) return;
-    setVotedPlace(name);
-    setVotes((prev) => ({
-      ...prev,
-      [name]: (prev[name] || 500) + 1,
-    }));
   };
 
   const handleSendCompanion = (e) => {
@@ -656,33 +636,6 @@ export default function BestPlaces2026Page() {
           ))}
         </div>
 
-        {/* ─── 6. COMMUNITY SURVEY / VOTING ─── */}
-        <section className="places-survey-card">
-          <h3 className="places-survey-title">
-            What is your favorite place in Vietnam in 2026?
-          </h3>
-          <p className="places-survey-subtitle">
-            Join over 8,000 global travelers in voting for Vietnam’s most unforgettable destination!
-          </p>
-          <div className="places-survey-grid">
-            {Object.entries(votes).map(([city, count]) => (
-              <button
-                key={city}
-                type="button"
-                className={`places-survey-btn ${votedPlace === city ? "voted" : ""}`}
-                onClick={() => handleVote(city)}
-              >
-                <span>{city}</span>
-                <span className="places-survey-badge">{count.toLocaleString()} votes</span>
-              </button>
-            ))}
-          </div>
-          {votedPlace && (
-            <p style={{ marginTop: "16px", color: "#0d9488", fontWeight: 600, fontSize: "14px" }}>
-              ✓ Cảm ơn bạn đã bình chọn cho {votedPlace}!
-            </p>
-          )}
-        </section>
       </main>
 
       {/* ─── 7. FLOATING AI COMPANION BUTTON & MODAL (Hình 1) ─── */}
