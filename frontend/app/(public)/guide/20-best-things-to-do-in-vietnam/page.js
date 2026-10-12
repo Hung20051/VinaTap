@@ -596,7 +596,7 @@ const THINGS_ITEMS = [
     "id": "19-nha-trang",
     "num": 19,
     "titleEn": "19. Visit Nha Trang",
-    "titleVi": "19. Nghỉ dưỡng bên vịnh biển xanh ngắt Nha Trang",
+    "titleVi": "19. Khám phá thành phố biển Nha Trang",
     "img": "/guide/20-best-things/19-nha-trang.jpg",
     "webp": "/guide/20-best-things/19-nha-trang.webp",
     "alt": "Nha Trang tropical bay beach and resorts",
@@ -605,23 +605,23 @@ const THINGS_ITEMS = [
       "Nha Trang may not be new, but it remains one of the most popular beach cities in the country due to its pleasant weather, warm water, and resort facilities that stretch along the shoreline. The best reason to visit Nha Trang is to completely relax and lounge on the beach while sipping cocktails and enjoying the sun. There is a wide range of food options available, including both local and international dishes. In Nha Trang, you can also experience the unique experience of a mud bath, which is said to have healing properties. You can also see the influence of the Champa culture through the Cham towers. Overall, it's a place to have fun and unwind."
     ],
     "paragraphsVi": [
-      "Nha Trang là thiên đường nghỉ dưỡng ven biển hàng đầu Đông Nam Á với bãi biển cát mịn trải dài, nắng ấm quanh năm và hệ sinh thái san hô phong phú tại Vịnh Nha Trang. Du khách có thể trải nghiệm lặn biển ngắm san hô tại Hòn Mun, tắm bùn khoáng nóng thư giãn hay vui chơi tại công viên giải trí VinWonders trên đảo Hòn Tre."
+      "Nha Trang có thể không còn là điểm đến mới mẻ, nhưng vẫn luôn là một trong những thành phố biển được yêu thích nhất cả nước nhờ thời tiết dễ chịu quanh năm, làn nước biển ấm áp và chuỗi khu nghỉ dưỡng tiện nghi trải dài dọc bờ biển. Lý do tuyệt vời nhất để ghé thăm Nha Trang là hoàn toàn thư giãn, nằm dài trên bãi biển nhâm nhi ly cocktail và tận hưởng ánh nắng vàng. Nơi đây có vô vàn lựa chọn ẩm thực phong phú từ món ăn địa phương đến quốc tế. Tại Nha Trang, bạn còn có thể trải nghiệm tắm bùn khoáng độc đáo với nhiều lợi ích cho sức khỏe. Bạn cũng sẽ cảm nhận được dấu ấn văn hóa Chăm pa đặc sắc qua các tháp Chàm cổ kính. Tựu trung lại, đây là nơi hoàn hảo để vui chơi và xả hơi."
     ]
   },
   {
     "id": "20-ha-giang",
     "num": 20,
     "titleEn": "20. Marvel in Ha Giang",
-    "titleVi": "20. Chinh phục kỳ quan Cao nguyên đá Hà Giang",
+    "titleVi": "20. Chiêm ngưỡng kỳ quan hùng vĩ Hà Giang",
     "img": "/guide/20-best-things/20-ha-giang.jpg",
     "webp": "/guide/20-best-things/20-ha-giang.webp",
-    "alt": "Ha Giang spectacular mountain pass and Nho Que river",
+    "alt": "Lung Cu Flag Tower Ha Giang panoramic mountain view",
     "provinceLink": "/province/ha-giang",
     "paragraphsEn": [
-      "Ha Giang is the final frontier of Northern Vietnam, renowned for the Dong Van Karst Plateau Geopark, the legendary Ma Pi Leng Pass, and the emerald Nho Que River winding deep below the canyons. Conquering the winding roads of Ha Giang is considered by adventurers to be the ultimate motorcycle road trip in Southeast Asia, offering jaw-dropping mountain views and authentic ethnic minority culture."
+      "Ha Giang is considered to be one of the most captivating motorbike routes in Vietnam. Make sure to keep your eyes wide open and take in as much as possible, as every turn in the road presents a stunning view of towering mountains and scenic rivers running through deep valleys. It is an exciting experience to drive through Hmong villages and see the residents in their vibrant outfits. But the highlight of the trip is the Ma Pi Leng Pass, where mountains, rivers, and skies come together to create breathtaking scenery, making it a must-visit destination at least once in your lifetime. The beauty of Ha Giang is indescribable, so you must go there and witness it for yourself."
     ],
     "paragraphsVi": [
-      "Hà Giang – mảnh đất địa đầu cực Bắc của Tổ quốc – sở hữu Công viên địa chất toàn cầu Cao nguyên đá Đồng Văn hùng vĩ, Đèo Mã Pí Lèng hiểm trở bậc nhất và dòng sông Nho Quế xanh như ngọc uốn lượn dưới hẻm vực Tu Sản sâu hun hút. Chinh phục cung đường đèo Hà Giang mang đến cảm xúc choáng ngợp trước thiên nhiên kỳ vĩ cùng vẻ đẹp mộc mạc của hoa tam giác mạch và nụ cười rạng rỡ của trẻ em vùng cao."
+      "Hà Giang được coi là một trong những cung đường phượt xe máy mê hoặc nhất tại Việt Nam. Hãy mở to mắt và thu trọn nhiều nhất có thể vào tầm nhìn, bởi mỗi khúc cua trên đường đều mở ra khung cảnh ngoạn mục của những dãy núi cao chót vót và những dòng sông thơ mộng chảy qua các thung lũng sâu thẳm. Lái xe qua các bản làng người H'Mông và ngắm nhìn người dân địa phương trong những bộ trang phục rực rỡ sắc màu là một trải nghiệm vô cùng phấn khích. Nhưng điểm nhấn của chuyến đi chính là Đèo Mã Pí Lèng – nơi núi non, sông nước và mây trời hội tụ tạo nên cảnh sắc tráng lệ đến nghẹt thở, khiến nơi đây trở thành điểm đến nhất định phải ghé thăm ít nhất một lần trong đời. Vẻ đẹp của Hà Giang là không lời nào tả xiết, vì vậy bạn phải đích thân đến đó và tận mắt chiêm ngưỡng."
     ]
   }
 ];
@@ -757,123 +757,124 @@ export default function TwentyBestThingsPage() {
         }}
       />
 
-      {/* ─── TOP AD / HEADER BANNER ─── */}
-      <div className="cg-top-banner">
-        <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt">
-          <picture>
-            <source
-              media="(max-width: 768px)"
-              srcSet="/guide/hcmc/Vietnamnomad-header-banner-mobile-2026.jpg"
-            />
-            <img
-              src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
-              alt="Free AI Travel Assistant - AI Companion Vietnam"
-              className="cg-top-banner-img"
-            />
-          </picture>
+      {/* ─── 1. TOP BANNER ─── */}
+      <div
+        className="vnn-top-banner"
+        role="button"
+        tabIndex={0}
+        title="FREE AI TRAVEL ASSISTANT • AI COMPANION"
+      >
+        <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt" className="vnn-top-banner__inner">
+          <img
+            src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
+            alt="VinaTap AI Travel Assistant - AI Companion"
+            className="vnn-top-banner__img"
+          />
         </Link>
       </div>
 
-      {/* ─── MAIN NAVIGATION BAR ─── */}
-      <header className={`vnn-nav ${isScrolled ? "vnn-nav--sticky" : ""}`}>
-        <div className="vnn-nav__inner">
-          <div className="vnn-nav__left">
-            <Link href="/" className="vnn-nav__logo">
-              <Logo />
-            </Link>
-          </div>
+      {/* ─── 2. EDITORIAL NAVBAR WITH MEGAMENUS ─── */}
+      <header className="vnn-navbar" onMouseLeave={handleMouseLeave}>
+        <div className="vnn-navbar__inner">
+          <Link href="/" className="vnn-navbar__brand">
+            <div className="vnn-navbar__brand-vinatap">
+              <Logo size={32} showText={false} noLink href={null} as="span" />
+              <span>VinaTap</span>
+            </div>
+          </Link>
 
-          <nav className="vnn-nav__center">
+          <ul className="vnn-navbar__menu">
             {/* BE INSPIRED */}
-            <div
-              className="vnn-nav__item"
+            <li
+              className="vnn-navbar__item"
               onMouseEnter={() => handleMouseEnter("inspired")}
-              onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`vnn-nav__link ${activeMenu === "inspired" ? "vnn-nav__link--active" : ""}`}
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "inspired" ? "is-active" : ""}`}
               >
-                {isVi ? "CẢM HỨNG" : "BE INSPIRED"}
-                <ChevronDown className="vnn-nav__arrow" />
+                <span>{isVi ? "CẢM HỨNG" : "BE INSPIRED"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
+            </li>
 
             {/* DESTINATIONS */}
-            <div
-              className="vnn-nav__item"
+            <li
+              className="vnn-navbar__item"
               onMouseEnter={() => handleMouseEnter("destinations")}
-              onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`vnn-nav__link ${activeMenu === "destinations" ? "vnn-nav__link--active" : ""}`}
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "destinations" ? "is-active" : ""}`}
               >
-                {isVi ? "ĐIỂM ĐẾN" : "DESTINATIONS"}
-                <ChevronDown className="vnn-nav__arrow" />
+                <span>{isVi ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
+            </li>
 
             {/* THINGS TO DO */}
-            <div
-              className="vnn-nav__item"
+            <li
+              className="vnn-navbar__item"
               onMouseEnter={() => handleMouseEnter("thingsToDo")}
-              onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`vnn-nav__link ${activeMenu === "thingsToDo" ? "vnn-nav__link--active" : ""}`}
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "thingsToDo" ? "is-active" : ""}`}
               >
-                {isVi ? "TRẢI NGHIỆM" : "THINGS TO DO"}
-                <ChevronDown className="vnn-nav__arrow" />
+                <span>{isVi ? "TRẢI NGHIỆM" : "THINGS TO DO"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
+            </li>
 
             {/* EAT & DRINK */}
-            <div
-              className="vnn-nav__item"
+            <li
+              className="vnn-navbar__item"
               onMouseEnter={() => handleMouseEnter("eatAndDrink")}
-              onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`vnn-nav__link ${activeMenu === "eatAndDrink" ? "vnn-nav__link--active" : ""}`}
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "eatAndDrink" ? "is-active" : ""}`}
               >
-                {isVi ? "ẨM THỰC" : "EAT & DRINK"}
-                <ChevronDown className="vnn-nav__arrow" />
+                <span>{isVi ? "ẨM THỰC" : "EAT & DRINK"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
+            </li>
 
             {/* ITINERARIES */}
-            <div
-              className="vnn-nav__item"
+            <li
+              className="vnn-navbar__item"
               onMouseEnter={() => handleMouseEnter("itineraries")}
-              onMouseLeave={handleMouseLeave}
             >
               <button
-                className={`vnn-nav__link ${activeMenu === "itineraries" ? "vnn-nav__link--active" : ""}`}
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "itineraries" ? "is-active" : ""}`}
               >
-                {isVi ? "LỊCH TRÌNH" : "ITINERARIES"}
-                <ChevronDown className="vnn-nav__arrow" />
+                <span>{isVi ? "LỊCH TRÌNH" : "ITINERARIES"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
-          </nav>
+            </li>
+          </ul>
 
-          <div className="vnn-nav__right">
+          <div className="vnn-navbar__actions">
+            <LanguageSwitch variant="navbar" />
             <button
-              className="vnn-nav__icon-btn"
-              onClick={() => setSearchOpen(!searchOpen)}
-              aria-label="Search"
+              type="button"
+              className="vnn-search-btn"
+              onClick={() => setSearchOpen(true)}
+              aria-label={isVi ? "Tìm kiếm cẩm nang" : "Search guide"}
             >
-              <Search className="w-5 h-5 text-gray-700" />
+              <Search size={18} />
             </button>
-            <div className="ml-2">
-              <LanguageSwitch />
-            </div>
           </div>
         </div>
 
-        {/* ─── MEGAMENU DROPDOWN ─── */}
+        {/* ─── HOVER MEGAMENU CONTAINER ─── */}
         {activeMenu && MEGA_MENUS_DATA[activeMenu] && (
           <div
             className="vnn-megamenu"
-            onMouseEnter={() => handleMouseEnter(activeMenu)}
+            onMouseEnter={() => {
+              if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
+            }}
             onMouseLeave={handleMouseLeave}
           >
             <div className="vnn-megamenu__grid">
@@ -884,19 +885,25 @@ export default function TwentyBestThingsPage() {
                   className="vnn-megamenu__card"
                   onClick={() => setActiveMenu(null)}
                 >
-                  <div className="vnn-megamenu__img-wrap">
+                  <div className="vnn-megamenu__thumb">
                     <img
                       src={item.img}
-                      alt={item.title}
+                      alt={isVi && item.titleVi ? item.titleVi : item.title}
                       className="vnn-megamenu__img"
+                      loading="lazy"
                     />
+                    {item.badge && (
+                      <span className="vnn-megamenu__badge">
+                        {item.badge}
+                      </span>
+                    )}
                   </div>
-                  <div className="vnn-megamenu__body">
+                  <div className="vnn-megamenu__content">
                     <h4 className="vnn-megamenu__title">
-                      {isVi ? item.titleVi : item.title}
+                      {isVi && item.titleVi ? item.titleVi : item.title}
                     </h4>
                     <span className="vnn-megamenu__date">
-                      {isVi ? item.dateVi : item.date}
+                      {isVi && item.dateVi ? item.dateVi : item.date}
                     </span>
                   </div>
                 </Link>
@@ -905,6 +912,48 @@ export default function TwentyBestThingsPage() {
           </div>
         )}
       </header>
+
+      {/* ─── SEARCH MODAL OVERLAY ─── */}
+      {searchOpen && (
+        <div
+          className="vnn-search-modal"
+          onClick={() => setSearchOpen(false)}
+        >
+          <div
+            className="vnn-search-modal__box"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="vnn-search-modal__header">
+              <h3 className="vnn-search-modal__title">
+                {isVi ? "Tìm kiếm cẩm nang du lịch" : "Search Vietnam Travel Guide"}
+              </h3>
+              <button
+                type="button"
+                className="vnn-search-modal__close"
+                onClick={() => setSearchOpen(false)}
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="vnn-search-modal__body">
+              <div className="vnn-search-input-wrap">
+                <Search size={18} className="vnn-search-icon" />
+                <input
+                  type="text"
+                  placeholder={
+                    isVi
+                      ? "Nhập tên điểm đến (Hà Nội, Hội An, Sapa, Đà Nẵng...)..."
+                      : "Search destination (Hanoi, Hoi An, Sapa, Da Nang...)..."
+                  }
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ─── HERO SECTION (HÌNH 1) ─── */}
       <section
@@ -1068,64 +1117,29 @@ export default function TwentyBestThingsPage() {
       </main>
 
       {/* ─── FOOTER ─── */}
-      <footer className="cg-footer">
-        <div className="cg-footer__inner">
-          <div className="cg-footer__col">
-            <Link href="/" className="cg-footer__logo">
-              <Logo />
-            </Link>
-            <p className="cg-footer__tagline">
-              {isVi
-                ? "Nền tảng cẩm nang du lịch thông minh và đồng hành AI hàng đầu tại Việt Nam."
-                : "Vietnam's leading smart travel guide and AI companion platform."}
-            </p>
+      <footer className="home-footer" style={{ marginTop: "60px" }}>
+        <div className="home-footer__bottom">
+          <p>
+            {isVi
+              ? "© 2026 VinaTap. Tất cả quyền được bảo lưu. Cẩm nang du lịch 34 tỉnh thành Việt Nam."
+              : "© 2026 VinaTap. All rights reserved. Travel guide to 34 provinces of Vietnam."}
+          </p>
+          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+            <a
+              href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#9ca3af" }}
+            >
+              <Facebook size={18} />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af" }}>
+              <Instagram size={18} />
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af" }}>
+              <Youtube size={18} />
+            </a>
           </div>
-          <div className="cg-footer__col">
-            <h4 className="cg-footer__heading">
-              {isVi ? "Khám phá" : "Explore"}
-            </h4>
-            <ul className="cg-footer__links">
-              <li>
-                <Link href="/guide/15-best-places-to-visit-in-vietnam-in-2026">
-                  {isVi ? "15 Điểm đến 2026" : "15 Best Places 2026"}
-                </Link>
-              </li>
-              <li>
-                <Link href="/guide/20-best-things-to-do-in-vietnam">
-                  {isVi ? "20 Trải nghiệm hàng đầu" : "20 Best Things to Do"}
-                </Link>
-              </li>
-              <li>
-                <Link href="/guide/the-complete-guide-to-vietnam">
-                  {isVi ? "Cẩm nang toàn diện" : "The Complete Guide"}
-                </Link>
-              </li>
-              <li>
-                <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt">
-                  {isVi ? "Lập kế hoạch với AI" : "AI Trip Planner"}
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="cg-footer__col">
-            <h4 className="cg-footer__heading">
-              {isVi ? "Theo dõi chúng tôi" : "Follow Us"}
-            </h4>
-            <div className="cg-footer__socials">
-              <a href="#" className="cg-footer__social-btn" aria-label="Facebook">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="cg-footer__social-btn" aria-label="Instagram">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="cg-footer__social-btn" aria-label="YouTube">
-                <Youtube className="w-5 h-5" />
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="cg-footer__bottom">
-          <p>© 2026 Welcome to Vietnam. All rights reserved.</p>
         </div>
       </footer>
     </div>
