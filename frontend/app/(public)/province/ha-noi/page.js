@@ -1789,121 +1789,273 @@ export default function HanoiPage() {
 
                 <p>
                   {lang === "vi"
-                    ? "Dù ngôi chùa không có quy mô bề thế hoành tráng, kiến trúc độc bản tựa đài sen trên một cột đá duy nhất giữa hồ sen đã biến nơi đây thành biểu tượng kiến trúc văn hóa vang danh toàn cầu của Việt Nam."
-                    : "Although the pagoda is not a spectacular and large-scale complex, its unique architecture shaped like a lotus blossom emerging from the water makes it a world-renowned architectural icon of Vietnam."}
+                    ? "Dù ngôi chùa không phải là một công trình bề thế, quy mô lớn, nơi đây lại sở hữu giá trị lịch sử và tâm linh tôn giáo đặc biệt sâu sắc, rất xứng đáng để ghé thăm."
+                    : "Although the pagoda is not a spectacular and large-scale construction, it has a particular historical and religious value that is totally worth a visit."}
+                </p>
+
+                <p>
+                  <em>
+                    {lang === "vi"
+                      ? "Lưu ý: Vào ngày mùng 1 và ngày 14 Âm lịch hàng tháng, tại chùa diễn ra các nghi lễ Phật giáo trang trọng, giúp bạn cảm nhận trọn vẹn nhất không khí linh thiêng nơi đây."
+                      : "Note: on the 1st and 14th monthly (lunar calendar), there will be Buddhist ceremonies which will allow you to have a full picture of the place."}
+                  </em>
                 </p>
 
                 <ul className="vnn-hanoi-attraction-bullets">
                   <li>
                     <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
-                    {lang === "vi" ? "Phố Chùa Một Cột, Đội Cấn, Quận Ba Đình" : "Chua Mot Cot Street, Doi Can, Ba Dinh District"}
+                    {lang === "vi" ? "Chùa Một Cột, Đội Cấn, Quận Ba Đình" : "Chua Mot Cot, Doi Can, Ba Dinh District"}
                   </li>
                   <li>
-                    <strong>{lang === "vi" ? "Giờ mở cửa: " : "Opening hours: "}</strong>
+                    <strong>{lang === "vi" ? "Giá vé: " : "Price: "}</strong>
+                    25,000 VND
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giờ mở cửa: " : "Opening Hours: "}</strong>
                     7:00 AM – 6:00 PM
-                  </li>
-                  <li>
-                    <strong>{lang === "vi" ? "Giá vé: " : "Ticket price: "}</strong>
-                    {lang === "vi" ? "Miễn phí (25.000 VNĐ cho khách quốc tế)" : "Free for Vietnamese, 25,000 VND for foreign visitors"}
                   </li>
                 </ul>
               </div>
             </div>
           </div>
 
-          {/* MORE ATTRACTIONS CARDS GRID */}
-          <h4 style={{ fontSize: "18px", fontWeight: "700", color: "#222", marginBottom: "16px" }}>
-            {lang === "vi" ? "Các điểm đến biểu tượng tiếp theo:" : "More iconic attractions in Hanoi:"}
-          </h4>
-          <div className="vnn-hanoi-cards-grid">
-            {/* 1. Hoan Kiem Lake */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-hoankiem-hd.jpg"
-                  alt="Hoan Kiem Lake and Ngoc Son Temple"
-                />
+          {/* ITEM 14: BAT TRANG CERAMIC VILLAGE (SCREENSHOT 1 & 2) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "14. Làng gốm Bát Tràng (Bat Trang Ceramic Village)" : "14. Bat Trang Ceramic Village"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-battrang-hd.jpg"
+                    alt="Bat Trang Ceramic Village"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Làng gốm cổ Bát Tràng – Nghệ thuật thủ công nghìn năm" : "Bat Trang Ceramic Village"}
+                  </p>
+                </div>
               </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Hồ Hoàn Kiếm & Đền Ngọc Sơn" : "Hoan Kiem Lake & Ngoc Son Temple"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
                   {lang === "vi"
-                    ? "Trái tim lịch sử của thủ đô với Cầu Thê Húc đỏ son, Tháp Rùa cổ kính và huyền tích vua Lê Thái Tổ trả gươm thần."
-                    : "The emerald heart of the capital featuring the iconic red The Huc Bridge, Turtle Tower, and ancient legend of King Le Loi."}
+                    ? "Suốt hàng ngàn năm qua, gốm sứ đã trở thành biểu tượng gắn liền với Bát Tràng, minh chứng cho chất lượng tuyệt hảo và trình độ thủ công xuất chúng. Nằm ở bờ đông sông Hồng và chỉ cách trung tâm Hà Nội 15km, Làng gốm Bát Tràng là một quần thể gồm các bảo tàng gốm, xưởng chế tác, nhà cổ và chợ gốm sầm uất. Từng góc nhỏ trong làng đều mang nét cổ kính, rực rỡ sắc màu làm phông nền hoàn hảo cho những bức ảnh kỷ niệm của bạn. Bạn có thể đăng ký tham gia các buổi trải nghiệm vuốt gốm, tự tay tạo hình và sáng tạo nên tác phẩm gốm của riêng mình. Chợ gốm là nơi bạn dễ dàng tìm thấy những món đồ gốm tinh xảo độc nhất vô nhị vì mỗi sản phẩm đều được các nghệ nhân tỉ mỉ vẽ tay hàng giờ đồng hồ."
+                    : "For thousands of years, ceramic has been synonymous with Bat Trang, which is a testimony to its excellent quality and outstanding handicraft quality. Located on the east side of the Red River and only 15km from Hanoi center, Bat Trang Ceramic Village is a complex of ceramic museums, workshops, ancient houses and markets. Every corner of the village sets up a colorful and vintage background for your photographs. You can sign up for ceramic-making workshops, which will give you hands-on experience and help you create your own piece of ceramic. The ceramic market is where you can get lovely and one-and-only ceramic items since each of them takes hours to be painted by hand by the artisans."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Điểm tham quan vào cửa hoàn toàn miễn phí, bạn chỉ phải trả phí nếu muốn tự tay tham gia hoạt động nặn gốm (chi phí bắt đầu từ 30.000 VNĐ)."
+                    : "The attraction allows free entrance, and you are only charged if you want to take part in ceramic-making activities (the cost starts at 30,000 VND)."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Từ trung tâm Hà Nội, bạn có thể đón xe buýt số 47A hoặc 52B để đến Bát Tràng. Làng gốm cũng rất dễ dàng di chuyển bằng xe máy, hoặc bạn có thể đặt tour trọn gói tại các công ty du lịch để chuyến đi thêm phần thuận tiện."
+                    : "From Hanoi, you can check out bus number 47A or bus 52B to go to Bat Trang. It is also easily accessed by motorbikes and there are many tourist agencies that offer a full-package tour to Bat Trang Ceramic Village which will save you from all the hassle."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "Huyện Gia Lâm, Hà Nội" : "Gia Lam District"}
                 </p>
               </div>
             </div>
+          </div>
 
-            {/* 2. Hanoi Train Street */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-hero-hd.jpg"
-                  alt="Hanoi Train Street"
-                />
-              </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Phố đường tàu Hà Nội" : "Hanoi Train Street"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
-                  {lang === "vi"
-                    ? "Trải nghiệm nhâm nhi ly cà phê trứng bên đường ray khi đoàn tàu hỏa chạy lướt qua cách chỉ vài bước chân."
-                    : "World-famous railway corridor where trains pass through inches from vintage cafes, lanterns, and colorful shophouses."}
-                </p>
-              </div>
-            </div>
+          {/* ITEM 15: HANOI TRAIN STREET (SCREENSHOT 2 & 3) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "15. Phố đường tàu Hà Nội (Hanoi Train Street)" : "15. Hanoi Train Street"}
+            </h3>
 
-            {/* 3. Temple of Literature */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-vanmieu-hd.jpg"
-                  alt="Temple of Literature"
-                />
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-hero-hd.jpg"
+                    alt="Hanoi Train Street Phung Hung"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Phố đường tàu Phùng Hưng – Lê Duẩn" : "Hanoi Train Street"}
+                  </p>
+                </div>
               </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Văn Miếu – Quốc Tử Giám" : "Temple of Literature"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
-                  {lang === "vi"
-                    ? "Trường đại học đầu tiên của Việt Nam xây dựng từ năm 1070, biểu tượng ngàn năm hiếu học của dân tộc."
-                    : "Vietnam's first national university established in 1070, featuring peaceful courtyards and ancient Doctor stelae."}
-                </p>
-              </div>
-            </div>
 
-            {/* 4. St. Joseph's Cathedral */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-nhatho-hd.jpg"
-                  alt="St. Joseph's Cathedral"
-                />
-              </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Nhà thờ Lớn Hà Nội" : "St. Joseph's Cathedral"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
                   {lang === "vi"
-                    ? "Kiến trúc Gothic cổ kính tráng lệ giữa lòng phố cổ, điểm thưởng thức trà chanh chém gió quen thuộc của giới trẻ."
-                    : "Neo-Gothic architectural masterpiece dating from 1886 surrounded by lively sidewalk cafes and iced lemon tea stalls."}
+                    ? "Phố đường tàu Hà Nội (hay Phố đường tàu Phùng Hưng) nổi tiếng nhất với đoạn dài 2 km nối từ phố Phùng Hưng đến phố Lê Duẩn, chạy cắt ngang qua phố Trần Phú và phố Cửa Đông. Nơi đây đã trở thành điểm đến độc nhất vô nhị thu hút du khách trải nghiệm sự hòa quyện giữa kiến trúc Pháp và Việt Nam, cùng nhịp sống đời thường của người dân sinh sống sát mép đường ray. Vào cuối năm 2019, tuyến phố từng bị tạm dừng hoạt động vì lý do an toàn đường sắt. Đến giữa năm 2022, tuyến tham quan này đã được phục hồi phục vụ du lịch, nhưng du khách luôn phải tuân thủ nghiêm ngặt các quy định an toàn."
+                    : "Hanoi Train Street (or Phung Hung Train Street) is most famous with the 2-kilometer section from Phung Hung Street to Le Duan Street, running across Tran Phu Street and Cua Dong Street. This has been recognized as a unique attraction for tourists to experience the coming together between French and Vietnamese architecture and also the local life of those residing along the railway. At the end of 2019, the street was closed down for safety purposes. In mid-2022, this route was restored to tourist activity, but visitors must ensure strict safety guidelines."}
                 </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "Phố Phùng Hưng, Quận Hoàn Kiếm" : "Phung Hung Street"}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Giờ tàu chạy (Train times):" : "Train times:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Ngày trong tuần (Weekdays): " : "Weekdays: "}</strong>
+                    7:00 PM, 7:45 PM, 8:30 PM, 10:00 PM
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Cuối tuần (Weekends): " : "Weekends: "}</strong>
+                    9:15 AM, 11:20 AM, 3:20 PM, 5:30 PM, 6:00 PM, 7:00 PM, 7:45 PM, 8:30 PM, 9:00 PM, 11:00 PM
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ─── 11. 10 MUST-TRY DISHES IN HANOI ─── */}
+        {/* ─── 11. 10 MUST-TRY DISHES IN HANOI (SCREENSHOT 3, 4, 5) ─── */}
         <section id="hanoi-dishes" style={{ marginTop: "48px" }}>
           <h2 className="vnn-hanoi-teal-heading">
             {lang === "vi" ? "10 món ngon nhất định phải thử ở Hà Nội" : "10 must-try dishes in Hanoi"}
           </h2>
 
+          <p style={{ fontStyle: "italic", fontSize: "15px", lineHeight: "1.8", color: "#555", textAlign: "justify", marginBottom: "32px" }}>
+            {lang === "vi"
+              ? "Hà Nội – thủ đô ngàn năm văn hiến, là cái nôi của tinh hoa ẩm thực Việt Nam. Bên cạnh những món ăn đã vang danh thế giới như Phở hay Bún chả, Hà Nội vẫn còn rất nhiều món ăn đặc sắc mang đậm hương vị truyền thống. Dưới đây là top 10 món ăn hàng đầu bạn không thể bỏ lỡ trong hành trình ẩm thực tại Hà Nội."
+              : "Hanoi – the capital of a thousand years of civilization, is the cradle of Vietnamese cuisine. In addition to the dishes that have made Vietnam famous such as Pho or Bun Cha, Hanoi still has very typical dishes. Here are the top 10 dishes you should not miss on your culinary journey in Hanoi."}
+          </p>
+
+          {/* DISH 1: PHO (SCREENSHOT 3 & 4) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "1. Phở Hà Nội (Pho)" : "1. Pho"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-pho-hd.jpg"
+                    alt="Traditional Pho Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Phở bò Hà Nội thơm lừng hương vị truyền thống" : "Traditional Pho Hanoi"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi" ? (
+                    <>
+                      Không cần phải bàn cãi, Phở đã được toàn thế giới công nhận là linh hồn của{" "}
+                      <a href="/guide/the-complete-guide-to-vietnam" style={{ color: "#008b94", textDecoration: "underline" }}>
+                        ẩm thực Việt Nam
+                      </a>{" "}
+                      và là một phần không thể thiếu gắn bó với người dân Việt Nam từ thế hệ này sang thế hệ khác. Dù bạn có thể thưởng thức phở ở bất cứ nơi đâu, không thể phủ nhận rằng Phở Hà Nội – nơi cội nguồn sinh ra món ăn này – vẫn là chuẩn mực thơm ngon nhất.
+                    </>
+                  ) : (
+                    <>
+                      Needless to say, Pho has been recognized all around the world as the soul of{" "}
+                      <a href="/guide/the-complete-guide-to-vietnam" style={{ color: "#008b94", textDecoration: "underline" }}>
+                        Vietnamese cuisine
+                      </a>{" "}
+                      and is one of the indispensable parts associated with Vietnamese people from generation to generation. Although Pho can be found anywhere you go, it cannot be denied that Pho Hanoi – where it was originally from – is at its best.
+                    </>
+                  )}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Một bát phở chuẩn vị đòi hỏi quy trình chuẩn bị và ninh nấu vô cùng tỉ mỉ. Phở được chế biến từ các nguyên liệu chính gồm nước dùng ninh xương bò ngọt thanh, bánh phở mềm mướt và những lát thịt bò thái mỏng. Điểm khác biệt giữa Phở Hà Nội và Phở miền Nam là bát phở Bắc ngập tràn hành hoa thái nhỏ và không kèm đĩa rau thơm sống riêng biệt (thay vào đó, phở luôn ăn kèm với bánh quẩy vàng giòn nóng hổi)."
+                    : "A decent bowl of Pho requires a meticulous preparation and cooking process. Pho is made from the main ingredients such as bone-beef broth, noodles, and thinly sliced beef. What makes Pho Hanoi different from Pho in the south is that you will find lots of green onion in your bowl and there are no side green herbs (instead, it is sided with \"bánh quẩy\" or hot finger-shaped soufflé)."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Mẹo thưởng thức (Tips):" : "Tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Thực đơn phở thường có rất nhiều lựa chọn phần thịt bò, có thể khiến bạn phân vân trong lần đầu trải nghiệm. Một lựa chọn an toàn và ngon nhất để gọi là \"Phở tái nạm\" – phở với thịt bò tái mềm và nạm giòn thơm (bạn có thể gọi thêm bò viên tùy khẩu vị cá nhân)."
+                    : "Oftentimes, there are many types of beef you can choose from the menu, which could be confusing for your first experience. A safe option to stick to is \"Phở tái nạm\" – Pho with rare lean & brisket beef (with or without \"bò viên\" – meatballs depending on your preference)."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Khi ăn, bạn hãy thêm một chút giấm tỏi ớt và tương ớt truyền thống vào bát, trộn đều, nhúng miếng bánh quẩy ngập vào nước dùng nóng hổi rồi thưởng thức một miếng đầy đặn để cảm nhận sự bùng nổ hương vị thơm ngậy trong vòm họng."
+                    : "When eating, you can add a bit of pickled garlic and homemade chili sauce to the bowl, mix it up, dip \"bánh quẩy\" in the broth then have a big bite of everything and the explosion of flavors in your mouth."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Một số quán phở ngon nức tiếng tại Hà Nội:" : "Some famous delicious Pho restaurants in Hanoi:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>49 Phố Bát Đàn, Quận Hoàn Kiếm (30,000 VND – 55,000 VND)</li>
+                  <li>13 Phố Lò Đúc, Quận Hoàn Kiếm (40,000 VND – 60,000 VND)</li>
+                  <li>10 Phố Lý Quốc Sư, Quận Hoàn Kiếm (50,000 VND – 80,000 VND)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* DISH 2: BUN CHA (SCREENSHOT 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "2. Bún Chả Hà Nội (Bun Cha)" : "2. Bun Cha"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-buncha-hd.jpg"
+                    alt="Bun Cha Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Bún chả nướng than hoa thơm nức đậm đà Hà Nội" : "Bun Cha Hanoi"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Bún Chả thực tế còn gắn liền với ẩm thực thủ đô sâu đậm hơn cả Phở, đúng như tên gọi của nó. Một suất bún chả bao gồm đĩa bún sợi nhỏ mềm mát, bát thịt nướng và chả miếng ngập trong nước mắm chua ngọt ấm nóng kèm đu đủ giòn, cùng một rổ rau sống tươi non để cân bằng dinh dưỡng."
+                    : "Bun Cha is actually even more synonymous with Hanoi cuisine than Pho, which is suggested in its name. One portion of Bun Cha consists of thin noodles, grilled pork in sweet and vinegary broth, and a small basket of green herbs to balance out the meaty protein."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Tinh hoa của Bún Chả Hà Nội nằm ở những miếng thịt chả nướng than hoa: thịt phải được chọn theo tỷ lệ nạc mỡ hài hòa, tẩm ướp vừa vặn với các loại gia vị hành tỏi rồi nướng xém vàng trên vỉ than hồng đỏ rực."
+                    : "The essence of Bun Cha Hanoi lies among the BBQ pork which has to meet the balanced proportion of lean meat and fat before being seasoned with the right amount of herbs and spices then grilled on an open coal-fire."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Mẹo thưởng thức (Tips):" : "Tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Khi ăn bún chả, bạn sẽ được phục vụ một chiếc bát nhỏ riêng. Hãy gắp một chút bún tươi, thêm miếng thịt nướng và ít rau thơm rồi chan một thìa nước mắm chua ngọt vào. Món ăn ngon nhất khi bạn thưởng thức đầy đủ các thành phần cùng một lúc."
+                    : "When eating Bun Cha Hanoi, you will be given an extra small bowl. Take a bit of noodle, add grilled pork and some herbs, then pour in a bit of the broth. It tastes best when you have a bit of everything at the same time."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Bún chả được bán cả ngày, tuy nhiên thời điểm lý tưởng nhất để thưởng thức là vào bữa trưa, vì thịt nướng có thể hơi nhiều đạm cho bữa sáng và khẩu phần một suất rất đầy đặn – cung cấp dồi dào năng lượng cho phần còn lại trong ngày của bạn. Bạn cũng rất nên gọi thêm Nem Rán (chả giò rán giòn rụm) để bữa ăn thêm trọn vị."
+                    : "Bun Cha is available all day, however, it is ideal to eat Bun Cha for lunch, as it could be a bit too fatty for breakfast and its serving portion is huge and very filling – which will give you energy for the rest of the day. It is also recommended to order Nem Ran – a square version of spring rolls."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h4 style={{ fontSize: "18px", fontWeight: "700", color: "#222", marginBottom: "16px" }}>
+            {lang === "vi" ? "Các món đặc sản trứ danh tiếp theo:" : "More must-try Hanoi specialties:"}
+          </h4>
           <div className="vnn-hanoi-cards-grid">
             {/* 1. Pho Hanoi */}
             <div className="vnn-hanoi-article-card">
