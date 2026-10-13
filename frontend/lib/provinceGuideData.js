@@ -68,7 +68,7 @@ export const DANANG_GUIDE_DATA = {
       {
         id: "c1",
         title: "Chip chip hấp sả - Đậm đà hương vị miền Trung",
-        date: "08/07/2026",
+        date: "11/10/2026",
         views: "128,632",
         image:
           "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&q=80",
@@ -79,7 +79,7 @@ export const DANANG_GUIDE_DATA = {
         id: "c2",
         title:
           "Lưu ngay list 10 quán bánh tráng kẹp Đà Nẵng càng ăn càng ghiền",
-        date: "08/07/2026",
+        date: "11/10/2026",
         views: "102,306",
         image:
           "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&q=80",
@@ -90,7 +90,7 @@ export const DANANG_GUIDE_DATA = {
       {
         id: "c3",
         title: "Top 11 quán bánh bèo Đà Nẵng ngon chuẩn vị nổi tiếng nhất",
-        date: "09/09/2026",
+        date: "12/10/2026",
         views: "98,889",
         image:
           "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
@@ -102,7 +102,7 @@ export const DANANG_GUIDE_DATA = {
         id: "c4",
         title:
           "Muốn tìm quán bánh tráng cuốn thịt heo Đà Nẵng chuẩn vị phải bỏ túi ngay danh sách này",
-        date: "05/06/2026",
+        date: "11/10/2026",
         views: "98,277",
         image:
           "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80",
@@ -244,7 +244,7 @@ export const DANANG_GUIDE_DATA = {
       {
         id: "r1",
         title: "Cầu Rồng phun lửa mấy giờ, thứ mấy? Review chi tiết 2026",
-        date: "03/01/2026",
+        date: "12/10/2026",
         views: "74,452",
         image:
           "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&q=80",
@@ -253,7 +253,7 @@ export const DANANG_GUIDE_DATA = {
       {
         id: "r2",
         title: "Phá đảo khu vui chơi Fantasy Park Bà Nà Hills từ A đến Z",
-        date: "15/10/2024",
+        date: "13/10/2026",
         views: "59,496",
         image:
           "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?w=400&q=80",
@@ -262,7 +262,7 @@ export const DANANG_GUIDE_DATA = {
       {
         id: "r3",
         title: "Oanh tạc chợ Bắc Mỹ An thưởng thức trọn vẹn đặc sản Đà Nẵng",
-        date: "09/11/2024",
+        date: "13/10/2026",
         views: "44,532",
         image:
           "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
@@ -272,7 +272,7 @@ export const DANANG_GUIDE_DATA = {
         id: "r4",
         title:
           "Da Nang Downtown tổ hợp vui chơi giải trí đẳng cấp bên sông Hàn",
-        date: "18/09/2026",
+        date: "12/10/2026",
         views: "37,512",
         image:
           "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80",
@@ -403,7 +403,7 @@ export const HCMC_GUIDE_DATA = {
       {
         id: "hcm-c1",
         title: "Bánh Xèo Nam Bộ giòn rụm cuốn rau rừng",
-        date: "12/08/2026",
+        date: "13/10/2026",
         views: "115,420",
         image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Xeo.jpg",
         address: "Bánh xèo 46A Đinh Công Tráng, Bánh xèo Mười Xiềm",
@@ -412,7 +412,7 @@ export const HCMC_GUIDE_DATA = {
       {
         id: "hcm-c2",
         title: "Hủ Tiếu Nam Vang đậm đà nước dùng thanh ngọt",
-        date: "10/08/2026",
+        date: "13/10/2026",
         views: "98,110",
         image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Hu-Tieu.jpg",
         address: "Hủ tiếu Nhân Quán, Hủ tiếu Quỳnh",
@@ -421,7 +421,7 @@ export const HCMC_GUIDE_DATA = {
       {
         id: "hcm-c3",
         title: "Bún Thịt Nướng Chả Giò giòn tan nước mắm chua ngọt",
-        date: "05/08/2026",
+        date: "13/10/2026",
         views: "89,930",
         image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
         address: "Bún thịt nướng Chị Tuyền, Bún thịt nướng Kiều Bảo",
@@ -430,7 +430,7 @@ export const HCMC_GUIDE_DATA = {
       {
         id: "hcm-c4",
         title: "Bò Né chảo gang xèo xèo cùng trứng ốp la béo ngậy",
-        date: "01/08/2026",
+        date: "13/10/2026",
         views: "75,200",
         image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bo-Ne.jpg",
         address: "Bò né Cô Ba, Bò né Lệ Hồng",
@@ -439,7 +439,7 @@ export const HCMC_GUIDE_DATA = {
       {
         id: "hcm-c5",
         title: "Ốc Sài Gòn đêm thơm lừng bơ tỏi và muối ớt",
-        date: "28/07/2026",
+        date: "14/10/2026",
         views: "92,400",
         image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Shellfish.jpg",
         address: "Ốc Oanh (Vĩnh Khánh), Ốc Đào (Nguyễn Trãi)",
@@ -448,7 +448,7 @@ export const HCMC_GUIDE_DATA = {
       {
         id: "hcm-c6",
         title: "Cà phê sữa đá Sài Gòn nét văn hóa đường phố trứ danh",
-        date: "20/07/2026",
+        date: "14/10/2026",
         views: "135,800",
         image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da.jpg",
         address: "Cà phê bệt Nhà thờ Đức Bà, Cà phê Cheo Leo",
@@ -504,7 +504,7 @@ export const HCMC_GUIDE_DATA = {
       {
         id: "r1",
         title: "Review một ngày làm người Sài Gòn: Cà phê bệt, waterbus và phố đi bộ",
-        date: "14/06/2026",
+        date: "14/10/2026",
         views: "68,180",
         image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bui-Vien-Street-Vietnamnomad.jpg",
         desc: "Chuyến đi thú vị với chi phí cực kỳ tiết kiệm nhưng đầy ắp kỷ niệm đẹp.",
@@ -771,7 +771,7 @@ export function getProvinceGuideData(
       list: listRaw.map((f, i) => ({
         id: f.id || `f-${i}`,
         title: f.title,
-        date: f.published_date || f.date || "01/01/2026",
+        date: f.published_date || f.date || "10/10/2026",
         views: f.view_count || f.views || null,
         image: getFoodImage(
           f,
@@ -903,7 +903,7 @@ export function getProvinceGuideData(
         list: listRevRaw.map((r, i) => ({
           id: r.id || `r-${i}`,
           title: r.title,
-          date: r.published_date || r.date || "01/01/2026",
+          date: r.published_date || r.date || "10/10/2026",
           views: r.view_count || r.views || null,
           image: getArticleImage(
             r,
@@ -1009,7 +1009,7 @@ function getGenericFallback(pName, province) {
         {
           id: "c1",
           title: `Đặc sản ẩm thực truyền thống ${pName} đậm đà khó quên`,
-          date: "12/08/2026",
+          date: "13/10/2026",
           views: "85,420",
           image:
             "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
@@ -1019,7 +1019,7 @@ function getGenericFallback(pName, province) {
         {
           id: "c2",
           title: `Top quán ăn ngon nức tiếng tại ${pName} đông khách mỗi ngày`,
-          date: "10/08/2026",
+          date: "13/10/2026",
           views: "62,110",
           image:
             "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80",
@@ -1029,7 +1029,7 @@ function getGenericFallback(pName, province) {
         {
           id: "c3",
           title: `Khám phá các món ăn vặt đường phố siêu ngon tại ${pName}`,
-          date: "05/08/2026",
+          date: "13/10/2026",
           views: "48,930",
           image:
             "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&q=80",
@@ -1039,7 +1039,7 @@ function getGenericFallback(pName, province) {
         {
           id: "c4",
           title: `Mua gì làm quà khi du lịch ${pName}? Gợi ý đặc sản trứ danh`,
-          date: "01/08/2026",
+          date: "13/10/2026",
           views: "53,200",
           image:
             "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&q=80",
@@ -1152,7 +1152,7 @@ function getGenericFallback(pName, province) {
         {
           id: "r1",
           title: `Review chân thực chuyến đi ${pName} tự túc cùng hội bạn thân`,
-          date: "14/06/2026",
+          date: "14/10/2026",
           views: "52,180",
           image:
             "https://images.unsplash.com/photo-1528127269322-539801943592?w=400&q=80",
@@ -1161,7 +1161,7 @@ function getGenericFallback(pName, province) {
         {
           id: "r2",
           title: `Khám phá những góc check-in bí mật ít người biết tại ${pName}`,
-          date: "20/05/2026",
+          date: "14/10/2026",
           views: "43,910",
           image:
             "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&q=80",
@@ -1170,7 +1170,7 @@ function getGenericFallback(pName, province) {
         {
           id: "r3",
           title: `Trải nghiệm văn hóa chợ phiên và nhịp sống địa phương ở ${pName}`,
-          date: "11/04/2026",
+          date: "14/10/2026",
           views: "38,240",
           image:
             "https://images.unsplash.com/photo-1555126634-323283e090fa?w=400&q=80",
@@ -1179,7 +1179,7 @@ function getGenericFallback(pName, province) {
         {
           id: "r4",
           title: `Check-in ngắm hoàng hôn cực chill tại những quán cafe đẹp ở ${pName}`,
-          date: "02/03/2026",
+          date: "14/10/2026",
           views: "31,450",
           image:
             "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80",

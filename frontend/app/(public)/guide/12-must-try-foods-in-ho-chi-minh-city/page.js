@@ -555,7 +555,7 @@ export default function MustTryFoodsInHCMCPage() {
             <div className="guide-meta-stats">
               <span className="guide-meta-item">
                 <Calendar size={14} />
-                <span>24 Tháng 9, 2026</span>
+                <span>12 Tháng 10, 2026</span>
               </span>
               <span className="guide-meta-item">
                 <Clock size={14} />

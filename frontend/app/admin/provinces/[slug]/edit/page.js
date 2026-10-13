@@ -449,7 +449,7 @@ export default function AdminProvinceVisualEditor() {
                     address: "",
                     description: "",
                     view_count: "100,000+",
-                    published_date: "01/01/2026",
+                    published_date: "10/10/2026",
                     is_featured: 0,
                   },
                   index: -1,
