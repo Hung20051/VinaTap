@@ -818,7 +818,7 @@ export default function DalatPage() {
                             opacity: 0.85,
                           }}
                         >
-                          Welcome To Vietnam
+                          VinaTap
                         </p>
                       </div>
                     </div>

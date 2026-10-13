@@ -727,7 +727,7 @@ export default function HoChiMinhCityPage() {
                             opacity: 0.85,
                           }}
                         >
-                          Welcome To Vietnam
+                          VinaTap
                         </p>
                       </div>
                     </div>

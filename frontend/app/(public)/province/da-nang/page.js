@@ -738,7 +738,7 @@ export default function DaNangPage() {
         <Link href="/">
           <img
             src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
-            alt="Welcome To Vietnam - AI Companion"
+            alt="VinaTap - AI Companion"
           />
         </Link>
       </div>
@@ -1039,7 +1039,7 @@ export default function DaNangPage() {
               <div className="vnn-danang-video-iframe-wrap">
                 <iframe
                   src="https://www.youtube.com/embed/FNJW8K0_73o?autoplay=1&rel=0"
-                  title="Da Nang: A Guide to Visiting the Most Livable City in Vietnam | Welcome To Vietnam"
+                  title="Da Nang: A Guide to Visiting the Most Livable City in Vietnam | VinaTap"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
@@ -1838,7 +1838,7 @@ export default function DaNangPage() {
           <div className="home-footer__brand">
             <span className="home-footer__name">VinaTap</span>
             <span className="home-footer__copy">
-              © {new Date().getFullYear()} VinaTap. Welcome to Vietnam.
+              © {new Date().getFullYear()} VinaTap.
             </span>
           </div>
 

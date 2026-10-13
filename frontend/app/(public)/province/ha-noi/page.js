@@ -342,7 +342,7 @@ export default function HanoiPage() {
         <Link href="/">
           <img
             src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
-            alt="Welcome To Vietnam - Free AI Travel Assistant AI-Companion"
+            alt="VinaTap - Free AI Travel Assistant AI-Companion"
           />
         </Link>
       </div>
@@ -2563,7 +2563,7 @@ export default function HanoiPage() {
           <div className="home-footer__brand">
             <span className="home-footer__name">VinaTap</span>
             <span className="home-footer__copy">
-              © {new Date().getFullYear()} VinaTap. Welcome to Vietnam.
+              © {new Date().getFullYear()} VinaTap.
             </span>
           </div>
 

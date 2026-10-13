@@ -875,7 +875,7 @@ export default function HoiAnPage() {
                         Hoi An: A Guide to Visiting the Most Beautiful Ancient Town
                       </h4>
                       <p style={{ margin: 0, fontSize: "12px", opacity: 0.85, color: "#fff" }}>
-                        Welcome To Vietnam
+                        VinaTap
                       </p>
                     </div>
                   </div>

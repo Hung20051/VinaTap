@@ -1428,6 +1428,69 @@ export default function ThreeWeekVietnamItineraryPage() {
               : "3-week Vietnam Itinerary: Extended exploration"}
           </div>
         </section>
+
+        {/* ─── 11. RELATED ARTICLES (IMAGE 2) ─── */}
+        <hr className="itin-divider" />
+        <section className="itin-related-section">
+          <h3 className="itin-related-title">
+            {lang === "vi" ? "Bài viết liên quan" : "Related Articles"}
+          </h3>
+          <div className="itin-related-grid">
+            <Link href="/province/ha-noi" className="itin-related-card">
+              <div className="itin-related-card__thumb-wrap">
+                <img
+                  src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"
+                  alt="8 must-try foods in Hanoi"
+                  className="itin-related-card__thumb"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="itin-related-card__title">
+                {lang === "vi"
+                  ? "8 món ngon nhất định phải thử tại Hà Nội"
+                  : "8 must-try foods in Hanoi"}
+              </h4>
+            </Link>
+
+            <Link
+              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+              className="itin-related-card"
+            >
+              <div className="itin-related-card__thumb-wrap">
+                <img
+                  src="/guide/hcmc/hcmc-hero-aerial-hd.jpg"
+                  alt="10 best things to do in Ho Chi Minh City"
+                  className="itin-related-card__thumb"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="itin-related-card__title">
+                {lang === "vi"
+                  ? "10 trải nghiệm tuyệt nhất tại TP.HCM"
+                  : "10 best things to do in Ho Chi Minh City"}
+              </h4>
+            </Link>
+
+            <Link
+              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+              className="itin-related-card"
+            >
+              <div className="itin-related-card__thumb-wrap">
+                <img
+                  src="/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Goi-Cuon.jpg"
+                  alt="12 must-try foods in Ho Chi Minh City"
+                  className="itin-related-card__thumb"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="itin-related-card__title">
+                {lang === "vi"
+                  ? "12 món ngon nhất định phải thử tại TP.HCM"
+                  : "12 must-try foods in Ho Chi Minh City"}
+              </h4>
+            </Link>
+          </div>
+        </section>
       </div>
 
       {/* ─── FLOATING AI TRAVEL COMPANION ─── */}
