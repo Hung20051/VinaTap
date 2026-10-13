@@ -112,7 +112,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "14 Tháng 11, 2024",
         badge: "Central Vietnam",
         img: "/guide/megamenu/dest-2-dalat.jpg",
-        link: "/province/lam-dong",
+        link: "/province/dalat",
       },
       {
         id: "dest-3",
@@ -196,7 +196,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "21 Tháng 7, 2024",
         badge: "Articles",
         img: "/guide/megamenu/todo-5-dalat.jpg",
-        link: "/province/lam-dong",
+        link: "/province/dalat",
       },
     ],
   },
@@ -759,7 +759,7 @@ export default function CompleteGuideToVietnamPage() {
                       Phố cổ Hội An
                     </Link>
                     , Phong Nha - Kẻ Bàng (Quảng Trị), Nha Trang (Khánh Hòa), Quy Nhơn (Gia Lai),{" "}
-                    <Link href="/province/lam-dong" className="cg-inline-link">
+                    <Link href="/province/dalat" className="cg-inline-link">
                       Đà Lạt
                     </Link>{" "}
                     (Lâm Đồng). Dải đất miền Trung trải dài dọc theo bờ biển và vùng Tây Nguyên, kết hợp hài hòa giữa những bãi biển tuyệt đẹp, di sản lịch sử lâu đời và cao nguyên mát mẻ.
@@ -775,7 +775,7 @@ export default function CompleteGuideToVietnamPage() {
                       Hoi An Ancient Town
                     </Link>
                     , Phong Nha-Ke Bang (Quang Tri), Nha Trang (Khanh Hoa), Quy Nhon (Gia Lai),{" "}
-                    <Link href="/province/lam-dong" className="cg-inline-link">
+                    <Link href="/province/dalat" className="cg-inline-link">
                       Da Lat
                     </Link>{" "}
                     (Lam Dong). This region stretches along the coastline and the Central Highlands, combining beaches, historical heritage, and cool-climate highlands.

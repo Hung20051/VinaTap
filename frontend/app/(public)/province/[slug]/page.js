@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import "@/styles/province.css";
 import HoChiMinhCityPage from "../ho-chi-minh/page";
+import DalatPage from "../dalat/page";
 
 export default function ProvincePage() {
   const { slug } = useParams();
@@ -38,6 +39,9 @@ export default function ProvincePage() {
 
   if (slug === "ho-chi-minh") {
     return <HoChiMinhCityPage />;
+  }
+  if (slug === "dalat" || slug === "lam-dong") {
+    return <DalatPage />;
   }
 
   const [province, setProvince] = useState(null);

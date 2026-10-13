@@ -665,7 +665,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "14 Tháng 11, 2024",
         badge: "Central Vietnam",
         img: "/guide/megamenu/dest-2-dalat.jpg",
-        link: "/province/lam-dong",
+        link: "/province/dalat",
       },
       {
         id: "dest-3",
@@ -749,7 +749,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "21 Tháng 7, 2024",
         badge: "Articles",
         img: "/guide/megamenu/todo-5-dalat.jpg",
-        link: "/province/lam-dong",
+        link: "/province/dalat",
       },
     ],
   },

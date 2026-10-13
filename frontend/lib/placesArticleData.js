@@ -132,13 +132,13 @@ export const PLACES_ARTICLE_DATA = [
     title: "Da Lat",
     titleVi: "Đà Lạt",
     slug: "da-lat",
-    provinceSlug: "lam-dong",
+    provinceSlug: "dalat",
     image: "/guide/15-best-places/place-9-da-lat.jpg",
     paragraphs: [
-      "Da Lat is considered both a retreat destination and an unofficial honeymoon capital among locals. With its year-round cool climate, abundant flower gardens, and creative café setups, [Da Lat](/province/lam-dong) is in full aesthetic bloom. Once a retreat for the French, you’ll find yourself wandering through French-inspired architecture as if you had time – and space-traveled to a European town tucked into the Vietnamese highlands. The culinary experience is elevated by farm-to-table produce, scenic landscapes, and the pleasant air surrounding you. There’s so much surprise packed into this little town. In short, it’s a place where poets come to write and dreamers come to dream."
+      "Da Lat is considered both a retreat destination and an unofficial honeymoon capital among locals. With its year-round cool climate, abundant flower gardens, and creative café setups, [Da Lat](/province/dalat) is in full aesthetic bloom. Once a retreat for the French, you’ll find yourself wandering through French-inspired architecture as if you had time – and space-traveled to a European town tucked into the Vietnamese highlands. The culinary experience is elevated by farm-to-table produce, scenic landscapes, and the pleasant air surrounding you. There’s so much surprise packed into this little town. In short, it’s a place where poets come to write and dreamers come to dream."
     ],
     paragraphsVi: [
-      "Được mệnh danh là thành phố tình yêu và xứ sở ngàn hoa, [Đà Lạt](/province/lam-dong) sở hữu khí hậu se lạnh quanh năm, những đồi thông reo trong gió và những quán cà phê xinh xắn ngập tràn sắc hoa. Dạo bước qua những biệt thự Pháp cổ kính nép mình giữa sương mờ, bạn sẽ ngỡ như đang lạc bước vào một thị trấn châu Âu thu nhỏ giữa cao nguyên Việt Nam. Nền ẩm thực tươi ngon từ nông sản địa phương, không khí trong lành và cảnh sắc thơ mộng khiến Đà Lạt trở thành nơi chắp cánh cho những tâm hồn mộng mơ."
+      "Được mệnh danh là thành phố tình yêu và xứ sở ngàn hoa, [Đà Lạt](/province/dalat) sở hữu khí hậu se lạnh quanh năm, những đồi thông reo trong gió và những quán cà phê xinh xắn ngập tràn sắc hoa. Dạo bước qua những biệt thự Pháp cổ kính nép mình giữa sương mờ, bạn sẽ ngỡ như đang lạc bước vào một thị trấn châu Âu thu nhỏ giữa cao nguyên Việt Nam. Nền ẩm thực tươi ngon từ nông sản địa phương, không khí trong lành và cảnh sắc thơ mộng khiến Đà Lạt trở thành nơi chắp cánh cho những tâm hồn mộng mơ."
     ]
   },
   {
