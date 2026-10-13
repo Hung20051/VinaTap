@@ -261,7 +261,7 @@ const ITINERARY_6_DESTINATIONS = [
     nextRoute: "Ho Chi Minh City → Nha Trang",
     nextRouteVi: "TP. Hồ Chí Minh → Nha Trang",
     transport: "Train",
-    transportVi: "Tàu hỏa (Đường sắt Việt Nam)",
+    transportVi: "Tàu hỏa",
     time: "8 hr 30 min",
     timeVi: "8 giờ 30 phút",
     fare: "300,000 VND",
@@ -302,7 +302,7 @@ const ITINERARY_6_DESTINATIONS = [
     nextRoute: "Da Nang → Hoi An",
     nextRouteVi: "Đà Nẵng → Hội An",
     transport: "Bus (01)",
-    transportVi: "Tuyến xe buýt (01)",
+    transportVi: "Xe buýt (01)",
     time: "45 min",
     timeVi: "45 phút",
     fare: "30,000 VND",
@@ -312,22 +312,22 @@ const ITINERARY_6_DESTINATIONS = [
     num: 4,
     name: "Hoi An",
     nameVi: "Hội An",
-    days: "2 days",
-    daysVi: "2 ngày",
+    days: "1 day",
+    daysVi: "1 ngày",
     image: "/guide/vietnam/10-day-dest-4-hoian.jpg",
     thingsToDo:
       "Hoi An Ancient Town, An Bang Beach, Bay Mau Coconut Forest.",
     thingsToDoVi:
       "Phố cổ Hội An, Biển An Bàng, Rừng dừa Bảy Mẫu.",
-    nextRoute: "Hoi An → Ha Long Bay",
-    nextRouteVi: "Hội An → Vịnh Hạ Long",
-    transport: "Plane (Da Nang to Hai Phong / Van Don Airport)",
-    transportVi: "Máy bay (Đà Nẵng đi Sân bay Cát Bi Hải Phòng hoặc Vân Đồn)",
-    time: "1 hr 15 min",
-    timeVi: "1 giờ 15 phút",
-    fare: "800,000 – 1,200,000 VND",
-    fareVi: "800.000 – 1.200.000 VNĐ",
-    isFlight: true,
+    isHoiAnCustomTransit: true,
+    transitNote:
+      "From Hoi An, you take bus 01 back to Da Nang to fly to Van Don Airport (Quang Ninh).",
+    transitNoteVi:
+      "Từ Hội An, bạn đi xe buýt số 01 quay lại Đà Nẵng để bay đến Sân bay Vân Đồn (Quảng Ninh).",
+    flyingTime: "1 hr 20 min",
+    flyingTimeVi: "1 giờ 20 phút",
+    airfare: "800,000 – 1,200,000 VND",
+    airfareVi: "800.000 – 1.200.000 VNĐ",
   },
   {
     num: 5,
@@ -336,18 +336,23 @@ const ITINERARY_6_DESTINATIONS = [
     days: "1 day",
     daysVi: "1 ngày",
     image: "/guide/vietnam/10-day-dest-5-halong.jpg",
+    hasPreNote: true,
+    preNote:
+      "You take bus 14A or 14B to get to Ha Long Bay from Van Don Airport (free).",
+    preNoteVi:
+      "Bạn đi xe buýt 14A hoặc 14B để đến Vịnh Hạ Long từ Sân bay Vân Đồn (miễn phí).",
     thingsToDo:
-      "Ha Long Bay, Tuan Chau Island, Sung Sot Cave.",
+      "Ha Long Bay, Bai Chay Beach, Tuan Chau Island.",
     thingsToDoVi:
-      "Vịnh Hạ Long, Đảo Tuần Châu, Hang Sửng Sốt.",
+      "Vịnh Hạ Long, Bãi Cháy, Đảo Tuần Châu.",
     nextRoute: "Ha Long Bay → Hanoi",
     nextRouteVi: "Vịnh Hạ Long → Hà Nội",
-    transport: "Bus (Limousine Express)",
-    transportVi: "Xe Limousine cao tốc",
-    time: "2 hr 30 min",
-    timeVi: "2 giờ 30 phút",
-    fare: "150,000 – 250,000 VND",
-    fareVi: "150.000 – 250.000 VNĐ",
+    transport: "Bus (Trung Thanh Limousine)",
+    transportVi: "Xe buýt (Trung Thành Limousine)",
+    time: "1 hr 30 min",
+    timeVi: "1 giờ 30 phút",
+    fare: "260,000 VND",
+    fareVi: "260.000 VNĐ",
   },
   {
     num: 6,
@@ -357,14 +362,14 @@ const ITINERARY_6_DESTINATIONS = [
     daysVi: "2 ngày",
     image: "/guide/vietnam/10-day-dest-6-hanoi.jpg",
     thingsToDo:
-      "Hoan Kiem Lake, Hanoi Old Quarter, Temple of Literature, Dong Xuan Market, Ho Chi Minh Mausoleum.",
+      "Hanoi Old Quarter, Temple of Literature, Hoan Kiem Lake, Dong Xuan Market, Ho Chi Minh Mausoleum, Ta Hien Street.",
     thingsToDoVi:
-      "Hồ Hoàn Kiếm, Phố cổ Hà Nội, Văn Miếu – Quốc Tử Giám, Chợ Đồng Xuân, Lăng Chủ tịch Hồ Chí Minh.",
+      "Phố cổ Hà Nội, Văn Miếu – Quốc Tử Giám, Hồ Hoàn Kiếm, Chợ Đồng Xuân, Lăng Chủ tịch Hồ Chí Minh, Phố Tạ Hiện.",
     isHanoiEnd: true,
     endNote:
-      "You can take bus number 86 (35,000 VND) to Noi Bai International Airport from Hanoi city center, ending your 10-day itinerary in Vietnam.",
+      "To reach Noi Bai International Airport from Hanoi city center and complete your 10-day itinerary in Vietnam, you can take bus number 86 for a fare of 35,000 VND.",
     endNoteVi:
-      "Bạn có thể đi xe buýt số 86 (35.000 VNĐ) ra Sân bay Quốc tế Nội Bài từ trung tâm thành phố Hà Nội, kết thúc chuyến hành trình 10 ngày tại Việt Nam.",
+      "Để đến Sân bay Quốc tế Nội Bài từ trung tâm thành phố Hà Nội và hoàn tất lịch trình 10 ngày tại Việt Nam, bạn có thể đi xe buýt số 86 với giá vé 35.000 VNĐ.",
   },
 ];
 
@@ -747,17 +752,39 @@ export default function TenDaysInVietnamPage() {
                   ({isVi && dest.daysVi ? dest.daysVi : dest.days})
                 </div>
 
+                {dest.hasPreNote && (
+                  <p style={{ margin: "0 0 10px", fontSize: "13.5px", lineHeight: 1.6, color: "#334155" }}>
+                    {isVi ? dest.preNoteVi : dest.preNote}
+                  </p>
+                )}
+
                 <div className="omi-card__section">
                   <span className="omi-card__label">
-                    {isVi ? "Things to do: " : "Things to do: "}
+                    Things to do:{" "}
                   </span>
                   <span>{isVi && dest.thingsToDoVi ? dest.thingsToDoVi : dest.thingsToDo}</span>
                 </div>
 
                 {dest.isHanoiEnd ? (
-                  <p style={{ marginTop: "14px", fontSize: "14px", lineHeight: 1.6, color: "#334155" }}>
+                  <p style={{ marginTop: "14px", fontSize: "13.5px", lineHeight: 1.6, color: "#334155" }}>
                     {isVi ? dest.endNoteVi : dest.endNote}
                   </p>
+                ) : dest.isHoiAnCustomTransit ? (
+                  <>
+                    <p style={{ marginTop: "12px", marginBottom: "6px", fontSize: "13.5px", lineHeight: 1.6, color: "#334155" }}>
+                      {isVi ? dest.transitNoteVi : dest.transitNote}
+                    </p>
+                    <ul className="omi-card__transit-list">
+                      <li>
+                        <strong>Flying time: </strong>
+                        {isVi ? dest.flyingTimeVi : dest.flyingTime}
+                      </li>
+                      <li>
+                        <strong>Airfare: </strong>
+                        {isVi ? dest.airfareVi : dest.airfare}
+                      </li>
+                    </ul>
+                  </>
                 ) : (
                   <>
                     <div className="omi-card__transit-title">
@@ -766,22 +793,18 @@ export default function TenDaysInVietnamPage() {
 
                     <ul className="omi-card__transit-list">
                       <li>
-                        <strong>{isVi ? "Transportation: " : "Transportation: "}</strong>
+                        <strong>Transportation: </strong>
                         {isVi && dest.transportVi ? dest.transportVi : dest.transport}
                       </li>
                       <li>
                         <strong>
-                          {dest.isFlight
-                            ? (isVi ? "Flying time: " : "Flying time: ")
-                            : (isVi ? "Travel time: " : "Travel time: ")}
+                          {dest.isFlight ? "Flying time: " : "Travel time: "}
                         </strong>
                         {isVi && dest.timeVi ? dest.timeVi : dest.time}
                       </li>
                       <li>
                         <strong>
-                          {dest.isFlight
-                            ? (isVi ? "Airfare: " : "Airfare: ")
-                            : (isVi ? "Fare: " : "Fare: ")}
+                          {dest.isFlight ? "Airfare: " : "Fare: "}
                         </strong>
                         {isVi && dest.fareVi ? dest.fareVi : dest.fare}
                       </li>
@@ -801,28 +824,52 @@ export default function TenDaysInVietnamPage() {
           <ul className="omi-notes-list">
             <li>
               {isVi
-                ? "Tính đến năm 2024, tỷ giá hối đoái xấp xỉ từ USD sang VNĐ là 1 USD ≈ 25.000 VNĐ."
-                : "As of 2024, the approximate exchange rate for USD to VND is 1 USD ≈ 25,000 VND."}
+                ? "Tỷ giá hối đoái từ USD sang VNĐ năm 2024 xấp xỉ 1 USD đổi 25.000 VNĐ."
+                : "The exchange rate for USD to VND in 2024 is approximately 1 USD to 25,000 VND."}
             </li>
             <li>
               {isVi
-                ? "Thời gian di chuyển được đề cập cho từng phần của lịch trình không bao gồm thời gian cần thiết để làm thủ tục tại sân bay."
-                : "The travel time mentioned for each part of the itinerary does not include the time required for airport check-in."}
+                ? "Xin lưu ý thời gian di chuyển được liệt kê cho mỗi chặng hành trình không bao gồm thời gian làm thủ tục tại sân bay. Chúng tôi khuyên bạn nên đặt vé máy bay trước để có mức giá tốt hơn."
+                : "Please note that the travel time listed for each leg of the journey does not include airport check-in time. We recommend booking flights in advance to take advantage of lower prices."}
+            </li>
+            <li>
+              {isVi ? (
+                <>
+                  Đối với việc đi tàu hỏa, chúng tôi khuyên bạn nên đặt vé qua website chính thức của Tổng công ty Đường sắt Việt Nam tại{" "}
+                  <a
+                    href="https://dsvn.vn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#00c2cb", textDecoration: "underline" }}
+                  >
+                    dsvn.vn
+                  </a>
+                  . Điều này sẽ đảm bảo bạn nhận được thông tin lịch trình cập nhật nhất và mức giá tốt nhất.
+                </>
+              ) : (
+                <>
+                  For train travel, we recommend booking tickets through the official website of the Vietnam Railway Corporation at{" "}
+                  <a
+                    href="https://dsvn.vn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#00c2cb", textDecoration: "underline" }}
+                  >
+                    dsvn.vn
+                  </a>
+                  . This will ensure that you get the most up-to-date schedule information and the best prices.
+                </>
+              )}
             </li>
             <li>
               {isVi
-                ? "10 ngày là một hành trình tinh gọn, tập trung vào những địa danh đặc sắc nhất trải dài khắp miền Nam, miền Trung và miền Bắc Việt Nam."
-                : "10 days is a fast-paced trip through Vietnam, focusing on key signature highlights across South, Central, and North regions."}
+                ? "Các đề xuất về tour, khách sạn, nhà xe và hãng hàng không được cung cấp ở trên được lựa chọn dựa trên sự phù hợp với du khách, hoàn toàn không có quảng cáo hay tiếp thị liên kết. Bạn có thể yên tâm rằng những gợi ý này sẽ đáp ứng tốt nhu cầu của bạn."
+                : "The recommendations for tours, hotels, bus operators, and airlines provided above are selected based on their suitability for travelers, with no advertising or affiliate marketing. You can rest assured that these suggestions will meet your needs."}
             </li>
             <li>
               {isVi
-                ? "Các khuyến nghị trên về khách sạn, đơn vị vận chuyển và hãng hàng không được lựa chọn dựa trên sự phù hợp, hoàn toàn không có quảng cáo hay tiếp thị liên kết, vì vậy bạn có thể hoàn toàn tin tưởng vào những gợi ý này."
-                : "The above recommendations for hotels, bus operators, and airlines were selected based on suitability and without any advertising or affiliate marketing, so you can trust these suggestions."}
-            </li>
-            <li>
-              {isVi
-                ? "Nếu bạn khởi hành từ Hà Nội hoặc các tỉnh phía Bắc, bạn có thể đi ngược lại lịch trình này."
-                : "If you are departing from Hanoi or the northern provinces, you can reverse the itinerary."}
+                ? "Mặc dù mười ngày có thể chưa đủ để khám phá trọn vẹn Việt Nam, chúng tôi đã chọn lọc những địa điểm nổi tiếng nhất đất nước để đảm bảo bạn có một trải nghiệm khó quên."
+                : "Although ten days may not be enough to fully explore Vietnam, we have selected the country's most famous places to ensure that you have an unforgettable experience."}
             </li>
           </ul>
         </section>
@@ -834,44 +881,30 @@ export default function TenDaysInVietnamPage() {
           </h2>
           <p className="omi-costs-intro" style={{ textAlign: "left", marginBottom: "16px" }}>
             {isVi
-              ? "Nhiều du khách có thể dự trù chi tiêu khoảng 450 USD cho chuyến du lịch 10 ngày tại Việt Nam. Dưới đây là một số chi phí cố định ước tính giúp bạn lên kế hoạch ngân sách:"
-              : "Many tourists can expect to spend around $450 for a 10-day trip to Vietnam. Here are some estimated fixed costs to help with your budget planning:"}
+              ? "Với mức chi tiêu trung bình khoảng 450 USD, nhiều du khách có thể chi trả các chi phí cơ bản cho chuyến đi 10 ngày tại Việt Nam. Dưới đây là một số chi phí cố định ước tính:"
+              : "For an average expenditure of $450, many tourists can cover basic expenses for a 10-day trip to Vietnam. Here are some estimated fixed costs:"}
           </p>
 
           <ul className="omi-notes-list" style={{ marginTop: "12px" }}>
             <li>
               {isVi
-                ? "Chi phí di chuyển khoảng 110 USD. Đặt vé máy bay và vé tàu sớm có thể giúp bạn có được mức giá thấp hơn."
-                : "Transportation costs are approximately $110. Booking flights and trains in advance can help you secure lower prices."}
-            </li>
-            <li>
-              {isVi ? (
-                <>
-                  Khách sạn riêng và homestay có giá khoảng 15–20 USD mỗi đêm. Du khách đi một mình có thể cân nhắc các hostel, một lựa chọn tiết kiệm hơn với giá khoảng 5 USD mỗi đêm. Tìm hiểu thêm về các lựa chọn{" "}
-                  <Link href="/guide/where-to-stay-in-ho-chi-minh-city" style={{ color: "#00c2cb", textDecoration: "underline" }}>
-                    chỗ ở
-                  </Link>{" "}
-                  tại Việt Nam.
-                </>
-              ) : (
-                <>
-                  Private hotels and homestays cost around $15–$20 per night. Solo travelers can consider hostels, which are a more economical option at around $5 per night. Learn more about{" "}
-                  <Link href="/guide/where-to-stay-in-ho-chi-minh-city" style={{ color: "#00c2cb", textDecoration: "underline" }}>
-                    accommodation
-                  </Link>{" "}
-                  options in Vietnam.
-                </>
-              )}
+                ? "Chi phí di chuyển khoảng 110 USD, tùy thuộc vào loại hình phương tiện sử dụng."
+                : "Transportation costs around $110, depending on the types of transportation used."}
             </li>
             <li>
               {isVi
-                ? "Chi phí ăn uống ước tính khoảng 15 USD mỗi người mỗi ngày."
-                : "Food expenses are estimated at $15 per person per day."}
+                ? "Chi phí lưu trú tại khách sạn riêng hoặc homestay khoảng 15–20 USD mỗi người một đêm. Du khách đi một mình có thể chọn hostel để tiết kiệm hơn với giá khoảng 5 USD mỗi đêm."
+                : "Accommodation in a private hotel or homestay costs about $15-$20 per person per night. Solo travelers may find hostels to be a more economical option at around $5 per night."}
             </li>
             <li>
               {isVi
-                ? "Giá vé tham quan các di tích, viện bảo tàng và điểm du lịch thường dao động từ 1 đến 5 USD."
-                : "Admission fees for monuments, museums, and attractions typically range from $1 to $5."}
+                ? "Chi phí ăn uống ước tính khoảng 15 USD mỗi người một ngày, có thể thay đổi tùy thuộc vào địa điểm và món bạn ăn."
+                : "Food expenses are estimated at around $15 per person per day, though this can vary depending on where and what you eat."}
+            </li>
+            <li>
+              {isVi
+                ? "Giá vé tham quan các di tích và điểm du lịch nhìn chung dao động từ 1 đến 5 USD mỗi vé, tùy thuộc vào từng địa điểm cụ thể."
+                : "Entrance fees for monuments and tourist attractions are generally between $1 and $5 per ticket, though prices may vary depending on the specific site."}
             </li>
           </ul>
         </section>
@@ -889,13 +922,13 @@ export default function TenDaysInVietnamPage() {
               <div className="omi-other-itin-img-wrap">
                 <img
                   src="/guide/vietnam/2-week-vietnam-itinerary-map.jpg"
-                  alt="2-week Vietnam Itinerary"
+                  alt="2-week Vietnam itinerary"
                   className="omi-other-itin-img"
                   loading="lazy"
                 />
               </div>
               <span className="omi-other-itin-caption">
-                {isVi ? "Lịch trình 2 tuần tại Việt Nam" : "2-week Vietnam Itinerary"}
+                {isVi ? "2-week Vietnam itinerary" : "2-week Vietnam itinerary"}
               </span>
             </Link>
 
@@ -906,13 +939,13 @@ export default function TenDaysInVietnamPage() {
               <div className="omi-other-itin-img-wrap">
                 <img
                   src="/guide/vietnam/3-week-vietnam-itinerary-map.jpg"
-                  alt="3-week Vietnam Itinerary"
+                  alt="3-week Vietnam itinerary"
                   className="omi-other-itin-img"
                   loading="lazy"
                 />
               </div>
               <span className="omi-other-itin-caption">
-                {isVi ? "Lịch trình 3 tuần tại Việt Nam" : "3-week Vietnam Itinerary"}
+                {isVi ? "3-week Vietnam itinerary" : "3-week Vietnam itinerary"}
               </span>
             </Link>
 
@@ -923,13 +956,13 @@ export default function TenDaysInVietnamPage() {
               <div className="omi-other-itin-img-wrap">
                 <img
                   src="/guide/vietnam/1-month-in-vietnam-itinerary-map.jpg"
-                  alt="1-month Vietnam Itinerary"
+                  alt="1-month Vietnam itinerary"
                   className="omi-other-itin-img"
                   loading="lazy"
                 />
               </div>
               <span className="omi-other-itin-caption">
-                {isVi ? "Lịch trình 1 tháng tại Việt Nam" : "1-month Vietnam Itinerary"}
+                {isVi ? "1-month Vietnam itinerary" : "1-month Vietnam itinerary"}
               </span>
             </Link>
           </div>
@@ -945,19 +978,19 @@ export default function TenDaysInVietnamPage() {
           </h2>
           <div className="omi-related-grid">
             <Link
-              href="/guide/2-weeks-in-vietnam"
+              href="/guide/3-week-vietnam-itinerary"
               className="omi-related-card"
             >
               <div className="omi-related-img-wrap">
                 <img
-                  src="/guide/megamenu/itin-3-2weeks.jpg"
-                  alt="2 Weeks in Vietnam"
+                  src="/guide/hcmc/3-week-vietnam-itinerary.jpg"
+                  alt="3-week Vietnam Itinerary"
                   className="omi-related-img"
                   loading="lazy"
                 />
               </div>
               <h3 className="omi-related-card-title">
-                {isVi ? "Lịch trình 2 tuần xuyên Việt" : "2 Weeks in Vietnam"}
+                {isVi ? "Lịch trình 3 tuần xuyên Việt" : "3-week Vietnam Itinerary"}
               </h3>
             </Link>
 
@@ -986,7 +1019,7 @@ export default function TenDaysInVietnamPage() {
             >
               <div className="omi-related-img-wrap">
                 <img
-                  src="/guide/hcmc/Top-8-things-to-do-in-Nha-Trang-Vietnamnomad.jpg"
+                  src="/guide/nha-trang/Top-8-things-to-do-in-Nha-Trang-Vietnamnomad.jpg"
                   alt="8 best things to do in Nha Trang"
                   className="omi-related-img"
                   loading="lazy"
