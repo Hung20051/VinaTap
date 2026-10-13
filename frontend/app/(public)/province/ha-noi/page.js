@@ -9,6 +9,7 @@ import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import {
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   List,
   Compass,
@@ -145,7 +146,7 @@ const MEGA_MENUS_DATA = {
         date: "July 20, 2025",
         dateVi: "20 Tháng 7, 2025",
         badge: "Articles",
-        img: "/guide/megamenu/things-1.jpg",
+        img: "/guide/megamenu/todo-1-3week.jpg",
         link: "/guide/3-week-vietnam-itinerary",
       },
       {
@@ -155,7 +156,7 @@ const MEGA_MENUS_DATA = {
         date: "May 5, 2025",
         dateVi: "5 Tháng 5, 2025",
         badge: "Articles",
-        img: "/guide/megamenu/things-2.jpg",
+        img: "/guide/megamenu/todo-2-hcmc.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
       {
@@ -165,7 +166,7 @@ const MEGA_MENUS_DATA = {
         date: "March 1, 2025",
         dateVi: "1 Tháng 3, 2025",
         badge: "Articles",
-        img: "/guide/megamenu/things-3.jpg",
+        img: "/guide/megamenu/todo-3-nhatrang.jpg",
         link: "/province/khanh-hoa",
       },
       {
@@ -175,7 +176,7 @@ const MEGA_MENUS_DATA = {
         date: "January 1, 2025",
         dateVi: "1 Tháng 1, 2025",
         badge: "#Trending",
-        img: "/guide/megamenu/things-4.jpg",
+        img: "/guide/megamenu/todo-4-vietnam.jpg",
         link: "/guide/20-best-things-to-do-in-vietnam",
       },
       {
@@ -185,7 +186,7 @@ const MEGA_MENUS_DATA = {
         date: "July 21, 2024",
         dateVi: "21 Tháng 7, 2024",
         badge: "Articles",
-        img: "/guide/megamenu/things-5.jpg",
+        img: "/guide/megamenu/todo-5-dalat.jpg",
         link: "/province/dalat",
       },
     ],
@@ -199,7 +200,7 @@ const MEGA_MENUS_DATA = {
         date: "May 19, 2025",
         dateVi: "19 Tháng 5, 2025",
         badge: "Hanoi",
-        img: "/guide/megamenu/eat-1.jpg",
+        img: "/guide/megamenu/eat-1-hanoi.jpg",
         link: "/province/ha-noi#hanoi-dishes",
       },
       {
@@ -209,7 +210,7 @@ const MEGA_MENUS_DATA = {
         date: "April 25, 2025",
         dateVi: "25 Tháng 4, 2025",
         badge: "Articles",
-        img: "/guide/megamenu/eat-2.jpg",
+        img: "/guide/megamenu/eat-2-hcmc.jpg",
         link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
       },
       {
@@ -219,7 +220,7 @@ const MEGA_MENUS_DATA = {
         date: "April 8, 2025",
         dateVi: "8 Tháng 4, 2025",
         badge: "Eat & Drink",
-        img: "/guide/megamenu/eat-3.jpg",
+        img: "/guide/megamenu/eat-3-pho.jpg",
         link: "/guide/pho-the-complete-guide",
       },
       {
@@ -229,7 +230,7 @@ const MEGA_MENUS_DATA = {
         date: "April 1, 2025",
         dateVi: "1 Tháng 4, 2025",
         badge: "Articles",
-        img: "/guide/megamenu/eat-4.jpg",
+        img: "/guide/megamenu/eat-4-vungtau.jpg",
         link: "/province/ba-ria-vung-tau",
       },
       {
@@ -239,7 +240,7 @@ const MEGA_MENUS_DATA = {
         date: "February 17, 2025",
         dateVi: "17 Tháng 2, 2025",
         badge: "Articles",
-        img: "/guide/megamenu/eat-5.jpg",
+        img: "/guide/megamenu/eat-5-nhatrang.jpg",
         link: "/province/khanh-hoa",
       },
     ],
@@ -253,7 +254,7 @@ const MEGA_MENUS_DATA = {
         date: "July 20, 2025",
         dateVi: "20 Tháng 7, 2025",
         badge: "Articles",
-        img: "/guide/megamenu/itin-1.jpg",
+        img: "/guide/megamenu/itin-1-3week.jpg",
         link: "/guide/3-week-vietnam-itinerary",
       },
       {
@@ -263,7 +264,7 @@ const MEGA_MENUS_DATA = {
         date: "May 21, 2024",
         dateVi: "21 Tháng 5, 2024",
         badge: "Itinerary",
-        img: "/guide/megamenu/itin-2.jpg",
+        img: "/guide/megamenu/itin-2-10days.jpg",
         link: "/guide/10-days-in-vietnam",
       },
       {
@@ -273,7 +274,7 @@ const MEGA_MENUS_DATA = {
         date: "May 20, 2024",
         dateVi: "20 Tháng 5, 2024",
         badge: "Itinerary",
-        img: "/guide/megamenu/itin-3.jpg",
+        img: "/guide/megamenu/itin-3-2weeks.jpg",
         link: "/guide/2-weeks-in-vietnam",
       },
       {
@@ -283,11 +284,22 @@ const MEGA_MENUS_DATA = {
         date: "May 18, 2024",
         dateVi: "18 Tháng 5, 2024",
         badge: "Itinerary",
-        img: "/guide/megamenu/itin-4.jpg",
+        img: "/guide/megamenu/itin-4-1month.jpg",
         link: "/guide/1-month-in-vietnam",
       },
     ],
   },
+};
+
+const getBadgeLabel = (badge, isVi) => {
+  if (!badge) return "";
+  if (!isVi) return badge;
+  const b = badge.toLowerCase();
+  if (b.includes("trending")) return "#Xu hướng";
+  if (b.includes("destination")) return "Điểm đến";
+  if (b.includes("itinerary")) return "Lịch trình";
+  if (b.includes("article")) return "Bài viết";
+  return badge;
 };
 
 export default function HanoiPage() {
@@ -442,73 +454,65 @@ export default function HanoiPage() {
             <HeaderSearch />
             <LanguageSwitch variant="navbar" />
           </div>
-        </div>
 
-        {/* MEGA MENU FLYOUT */}
-        {activeMega && MEGA_MENUS_DATA[activeMega] && (
-          <div
-            className="vnn-hanoi-megamenu-panel"
-            onMouseEnter={() => handleMenuEnter(activeMega)}
-            onMouseLeave={handleMenuLeave}
-          >
+          {/* MEGA MENU FLYOUT (MATCHING FIG 2) */}
+          {activeMega && MEGA_MENUS_DATA[activeMega] && (
             <div
-              style={{
-                maxWidth: "1240px",
-                margin: "0 auto",
-                padding: "0 24px",
-                display: "grid",
-                gridTemplateColumns: `repeat(${MEGA_MENUS_DATA[activeMega].items.length}, 1fr)`,
-                gap: "20px",
-              }}
+              className="vnn-megamenu"
+              onMouseEnter={() => handleMenuEnter(activeMega)}
+              onMouseLeave={handleMenuLeave}
             >
-              {MEGA_MENUS_DATA[activeMega].items.map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.link}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  onClick={() => setActiveMega(null)}
-                >
-                  <div
-                    style={{
-                      position: "relative",
-                      borderRadius: "6px",
-                      overflow: "hidden",
-                      height: "150px",
-                      marginBottom: "10px",
-                      backgroundColor: "#f5f5f5",
-                    }}
+              <div className="vnn-megamenu__grid">
+                {MEGA_MENUS_DATA[activeMega].items.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={item.link}
+                    className="vnn-megamenu__card"
+                    onClick={() => setActiveMega(null)}
                   >
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        display: "block",
-                      }}
-                      loading="lazy"
-                    />
-                  </div>
-                  <h4
-                    style={{
-                      fontSize: "13.5px",
-                      fontWeight: 600,
-                      lineHeight: "1.4",
-                      margin: "0 0 6px 0",
-                      color: "#1a1a1a",
-                    }}
+                    <div className="vnn-megamenu__thumb">
+                      <img
+                        src={item.img}
+                        alt={lang === "vi" ? item.titleVi : item.title}
+                        loading="eager"
+                      />
+                      {item.badge && (
+                        <span className="vnn-megamenu__badge">
+                          {getBadgeLabel(item.badge, lang === "vi")}
+                        </span>
+                      )}
+                    </div>
+                    <h4 className="vnn-megamenu__title">
+                      {lang === "vi" ? item.titleVi : item.title}
+                    </h4>
+                    <span className="vnn-megamenu__date">
+                      {lang === "vi" ? item.dateVi : item.date}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="vnn-megamenu__footer">
+                <div className="vnn-megamenu__nav-btns">
+                  <button
+                    type="button"
+                    className="vnn-megamenu__nav-btn"
+                    aria-label="Previous"
                   >
-                    {lang === "vi" ? item.titleVi : item.title}
-                  </h4>
-                  <span style={{ fontSize: "12px", color: "#888888" }}>
-                    {lang === "vi" ? item.dateVi : item.date}
-                  </span>
-                </Link>
-              ))}
+                    <ChevronLeft size={13} />
+                  </button>
+                  <button
+                    type="button"
+                    className="vnn-megamenu__nav-btn"
+                    aria-label="Next"
+                  >
+                    <ChevronRight size={13} />
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </header>
 
       {/* ─── 3. HERO SECTION (SCREENSHOT 2) ─── */}
