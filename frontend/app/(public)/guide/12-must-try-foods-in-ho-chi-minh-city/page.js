@@ -4,970 +4,1045 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import PublicFooter from "@/components/layout/PublicFooter";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
-import {
-  Compass,
-  Calendar,
-  Eye,
-  Clock,
-  Bookmark,
-  Share2,
-  ChevronRight,
-  MapPin,
-  Sparkles,
-  ExternalLink,
-  Copy,
-  Check,
-  Utensils,
-  Coffee,
-  X,
-  CreditCard,
-  ArrowRight,
-  Info,
-  Flame,
-  Award,
-} from "lucide-react";
-import "@/styles/guide-editorial.css";
+import { getLang } from "@/lib/prefs";
+import { ChevronDown, Sparkles } from "lucide-react";
 import "@/styles/home.css";
+import "./hcmc-food.css";
 
-// ─── DỮ LIỆU: 12 MÓN ĂN NHẤT ĐỊNH PHẢI THỬ Ở TP. HỒ CHÍ MINH ───
-const HCMC_FOOD_ITEMS = [
-  {
-    id: 101,
-    num: "01",
-    title: "Cơm Tấm Sài Gòn (Sườn Bì Chả Trứng)",
-    subTitle: "Linh hồn ẩm thực đường phố của người dân Nam Bộ",
-    category: "Cơm & Món Chính",
-    categoryKey: "rice",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg",
-    desc: "Cơm tấm, món cơm nấu từ hạt gạo tấm vỡ, là nhịp đập của ẩm thực Sài Gòn — món ăn biểu tượng mà bạn nhất định không thể bỏ lỡ khi ghé thăm thành phố. Dù cho bữa sáng sớm, bữa trưa chắc dạ hay cơn đói lúc nửa đêm, đĩa cơm tấm luôn thỏa mãn vị giác trọn vẹn. Combo kinh điển bao gồm sườn heo cốt lết ướp sả mật ong nướng than hoa thơm lừng, bì heo dai giòn, chả trứng chưng bùi béo và một quả trứng ốp-la lòng đào. Tất cả phủ đều mỡ hành óng ả, tóp mỡ giòn rụm, đồ chua và chan thìa nước mắm chua ngọt keo đặc sóng sánh.",
-    tip: "Gọi thêm một chén canh khổ qua dồn thịt thanh mát hoặc canh cải chua để trung hòa độ ngậy và thăng hoa vị giác.",
-    places: [
+// ─── STANDARDIZED MEGAMENUS DATA ───
+const MEGA_MENUS_DATA = {
+  inspired: {
+    items: [
       {
-        name: "Cơm Tấm Mộc",
-        address: "85 Lý Tự Trọng, Bến Thành, Quận 1",
-        price: "95.000 VNĐ (~$3.65 USD)",
+        id: "insp-1",
+        title: "15 best places to visit in Vietnam in 2026",
+        titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
+        date: "October 11, 2026",
+        dateVi: "11 Tháng 10, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-1.jpg",
+        link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
       },
       {
-        name: "Cơm Tấm Chị Hằng",
-        address: "28 Đỗ Quang Đẩu, Phạm Ngũ Lão, Quận 1",
-        price: "82.000 VNĐ",
+        id: "insp-2",
+        title: "Plan Your Vietnam Trip with Just One Prompt",
+        titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một prompt",
+        date: "October 11, 2026",
+        dateVi: "11 Tháng 10, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-2.jpg",
+        link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
       },
       {
-        name: "Cơm Tấm Ba Ghiền",
-        address: "84 Đặng Văn Ngữ, Phú Nhuận",
-        price: "85.000 - 110.000 VNĐ",
-      },
-    ],
-    cost: "45.000 - 95.000 VNĐ (~$1.8 - $3.8 USD)",
-    hours: "06:30 - 23:00 (Nhiều quán bán 24/7)",
-    address: "85 Lý Tự Trọng, Phường Bến Thành, Quận 1, TP.HCM",
-    mapsQuery: "Cơm Tấm Mộc 85 Lý Tự Trọng",
-  },
-  {
-    id: 102,
-    num: "02",
-    title: "Bánh Mì Sài Gòn Giòn Rụm Đủ Vị",
-    subTitle: "Di sản ẩm thực đường phố được vinh danh toàn cầu",
-    category: "Bánh Mì & Ăn Nhanh",
-    categoryKey: "bread",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Mi.jpg",
-    desc: "Bánh mì Việt Nam đã vượt ra khỏi biên giới quốc gia để trở thành một trong những món sandwich ngon nhất hành tinh. Tại Sài Gòn, ổ bánh mì có lớp vỏ mỏng tang vàng ươm giòn rụm, ruột bông xốp nhẹ tênh. Bên trong được quết một lớp bơ trứng béo ngậy, pate gan heo đậm đà, xếp tầng giò lụa, chả bò, thịt xá xíu hoặc heo quay giòn bì. Sự cân bằng đạt đến đỉnh cao nhờ dưa leo giòn mát, ngò rí thơm dịu, đồ chua chua ngọt và vài lát ớt hiểm cay nồng chan chút nước sốt thịt rim sánh mịn.",
-    tip: "Nếu bạn không quen ăn cay gắt, hãy nhớ dặn người bán 'Không ớt' hoặc 'Ớt ít' khi gọi món.",
-    places: [
-      {
-        name: "Bánh Mì Huỳnh Hoa",
-        address: "26 Lê Thị Riêng, Bến Thành, Quận 1",
-        price: "68.000 VNĐ (~$2.6 USD)",
+        id: "insp-3",
+        title: "The Complete Guide to Vietnam",
+        titleVi: "Cẩm nang du lịch toàn diện Việt Nam",
+        date: "October 12, 2026",
+        dateVi: "12 Tháng 10, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-3.jpg",
+        link: "/guide/the-complete-guide-to-vietnam",
       },
       {
-        name: "Bánh Mì Bảy Hổ (Từ 1930)",
-        address: "19 Huỳnh Khương Ninh, Đa Kao, Quận 1",
-        price: "25.000 - 35.000 VNĐ",
-      },
-      {
-        name: "Bánh Mì Chảo Hòa Mã",
-        address: "53 Cao Thắng, Phường 3, Quận 3",
-        price: "60.000 - 75.000 VNĐ",
+        id: "insp-4",
+        title: "20 Best Things to Do in Vietnam",
+        titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-4.jpg",
+        link: "/guide/20-best-things-to-do-in-vietnam",
       },
     ],
-    cost: "25.000 - 68.000 VNĐ (~$1.0 - $2.6 USD)",
-    hours: "Mở cả ngày (Huỳnh Hoa mở từ 11:00 - 21:00)",
-    address: "26 Lê Thị Riêng, Phường Bến Thành, Quận 1, TP.HCM",
-    mapsQuery: "Bánh Mì Huỳnh Hoa Lê Thị Riêng",
   },
-  {
-    id: 103,
-    num: "03",
-    title: "Phở Bò & Gà Phong Cách Sài Gòn",
-    subTitle: "Nước dùng thanh ngọt thảo mộc ngập tràn rau thơm bản địa",
-    category: "Món Sợi & Nước",
-    categoryKey: "noodles",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Pho.jpg",
-    desc: "Khác biệt với phở Bắc thanh tao chú trọng vị ngọt nguyên bản của xương hầm, phở Nam (phở Sài Gòn) mang nét hào sảng phóng khoáng với nước dùng ngọt đậm đà ninh từ xương bò và hoa hồi, quế, thảo quả. Điểm cuốn hút nhất là đĩa rau thơm tươi tốt đi kèm: ngò gai, húng quế, ngò om và giá đỗ chần. Thực khách tự do nêm nếm tô phở theo khẩu vị cá nhân với tương đen (hoisin), tương ớt cay nồng và vắt miếng chanh tươi mọng nước.",
-    tip: "Thử gọi một chén 'tiết hột gà' (lòng đỏ trứng gà trần trong nước béo) để ăn kèm phở theo đúng phong cách sành ăn của dân địa phương.",
-    places: [
+  destinations: {
+    regions: [
       {
-        name: "Phở Hòa Pasteur",
-        address: "260C Pasteur, Phường 8, Quận 3",
-        price: "95.000 - 115.000 VNĐ",
+        name: "Miền Bắc",
+        nameEn: "Northern Vietnam",
+        provinces: [
+          { name: "Hà Nội", slug: "ha-noi" },
+          { name: "Hải Phòng", slug: "hai-phong" },
+          { name: "Quảng Ninh", slug: "quang-ninh" },
+          { name: "Ninh Bình", slug: "ninh-binh" },
+          { name: "Hà Giang", slug: "ha-giang" },
+          { name: "Lào Cai (Sa Pa)", slug: "lao-cai" },
+          { name: "Cao Bằng", slug: "cao-bang" },
+          { name: "Mai Châu (Hòa Bình)", slug: "hoa-binh" },
+        ],
       },
       {
-        name: "Phở Lệ (Nguyễn Trãi)",
-        address: "415 Nguyễn Trãi, Phường 7, Quận 5",
-        price: "90.000 - 110.000 VNĐ",
+        name: "Miền Trung",
+        nameEn: "Central Vietnam",
+        provinces: [
+          { name: "Đà Nẵng", slug: "da-nang" },
+          { name: "Quảng Nam (Hội An)", slug: "hoi-an" },
+          { name: "Thừa Thiên Huế", slug: "thua-thien-hue" },
+          { name: "Khánh Hòa (Nha Trang)", slug: "khanh-hoa" },
+          { name: "Lâm Đồng (Đà Lạt)", slug: "dalat" },
+          { name: "Bình Định (Quy Nhơn)", slug: "binh-dinh" },
+          { name: "Phú Yên", slug: "phu-yen" },
+          { name: "Quảng Bình (Phong Nha)", slug: "quang-binh" },
+        ],
       },
       {
-        name: "Phở Phú Vương",
-        address: "339 Lê Văn Sỹ, Phường 1, Tân Bình",
-        price: "80.000 - 100.000 VNĐ",
+        name: "Miền Nam",
+        nameEn: "Southern Vietnam",
+        provinces: [
+          { name: "TP. Hồ Chí Minh", slug: "ho-chi-minh" },
+          { name: "Bà Rịa - Vũng Tàu", slug: "ba-ria-vung-tau" },
+          { name: "Kiên Giang (Phú Quốc)", slug: "kien-giang" },
+          { name: "Cần Thơ", slug: "can-tho" },
+          { name: "An Giang (Châu Đốc)", slug: "an-giang" },
+          { name: "Bến Tre", slug: "ben-tre" },
+          { name: "Tây Ninh", slug: "tay-ninh" },
+          { name: "Cà Mau", slug: "ca-mau" },
+        ],
       },
     ],
-    cost: "75.000 - 115.000 VNĐ (~$3 - $4.5 USD)",
-    hours: "06:00 - 23:30 hàng ngày",
-    address: "260C Pasteur, Phường 8, Quận 3, TP.HCM",
-    mapsQuery: "Phở Hòa Pasteur Quận 3",
   },
-  {
-    id: 104,
-    num: "04",
-    title: "Bánh Xèo & Bánh Khọt Giòn Tan Miền Tây",
-    subTitle: "Tuyệt đỉnh bánh chiên vàng ruộm cuốn đọt rau rừng xanh mướt",
-    category: "Bánh Cuốn & Đồ Chiên",
-    categoryKey: "rolls",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Xeo.jpg",
-    desc: "Bánh xèo miền Nam gây ấn tượng mạnh bởi kích thước khổng lồ, vỏ bánh vàng óng giòn rụm từ bột gạo pha nước cốt dừa béo ngậy và bột nghệ thơm lừng. Khi đổ bột vào chảo gang nóng rẫy, tiếng 'xèo xèo' vang lên vui tai báo hiệu mẻ bánh giòn tan. Nhân bánh đầy ắp tôm sông ngọt thịt, thịt ba chỉ xắt mỏng, giá đỗ và đậu xanh bùi bùi. Ăn kèm là rổ rau rừng Tây Ninh với hơn 10 loại lá thảo dược, chấm ngập trong chén nước mắm tỏi ớt chua ngọt.",
-    tip: "Dùng tay lấy một lá cải bẹ xanh to bản, đặt rau thơm và một miếng bánh xèo lên trên, cuộn tròn chặt tay rồi chấm ngập sốt để cảm nhận trọn vẹn độ giòn và béo.",
-    places: [
+  thingsToDo: {
+    items: [
       {
-        name: "Bánh Xèo Ăn Là Ghiền",
-        address: "74 Sương Nguyệt Ánh, Bến Thành, Quận 1",
-        price: "95.000 - 145.000 VNĐ",
+        id: "todo-1",
+        title: "10 Best Things to Do in Ho Chi Minh City",
+        titleVi: "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Guide",
+        img: "/guide/megamenu/todo-1-hcmc.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
       {
-        name: "Bánh Khọt Cô Ba Vũng Tàu",
-        address: "102 Cao Thắng, Phường 4, Quận 3",
-        price: "85.000 - 120.000 VNĐ",
+        id: "todo-2",
+        title: "8 Best Things to Do in Nha Trang",
+        titleVi: "8 trải nghiệm tuyệt nhất tại Nha Trang",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Guide",
+        img: "/guide/megamenu/todo-2-nhatrang.jpg",
+        link: "/guide/8-best-things-to-do-in-nha-trang",
       },
       {
-        name: "Bánh Xèo 46A Đinh Công Tráng",
-        address: "46A Đinh Công Tráng, Tân Định, Quận 1",
-        price: "110.000 - 180.000 VNĐ",
+        id: "todo-3",
+        title: "Hanoi Tourist Map: Essential Guide for Travelers",
+        titleVi: "Bản đồ du lịch Hà Nội cho du khách",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Map Guide",
+        img: "/guide/megamenu/todo-3-hanoimap.jpg",
+        link: "/guide/hanoi-tourist-map",
+      },
+      {
+        id: "todo-4",
+        title: "Ao Dai: Vietnamese Traditional Dress",
+        titleVi: "Áo Dài: Trang phục truyền thống Việt Nam",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Culture",
+        img: "/guide/megamenu/todo-4-aodai.jpg",
+        link: "/guide/ao-dai-vietnamese-traditional-dress",
       },
     ],
-    cost: "80.000 - 150.000 VNĐ (~$3.2 - $6 USD)",
-    hours: "10:00 - 21:30",
-    address: "74 Sương Nguyệt Ánh, Phường Bến Thành, Quận 1, TP.HCM",
-    mapsQuery: "Bánh Xèo Ăn Là Ghiền Sương Nguyệt Ánh",
   },
-  {
-    id: 105,
-    num: "05",
-    title: "Bò Né Chảo Gang Sôi Xèo Xèo Bữa Sáng",
-    subTitle: "Món bò bít tết đường phố kiểu Sài Gòn kèm bánh mì giòn",
-    category: "Thịt & Món Nóng",
-    categoryKey: "meat",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bo-Ne.jpg",
-    desc: "Bò né là món ăn sáng độc đáo và tràn đầy năng lượng của người Sài Gòn. Từng lát thịt bò mềm được tẩm ướp đậm đà, đặt trên chiếc chảo gang hình chú bò được nung nóng rực lửa cùng bơ thực vật thơm lừng. Khi bưng ra bàn, chảo vẫn còn sôi xèo xèo reo vui cùng quả trứng ốp-la lòng đào, viên xíu mại béo ngậy, pate gan và xúc xích. Tên gọi 'né' xuất phát từ việc thực khách phải hơi né người ra để tránh những giọt dầu bơ bắn nhẹ khi chảo vừa hạ cánh xuống bàn.",
-    tip: "Dùng bánh mì nóng giòn chấm thẳng vào lòng đỏ trứng ốp-la hòa quyện cùng nước sốt bơ thịt trên mặt chảo gang để tận hưởng hương vị bùng nổ.",
-    places: [
+  eatDrink: {
+    items: [
       {
-        name: "Bò Né Lệ Hồng",
-        address: "489/27/29 Huỳnh Văn Bánh, Phường 13, Phú Nhuận",
-        price: "75.000 - 95.000 VNĐ",
+        id: "eat-1",
+        title: "Pho: The Complete Guide to Vietnam's National Dish",
+        titleVi: "Phở: Cẩm nang trọn vẹn về quốc hồn ẩm thực Việt Nam",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Cuisine",
+        img: "/guide/megamenu/eat-1-pho.jpg",
+        link: "/guide/pho-the-complete-guide",
       },
       {
-        name: "Bò Né Cô Long",
-        address: "Đầu hẻm 46 Nguyễn Thái Học, Cầu Ông Lãnh, Quận 1",
-        price: "50.000 - 70.000 VNĐ",
+        id: "eat-2",
+        title: "12 Must-Try Foods in Ho Chi Minh City",
+        titleVi: "12 món ăn nhất định phải thử tại TP. Hồ Chí Minh",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Cuisine",
+        img: "/guide/megamenu/eat-2-hcmc.jpg",
+        link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
       },
       {
-        name: "Bò Né Ba Ngon",
-        address: "18 Đinh Tiên Hoàng, Đa Kao, Quận 1",
-        price: "45.000 - 65.000 VNĐ",
+        id: "eat-3",
+        title: "8 Must-Try Foods in Hanoi",
+        titleVi: "8 món ngon nức tiếng tại Hà Nội",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Cuisine",
+        img: "/guide/megamenu/eat-3-hanoi.jpg",
+        link: "/guide/8-must-try-foods-in-hanoi",
+      },
+      {
+        id: "eat-4",
+        title: "5 Must-Try Nha Trang Dishes",
+        titleVi: "5 món ăn đặc sản không thể bỏ qua tại Nha Trang",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Cuisine",
+        img: "/guide/megamenu/eat-4-nhatrang.jpg",
+        link: "/guide/5-must-try-nha-trang-dishes",
       },
     ],
-    cost: "45.000 - 75.000 VNĐ (~$1.8 - $3 USD)",
-    hours: "07:00 - 13:00 & 16:30 - 22:00",
-    address: "18 Đinh Tiên Hoàng, Phường Đa Kao, Quận 1, TP.HCM",
-    mapsQuery: "Bò Né Ba Ngon Đinh Tiên Hoàng",
   },
-  {
-    id: 106,
-    num: "06",
-    title: "Hủ Tiếu Sài Gòn (Nam Vang, Sa Đéc, Mỹ Tho)",
-    subTitle: "Di sản món nước đa văn hóa với sợi hủ tiếu dai mướt",
-    category: "Món Sợi & Nước",
-    categoryKey: "noodles",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Hu-Tieu.jpg",
-    desc: "Nếu muốn thấu hiểu chiều sâu của văn hóa mì nước phương Nam, hãy bắt đầu bằng một tô hủ tiếu. Sợi hủ tiếu trong suốt, dai sần sật chan trong làn nước lèo ngọt thanh ninh từ xương ống heo, mực nướng và củ cải. Bạn có thể chọn ăn hủ tiếu nước truyền thống hoặc hủ tiếu khô trộn nước sốt tương đen đậm đà kèm chén súp riêng. Topping phong phú gồm tôm tươi bóc vỏ, thịt nạc, thịt băm, gan heo béo bùi, trứng cút và tỏi phi vàng rộm thơm lừng.",
-    tip: "Hãy gọi phiên bản 'hủ tiếu khô' — sợi hủ tiếu ngấm đẫm sốt trộn xì dầu và tỏi phi giòn tan, kèm theo một chén nước dùng xí quách ninh nhừ.",
-    places: [
+  itineraries: {
+    items: [
       {
-        name: "Hủ Tiếu Mỹ Tho Thanh Xuân",
-        address: "62 Tôn Thất Thiệp, Bến Nghé, Quận 1",
-        price: "75.000 VNĐ",
+        id: "itin-1",
+        title: "3-Week Vietnam Itinerary",
+        titleVi: "Lịch trình 3 tuần xuyên Việt",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-1-3weeks.jpg",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
-        name: "Hủ Tiếu Nam Vang Nhân Quán",
-        address: "122 Nguyễn Trãi, Phường 3, Quận 5",
-        price: "85.000 VNĐ",
+        id: "itin-2",
+        title: "10 Days in Vietnam",
+        titleVi: "Lịch trình 10 ngày tại Việt Nam",
+        date: "October 13, 2026",
+        dateVi: "13 Tháng 10, 2026",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-2-10days.jpg",
+        link: "/guide/10-days-in-vietnam",
       },
       {
-        name: "Hủ Tiếu Cả Cần",
-        address: "110 Hùng Vương, Phường 9, Quận 5",
-        price: "80.000 - 110.000 VNĐ",
+        id: "itin-3",
+        title: "2 Weeks in Vietnam",
+        titleVi: "Lịch trình 2 tuần xuyên Việt",
+        date: "October 13, 2026",
+        dateVi: "13 Tháng 10, 2026",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-3-2weeks.jpg",
+        link: "/guide/2-weeks-in-vietnam",
+      },
+      {
+        id: "itin-4",
+        title: "1 Month in Vietnam",
+        titleVi: "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam",
+        date: "October 13, 2026",
+        dateVi: "13 Tháng 10, 2026",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-4-1month.jpg",
+        link: "/guide/1-month-in-vietnam",
       },
     ],
-    cost: "50.000 - 95.000 VNĐ (~$2 - $3.8 USD)",
-    hours: "06:00 - 23:00",
-    address: "62 Tôn Thất Thiệp, Phường Bến Nghé, Quận 1, TP.HCM",
-    mapsQuery: "Hủ Tiếu Mỹ Tho Thanh Xuân Tôn Thất Thiệp",
   },
-  {
-    id: 107,
-    num: "07",
-    title: "Bún Riêu Cua Đồng & Đậu Hũ Chiên Sốt Cà Chua",
-    subTitle: "Bát bún màu sắc quyến rũ với vị chua thanh đượm đà",
-    category: "Món Sợi & Nước",
-    categoryKey: "noodles",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Rieu.jpg",
-    desc: "Bún riêu Sài Gòn là bữa tiệc của màu sắc và vị giác: sắc đỏ rực rỡ của cà chua xào, miếng riêu cua đồng bông xốp thơm lừng nổi bồng bềnh, đậu hũ chiên vàng ươm mọng nước, huyết heo mềm mướt và chả lụa hoặc ốc bươu giòn sần sật. Nước dùng có vị chua thanh mát dịu từ me chín kết hợp với độ ngọt tự nhiên từ cua đồng giã nhuyễn. Dùng kèm dĩa rau muống chẻ xanh mướt, hoa chuối thái sợi, chanh tươi và thìa mắm tôm nguyên chất dậy mùi quyến rũ.",
-    tip: "Mắm tôm là linh hồn không thể thiếu: hãy cho nửa thìa mắm tôm cùng vài lát ớt tươi vào tô bún để cảm nhận trọn vẹn hương vị nồng nàn đặc trưng.",
-    places: [
-      {
-        name: "Bún Riêu Gánh Chợ Bến Thành",
-        address: "163 Lê Thánh Tôn, Bến Thành, Quận 1",
-        price: "65.000 VNĐ",
-      },
-      {
-        name: "Bún Riêu Gốc Nguyễn Cảnh Chân",
-        address: "TK18/5 Nguyễn Cảnh Chân, Cầu Kho, Quận 1",
-        price: "75.000 VNĐ",
-      },
-      {
-        name: "Bún Riêu Cua Ốc 66",
-        address: "66 Nguyễn Thái Bình, Quận 1",
-        price: "55.000 - 70.000 VNĐ",
-      },
-    ],
-    cost: "45.000 - 75.000 VNĐ (~$1.8 - $3 USD)",
-    hours: "07:00 - 21:00",
-    address: "163 Lê Thánh Tôn, Phường Bến Thành, Quận 1, TP.HCM",
-    mapsQuery: "Bún Riêu Gánh Chợ Bến Thành",
-  },
-  {
-    id: 108,
-    num: "08",
-    title: "Bún Mắm Miền Tây Đậm Hương Sông Nước",
-    subTitle: "Đặc sản phương Nam với nước lèo mắm cá linh, cá sặc trứ danh",
-    category: "Món Sợi & Nước",
-    categoryKey: "noodles",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Mam.jpg",
-    desc: "Bún mắm là tuyệt tác ẩm thực phản ánh trù phú của đồng bằng sông Cửu Long. Nước lèo được nấu từ mắm cá linh hoặc cá sặc ủ kỹ, lọc lấy nước cốt trong veo rồi ninh cùng sả đập dập thơm lừng, ớt cay và cà tím ngọt mềm. Một tô bún mắm đầy đặn với tôm sú tươi ngọt, mực ống giòn sần sật, cá lóc phi-lê và những miếng heo quay giòn rụm đậm vị. Điểm độc đáo nhất là dĩa rau 'miệt vườn' ăn kèm phong phú nhất Việt Nam: rau đắng, bông súng, kèo nèo, bắp chuối và giá đỗ tươi.",
-    tip: "Nếu là lần đầu ăn mắm, hãy nặn nhiều chanh tươi vào tô nước dùng để làm dịu mùi mắm và làm nổi bật vị ngọt thanh của hải sản.",
-    places: [
-      {
-        name: "Bún Mắm Cô Ba",
-        address: "59 Châu Văn Liêm, Phường 14, Quận 5",
-        price: "85.000 VNĐ",
-      },
-      {
-        name: "Bún Mắm Bạc Liêu 444",
-        address: "375 Huỳnh Tấn Phát, Tân Thuận Đông, Quận 7",
-        price: "70.000 - 85.000 VNĐ",
-      },
-      {
-        name: "Bún Mắm 173",
-        address: "173 Trang Tử, Phường 14, Quận 5",
-        price: "65.000 VNĐ",
-      },
-    ],
-    cost: "60.000 - 90.000 VNĐ (~$2.4 - $3.6 USD)",
-    hours: "08:00 - 21:00",
-    address: "59 Châu Văn Liêm, Phường 14, Quận 5, TP.HCM",
-    mapsQuery: "Bún Mắm Cô Ba Châu Văn Liêm",
-  },
-  {
-    id: 109,
-    num: "09",
-    title: "Bánh Cuốn Nóng & Chả Lụa Bánh Tôm Sài Gòn",
-    subTitle: "Lớp bánh mỏng mềm như lụa với nhân thịt mộc nhĩ thơm nức",
-    category: "Bánh Cuốn & Đồ Chiên",
-    categoryKey: "rolls",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Cuon.jpg",
-    desc: "Mỗi đĩa bánh cuốn nóng là một màn biểu diễn nghệ thuật của người thợ tráng bánh: múc muôi bột gạo tráng thật mỏng trên lớp vải căng trên nồi nước sôi sùng sục, đậy nắp trong chớp mắt rồi dùng thanh tre mỏng khéo léo cuộn lấy lớp bánh mềm mướt bọc nhân thịt nạc băm, mộc nhĩ giòn sần sật. Bánh cuốn Sài Gòn được dọn kèm chả quế thơm lừng, nem chua, lát bánh tôm chiên giòn rụm, giá đỗ chần sơ và rắc ngập hành phi vàng giòn rụm. Chấm cùng chén nước mắm pha ấm ngọt dịu đưa vị.",
-    tip: "Thêm một chút tinh dầu cà cuống vào chén nước mắm để dậy lên hương vị cổ truyền hoàng gia xưa.",
-    places: [
-      {
-        name: "Bánh Cuốn Tây Hồ (Từ 1961)",
-        address: "127 Đinh Tiên Hoàng, Đa Kao, Quận 1",
-        price: "60.000 - 85.000 VNĐ",
-      },
-      {
-        name: "Bánh Cuốn Hải Nam",
-        address: "11A Cao Thắng, Phường 2, Quận 3",
-        price: "50.000 - 75.000 VNĐ",
-      },
-      {
-        name: "Bánh Cuốn Thiên Hương",
-        address: "179 Ba Tháng Hai, Phường 11, Quận 10",
-        price: "55.000 - 70.000 VNĐ",
-      },
-    ],
-    cost: "45.000 - 85.000 VNĐ (~$1.8 - $3.4 USD)",
-    hours: "06:00 - 22:00",
-    address: "127 Đinh Tiên Hoàng, Phường Đa Kao, Quận 1, TP.HCM",
-    mapsQuery: "Bánh Cuốn Tây Hồ Đinh Tiên Hoàng",
-  },
-  {
-    id: 110,
-    num: "10",
-    title: "Ốc Sài Gòn & Văn Hóa Nhậu Đêm Vỉa Hè",
-    subTitle: "Trải nghiệm ẩm thực đêm sôi động nhất của giới trẻ Sài Gòn",
-    category: "Hải Sản & Nhậu Đêm",
-    categoryKey: "seafood",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Oc.jpg",
-    desc: "Không đi ăn ốc đêm thì coi như chưa biết đến linh hồn thực sự của Sài Gòn về đêm. Tại các con hẻm ốc nức tiếng như hẻm ốc Vĩnh Khánh (Quận 4) hay ốc Đào (Quận 1), hàng chục loại ốc và hải sản tươi sống được bày biện hấp dẫn: ốc hương, ốc móng tay, càng ghẹ, sò điệp, nghêu... Các đầu bếp đường phố biến hóa tài tình với vô vàn phong cách chế biến: sốt trứng muối béo ngậy, rang muối ớt cay nồng, xào me chua ngọt, nướng mỡ hành đậu phộng thơm nức mũi. Dùng kèm bánh mì chấm sốt và vài lon bia mát lạnh.",
-    tip: "Món bắt buộc phải gọi: Ốc hương xào bắp bơ cay hoặc sốt trứng muối, gọi thêm bánh mì nóng để quệt sạch nước sốt ngon tuyệt đỉnh.",
-    places: [
-      {
-        name: "Ốc Đào (Nguyễn Trãi)",
-        address: "212B/C79 Nguyễn Trãi, Nguyễn Cư Trinh, Quận 1",
-        price: "80.000 - 160.000 VNĐ/dĩa",
-      },
-      {
-        name: "Ốc Oanh (Phố Ốc Vĩnh Khánh)",
-        address: "534 Vĩnh Khánh, Phường 8, Quận 4",
-        price: "90.000 - 180.000 VNĐ/dĩa",
-      },
-      {
-        name: "Ốc Như",
-        address: "650/4/29 Điện Biên Phủ, Phường 11, Quận 10",
-        price: "60.000 - 130.000 VNĐ/dĩa",
-      },
-    ],
-    cost: "150.000 - 300.000 VNĐ/người (~$6 - $12 USD)",
-    hours: "15:00 - 01:00 sáng",
-    address: "212B/C79 Nguyễn Trãi, Phường Nguyễn Cư Trinh, Quận 1, TP.HCM",
-    mapsQuery: "Ốc Đào Nguyễn Trãi Quận 1",
-  },
-  {
-    id: 111,
-    num: "11",
-    title: "Xôi Mặn Thập Cẩm & Xôi Gà Xé Nước Sốt Đậm Vị",
-    subTitle: "Bữa ăn chắc dạ, thơm dẻo từ những chõ xôi bốc khói sớm mai",
-    category: "Cơm & Món Chính",
-    categoryKey: "rice",
-    image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Xoi-Man.jpg",
-    desc: "Xôi mặn Sài Gòn là món ăn đường phố dân dã nhưng tinh tế bậc nhất. Từng hạt nếp dẻo thơm hạt bóng bẩy được đồ kỹ trong chõ hơi nghi ngút, gói ghém trong chiếc lá chuối xanh mộc mạc. Một gói xôi đầy ắp topping hấp dẫn: lạp xưởng Mai Quế Lộ chiên bóng loáng, chà bông heo tơi xốp, gà xé xào nấm đùi gà, chả lụa xắt sợi, mỡ hành xanh rì và rắc thêm đậu phộng rang giòn rụm. Linh hồn kết nối tất cả là muỗng nước sốt gà rim tương mặn ngọt đậm đà chan ngập xôi.",
-    tip: "Nếu ghé Chợ Bà Chiểu lúc xế chiều, hãy ghé quán Xôi Gà Bà Chiểu nức tiếng để thử món xôi gà chiên giòn rụm sốt cay độc nhất vô nhị.",
-    places: [
-      {
-        name: "Xôi Gà Bà Chiểu",
-        address: "Chợ Bà Chiểu, Bùi Hữu Nghĩa, Bình Thạnh",
-        price: "35.000 - 55.000 VNĐ",
-      },
-      {
-        name: "Xôi Bình Tiên",
-        address: "88 Minh Phụng, Phường 5, Quận 6",
-        price: "20.000 - 35.000 VNĐ",
-      },
-      {
-        name: "Xôi Mặn Hào Huê",
-        address: "166 Ba Tháng Hai, Phường 12, Quận 10",
-        price: "20.000 - 30.000 VNĐ",
-      },
-    ],
-    cost: "15.000 - 45.000 VNĐ (~$0.6 - $1.8 USD)",
-    hours: "06:00 - 10:00 & 17:00 - 23:30",
-    address: "Chợ Bà Chiểu, Đường Bùi Hữu Nghĩa, Phường 1, Bình Thạnh, TP.HCM",
-    mapsQuery: "Xôi Gà Bà Chiểu",
-  },
-  {
-    id: 112,
-    num: "12",
-    title: "Cà Phê Sữa Đá Sài Gòn Đậm Đà",
-    subTitle: "Thức uống đại diện cho linh hồn và nhịp đập thành phố",
-    category: "Đồ Uống & Tráng Miệng",
-    categoryKey: "drinks",
-    image:
-      "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da.jpg",
-    desc: "Chúng ta kết lại danh sách với thức uống đã định hình phong cách sống của người Sài Gòn: cà phê sữa đá. Từng giọt cà phê Robusta rang đậm nhỏ giọt tí tách từ phin nhôm xuống lớp sữa đặc ngọt ngào béo ngậy dưới đáy ly thủy tinh. Khi khuấy đều và rót ngập đá bi mát lạnh, vị đắng đậm đà hòa quyện với vị béo ngọt và cảm giác sảng khoái đánh thức tức thì mọi giác quan. Người Sài Gòn nhâm nhi ly cà phê sữa đá ở mọi lúc, mọi nơi — từ chiếc ghế nhựa vỉa hè ngắm phố phường đến quán sân vườn lãng mạn.",
-    tip: "Dùng ống hút khuấy thật đều tay cho sữa đặc tan hết và đá bi tan nhẹ một chút để đạt được vị cân bằng thanh mát hoàn hảo.",
-    places: [
-      {
-        name: "Cà Phê Vợt Cheo Leo (Từ năm 1938)",
-        address: "109/36 Nguyễn Thiện Thuật, Quận 3",
-        price: "20.000 VNĐ",
-      },
-      {
-        name: "Cà Phê Bệt Công Viên 30/4",
-        address: "Đường Alexandre de Rhodes, Bến Nghé, Quận 1",
-        price: "15.000 - 25.000 VNĐ",
-      },
-      {
-        name: "Cà Phê Vợt Ba Lù Chợ Lớn",
-        address: "Chợ Phùng Hưng, Quận 5",
-        price: "18.000 - 22.000 VNĐ",
-      },
-    ],
-    cost: "15.000 - 35.000 VNĐ (~$0.6 - $1.4 USD)",
-    hours: "06:00 - 22:30 (Cà phê bệt mở cả ngày)",
-    address: "109/36 Nguyễn Thiện Thuật, Phường 2, Quận 3, TP.HCM",
-    mapsQuery: "Cà phê Cheo Leo Nguyễn Thiện Thuật",
-  },
-];
+};
 
-// Danh mục lọc
-const FOODS_CATEGORIES = [
-  { key: "all", label: "Tất cả 12 món ngon", icon: Flame },
-  { key: "rice", label: "Cơm & Xôi", icon: Utensils },
-  { key: "bread", label: "Bánh Mì kẹp giòn", icon: Award },
-  { key: "noodles", label: "Bún & Hủ Tiếu nước", icon: Sparkles },
-  { key: "rolls", label: "Bánh Xèo & Gỏi Cuốn", icon: Compass },
-  { key: "meat", label: "Bò Né chảo gang", icon: Award },
-  { key: "seafood", label: "Ốc & Nhậu đêm", icon: Sparkles },
-  { key: "drinks", label: "Cà Phê Sữa Đá", icon: Coffee },
+// ─── 12 MUST-TRY FOODS DATA (MATCHING SCREENSHOTS 1 TO 5) ───
+const HCMC_12_DISHES = [
+  {
+    id: "com-tam",
+    index: 1,
+    title: "1. Com Tam",
+    titleVi: "1. Cơm Tấm",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg",
+    alt: "Com Tam - Broken Rice Ho Chi Minh City",
+    desc: (
+      <>
+        <em><span className="vnn-link-highlight">Com tam</span></em>, or broken rice, is the beating heart of Saigonese cuisine—a dish so iconic you simply can&apos;t leave the city without trying it. Whether for breakfast, lunch, dinner, or a midnight craving, this flexible dish always delivers. The classic combo includes grilled pork chop, shredded pork skin, steamed egg meatloaf, and a sunny side up egg atop fragrant, broken rice. It&apos;s usually served with pickled veggies and a drizzle of sweet savory fish sauce. Add some scallion oil and crispy pork fat, and you&apos;ve got yourself a heavenly bite. Best enjoyed with a cold drink in a bustling local eatery.
+      </>
+    ),
+    descVi: (
+      <>
+        <em><span className="vnn-link-highlight">Cơm tấm</span></em>, hay cơm nấu từ hạt gạo tấm vỡ, là nhịp đập của ẩm thực Sài Gòn — món ăn biểu tượng mà bạn nhất định không thể bỏ qua khi ghé thăm thành phố. Dù cho bữa sáng, bữa trưa, bữa tối hay cơn đói lúc nửa đêm, đĩa cơm tấm luôn chiều lòng thực khách. Đĩa cơm kinh điển gồm sườn nướng than hoa thơm lừng, bì dai giòn, chả trứng bùi béo và quả trứng ốp la lòng đào trên đĩa cơm tấm thơm phức. Món ăn thường kèm đồ chua và thìa nước mắm chua ngọt sóng sánh. Thêm chút mỡ hành và tóp mỡ giòn rụm, bạn sẽ có ngay một bữa ăn tuyệt hảo.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Com Tam Moc (85 Ly Tu Trong): 95,000 VND ($3.65, 1 USD ~ 26,000 VND)",
+      "Com Tam Chi Hang (28 Do Quang Dau): 82,000 VND",
+    ],
+    whereToEatVi: [
+      "Cơm Tấm Mộc (85 Lý Tự Trọng): 95.000 VNĐ ($3.65)",
+      "Cơm Tấm Chị Hằng (28 Đỗ Quang Đẩu): 82.000 VNĐ",
+    ],
+  },
+  {
+    id: "banh-mi",
+    index: 2,
+    title: "2. Banh Mi",
+    titleVi: "2. Bánh Mì",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Mi.jpg",
+    alt: "Banh Mi - Vietnamese Baguette Sandwich",
+    desc: (
+      <>
+        <em><span className="vnn-link-highlight">Banh mi</span></em> isn&apos;t just a sandwich; it&apos;s a full-on flavor explosion in a crispy baguette. With its roots in French colonial times, this Vietnamese sandwich has evolved into something truly unique. The crusty bread holds an endless mix of fillings—cold cuts, pate, grilled meat, fried egg, or even sardines—topped with pickled carrots, cucumbers, coriander, and a splash of soy or chili sauce. It&apos;s perfect for on the go munching. Some vendors even offer vegetarian options, so feel free to ask (and if they don&apos;t have it, chances are they&apos;ll point you to someone who does).
+      </>
+    ),
+    descVi: (
+      <>
+        <em><span className="vnn-link-highlight">Bánh mì</span></em> không chỉ đơn thuần là bánh kẹp; đó là sự bùng nổ hương vị trọn vẹn trong ổ baguette giòn rụm. Bắt nguồn từ thời Pháp thuộc, ổ bánh mì Việt Nam đã biến chuyển thành di sản ẩm thực độc nhất vô nhị. Vỏ bánh nướng giòn tan ôm trọn lớp nhân phong phú: chả lụa, pate béo bùi, thịt nướng thơm lừng, trứng ốp la, dưa leo tươi mát, đồ chua, ngò rí và chút nước tương hay tương ớt cay nồng. Cực kỳ tiện lợi để ăn nhanh khi đang dạo phố.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Banh Mi Huynh Hoa (26 Le Thi Rieng): 68,000 VND",
+      "Banh Mi Pho Co 159 (31/1 Ton That Tung): 49,000 VND",
+    ],
+    whereToEatVi: [
+      "Bánh Mì Huỳnh Hoa (26 Lê Thị Riêng): 68.000 VNĐ",
+      "Bánh Mì Phố Cổ 159 (31/1 Tôn Thất Tùng): 49.000 VNĐ",
+    ],
+  },
+  {
+    id: "banh-xeo",
+    index: 3,
+    title: "3. Banh Xeo",
+    titleVi: "3. Bánh Xèo",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Xeo.jpg",
+    alt: "Banh Xeo - Crispy Vietnamese Pancake",
+    desc: (
+      <>
+        Watching <em><span className="vnn-link-highlight">banh xeo</span></em> cook is half the fun. These crispy golden pancakes are made in large, sizzling pans, with a batter of rice flour, turmeric, and coconut milk. The filling—shrimp, pork, and bean sprouts—is folded inside the thin, crackling shell. But that&apos;s just the beginning. Wrap it in mustard greens or lettuce, add fresh herbs, and dip it in tangy fish sauce for a bite that&apos;s crunchy, savory, and fresh all at once. It&apos;s a communal dish that invites sharing, storytelling, and the pure joy of messy, delicious eating. Don&apos;t be afraid to get your hands dirty—it&apos;s part of the <em>banh xeo</em> fun.
+      </>
+    ),
+    descVi: (
+      <>
+        Ngắm nhìn chảo <em><span className="vnn-link-highlight">bánh xèo</span></em> sôi xèo xèo trên lửa là một trải nghiệm thú vị. Chiếc bánh vàng ươm giòn rụm được làm từ bột gạo, bột nghệ và nước cốt dừa béo ngậy. Phần nhân gồm tôm tươi ngọt thịt, thịt ba rọi và giá đỗ được gói ghém khéo léo trong lớp vỏ giòn tan. Cuộn một miếng bánh xèo vào lá cải bẹ xanh hay xà lách cùng rau rừng, rồi chấm ngập trong chén nước mắm tỏi ớt chua ngọt.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Hoang Tam Restaurant (TK22/1 Nguyen Canh Chan): 179,000 VND",
+      "Banh Xeo An Ghien (74 Suong Nguyet Anh): 85,000 VND",
+    ],
+    whereToEatVi: [
+      "Nhà Hàng Hoàng Tâm (TK22/1 Nguyễn Cảnh Chân): 179.000 VNĐ",
+      "Bánh Xèo Ăn Là Ghiền (74 Sương Nguyệt Ánh): 85.000 VNĐ",
+    ],
+  },
+  {
+    id: "goi-cuon",
+    index: 4,
+    title: "4. Goi Cuon & Bo Bia",
+    titleVi: "4. Gỏi Cuốn & Bò Bía",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Goi-Cuon.jpg",
+    alt: "Goi Cuon & Bo Bia - Fresh Spring Rolls",
+    desc: (
+      <>
+        When you want something light but full of flavor, <em><span className="vnn-link-highlight">goi cuon</span></em> and <em><span className="vnn-link-highlight">bo bia</span></em> (spring rolls & Chinese-style spring rolls) are your go-to. These fresh rolls are wrapped in soft rice paper and packed with herbs, vermicelli noodles, pork, and shrimp for the former, or Chinese sausage with jicama for the latter. They&apos;re refreshing, low-calorie, and served with a thick, savory peanut-hoisin dipping sauce that takes them to the next level. Perfect as an afternoon snack, a starter, or a healthy bite between sightseeing stops.
+      </>
+    ),
+    descVi: (
+      <>
+        Khi bạn muốn một món ăn thanh mát nhưng ngập tràn hương vị, <em><span className="vnn-link-highlight">gỏi cuốn</span></em> và <em><span className="vnn-link-highlight">bò bía</span></em> chính là lựa chọn số 1. Từng cuốn bánh tráng dẻo mềm bọc lấy bún tươi, tôm luộc đỏ au, thịt ba rọi nạc mỡ đan xen cùng rau thơm mát lành, hoặc lạp xưởng và củ sắn ngọt dịu đối với bò bía. Món cuốn chấm cùng tương đen đậu phộng béo bùi rắc thêm ớt hiểm cay nồng sẽ khiến bạn say đắm.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEatText: "This is a popular street food priced at 10,000-20,000 VND per roll. You'll find it at markets and sidewalk vendors all over the city.",
+    whereToEatTextVi: "Đây là món ăn vặt đường phố phổ biến có giá chỉ 10.000 - 20.000 VNĐ một cuốn. Bạn có thể dễ dàng tìm thấy tại các khu chợ truyền thống và quầy hàng rong trên khắp các con phố Sài Gòn.",
+  },
+  {
+    id: "bo-ne",
+    index: 5,
+    title: "5. Bo Ne",
+    titleVi: "5. Bò Né",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bo-Ne.jpg",
+    alt: "Bo Ne - Sizzling Beef Steak Ho Chi Minh City",
+    desc: (
+      <>
+        You want steak and eggs? We have them—served to you still sizzling. <em>Bo ne</em> features thin slices of beef, often paired with egg, pate, sausage, or even meatballs, all cooking on a hot cast iron skillet. The name &ldquo;ne&rdquo; (meaning &ldquo;to dodge&rdquo;) comes from dodging the hot oil splatters! Served with a baguette or French fries to soak up the juicy sauces, it&apos;s hearty, indulgent, and truly delicious. Add a bit of chili sauce, fresh tomato slices, and cucumber on the side for the full experience. Ideal for brunch or a protein packed dinner with a twist of local flair.
+      </>
+    ),
+    descVi: (
+      <>
+        Bạn thèm món bít tết kèm trứng? Sài Gòn có món ăn phục vụ ngay trên chảo gang reo xèo xèo. <em>Bò né</em> gồm những lát thịt bò mềm ướp sốt đậm đà, ăn cùng trứng ốp la lòng đào, pate gan béo ngậy, xúc xích hay xíu mại. Cái tên &ldquo;né&rdquo; xuất phát từ việc thực khách phải hơi né người ra để tránh dầu bơ bắn nhẹ khi chảo vừa bưng ra bàn! Dùng kèm ổ bánh mì nóng giòn quệt sạch lớp nước sốt thịt bơ óng ả, đem lại bữa ăn đậm đà khó quên.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Bo Ne Ba Ngon (18 Dinh Tien Hoang): 68,000 VND",
+      "Bo Ne Ba Nui (94 Nguyen Thai Binh): 68,000 VND",
+    ],
+    whereToEatVi: [
+      "Bò Né Ba Ngon (18 Đinh Tiên Hoàng): 68.000 VNĐ",
+      "Bò Né Bà Núi (94 Nguyễn Thái Bình): 68.000 VNĐ",
+    ],
+  },
+  {
+    id: "hu-tieu",
+    index: 6,
+    title: "6. Hu Tieu",
+    titleVi: "6. Hủ Tiếu",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Hu-Tieu.jpg",
+    alt: "Hu Tieu - Southern Clear Noodle Soup",
+    desc: (
+      <>
+        If you want to understand the depth of southern Vietnamese noodle culture, start with a bowl of <em>hu tieu</em>. Chewy rice noodles are served in a clear, delicately sweet pork and dried squid broth, topped with shrimp, minced pork, quail eggs, and golden crispy garlic. You can enjoy it as a piping hot soup or &ldquo;dry&rdquo; (<em>hu tieu kho</em>), tossed in a savory soy-based sauce with the broth on the side.
+      </>
+    ),
+    descVi: (
+      <>
+        Để thấu hiểu văn hóa ẩm thực sợi phương Nam, hãy bắt đầu bằng một tô <em>hủ tiếu</em>. Sợi hủ tiếu dai mướt chan trong nước lèo ngọt thanh ninh từ xương heo và mực nướng, đầy ắp tôm tươi, thịt nạc, thịt băm, trứng cút và tỏi phi thơm lừng. Bạn có thể chọn ăn nước hoặc ăn khô trộn sốt tương đen đậm vị.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Hu Tieu My Tho Thanh Xuan (62 Ton That Thiep): 75,000 VND",
+      "Hu Tieu Nam Vang Nhan Quan (122 Nguyen Trai): 85,000 VND",
+    ],
+    whereToEatVi: [
+      "Hủ Tiếu Mỹ Tho Thanh Xuân (62 Tôn Thất Thiệp): 75.000 VNĐ",
+      "Hủ Tiếu Nam Vang Nhân Quán (122 Nguyễn Trãi): 85.000 VNĐ",
+    ],
+  },
+  {
+    id: "bun-rieu",
+    index: 7,
+    title: "7. Bun Rieu",
+    titleVi: "7. Bún Riêu",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Rieu.jpg",
+    alt: "Bun Rieu - Crab Paste Noodle Soup",
+    desc: (
+      <>
+        A colorful, savory feast in a bowl, <em>bun rieu</em> showcases sweet freshwater crab meat cooked into savory floating clusters alongside fried tofu, blood cubes, and ripe tomatoes in a tart tamarind-scented broth. Served with shredded morning glory, banana blossoms, and a dab of pungent shrimp paste to elevate every spoonful.
+      </>
+    ),
+    descVi: (
+      <>
+        Bát <em>bún riêu</em> rực rỡ sắc màu với từng tảng riêu cua đồng thơm bùi nổi bồng bềnh, đậu hũ chiên vàng ươm mọng nước, cà chua tươi và nước lèo chua thanh mát dịu từ me chín. Thêm muỗng mắm tôm nồng nàn và dĩa rau muống chẻ xanh mướt là đúng chuẩn phong vị Sài Gòn.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Bun Rieu Ganh Ben Thanh (163 Le Thanh Ton): 65,000 VND",
+      "Bun Rieu Cua Oc 66 (66 Nguyen Thai Binh): 60,000 VND",
+    ],
+    whereToEatVi: [
+      "Bún Riêu Gánh Bến Thành (163 Lê Thánh Tôn): 65.000 VNĐ",
+      "Bún Riêu Cua Ốc 66 (66 Nguyễn Thái Bình): 60.000 VNĐ",
+    ],
+  },
+  {
+    id: "bun-thit-nuong",
+    index: 8,
+    title: "8. Bun Thit Nuong",
+    titleVi: "8. Bún Thịt Nướng",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
+    alt: "Bun Thit Nuong - Grilled Pork Vermicelli",
+    desc: (
+      <>
+        Smoky chargrilled pork slices and crispy fried spring rolls piled atop a bed of soft rice vermicelli, fresh herbs, pickled carrots, and crushed peanuts. Drizzle generously with sweet garlic chili fish sauce and toss everything together for a balanced, texturally thrilling meal that epitomizes Saigon street gastronomy.
+      </>
+    ),
+    descVi: (
+      <>
+        Tô <em>bún thịt nướng</em> thơm nức mũi với từng lát thịt heo ướp sả nướng than hoa vàng óng, chả giò giòn rụm xếp trên lớp bún tươi, rau sống mát lành và đậu phộng rang giòn. Chan ngập chén nước mắm tỏi ớt chua ngọt rồi trộn đều, vị béo ngọt giòn tươi hòa quyện khó cưỡng.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Bun Thit Nuong Chi Tuyen (175 Co Giang): 65,000 VND",
+      "Bun Thit Nuong Hai Dang (149 Chan Hung): 55,000 VND",
+    ],
+    whereToEatVi: [
+      "Bún Thịt Nướng Chị Tuyền (175 Cô Giang): 65.000 VNĐ",
+      "Bún Thịt Nướng Hải Đăng (149 Chấn Hưng): 55.000 VNĐ",
+    ],
+  },
+  {
+    id: "bun-mam",
+    index: 9,
+    title: "9. Bun Mam",
+    titleVi: "9. Bún Mắm",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Mam.jpg",
+    alt: "Bun Mam - Mekong Fermented Fish Noodle Soup",
+    desc: (
+      <>
+        Known as the &ldquo;gumbo of Vietnam,&rdquo; <em>bun mam</em> features a deeply flavorful fermented fish broth simmered with lemongrass and eggplant. Laden with peeled prawns, squid, crispy roast pork belly, and fish fillets, it is served alongside an abundant platter of water lilies, bitter herbs, and banana blossoms.
+      </>
+    ),
+    descVi: (
+      <>
+        Được ví như món súp gumbo của phương Nam, <em>bún mắm</em> sở hữu làn nước lèo nấu từ mắm cá linh, cá sặc đậm đà thơm ngát hương sả và cà tím. Topping ngập tràn với tôm sú tươi ngọt, mực ống giòn sần sật, heo quay giòn bì và đĩa rau miệt vườn với bông súng, kèo nèo xanh mướt.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Bun Mam Co Ba (59 Chau Van Liem): 85,000 VND",
+      "Bun Mam 444 (375 Huynh Tan Phat): 75,000 VND",
+    ],
+    whereToEatVi: [
+      "Bún Mắm Cô Ba (59 Châu Văn Liêm): 85.000 VNĐ",
+      "Bún Mắm 444 (375 Huỳnh Tấn Phát): 75.000 VNĐ",
+    ],
+  },
+  {
+    id: "oc",
+    index: 10,
+    title: "10. Oc (Snails & Shellfish)",
+    titleVi: "10. Ốc & Hải Sản Vỉa Hè",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Shellfish.jpg",
+    alt: "Oc - Snails & Shellfish Saigon",
+    desc: (
+      <>
+        An evening snail feast is an quintessential Saigon rite of passage. Sidewalk stalls showcase dozens of fresh shellfish stir-fried in salted egg sauce, roasted with chili salt, sautéed in garlic butter, or grilled with scallion oil and peanuts. Dip crusty baguettes into the rich gravies and wash it down with a cold local lager.
+      </>
+    ),
+    descVi: (
+      <>
+        Ăn ốc đêm vỉa hè là nét văn hóa đặc trưng nhất của Sài Gòn. Hàng chục loại ốc và hải sản tươi sống được biến tấu tài tình: sốt trứng muối béo ngậy, rang muối ớt cay nồng, xào bơ tỏi thơm lừng hay nướng mỡ hành đậu phộng. Chấm bánh mì nóng giòn vào nước sốt và nhâm nhi cùng ly bia mát lạnh.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Oc Dao (212B/C79 Nguyen Trai): 80,000 - 150,000 VND",
+      "Oc Oanh (534 Vinh Khanh, District 4): 90,000 - 180,000 VND",
+    ],
+    whereToEatVi: [
+      "Ốc Đào (212B/C79 Nguyễn Trãi): 80.000 - 150.000 VNĐ",
+      "Ốc Oanh (534 Vĩnh Khánh, Quận 4): 90.000 - 180.000 VNĐ",
+    ],
+  },
+  {
+    id: "xoi-man",
+    index: 11,
+    title: "11. Xoi Man",
+    titleVi: "11. Xôi Mặn Thập Cẩm",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Xoi-Man.jpg",
+    alt: "Xoi Man - Savory Sticky Rice",
+    desc: (
+      <>
+        Steaming savory sticky rice packed inside banana leaves, loaded with Chinese sausage (<em>lap xuong</em>), shredded chicken, pork floss, quail eggs, scallion oil, and crunchy peanuts, all tied together by a ladle of rich braised chicken reduction. Hearty, portable, and utterly delicious.
+      </>
+    ),
+    descVi: (
+      <>
+        Gói <em>xôi mặn</em> bọc trong lá chuối xanh mộc mạc bốc khói nghi ngút. Từng hạt nếp dẻo thơm bóng bẩy quyện cùng lạp xưởng Mai Quế Lộ chiên bóng, gà xé đậm vị, chà bông tơi xốp, trứng cút, mỡ hành và chan thìa nước sốt rim đậm đà chắc dạ cho buổi sáng sớm.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Xoi Ga Ba Chieu (Ba Chieu Market, Binh Thanh): 40,000 VND",
+      "Xoi Binh Tien (88 Minh Phung): 25,000 VND",
+    ],
+    whereToEatVi: [
+      "Xôi Gà Bà Chiểu (Chợ Bà Chiểu, Bình Thạnh): 40.000 VNĐ",
+      "Xôi Bình Tiên (88 Minh Phụng): 25.000 VNĐ",
+    ],
+  },
+  {
+    id: "ca-phe-sua-da",
+    index: 12,
+    title: "12. Ca Phe Sua Da",
+    titleVi: "12. Cà Phê Sữa Đá",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da.jpg",
+    alt: "Ca Phe Sua Da - Vietnamese Iced Coffee",
+    desc: (
+      <>
+        Finishing the list with Saigon&apos;s liquid obsession: Vietnamese iced coffee with sweetened condensed milk. Slow-dripped dark Robusta coffee mixed with rich condensed milk and poured over crushed ice. Bold, sweet, creamy, and revitalizing, it is sipped leisurely at street corners and chic cafes alike.
+      </>
+    ),
+    descVi: (
+      <>
+        Khép lại danh sách bằng thức uống đại diện cho linh hồn và nhịp sống của người Sài Gòn: <em>cà phê sữa đá</em>. Từng giọt cà phê Robusta đen đậm nhỏ giọt tí tách từ phin nhôm xuống lớp sữa đặc ngọt ngào béo ngậy, khuấy đều cùng đá bi mát lạnh, đánh thức mọi giác quan trong sớm mai.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Ca Phe Vot Cheo Leo (109/36 Nguyen Thien Thuat - Since 1938): 20,000 VND",
+      "Ca Phe Bet (30/4 Park, District 1): 20,000 VND",
+    ],
+    whereToEatVi: [
+      "Cà Phê Vợt Cheo Leo (109/36 Nguyễn Thiện Thuật - Từ 1938): 20.000 VNĐ",
+      "Cà Phê Bệt Công Viên 30/4 (Quận 1): 20.000 VNĐ",
+    ],
+  },
 ];
 
 export default function MustTryFoodsInHCMCPage() {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [bookmarkedIds, setBookmarkedIds] = useState([]);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastVisible, setToastVisible] = useState(false);
-  const [lightboxItem, setLightboxItem] = useState(null);
+  const [lang, setLang] = useState("vi");
+  const [activeMegaMenu, setActiveMegaMenu] = useState(null);
+  const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const progress = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(Math.min(100, Math.max(0, progress)));
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    setLang(getLang());
+    const handleStorage = () => setLang(getLang());
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("vinatap_guide_bookmarks");
-      if (saved) setBookmarkedIds(JSON.parse(saved));
-    } catch (e) {}
-  }, []);
-
-  const showToast = (msg) => {
-    setToastMessage(msg);
-    setToastVisible(true);
-    setTimeout(() => {
-      setToastVisible(false);
-    }, 2800);
-  };
-
-  const toggleBookmark = (id) => {
-    let next;
-    if (bookmarkedIds.includes(id)) {
-      next = bookmarkedIds.filter((item) => item !== id);
-      showToast("Đã bỏ lưu khỏi Sổ tay VinaTap");
-    } else {
-      next = [...bookmarkedIds, id];
-      showToast("Đã lưu vào Sổ tay hành trình VinaTap! ✨");
-    }
-    setBookmarkedIds(next);
-    try {
-      localStorage.setItem("vinatap_guide_bookmarks", JSON.stringify(next));
-    } catch (e) {}
-  };
-
-  const copyAddress = (address) => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(address);
-      showToast("Đã sao chép địa chỉ vào bộ nhớ tạm! 📋");
-    }
-  };
-
-  const filteredItems =
-    activeCategory === "all"
-      ? HCMC_FOOD_ITEMS
-      : HCMC_FOOD_ITEMS.filter((item) => item.categoryKey === activeCategory);
+  const isVi = lang === "vi";
 
   return (
-    <div className="guide-page-wrapper">
-      {/* ─── THANH TIẾN TRÌNH ĐỌC ─── */}
-      <div
-        className="guide-progress-bar"
-        style={{ width: `${scrollProgress}%` }}
-      />
-
-      {/* ─── TOP NAVBAR ─── */}
-      <nav className="guide-nav" aria-label="Điều hướng cẩm nang">
-        <div className="guide-nav__inner">
-          <div className="guide-nav__left">
-            <Logo size={28} />
-            <div className="guide-breadcrumb">
-              <Link href="/">Trang chủ</Link>
-              <ChevronRight size={13} />
-              <Link href="/#destinations">Điểm đến</Link>
-              <ChevronRight size={13} />
-              <Link href="/province/ho-chi-minh">TP. Hồ Chí Minh</Link>
-              <ChevronRight size={13} />
-              <span className="guide-breadcrumb__curr">
-                12 món ăn đường phố phải thử
-              </span>
-            </div>
-          </div>
-          <div className="guide-nav__right" />
+    <div className="vnn-article-page">
+      {/* ── Top Companion Banner (Screenshot 1) ── */}
+      <div className="vnn-top-banner">
+        <div className="vnn-top-banner__container">
+          <a
+            href="https://tripion.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="vnn-top-banner__link"
+          >
+            <img
+              src="/guide/top-banner-companion.png"
+              alt="Free AI Travel Assistant - AI Companion"
+              className="vnn-top-banner__img"
+            />
+          </a>
         </div>
-      </nav>
+      </div>
 
-      {/* ─── NỘI DUNG CHÍNH ─── */}
-      <main className="guide-container">
-        {/* TIÊU ĐỀ & METADATA */}
-        <header className="guide-header">
-          <div className="guide-badge-pill">
-            <Compass size={14} />
-            <span>CẨM NANG ẨM THỰC • VINATAP SIGNATURE EDITORIAL</span>
+      {/* ── Standard Navbar Header ── */}
+      <header className="home-header" onMouseLeave={() => setActiveMegaMenu(null)}>
+        <div className="home-header__container">
+          <div className="home-header__left">
+            <Logo variant="home" />
           </div>
 
-          <h1 className="guide-title">
-            12 Món Ăn Đường Phố Phải Thử Ở Sài Gòn
-          </h1>
+          <nav className="home-header__nav">
+            <ul className="home-nav-list">
+              {/* BE INSPIRED */}
+              <li
+                className="home-nav-item home-nav-item--has-dropdown"
+                onMouseEnter={() => setActiveMegaMenu("inspired")}
+              >
+                <button
+                  type="button"
+                  className={`home-nav-link ${activeMegaMenu === "inspired" ? "home-nav-link--active" : ""}`}
+                >
+                  <span>{isVi ? "CẢM HỨNG" : "BE INSPIRED"}</span>
+                  <ChevronDown className="home-nav-link__icon" size={14} />
+                </button>
+              </li>
 
-          <p className="guide-subtitle">
-            Từ đĩa cơm tấm sườn nướng mỡ hành giòn rụm, ổ bánh mì pate thơm nức đến tô bún mắm miền Tây đậm đà và ly cà phê sữa đá vỉa hè — trọn bộ bản đồ ẩm thực giúp bạn cảm nhận hương vị chân thật nhất của Sài Gòn.
-          </p>
+              {/* DESTINATIONS */}
+              <li
+                className="home-nav-item home-nav-item--has-dropdown"
+                onMouseEnter={() => setActiveMegaMenu("destinations")}
+              >
+                <button
+                  type="button"
+                  className={`home-nav-link ${activeMegaMenu === "destinations" ? "home-nav-link--active" : ""}`}
+                >
+                  <span>{isVi ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
+                  <ChevronDown className="home-nav-link__icon" size={14} />
+                </button>
+              </li>
 
-          <div className="guide-meta-bar">
-            <div className="guide-author-box">
-              <div className="guide-author-avatar">VT</div>
-              <div>
-                <div className="guide-author-name">
-                  <span>Ban Biên Tập VinaTap</span>
-                  <Sparkles size={14} className="guide-verified-badge" />
-                </div>
-                <div className="guide-author-role">
-                  Chuyên trang Văn hóa &amp; Du lịch Bản địa Việt Nam
-                </div>
+              {/* THINGS TO DO */}
+              <li
+                className="home-nav-item home-nav-item--has-dropdown"
+                onMouseEnter={() => setActiveMegaMenu("thingsToDo")}
+              >
+                <button
+                  type="button"
+                  className={`home-nav-link ${activeMegaMenu === "thingsToDo" ? "home-nav-link--active" : ""}`}
+                >
+                  <span>{isVi ? "TRẢI NGHIỆM" : "THINGS TO DO"}</span>
+                  <ChevronDown className="home-nav-link__icon" size={14} />
+                </button>
+              </li>
+
+              {/* EAT & DRINK */}
+              <li
+                className="home-nav-item home-nav-item--has-dropdown"
+                onMouseEnter={() => setActiveMegaMenu("eatDrink")}
+              >
+                <button
+                  type="button"
+                  className={`home-nav-link ${activeMegaMenu === "eatDrink" ? "home-nav-link--active" : ""}`}
+                >
+                  <span>{isVi ? "ẨM THỰC" : "EAT & DRINK"}</span>
+                  <ChevronDown className="home-nav-link__icon" size={14} />
+                </button>
+              </li>
+
+              {/* ITINERARIES */}
+              <li
+                className="home-nav-item home-nav-item--has-dropdown"
+                onMouseEnter={() => setActiveMegaMenu("itineraries")}
+              >
+                <button
+                  type="button"
+                  className={`home-nav-link ${activeMegaMenu === "itineraries" ? "home-nav-link--active" : ""}`}
+                >
+                  <span>{isVi ? "LỊCH TRÌNH" : "ITINERARIES"}</span>
+                  <ChevronDown className="home-nav-link__icon" size={14} />
+                </button>
+              </li>
+            </ul>
+          </nav>
+
+          <div className="home-header__right">
+            <HeaderSearch />
+            <LanguageSwitch currentLang={lang} onLangChange={setLang} />
+          </div>
+        </div>
+
+        {/* ── MEGAMENUS DROPDOWNS ── */}
+        {activeMegaMenu === "inspired" && (
+          <div className="home-megamenu home-megamenu--grid" onMouseEnter={() => setActiveMegaMenu("inspired")}>
+            <div className="home-megamenu__container">
+              <div className="home-megamenu__grid">
+                {MEGA_MENUS_DATA.inspired.items.map((item) => (
+                  <Link key={item.id} href={item.link} className="home-megamenu-card">
+                    <div className="home-megamenu-card__img-wrap">
+                      <img src={item.img} alt={item.title} className="home-megamenu-card__img" />
+                      <span className="home-megamenu-card__badge">{item.badge}</span>
+                    </div>
+                    <div className="home-megamenu-card__body">
+                      <span className="home-megamenu-card__date">{isVi ? item.dateVi : item.date}</span>
+                      <h4 className="home-megamenu-card__title">{isVi ? item.titleVi : item.title}</h4>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
+          </div>
+        )}
 
-            <div className="guide-meta-stats">
-              <span className="guide-meta-item">
-                <Calendar size={14} />
-                <span>12 Tháng 10, 2026</span>
-              </span>
-              <span className="guide-meta-item">
-                <Clock size={14} />
-                <span>10 phút đọc</span>
-              </span>
-              <span className="guide-meta-item">
-                <Eye size={14} />
-                <span>142.800 lượt xem</span>
-              </span>
-            </div>
-
-            <div className="guide-header-actions">
-              <button
-                type="button"
-                className={`guide-action-btn ${
-                  bookmarkedIds.length > 0 ? "active" : ""
-                }`}
-                onClick={() =>
-                  showToast(
-                    `Bạn đã lưu ${bookmarkedIds.length} địa điểm trong Sổ tay VinaTap`,
-                  )
-                }
-              >
-                <Bookmark size={14} />
-                <span>Đã lưu ({bookmarkedIds.length})</span>
-              </button>
-              <button
-                type="button"
-                className="guide-action-btn"
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: "12 Món Ăn Đường Phố Phải Thử ở Sài Gòn - VinaTap",
-                      url: window.location.href,
-                    });
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    showToast("Đã sao chép link bài viết! 🔗");
-                  }
-                }}
-              >
-                <Share2 size={14} />
-                <span>Chia sẻ</span>
-              </button>
+        {activeMegaMenu === "destinations" && (
+          <div className="home-megamenu home-megamenu--destinations" onMouseEnter={() => setActiveMegaMenu("destinations")}>
+            <div className="home-megamenu__container">
+              <div className="home-megamenu__regions">
+                {MEGA_MENUS_DATA.destinations.regions.map((region) => (
+                  <div key={region.name} className="home-megamenu__region-col">
+                    <h4 className="home-megamenu__region-title">{isVi ? region.name : region.nameEn}</h4>
+                    <ul className="home-megamenu__province-list">
+                      {region.provinces.map((prov) => (
+                        <li key={prov.slug}>
+                          <Link href={`/province/${prov.slug}`} className="home-megamenu__province-link">
+                            {prov.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </header>
+        )}
 
-        {/* ─── BANNER LIÊN KẾT NHANH SANG BÀI 10 TRẢI NGHIỆM ─── */}
-        <div style={{
-          background: "linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%)",
-          border: "1px solid #99f6e4",
-          borderRadius: "12px",
-          padding: "14px 18px",
-          margin: "18px 0 24px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "12px"
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <Compass size={20} color="#0d9488" />
-            <span style={{ fontSize: "14px", color: "#0f766e", fontWeight: 600 }}>
-              Bạn muốn khám phá các điểm tham quan biểu tượng ở TP. Hồ Chí Minh?
-            </span>
+        {activeMegaMenu === "thingsToDo" && (
+          <div className="home-megamenu home-megamenu--grid" onMouseEnter={() => setActiveMegaMenu("thingsToDo")}>
+            <div className="home-megamenu__container">
+              <div className="home-megamenu__grid">
+                {MEGA_MENUS_DATA.thingsToDo.items.map((item) => (
+                  <Link key={item.id} href={item.link} className="home-megamenu-card">
+                    <div className="home-megamenu-card__img-wrap">
+                      <img src={item.img} alt={item.title} className="home-megamenu-card__img" />
+                      <span className="home-megamenu-card__badge">{item.badge}</span>
+                    </div>
+                    <div className="home-megamenu-card__body">
+                      <span className="home-megamenu-card__date">{isVi ? item.dateVi : item.date}</span>
+                      <h4 className="home-megamenu-card__title">{isVi ? item.titleVi : item.title}</h4>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
-          <Link
-            href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+        )}
+
+        {activeMegaMenu === "eatDrink" && (
+          <div className="home-megamenu home-megamenu--grid" onMouseEnter={() => setActiveMegaMenu("eatDrink")}>
+            <div className="home-megamenu__container">
+              <div className="home-megamenu__grid">
+                {MEGA_MENUS_DATA.eatDrink.items.map((item) => (
+                  <Link key={item.id} href={item.link} className="home-megamenu-card">
+                    <div className="home-megamenu-card__img-wrap">
+                      <img src={item.img} alt={item.title} className="home-megamenu-card__img" />
+                      <span className="home-megamenu-card__badge">{item.badge}</span>
+                    </div>
+                    <div className="home-megamenu-card__body">
+                      <span className="home-megamenu-card__date">{isVi ? item.dateVi : item.date}</span>
+                      <h4 className="home-megamenu-card__title">{isVi ? item.titleVi : item.title}</h4>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeMegaMenu === "itineraries" && (
+          <div className="home-megamenu home-megamenu--grid" onMouseEnter={() => setActiveMegaMenu("itineraries")}>
+            <div className="home-megamenu__container">
+              <div className="home-megamenu__grid">
+                {MEGA_MENUS_DATA.itineraries.items.map((item) => (
+                  <Link key={item.id} href={item.link} className="home-megamenu-card">
+                    <div className="home-megamenu-card__img-wrap">
+                      <img src={item.img} alt={item.title} className="home-megamenu-card__img" />
+                      <span className="home-megamenu-card__badge">{item.badge}</span>
+                    </div>
+                    <div className="home-megamenu-card__body">
+                      <span className="home-megamenu-card__date">{isVi ? item.dateVi : item.date}</span>
+                      <h4 className="home-megamenu-card__title">{isVi ? item.titleVi : item.title}</h4>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* ── Full-Bleed Hero Banner (Screenshot 1) ── */}
+      <section className="vnn-fullbleed-hero">
+        <div className="vnn-fullbleed-hero__inner">
+          <div className="vnn-fullbleed-hero__tags">
+            <span className="vnn-fullbleed-hero__tag">ARTICLES</span>
+            <span className="vnn-fullbleed-hero__tag">EAT &amp; DRINK</span>
+            <span className="vnn-fullbleed-hero__tag">HO CHI MINH CITY</span>
+          </div>
+          <h1 className="vnn-fullbleed-hero__title">
+            {isVi ? "12 món ăn nhất định phải thử tại TP. Hồ Chí Minh" : "12 must-try foods in Ho Chi Minh City"}
+          </h1>
+          <p className="vnn-fullbleed-hero__byline">
+            By Welcome to Vietnam &nbsp;&nbsp;&nbsp; April 25, 2025
+          </p>
+        </div>
+      </section>
+
+      {/* ── Article Content Container ── */}
+      <main className="vnn-article-container">
+        {/* Pill CTA Button (Screenshot 1 & 2) */}
+        <div className="vnn-pill-cta-container">
+          <a
+            href="https://tripion.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="vnn-pill-cta-btn"
+          >
+            <Sparkles size={16} />
+            {isVi ? "Tạo kế hoạch du lịch Việt Nam chỉ trong vài giây" : "Create your Vietnam trip in seconds"}
+          </a>
+        </div>
+
+        {/* Lead Intro Paragraph (Screenshot 1 & 2) */}
+        <p className="vnn-article-lead">
+          {isVi ? (
+            <>
+              TP. Hồ Chí Minh là thiên đường ẩm thực dành cho những tín đồ đam mê ăn uống, nơi mỗi góc phố đều ẩn chứa những bất ngờ thơm ngon. Thành phố này luôn biết cách chinh phục trái tim du khách qua đường dạ dày. Bạn có thể dành cả hai tuần chỉ để la cà ăn uống khắp nơi mà không hề trùng lặp một món ăn nào. Dưới đây là danh sách 12 món ăn đặc sắc nhất định bạn phải thử để có trải nghiệm ẩm thực trọn vẹn nhất.
+            </>
+          ) : (
+            <>
+              Ho Chi Minh City is a paradise for food lovers, where every street corner offers a delicious surprise. This city captures the hearts of visitors through their stomachs. You could spend two weeks just eating out without repeating a single dish. Here&apos;s a guide to 12 signature foods you absolutely must try to get the full experience.
+            </>
+          )}
+        </p>
+
+        {/* ── 12 Dishes List (Screenshots 2 to 5) ── */}
+        <div className="vnn-dishes-list">
+          {HCMC_12_DISHES.map((dish) => (
+            <article key={dish.id} className="vnn-dish-item" id={dish.id}>
+              <h2 className="vnn-dish-title">{isVi ? dish.titleVi : dish.title}</h2>
+              <div className="vnn-dish-layout">
+                {/* Column 1: Crisp Sharp Image (420px) */}
+                <div className="vnn-dish-img-col">
+                  <img
+                    src={dish.img}
+                    alt={dish.alt}
+                    className="vnn-dish-img"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Column 2: Detailed Text Content */}
+                <div className="vnn-dish-content-col">
+                  <p className="vnn-dish-text">
+                    {isVi ? dish.descVi : dish.desc}
+                  </p>
+
+                  {/* Where to eat / Địa chỉ */}
+                  <span className="vnn-dish-subhead">
+                    {isVi ? dish.whereToEatTitleVi : dish.whereToEatTitle}
+                  </span>
+
+                  {dish.whereToEatText ? (
+                    <p style={{ margin: "4px 0 16px", color: "#334155", lineHeight: 1.6 }}>
+                      {isVi ? dish.whereToEatTextVi : dish.whereToEatText}
+                    </p>
+                  ) : (
+                    <ul className="vnn-dish-bullets">
+                      {(isVi ? dish.whereToEatVi : dish.whereToEat)?.map((spot, idx) => (
+                        <li key={idx}>{spot}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* ── Closing Paragraph ── */}
+        <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#334155", margin: "36px 0 24px" }}>
+          {isVi ? (
+            <>
+              Từ những chảo gang sôi xèo xèo, những con hẻm ốc đêm nhộn nhịp cho đến những tô bún ngọt thanh và ổ bánh mì giòn tan, nền ẩm thực TP. Hồ Chí Minh cũng sôi động và phong phú như chính nhịp sống của thành phố này. Hãy tự do len lỏi vào các ngõ ngách để hương thơm quyến rũ của các quầy quán đường phố dẫn lối cho hành trình ẩm thực của bạn.
+            </>
+          ) : (
+            <>
+              From sizzling skillets and bustling snail alleys to soothing noodle broths and crispy baguettes, Ho Chi Minh City&apos;s food culture is as dynamic and vibrant as the metropolis itself. Make sure to wander off the beaten track and let the aromas of street stalls guide your culinary adventure.
+            </>
+          )}
+        </p>
+
+        {/* ── Disclaimer Note ── */}
+        <p style={{ fontSize: "14px", lineHeight: 1.6, color: "#334155", margin: "0 0 28px", fontStyle: "italic" }}>
+          {isVi
+            ? "Note: Các gợi ý nhà hàng chỉ dựa trên trải nghiệm của tác giả; giá cả thực tế có thể thay đổi tùy thời điểm."
+            : "Note: Restaurant recommendations are based on the authors' experiences; prices may vary."}
+        </p>
+
+        {/* ── Tags ── */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "24px 0 40px", flexWrap: "wrap" }}>
+          <span
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "6px 14px",
-              background: "#0d9488",
+              background: "#00c2cb",
               color: "#ffffff",
-              borderRadius: "8px",
-              fontSize: "13px",
+              padding: "5px 14px",
+              borderRadius: "9999px",
+              fontSize: "12px",
               fontWeight: 700,
-              textDecoration: "none"
+              letterSpacing: "0.05em",
             }}
           >
-            <span>10 Trải Nghiệm Tuyệt Nhất</span>
-            <ArrowRight size={14} />
+            TAGS
+          </span>
+          <Link
+            href="/province/ho-chi-minh"
+            style={{
+              border: "1px solid #e2e8f0",
+              borderRadius: "9999px",
+              padding: "5px 14px",
+              fontSize: "13px",
+              color: "#334155",
+              textDecoration: "none",
+            }}
+          >
+            Ho Chi Minh City
+          </Link>
+          <Link
+            href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+            style={{
+              border: "1px solid #e2e8f0",
+              borderRadius: "9999px",
+              padding: "5px 14px",
+              fontSize: "13px",
+              color: "#334155",
+              textDecoration: "none",
+            }}
+          >
+            Saigon Food
           </Link>
         </div>
 
-        {/* ─── HERO BANNER ─── */}
-        <section className="guide-hero-banner">
-          <div className="guide-hero-img-wrap">
-            <img
-              src="/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg"
-              alt="12 món ăn đường phố Sài Gòn"
-              className="guide-hero-img"
-            />
-            <div className="guide-hero-overlay">
-              <div className="guide-hero-chips">
-                <span className="guide-hero-chip">12 Món Ăn Tuyệt Kỹ</span>
-                <span className="guide-hero-chip">Địa chỉ quán gia truyền</span>
-                <span className="guide-hero-chip">Giá cả minh bạch</span>
-              </div>
-              <p className="guide-hero-caption">
-                Sài Gòn là thánh địa ẩm thực nơi tụ hội tinh hoa khắp ba miền và quốc tế, sẵn sàng đánh thức mọi giác quan của bạn từ bình minh đến tận đêm khuya.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* ── Divider ── */}
+        <hr style={{ border: 0, height: "1px", background: "#e2e8f0", margin: "40px 0" }} />
 
-        {/* ─── DẪN NHẬP (LEAD STORY) ─── */}
-        <section className="guide-lead-box">
-          <p>
-            Không có cách nào hiểu một thành phố nhanh hơn là ngồi xuống
-            chiếc ghế nhựa con con bên hè phố và thưởng thức những món ăn
-            trứ danh. Ẩm thực TP. Hồ Chí Minh phóng khoáng như chính con
-            người nơi đây: đậm đà, tươi mới, ngập tràn rau ghém và nước chấm
-            phong phú. Dưới đây là{" "}
-            <strong>12 món ăn biểu tượng nhất</strong> kèm địa chỉ những
-            quán gia truyền lâu năm do VinaTap thẩm định kỹ lưỡng.
-          </p>
-        </section>
+        {/* ── Related Articles ── */}
+        <section style={{ margin: "40px 0 60px" }}>
+          <h2
+            style={{
+              textAlign: "center",
+              fontSize: "26px",
+              fontWeight: 700,
+              color: "#0f172a",
+              marginBottom: "32px",
+            }}
+          >
+            {isVi ? "Bài viết liên quan" : "Related Articles"}
+          </h2>
 
-        {/* ─── THANH LỌC DANH MỤC ─── */}
-        <section className="guide-quicknav-sticky">
-          <div className="guide-quicknav-inner">
-            {FOODS_CATEGORIES.map((cat) => {
-              const Icon = cat.icon;
-              const isActive = activeCategory === cat.key;
-              return (
-                <button
-                  key={cat.key}
-                  type="button"
-                  className={`guide-filter-pill ${isActive ? "active" : ""}`}
-                  onClick={() => setActiveCategory(cat.key)}
-                >
-                  <Icon size={14} />
-                  <span>{cat.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ─── DANH SÁCH 12 MÓN ĂN ─── */}
-        <section className="guide-cards-list">
-          {filteredItems.map((item) => {
-            const isSaved = bookmarkedIds.includes(item.id);
-            return (
-              <article
-                key={item.id}
-                id={`item-${item.id}`}
-                className="guide-card"
-              >
-                <div className="guide-card__grid">
-                  {/* Cột ảnh */}
-                  <div
-                    className="guide-card__media"
-                    onClick={() => setLightboxItem(item)}
-                    style={{ cursor: "pointer" }}
-                    title="Nhấp để xem ảnh phóng to"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      className="guide-card__img"
-                    />
-                    <div className="guide-card__number-badge">#{item.num}</div>
-                    <div className="guide-card__category-badge">
-                      <Sparkles size={12} color="#00c2cb" />
-                      <span>{item.category}</span>
-                    </div>
-                  </div>
-
-                  {/* Cột nội dung */}
-                  <div className="guide-card__body">
-                    <div>
-                      <h2 className="guide-card__title">
-                        {item.num}. {item.title}
-                      </h2>
-                      <div className="guide-card__subtitle">
-                        {item.subTitle}
-                      </div>
-                      <p className="guide-card__desc">{item.desc}</p>
-
-                      {/* Box Mẹo bản địa */}
-                      <div className="guide-tip-box">
-                        <Info size={17} className="guide-tip-icon" />
-                        <div className="guide-tip-text">
-                          <strong>Mẹo VinaTap:</strong> {item.tip}
-                        </div>
-                      </div>
-
-                      {/* Box Quán Ăn Nổi Tiếng Đề Xuất */}
-                      {item.places && item.places.length > 0 && (
-                        <div className="guide-places-list">
-                          <div className="guide-places-title">
-                            <Utensils size={14} />
-                            <span>Địa chỉ quán ngon nức tiếng khuyên thử:</span>
-                          </div>
-                          {item.places.map((place, idx) => (
-                            <div key={idx} className="guide-place-row">
-                              <span className="guide-place-dot" />
-                              <div style={{ flex: 1 }}>
-                                <strong>{place.name}</strong> – {place.address}
-                                {place.price && (
-                                  <span
-                                    style={{
-                                      color: "#009aa2",
-                                      fontWeight: 600,
-                                      marginLeft: "6px",
-                                    }}
-                                  >
-                                    ({place.price})
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Bảng thông tin nhanh */}
-                      <div className="guide-card__facts">
-                        <div className="guide-fact-item">
-                          <CreditCard size={15} />
-                          <div>
-                            <div>Chi phí tham khảo:</div>
-                            <span className="guide-fact-val">{item.cost}</span>
-                          </div>
-                        </div>
-                        <div className="guide-fact-item">
-                          <Clock size={15} />
-                          <div>
-                            <div>Thời gian hoạt động:</div>
-                            <span className="guide-fact-val">{item.hours}</span>
-                          </div>
-                        </div>
-                        <div
-                          className="guide-fact-item"
-                          style={{ gridColumn: "1 / -1" }}
-                        >
-                          <MapPin size={15} />
-                          <div>
-                            <div>Địa chỉ gợi ý:</div>
-                            <span className="guide-fact-val">
-                              {item.address}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Footer hàng nút hành động */}
-                    <div className="guide-card__footer">
-                      <div className="guide-card__address-group">
-                        <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                            item.mapsQuery || item.address,
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="guide-btn-action"
-                        >
-                          <ExternalLink size={14} />
-                          <span>Mở Google Maps</span>
-                        </a>
-
-                        <button
-                          type="button"
-                          className="guide-btn-copy"
-                          onClick={() => copyAddress(item.address)}
-                          title="Sao chép địa chỉ"
-                        >
-                          <Copy size={13} />
-                          <span>Copy địa chỉ</span>
-                        </button>
-                      </div>
-
-                      <button
-                        type="button"
-                        className={`guide-card__save-btn ${isSaved ? "saved" : ""}`}
-                        onClick={() => toggleBookmark(item.id)}
-                      >
-                        <Bookmark size={14} />
-                        <span>{isSaved ? "Đã lưu" : "Lưu vào sổ tay"}</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-        </section>
-
-        {/* ─── LIÊN KẾT BÀI VIẾT LIÊN QUAN ─── */}
-        <footer className="guide-article-footer">
-          <div>
-            <div className="guide-badge-pill">
-              <Compass size={13} />
-              <span>KHÁM PHÁ TIẾP TỤC CÙNG VINATAP</span>
-            </div>
-            <h3
-              style={{
-                fontSize: "1.45rem",
-                fontWeight: 800,
-                margin: "0.5rem 0 1rem",
-              }}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "24px",
+            }}
+          >
+            <Link
+              href="/guide/3-week-vietnam-itinerary"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
             >
-              Cẩm Nang Du Lịch Các Tỉnh Thành Nổi Bật Khác
-            </h3>
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/3-week-vietnam-itinerary.jpg"
+                  alt="3-week Vietnam Itinerary"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "Lịch trình 3 tuần xuyên Việt" : "3-week Vietnam Itinerary"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/8-must-try-foods-in-hanoi"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"
+                  alt="8 must-try foods in Hanoi"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "8 món ăn nhất định phải thử ở Hà Nội" : "8 must-try foods in Hanoi"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/hcmc-10-things-bitexco.jpg"
+                  alt="10 best things to do in Ho Chi Minh City"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh" : "10 best things to do in Ho Chi Minh City"}
+              </h3>
+            </Link>
           </div>
-
-          <div className="guide-related-grid">
-            <Link href="/guide/10-best-things-to-do-in-ho-chi-minh-city" className="guide-related-card">
-              <img
-                src="/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg"
-                alt="10 Điều Nên Làm ở TP.HCM"
-                className="guide-related-img"
-              />
-              <div className="guide-related-content">
-                <div className="guide-related-tag">Trải Nghiệm TP.HCM</div>
-                <div className="guide-related-title">
-                  10 Điều Tuyệt Nhất Nên Làm &amp; Trải Nghiệm Tại TP. Hồ Chí Minh
-                </div>
-              </div>
-            </Link>
-
-            <Link href="/guide/the-complete-guide-to-vietnam" className="guide-related-card">
-              <img
-                src="/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg"
-                alt="Cẩm nang du lịch Việt Nam"
-                className="guide-related-img"
-              />
-              <div className="guide-related-content">
-                <div className="guide-related-tag">Toàn Diện 34 Tỉnh</div>
-                <div className="guide-related-title">
-                  Cẩm Nang Toàn Diện Du Lịch Việt Nam 2026: Bản Đồ, Visa &amp; Chi Phí
-                </div>
-              </div>
-            </Link>
-
-            <Link href="/guide/15-best-places-to-visit-in-vietnam-in-2026" className="guide-related-card">
-              <img
-                src="/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg"
-                alt="15 Điểm Đến Tuyệt Nhất Việt Nam"
-                className="guide-related-img"
-              />
-              <div className="guide-related-content">
-                <div className="guide-related-tag">Bình Chọn 2026</div>
-                <div className="guide-related-title">
-                  15 Điểm Đến Tuyệt Nhất Việt Nam Năm 2026 Theo Du Khách
-                </div>
-              </div>
-            </Link>
-          </div>
-        </footer>
+        </section>
       </main>
 
-      {/* ─── FULL EDITORIAL FOOTER ─── */}
-      <PublicFooter lang="vi" />
+      {/* ── PUBLIC FOOTER FROM HOMEPAGE ── */}
+      <PublicFooter lang={lang} />
 
-      {/* ─── TOAST THÔNG BÁO ─── */}
-      <div className={`guide-toast ${toastVisible ? "show" : ""}`}>
-        <Check size={18} color="#00c2cb" />
-        <span>{toastMessage}</span>
-      </div>
-
-      {/* ─── LIGHTBOX MODAL ─── */}
-      {lightboxItem && (
-        <div
-          className="guide-lightbox open"
-          onClick={() => setLightboxItem(null)}
-        >
-          <div
-            className="guide-lightbox__content"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="guide-lightbox__close"
-              onClick={() => setLightboxItem(null)}
-              aria-label="Đóng"
-            >
-              <X size={20} />
-            </button>
-            <img
-              src={lightboxItem.image}
-              alt={lightboxItem.title}
-              className="guide-lightbox__img"
-            />
-            <div className="guide-lightbox__meta">
-              <h3
-                style={{
-                  fontSize: "1.2rem",
-                  fontWeight: 700,
-                  marginBottom: "4px",
-                }}
-              >
-                #{lightboxItem.num}. {lightboxItem.title}
-              </h3>
-              <p style={{ fontSize: "0.9rem", color: "#94a3b8" }}>
-                {lightboxItem.address}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
+      {/* ── FLOATING PROVINCE CHATBOT ── */}
       <ProvinceChatbot
-        province={{ name: "TP. Hồ Chí Minh", slug: "ho-chi-minh" }}
+        isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
+        province={{
+          name: isVi ? "TP. Hồ Chí Minh" : "Ho Chi Minh City",
+          slug: "ho-chi-minh",
+        }}
       />
     </div>
   );
