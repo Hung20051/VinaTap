@@ -6,11 +6,9 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
-  CreditCard,
   MapPin,
   Images,
   DollarSign,
-  BarChart3,
   Settings,
   Sticker,
   LogOut,
@@ -20,13 +18,13 @@ import {
   Package,
   ChevronDown,
   TrendingUp,
-  FolderTree,
-  Shield,
   FileText,
+  BarChart3,
+  ShieldCheck,
+  Megaphone,
 } from "lucide-react";
 import Logo from "./Logo";
 import { getLang } from "@/lib/prefs";
-import { t } from "@/lib/i18n";
 import "@/styles/sidebar.css";
 
 export default function AdminSidebar({
@@ -40,51 +38,120 @@ export default function AdminSidebar({
   const [lang, setLang] = useState("vi");
   const [mounted, setMounted] = useState(false);
 
-  // Danh mục điều hướng chuẩn hệ sinh thái Du Lịch VinaTap
+  // 7 Module Quản trị cốt lõi theo đúng kiến trúc chuẩn VinaTap
   const adminSections = [
     {
-      id: "overview",
-      title: lang === "vi" ? "Tổng Quan & Dữ Liệu" : "Overview & Analytics",
-      icon: BarChart3,
+      id: "sec-01",
+      title: lang === "vi" ? "01. Tổng Quan Dashboard" : "01. Executive Dashboard",
+      icon: LayoutDashboard,
       items: [
-        { href: "/admin/dashboard", icon: LayoutDashboard, label: lang === "vi" ? "Bảng điều khiển" : "Dashboard" },
-        { href: "/admin/analytics", icon: TrendingUp, label: lang === "vi" ? "Lượt truy cập & Nguồn khách" : "Traffic & Acquisition" },
-        { href: "/admin/revenue", icon: DollarSign, label: lang === "vi" ? "Báo cáo doanh thu" : "Revenue Reports" },
+        {
+          href: "/admin/dashboard",
+          icon: LayoutDashboard,
+          label: lang === "vi" ? "Bảng điều khiển trung tâm" : "Main Dashboard",
+        },
       ],
     },
     {
-      id: "travel",
-      title: lang === "vi" ? "Điểm Đến & Cẩm Nang" : "Destinations & Guides",
+      id: "sec-02",
+      title: lang === "vi" ? "02. Dữ Liệu & Lưu Lượng" : "02. Data & Analytics",
+      icon: TrendingUp,
+      items: [
+        {
+          href: "/admin/analytics",
+          icon: TrendingUp,
+          label: lang === "vi" ? "Phân tích lưu lượng khách" : "Traffic & Acquisition",
+        },
+      ],
+    },
+    {
+      id: "sec-03",
+      title: lang === "vi" ? "03. Nội Dung & SEO" : "03. Content & SEO",
+      icon: FileText,
+      items: [
+        {
+          href: "/admin/articles",
+          icon: FileText,
+          label: lang === "vi" ? "Quản lý bài viết & SEO" : "Articles & SEO CMS",
+        },
+      ],
+    },
+    {
+      id: "sec-04",
+      title: lang === "vi" ? "04. Điểm Đến & Cẩm Nang" : "04. Destinations & Guides",
       icon: MapPin,
       items: [
-        { href: "/admin/provinces", icon: MapPin, label: lang === "vi" ? "63 Tỉnh thành & Điểm đến" : "Provinces & Places" },
-        { href: "/admin/articles", icon: FileText, label: lang === "vi" ? "Bài viết & Cẩm nang du lịch" : "Travel Guides & CMS" },
-        { href: "/admin/albums", icon: Images, label: lang === "vi" ? "Nhật ký & Album chuyến đi" : "Trip Albums & Memories" },
-        { href: "/admin/stickers", icon: Sticker, label: lang === "vi" ? "Nhãn dán & Sticker du lịch" : "Travel Stickers" },
+        {
+          href: "/admin/provinces",
+          icon: MapPin,
+          label: lang === "vi" ? "63 Tỉnh thành & Điểm đến" : "63 Provinces & Places",
+        },
+        {
+          href: "/admin/albums",
+          icon: Images,
+          label: lang === "vi" ? "Duyệt album ảnh du khách" : "Trip Albums",
+        },
+        {
+          href: "/admin/stickers",
+          icon: Sticker,
+          label: lang === "vi" ? "Nhãn dán & Sticker du lịch" : "Travel Stickers",
+        },
       ],
     },
     {
-      id: "customers",
-      title: lang === "vi" ? "Du Khách & Ưu Đãi" : "Customers & Vouchers",
-      icon: Users,
+      id: "sec-05",
+      title: lang === "vi" ? "05. Affiliate & Doanh Thu" : "05. Affiliate & Revenue",
+      icon: DollarSign,
       items: [
-        { href: "/admin/users", icon: Users, label: lang === "vi" ? "Quản lý người dùng" : "User Management" },
-        { href: "/admin/vouchers", icon: Ticket, label: lang === "vi" ? "Mã ưu đãi & Vouchers" : "Promo Vouchers" },
-        { href: "/admin/products", icon: Package, label: lang === "vi" ? "Sản phẩm & Bản đồ du lịch" : "Travel Products" },
+        {
+          href: "/admin/revenue",
+          icon: DollarSign,
+          label: lang === "vi" ? "Báo cáo doanh thu & Affiliate" : "Revenue & Affiliate",
+        },
+        {
+          href: "/admin/products",
+          icon: Package,
+          label: lang === "vi" ? "Sản phẩm & Bản đồ du lịch" : "Products & Maps",
+        },
       ],
     },
     {
-      id: "system",
-      title: lang === "vi" ? "Hệ Thống & Cấu Hình" : "System & Settings",
+      id: "sec-06",
+      title: lang === "vi" ? "06. Quảng Cáo & Chiến Dịch" : "06. Ads & Campaigns",
+      icon: Ticket,
+      items: [
+        {
+          href: "/admin/vouchers",
+          icon: Ticket,
+          label: lang === "vi" ? "Chiến dịch & Voucher ưu đãi" : "Campaigns & Vouchers",
+        },
+      ],
+    },
+    {
+      id: "sec-07",
+      title: lang === "vi" ? "07. Hệ Thống & Cấu Hình" : "07. System & Settings",
       icon: Settings,
       items: [
-        { href: "/admin/notifications", icon: Bell, label: lang === "vi" ? "Thông báo hệ thống" : "Notifications" },
-        { href: "/admin/system-settings", icon: Settings, label: lang === "vi" ? "Cài đặt & Cấu hình" : "System Settings" },
+        {
+          href: "/admin/users",
+          icon: Users,
+          label: lang === "vi" ? "Quản lý người dùng & Admin" : "User Management",
+        },
+        {
+          href: "/admin/system-settings",
+          icon: Settings,
+          label: lang === "vi" ? "Cài đặt & Cấu hình website" : "System Settings",
+        },
+        {
+          href: "/admin/notifications",
+          icon: Bell,
+          label: lang === "vi" ? "Thông báo & Cảnh báo" : "Notifications & Alerts",
+        },
       ],
     },
   ];
 
-  // Helper kiểm tra route đang kích hoạt (hỗ trợ cả subroutes như /admin/orders/:id, /admin/provinces/:slug)
+  // Helper kiểm tra route đang kích hoạt
   const isItemActive = (href) => {
     if (!pathname) return false;
     if (pathname === href) return true;
@@ -101,7 +168,7 @@ export default function AdminSidebar({
         return section.id;
       }
     }
-    return "overview";
+    return "sec-01";
   };
 
   const [openSections, setOpenSections] = useState({
@@ -146,114 +213,108 @@ export default function AdminSidebar({
 
   return (
     <>
-      {/* Overlay Backdrop */}
-      {isOpen && <div className="app-drawer-overlay" onClick={onClose} />}
+      {/* Lớp nền mờ trên Mobile */}
+      <div
+        className={`admin-sidebar-backdrop ${isOpen ? "is-open" : ""}`}
+        onClick={onClose}
+        aria-hidden="true"
+      />
 
-      {/* GitHub / Mobile App Slide Drawer */}
-      <aside className={`app-sidebar-drawer ${isOpen ? "is-open" : ""}`}>
-        <div className="app-sidebar__top">
-          <Logo className="app-sidebar__logo" href="/" />
-          <button
-            type="button"
-            className="app-sidebar__toggle"
-            onClick={onClose}
-            title={t(lang, "close")}
-          >
-            <X size={20} />
-          </button>
+      <aside className={`admin-sidebar ${isOpen ? "is-open" : ""}`}>
+        {/* Header: Logo thương hiệu VinaTap & Nút đóng */}
+        <div className="admin-sidebar-header">
+          <div className="admin-sidebar-brand">
+            <Logo size={28} showText={false} />
+            <div className="admin-sidebar-brand-text">
+              <span className="brand-name">VinaTap</span>
+              <span className="brand-badge">ADMIN CMS</span>
+            </div>
+          </div>
+          {onClose && (
+            <button
+              type="button"
+              className="admin-sidebar-close-btn"
+              onClick={onClose}
+              aria-label="Đóng menu"
+            >
+              <X size={20} />
+            </button>
+          )}
         </div>
 
-        <nav className="app-nav app-nav--accordion">
-          {adminSections.map((section) => {
-            const isExpanded = !!openSections[section.id];
-            const SectionIcon = section.icon;
-            const hasActiveChild = section.items.some(
-              (item) => isItemActive(item.href),
-            );
+        {/* Nội dung menu cuộn độc lập */}
+        <div className="admin-sidebar-scroll">
+          <nav className="admin-sidebar-nav">
+            {adminSections.map((section) => {
+              const isOpen = !!openSections[section.id];
+              const hasActiveChild = section.items.some((item) =>
+                isItemActive(item.href)
+              );
 
-            return (
-              <div
-                key={section.id}
-                className={`app-accordion-group ${isExpanded ? "is-expanded" : ""} ${hasActiveChild ? "has-active" : ""}`}
-              >
-                <button
-                  type="button"
-                  className="app-accordion-header"
-                  onClick={() => toggleSection(section.id)}
-                >
-                  <div className="app-accordion-header__left">
-                    <span className="app-accordion-header__icon">
-                      <SectionIcon size={17} />
-                    </span>
-                    <span className="app-accordion-header__title">
-                      {section.title}
-                    </span>
-                  </div>
-                  <ChevronDown
-                    size={15}
-                    className={`app-accordion-chevron ${isExpanded ? "rotate-180" : ""}`}
-                  />
-                </button>
+              return (
+                <div key={section.id} className="admin-nav-group">
+                  <button
+                    type="button"
+                    className={`admin-nav-group-header ${hasActiveChild ? "has-active" : ""}`}
+                    onClick={() => toggleSection(section.id)}
+                  >
+                    <div className="admin-nav-group-title">
+                      <section.icon size={15} className="group-icon" />
+                      <span>{section.title}</span>
+                    </div>
+                    <ChevronDown
+                      size={14}
+                      className={`group-chevron ${isOpen ? "is-open" : ""}`}
+                    />
+                  </button>
 
-                {isExpanded && (
-                  <div className="app-accordion-body">
-                    {section.items.map((item) => {
-                      const ItemIcon = item.icon;
-                      const isActive = isItemActive(item.href);
-                      return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          className={`app-nav__link ${isActive ? "is-active" : ""}`}
-                          onClick={onClose}
-                        >
-                          <span className="app-nav__icon">
-                            <ItemIcon size={16} />
-                          </span>
-                          <span className="app-nav__label">{item.label}</span>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
+                  {isOpen && (
+                    <div className="admin-nav-group-items">
+                      {section.items.map((item) => {
+                        const active = isItemActive(item.href);
+                        return (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={onClose}
+                            className={`admin-nav-link ${active ? "is-active" : ""}`}
+                          >
+                            <item.icon size={16} className="nav-icon" />
+                            <span className="nav-label">{item.label}</span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Footer: User Profile & Đăng xuất */}
+        <div className="admin-sidebar-footer">
+          <div className="admin-user-cell">
+            <div className="admin-user-avatar">
+              {user?.full_name?.charAt(0)?.toUpperCase() || "A"}
+            </div>
+            <div className="admin-user-info">
+              <div className="admin-user-name">
+                {user?.full_name || "Admin VinaTap"}
               </div>
-            );
-          })}
-        </nav>
-
-        <div className="app-sidebar__footer">
-          <Link
-            href="/settings/account"
-            className="app-sidebar__profile"
-            onClick={onClose}
-          >
-            <div className="app-avatar-circle">
-              {mounted && user?.avatar_url ? (
-                <img src={user.avatar_url} alt={user.name} />
-              ) : (
-                <span>
-                  {mounted && user?.name?.[0] ? user.name[0].toUpperCase() : "A"}
-                </span>
-              )}
+              <div className="admin-user-role">
+                <ShieldCheck size={11} /> {user?.role || "Quản trị viên"}
+              </div>
             </div>
-            <div className="app-sidebar__profile-text">
-              <span className="app-avatar-name">
-                {mounted && user?.name ? user.name : "Admin"}
-              </span>
-              <span className="app-avatar-role">{t(lang, "adminRole")}</span>
-            </div>
-          </Link>
+          </div>
           {onLogout && (
             <button
               type="button"
-              className="app-sidebar__logout"
-              onClick={() => {
-                if (onClose) onClose();
-                onLogout();
-              }}
-              title={t(lang, "logout")}
+              className="admin-logout-btn"
+              onClick={onLogout}
+              title={lang === "vi" ? "Đăng xuất" : "Logout"}
             >
-              <LogOut size={18} />
+              <LogOut size={16} />
             </button>
           )}
         </div>
