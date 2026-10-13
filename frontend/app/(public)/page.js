@@ -168,7 +168,7 @@ const BE_INSPIRED_COMPACT = [
     date: "September 15, 2026",
     dateVi: "15 Tháng 9, 2026",
     img: "/guide/hcmc/vung-tau-beaches-peninsula.jpg",
-    link: "/province/hai-phong",
+    link: "/guide/5-best-vung-tau-beaches",
   },
 ];
 

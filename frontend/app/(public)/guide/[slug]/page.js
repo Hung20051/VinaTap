@@ -5,6 +5,7 @@ import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import Logo from "@/components/layout/Logo";
+import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import {
   Compass,
   Calendar,
@@ -1219,6 +1220,11 @@ function GuideDetailContent() {
           </div>
         </div>
       )}
+
+      {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
+      <ProvinceChatbot
+        province={{ name: "Việt Nam", slug: "viet-nam" }}
+      />
     </div>
   );
 }

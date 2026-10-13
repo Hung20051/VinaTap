@@ -1305,25 +1305,15 @@ export default function DalatPage() {
         </div>
       </footer>
 
-      {/* ─── 12. FLOATING AI COMPANION ─── */}
-      <div
-        className="vnn-dalat-floating-ai"
-        onClick={() => setAiCompanionOpen(true)}
-        title="AI Companion Travel Assistant"
-        role="button"
-        tabIndex={0}
-      >
-        <img
-          src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
-          alt="AI Companion"
-        />
-      </div>
-
-      {/* ─── AI CHATBOT MODAL ─── */}
+      {/* ─── 12. AI CHATBOT MODAL & FLOATING FAB ─── */}
       <ProvinceChatbot
         isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
         onClose={() => setAiCompanionOpen(false)}
-        provinceName={lang === "vi" ? "Đà Lạt (Lâm Đồng)" : "Dalat (Lam Dong)"}
+        province={{
+          name: lang === "vi" ? "Đà Lạt" : "Dalat",
+          slug: "dalat",
+        }}
       />
 
       {/* ─── DALAT TOURIST MAP LIGHTBOX MODAL ─── */}

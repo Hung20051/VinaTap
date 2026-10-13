@@ -2665,25 +2665,15 @@ export default function HanoiPage() {
         <List size={22} />
       </div>
 
-      {/* ─── FLOATING CIRCULAR AI COMPANION (SCREENSHOT 2, 3, 4, 5) ─── */}
-      <div
-        className="vnn-hanoi-floating-ai"
-        onClick={() => setAiCompanionOpen(true)}
-        role="button"
-        tabIndex={0}
-        title={lang === "vi" ? "Trò chuyện với AI Companion" : "Chat with AI Companion"}
-      >
-        <img
-          src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
-          alt="AI Companion"
-        />
-      </div>
-
-      {/* ─── AI COMPANION CHATBOT MODAL ─── */}
+      {/* ─── AI COMPANION CHATBOT MODAL & FLOATING FAB ─── */}
       <ProvinceChatbot
         isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
         onClose={() => setAiCompanionOpen(false)}
-        provinceName={lang === "vi" ? "Hà Nội" : "Hanoi"}
+        province={{
+          name: lang === "vi" ? "Hà Nội" : "Hanoi",
+          slug: "ha-noi",
+        }}
       />
 
       {/* ─── MAP LIGHTBOX MODAL ─── */}

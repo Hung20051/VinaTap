@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import {
   Compass,
   Calendar,
@@ -959,6 +960,10 @@ export default function MustTryFoodsInHCMCPage() {
           </div>
         </div>
       )}
+      {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
+      <ProvinceChatbot
+        province={{ name: "TP. Hồ Chí Minh", slug: "ho-chi-minh" }}
+      />
     </div>
   );
 }

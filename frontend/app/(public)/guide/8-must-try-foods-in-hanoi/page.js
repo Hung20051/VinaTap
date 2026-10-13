@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import HeaderSearch from "@/components/ui/HeaderSearch";
+import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import { getLang } from "@/lib/prefs";
 import { ChevronDown, Share2, ArrowLeft } from "lucide-react";
 import "@/styles/home.css";
@@ -731,20 +732,83 @@ export default function MustTryFoodsInHanoiPage() {
           ))}
         </div>
 
-        {/* Conclusion / Back link */}
-        <div className="vnn-article-conclusion">
-          <h3>{lang === "vi" ? "Khám phá thêm về Hà Nội" : "Explore More of Hanoi"}</h3>
-          <p>
-            {lang === "vi"
-              ? "Hà Nội còn vô vàn ngõ ngách và hàng quán đang chờ bạn khám phá. Hãy dành trọn thời gian thả bộ qua từng con phố cổ để hít hà hương thơm nồng nàn của ẩm thực phố thị."
-              : "Hanoi still has countless alleys and hidden eateries waiting for you. Take your time strolling through the Old Quarter to savor every aroma and flavor of the capital."}
-          </p>
-          <Link href="/province/ha-noi" className="vnn-back-link">
-            <ArrowLeft size={16} />
-            <span>{lang === "vi" ? "Xem toàn bộ Cẩm nang Du lịch Hà Nội" : "Back to Complete Hanoi Travel Guide"}</span>
-          </Link>
-        </div>
+        {/* ── Related Articles Section (Matching screenshot) ── */}
+        <hr className="vnn-related-divider" />
+        <section className="vnn-related-section">
+          <h2 className="vnn-related-title">
+            {lang === "vi" ? "Bài viết liên quan" : "Related Articles"}
+          </h2>
+          <div className="vnn-related-grid">
+            <Link
+              href="/guide/pho-the-complete-guide"
+              className="vnn-related-card"
+            >
+              <div className="vnn-related-img-wrap">
+                <img
+                  src="/guide/pho/pho-ha-noi.jpg"
+                  alt="Pho Complete Guide"
+                  className="vnn-related-img"
+                  onError={(e) => {
+                    e.currentTarget.src = "/guide/hanoi/dish-1-pho-bo.jpg";
+                  }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="vnn-related-card-title">
+                {lang === "vi"
+                  ? "Phở – Quốc hồn quốc túy ẩm thực Việt Nam"
+                  : "Pho – The Complete Guide to Vietnam's National Dish"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/the-complete-guide-to-vietnam"
+              className="vnn-related-card"
+            >
+              <div className="vnn-related-img-wrap">
+                <img
+                  src="/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg"
+                  alt="The Complete Guide to Vietnam"
+                  className="vnn-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="vnn-related-card-title">
+                {lang === "vi"
+                  ? "Cẩm nang du lịch toàn diện Việt Nam"
+                  : "The Complete Guide to Vietnam"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
+              className="vnn-related-card"
+            >
+              <div className="vnn-related-img-wrap">
+                <img
+                  src="/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg"
+                  alt="15 best places to visit in Vietnam in 2026"
+                  className="vnn-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="vnn-related-card-title">
+                {lang === "vi"
+                  ? "15 điểm đến tuyệt nhất Việt Nam năm 2026"
+                  : "15 best places to visit in Vietnam in 2026"}
+              </h3>
+            </Link>
+          </div>
+        </section>
       </main>
+
+      {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
+      <ProvinceChatbot
+        province={{
+          name: lang === "vi" ? "Hà Nội" : "Hanoi",
+          slug: "ha-noi",
+        }}
+      />
 
       {/* Toast */}
       {toastVisible && <div className="vnn-toast">{toastMessage}</div>}

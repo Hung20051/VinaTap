@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import HeaderSearch from "@/components/ui/HeaderSearch";
+import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import { getLang } from "@/lib/prefs";
 import {
   ChevronDown,
@@ -1216,6 +1217,14 @@ export default function PhoGuidePage() {
           </div>
         </section>
       </article>
+
+      {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
+      <ProvinceChatbot
+        province={{
+          name: isVi ? "Việt Nam" : "Vietnam",
+          slug: "viet-nam",
+        }}
+      />
     </div>
   );
 }

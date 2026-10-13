@@ -19,6 +19,16 @@ const SEARCH_POSTS = [
     keywords: "8 must try foods in hanoi culinary bun cha pho street food bun dau",
   },
   {
+    id: "vung-tau-beaches",
+    title: "5 best Vung Tau beaches",
+    titleVi: "5 bãi biển đẹp nhất tại Vũng Tàu",
+    date: "September 15, 2026",
+    dateVi: "15 Tháng 9, 2026",
+    img: "/guide/vung-tau/hero-vung-tau-beaches.jpg",
+    link: "/guide/5-best-vung-tau-beaches",
+    keywords: "5 best vung tau beaches 5 bai bien dep nhat vung tau bai sau bai truoc bai dau bai dua bai vong nguyet sea ocean coastal",
+  },
+  {
     id: "dest-dalat",
     title: "Dalat",
     titleVi: "Đà Lạt",

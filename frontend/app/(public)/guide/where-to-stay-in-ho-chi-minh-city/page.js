@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import { getLang } from "@/lib/prefs";
 import {
   Compass,
@@ -893,6 +894,14 @@ export default function WhereToStayInHCMCPage() {
           </p>
         </footer>
       </main>
+
+      {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
+      <ProvinceChatbot
+        province={{
+          name: lang === "vi" ? "TP. Hồ Chí Minh" : "Ho Chi Minh City",
+          slug: "ho-chi-minh",
+        }}
+      />
     </div>
   );
 }
