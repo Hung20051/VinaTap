@@ -816,22 +816,6 @@ export default function NhaTrangFoodGuidePage() {
 
       {/* ── Main Editorial Content Section ── */}
       <main className="vnn-container">
-        {/* Breadcrumb Navigation */}
-        <nav className="vnn-breadcrumb" aria-label="Breadcrumb">
-          <Link href="/">{lang === "vi" ? "Trang chủ" : "Home"}</Link>
-          <span className="vnn-breadcrumb-separator">/</span>
-          <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city">
-            {lang === "vi" ? "Ẩm thực" : "Eat & Drink"}
-          </Link>
-          <span className="vnn-breadcrumb-separator">/</span>
-          <Link href="/province/khanh-hoa">Nha Trang</Link>
-          <span className="vnn-breadcrumb-separator">/</span>
-          <span className="vnn-breadcrumb-current">
-            {lang === "vi"
-              ? "5 món ăn phải nếm khi đến Nha Trang"
-              : "5 Must-Try Nha Trang Dishes"}
-          </span>
-        </nav>
 
         {/* Primary CTA Button to Tripion.ai */}
         <div className="vnn-pill-cta-wrap">
