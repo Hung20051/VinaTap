@@ -1070,6 +1070,258 @@ export default function HanoiPage() {
                     ? "Khi ghé thăm hồ, bạn không chỉ cảm nhận hơi thở của lịch sử mà còn bị cuốn hút bởi các công trình kiến trúc tuyệt mỹ tại đây. Nổi bật giữa lòng hồ là Tháp Rùa cổ kính và cây Cầu Thê Húc đỏ son dẫn vào Đền Ngọc Sơn với kiến trúc và khung cảnh độc đáo."
                     : "When visiting this lake, you will not only feel the breath of history but also be amazed by other attractions built within it. In the middle of the lake are Thap Rua (the Turtle Tower) and the beautiful The Huc Bridge leading to Ngoc Son Temple which has unique architecture and setting."}
                 </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Bạn sẽ chỉ phải trả vé 30.000 VNĐ ($1.5) nếu vào bên trong Đền Ngọc Sơn (đi qua Cầu Thê Húc vẫn hoàn toàn miễn phí)."
+                    : "You will only be charged 30,000 VND ($1.5) if you go inside Ngoc Son Temple (crossing The Huc Bridge is still free)."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "Đường Đinh Tiên Hoàng, Quận Hoàn Kiếm" : "Dinh Tien Hoang Street, Hoan Kiem District"}
+                </p>
+
+                {/* WEST LAKE (SCREENSHOT 1) */}
+                <h4 className="vnn-hanoi-attraction-subh4">
+                  {lang === "vi" ? "Hồ Tây (West Lake)" : "West Lake"}
+                </h4>
+
+                <p>
+                  {lang === "vi"
+                    ? "Hồ Tây là hồ nước ngọt tự nhiên lớn nhất ở Hà Nội. Cảnh sắc hồ tuyệt đẹp đến mức từng được chọn làm nơi xây dựng các cung điện nghỉ dưỡng của hoàng tộc. Điều này lý giải vì sao bạn vẫn có thể tìm thấy rất nhiều di tích lịch sử quanh hồ."
+                    : "West Lake is the largest natural freshwater lake in Hanoi. The lake view is so magnificent that it was chosen as a base for royal holiday palaces. It explains why you can still find a lot of historical remains around the lake."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Hồ Tây mang vẻ đẹp quyến rũ bất kể thời điểm nào bạn ghé thăm: yên bình và mờ sương vào sáng sớm, trong khi buổi chiều lại sôi động và ngập tràn hoạt động. Gần đây, rất nhiều trò chơi dưới nước thú vị được bổ sung, biến nơi đây không chỉ là chốn dừng chân ngắm cảnh tĩnh lặng mà còn là điểm đến lý tưởng cho các hoạt động ngoài trời."
+                    : "West Lake holds its own beauty regardless of the time you visit: tranquil and misty in the early morning while lively and activity-packed in the afternoon. Recently, there is a wide range of water activities added, making it not only a place to sit down and quietly enjoy the view but also a place to take part in outdoor activities."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Thuê thuyền đạp vịt có giá từ 60.000 VNĐ đến 120.000 VNĐ (tùy kích thước thuyền)."
+                    : "Swan boats rental costs from 60,000 VND to 120,000 VND (varying according to the boat sizes)."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Thuê ván SUP có giá 150.000 VNĐ (nửa ngày trong tuần) và 300.000 VNĐ (cả ngày trong tuần); 200.000 VNĐ (nửa ngày cuối tuần) và 400.000 VNĐ (cả ngày cuối tuần)."
+                    : "SUP rental costs 150,000 VND (half weekdays) and 300,000 VND (full weekdays); 200,000 VND (half weekends) and 400,000 VND (full weekends)."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Nếu bạn có xe đạp, đạp một vòng quanh hồ và đón hoàng hôn buông xuống cũng là một trải nghiệm tuyệt hảo."
+                    : "If you have your bicycle with you, riding around the lake and catching the sunset is also a good choice."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "Đường Thanh Niên, Quận Tây Hồ" : "Thanh Nien Street, Tay Ho District"}
+                </p>
+
+                {/* TRUC BACH LAKE (SCREENSHOT 1 & 2) */}
+                <h4 className="vnn-hanoi-attraction-subh4">
+                  {lang === "vi" ? "Hồ Trúc Bạch (Truc Bach Lake)" : "Truc Bach Lake"}
+                </h4>
+
+                <p>
+                  {lang === "vi"
+                    ? "Hồ Trúc Bạch (vốn là một phần tách ra từ Hồ Tây) có diện tích nhỏ hơn so với hai hồ kể trên và được người dân địa phương vô cùng yêu thích; tuy vậy hồ chứa đựng bề dày lịch sử không hề kém cạnh bất kỳ danh thắng nào."
+                    : "Truc Bach Lake (originally a part of West Lake) is relatively smaller compared to the other two mentioned lakes, and somehow more locally preferred; however, it carries a breadth of history no less than any other location."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Về phía tây của hồ là Đền Quán Thánh linh thiêng được xây dựng từ thế kỷ 11. Ngôi đền thờ Thánh Trấn Vũ (Thánh Trấn Vũ) – vị thần tương truyền đã nhiều lần giúp các triều vua bảo vệ đất nước."
+                    : "To the west of the lake stands the sacred Quan Thanh Temple which was built in the 11th century. This temple worships Saint Tran Vu (Thánh Trấn Vũ) who was said to assist many kings to defend the country."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Phía đông của hồ là Chùa Châu Long (Chùa Châu Long), nơi thờ một vị công chúa thời nhà Trần."
+                    : "To the east of the lake is Chau Long Pagoda (Chùa Châu Long) where a princess of the Tran Dynasty is worshiped."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Và phía bắc hồ tọa lạc Chùa Thần Quang (Chùa Thần Quang) nổi tiếng với pho tượng đồng đúc liền khối lớn bậc nhất."
+                    : "And to the north of the lake is located Than Quang Pagoda (Chùa Thần Quang) with the largest bronze statue carved in one piece."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Chính nhờ quy mô vừa phải, Hồ Trúc Bạch mang lại cảm giác gần gũi, thân thuộc khi bạn có thể dễ dàng dõi theo mọi nhịp sống quanh hồ. Đây cũng là điểm tập thể dục ưa thích của người dân và là nơi giới trẻ tụ tập tại các quán cà phê, ngồi trên những chiếc ghế con ngắm trọn mặt hồ êm ả."
+                    : "Probably due to its decent size, Truc Bach Lake gives a sense of intimacy, when you can watch all the activities taking place around the lake. This is also a favorite spot for locals coming for exercise and the young people gathering at the cafes, on little stools overlooking the lake view."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 2: TEMPLE OF LITERATURE (SCREENSHOT 2 & 3) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "2. Văn Miếu – Quốc Tử Giám (Temple of Literature)" : "2. Temple of Literature"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-vanmieu-hd.jpg"
+                    alt="Temple of Literature Khue Van Cac"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Khuê Văn Các – Văn Miếu Quốc Tử Giám" : "Temple of Literature"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Văn Miếu – Quốc Tử Giám được coi là một trong những điểm đến du lịch nổi tiếng hàng đầu tại Hà Nội. Được xây dựng vào năm 1070 dưới thời vua Lý Thánh Tông, đây là nơi thờ Khổng Tử, các bậc hiền triết Nho học. Văn Miếu cũng được công nhận là trường đại học đầu tiên của Việt Nam, nơi đào tạo nhân tài cho đất nước. Cho đến nay, Văn Miếu đã trở thành biểu tượng ngàn năm văn hiến của dân tộc. Các sĩ tử luôn tin rằng ngôi trường sẽ mang lại may mắn trong thi cử; đó là lý do vào dịp Tết và mùa thi, nơi đây luôn tấp nập người dân đến cầu may và xin chữ may mắn."
+                    : "Temple of Literature is considered as one of the famous tourist destinations in Hanoi. Built in 1070 under King Ly Thanh Tong, it is a place of worship of Confucius, Confucian scholars, scholars and sages. Temple of Literature is also considered as the first university in Vietnam, which trained talented people for the country. Up to now, the temple has become a symbol of the thousand-years civilization cradle of Vietnam. The students religiously believe that this temple is going to bring them luck for their exams. That's why during Tet (Lunar New Year) and examination time, the temple is packed with people praying and waiting for lucky calligraphy."}
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                    {lang === "vi" ? "58 Phố Quốc Tử Giám, Quận Đống Đa" : "58 Quoc Tu Giam Street, Dong Da District"}
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giá vé: " : "Ticket price: "}</strong>
+                    {lang === "vi" ? "30.000 VNĐ, miễn phí cho trẻ em dưới 15 tuổi" : "30,000 VND, free for children under 15 years old"}
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giờ mở cửa: " : "Opening hours: "}</strong>
+                    {lang === "vi" ? "Mùa hè từ 7:30 – 18:00, mùa đông từ 8:00 – 18:00" : "summer from 7:30 AM – 6:00 PM, winter from 8:00 AM – 6:00 PM"}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 3: HO CHI MINH MAUSOLEUM (SCREENSHOT 3, 4, 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "3. Lăng Chủ tịch Hồ Chí Minh (Ho Chi Minh Mausoleum)" : "3. Ho Chi Minh Mausoleum"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-langbac-hd.jpg"
+                    alt="Ho Chi Minh Mausoleum Ba Dinh Square"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Lăng Chủ tịch Hồ Chí Minh tại Quảng trường Ba Đình" : "Ho Chi Minh Mausoleum"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Lăng Chủ tịch Hồ Chí Minh giữ vị trí đặc biệt về chính trị và lịch sử tại Thủ đô Hà Nội cũng như trong trái tim mỗi người dân Việt Nam – nơi lưu giữ thi hài của vị Chủ tịch vĩ đại. Công trình lịch sử này được xây dựng trên Quảng trường Ba Đình rợp bóng cây xanh và thảm cỏ bát ngát, mang lại cho bạn cảm giác trang nghiêm và thanh bình ngay khi đặt chân đến."
+                    : "Ho Chi Minh Mausoleum plays a political and historical role in Hanoi Capital and also in the heart of every Vietnamese - where our great former President's corpse is preserved and remembered. The historical attraction was built on Ba Dinh Square covered with a vast green of grass and trees, giving you an instant feeling of peace and solemnity."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Tại đây, mỗi buổi sáng vào lúc 6:00 và buổi tối lúc 21:00 đều diễn ra nghi lễ thượng cờ và hạ cờ thiêng liêng mà bạn rất nên chứng kiến. Trải nghiệm này sẽ mang đến sự thấu hiểu sâu sắc và lòng biết ơn chân thành đối với vị Cha già của dân tộc."
+                    : "At this place, every morning at 6:00 AM and evening at 9:00 PM holds the flag-salute ceremony which is highly recommended to you. This experience will give a deeper understanding about how profound and sincere our gratitude is towards the Father of the country."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Du khách bắt buộc phải mặc trang phục lịch sự (không mặc áo sát nách, quần ngắn) và giữ trật tự trang nghiêm trong suốt buổi lễ. Bạn nên có mặt tại quảng trường trước khoảng 5:45 – 5:50 sáng để chọn vị trí quan sát đẹp, theo dõi trọn vẹn đoàn tiêu binh diễu hành và lễ thượng cờ trên nền quốc ca vang vọng."
+                    : "You are required to dress formally (no tank top and shorts are allowed) and remain silent during the ceremony. It is suggested that you arrive at the square at around 5:45 AM – 5:50 AM to find a good spot to watch the whole scene of the ceremony with soldiers marching, the flag being raised with the national anthem in the background."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Để vào viếng bên trong lăng, có những quy định cụ thể về thời gian theo từng mùa như sau:"
+                    : "To see inside the mausoleum, there are some specific regulations for opening and visiting times. The opening and visiting times vary each season as follows:"}
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Mùa nóng (từ 1/4 đến 31/10): " : "The hot season (from 1st April to 31st October): "}</strong>
+                    {lang === "vi"
+                      ? "từ 7:30 – 10:30 các ngày trong tuần (trừ Thứ Hai và Thứ Sáu); từ 7:30 – 11:00 vào các ngày cuối tuần và lễ tết."
+                      : "from 7:30 AM – 10:30 AM on weekdays (excluding Mondays and Fridays) and from 7:30 AM – 11:00 AM on weekends and public holidays"}
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Mùa lạnh (từ 1/11 đến 31/3): " : "The cold season (from 1st November to 31st March): "}</strong>
+                    {lang === "vi"
+                      ? "từ 8:00 – 11:00 các ngày trong tuần (trừ Thứ Hai và Thứ Sáu); từ 8:00 – 11:30 vào các ngày cuối tuần và lễ tết."
+                      : "from 8:00 AM – 11:00 AM on weekdays (excluding Mondays and Fridays) and from 8:00 AM – 11:30 AM on weekends and public holidays"}
+                  </li>
+                </ul>
+
+                <p>
+                  <em>
+                    {lang === "vi"
+                      ? "Lưu ý: Nếu các dịp lễ đặc biệt như ngày Mùng 1 Tết Âm lịch, ngày sinh nhật Bác (19/5) và ngày Quốc khánh (2/9) trùng vào Thứ Hai hoặc Thứ Sáu thì lăng vẫn mở cửa phục vụ đồng bào và du khách."
+                      : "Note: If special occasions such as the first day of Lunar New Year, Uncle Ho's birthday (19th May) and Independence Day (2nd September) fall on Mondays and Fridays, the attraction will be open to the public."}
+                  </em>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                    {lang === "vi" ? "19 Phố Ngọc Hà, Quận Ba Đình" : "19 Ngoc Ha Street, Ba Dinh District"}
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giá vé: " : "Ticket price: "}</strong>
+                    {lang === "vi" ? "25.000 VNĐ (miễn phí cho công dân Việt Nam)" : "25,000 VND"}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 4: HANOI 36 STREETS (SCREENSHOT 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "4. Hà Nội 36 phố phường – Phố Cổ (Hanoi 36 Streets)" : "4. Hanoi 36 Streets (Hanoi Old Quarter)"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-oldquarter-aerial-hd.jpg"
+                    alt="Hanoi 36 Streets Old Quarter aerial view"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Khu phố cổ Hà Nội 36 phố phường nhìn từ trên cao" : "Hanoi 36 Streets (Hanoi Old Quarter)"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Vì sao lại là 36 phố phường mà không phải con số khác? Theo quan niệm dân gian, 36 là con số tài lộc mang lại sự thịnh vượng và trù phú. Điều đó lý giải vì sao cái tên Hà Nội 36 phố phường luôn gắn liền qua bao thế hệ, dù thực tế số lượng phố không hoàn toàn cố định ở con số 36."
+                    : "Why 36 streets but not another number? According to folk beliefs, 36 is a lucky number that attracts prosperity and abundance. That explains why it permanently goes with the name Hanoi 36 Streets although the number does not exactly reflect the real number of the streets."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Nét đặc trưng hấp dẫn nhất của khu phố là mỗi con phố (bắt đầu bằng chữ Hàng) chuyên doanh một mặt hàng truyền thống và tên phố chính là sản phẩm được buôn bán. Ví dụ, Hàng Tre là nơi bày bán các cây tre cao vút và mọi vật dụng từ tre nứa; Hàng Bạc chuyên vàng bạc trang sức tinh xảo;..."
+                    : "The highlight of the area is that each street (or Hàng) specializes in one characteristic product and each street name indicates what products are sold. For example, Hàng Tre (Bamboo Street) is where you will find all the tall bamboo poles and all kinds of items made from bamboo; Hàng Bạc (Silver Street) sells gold and silver jewelry; etc."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Quy hoạch các tuyến phố không chỉ tái hiện nét văn hóa buôn bán truyền thống lâu đời mà còn phô diễn phong cách kiến trúc độc nhất vô nhị với hàng trăm công trình lịch sử cổ kính như đền, chùa, đình hội quán và những ngôi nhà ống cổ. Đây cũng là thiên đường ẩm thực đường phố đặc sắc. Bạn nên chọn xích lô, xe đạp hoặc đi bộ để trải nghiệm trọn vẹn nhất không gian này."
+                    : "The setting of streets not only shows you a traditional trading culture but also displays the unique and iconic style of architecture including a hundred of long-standing architectural and historical buildings such as temples, pagodas, assemblies and ordinary residential housing. This is also where you can sample a great variety of local foods. Cyclos, bicycles or walking are recommended to explore this area."}
+                </p>
               </div>
             </div>
           </div>
