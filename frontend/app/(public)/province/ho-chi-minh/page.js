@@ -68,8 +68,8 @@ const MEGA_MENUS_DATA = {
         id: "insp-4",
         title: "20 Best Things to Do in Vietnam",
         titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
-        date: "January 1, 2025",
-        dateVi: "1 Tháng 1, 2025",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-4.jpg",
         link: "/guide/20-best-things-to-do-in-vietnam",
@@ -78,8 +78,8 @@ const MEGA_MENUS_DATA = {
         id: "insp-5",
         title: "Ao Dai – Vietnamese Traditional Dress",
         titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
-        date: "December 31, 2024",
-        dateVi: "31 Tháng 12, 2024",
+        date: "September 18, 2026",
+        dateVi: "18 Tháng 9, 2026",
         badge: "Featured Articles",
         img: "/guide/megamenu/inspired-5.jpg",
         link: "/guide/ao-dai-vietnamese-traditional-dress",
@@ -92,8 +92,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-1",
         title: "Ho Chi Minh City",
         titleVi: "TP. Hồ Chí Minh",
-        date: "April 19, 2025",
-        dateVi: "19 Tháng 4, 2025",
+        date: "October 12, 2026",
+        dateVi: "12 Tháng 10, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-1-hcmc.jpg",
         link: "/province/ho-chi-minh",
@@ -102,8 +102,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-2",
         title: "Dalat",
         titleVi: "Đà Lạt",
-        date: "November 14, 2024",
-        dateVi: "14 Tháng 11, 2024",
+        date: "September 25, 2026",
+        dateVi: "25 Tháng 9, 2026",
         badge: "Central Vietnam",
         img: "/guide/megamenu/dest-2-dalat.jpg",
         link: "/province/dalat",
@@ -112,8 +112,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-3",
         title: "Hoi An",
         titleVi: "Hội An",
-        date: "November 12, 2024",
-        dateVi: "12 Tháng 11, 2024",
+        date: "September 22, 2026",
+        dateVi: "22 Tháng 9, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-3-hoian.jpg",
         link: "/province/hoi-an",
@@ -122,8 +122,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-4",
         title: "Da Nang",
         titleVi: "Đà Nẵng",
-        date: "July 25, 2024",
-        dateVi: "25 Tháng 7, 2024",
+        date: "September 15, 2026",
+        dateVi: "15 Tháng 9, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-4-danang.jpg",
         link: "/province/da-nang",
@@ -146,8 +146,8 @@ const MEGA_MENUS_DATA = {
         id: "thing-1",
         title: "3-week Vietnam Itinerary",
         titleVi: "Lịch trình 3 tuần xuyên Việt",
-        date: "July 20, 2025",
-        dateVi: "20 Tháng 7, 2025",
+        date: "October 5, 2026",
+        dateVi: "5 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/todo-1-3week.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
@@ -156,8 +156,8 @@ const MEGA_MENUS_DATA = {
         id: "thing-2",
         title: "10 best things to do in Ho Chi Minh City",
         titleVi: "10 hoạt động tuyệt nhất tại TP.HCM",
-        date: "May 5, 2025",
-        dateVi: "5 Tháng 5, 2025",
+        date: "September 28, 2026",
+        dateVi: "28 Tháng 9, 2026",
         badge: "Articles",
         img: "/guide/megamenu/todo-2-hcmc.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
@@ -166,8 +166,8 @@ const MEGA_MENUS_DATA = {
         id: "thing-3",
         title: "8 best things to do in Nha Trang",
         titleVi: "8 hoạt động không thể bỏ lỡ tại Nha Trang",
-        date: "March 1, 2025",
-        dateVi: "1 Tháng 3, 2025",
+        date: "September 12, 2026",
+        dateVi: "12 Tháng 9, 2026",
         badge: "Articles",
         img: "/guide/megamenu/todo-3-nhatrang.jpg",
         link: "/province/khanh-hoa",
@@ -176,8 +176,8 @@ const MEGA_MENUS_DATA = {
         id: "thing-4",
         title: "20 Best Things to Do in Vietnam",
         titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
-        date: "January 1, 2025",
-        dateVi: "1 Tháng 1, 2025",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/todo-4-vietnam.jpg",
         link: "/guide/20-best-things-to-do-in-vietnam",
@@ -186,8 +186,8 @@ const MEGA_MENUS_DATA = {
         id: "thing-5",
         title: "The 15 best attractions in Dalat",
         titleVi: "15 điểm tham quan đẹp nhất Đà Lạt",
-        date: "July 21, 2024",
-        dateVi: "21 Tháng 7, 2024",
+        date: "September 14, 2026",
+        dateVi: "14 Tháng 9, 2026",
         badge: "Articles",
         img: "/guide/megamenu/todo-5-dalat.jpg",
         link: "/province/dalat",
@@ -200,8 +200,8 @@ const MEGA_MENUS_DATA = {
         id: "eat-1",
         title: "8 must-try foods in Hanoi",
         titleVi: "8 món ăn nhất định phải thử tại Hà Nội",
-        date: "May 19, 2025",
-        dateVi: "19 Tháng 5, 2025",
+        date: "October 2, 2026",
+        dateVi: "2 Tháng 10, 2026",
         badge: "Hanoi",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
         link: "/province/ha-noi",
@@ -210,8 +210,8 @@ const MEGA_MENUS_DATA = {
         id: "eat-2",
         title: "12 must-try foods in Ho Chi Minh City",
         titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
-        date: "April 25, 2025",
-        dateVi: "25 Tháng 4, 2025",
+        date: "September 24, 2026",
+        dateVi: "24 Tháng 9, 2026",
         badge: "Articles",
         img: "/guide/megamenu/eat-2-hcmc.jpg",
         link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
@@ -220,8 +220,8 @@ const MEGA_MENUS_DATA = {
         id: "eat-3",
         title: "Pho",
         titleVi: "Phở Việt Nam",
-        date: "April 8, 2025",
-        dateVi: "8 Tháng 4, 2025",
+        date: "September 15, 2026",
+        dateVi: "15 Tháng 9, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-3-pho.jpg",
         link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
@@ -230,8 +230,8 @@ const MEGA_MENUS_DATA = {
         id: "eat-4",
         title: "7 must-try foods in Vung Tau",
         titleVi: "7 món ngon nổi tiếng tại Vũng Tàu",
-        date: "April 1, 2025",
-        dateVi: "1 Tháng 4, 2025",
+        date: "September 30, 2026",
+        dateVi: "30 Tháng 9, 2026",
         badge: "Articles",
         img: "/guide/megamenu/eat-4-vungtau.jpg",
         link: "/province/ba-ria-vung-tau",
@@ -240,8 +240,8 @@ const MEGA_MENUS_DATA = {
         id: "eat-5",
         title: "5 must-try Nha Trang dishes",
         titleVi: "5 món đặc sản Nha Trang",
-        date: "February 17, 2025",
-        dateVi: "17 Tháng 2, 2025",
+        date: "September 8, 2026",
+        dateVi: "8 Tháng 9, 2026",
         badge: "Articles",
         img: "/guide/megamenu/eat-5-nhatrang.jpg",
         link: "/province/khanh-hoa",
@@ -254,8 +254,8 @@ const MEGA_MENUS_DATA = {
         id: "itin-1",
         title: "3-week Vietnam Itinerary",
         titleVi: "Lịch trình 3 tuần xuyên Việt",
-        date: "July 20, 2025",
-        dateVi: "20 Tháng 7, 2025",
+        date: "October 5, 2026",
+        dateVi: "5 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/itin-1-3week.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
@@ -264,8 +264,8 @@ const MEGA_MENUS_DATA = {
         id: "itin-2",
         title: "10 Days in Vietnam",
         titleVi: "Lịch trình 10 ngày tại Việt Nam",
-        date: "May 21, 2024",
-        dateVi: "21 Tháng 5, 2024",
+        date: "September 16, 2026",
+        dateVi: "16 Tháng 9, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-2-10days.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
@@ -274,8 +274,8 @@ const MEGA_MENUS_DATA = {
         id: "itin-3",
         title: "2 Weeks in Vietnam",
         titleVi: "Lịch trình 2 tuần xuyên Việt",
-        date: "May 20, 2024",
-        dateVi: "20 Tháng 5, 2024",
+        date: "September 15, 2026",
+        dateVi: "15 Tháng 9, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-3-2weeks.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
@@ -284,8 +284,8 @@ const MEGA_MENUS_DATA = {
         id: "itin-4",
         title: "1 Month in Vietnam",
         titleVi: "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam",
-        date: "May 18, 2024",
-        dateVi: "18 Tháng 5, 2024",
+        date: "September 14, 2026",
+        dateVi: "14 Tháng 9, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-4-1month.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
@@ -590,7 +590,7 @@ export default function HoChiMinhCityPage() {
           <div className="vnn-hcmc-hero-meta">
             <span className="author">By Welcome To Vietnam</span>
             <span>•</span>
-            <span className="date">April 19, 2025</span>
+            <span className="date">October 12, 2026</span>
           </div>
         </div>
       </section>
@@ -1154,8 +1154,8 @@ export default function HoChiMinhCityPage() {
                   titleVi:
                     "Tỏa sáng nụ cười tại Việt Nam – Ưu đãi đến $800 tại Nha khoa Hà Linh",
                   image: "/guide/hcmc/offer-halinh-dental-hd.png",
-                  validity: "Valid until December 31, 2025",
-                  validityVi: "Có hiệu lực đến ngày 31 tháng 12 năm 2025",
+                  validity: "Valid until December 31, 2026",
+                  validityVi: "Có hiệu lực đến ngày 31 tháng 12 năm 2026",
                   code: "HALINH800",
                   desc: "Voucher giảm giá trị giá lên đến $800 áp dụng cho các dịch vụ dán sứ veneer cao cấp, cấy ghép implant nha khoa và thẩm mỹ nụ cười chuẩn quốc tế.",
                 })
@@ -1177,8 +1177,8 @@ export default function HoChiMinhCityPage() {
               </h3>
               <p className="vnn-hcmc-offer-validity">
                 {lang === "vi"
-                  ? "Có hiệu lực đến 31/12/2025"
-                  : "Valid until December 31, 2025"}
+                  ? "Có hiệu lực đến 31/12/2026"
+                  : "Valid until December 31, 2026"}
               </p>
             </div>
           </div>
@@ -1204,7 +1204,7 @@ export default function HoChiMinhCityPage() {
           <div className="vnn-hcmc-related-grid">
             {/* Card 1: Where to Stay in Ho Chi Minh City */}
             <Link
-              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+              href="/guide/where-to-stay-in-ho-chi-minh-city"
               className="vnn-hcmc-related-card"
             >
               <div className="vnn-hcmc-related-img-wrap">

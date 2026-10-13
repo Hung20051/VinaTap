@@ -410,7 +410,7 @@ export default function ThingsToDoInHCMCPage() {
             <div className="guide-meta-stats">
               <span className="guide-meta-item">
                 <Calendar size={14} />
-                <span>5 Tháng 5, 2025</span>
+                <span>28 Tháng 9, 2026</span>
               </span>
               <span className="guide-meta-item">
                 <Clock size={14} />

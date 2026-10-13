@@ -28,6 +28,7 @@ import "@/styles/complete-guide.css";
 import "@/styles/twenty-best-things.css";
 import "@/styles/ao-dai-article.css";
 
+
 // ─── MEGAMENUS DATA ───
 const MEGA_MENUS_DATA = {
   inspired: {
@@ -35,7 +36,7 @@ const MEGA_MENUS_DATA = {
       {
         id: "insp-1",
         title: "15 best places to visit in Vietnam in 2026",
-        titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
+        titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
         date: "June 16, 2026",
         dateVi: "16 Tháng 6, 2026",
         badge: "#Trending",
@@ -65,9 +66,9 @@ const MEGA_MENUS_DATA = {
       {
         id: "insp-4",
         title: "20 Best Things to Do in Vietnam",
-        titleVi: "20 trải nghiệm tuyệt vời nhất tại Việt Nam",
-        date: "January 1, 2025",
-        dateVi: "1 Tháng 1, 2025",
+        titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-4.jpg",
         link: "/guide/20-best-things-to-do-in-vietnam",
@@ -76,8 +77,8 @@ const MEGA_MENUS_DATA = {
         id: "insp-5",
         title: "Ao Dai – Vietnamese Traditional Dress",
         titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
-        date: "December 31, 2024",
-        dateVi: "31 Tháng 12, 2024",
+        date: "September 18, 2026",
+        dateVi: "18 Tháng 9, 2026",
         badge: "Featured Articles",
         img: "/guide/megamenu/inspired-5.jpg",
         link: "/guide/ao-dai-vietnamese-traditional-dress",
@@ -89,160 +90,160 @@ const MEGA_MENUS_DATA = {
       {
         id: "dest-1",
         title: "Ho Chi Minh City",
-        titleVi: "Thành phố Hồ Chí Minh",
-        date: "April 19, 2025",
-        dateVi: "19 Tháng 4, 2025",
+        titleVi: "TP. Hồ Chí Minh",
+        date: "October 12, 2026",
+        dateVi: "12 Tháng 10, 2026",
         badge: "Destinations",
-        img: "/guide/megamenu/dest-1.jpg",
+        img: "/guide/megamenu/dest-1-hcmc.jpg",
         link: "/province/ho-chi-minh",
       },
       {
         id: "dest-2",
-        title: "Ha Long Bay",
-        titleVi: "Vịnh Hạ Long",
-        date: "April 19, 2025",
-        dateVi: "19 Tháng 4, 2025",
-        badge: "Destinations",
-        img: "/guide/megamenu/dest-2.jpg",
-        link: "/province/quang-ninh",
+        title: "Dalat",
+        titleVi: "Đà Lạt",
+        date: "September 25, 2026",
+        dateVi: "25 Tháng 9, 2026",
+        badge: "Central Vietnam",
+        img: "/guide/megamenu/dest-2-dalat.jpg",
+        link: "/province/dalat",
       },
       {
         id: "dest-3",
         title: "Hoi An",
         titleVi: "Hội An",
-        date: "April 19, 2025",
-        dateVi: "19 Tháng 4, 2025",
+        date: "September 22, 2026",
+        dateVi: "22 Tháng 9, 2026",
         badge: "Destinations",
-        img: "/guide/megamenu/dest-3.jpg",
+        img: "/guide/megamenu/dest-3-hoian.jpg",
         link: "/province/hoi-an",
       },
       {
         id: "dest-4",
         title: "Da Nang",
         titleVi: "Đà Nẵng",
-        date: "April 19, 2025",
-        dateVi: "19 Tháng 4, 2025",
+        date: "September 15, 2026",
+        dateVi: "15 Tháng 9, 2026",
         badge: "Destinations",
-        img: "/guide/megamenu/dest-4.jpg",
+        img: "/guide/megamenu/dest-4-danang.jpg",
         link: "/province/da-nang",
       },
       {
         id: "dest-5",
         title: "Hanoi",
         titleVi: "Hà Nội",
-        date: "April 19, 2025",
-        dateVi: "19 Tháng 4, 2025",
+        date: "June 15, 2022",
+        dateVi: "15 Tháng 6, 2022",
         badge: "Destinations",
-        img: "/guide/megamenu/dest-5.jpg",
+        img: "/guide/megamenu/dest-5-hanoi.jpg",
         link: "/province/ha-noi",
       },
     ],
   },
-  thingsToDo: {
+  things: {
     items: [
       {
-        id: "ttd-1",
-        title: "20 Best Things to Do in Vietnam",
-        titleVi: "20 trải nghiệm tuyệt vời nhất tại Việt Nam",
-        date: "January 1, 2025",
-        dateVi: "1 Tháng 1, 2025",
-        badge: "#Trending",
-        img: "/guide/megamenu/inspired-4.jpg",
-        link: "/guide/20-best-things-to-do-in-vietnam",
-      },
-      {
-        id: "ttd-2",
-        title: "10 Best Things to Do in Ho Chi Minh City",
-        titleVi: "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh",
-        date: "May 20, 2025",
-        dateVi: "20 Tháng 5, 2025",
-        badge: "Things to Do",
-        img: "/guide/megamenu/inspired-5.jpg",
+        id: "todo-1",
+        title: "3 week Vietnam Itinerary",
+        titleVi: "Lịch trình 3 tuần xuyên Việt",
+        date: "October 5, 2026",
+        dateVi: "5 Tháng 10, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-1-3week.jpg",
         link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
       {
-        id: "ttd-3",
-        title: "10 Best Things to Do in Da Nang",
-        titleVi: "10 trải nghiệm tuyệt nhất tại Đà Nẵng",
-        date: "May 20, 2025",
-        dateVi: "20 Tháng 5, 2025",
-        badge: "Things to Do",
-        img: "/guide/megamenu/dest-4.jpg",
-        link: "/province/da-nang",
+        id: "todo-2",
+        title: "10 best things to do in Ho Chi Minh City",
+        titleVi: "10 điều tuyệt nhất ở TP. Hồ Chí Minh",
+        date: "September 28, 2026",
+        dateVi: "28 Tháng 9, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-2-hcmc.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
       {
-        id: "ttd-4",
-        title: "10 Best Things to Do in Hanoi",
-        titleVi: "10 trải nghiệm tuyệt nhất tại Hà Nội",
-        date: "May 20, 2025",
-        dateVi: "20 Tháng 5, 2025",
-        badge: "Things to Do",
-        img: "/guide/megamenu/dest-5.jpg",
-        link: "/province/ha-noi",
+        id: "todo-3",
+        title: "8 best things to do in Nha Trang",
+        titleVi: "8 hoạt động không thể bỏ qua tại Nha Trang",
+        date: "September 12, 2026",
+        dateVi: "12 Tháng 9, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-3-nhatrang.jpg",
+        link: "/province/khanh-hoa",
       },
       {
-        id: "ttd-5",
-        title: "10 Best Things to Do in Hoi An",
-        titleVi: "10 trải nghiệm tuyệt nhất tại Hội An",
-        date: "May 20, 2025",
-        dateVi: "20 Tháng 5, 2025",
-        badge: "Things to Do",
-        img: "/guide/megamenu/dest-3.jpg",
-        link: "/province/hoi-an",
+        id: "todo-4",
+        title: "20 Best Things to Do in Vietnam",
+        titleVi: "20 trải nghiệm hàng đầu ở Việt Nam",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/todo-4-vietnam.jpg",
+        link: "/guide/20-best-things-to-do-in-vietnam",
+      },
+      {
+        id: "todo-5",
+        title: "The 15 best attractions in Dalat",
+        titleVi: "15 điểm tham quan tuyệt nhất Đà Lạt",
+        date: "September 14, 2026",
+        dateVi: "14 Tháng 9, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-5-dalat.jpg",
+        link: "/province/dalat",
       },
     ],
   },
-  eatDrink: {
+  eat: {
     items: [
       {
-        id: "ed-1",
-        title: "Vietnam Food: 10 Best Dishes You Must Try",
-        titleVi: "Ẩm thực Việt Nam: 10 món ngon nhất định phải thử",
-        date: "January 14, 2025",
-        dateVi: "14 Tháng 1, 2025",
-        badge: "Must Try",
-        img: "/guide/megamenu/eat-1.jpg",
-        link: "/guide/the-complete-guide-to-vietnam",
-      },
-      {
-        id: "ed-2",
-        title: "A Guide to Vietnamese Coffee",
-        titleVi: "Khám phá hương vị cà phê Việt Nam",
-        date: "January 12, 2025",
-        dateVi: "12 Tháng 1, 2025",
-        badge: "Culture",
-        img: "/guide/megamenu/eat-2.jpg",
-        link: "/guide/the-complete-guide-to-vietnam",
-      },
-      {
-        id: "ed-3",
-        title: "Top 10 Street Foods in Hanoi",
-        titleVi: "Top 10 món ăn đường phố Hà Nội",
-        date: "February 2, 2025",
-        dateVi: "2 Tháng 2, 2025",
-        badge: "Street Food",
-        img: "/guide/megamenu/eat-3.jpg",
+        id: "eat-1",
+        title: "8 must-try foods in Hanoi",
+        titleVi: "8 món ngon nhất định phải thử ở Hà Nội",
+        date: "October 2, 2026",
+        dateVi: "2 Tháng 10, 2026",
+        badge: "Hanoi",
+        img: "/guide/megamenu/eat-1-hanoi.jpg",
         link: "/province/ha-noi",
       },
       {
-        id: "ed-4",
-        title: "Saigon Street Food Tour Guide",
-        titleVi: "Cẩm nang ẩm thực hè phố Sài Gòn",
-        date: "February 5, 2025",
-        dateVi: "5 Tháng 2, 2025",
-        badge: "Street Food",
-        img: "/guide/megamenu/eat-4.jpg",
-        link: "/province/ho-chi-minh",
+        id: "eat-2",
+        title: "12 must-try foods in Ho Chi Minh City",
+        titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
+        date: "September 24, 2026",
+        dateVi: "24 Tháng 9, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-2-hcmc.jpg",
+        link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
       },
       {
-        id: "ed-5",
-        title: "Central Vietnam Culinary Delights",
-        titleVi: "Tinh hoa ẩm thực miền Trung",
-        date: "March 1, 2025",
-        dateVi: "1 Tháng 3, 2025",
-        badge: "Culinary",
-        img: "/guide/megamenu/eat-5.jpg",
-        link: "/province/thua-thien-hue",
+        id: "eat-3",
+        title: "Pho",
+        titleVi: "Phở truyền thống",
+        date: "October 1, 2026",
+        dateVi: "1 Tháng 10, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-3-pho.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-4",
+        title: "7 must-try foods in Vung Tau",
+        titleVi: "7 món ăn tuyệt vời tại Vũng Tàu",
+        date: "September 30, 2026",
+        dateVi: "30 Tháng 9, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-4-vungtau.jpg",
+        link: "/province/ba-ria-vung-tau",
+      },
+      {
+        id: "eat-5",
+        title: "5 must-try Nha Trang dishes",
+        titleVi: "5 món đặc sản Nha Trang",
+        date: "September 8, 2026",
+        dateVi: "8 Tháng 9, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/eat-5-nhatrang.jpg",
+        link: "/province/khanh-hoa",
       },
     ],
   },
@@ -250,53 +251,43 @@ const MEGA_MENUS_DATA = {
     items: [
       {
         id: "itin-1",
-        title: "Plan Your Vietnam Trip with Just One Prompt",
-        titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một prompt",
-        date: "April 1, 2026",
-        dateVi: "1 Tháng 4, 2026",
-        badge: "#Trending",
-        img: "/guide/megamenu/inspired-2.jpg",
-        link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
+        title: "3-week Vietnam Itinerary",
+        titleVi: "Lịch trình 3 tuần xuyên Việt",
+        date: "October 5, 2026",
+        dateVi: "5 Tháng 10, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/itin-1-3week.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
       {
         id: "itin-2",
-        title: "2-Week Vietnam Itinerary for First-Timers",
-        titleVi: "Lịch trình 2 tuần khám phá Việt Nam cho người đi lần đầu",
-        date: "February 10, 2025",
-        dateVi: "10 Tháng 2, 2025",
+        title: "10 Days in Vietnam",
+        titleVi: "Lịch trình 10 ngày tại Việt Nam",
+        date: "September 16, 2026",
+        dateVi: "16 Tháng 9, 2026",
         badge: "Itinerary",
-        img: "/guide/megamenu/itin-1.jpg",
-        link: "/guide/the-complete-guide-to-vietnam",
+        img: "/guide/megamenu/itin-2-10days.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
       {
         id: "itin-3",
-        title: "10-Day Northern Vietnam Highlights",
-        titleVi: "Hành trình 10 ngày khám phá tinh hoa miền Bắc",
-        date: "February 15, 2025",
-        dateVi: "15 Tháng 2, 2025",
+        title: "2 Weeks in Vietnam",
+        titleVi: "Lịch trình 2 tuần xuyên Việt",
+        date: "September 15, 2026",
+        dateVi: "15 Tháng 9, 2026",
         badge: "Itinerary",
-        img: "/guide/megamenu/itin-2.jpg",
-        link: "/guide/the-complete-guide-to-vietnam",
+        img: "/guide/megamenu/itin-3-2weeks.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
       {
         id: "itin-4",
-        title: "7-Day Central Vietnam Heritage Trail",
-        titleVi: "Con đường di sản miền Trung 7 ngày",
-        date: "February 20, 2025",
-        dateVi: "20 Tháng 2, 2025",
-        badge: "Heritage",
-        img: "/guide/megamenu/itin-3.jpg",
-        link: "/province/hoi-an",
-      },
-      {
-        id: "itin-5",
-        title: "5-Day Mekong Delta & Southern Escapes",
-        titleVi: "5 ngày du ngoạn miền Tây & sông nước Nam Bộ",
-        date: "February 25, 2025",
-        dateVi: "25 Tháng 2, 2025",
-        badge: "Adventure",
-        img: "/guide/megamenu/itin-4.jpg",
-        link: "/province/can-tho",
+        title: "1 Month in Vietnam",
+        titleVi: "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam",
+        date: "September 14, 2026",
+        dateVi: "14 Tháng 9, 2026",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-4-1month.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
     ],
   },
@@ -316,15 +307,19 @@ export default function AoDaiArticlePage() {
 
   const isVi = lang === "vi";
 
-  const handleMouseEnter = (menuKey) => {
+  const handleMenuEnter = (menuKey) => {
     if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
     setActiveMenu(menuKey);
   };
 
-  const handleMouseLeave = () => {
+  const handleMenuLeave = () => {
     menuTimeoutRef.current = setTimeout(() => {
       setActiveMenu(null);
-    }, 200);
+    }, 140);
+  };
+
+  const handleMegaMouseEnter = () => {
+    if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
   };
 
   return (
@@ -351,75 +346,86 @@ export default function AoDaiArticlePage() {
       </div>
 
       {/* ─── NAVBAR ─── */}
-      <header className="vnn-navbar">
+      <header className="vnn-navbar" onMouseLeave={handleMenuLeave}>
         <div className="vnn-navbar__inner">
-          <div className="vnn-navbar__brand">
-            <Link href="/" className="vnn-navbar__logo-link">
-              <Logo />
-            </Link>
-          </div>
-
-          <nav className="vnn-navbar__menu">
-            {/* BE INSPIRED */}
-            <div
-              className={`vnn-menu-item ${activeMenu === "inspired" ? "vnn-menu-item--active" : ""}`}
-              onMouseEnter={() => handleMouseEnter("inspired")}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button type="button" className="vnn-menu-item__btn">
-                <span>{isVi ? "CẢM HỨNG" : "BE INSPIRED"}</span>
-                <ChevronDown size={14} className="vnn-menu-chevron" />
-              </button>
+          <Link href="/" className="vnn-navbar__brand">
+            <div className="vnn-navbar__brand-vinatap">
+              <Logo size={32} showText={false} noLink href={null} as="span" />
+              <span>VinaTap</span>
             </div>
+          </Link>
+
+          <ul className="vnn-navbar__menu">
+            {/* BE INSPIRED */}
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMenuEnter("inspired")}
+            >
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "inspired" ? "is-active" : ""}`}
+              >
+                <span>{isVi ? "CẢM HỨNG" : "BE INSPIRED"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
+              </button>
+            </li>
 
             {/* DESTINATIONS */}
-            <div
-              className={`vnn-menu-item ${activeMenu === "destinations" ? "vnn-menu-item--active" : ""}`}
-              onMouseEnter={() => handleMouseEnter("destinations")}
-              onMouseLeave={handleMouseLeave}
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMenuEnter("destinations")}
             >
-              <button type="button" className="vnn-menu-item__btn">
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "destinations" ? "is-active" : ""}`}
+              >
                 <span>{isVi ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
-                <ChevronDown size={14} className="vnn-menu-chevron" />
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
+            </li>
 
             {/* THINGS TO DO */}
-            <div
-              className={`vnn-menu-item ${activeMenu === "thingsToDo" ? "vnn-menu-item--active" : ""}`}
-              onMouseEnter={() => handleMouseEnter("thingsToDo")}
-              onMouseLeave={handleMouseLeave}
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMenuEnter("things")}
             >
-              <button type="button" className="vnn-menu-item__btn">
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "things" ? "is-active" : ""}`}
+              >
                 <span>{isVi ? "TRẢI NGHIỆM" : "THINGS TO DO"}</span>
-                <ChevronDown size={14} className="vnn-menu-chevron" />
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
+            </li>
 
             {/* EAT & DRINK */}
-            <div
-              className={`vnn-menu-item ${activeMenu === "eatDrink" ? "vnn-menu-item--active" : ""}`}
-              onMouseEnter={() => handleMouseEnter("eatDrink")}
-              onMouseLeave={handleMouseLeave}
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMenuEnter("eat")}
             >
-              <button type="button" className="vnn-menu-item__btn">
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "eat" ? "is-active" : ""}`}
+              >
                 <span>{isVi ? "ẨM THỰC" : "EAT & DRINK"}</span>
-                <ChevronDown size={14} className="vnn-menu-chevron" />
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
+            </li>
 
             {/* ITINERARIES */}
-            <div
-              className={`vnn-menu-item ${activeMenu === "itineraries" ? "vnn-menu-item--active" : ""}`}
-              onMouseEnter={() => handleMouseEnter("itineraries")}
-              onMouseLeave={handleMouseLeave}
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMenuEnter("itineraries")}
             >
-              <button type="button" className="vnn-menu-item__btn">
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "itineraries" ? "is-active" : ""}`}
+              >
                 <span>{isVi ? "LỊCH TRÌNH" : "ITINERARIES"}</span>
-                <ChevronDown size={14} className="vnn-menu-chevron" />
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
-            </div>
-          </nav>
+            </li>
+          </ul>
 
           <div className="vnn-navbar__actions">
             <HeaderSearch />
@@ -427,36 +433,39 @@ export default function AoDaiArticlePage() {
           </div>
         </div>
 
-        {/* ─── MEGAMENU DROPDOWN ─── */}
+        {/* ─── HOVER MEGAMENU CONTAINER ─── */}
         {activeMenu && (
           <div
-            className="vnn-megamenu-dropdown"
-            onMouseEnter={() => handleMouseEnter(activeMenu)}
-            onMouseLeave={handleMouseLeave}
+            className="vnn-megamenu"
+            onMouseEnter={handleMegaMouseEnter}
+            onMouseLeave={handleMenuLeave}
           >
-            <div className="vnn-megamenu-grid">
-              {MEGA_MENUS_DATA[activeMenu]?.items.map((item) => (
+            <div className="vnn-megamenu__grid">
+              {(MEGA_MENUS_DATA[activeMenu]?.items || []).map((item) => (
                 <Link
                   key={item.id}
                   href={item.link}
-                  className="vnn-megamenu-card"
+                  className="vnn-megamenu__card"
                   onClick={() => setActiveMenu(null)}
                 >
-                  <div className="vnn-megamenu-card__img-wrap">
+                  <div className="vnn-megamenu__thumb">
                     <img
                       src={item.img}
-                      alt={item.title}
-                      className="vnn-megamenu-card__img"
+                      alt={isVi && item.titleVi ? item.titleVi : item.title}
+                      className="vnn-megamenu__img"
+                      loading="lazy"
                     />
-                    <span className="vnn-megamenu-card__badge">
-                      {item.badge}
-                    </span>
+                    {item.badge && (
+                      <span className="vnn-megamenu__badge">
+                        {item.badge}
+                      </span>
+                    )}
                   </div>
-                  <h4 className="vnn-megamenu-card__title">
-                    {isVi ? item.titleVi : item.title}
+                  <h4 className="vnn-megamenu__title">
+                    {isVi && item.titleVi ? item.titleVi : item.title}
                   </h4>
-                  <p className="vnn-megamenu-card__date">
-                    {isVi ? item.dateVi : item.date}
+                  <p className="vnn-megamenu__date">
+                    {isVi && item.dateVi ? item.dateVi : item.date}
                   </p>
                 </Link>
               ))}
@@ -486,8 +495,8 @@ export default function AoDaiArticlePage() {
             </h1>
             <p className="ad-hero__meta">
               {isVi
-                ? "Bởi Welcome to Vietnam    31 Tháng 12, 2024"
-                : "By Welcome to Vietnam    December 31, 2024"}
+                ? "Bởi Welcome to Vietnam    18 Tháng 9, 2026"
+                : "By Welcome to Vietnam    September 18, 2026"}
             </p>
           </div>
         </section>

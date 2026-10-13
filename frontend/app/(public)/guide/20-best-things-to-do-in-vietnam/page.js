@@ -63,8 +63,8 @@ const MEGA_MENUS_DATA = {
         id: "insp-4",
         title: "20 Best Things to Do in Vietnam",
         titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
-        date: "January 1, 2025",
-        dateVi: "1 Tháng 1, 2025",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
         badge: "#Trending",
         img: "/guide/megamenu/inspired-4.jpg",
         link: "/guide/20-best-things-to-do-in-vietnam",
@@ -73,8 +73,8 @@ const MEGA_MENUS_DATA = {
         id: "insp-5",
         title: "Ao Dai – Vietnamese Traditional Dress",
         titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
-        date: "January 1, 2025",
-        dateVi: "1 Tháng 1, 2025",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/inspired-5.jpg",
         link: "/guide/ao-dai-vietnamese-traditional-dress",
@@ -87,8 +87,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-1",
         title: "Ho Chi Minh City",
         titleVi: "TP. Hồ Chí Minh",
-        date: "June 25, 2025",
-        dateVi: "25 Tháng 6, 2025",
+        date: "September 27, 2026",
+        dateVi: "27 Tháng 9, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-1-hcmc.jpg",
         link: "/province/ho-chi-minh",
@@ -97,8 +97,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-2",
         title: "Da Lat",
         titleVi: "Đà Lạt",
-        date: "June 20, 2025",
-        dateVi: "20 Tháng 6, 2025",
+        date: "September 21, 2026",
+        dateVi: "21 Tháng 9, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-2-dalat.jpg",
         link: "/province/dalat",
@@ -107,8 +107,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-3",
         title: "Hoi An",
         titleVi: "Hội An",
-        date: "June 15, 2025",
-        dateVi: "15 Tháng 6, 2025",
+        date: "October 6, 2026",
+        dateVi: "6 Tháng 10, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-3-hoian.jpg",
         link: "/province/da-nang",
@@ -117,8 +117,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-4",
         title: "Da Nang",
         titleVi: "Đà Nẵng",
-        date: "June 10, 2025",
-        dateVi: "10 Tháng 6, 2025",
+        date: "October 4, 2026",
+        dateVi: "4 Tháng 10, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-4-danang.jpg",
         link: "/province/da-nang",
@@ -127,8 +127,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-5",
         title: "Hanoi",
         titleVi: "Hà Nội",
-        date: "June 5, 2025",
-        dateVi: "5 Tháng 6, 2025",
+        date: "September 29, 2026",
+        dateVi: "29 Tháng 9, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-5-hanoi.jpg",
         link: "/province/ha-noi",
@@ -716,9 +716,13 @@ export default function TwentyBestThingsPage() {
 
   useEffect(() => {
     setLang(getLang());
-    const handleStorage = () => setLang(getLang());
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+    const handleLang = (e) => setLang(e?.detail || getLang());
+    window.addEventListener("vinatap:lang-updated", handleLang);
+    window.addEventListener("storage", handleLang);
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLang);
+      window.removeEventListener("storage", handleLang);
+    };
   }, []);
 
   const [activeMenu, setActiveMenu] = useState(null);
@@ -967,7 +971,7 @@ export default function TwentyBestThingsPage() {
             {isVi ? "20 trải nghiệm tuyệt nhất tại Việt Nam" : "20 Best Things to Do in Vietnam"}
           </h1>
           <p className="things-hero__meta">
-            {isVi ? "Bởi Welcome to Vietnam • 1 Tháng 1, 2025" : "By Welcome to Vietnam • January 1, 2025"}
+            {isVi ? "Bởi Welcome to Vietnam • 10 Tháng 10, 2026" : "By Welcome to Vietnam • October 10, 2026"}
           </p>
         </div>
       </section>

@@ -272,7 +272,7 @@ export const DANANG_GUIDE_DATA = {
         id: "r4",
         title:
           "Da Nang Downtown tổ hợp vui chơi giải trí đẳng cấp bên sông Hàn",
-        date: "05/09/2025",
+        date: "18/09/2026",
         views: "37,512",
         image:
           "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&q=80",

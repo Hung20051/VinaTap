@@ -8,7 +8,16 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   min-height: 100vh;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* ─── STICKY NAVBAR FIX ─── */
+.complete-guide-page .vnn-navbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9999 !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08) !important;
 }
 
 /* ─── HERO HEADER SECTION (HÌNH 1) ─── */
