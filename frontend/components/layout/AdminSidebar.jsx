@@ -38,7 +38,7 @@ export default function AdminSidebar({
   const [lang, setLang] = useState("vi");
   const [mounted, setMounted] = useState(false);
 
-  // 7 Module Quản trị cốt lõi theo đúng kiến trúc chuẩn VinaTap
+  // Các Module Quản trị trọng tâm theo yêu cầu của hệ thống VinaTap
   const adminSections = [
     {
       id: "sec-01",
@@ -54,7 +54,7 @@ export default function AdminSidebar({
     },
     {
       id: "sec-02",
-      title: lang === "vi" ? "02. Dữ Liệu & Lưu Lượng" : "02. Data & Analytics",
+      title: lang === "vi" ? "02. Lượt Truy Cập & Nguồn Khách" : "02. Traffic & Analytics",
       icon: TrendingUp,
       items: [
         {
@@ -66,77 +66,21 @@ export default function AdminSidebar({
     },
     {
       id: "sec-03",
-      title: lang === "vi" ? "03. Nội Dung & SEO" : "03. Content & SEO",
+      title: lang === "vi" ? "03. Quản Lý Bài Viết & Cẩm Nang" : "03. Articles & Content CMS",
       icon: FileText,
       items: [
         {
           href: "/admin/articles",
           icon: FileText,
-          label: lang === "vi" ? "Quản lý bài viết & SEO" : "Articles & SEO CMS",
+          label: lang === "vi" ? "Bài viết & Cẩm nang du lịch" : "Articles & Travel Guides",
         },
       ],
     },
     {
       id: "sec-04",
-      title: lang === "vi" ? "04. Điểm Đến & Cẩm Nang" : "04. Destinations & Guides",
-      icon: MapPin,
-      items: [
-        {
-          href: "/admin/provinces",
-          icon: MapPin,
-          label: lang === "vi" ? "63 Tỉnh thành & Điểm đến" : "63 Provinces & Places",
-        },
-        {
-          href: "/admin/albums",
-          icon: Images,
-          label: lang === "vi" ? "Duyệt album ảnh du khách" : "Trip Albums",
-        },
-        {
-          href: "/admin/stickers",
-          icon: Sticker,
-          label: lang === "vi" ? "Nhãn dán & Sticker du lịch" : "Travel Stickers",
-        },
-      ],
-    },
-    {
-      id: "sec-05",
-      title: lang === "vi" ? "05. Affiliate & Doanh Thu" : "05. Affiliate & Revenue",
-      icon: DollarSign,
-      items: [
-        {
-          href: "/admin/revenue",
-          icon: DollarSign,
-          label: lang === "vi" ? "Báo cáo doanh thu & Affiliate" : "Revenue & Affiliate",
-        },
-        {
-          href: "/admin/products",
-          icon: Package,
-          label: lang === "vi" ? "Sản phẩm & Bản đồ du lịch" : "Products & Maps",
-        },
-      ],
-    },
-    {
-      id: "sec-06",
-      title: lang === "vi" ? "06. Quảng Cáo & Chiến Dịch" : "06. Ads & Campaigns",
-      icon: Ticket,
-      items: [
-        {
-          href: "/admin/vouchers",
-          icon: Ticket,
-          label: lang === "vi" ? "Chiến dịch & Voucher ưu đãi" : "Campaigns & Vouchers",
-        },
-      ],
-    },
-    {
-      id: "sec-07",
-      title: lang === "vi" ? "07. Hệ Thống & Cấu Hình" : "07. System & Settings",
+      title: lang === "vi" ? "04. Hệ Thống & Cấu Hình" : "04. System & Settings",
       icon: Settings,
       items: [
-        {
-          href: "/admin/users",
-          icon: Users,
-          label: lang === "vi" ? "Quản lý người dùng & Admin" : "User Management",
-        },
         {
           href: "/admin/system-settings",
           icon: Settings,

@@ -86,14 +86,14 @@ const createArticle = async (req, res) => {
       return res.status(400).json({ message: "Slug bài viết không hợp lệ" });
     }
 
-    // Kiểm tra trùng lặp slug
-    const existing = await Article.findBySlug(cleanSlug);
+    let finalSlug = cleanSlug;
+    const existing = await Article.findBySlug(finalSlug);
     if (existing) {
-      return res.status(400).json({ message: "Đường dẫn (slug) này đã tồn tại" });
+      finalSlug = `${cleanSlug}-${Date.now().toString().slice(-4)}`;
     }
 
     const id = await Article.create({
-      slug: cleanSlug,
+      slug: finalSlug,
       category: category || "things-to-do",
       province_slug,
       title_en: title_en.trim(),

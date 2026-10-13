@@ -263,17 +263,14 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* ─── NAVIGATION JUMP PILLS (CHỌN NHANH 7 MODULE) ─── */}
+      {/* ─── NAVIGATION JUMP PILLS (CHỌN NHANH CÁC PHÂN HỆ) ─── */}
       <div className="dash-module-nav-bar">
         {[
           { id: "all", label: "Tất cả các phần" },
           { id: "sec-01", label: "01. Tổng quan" },
           { id: "sec-02", label: "02. Lưu lượng & Khách" },
-          { id: "sec-03", label: "03. Nội dung & SEO" },
-          { id: "sec-04", label: "04. Điểm đến & Cẩm nang" },
-          { id: "sec-05", label: "05. Affiliate & Doanh thu" },
-          { id: "sec-06", label: "06. Quảng cáo & Chiến dịch" },
-          { id: "sec-07", label: "07. Hệ thống & Cấu hình" },
+          { id: "sec-03", label: "03. Bài viết & Nội dung CMS" },
+          { id: "sec-07", label: "04. Hệ thống & Cấu hình" },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -295,7 +292,7 @@ export default function AdminDashboard() {
             <div className="dash-module-number">01</div>
             <div>
               <h2 className="dash-module-title">Tổng Quan Dashboard</h2>
-              <p className="dash-module-desc">Màn hình điều hành cốt lõi, chỉ số lưu lượng, doanh thu và cảnh báo hệ thống</p>
+              <p className="dash-module-desc">Màn hình điều hành cốt lõi, chỉ số lưu lượng, cẩm nang CMS và cảnh báo hệ thống</p>
             </div>
           </div>
 
@@ -320,22 +317,22 @@ export default function AdminDashboard() {
               href="/admin/analytics"
             />
             <KpiCard
-              icon={<Users size={22} />}
-              label="DU KHÁCH & NGƯỜI DÙNG"
-              value={(overview?.user_total ?? 0).toLocaleString("vi-VN")}
-              sub={`+${overview?.user_new_7d ?? 0} thành viên mới (7 ngày qua)`}
+              icon={<FileText size={22} />}
+              label="BÀI VIẾT & CẨM NANG"
+              value={(overview?.articles_total ?? 2).toLocaleString("vi-VN")}
+              sub="Cẩm nang du lịch chuẩn SEO đã xuất bản"
               accent="purple"
-              badge="Thành viên"
-              href="/admin/users"
+              badge="Nội dung CMS"
+              href="/admin/articles"
             />
             <KpiCard
-              icon={<DollarSign size={22} />}
-              label="DOANH THU & AFFILIATE"
-              value={`${(overview?.total_revenue ?? 158000).toLocaleString("vi-VN")}đ`}
-              sub={`${overview?.orders_count ?? 2} đơn hàng • ${overview?.affiliate_clicks ?? 48} clicks`}
+              icon={<ShieldCheck size={22} />}
+              label="TRẠNG THÁI HỆ THỐNG"
+              value="24ms OK"
+              sub="Hệ thống bảo mật SSL • Hoạt động 100%"
               accent="amber"
-              badge="Tăng trưởng 🚀"
-              href="/admin/revenue"
+              badge="Online 🟢"
+              href="/admin/system-settings"
             />
           </div>
 
@@ -458,17 +455,6 @@ export default function AdminDashboard() {
                   <ChevronRight size={16} className="shortcut-arrow" />
                 </Link>
 
-                <Link href="/admin/provinces" className="shortcut-item">
-                  <div className="shortcut-icon bg-emerald-soft">
-                    <MapPin size={18} color="#059669" />
-                  </div>
-                  <div className="shortcut-info">
-                    <h4>63 Tỉnh Thành & Địa Danh</h4>
-                    <p>Quản lý danh lam, ẩm thực, lễ hội và tọa độ bản đồ</p>
-                  </div>
-                  <ChevronRight size={16} className="shortcut-arrow" />
-                </Link>
-
                 <Link href="/admin/analytics" className="shortcut-item">
                   <div className="shortcut-icon bg-blue-soft">
                     <TrendingUp size={18} color="#2563eb" />
@@ -480,13 +466,13 @@ export default function AdminDashboard() {
                   <ChevronRight size={16} className="shortcut-arrow" />
                 </Link>
 
-                <Link href="/admin/revenue" className="shortcut-item">
-                  <div className="shortcut-icon bg-amber-soft">
-                    <DollarSign size={18} color="#d97706" />
+                <Link href="/admin/system-settings" className="shortcut-item">
+                  <div className="shortcut-icon bg-purple-soft">
+                    <Settings size={18} color="#9333ea" />
                   </div>
                   <div className="shortcut-info">
-                    <h4>Affiliate & Doanh Thu</h4>
-                    <p>Klook, Agoda, Traveloka, hoa hồng xác nhận</p>
+                    <h4>Cài Đặt & Cấu Hình Website</h4>
+                    <p>Bảo mật, phân quyền tài khoản và cấu hình hệ thống</p>
                   </div>
                   <ChevronRight size={16} className="shortcut-arrow" />
                 </Link>
@@ -740,7 +726,8 @@ export default function AdminDashboard() {
       {/* ═══════════════════════════════════════════════════════════════════════
           04. QUẢN LÝ ĐIỂM ĐẾN & CẨM NANG
          ═══════════════════════════════════════════════════════════════════════ */}
-      {(showAll || activeModuleTab === "sec-04") && (
+      {/* Module 04: 63 Tỉnh thành & Điểm đến (Đã ẩn theo yêu cầu người dùng) */}
+      {activeModuleTab === "sec-04" && (
         <section className="dash-module-block" id="module-04">
           <div className="dash-module-header">
             <div className="dash-module-number">04</div>
@@ -878,7 +865,8 @@ export default function AdminDashboard() {
       {/* ═══════════════════════════════════════════════════════════════════════
           05. AFFILIATE & DOANH THU
          ═══════════════════════════════════════════════════════════════════════ */}
-      {(showAll || activeModuleTab === "sec-05") && (
+      {/* Module 05: Doanh thu & Affiliate (Đã ẩn theo yêu cầu người dùng) */}
+      {activeModuleTab === "sec-05" && (
         <section className="dash-module-block" id="module-05">
           <div className="dash-module-header">
             <div className="dash-module-number">05</div>
@@ -979,7 +967,8 @@ export default function AdminDashboard() {
       {/* ═══════════════════════════════════════════════════════════════════════
           06. QUẢNG CÁO & CHIẾN DỊCH
          ═══════════════════════════════════════════════════════════════════════ */}
-      {(showAll || activeModuleTab === "sec-06") && (
+      {/* Module 06: Quảng cáo & Chiến dịch (Đã ẩn theo yêu cầu người dùng) */}
+      {activeModuleTab === "sec-06" && (
         <section className="dash-module-block" id="module-06">
           <div className="dash-module-header">
             <div className="dash-module-number">06</div>

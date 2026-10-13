@@ -537,12 +537,14 @@
 }
 
 .preview-hero-thumb {
-  margin-top: 8px;
-  width: 180px;
+  position: relative;
+  margin-top: 10px;
+  max-width: 360px;
   aspect-ratio: 16 / 9;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #cbd5e1;
+  background: #f1f5f9;
 }
 .preview-hero-thumb img {
   width: 100%;
@@ -550,18 +552,102 @@
   object-fit: cover;
 }
 
-.preview-item-thumb {
+.preview-thumb-actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 6px;
+}
+.preview-remove-btn {
+  background: rgba(15, 23, 42, 0.75);
+  color: #ffffff;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease;
+}
+.preview-remove-btn:hover {
+  background: rgba(239, 68, 68, 0.9);
+}
+
+.quick-photo-presets {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
   margin-top: 8px;
-  width: 140px;
+}
+.quick-preset-label {
+  font-size: 0.76rem;
+  color: #64748b;
+  font-weight: 600;
+}
+.preset-chip {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 99px;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.preset-chip:hover {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+  color: #0284c7;
+}
+
+.preview-item-thumb {
+  position: relative;
+  margin-top: 8px;
+  width: 160px;
   aspect-ratio: 4 / 3;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #cbd5e1;
+  background: #f1f5f9;
 }
 .preview-item-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.item-reorder-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.item-reorder-btn {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  color: #64748b;
+  cursor: pointer;
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+.item-reorder-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+.item-reorder-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .items-list-wrap {

@@ -566,7 +566,13 @@ export const articleAPI = {
     request(`/articles/${id}`, {
       method: "DELETE",
     }),
-  uploadImage: (formData) => upload("/provinces/upload", formData),
+  uploadImage: async (formData) => {
+    try {
+      return await upload("/articles/upload", formData);
+    } catch {
+      return await upload("/provinces/upload", formData);
+    }
+  },
 };
 
 // ─── ORDERS & E-COMMERCE CHECKOUT ──────────────────────────────
