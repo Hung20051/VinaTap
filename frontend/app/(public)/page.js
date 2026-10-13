@@ -200,7 +200,7 @@ const TOP_DESTINATIONS_DATA = [
     name: "Hoi An",
     nameVi: "Hội An",
     img: "/guide/hcmc/top-dest-hoian.jpg",
-    link: "/province/da-nang",
+    link: "/province/hoi-an",
   },
 ];
 
