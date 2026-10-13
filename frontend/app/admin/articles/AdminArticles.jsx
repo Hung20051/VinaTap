@@ -381,14 +381,24 @@ export default function AdminArticles() {
     }
     try {
       await articleAPI.delete(id);
+      setArticles((prev) => prev.filter((a) => a.id !== id));
+      showToast("Đã xóa bài viết thành công!");
     } catch (err) {
-      console.warn("API delete warning, removing from state:", err);
+      console.error("API delete error:", err);
+      showToast(err.message || "Lỗi xóa bài viết", "error");
     }
-    setArticles((prev) => prev.filter((a) => a.id !== id));
-    showToast("Đã xóa bài viết thành công!");
   };
 
   const handleSaveArticle = async (articleData) => {
+    if (!articleData.title_vi || !articleData.title_vi.trim()) {
+      showToast("Vui lòng nhập tiêu đề tiếng Việt", "error");
+      return;
+    }
+    if (!articleData.title_en || !articleData.title_en.trim()) {
+      showToast("Vui lòng nhập tiêu đề tiếng Anh", "error");
+      return;
+    }
+
     setSaving(true);
     try {
       let slug = (articleData.slug || "").trim();
@@ -426,40 +436,21 @@ export default function AdminArticles() {
       const payload = {
         ...articleData,
         slug,
+        title_vi: articleData.title_vi.trim(),
+        title_en: articleData.title_en.trim(),
+        hero_image: (articleData.hero_image || "/guide/megamenu/todo-2-hcmc.jpg").trim(),
         items: preparedItems,
       };
 
       if (articleData.id) {
-        try {
-          await articleAPI.update(articleData.id, payload);
-        } catch (apiErr) {
-          console.warn("API update warning, synced locally:", apiErr);
-        }
-        setArticles((prev) =>
-          prev.map((a) => (a.id === articleData.id ? { ...a, ...payload } : a)),
-        );
+        await articleAPI.update(articleData.id, payload);
         showToast("Đã lưu cập nhật bài viết thành công!");
       } else {
-        const newId = Date.now();
-        let createdArticle = {
-          ...payload,
-          id: newId,
-          views_count: 0,
-          created_at: new Date().toISOString(),
-        };
-        try {
-          const res = await articleAPI.create(payload);
-          if (res?.article) {
-            createdArticle = res.article;
-          }
-        } catch (apiErr) {
-          console.warn("API create warning, saved locally:", apiErr);
-        }
-        setArticles((prev) => [createdArticle, ...prev]);
+        await articleAPI.create(payload);
         showToast("Đã tạo bài viết mới thành công!");
       }
       setIsEditing(false);
-      loadArticles();
+      await loadArticles();
     } catch (err) {
       console.error("handleSaveArticle error:", err);
       showToast(err.message || "Lỗi lưu bài viết", "error");

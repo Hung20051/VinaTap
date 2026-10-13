@@ -6,18 +6,20 @@ const getAllArticles = async (req, res) => {
     const { category, search, status, limit, offset } = req.query;
     // Guest chỉ được xem bài đã xuất bản, admin xem tất cả hoặc theo status lọc
     const role = req.user?.role;
-    const filterStatus =
-      role === "admin"
-        ? status === "all" || !status
-          ? undefined
-          : status
-        : "published";
+    let filterStatus;
+    if (status && status !== "all") {
+      filterStatus = status;
+    } else if (status === "all" || role === "admin") {
+      filterStatus = undefined;
+    } else {
+      filterStatus = "published";
+    }
 
     const data = await Article.findAll({
       category: category === "all" ? undefined : category,
       search,
       status: filterStatus,
-      limit: Number(limit) || 50,
+      limit: Number(limit) || 100,
       offset: Number(offset) || 0,
     });
 

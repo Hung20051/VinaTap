@@ -643,29 +643,3 @@ export const voucherAPI = {
       method: "DELETE",
     }),
 };
-
-// ─── ARTICLES & CMS ───────────────────────────────────────────
-export const articleAPI = {
-  getAll: (params = {}) => {
-    const qs = new URLSearchParams(
-      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
-    ).toString();
-    return request(`/articles${qs ? `?${qs}` : ""}`);
-  },
-  getBySlug: (slug) => request(`/articles/${slug}`),
-  create: (body) =>
-    request("/articles", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  update: (id, body) =>
-    request(`/articles/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-    }),
-  delete: (id) =>
-    request(`/articles/${id}`, {
-      method: "DELETE",
-    }),
-  uploadImage: (formData) => upload("/articles/upload", formData),
-};
