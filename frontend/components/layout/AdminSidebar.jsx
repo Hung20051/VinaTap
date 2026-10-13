@@ -5,23 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
-  Users,
-  MapPin,
-  Images,
-  DollarSign,
   Settings,
-  Sticker,
   LogOut,
   X,
-  Ticket,
   Bell,
-  Package,
-  ChevronDown,
   TrendingUp,
   FileText,
-  BarChart3,
   ShieldCheck,
-  Megaphone,
 } from "lucide-react";
 import Logo from "./Logo";
 import { getLang } from "@/lib/prefs";
@@ -38,48 +28,31 @@ export default function AdminSidebar({
   const [lang, setLang] = useState("vi");
   const [mounted, setMounted] = useState(false);
 
-  // Các Module Quản trị trọng tâm theo yêu cầu của hệ thống VinaTap
-  const adminSections = [
+  // Danh mục điều hướng trực tiếp — bấm là chuyển trang ngay, không dùng mũi tên dropdown
+  const adminNavSections = [
     {
-      id: "sec-01",
-      title: lang === "vi" ? "Tổng Quan Dashboard" : "Executive Dashboard",
-      icon: LayoutDashboard,
+      id: "main",
       items: [
         {
           href: "/admin/dashboard",
           icon: LayoutDashboard,
-          label: lang === "vi" ? "Bảng điều khiển trung tâm" : "Main Dashboard",
+          label: lang === "vi" ? "Tổng quan Dashboard" : "Executive Dashboard",
         },
-      ],
-    },
-    {
-      id: "sec-02",
-      title: lang === "vi" ? "Lượt Truy Cập & Nguồn Khách" : "Traffic & Analytics",
-      icon: TrendingUp,
-      items: [
         {
           href: "/admin/analytics",
           icon: TrendingUp,
-          label: lang === "vi" ? "Phân tích lưu lượng khách" : "Traffic & Acquisition",
+          label: lang === "vi" ? "Lượt truy cập & Nguồn khách" : "Traffic & Acquisition",
         },
-      ],
-    },
-    {
-      id: "sec-03",
-      title: lang === "vi" ? "Quản Lý Bài Viết & Cẩm Nang" : "Articles & Content CMS",
-      icon: FileText,
-      items: [
         {
           href: "/admin/articles",
           icon: FileText,
-          label: lang === "vi" ? "Bài viết & Cẩm nang du lịch" : "Articles & Travel Guides",
+          label: lang === "vi" ? "Quản lý bài viết & Cẩm nang" : "Articles & Travel Guides",
         },
       ],
     },
     {
-      id: "sec-04",
-      title: lang === "vi" ? "Hệ Thống & Cấu Hình" : "System & Settings",
-      icon: Settings,
+      id: "system",
+      title: lang === "vi" ? "Hệ thống & Cấu hình" : "System & Settings",
       items: [
         {
           href: "/admin/system-settings",
@@ -103,32 +76,6 @@ export default function AdminSidebar({
       return true;
     }
     return false;
-  };
-
-  // Tự động mở nhóm chứa trang hiện tại
-  const findActiveSectionId = () => {
-    for (const section of adminSections) {
-      if (section.items.some((item) => isItemActive(item.href))) {
-        return section.id;
-      }
-    }
-    return "sec-01";
-  };
-
-  const [openSections, setOpenSections] = useState({
-    [findActiveSectionId()]: true,
-  });
-
-  useEffect(() => {
-    const currentActiveId = findActiveSectionId();
-    setOpenSections((prev) => ({ ...prev, [currentActiveId]: true }));
-  }, [pathname]);
-
-  const toggleSection = (sectionId) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [sectionId]: !prev[sectionId],
-    }));
   };
 
   useEffect(() => {
@@ -185,53 +132,32 @@ export default function AdminSidebar({
           )}
         </div>
 
-        {/* Nội dung menu cuộn độc lập */}
+        {/* Nội dung menu cuộn độc lập — link trực tiếp, không mũi tên */}
         <div className="admin-sidebar-scroll">
           <nav className="admin-sidebar-nav">
-            {adminSections.map((section) => {
-              const isOpen = !!openSections[section.id];
-              const hasActiveChild = section.items.some((item) =>
-                isItemActive(item.href)
-              );
-
-              return (
-                <div key={section.id} className="admin-nav-group">
-                  <button
-                    type="button"
-                    className={`admin-nav-group-header ${hasActiveChild ? "has-active" : ""}`}
-                    onClick={() => toggleSection(section.id)}
-                  >
-                    <div className="admin-nav-group-title">
-                      <section.icon size={15} className="group-icon" />
-                      <span>{section.title}</span>
-                    </div>
-                    <ChevronDown
-                      size={14}
-                      className={`group-chevron ${isOpen ? "is-open" : ""}`}
-                    />
-                  </button>
-
-                  {isOpen && (
-                    <div className="admin-nav-group-items">
-                      {section.items.map((item) => {
-                        const active = isItemActive(item.href);
-                        return (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={onClose}
-                            className={`admin-nav-link ${active ? "is-active" : ""}`}
-                          >
-                            <item.icon size={16} className="nav-icon" />
-                            <span className="nav-label">{item.label}</span>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
+            {adminNavSections.map((sec) => (
+              <div key={sec.id} className="admin-nav-group">
+                {sec.title && (
+                  <div className="admin-nav-section-title">{sec.title}</div>
+                )}
+                <div className="admin-nav-group-items">
+                  {sec.items.map((item) => {
+                    const active = isItemActive(item.href);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={onClose}
+                        className={`admin-nav-link ${active ? "is-active" : ""}`}
+                      >
+                        <item.icon size={17} className="nav-icon" />
+                        <span className="nav-label">{item.label}</span>
+                      </Link>
+                    );
+                  })}
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </nav>
         </div>
 

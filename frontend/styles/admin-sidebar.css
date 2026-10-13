@@ -108,63 +108,28 @@
   gap: 0.75rem;
 }
 
-/* ─── NAV GROUP (ACCORDION / SECTIONS) ────────────────────────── */
+/* ─── NAV GROUP (DIRECT LINKS & SECTIONS) ────────────────────────── */
 .admin-nav-group {
   display: flex;
   flex-direction: column;
   gap: 3px;
 }
 
-.admin-nav-group-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 10px;
-  background: transparent;
-  border: none;
-  border-radius: 8px;
-  color: #94a3b8;
-  font-size: 0.78rem;
+.admin-nav-section-title {
+  padding: 10px 10px 4px;
+  color: #64748b;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  text-align: left;
-}
-.admin-nav-group-header:hover {
-  color: #f1f5f9;
-  background: rgba(255, 255, 255, 0.04);
-}
-.admin-nav-group-header.has-active {
-  color: #f1f5f9;
-}
-
-.admin-nav-group-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.admin-nav-group-title .group-icon {
-  flex-shrink: 0;
-  opacity: 0.85;
-}
-
-.group-chevron {
-  transition: transform 0.2s ease;
-  opacity: 0.65;
-}
-.group-chevron.is-open {
-  transform: rotate(180deg);
 }
 
 .admin-nav-group-items {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding-left: 6px;
-  margin-top: 2px;
+  gap: 3px;
+  padding-left: 0;
+  margin-top: 0;
 }
 
 /* ─── NAV LINKS ───────────────────────────────────────────────── */
