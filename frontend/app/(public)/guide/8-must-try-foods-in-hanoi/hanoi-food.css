@@ -1,181 +1,204 @@
 /* ==========================================================================
-   HANOI FOOD ARTICLE - VIETNAMNOMAD EDITORIAL STYLE
-   Clean, authentic editorial layout with 2-column dish presentation.
+   8 MUST-TRY FOODS IN HANOI - EDITORIAL CSS (MATCHING USER SCREENSHOTS)
    ========================================================================== */
 
 .vnn-article-page {
   background-color: #ffffff;
-  color: #222222;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  line-height: 1.75;
-  font-size: 16px;
+  color: #1e293b;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.7;
+  font-size: 15px;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-/* ── Reading Progress Bar ── */
-.vnn-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #00c2cb, #008779);
-  z-index: 99999;
-  transition: width 0.1s ease-out;
+/* ── Top Companion Banner (Screenshot 3) ── */
+.vnn-top-banner {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  overflow: hidden;
 }
 
-/* ── Main Article Container ── */
-.vnn-container {
-  max-width: 980px;
+.vnn-top-banner__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.vnn-top-banner__link {
+  display: block;
+  width: 100%;
+}
+
+.vnn-top-banner__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 100px;
+  object-fit: cover;
+}
+
+/* ── Full-Bleed Hero Banner (Screenshot 3) ── */
+.vnn-fullbleed-hero {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  min-height: 420px;
+  background-image: url("/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.vnn-fullbleed-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.35) 50%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+  z-index: 1;
+}
+
+.vnn-fullbleed-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0 24px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.vnn-fullbleed-hero__tags {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.vnn-fullbleed-hero__tag {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(4px);
+}
+
+.vnn-fullbleed-hero__title {
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+  margin: 0;
+  max-width: 800px;
+}
+
+.vnn-fullbleed-hero__byline {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+
+/* ── Main Container ── */
+.vnn-article-container {
+  max-width: 960px;
   margin: 0 auto;
   padding: 36px 20px 80px;
 }
 
-/* ── Article Header ── */
-.vnn-post-header {
-  margin-bottom: 28px;
-}
-
-.vnn-post-title {
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 1.25;
-  color: #111111;
-  letter-spacing: -0.02em;
-  margin: 0 0 16px;
-}
-
-.vnn-post-meta {
+/* ── Pill CTA Button (Screenshot 3 & 4) ── */
+.vnn-pill-cta-container {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-size: 13.5px;
-  color: #777777;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #eeeeee;
-}
-
-.vnn-author-wrap {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.vnn-author-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #00c2cb;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
+  margin: 0 auto 36px;
 }
 
-.vnn-author-name {
-  color: #222222;
-  font-weight: 600;
-}
-
-.vnn-meta-dot {
-  color: #cccccc;
-}
-
-.vnn-share-btn {
-  margin-left: auto;
+.vnn-pill-cta-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: #f5f6f8;
-  border: 1px solid #e1e4e8;
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 12.5px;
-  color: #444444;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+  color: #ffffff !important;
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0, 180, 216, 0.35);
+  transition: all 0.25s ease;
+  border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.vnn-share-btn:hover {
-  background: #eef2f5;
-  color: #111111;
+.vnn-pill-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 180, 216, 0.5);
+  background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%);
 }
 
-/* ── Featured Hero Image ── */
-.vnn-featured-image-wrap {
-  margin: 24px 0 32px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+/* ── Lead Intro (Screenshot 3 & 4) ── */
+.vnn-article-lead {
+  max-width: 960px;
+  margin: 0 auto 46px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #334155;
+  text-align: left;
 }
 
-.vnn-featured-image {
-  width: 100%;
-  height: auto;
-  max-height: 520px;
-  object-fit: cover;
-  display: block;
+/* ── 8 Dishes Section (Screenshots 4 & 5) ── */
+.vnn-dish-item {
+  margin-bottom: 52px;
 }
 
-/* ── Lead Story / Intro ── */
-.vnn-intro-paragraph {
-  font-size: 17px;
-  line-height: 1.8;
-  color: #333333;
-  margin-bottom: 36px;
-}
-
-.vnn-intro-paragraph strong {
-  color: #111111;
-}
-
-/* ── Dishes Content Flow ── */
-.vnn-dish-section {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid #f0f0f0;
-}
-
-.vnn-dish-section:first-of-type {
-  border-top: none;
-  margin-top: 20px;
-  padding-top: 0;
-}
-
-.vnn-dish-heading {
+.vnn-dish-title {
   font-size: 26px;
   font-weight: 700;
-  color: #111111;
-  margin: 0 0 20px;
+  color: #0f172a;
+  margin: 0 0 18px 0;
+  line-height: 1.3;
   letter-spacing: -0.01em;
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
 }
 
-/* 2-Column Row (Matches VietnamNomad .wp-block-columns) */
-.vnn-dish-columns {
-  display: flex;
+.vnn-dish-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
   gap: 32px;
-  align-items: flex-start;
-  margin-bottom: 36px;
+  align-items: start;
 }
 
-/* Left Column: Image (~35%) */
-.vnn-column-image {
-  flex: 0 0 35%;
-  max-width: 35%;
+@media (max-width: 860px) {
+  .vnn-dish-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
-.vnn-figure {
-  margin: 0;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  background-color: #f7f7f7;
+.vnn-dish-img-col {
+  width: 100%;
 }
 
 .vnn-dish-img {
@@ -183,274 +206,50 @@
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.vnn-figure:hover .vnn-dish-img {
-  transform: scale(1.02);
-}
-
-/* Right Column: Content (~65%) */
-.vnn-column-text {
-  flex: 1;
-  min-width: 0;
-}
-
-.vnn-paragraph {
-  font-size: 15.5px;
-  line-height: 1.75;
-  color: #333333;
-  margin: 0 0 16px;
-}
-
-.vnn-paragraph em {
-  font-style: italic;
-  color: #222222;
-}
-
-/* ── Tip Box ── */
-.vnn-tip-box {
-  background-color: #f6fafd;
-  border-left: 3px solid #00c2cb;
-  padding: 12px 16px;
   border-radius: 4px;
-  margin: 16px 0;
-  font-size: 15px;
-  line-height: 1.65;
-  color: #333333;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
-.vnn-tip-box strong {
-  color: #008779;
-  font-weight: 700;
-}
-
-/* ── Where to Eat Section ── */
-.vnn-where-label {
-  font-size: 15.5px;
-  font-weight: 700;
-  color: #111111;
-  margin: 20px 0 8px;
-}
-
-.vnn-where-list {
-  list-style: disc;
-  padding-left: 22px;
-  margin: 0 0 16px;
-}
-
-.vnn-where-item {
+.vnn-dish-content-col {
   font-size: 15px;
   line-height: 1.7;
-  color: #444444;
-  margin-bottom: 8px;
+  color: #334155;
 }
 
-.vnn-restaurant-name {
-  font-weight: 600;
-  color: #111111;
+.vnn-dish-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 16px;
 }
 
-.vnn-restaurant-address {
-  color: #666666;
-}
-
-.vnn-restaurant-price {
-  font-weight: 600;
-  color: #008779;
-}
-
-/* ── Article Footer / Conclusion ── */
-.vnn-article-conclusion {
-  margin-top: 50px;
-  padding: 28px 32px;
-  background: #fbfbfb;
-  border: 1px solid #eeeeee;
-  border-radius: 10px;
-}
-
-.vnn-article-conclusion h3 {
-  font-size: 20px;
-  font-weight: 700;
-  color: #111111;
-  margin: 0 0 12px;
-}
-
-.vnn-article-conclusion p {
-  font-size: 15.5px;
-  line-height: 1.75;
-  color: #444444;
-  margin: 0 0 16px;
-}
-
-.vnn-back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #008779;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 14.5px;
-  transition: color 0.15s ease;
-}
-
-.vnn-back-link:hover {
-  color: #00c2cb;
-  text-decoration: underline;
-}
-
-/* ── Toast Notification ── */
-.vnn-toast {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  background: #1e293b;
-  color: #ffffff;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  z-index: 10000;
-  animation: vnnFadeIn 0.2s ease-out;
-}
-
-@keyframes vnnFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ── Responsive Styling (< 768px) ── */
-@media (max-width: 768px) {
-  .vnn-container {
-    padding: 24px 16px 60px;
-  }
-
-  .vnn-post-title {
-    font-size: 28px;
-  }
-
-  .vnn-intro-paragraph {
-    font-size: 16px;
-  }
-
-  .vnn-dish-heading {
-    font-size: 22px;
-  }
-
-  .vnn-dish-columns {
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-
-  .vnn-column-image {
-    flex: 100%;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .vnn-dish-img {
-    aspect-ratio: 16 / 10;
-  }
-
-  .vnn-paragraph {
-    font-size: 15px;
-  }
-
-  .vnn-where-item {
-    font-size: 14.5px;
-  }
-
-  .vnn-article-conclusion {
-    padding: 20px 18px;
-  }
-
-  .vnn-related-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-}
-
-/* ─── RELATED ARTICLES SECTION ─── */
-.vnn-related-divider {
-  border: none;
-  height: 1px;
-  background-color: #e5e7eb;
-  margin: 48px 0 36px 0;
-}
-
-.vnn-related-section {
-  margin-top: 10px;
-  padding-bottom: 40px;
-}
-
-.vnn-related-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #111827;
-  text-align: center;
-  margin: 0 0 32px 0;
-  letter-spacing: -0.3px;
-}
-
-.vnn-related-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-
-.vnn-related-card {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.25s ease, opacity 0.2s ease;
-}
-
-.vnn-related-card:hover {
-  transform: translateY(-4px);
-}
-
-.vnn-related-img-wrap {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background-color: #f3f4f6;
-  border-radius: 4px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-}
-
-.vnn-related-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.vnn-dish-subhead {
   display: block;
-  transition: transform 0.35s ease;
-  image-rendering: -webkit-optimize-contrast;
-}
-
-.vnn-related-card:hover .vnn-related-img {
-  transform: scale(1.05);
-}
-
-.vnn-related-card-title {
-  font-size: 17px;
   font-weight: 700;
-  color: #111827;
-  margin: 14px 0 0 0;
-  line-height: 1.35;
-  transition: color 0.2s ease;
+  color: #0f172a;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 15px;
 }
 
-.vnn-related-card:hover .vnn-related-card-title {
+.vnn-dish-bullets {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0 0 16px 0;
+}
+
+.vnn-dish-bullets li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+  color: #334155;
+}
+
+.vnn-link-highlight {
   color: #00c2cb;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
-

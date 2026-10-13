@@ -873,27 +873,35 @@ export default function MustTryFoodsInHCMCPage() {
           ))}
         </div>
 
-        {/* ── Closing Paragraph ── */}
+        {/* ── Closing Paragraph (Screenshot 1 & 2) ── */}
         <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#334155", margin: "36px 0 24px" }}>
           {isVi ? (
             <>
-              Từ những chảo gang sôi xèo xèo, những con hẻm ốc đêm nhộn nhịp cho đến những tô bún ngọt thanh và ổ bánh mì giòn tan, nền ẩm thực TP. Hồ Chí Minh cũng sôi động và phong phú như chính nhịp sống của thành phố này. Hãy tự do len lỏi vào các ngõ ngách để hương thơm quyến rũ của các quầy quán đường phố dẫn lối cho hành trình ẩm thực của bạn.
+              Ẩm thực tại{" "}
+              <Link href="/province/ho-chi-minh" style={{ color: "#00c2cb", textDecoration: "none" }}>
+                TP. Hồ Chí Minh
+              </Link>{" "}
+              không chỉ là dinh dưỡng—đó là một ngày hội thường nhật rực rỡ của hương vị, văn hóa và sự kết nối. 12 món ăn này phản ánh trọn vẹn tinh thần của thành phố. Dù bạn ở đây vài ngày hay vài tháng, việc đắm mình vào nền ẩm thực địa phương sẽ là một trong những chuyến phiêu lưu đáng nhớ nhất. Hãy để TP. Hồ Chí Minh cho bạn thấy thế nào là ẩm thực nuôi dưỡng tâm hồn.
             </>
           ) : (
             <>
-              From sizzling skillets and bustling snail alleys to soothing noodle broths and crispy baguettes, Ho Chi Minh City&apos;s food culture is as dynamic and vibrant as the metropolis itself. Make sure to wander off the beaten track and let the aromas of street stalls guide your culinary adventure.
+              Food in{" "}
+              <Link href="/province/ho-chi-minh" style={{ color: "#00c2cb", textDecoration: "none" }}>
+                Ho Chi Minh City
+              </Link>{" "}
+              is more than nourishment—it&apos;s a vibrant, daily celebration of flavor, culture, and connection. These 12 foods reflect the spirit of the city. Whether you&apos;re here for a few days or a few months, diving into the local food scene will be one of your most unforgettable adventures. Let Ho Chi Minh City show you what soul food truly means.
             </>
           )}
         </p>
 
-        {/* ── Disclaimer Note ── */}
+        {/* ── Disclaimer Note (Screenshot 1 & 2) ── */}
         <p style={{ fontSize: "14px", lineHeight: 1.6, color: "#334155", margin: "0 0 28px", fontStyle: "italic" }}>
           {isVi
             ? "Note: Các gợi ý nhà hàng chỉ dựa trên trải nghiệm của tác giả; giá cả thực tế có thể thay đổi tùy thời điểm."
             : "Note: Restaurant recommendations are based on the authors' experiences; prices may vary."}
         </p>
 
-        {/* ── Tags ── */}
+        {/* ── Tags (Screenshot 1 & 2: TAGS + Ho Chi Minh City + Saigon food) ── */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "24px 0 40px", flexWrap: "wrap" }}>
           <span
             style={{
@@ -932,14 +940,14 @@ export default function MustTryFoodsInHCMCPage() {
               textDecoration: "none",
             }}
           >
-            Saigon Food
+            Saigon food
           </Link>
         </div>
 
-        {/* ── Divider ── */}
+        {/* ── Divider (Screenshot 2) ── */}
         <hr style={{ border: 0, height: "1px", background: "#e2e8f0", margin: "40px 0" }} />
 
-        {/* ── Related Articles ── */}
+        {/* ── Related Articles (Screenshot 2: Where to Stay, 3-week, 8 must-try foods in Hanoi) ── */}
         <section style={{ margin: "40px 0 60px" }}>
           <h2
             style={{
@@ -960,6 +968,23 @@ export default function MustTryFoodsInHCMCPage() {
               gap: "24px",
             }}
           >
+            <Link
+              href="/guide/where-to-stay-in-ho-chi-minh-city"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/where-to-stay-in-hcmc-hd.jpg"
+                  alt="Where to Stay in Ho Chi Minh City"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "Nơi lưu trú tốt nhất tại TP. Hồ Chí Minh" : "Where to Stay in Ho Chi Minh City"}
+              </h3>
+            </Link>
+
             <Link
               href="/guide/3-week-vietnam-itinerary"
               style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
@@ -991,23 +1016,6 @@ export default function MustTryFoodsInHCMCPage() {
               </div>
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
                 {isVi ? "8 món ăn nhất định phải thử ở Hà Nội" : "8 must-try foods in Hanoi"}
-              </h3>
-            </Link>
-
-            <Link
-              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
-              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
-            >
-              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
-                <img
-                  src="/guide/hcmc/hcmc-10-things-bitexco.jpg"
-                  alt="10 best things to do in Ho Chi Minh City"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  loading="lazy"
-                />
-              </div>
-              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
-                {isVi ? "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh" : "10 best things to do in Ho Chi Minh City"}
               </h3>
             </Link>
           </div>
