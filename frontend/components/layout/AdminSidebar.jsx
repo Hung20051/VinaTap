@@ -42,7 +42,7 @@ export default function AdminSidebar({
   const adminSections = [
     {
       id: "sec-01",
-      title: lang === "vi" ? "01. Tổng Quan Dashboard" : "01. Executive Dashboard",
+      title: lang === "vi" ? "Tổng Quan Dashboard" : "Executive Dashboard",
       icon: LayoutDashboard,
       items: [
         {
@@ -54,7 +54,7 @@ export default function AdminSidebar({
     },
     {
       id: "sec-02",
-      title: lang === "vi" ? "02. Lượt Truy Cập & Nguồn Khách" : "02. Traffic & Analytics",
+      title: lang === "vi" ? "Lượt Truy Cập & Nguồn Khách" : "Traffic & Analytics",
       icon: TrendingUp,
       items: [
         {
@@ -66,7 +66,7 @@ export default function AdminSidebar({
     },
     {
       id: "sec-03",
-      title: lang === "vi" ? "03. Quản Lý Bài Viết & Cẩm Nang" : "03. Articles & Content CMS",
+      title: lang === "vi" ? "Quản Lý Bài Viết & Cẩm Nang" : "Articles & Content CMS",
       icon: FileText,
       items: [
         {
@@ -78,7 +78,7 @@ export default function AdminSidebar({
     },
     {
       id: "sec-04",
-      title: lang === "vi" ? "04. Hệ Thống & Cấu Hình" : "04. System & Settings",
+      title: lang === "vi" ? "Hệ Thống & Cấu Hình" : "System & Settings",
       icon: Settings,
       items: [
         {
@@ -171,7 +171,6 @@ export default function AdminSidebar({
             <Logo size={28} showText={false} />
             <div className="admin-sidebar-brand-text">
               <span className="brand-name">VinaTap</span>
-              <span className="brand-badge">ADMIN CMS</span>
             </div>
           </div>
           {onClose && (

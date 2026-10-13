@@ -138,7 +138,7 @@
   background: rgba(255, 255, 255, 0.04);
 }
 .admin-nav-group-header.has-active {
-  color: #00c2cb;
+  color: #f1f5f9;
 }
 
 .admin-nav-group-title {
@@ -187,10 +187,10 @@
 }
 
 .admin-nav-link.is-active {
-  background: linear-gradient(90deg, rgba(0, 194, 203, 0.2) 0%, rgba(0, 194, 203, 0.06) 100%);
-  color: #00c2cb;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #ffffff;
   font-weight: 600;
-  box-shadow: inset 3px 0 0 #00c2cb;
+  box-shadow: 0 3px 12px rgba(234, 88, 12, 0.32);
 }
 
 .admin-nav-link .nav-icon {
@@ -199,7 +199,7 @@
 }
 .admin-nav-link.is-active .nav-icon {
   opacity: 1;
-  color: #00c2cb;
+  color: #ffffff;
 }
 
 .admin-nav-link .nav-label {
@@ -231,7 +231,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00c2cb 0%, #0284c7 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -239,7 +239,7 @@
   font-weight: 700;
   font-size: 0.88rem;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 194, 203, 0.3);
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.3);
 }
 
 .admin-user-info {
