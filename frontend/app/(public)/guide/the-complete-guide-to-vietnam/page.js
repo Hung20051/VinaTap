@@ -295,7 +295,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "13 Tháng 10, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-4-1month.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/1-month-in-vietnam",
       },
     ],
   },
@@ -1133,7 +1133,7 @@ export default function CompleteGuideToVietnamPage() {
             </Link>
 
             {/* Card 4 (Right row 3): 1 Month in Vietnam */}
-            <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt" className="vnn-biggrid-item">
+            <Link href="/guide/1-month-in-vietnam" className="vnn-biggrid-item">
               <img
                 src="/guide/megamenu/itin-4-1month.jpg"
                 alt={lang === "vi" ? "Lịch trình 1 tháng trọn vẹn" : "1 Month in Vietnam"}

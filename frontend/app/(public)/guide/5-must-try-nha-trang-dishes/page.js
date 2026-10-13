@@ -279,7 +279,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "111 Tháng 10, 2026",
         badge: "Itineraries",
         img: "/guide/megamenu/itin-4-1month.jpg",
-        link: "/guide/3-week-vietnam-itinerary",
+        link: "/guide/1-month-in-vietnam",
       },
     ],
   },

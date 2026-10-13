@@ -1,0 +1,396 @@
+/* ─── 1 MONTH IN VIETNAM ITINERARY CSS (SCREENSHOTS 1, 2, 3, 4, 5) ─── */
+
+.omi-page {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── HERO SECTION (SCREENSHOT 1) ─── */
+.omi-hero {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  min-height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.omi-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.85);
+  transform: scale(1.02);
+  transition: transform 0.5s ease;
+}
+
+.omi-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.25) 50%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  z-index: 1;
+}
+
+.omi-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0 24px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.omi-hero__badges {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.omi-hero__badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+}
+
+.omi-hero__title {
+  font-size: 48px;
+  line-height: 1.15;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+  .omi-hero {
+    height: 400px;
+  }
+  .omi-hero__title {
+    font-size: 32px;
+  }
+}
+
+.omi-hero__byline {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+
+/* ─── CALL TO ACTION PILL BUTTON (SCREENSHOT 1 / 2) ─── */
+.omi-cta-bar {
+  display: flex;
+  justify-content: center;
+  margin: -24px auto 40px;
+  position: relative;
+  z-index: 3;
+}
+
+.omi-cta-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+  color: #ffffff;
+  font-size: 14.5px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 180, 216, 0.35);
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.omi-cta-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 180, 216, 0.5);
+  background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%);
+}
+
+/* ─── MAIN CONTAINER ─── */
+.omi-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+/* ─── SECTION TITLE TEAL ─── */
+.omi-section-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #00a8b5;
+  margin: 40px 0 16px;
+  letter-spacing: -0.01em;
+}
+
+.omi-intro-text {
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #475569;
+  max-width: 800px;
+  margin: 0 auto 32px;
+}
+
+/* ─── MAP WRAPPER (SCREENSHOT 2 & 3) ─── */
+.omi-map-wrap {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto 36px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.omi-map-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.omi-map-img:hover {
+  transform: scale(1.01);
+}
+
+.omi-map-hint {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* ─── CUSTOMIZE SECTION (SCREENSHOT 3 & 4) ─── */
+.omi-custom-box {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.omi-custom-box h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.omi-custom-box p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #475569;
+  margin: 0 0 14px;
+}
+
+.omi-custom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #00c2cb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 26px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 194, 203, 0.3);
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.omi-custom-btn:hover {
+  background: #00aab2;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 194, 203, 0.45);
+}
+
+/* ─── SUMMARY CARD (SCREENSHOT 4) ─── */
+.omi-summary-card {
+  max-width: 800px;
+  margin: 0 auto 50px;
+  background: #e6f6f8;
+  border: 1px solid #bce6ea;
+  border-left: 4px solid #00c2cb;
+  border-radius: 8px;
+  padding: 24px 32px;
+}
+
+.omi-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.omi-summary-item {
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.5;
+}
+
+.omi-summary-item strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* ─── ITINERARY DETAILS 3-COLUMN GRID (SCREENSHOT 5) ─── */
+.omi-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 24px;
+  margin-top: 32px;
+}
+
+@media (max-width: 900px) {
+  .omi-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .omi-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.omi-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.omi-card:hover {
+  transform: translateY(-3px);
+}
+
+.omi-card__img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #f1f5f9;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.omi-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.omi-card:hover .omi-card__img {
+  transform: scale(1.04);
+}
+
+.omi-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.omi-card__title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0099a8;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.omi-card__days {
+  text-align: center;
+  font-size: 13px;
+  color: #64748b;
+  margin: -4px 0 4px;
+}
+
+.omi-card__section {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #475569;
+}
+
+.omi-card__label {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.omi-card__transit-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.omi-card__transit-list {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.omi-card__transit-list li {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 3px;
+}
+
+.omi-card__transit-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #00a8b5;
+  font-weight: bold;
+}
