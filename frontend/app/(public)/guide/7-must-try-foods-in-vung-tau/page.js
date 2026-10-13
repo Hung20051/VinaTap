@@ -115,7 +115,7 @@ const MEGA_MENUS_DATA = {
         date: "September 15, 2026",
         dateVi: "15 Tháng 9, 2026",
         badge: "Destinations",
-        img: "/guide/megamenu/dest-4-nhatrang.jpg",
+        img: "/guide/megamenu/dest-4-danang.jpg",
         link: "/province/da-nang",
       },
       {
@@ -509,6 +509,7 @@ const RELATED_ARTICLES = [
     date: "September 15, 2026",
     dateVi: "15 Tháng 9, 2026",
     badge: "Things to Do",
+    badgeVi: "Trải nghiệm",
     img: "/guide/vung-tau/hero-vung-tau-beaches.jpg",
     link: "/guide/5-best-vung-tau-beaches",
   },
@@ -518,6 +519,7 @@ const RELATED_ARTICLES = [
     date: "September 8, 2026",
     dateVi: "8 Tháng 9, 2026",
     badge: "Eat & Drink",
+    badgeVi: "Ẩm thực",
     img: "/guide/megamenu/eat-2-hcmc.jpg",
     link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
   },
@@ -527,6 +529,7 @@ const RELATED_ARTICLES = [
     date: "October 2, 2026",
     dateVi: "2 Tháng 10, 2026",
     badge: "Eat & Drink",
+    badgeVi: "Ẩm thực",
     img: "/guide/megamenu/eat-1-hanoi.jpg",
     link: "/guide/8-must-try-foods-in-hanoi",
   },
@@ -540,27 +543,43 @@ export default function VungTauFoodGuidePage() {
   const [toastMessage, setToastMessage] = useState("");
   const menuTimerRef = useRef(null);
 
-  // Sync language
+  // Sync language with global VinaTap prefs
   useEffect(() => {
-    const currentLang = getLang();
-    setLang(currentLang || "vi");
+    setLang(getLang() || "vi");
 
-    const handleLangChange = (e) => {
-      setLang(e.detail || "vi");
+    const handleLangUpdated = (e) => {
+      if (e.detail) setLang(e.detail);
     };
-    window.addEventListener("app:languageChange", handleLangChange);
-    return () =>
-      window.removeEventListener("app:languageChange", handleLangChange);
+
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    const onStorage = (e) => {
+      if (e.key === "vinatap_lang" && e.newValue) setLang(e.newValue);
+    };
+    window.addEventListener("storage", onStorage);
+
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+      window.removeEventListener("storage", onStorage);
+    };
   }, []);
 
-  // Scroll Progress indicator
+  // Safe Scroll Progress indicator (RAF-throttled)
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const totalScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const currentScroll = window.scrollY;
-      if (totalScroll > 0) {
-        setScrollProgress((currentScroll / totalScroll) * 100);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const totalScroll =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const currentScroll = window.scrollY;
+          if (totalScroll > 0) {
+            setScrollProgress(
+              Math.min(100, Math.max(0, (currentScroll / totalScroll) * 100))
+            );
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -1025,19 +1044,19 @@ export default function VungTauFoodGuidePage() {
         {/* Article Tags */}
         <div className="vnn-tags-section">
           <span style={{ fontWeight: 700, fontSize: "12px", textTransform: "uppercase" }}>
-            Tags:
+            {lang === "vi" ? "Thẻ:" : "Tags:"}
           </span>
           <Link href="/province/ba-ria-vung-tau" className="vnn-tag-pill">
-            Vũng Tàu Food
+            {lang === "vi" ? "Ẩm thực Vũng Tàu" : "Vung Tau Food"}
           </Link>
           <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="vnn-tag-pill">
-            Vietnamese street food
+            {lang === "vi" ? "Ẩm thực đường phố Việt Nam" : "Vietnamese Street Food"}
           </Link>
           <Link href="/province/ba-ria-vung-tau" className="vnn-tag-pill">
-            Bà Rịa - Vũng Tàu
+            {lang === "vi" ? "Bà Rịa - Vũng Tàu" : "Ba Ria - Vung Tau"}
           </Link>
           <Link href="/guide/5-best-vung-tau-beaches" className="vnn-tag-pill">
-            Du lịch Vũng Tàu 2026
+            {lang === "vi" ? "Du lịch Vũng Tàu 2026" : "Vung Tau Travel 2026"}
           </Link>
         </div>
 
@@ -1064,7 +1083,9 @@ export default function VungTauFoodGuidePage() {
                     className="vnn-related-img"
                     loading="lazy"
                   />
-                  <span className="vnn-related-badge">{article.badge}</span>
+                  <span className="vnn-related-badge">
+                    {lang === "vi" ? (article.badgeVi || article.badge) : article.badge}
+                  </span>
                 </div>
                 <div className="vnn-related-body">
                   <h4 className="vnn-related-card-title">

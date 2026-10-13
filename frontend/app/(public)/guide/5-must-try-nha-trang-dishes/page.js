@@ -115,7 +115,7 @@ const MEGA_MENUS_DATA = {
         date: "September 15, 2026",
         dateVi: "15 Tháng 9, 2026",
         badge: "Destinations",
-        img: "/guide/megamenu/dest-4-nhatrang.jpg",
+        img: "/guide/megamenu/dest-4-danang.jpg",
         link: "/province/khanh-hoa",
       },
       {
@@ -481,6 +481,7 @@ const RELATED_ARTICLES = [
     date: "March 1, 2026",
     dateVi: "1 Tháng 3, 2026",
     badge: "Things to Do",
+    badgeVi: "Trải nghiệm",
     img: "/guide/megamenu/todo-3-nhatrang.jpg",
     link: "/guide/8-best-things-to-do-in-nha-trang",
   },
@@ -490,6 +491,7 @@ const RELATED_ARTICLES = [
     date: "April 25, 2026",
     dateVi: "25 Tháng 4, 2026",
     badge: "Eat & Drink",
+    badgeVi: "Ẩm thực",
     img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
     link: "/guide/7-must-try-foods-in-vung-tau",
   },
@@ -499,6 +501,7 @@ const RELATED_ARTICLES = [
     date: "September 8, 2026",
     dateVi: "8 Tháng 9, 2026",
     badge: "Eat & Drink",
+    badgeVi: "Ẩm thực",
     img: "/guide/megamenu/eat-2-hcmc.jpg",
     link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
   },
@@ -512,27 +515,43 @@ export default function NhaTrangFoodGuidePage() {
   const [toastMessage, setToastMessage] = useState("");
   const menuTimerRef = useRef(null);
 
-  // Sync language
+  // Sync language with global VinaTap prefs
   useEffect(() => {
-    const currentLang = getLang();
-    setLang(currentLang || "vi");
+    setLang(getLang() || "vi");
 
-    const handleLangChange = (e) => {
-      setLang(e.detail || "vi");
+    const handleLangUpdated = (e) => {
+      if (e.detail) setLang(e.detail);
     };
-    window.addEventListener("app:languageChange", handleLangChange);
-    return () =>
-      window.removeEventListener("app:languageChange", handleLangChange);
+
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    const onStorage = (e) => {
+      if (e.key === "vinatap_lang" && e.newValue) setLang(e.newValue);
+    };
+    window.addEventListener("storage", onStorage);
+
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+      window.removeEventListener("storage", onStorage);
+    };
   }, []);
 
-  // Scroll Progress indicator
+  // Safe Scroll Progress indicator (RAF-throttled)
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const totalScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const currentScroll = window.scrollY;
-      if (totalScroll > 0) {
-        setScrollProgress((currentScroll / totalScroll) * 100);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const totalScroll =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const currentScroll = window.scrollY;
+          if (totalScroll > 0) {
+            setScrollProgress(
+              Math.min(100, Math.max(0, (currentScroll / totalScroll) * 100))
+            );
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -967,22 +986,22 @@ export default function NhaTrangFoodGuidePage() {
         {/* Article Tags */}
         <div className="vnn-tags-section">
           <span style={{ fontWeight: 700, fontSize: "12px", textTransform: "uppercase" }}>
-            Tags:
+            {lang === "vi" ? "Thẻ:" : "Tags:"}
           </span>
           <Link href="/province/khanh-hoa" className="vnn-tag-pill">
-            Nha Trang Food
+            {lang === "vi" ? "Ẩm thực Nha Trang" : "Nha Trang Food"}
           </Link>
           <Link href="/province/khanh-hoa" className="vnn-tag-pill">
-            Ẩm thực Nha Trang
+            {lang === "vi" ? "Đặc sản Khánh Hòa" : "Khanh Hoa Specialties"}
           </Link>
           <Link href="/guide/8-best-things-to-do-in-nha-trang" className="vnn-tag-pill">
-            Du lịch Nha Trang 2026
+            {lang === "vi" ? "Du lịch Nha Trang 2026" : "Nha Trang Travel 2026"}
           </Link>
           <Link href="/province/khanh-hoa" className="vnn-tag-pill">
-            Khánh Hòa
+            {lang === "vi" ? "Khánh Hòa" : "Khanh Hoa"}
           </Link>
           <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="vnn-tag-pill">
-            Vietnamese Street Food
+            {lang === "vi" ? "Ẩm thực đường phố Việt Nam" : "Vietnamese Street Food"}
           </Link>
         </div>
 
@@ -1009,7 +1028,9 @@ export default function NhaTrangFoodGuidePage() {
                     className="vnn-related-img"
                     loading="lazy"
                   />
-                  <span className="vnn-related-badge">{article.badge}</span>
+                  <span className="vnn-related-badge">
+                    {lang === "vi" ? (article.badgeVi || article.badge) : article.badge}
+                  </span>
                 </div>
                 <div className="vnn-related-body">
                   <h4 className="vnn-related-card-title">
