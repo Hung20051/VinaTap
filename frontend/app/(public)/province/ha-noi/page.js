@@ -2286,91 +2286,240 @@ export default function HanoiPage() {
                     ? "Các món ăn này thường được phục vụ theo đĩa lớn đủ cho 2-3 người ăn chung. Do đó, bạn nên gọi món lần lượt từng đĩa một để tránh bị quá tải thức ăn, đồng thời luôn được thưởng thức món ăn khi vừa mới nấu xong còn nóng giòn tươi ngon."
                     : "These dishes are served in big portions which are enough for 2-3 people. So, it is recommended that you order one by one to make sure you are not overloaded with foods and also can enjoy them while they are freshly cooked and served."}
                 </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Một số địa chỉ gợi ý dành cho bạn:" : "Some recommendations for you:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>29B Ngu Xa, Ba Dinh District (25,000 VND – 75,000 VND)</li>
+                  <li>31 Ngu Xa, Ba Dinh District (25,000 VND – 75,000 VND)</li>
+                  <li>108B1 Tran Huy Lieu, Ba Dinh District (25,000 VND – 80,000 VND)</li>
+                </ul>
               </div>
             </div>
           </div>
 
-          <h4 style={{ fontSize: "18px", fontWeight: "700", color: "#222", marginBottom: "16px" }}>
-            {lang === "vi" ? "Các món đặc sản trứ danh tiếp theo:" : "More must-try Hanoi specialties:"}
-          </h4>
-          <div className="vnn-hanoi-cards-grid">
-            {/* 7. Ca Phe Trung */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-caphetrung-hd.jpg"
-                  alt="Hanoi Egg Coffee"
-                />
+          {/* DISH 7: NGAN CHAY TOI (SCREENSHOT 1 & 2) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "7. Ngan Cháy Tỏi (Ngan Chay Toi)" : "7. Ngan Chay Toi"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-nganchaytoi-hd.jpg"
+                    alt="Ngan Chay Toi Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Mẹt ngan cháy tỏi thơm lừng ăn kèm bún, canh măng và nước chấm gừng ớt" : "Ngan Chay Toi"}
+                  </p>
+                </div>
               </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "7. Cà Phê Trứng" : "7. Hanoi Egg Coffee"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
                   {lang === "vi"
-                    ? "Sự sáng tạo tuyệt hảo với lớp kem trứng đánh bông mịn như nhung trên nền cà phê Robusta đậm đà thơm ngậy."
-                    : "Rich Robusta drip coffee topped with velvety whipped egg yolk and condensed milk cream foam."}
+                    ? "Ngan Cháy Tỏi (thịt ngan chiên ngập tỏi) là một \"ngôi sao đang lên\" rực rỡ trên bản đồ ẩm thực thủ đô. Được tình cờ sáng tạo bởi một người đầu bếp gia đình – người chỉ đang tìm cách nấu lại phần thịt ngan còn thừa cho bữa cơm người nhà, món ăn này đã nhanh chóng bùng nổ danh tiếng và trở thành một trong những món khoái khẩu được người dân Hà Nội mê mẩn nhất."
+                    : "Ngan Chay Toi (duck fried with garlic) is a rising star on the Hanoian culinary map. Accidentally invented by a home cook chef – who was trying to cook up the leftovers for her family, this dish soon took off and became one of the most favorable dishes of the Hanoi people."}
                 </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Thịt ngan được tẩm ướp đậm đà và chiên già lửa cùng bạt ngàn tép tỏi cho đến khi miếng thịt khoác lên sắc nâu caramel tuyệt đẹp cùng những lát tỏi giòn tan bùi ngậy. Một mẹt ngan cháy tỏi đầy đủ thường gồm 1/4 đến 1/2 con ngan (bạn có thể gọi nửa đĩa \"cháy tỏi\" và nửa đĩa \"luộc\"); một bát bún tươi hoặc miến tùy chọn; một bát canh măng tiết nóng hổi; rổ rau sống tươi non và bát nước mắm gừng tỏi ớt chua cay đậm đà. Tất cả được bày biện trên chiếc mâm tròn đặt trên ghế nhựa, trong khi thực khách quây quần trên những chiếc ghế nhựa nhỏ xung quanh để thưởng thức."
+                    : "Duck meat is well seasoned and deep-fried with lots of garlic until they get that beautiful caramel color and crispy texture (for the garlic). A full combo of Ngan Chay Toi locally goes with a quarter to a half of a duck (you could ask for half \"cháy tỏi\" – deep-fried and half \"luộc\" – boiled); a bowl of noodles of your choice (could be \"bún\" – rice noodles or \"miến\" – glass vermicelli); a bowl of bamboo shoot soup; a small basket of fresh herbs; and of course a small bowl of ginger, garlic and chili fish sauce. All of these are served on a round serving platter which is set up on a plastic stool while you will be given even smaller plastic stools to sit around and enjoy your meal."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Ghi chú & Mẹo thưởng thức (Notes and tips):" : "Notes and tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Đây là món ăn sinh ra để chia sẻ cùng bạn bè, người thân. Một phần 1/4 con ngan là vừa vặn cho 2 người, và 1/2 con ngan sẽ đủ no nê cho nhóm ít nhất 3-4 người."
+                    : "This is supposed to be a shared dish. A combo of 1/4 a duck is sufficient for 2 people and 1/2 a duck should be enough for at least 3-4 people."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Bạn sẽ ngồi trên những chiếc ghế nhựa con kê sát nhau; vì vậy hãy cân nhắc nếu bạn là người thích có không gian riêng tư và trải nghiệm ăn uống rộng rãi, êm ái hơn."
+                    : "You will be sitting on little stools and quite close to each other; so consider if you feel like having your personal space and more comfortable dining space."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Dưới đây là một số địa chỉ gợi ý dành cho bạn:" : "Here are some suggested addresses for you:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>71 Hang Thiec, Hoan Kiem District (120,000 VND – 250,000 VND)</li>
+                  <li>51 Hang Luoc, Hoan Kiem District (40,000 VND – 265,000 VND)</li>
+                  <li>16 Hang Can, Hoan Kiem District (40,000 VND – 260,000 VND)</li>
+                </ul>
               </div>
             </div>
+          </div>
 
-            {/* 8. Banh Cuon */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-banhcuon-hd.jpg"
-                  alt="Banh Cuon Hanoi"
-                />
+          {/* DISH 8: CHAO SUON (SCREENSHOT 2 & 3) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "8. Cháo Sườn (Chao Suon)" : "8. Chao Suon"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-chaosun-hd.jpg"
+                    alt="Chao Suon Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Bát cháo sườn sánh mịn ăn kèm quẩy giòn và ruốc thịt đậm đà" : "Chao Suon"}
+                  </p>
+                </div>
               </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "8. Bánh Cuốn Thanh Trì" : "8. Banh Cuon"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
                   {lang === "vi"
-                    ? "Bánh tráng mỏng mềm mướt nhân thịt băm mộc nhĩ giòn sần sật, rắc hành phi vàng ruộm chấm nước mắm cà cuống thơm lừng."
-                    : "Delicate steamed rice paper rolls stuffed with minced pork and wood-ear mushrooms, topped with crispy shallots."}
+                    ? "Cháo Sườn dường như ít được du khách quốc tế biết đến hơn, nhưng lại là món ăn được những người bạn Hà Nội bản địa nhiệt tình tiến cử nhất. Đây đích thực là món \"comfort food\" (món ăn vỗ về tâm hồn) ấm áp tột cùng mà bạn tìm kiếm bấy lâu, ngay khi bạn nếm thử miếng đầu tiên."
+                    : "Chao Suon (pork rib porridge) is somehow less recognized by tourists but highly recommended by our local Hanoian friends. This could be the ultimate comfort food that you have been looking for as long as you give it a try."}
                 </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Cháo chính là linh hồn của món ăn này. Một nồi cháo chuẩn vị phải được ninh hoàn toàn từ nước hầm xương sườn ngọt lịm với tỷ lệ hoàn hảo giữa gạo tẻ và gạo nếp đã ngâm qua đêm trong nước sạch. Bột gạo xay nhuyễn được quấy đều tay và ninh nhỏ lửa cho đến khi đạt được độ sánh mịn như kem mượt mà. Sườn lợn và sườn sụn được ninh nhừ đến mức róc xương và tan ngay trong miệng. Một bát cháo sườn hoàn hảo là sự hòa quyện nhịp nhàng giữa cháo sánh mịn, ruốc thịt heo xé sợi bông xốp, thịt băm xào thơm và dĩ nhiên không thể thiếu những miếng sườn sụn mềm giòn."
+                    : "Chao (or rice porridge) is the soul of this dish. A good one needs to be cooked in pork rib broth with the right proportion of rice and sticky rice which are already soaked in fresh water overnight. This porridge is then blended and slow-cooked until it gets a finely smooth and creamy texture. Pork ribs, meanwhile, are slow-cooked until they can be easily deboned and melts in your mouth. A perfect bowl of Chao Suon is a combination of rice porridge, shredded pork floss, minced pork and tender pork ribs of course."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Mẹo thưởng thức (Tips):" : "Tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Món cháo này thường được ăn vào bữa sáng hoặc những bữa ăn khuya ấm bụng. Bạn cũng có thể gọi thêm bánh quẩy giòn cắt nhỏ và trứng bắc thảo để tăng thêm hương vị đậm đà cho món ăn."
+                    : "This dish is often eaten for breakfast or late-night meals. You can also order \"bánh quẩy\" (hot finger-shaped soufflé) and century eggs to add even more flavors to the dish."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Các địa chỉ ăn Cháo Sườn gợi ý:" : "Recommended addresses to eat Chao Suon:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>14 Dong Xuan, Hoan Kiem District (25,000 VND – 55,000 VND)</li>
+                  <li>61A Ngo Huyen, Hoan Kiem District (30,000 VND – 50,000 VND)</li>
+                  <li>55 Hong Tien, Long Bien District (45,000 VND – 70,000 VND)</li>
+                </ul>
               </div>
             </div>
+          </div>
 
-            {/* 9. Bun Rieu Cua */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Rieu.jpg"
-                  alt="Bun Rieu Cua Hanoi"
-                />
+          {/* DISH 9: BANH GOI AND BANH RAN MAN (SCREENSHOT 4) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "9. Bánh Gối & Bánh Rán Mặn (Banh Goi and Banh Ran Man)" : "9. Banh Goi and Banh Ran Man"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-banhgoi-hd.jpg"
+                    alt="Banh Goi and Banh Ran Man Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Bánh gối vàng ươm giòn rụm với nhân thịt băm mộc nhĩ thơm ngon" : "Banh Goi and Banh Ran Man"}
+                  </p>
+                </div>
               </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "9. Bún Riêu Cua Đồng" : "9. Bun Rieu Cua"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
                   {lang === "vi"
-                    ? "Bát bún riêu thanh mát với gạch cua đồng béo ngậy, đậu phụ rán vàng, cà chua đỏ mọng và vị chua thanh thanh của giấm bỗng."
-                    : "Tangy freshwater crab noodle soup cooked with ripe tomatoes, fried tofu, and traditional wine vinegar broth."}
+                    ? "Dù tên tiếng Anh mang nghĩa \"bánh ngọt\" (bánh gối chiên giòn & bánh rán mặn), những món ăn này hoàn toàn không phải bánh tráng miệng thông thường (mà tựa như bánh bao chiên giòn kiểu Việt) và cách thưởng thức chúng cũng khác xa so với hình dung của bạn. Vỏ bánh gối và bánh rán mặn được làm từ bột mì và bột nếp, còn phần nhân bên trong là hỗn hợp thịt băm, mộc nhĩ, hành tây, cà rốt và miến dong."
+                    : "Although the names suggest \"cakes\" (deep-fried pillow cakes & savory cakes), these dishes are not your typical dessert cakes (but more like Vietnamese deep-fried dumplings) and the way to eat them is nothing as in your imagination. Pillow cakes and savory cakes' skins are made with wheat flour and sticky rice powder and the fillings are a mixture of minced pork, wood ear mushrooms, onions, carrots and glass vermicelli."}
                 </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Thông thường, các loại bánh sẽ được bày biện bắt mắt theo phong cách tự chọn. Bạn chỉ cần chỉ vào những món bánh mình ưng ý, chọn chỗ ngồi và người bán sẽ chiên nóng giòn lại rồi mang ra phục vụ. Tại bàn, bánh đã được cắt thành từng miếng vừa ăn và dọn kèm một bát nước chấm chua ngọt có thả đu đủ xanh giòn sần sật cùng rổ rau sống tươi non. Khi ăn, bạn hãy lấy một lá xà lách hoặc rau thơm, kẹp miếng bánh giòn rụm bên trong, cuộn tròn lại rồi chấm ngập vào bát nước mắm chua ngọt."
+                    : "Typically, all the cakes will be displayed in a buffet style. You can simply point at whatever you feel like, go take a seat and they will serve you the exact ones but freshly cooked. At your table, the cakes are already cut up for you and they will be served with a small bowl of sweet and sour dipping sauce with green papaya sliced inside and some fresh leaves on the side. To eat this, you take a green leaf and add a piece of the cake together with some other herbs, wrap them up and dip in the sweet and sour sauce."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Mẹo thưởng thức (Tips):" : "Tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Món bánh này chiên ngập dầu nhiều lần nên vỏ rất giòn nhưng cũng có độ béo ngậy nhất định. Bạn sẽ cảm thấy món ăn ngon và hấp dẫn hơn gấp bội vào những ngày mưa lạnh; hoặc khi bạn đang đặc biệt thèm những món chiên giòn rụm."
+                    : "This food is quite oily as it is deep fried several times so that the skins are crispy. You would probably find it more enjoyable to eat on a cold and rainy day; or when you particularly crave for some fried dishes."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Một số địa chỉ gợi ý dành cho bạn:" : "Some recommendations for you:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>52 Ly Quoc Su, Hoan Kiem District (13,000 VND)</li>
+                  <li>112K Thai Thinh, Dong Da District (13,000 VND)</li>
+                </ul>
               </div>
             </div>
+          </div>
 
-            {/* 10. Xoi Xeo */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Xoi-Man.jpg"
-                  alt="Xoi Xeo Hanoi"
-                />
+          {/* DISH 10: CA PHE TRUNG (SCREENSHOT 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "10. Cà Phê Trứng (Ca Phe Trung)" : "10. Ca Phe Trung"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-caphetrung-nest-hd.jpg"
+                    alt="Ca Phe Trung Egg Coffee Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Tách cà phê trứng béo ngậy ấm nóng đặt trong tổ rơm mộc mạc" : "Ca Phe Trung"}
+                  </p>
+                </div>
               </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "10. Xôi Xéo Hà Nội" : "10. Xoi Xeo"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
                   {lang === "vi"
-                    ? "Gói xôi nếp vàng óng ả thơm dẻo bọc lá chuối, phủ lớp đỗ xanh thái mỏng bùi ngậy, hành phi giòn tan và rưới mỡ gà thơm lừng."
-                    : "Golden turmeric sticky rice served with shaved mung bean paste, fragrant fried shallots, and rich rendered chicken oil."}
+                    ? "Có thể sẽ có đôi chút băn khoăn khi khép lại danh sách bằng một món đồ uống; nhưng thật khó để phân định Cà Phê Trứng là món tráng miệng hay thức uống. Vì vậy, tốt nhất bạn đừng bao giờ bỏ lỡ. Được ca ngợi nồng nhiệt trên hàng loạt tạp chí du lịch quốc tế, Cà Phê Trứng là sự sáng tạo trác tuyệt kết hợp giữa cà phê đen và lòng đỏ trứng gà. Đây là bản hòa tấu cân bằng hoàn mỹ giữa vị đắng nồng nàn của cà phê đen và lớp kem trứng đánh bông béo ngậy, ngọt dịu như nhung. Cà phê trứng ngon nhất khi thưởng thức lúc còn nóng hổi bằng cách: (1) khuấy đều và nhấp từng ngụm nhỏ, hoặc (2) múc thìa từ đáy cốc lên để cảm nhận trọn vẹn từng tầng hương vị bùng nổ."
+                    : "It may be a bit controversial to end the list with a drink; but, it is hard to decide whether Ca Phe Trung (egg coffee) should be categorized as a dessert or a drink. So here it is, better not miss it. Having been praised by many international travel pages, Ca Phe Trung is a creative drink of black coffee and egg yolk. This is a perfectly balanced combination of bitter black coffee and creamy, lightly-sweet whisked egg yolk. Ca Phe Trung must be enjoyed while it is still hot by (1) mixing it up and sipping in small sips or (2) letting the spoon go from the bottom of the cup so you can experience a full layer of flavors."}
                 </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Mẹo thưởng thức (Tips):" : "Tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Bạn cũng có thể lựa chọn Cà Phê Trứng Lạnh hoặc Ca Cao Trứng."
+                    : "You can also choose Ca Phe Trung Lanh (iced egg coffee) or Cacao Trung (egg cocoa drink)."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Thức uống này vô cùng béo ngậy, mịn màng và có thể chính là món giải khát sảng khoái mát lành mà bạn đang tìm kiếm trong những ngày hè nắng nóng."
+                    : "This drink is super rich and creamy and probably the refreshing drink you are looking for on a hot summer day."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Thưởng thức một tách cà phê trứng trứ danh tại các quán sau:" : "Enjoy a cup of Egg coffee at the following coffee shops:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>39 Nguyen Huu Huan Street, Hoan Kiem District (39,000 VND)</li>
+                  <li>13 Dinh Tien Hoang Street, Hoan Kiem District (25,000 VND)</li>
+                </ul>
               </div>
             </div>
           </div>
