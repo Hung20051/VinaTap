@@ -6,7 +6,7 @@ const Article = {
     let conditions = [];
     let params = [];
 
-    if (status) {
+    if (status && status !== "all") {
       conditions.push("a.status = ?");
       params.push(status);
     }
@@ -64,17 +64,23 @@ const Article = {
 
     return {
       ...article,
-      items: items.map((it) => ({
-        ...it,
-        content_en:
-          typeof it.content_en === "string"
-            ? JSON.parse(it.content_en || "[]")
-            : it.content_en,
-        content_vi:
-          typeof it.content_vi === "string"
-            ? JSON.parse(it.content_vi || "[]")
-            : it.content_vi,
-      })),
+      items: items.map((it) => {
+        const pEn =
+          typeof it.paragraphs_en === "string"
+            ? JSON.parse(it.paragraphs_en || "[]")
+            : it.paragraphs_en || [];
+        const pVi =
+          typeof it.paragraphs_vi === "string"
+            ? JSON.parse(it.paragraphs_vi || "[]")
+            : it.paragraphs_vi || [];
+        return {
+          ...it,
+          paragraphs_en: pEn,
+          paragraphs_vi: pVi,
+          content_en: pEn,
+          content_vi: pVi,
+        };
+      }),
     };
   },
 
@@ -93,17 +99,23 @@ const Article = {
 
     return {
       ...article,
-      items: items.map((it) => ({
-        ...it,
-        content_en:
-          typeof it.content_en === "string"
-            ? JSON.parse(it.content_en || "[]")
-            : it.content_en,
-        content_vi:
-          typeof it.content_vi === "string"
-            ? JSON.parse(it.content_vi || "[]")
-            : it.content_vi,
-      })),
+      items: items.map((it) => {
+        const pEn =
+          typeof it.paragraphs_en === "string"
+            ? JSON.parse(it.paragraphs_en || "[]")
+            : it.paragraphs_en || [];
+        const pVi =
+          typeof it.paragraphs_vi === "string"
+            ? JSON.parse(it.paragraphs_vi || "[]")
+            : it.paragraphs_vi || [];
+        return {
+          ...it,
+          paragraphs_en: pEn,
+          paragraphs_vi: pVi,
+          content_en: pEn,
+          content_vi: pVi,
+        };
+      }),
     };
   },
 
@@ -124,20 +136,29 @@ const Article = {
     try {
       await conn.beginTransaction();
 
+      const formattedDate =
+        typeof published_date === "string" && published_date.trim()
+          ? published_date.trim()
+          : new Date().toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            });
+
       const [res] = await conn.execute(
         `INSERT INTO articles 
          (slug, category, province_slug, title_en, title_vi, hero_image, author_name, published_date, status)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
-          slug,
-          category,
+          slug || null,
+          category || "things-to-do",
           province_slug || null,
-          title_en,
-          title_vi,
-          hero_image,
-          author_name,
-          published_date || new Date(),
-          status,
+          title_en || "",
+          title_vi || "",
+          hero_image || "/guide/megamenu/todo-2-hcmc.jpg",
+          author_name || "VinaTap",
+          formattedDate,
+          status || "published",
         ],
       );
 
@@ -146,21 +167,30 @@ const Article = {
       if (Array.isArray(items) && items.length > 0) {
         for (let i = 0; i < items.length; i++) {
           const it = items[i];
+          const rawEn = it.paragraphs_en ?? it.content_en ?? [];
+          const rawVi = it.paragraphs_vi ?? it.content_vi ?? [];
+          const pEn = Array.isArray(rawEn) ? rawEn : [String(rawEn || "")];
+          const pVi = Array.isArray(rawVi) ? rawVi : [String(rawVi || "")];
+
           await conn.execute(
             `INSERT INTO article_items 
-             (article_id, sort_order, item_number, title_en, title_vi, image_url, caption_en, caption_vi, content_en, content_vi)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             (article_id, sort_order, item_number, title_en, title_vi, image_url, caption_en, caption_vi, paragraphs_en, paragraphs_vi, tip_en, tip_vi, affiliate_url, affiliate_partner)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               articleId,
               it.sort_order ?? i,
               it.item_number ?? i + 1,
               it.title_en || "",
               it.title_vi || "",
-              it.image_url || "",
-              it.caption_en || "",
-              it.caption_vi || "",
-              JSON.stringify(it.content_en || []),
-              JSON.stringify(it.content_vi || []),
+              it.image_url || "/guide/megamenu/todo-2-hcmc.jpg",
+              it.caption_en || null,
+              it.caption_vi || null,
+              JSON.stringify(pEn),
+              JSON.stringify(pVi),
+              it.tip_en || null,
+              it.tip_vi || null,
+              it.affiliate_url || null,
+              it.affiliate_partner || null,
             ],
           );
         }
@@ -200,7 +230,7 @@ const Article = {
       for (const key of allowedFields) {
         if (fields[key] !== undefined) {
           sets.push(`${key} = ?`);
-          values.push(fields[key]);
+          values.push(fields[key] === undefined ? null : fields[key]);
         }
       }
 
@@ -218,21 +248,30 @@ const Article = {
 
         for (let i = 0; i < items.length; i++) {
           const it = items[i];
+          const rawEn = it.paragraphs_en ?? it.content_en ?? [];
+          const rawVi = it.paragraphs_vi ?? it.content_vi ?? [];
+          const pEn = Array.isArray(rawEn) ? rawEn : [String(rawEn || "")];
+          const pVi = Array.isArray(rawVi) ? rawVi : [String(rawVi || "")];
+
           await conn.execute(
             `INSERT INTO article_items 
-             (article_id, sort_order, item_number, title_en, title_vi, image_url, caption_en, caption_vi, content_en, content_vi)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+             (article_id, sort_order, item_number, title_en, title_vi, image_url, caption_en, caption_vi, paragraphs_en, paragraphs_vi, tip_en, tip_vi, affiliate_url, affiliate_partner)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               id,
               it.sort_order ?? i,
               it.item_number ?? i + 1,
               it.title_en || "",
               it.title_vi || "",
-              it.image_url || "",
-              it.caption_en || "",
-              it.caption_vi || "",
-              JSON.stringify(it.content_en || []),
-              JSON.stringify(it.content_vi || []),
+              it.image_url || "/guide/megamenu/todo-2-hcmc.jpg",
+              it.caption_en || null,
+              it.caption_vi || null,
+              JSON.stringify(pEn),
+              JSON.stringify(pVi),
+              it.tip_en || null,
+              it.tip_vi || null,
+              it.affiliate_url || null,
+              it.affiliate_partner || null,
             ],
           );
         }
@@ -247,6 +286,7 @@ const Article = {
       conn.release();
     }
   },
+
 
   // Xóa bài viết
   async delete(id) {

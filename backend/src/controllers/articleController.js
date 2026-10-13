@@ -4,12 +4,17 @@ const Article = require("../models/Article");
 const getAllArticles = async (req, res) => {
   try {
     const { category, search, status, limit, offset } = req.query;
-    // Guest chỉ được xem bài đã xuất bản
+    // Guest chỉ được xem bài đã xuất bản, admin xem tất cả hoặc theo status lọc
     const role = req.user?.role;
-    const filterStatus = role === "admin" ? status : "published";
+    const filterStatus =
+      role === "admin"
+        ? status === "all" || !status
+          ? undefined
+          : status
+        : "published";
 
     const data = await Article.findAll({
-      category,
+      category: category === "all" ? undefined : category,
       search,
       status: filterStatus,
       limit: Number(limit) || 50,

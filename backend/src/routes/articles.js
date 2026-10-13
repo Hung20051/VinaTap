@@ -7,12 +7,12 @@ const {
   updateArticle,
   deleteArticle,
 } = require("../controllers/articleController");
-const { protect } = require("../middleware/auth");
+const { protect, optionalAuth } = require("../middleware/auth");
 const { requireRole } = require("../middleware/role");
 
-// Public endpoints
-router.get("/", getAllArticles);
-router.get("/:slug", getArticleBySlug);
+// Public endpoints (optionalAuth allows admin to view drafts/all articles)
+router.get("/", optionalAuth, getAllArticles);
+router.get("/:slug", optionalAuth, getArticleBySlug);
 
 // Admin-only endpoints
 router.post("/", protect, requireRole("admin"), createArticle);

@@ -188,7 +188,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* ─── TOP KPI GRID (ĐÃ BỎ 4 STATS CŨ, THÊM SỐ PHÚT XEM TRANG & LINK DU KHÁCH XEM) ─── */}
+      {/* ─── TOP KPI GRID (3 THẺ CỐT LÕI: LƯỢT TRUY CẬP, THỜI GIAN ĐỌC, DU KHÁCH) ─── */}
       <div className="admin-dash-kpis-grid">
         {/* Card 1: Lượt Xem & Truy Cập */}
         <KpiCard
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
           href="/admin/analytics"
         />
 
-        {/* Card 2: Số phút khách xem trang */}
+        {/* Card 2: Thời Gian Xem Trang (Số phút khách xem trang) */}
         <KpiCard
           icon={<Clock size={22} />}
           label="Thời Gian Xem Trang"
@@ -212,18 +212,7 @@ export default function AdminDashboard() {
           href="/admin/analytics"
         />
 
-        {/* Card 3: Trang / Link được xem nhiều nhất */}
-        <KpiCard
-          icon={<Compass size={22} />}
-          label="Trang Xem Nhiều Nhất"
-          value={getPageFriendlyName(topPage?.page_path)}
-          sub={`${topPage?.view_count || 24} lượt xem • Bấm mở trang ↗`}
-          accent="orange"
-          badge="Hot #1 🔥"
-          href={topPage?.page_path || "/"}
-        />
-
-        {/* Card 4: Du Khách & Người Dùng */}
+        {/* Card 3: Du Khách & Người Dùng */}
         <KpiCard
           icon={<Users size={22} />}
           label="Du Khách & Người Dùng"
@@ -233,29 +222,8 @@ export default function AdminDashboard() {
           badge="Thành viên"
           href="/admin/users"
         />
-
-        {/* Card 5: Nguồn Khách Đến Hàng Đầu */}
-        <KpiCard
-          icon={<TrendingUp size={22} />}
-          label="Nguồn Khách Hàng Đầu"
-          value="Tìm Kiếm & Trực Tiếp"
-          sub="Xem chi tiết nguồn lưu lượng ➔"
-          accent="indigo"
-          badge="Kênh chính 🚀"
-          href="/admin/analytics"
-        />
-
-        {/* Card 6: Điểm Đến Quan Tâm Nhất */}
-        <KpiCard
-          icon={<MapPin size={22} />}
-          label="Điểm Đến Quan Tâm Nhất"
-          value={topProvince?.name || "Hà Nội"}
-          sub={`${topProvince?.view_count || 12} lượt xem • Xem cẩm nang ↗`}
-          accent="amber"
-          badge="Top Tỉnh Thành 📍"
-          href={topProvince?.slug ? `/province/${topProvince.slug}` : "/admin/provinces"}
-        />
       </div>
+
 
       {/* ─── 2-COLUMN LAYOUT: BIỂU ĐỒ LƯU LƯỢNG & LỐI TẮT QUẢN TRỊ ─── */}
       <div className="admin-dash-mid-grid">

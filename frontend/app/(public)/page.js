@@ -45,7 +45,7 @@ import {
   X,
   Instagram,
 } from "lucide-react";
-import { provinceAPI } from "@/lib/api";
+import { provinceAPI, articleAPI } from "@/lib/api";
 import { isLoggedIn, getUser, clearAuth } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useReveal } from "@/hooks/useReveal";
@@ -873,6 +873,34 @@ export default function HomePage() {
   const faqChatContainerRef = useRef(null);
   const router = useRouter();
 
+  // Danh sách bài viết cẩm nang động được tạo từ trang Quản trị (Admin CMS)
+  const [dynamicArticles, setDynamicArticles] = useState([]);
+
+  useEffect(() => {
+    articleAPI
+      .getAll({ status: "published", limit: 8 })
+      .then((d) => {
+        if (d?.articles && Array.isArray(d.articles)) {
+          setDynamicArticles(d.articles);
+        }
+      })
+      .catch((err) => console.warn("Lỗi tải bài viết động trang chủ:", err));
+  }, []);
+
+  const inspiredCompactList = [
+    ...dynamicArticles.map((art) => ({
+      title: art.title_en,
+      titleVi: art.title_vi,
+      date: art.published_date || "2026",
+      dateVi: art.published_date || "Năm 2026",
+      img: art.hero_image || "/guide/megamenu/todo-2-hcmc.jpg",
+      link: `/guide/${art.slug}`,
+    })),
+    ...BE_INSPIRED_COMPACT.filter(
+      (s) => !dynamicArticles.some((d) => `/guide/${d.slug}` === s.link),
+    ),
+  ].slice(0, 8);
+
   // VietnamNomad Magazine Hero states
   const [trendingIndex, setTrendingIndex] = useState(0);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
@@ -1630,11 +1658,11 @@ export default function HomePage() {
                   </p>
                 </Link>
 
-                {/* Danh sách 5 bài compact (Bên phải) */}
+                {/* Danh sách bài viết cẩm nang (Bao gồm bài mới tạo từ Admin CMS) */}
                 <div className="vnn-compact-list">
-                  {BE_INSPIRED_COMPACT.map((story) => (
+                  {inspiredCompactList.map((story) => (
                     <Link
-                      key={story.title}
+                      key={story.link || story.title}
                       href={story.link}
                       className="vnn-compact-item"
                     >
@@ -1655,6 +1683,7 @@ export default function HomePage() {
                     </Link>
                   ))}
                 </div>
+
               </div>
             </div>
 

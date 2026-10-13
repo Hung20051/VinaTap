@@ -6,6 +6,8 @@ import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import { articleAPI } from "@/lib/api";
+import DinoLoader from "@/components/ui/DinoLoader";
 import {
   Compass,
   Calendar,
@@ -723,6 +725,153 @@ function GuideDetailContent() {
     }
   };
 
+  const [dbArticle, setDbArticle] = useState(null);
+  const [dbLoading, setDbLoading] = useState(false);
+
+  useEffect(() => {
+    const slug = params?.slug;
+    if (!slug) return;
+    if (
+      slug === "10-best-things-to-do-in-ho-chi-minh-city" ||
+      slug === "12-must-try-foods-in-ho-chi-minh-city" ||
+      slug.includes("15-best-places")
+    ) {
+      return;
+    }
+    setDbLoading(true);
+    articleAPI
+      .getBySlug(slug)
+      .then((res) => {
+        if (res?.article) {
+          setDbArticle(res.article);
+        }
+      })
+      .catch((err) => console.warn("Fetch article error:", err))
+      .finally(() => setDbLoading(false));
+  }, [params?.slug]);
+
+  if (dbLoading) {
+    return (
+      <div style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <DinoLoader
+          fullScreen={false}
+          size={220}
+          text="Đang tải cẩm nang du lịch..."
+          subtext="Khám phá hành trình tuyệt vời cùng VinaTap"
+        />
+      </div>
+    );
+  }
+
+  if (dbArticle) {
+    return (
+      <div className="guide-page-wrapper">
+        <div className="guide-progress-bar" style={{ width: `${scrollProgress}%` }} />
+        <nav className="guide-nav" aria-label="Điều hướng cẩm nang">
+          <div className="guide-nav__inner">
+            <div className="guide-nav__left">
+              <Logo size={28} />
+              <div className="guide-breadcrumb">
+                <Link href="/">Trang chủ</Link>
+                <ChevronRight size={13} />
+                <Link href="/#be-inspired">Cẩm nang</Link>
+                <ChevronRight size={13} />
+                <span className="guide-breadcrumb__curr">{dbArticle.title_vi || dbArticle.title_en}</span>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <main className="guide-container">
+          <header className="guide-header">
+            <div className="guide-badge-pill">
+              <Compass size={14} />
+              <span>CẨM NANG DU LỊCH • VINATAP EDITORIAL</span>
+            </div>
+            <h1 className="guide-title">{dbArticle.title_vi || dbArticle.title_en}</h1>
+            {(dbArticle.intro_vi || dbArticle.intro_en) && (
+              <p className="guide-subtitle">{dbArticle.intro_vi || dbArticle.intro_en}</p>
+            )}
+            <div className="guide-meta-bar">
+              <div className="guide-author-box">
+                <div className="guide-author-avatar">VT</div>
+                <div>
+                  <div className="guide-author-name">
+                    <span>{dbArticle.author_name || "Ban Biên Tập VinaTap"}</span>
+                    <Sparkles size={14} className="guide-verified-badge" />
+                  </div>
+                  <div className="guide-author-role">Chuyên trang Cẩm Nang Du Lịch Bản Địa Việt Nam</div>
+                </div>
+              </div>
+              <div className="guide-meta-stats">
+                <span className="guide-meta-item">
+                  <Calendar size={14} />
+                  <span>{dbArticle.published_date || "2026"}</span>
+                </span>
+                <span className="guide-meta-item">
+                  <Clock size={14} />
+                  <span>{Math.max(5, (dbArticle.items?.length || 1) * 2)} phút đọc</span>
+                </span>
+                <span className="guide-meta-item">
+                  <Eye size={14} />
+                  <span>{(dbArticle.views_count || 1280).toLocaleString("vi-VN")} lượt xem</span>
+                </span>
+              </div>
+            </div>
+          </header>
+
+          {dbArticle.hero_image && (
+            <section className="guide-hero-banner" style={{ marginBottom: "2rem" }}>
+              <div className="guide-hero-img-wrap">
+                <img src={dbArticle.hero_image} alt={dbArticle.title_vi} className="guide-hero-img" />
+              </div>
+            </section>
+          )}
+
+          <section className="guide-cards-list">
+            {(dbArticle.items || []).map((item, idx) => (
+              <article key={item.id || idx} id={`item-${idx + 1}`} className="guide-card">
+                <div className="guide-card__grid">
+                  {item.image_url && (
+                    <div className="guide-card__media">
+                      <img
+                        src={item.image_url}
+                        alt={item.title_vi || item.title_en}
+                        className="guide-card__img"
+                        loading="lazy"
+                      />
+                      <div className="guide-card__number-badge">#{item.item_number || idx + 1}</div>
+                    </div>
+                  )}
+                  <div className="guide-card__body">
+                    <h2 className="guide-card__title">
+                      {item.item_number || idx + 1}. {item.title_vi || item.title_en}
+                    </h2>
+                    {Array.isArray(item.paragraphs_vi || item.content_vi) ? (
+                      (item.paragraphs_vi || item.content_vi).map((p, pIdx) => (
+                        <p key={pIdx} className="guide-card__desc">{p}</p>
+                      ))
+                    ) : (
+                      <p className="guide-card__desc">{item.paragraphs_vi || item.content_vi || ""}</p>
+                    )}
+                    {(item.tip_vi || item.tip_en) && (
+                      <div className="guide-tip-box">
+                        <Info size={17} className="guide-tip-icon" />
+                        <div className="guide-tip-text">
+                          <strong>Mẹo VinaTap:</strong> {item.tip_vi || item.tip_en}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </section>
+        </main>
+      </div>
+    );
+  }
+
   // Lấy dữ liệu và danh mục tương ứng theo tab đang chọn
   const isFoodsTab = activeTab === "foods";
   const currentItems = isFoodsTab ? HCMC_FOOD_ITEMS : HCMC_GUIDE_ITEMS;
@@ -732,6 +881,7 @@ function GuideDetailContent() {
     activeCategory === "all"
       ? currentItems
       : currentItems.filter((item) => item.categoryKey === activeCategory);
+
 
   return (
     <div className="guide-page-wrapper">
