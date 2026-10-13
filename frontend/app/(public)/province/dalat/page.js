@@ -14,7 +14,6 @@ import {
   MapPin,
   Utensils,
   Hotel,
-  Play,
   X,
   Facebook,
   Instagram,
@@ -465,7 +464,6 @@ export default function DalatPage() {
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
   const megaMenuTimeoutRef = useRef(null);
   const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isGuideExpanded, setIsGuideExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState("travel-guide");
 
@@ -750,119 +748,6 @@ export default function DalatPage() {
             </p>
           </div>
 
-          {/* YouTube Video Player Embed / Card */}
-          <div className="vnn-dalat-video-container">
-            {isVideoPlaying ? (
-              <iframe
-                src="https://www.youtube.com/embed/wW6qIb0nCiE?autoplay=1&rel=0"
-                title="Da Lat: A Guide to Visiting Vietnam's Little Paris"
-                className="vnn-dalat-video-frame"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <div
-                className="vnn-dalat-video-poster"
-                onClick={() => setIsVideoPlaying(true)}
-              >
-                <img
-                  src="/guide/dalat/dalat-hero-hd.jpg"
-                  alt="Dalat Travel Guide Video Cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.65) 100%)",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    padding: "24px",
-                  }}
-                >
-                  <div style={{ color: "#fff", textAlign: "left" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      <img
-                        src="/logo.png"
-                        alt="VinaTap"
-                        style={{
-                          width: "36px",
-                          height: "36px",
-                          borderRadius: "50%",
-                          background: "#fff",
-                          padding: "2px",
-                          objectFit: "contain",
-                        }}
-                      />
-                      <div>
-                        <h4
-                          style={{
-                            margin: 0,
-                            fontSize: "16px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Da Lat: A Guide to Visiting Vietnam&apos;s Little Paris
-                        </h4>
-                        <p
-                          style={{
-                            margin: 0,
-                            fontSize: "12px",
-                            opacity: 0.85,
-                          }}
-                        >
-                          VinaTap
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      textAlign: "center",
-                      color: "#fff",
-                      fontSize: "30px",
-                      fontWeight: 800,
-                      textTransform: "uppercase",
-                      letterSpacing: "1.5px",
-                      textShadow: "0 4px 12px rgba(0,0,0,0.8)",
-                    }}
-                  >
-                    DA LAT
-                    <br />
-                    <span style={{ fontSize: "18px", color: "#ffd200" }}>
-                      TRAVEL GUIDE
-                    </span>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      color: "#fff",
-                      fontSize: "13px",
-                    }}
-                  >
-                    <span>Xem trên YouTube</span>
-                    <span style={{ opacity: 0.8 }}>12:45</span>
-                  </div>
-                </div>
-
-                <div className="vnn-dalat-video-play-btn">
-                  <Play size={24} fill="#fff" />
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Expand Accordion Button */}
           <div className="vnn-dalat-expand-wrap">

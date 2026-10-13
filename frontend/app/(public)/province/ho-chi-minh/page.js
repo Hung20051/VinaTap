@@ -14,7 +14,6 @@ import {
   MapPin,
   Utensils,
   Tag,
-  Play,
   X,
   ExternalLink,
   Calendar,
@@ -315,7 +314,6 @@ export default function HoChiMinhCityPage() {
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
   const megaMenuTimeoutRef = useRef(null);
   const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isGuideExpanded, setIsGuideExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState("travel-guide");
 
@@ -658,120 +656,6 @@ export default function HoChiMinhCityPage() {
             </p>
           </div>
 
-          {/* YouTube Video Player Embed / Card */}
-          <div className="vnn-hcmc-video-container">
-            {isVideoPlaying ? (
-              <iframe
-                src="https://www.youtube.com/embed/wwDGC-pmKPw?autoplay=1&rel=0"
-                title="Ho Chi Minh City: A Guide to Visit Vietnam's Largest City"
-                className="vnn-hcmc-video-frame"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <div
-                className="vnn-hcmc-video-poster"
-                onClick={() => setIsVideoPlaying(true)}
-              >
-                <img
-                  src="/guide/hcmc/hcmc-hero-aerial-hd.jpg"
-                  alt="Ho Chi Minh City Travel Guide Video Cover"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.65) 100%)",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    padding: "24px",
-                  }}
-                >
-                  <div style={{ color: "#fff", textAlign: "left" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      <img
-                        src="/logo.png"
-                        alt="VinaTap"
-                        style={{
-                          width: "36px",
-                          height: "36px",
-                          borderRadius: "50%",
-                          background: "#fff",
-                          padding: "2px",
-                          objectFit: "contain",
-                        }}
-                      />
-                      <div>
-                        <h4
-                          style={{
-                            margin: 0,
-                            fontSize: "16px",
-                            fontWeight: 600,
-                          }}
-                        >
-                          Ho Chi Minh City: A Guide to Visit Vietnam&apos;s
-                          Largest City
-                        </h4>
-                        <p
-                          style={{
-                            margin: 0,
-                            fontSize: "12px",
-                            opacity: 0.85,
-                          }}
-                        >
-                          VinaTap
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      textAlign: "center",
-                      color: "#fff",
-                      fontSize: "28px",
-                      fontWeight: 800,
-                      textTransform: "uppercase",
-                      letterSpacing: "1px",
-                      textShadow: "0 4px 12px rgba(0,0,0,0.8)",
-                    }}
-                  >
-                    HO CHI MINH CITY
-                    <br />
-                    <span style={{ fontSize: "18px", color: "#ffd200" }}>
-                      TRAVEL GUIDE
-                    </span>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      color: "#fff",
-                      fontSize: "13px",
-                    }}
-                  >
-                    <span>Xem trên YouTube</span>
-                    <span style={{ opacity: 0.8 }}>14:03</span>
-                  </div>
-                </div>
-
-                <div className="vnn-hcmc-video-play-btn">
-                  <Play size={24} fill="#fff" />
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Expand Accordion Button */}
           <div className="vnn-hcmc-expand-wrap">

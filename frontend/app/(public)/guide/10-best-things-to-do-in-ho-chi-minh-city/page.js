@@ -905,16 +905,7 @@ export default function TenBestThingsHCMCPage() {
           </p>
         </div>
 
-        {/* ─── YOUTUBE VIDEO EMBED (Screenshot 4) ─── */}
-        <div className="hcmc-video-container">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/wwDGC-pmKPw?rel=0"
-            title="Ho Chi Minh City: A Guide to Visit Vietnam's Largest City"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            className="hcmc-video-iframe"
-          />
-        </div>
+
 
         {/* ─── TAGS ROW (Screenshot 4) ─── */}
         <div className="hcmc-tags-wrap">

@@ -16,7 +16,6 @@ import {
   Calendar,
   Eye,
   ArrowRight,
-  Play,
   X,
   ExternalLink,
   Clock,
@@ -699,7 +698,6 @@ export default function DaNangPage() {
   const [lang, setLang] = useState("en");
   const [activeMega, setActiveMega] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
   const [readMoreExpanded, setReadMoreExpanded] = useState(false);
   const [mapModalOpen, setMapModalOpen] = useState(false);
   const [detailModalItem, setDetailModalItem] = useState(null);
@@ -1002,48 +1000,9 @@ export default function DaNangPage() {
 
             <p>
               {lang === "vi"
-                ? "Nhờ đó, Đà Nẵng là thành phố có vị trí đắc địa đóng vai trò then chốt trong việc phát triển và giữ vững du lịch, kinh tế, thương mại và an ninh quốc phòng; đối với du khách, thành phố này luôn là điểm đến hàng đầu tại Việt Nam. Hãy cùng đón xem video Cẩm nang Du lịch Đà Nẵng dưới đây!"
-                : "As a result, Da Nang is a city with a prime location that plays a crucial role in developing and maintaining tourism, the economy, trading, and military defense; for tourists, this city is always the top destination in Vietnam. Let’s check out the Da Nang Travel Guide video!"}
+                ? "Nhờ đó, Đà Nẵng là thành phố có vị trí đắc địa đóng vai trò then chốt trong việc phát triển và giữ vững du lịch, kinh tế, thương mại và an ninh quốc phòng; đối với du khách, thành phố này luôn là điểm đến hàng đầu tại Việt Nam."
+                : "As a result, Da Nang is a city with a prime location that plays a crucial role in developing and maintaining tourism, the economy, trading, and military defense; for tourists, this city is always the top destination in Vietnam."}
             </p>
-          </div>
-
-          {/* YouTube Video Container */}
-          <div className="vnn-danang-video-card">
-            {videoPlaying ? (
-              <div className="vnn-danang-video-iframe-wrap">
-                <iframe
-                  src="https://www.youtube.com/embed/FNJW8K0_73o?autoplay=1&rel=0"
-                  title="Da Nang: A Guide to Visiting the Most Livable City in Vietnam | VinaTap"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ) : (
-              <div
-                className="vnn-danang-video-custom-thumb"
-                onClick={() => setVideoPlaying(true)}
-              >
-                <img
-                  src="/guide/danang/danang-video-thumb-hd.jpg"
-                  alt="Da Nang Travel Guide Video Thumbnail"
-                  className="vnn-danang-thumb-img"
-                />
-                <div className="vnn-danang-video-overlay-tint" />
-
-                <button
-                  type="button"
-                  className="vnn-danang-video-play-btn"
-                  aria-label="Play video"
-                >
-                  <Play size={28} fill="#ffffff" color="#ffffff" />
-                </button>
-
-                <div className="vnn-danang-video-watch-link">
-                  <span>{lang === "vi" ? "Xem trên" : "Watch on"}</span>
-                  <strong>YouTube</strong>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Accordion Expand Button */}

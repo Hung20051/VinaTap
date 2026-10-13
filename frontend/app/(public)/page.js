@@ -43,7 +43,6 @@ import {
   Eye,
   Clock,
   X,
-  Play,
   Instagram,
 } from "lucide-react";
 import { provinceAPI } from "@/lib/api";
@@ -296,103 +295,8 @@ const REGIONAL_DESTINATIONS_DATA = [
   },
 ];
 
-// ─── VIDEO TRAVEL GUIDES (SCREENSHOT 4) ───
-const VIDEO_PLAYLIST_ITEMS = [
-  {
-    id: "video-1",
-    youtubeId: "BvP3G1Xfth8",
-    title: "Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
-    titleVi:
-      "Cẩm nang du lịch Việt Nam: Thời tiết, Visa, Điểm đến & Kinh nghiệm",
-    duration: "21:35",
-    img: "/guide/hcmc/video-player-sapa-cover.jpg",
-  },
-  {
-    id: "video-2",
-    youtubeId: "Nm0T5lPAT7U",
-    title: "Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in Vietnam",
-    titleVi: "Hội An: Cẩm nang khám phá khu phố cổ lung linh đèn lồng",
-    duration: "14:23",
-    img: "/guide/hcmc/video-card-hoian.jpg",
-  },
-  {
-    id: "video-3",
-    youtubeId: "BvP3G1Xfth8",
-    title: "Da Nang: A Guide to Visiting the Most Livable City in Vietnam",
-    titleVi: "Đà Nẵng: Hướng dẫn khám phá thành phố đáng sống nhất Việt Nam",
-    duration: "12:41",
-    img: "/guide/hcmc/region-central-danang.jpg",
-  },
-  {
-    id: "video-4",
-    youtubeId: "1WdDnbnwTcI",
-    title: "Hue: A Guide to Visiting the Ancient Capital of Vietnam",
-    titleVi: "Huế: Hành trình khám phá di sản Cố đô cổ kính ngàn năm",
-    duration: "13:14",
-    img: "/guide/hcmc/video-card-hue.jpg",
-  },
-  {
-    id: "video-5",
-    youtubeId: "2QbOPAKrsg4",
-    title: "10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
-    titleVi: "10 địa điểm du lịch tuyệt nhất Việt Nam được 7.050 du khách bình chọn",
-    duration: "09:53",
-    img: "/guide/hcmc/video-card-best10.jpg",
-  },
-  {
-    id: "video-6",
-    youtubeId: "BvP3G1Xfth8",
-    title: "Da Lat: A Guide to Visiting Vietnam's Little Paris",
-    titleVi: "Đà Lạt: Cẩm nang vi vu tiểu Paris ngập tràn sắc hoa và sương mù",
-    duration: "11:15",
-    img: "/guide/megamenu/dest-2-dalat.jpg",
-  },
-  {
-    id: "video-7",
-    youtubeId: "BvP3G1Xfth8",
-    title: "Nha Trang: A Guide to Visiting Vietnam's Sea Paradise",
-    titleVi: "Nha Trang: Cẩm nang du lịch vịnh biển thiên đường xanh ngắt",
-    duration: "11:37",
-    img: "/guide/hcmc/region-central-nhatrang.jpg",
-  },
-];
 
-const VIDEO_BOTTOM_CARDS = [
-  {
-    title:
-      "[Video] Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips",
-    titleVi:
-      "[Video] Cẩm nang du lịch Việt Nam: Khí hậu, Visa, Điểm đến & Ẩm thực",
-    duration: "00:21:35",
-    img: "/guide/hcmc/video-card-vietnam.jpg",
-    youtubeId: "BvP3G1Xfth8",
-  },
-  {
-    title: "[Video] Hue: A Guide to Visiting the Ancient Capital of Vietnam",
-    titleVi: "[Video] Huế: Cẩm nang khám phá di sản Cố đô trầm mặc",
-    duration: "00:13:14",
-    img: "/guide/hcmc/video-card-hue.jpg",
-    youtubeId: "1WdDnbnwTcI",
-  },
-  {
-    title:
-      "[Video] 10 Best Places to Visit in Vietnam Voted by 7,050 Travelers",
-    titleVi:
-      "[Video] 10 điểm đến đẹp nhất Việt Nam do hơn 7.000 du khách bình chọn",
-    duration: "00:09:53",
-    img: "/guide/hcmc/video-card-best10.jpg",
-    youtubeId: "2QbOPAKrsg4",
-  },
-  {
-    title:
-      "[Video] Hoi An: A Guide to Visiting the Most Beautiful Ancient Town in Vietnam",
-    titleVi:
-      "[Video] Hội An: Hướng dẫn khám phá phố cổ lung linh đèn lồng",
-    duration: "00:14:23",
-    img: "/guide/hcmc/video-card-hoian.jpg",
-    youtubeId: "Nm0T5lPAT7U",
-  },
-];
+
 
 // ─── FOODS TO TRY (SCREENSHOT 2 OF PART 2) ───
 const FOODS_TO_TRY_ITEMS = [
@@ -974,8 +878,6 @@ export default function HomePage() {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [searchModalText, setSearchModalText] = useState("");
   const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
-  const [activeVideo, setActiveVideo] = useState(VIDEO_PLAYLIST_ITEMS[0]);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const topDestTrackRef = useRef(null);
 
   // VietnamNomad Magazine Megamenu states
@@ -1951,173 +1853,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ─── 8. VIDEO TRAVEL GUIDES (SCREENSHOT 5) ─── */}
-        <section id="videos" className="vnn-video-section">
-          <div className="vnn-video-container">
-            {/* Top Video Grid: Player on Left, Playlist on Right */}
-            <div className="vnn-video-top-grid">
-              {/* Featured Video Player */}
-              <div className="vnn-video-player-wrap">
-                {isVideoPlaying ? (
-                  <iframe
-                    className="vnn-video-player-iframe"
-                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
-                    title={activeVideo.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
-                ) : (
-                  <div
-                    className="vnn-video-player-cover"
-                    style={{ backgroundImage: `url(${activeVideo.img})` }}
-                    onClick={() => setIsVideoPlaying(true)}
-                  >
-                    <div className="vnn-video-player-header">
-                      <div className="vnn-video-player-avatar">
-                        <img
-                          src="/logo.png"
-                          alt="VinaTap"
-                        />
-                      </div>
-                      <div>
-                        <div className="vnn-video-player-title-text">
-                          {lang === "vi"
-                            ? activeVideo.titleVi
-                            : activeVideo.title}
-                        </div>
-                        <div className="vnn-video-player-author">VinaTap</div>
-                      </div>
-                    </div>
 
-                    <button
-                      type="button"
-                      className="vnn-video-player-center-btn"
-                      aria-label="Play Video"
-                    >
-                      <svg width="68" height="48" viewBox="0 0 68 48">
-                        <path
-                          d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z"
-                          fill="#ff0000"
-                        />
-                        <polygon points="45,24 27,14 27,34" fill="#ffffff" />
-                      </svg>
-                    </button>
-
-                    <div className="vnn-video-player-footer">
-                      <a
-                        href={`https://www.youtube.com/watch?v=${activeVideo.youtubeId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="vnn-video-player-yt-badge"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <span>
-                          {lang === "vi"
-                            ? "Xem trên YouTube"
-                            : "Watch on YouTube"}
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Right Playlist */}
-              <div className="vnn-video-playlist">
-                <div className="vnn-video-playlist-head">
-                  <span className="vnn-video-playlist-head-title">
-                    {lang === "vi" ? activeVideo.titleVi : activeVideo.title}
-                  </span>
-                  <span className="vnn-video-playlist-head-time">
-                    {activeVideo.duration}
-                  </span>
-                </div>
-
-                <div className="vnn-video-playlist-items">
-                  {VIDEO_PLAYLIST_ITEMS.map((item) => (
-                    <div
-                      key={item.id}
-                      className={`vnn-video-playlist-item ${activeVideo.id === item.id ? "is-active" : ""}`}
-                      onClick={() => {
-                        setActiveVideo(item);
-                        setIsVideoPlaying(true);
-                      }}
-                    >
-                      <img
-                        src={item.img}
-                        alt={item.title}
-                        className="vnn-video-playlist-item__thumb"
-                      />
-                      <div className="vnn-video-playlist-item__info">
-                        <div className="vnn-video-playlist-item__title">
-                          {lang === "vi" ? item.titleVi : item.title}
-                        </div>
-                        <span className="vnn-video-playlist-item__duration">
-                          {item.duration}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom 4 Video Cards */}
-            <div className="vnn-video-bottom-cards">
-              {VIDEO_BOTTOM_CARDS.map((card) => (
-                <div
-                  key={card.title}
-                  className="vnn-video-card"
-                  onClick={() => {
-                    const match = VIDEO_PLAYLIST_ITEMS.find(
-                      (v) => v.youtubeId === card.youtubeId,
-                    );
-                    if (match) setActiveVideo(match);
-                    setIsVideoPlaying(true);
-                    const el = document.getElementById("videos");
-                    if (el) el.scrollIntoView({ behavior: "smooth" });
-                  }}
-                >
-                  <div className="vnn-video-card__thumb-wrap">
-                    <img
-                      src={card.img}
-                      alt={card.title}
-                      className="vnn-video-card__img"
-                      loading="lazy"
-                    />
-                    <div className="vnn-video-card__play-icon">
-                      <Play size={16} fill="#ffffff" />
-                    </div>
-                    <span className="vnn-video-card__duration">
-                      {card.duration}
-                    </span>
-                  </div>
-                  <h4 className="vnn-video-card__title">
-                    {lang === "vi" ? (card.titleVi || card.title) : card.title}
-                  </h4>
-                </div>
-              ))}
-            </div>
-
-            <div className="vnn-carousel-ctrls" style={{ marginTop: "16px" }}>
-              <button
-                type="button"
-                className="vnn-carousel-ctrl-btn"
-                aria-label="Previous"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                type="button"
-                className="vnn-carousel-ctrl-btn"
-                aria-label="Next"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
-        </section>
 
         {/* ─── 9. FOODS TO TRY & THINGS TO DO (SCREENSHOT 2 OF PART 2) ─── */}
         <section className="vnn-foods-things-section" id="foods-to-try">
