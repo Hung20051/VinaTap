@@ -805,47 +805,279 @@ export default function HanoiPage() {
             </em>
           </p>
 
-          {/* MOTORBIKES */}
+          {/* MOTORBIKES (SCREENSHOT 1) */}
           <h3 className="vnn-hanoi-transport-h3">
             {lang === "vi" ? "Thuê xe máy (Motorbikes)" : "Motorbikes"}
           </h3>
           <p>
             {lang === "vi"
-              ? "Nếu bạn đã quen với việc lái xe máy, đây sẽ là phương tiện tuyệt vời nhất để tự do len lỏi qua từng ngõ ngách, khám phá văn hóa ẩm thực hè phố và cảm nhận trọn vẹn nhịp sống Hà Nội. Giá thuê xe máy dao động từ 100.000 VNĐ – 180.000 VNĐ/ngày ($4 – $8 USD)."
-              : "If you are comfortable riding a motorbike then it should be the best way to explore any city in Vietnam. This gives you total freedom to go on your own schedule and easy access to go through small alleys and narrow streets to fully experience the authentic Hanoi street life. Daily rental prices range from 100,000 VND to 180,000 VND ($4 - $8 USD)."}
+              ? "Nếu bạn đã quen với việc lái xe máy, đây chắc chắn là phương tiện tuyệt vời nhất để khám phá bất kỳ thành phố nào ở Việt Nam. Bạn có toàn quyền chủ động lịch trình và dễ dàng len lỏi qua các con ngõ nhỏ, phố hẹp để hòa mình trọn vẹn vào nhịp sống thường nhật của người dân địa phương."
+              : "If you are comfortable riding a motorbike then it should be the best way to explore any city in Vietnam. This gives you total freedom to go on your own schedule and easy access to go through small alleys and narrow streets to fully embrace the local lifestyle."}
           </p>
+          <p>
+            {lang === "vi"
+              ? "Xe máy có thể thuê rất dễ dàng ngay tại nơi lưu trú (hoặc khách sạn sẽ giới thiệu điểm thuê gần nhất) và được giao tận nơi. Tùy thuộc vào loại xe (xe số hay xe tay ga), mức giá dao động từ 120.000 VNĐ – 200.000 VNĐ (/ngày)."
+              : "Motorbikes can be rented easily from your accommodation (or the hotels will surely recommend you where is the nearest place to get one) and delivered to wherever you are. Depending on the type of bikes (manual bikes or automatic bikes), the prices range from 120,000 VND - 200,000 VND (/day)."}
+          </p>
+          <p>
+            {lang === "vi"
+              ? "Bạn sẽ cần có giấy phép lái xe và lý tưởng hơn là bảo hiểm du lịch khi tham gia giao thông. Đa phần các điểm thuê không yêu cầu đặt cọc tiền mặt; tuy nhiên hãy lưu ý rằng vẫn hoàn toàn bình thường nếu bạn được yêu cầu (1) đặt cọc một khoản tiền nhỏ hoặc (2) thanh toán trước hoặc (3) chụp ảnh hộ chiếu (người bản địa cũng làm thủ tục tương tự)."
+              : "You will need a driving license and, more ideally, travel insurance to go on the road. Most of the time, you do not have to pay a deposit; however, be mindful that it is still reasonable if you are asked to (1) pay a small amount of money for a deposit or (2) to pay upfront or (3) have your passport's photo taken (as it also works the same way for us locals)."}
+          </p>
+
+          {/* BICYCLES (SCREENSHOT 1 & 2) */}
+          <h3 className="vnn-hanoi-transport-h3">
+            {lang === "vi" ? "Xe đạp & Đi bộ (Bicycles & Walking)" : "Bicycles"}
+          </h3>
+          <p>
+            {lang === "vi"
+              ? "Nếu phạm vi di chuyển chỉ quanh khu vực phố cổ, xe đạp sẽ là lựa chọn tuyệt vời nhất để dạo quanh và hòa mình vào đời sống địa phương. Nhịp sống Hà Nội nổi tiếng với sự thư thái, thong thả; bạn sẽ bắt gặp hình ảnh mình đạp xe cạnh một người phụ nữ Hà thành lớn tuổi mặc bộ đồ ngủ hoa hay dừng chân trên vỉa hè chỉ để ngắm nhìn dòng người xe qua lại. Thời tiết Hà Nội rất thích hợp để đạp xe (ngoại trừ mùa hè mưa bão từ tháng 5 đến tháng 9 khi tiết trời có thể rất nóng bức). Giá thuê xe đạp dao động từ 50.000 VNĐ – 100.000 VNĐ (/ngày)."
+              : "If you are only bound around the old quarter, bicycles would be the best choice to go around and immerse in the local activities. Hanoian lifestyle is known for its chill and relaxing vibes; you will find yourself riding next to an old Vietnamese lady in her floral pyjama or parking on the sidewalk just to watch the flow of traffic and people passing by. The weather in Hanoi is convenient for riding a bike (except for the rainy summer season from May to September when the weather could be very uncomfortably hot and dry). The prices for a bicycle rent range from 50,000 VND - 100,000 VND (/day)."}
+          </p>
+          <p>
+            {lang === "vi"
+              ? "Các con phố nhỏ ở trung tâm Hà Nội cũng rất lý tưởng cho việc đi bộ. Nếu bạn không vội vã, việc tản bộ qua khu 36 phố phường để chiêm ngưỡng sự biến chuyển về sắc màu và các mặt hàng buôn bán sẽ là một trải nghiệm tuyệt vời. Tóm lại, chúng tôi khuyên bạn nên đi bộ và đạp xe để khám phá phố cổ; đi xe máy và các ứng dụng đặt xe công nghệ cho những chặng đường xa hơn."
+              : "The narrow streets in Hanoi downtown are ideal for walking as well. If you are not in a hurry, taking a walk through the 36-street area to see the transition in the color and the goods sold would be a great experience. All in all, we recommend walking and biking to explore the old quarter; motorbikes, and ride-hailing apps for longer distances."}
+          </p>
+
+          {/* STREET IMAGE (SCREENSHOT 1 & 2) */}
+          <div className="vnn-hanoi-editorial-img-box">
+            <img
+              src="/guide/hanoi/hanoi-old-quarter-walking-hd.jpg"
+              alt="The narrow streets in Hanoi downtown are ideal for walking as well"
+              className="vnn-hanoi-editorial-img"
+            />
+            <p className="vnn-hanoi-editorial-caption">
+              {lang === "vi"
+                ? "Những con phố nhỏ ở trung tâm Hà Nội rất lý tưởng để tản bộ ngắm cảnh"
+                : "The narrow streets in Hanoi downtown are ideal for walking as well"}
+            </p>
+          </div>
         </section>
 
-        {/* ─── 8. HANOI WEATHER ─── */}
+        {/* ─── 8. HANOI WEATHER (SCREENSHOT 2 & 3) ─── */}
         <section id="hanoi-weather" style={{ marginTop: "48px" }}>
           <h2 className="vnn-hanoi-teal-heading">
-            {lang === "vi" ? "Thời tiết & Thời điểm lý tưởng đến Hà Nội" : "Hanoi weather"}
+            {lang === "vi" ? "Thời tiết Hà Nội" : "Hanoi weather"}
           </h2>
-          <p style={{ fontSize: "15.5px", lineHeight: "1.85", color: "#333", textAlign: "justify" }}>
+          <p style={{ fontSize: "15.5px", lineHeight: "1.85", color: "#333", textAlign: "justify", marginBottom: "16px" }}>
             {lang === "vi"
-              ? "Hà Nội mang đặc trưng khí hậu nhiệt đới gió mùa của miền Bắc với 4 mùa rõ rệt trong năm: Mùa xuân (tháng 2 – tháng 4) mát mẻ với mưa phùn nhẹ; Mùa hè (tháng 5 – tháng 8) nắng nóng với những cơn mưa rào; Mùa thu (tháng 9 – tháng 11) là mùa đẹp và lãng mạn nhất với nắng vàng dịu, gió heo may và hương hoa sữa nồng nàn; Mùa đông (tháng 12 – tháng 1) lạnh se sắt đặc trưng."
-              : "Hanoi experiences a humid subtropical climate with four distinct seasons. Autumn (September to November) is undoubtedly the most enchanting time to visit Hanoi with crisp air, mild temperatures (22°C - 27°C), and golden sunlight filtering through century-old trees. Spring brings refreshing drizzle and festive Lunar New Year vibes, while Winter offers a uniquely chilly atmospheric charm."}
+              ? "Thời tiết ở Hà Nội được chia thành bốn mùa rõ rệt, mỗi mùa mang một cảnh sắc thiên nhiên rất đặc trưng. Tuy nhiên, do chịu ảnh hưởng của khí hậu nhiệt đới gió mùa, hình thái thời tiết nổi bật với hai mùa khô và mùa mưa."
+              : "The weather in Hanoi is divided into four distinct seasons with each one characterizing very typical landscapes. However, being affected by the tropical monsoon, the weather patterns feature dry and rainy seasons."}
+          </p>
+          <p style={{ fontSize: "15.5px", lineHeight: "1.85", color: "#333", textAlign: "justify", marginBottom: "16px" }}>
+            {lang === "vi" ? (
+              <>
+                Thời điểm lý tưởng nhất để đến thăm Hà Nội là từ <strong>tháng 1 đến cuối tháng 3</strong> và từ <strong>tháng 10 đến tháng 12</strong>. Trong khoảng thời gian này, thời tiết vô cùng dễ chịu và phù hợp cho mọi hoạt động tham quan ngoài trời. Nhiệt độ thường không vượt quá 30 °C cùng bầu trời trong xanh và mây thoáng đãng.
+              </>
+            ) : (
+              <>
+                The best time to visit Hanoi, though, is from <strong>January to the end of March</strong> and from <strong>October to December</strong>. During this time, the weather is pleasant and suitable for all types of activities. The temperature normally does not exceed 30 °C with a clear blue sky and a high level of cloud coverage.
+              </>
+            )}
+          </p>
+          <p style={{ fontSize: "15.5px", lineHeight: "1.85", color: "#333", textAlign: "justify", marginBottom: "16px" }}>
+            {lang === "vi"
+              ? "Khoảng thời gian từ tháng 5 đến cuối tháng 9 được xem là giai đoạn thời tiết khắc nghiệt nhất trong năm. Trời cực kỳ nắng nóng, oi bức kèm theo gió khô và những cơn mưa rào như trút nước càng làm tăng thêm sự ngột ngạt."
+              : "May to the end of September is considered to be the harshest time of the year. The weather is extremely hot and humid with the dry wind and pouring rains making it worse."}
+          </p>
+          <p style={{ fontSize: "15.5px", lineHeight: "1.85", color: "#333", textAlign: "justify", marginBottom: "16px" }}>
+            {lang === "vi"
+              ? "Thời tiết trong giai đoạn giao mùa tháng 4 và tháng 5 thường rất khó dự đoán. Bất kỳ sự thay đổi thời tiết nào cũng có thể xảy ra trong những tháng này, vì vậy hãy đảm bảo chuẩn bị trang phục chu đáo cho mọi điều kiện thời tiết."
+              : "The weather in the transitional time of April and May is hardly predicted. Anything is possible during these months so make sure you are well prepared for all the conditions."}
           </p>
         </section>
 
-        {/* ─── 9. ACCOMMODATION IN HANOI ─── */}
+        {/* ─── 9. ACCOMMODATION IN HANOI (SCREENSHOT 3 & 4) ─── */}
         <section id="hanoi-stay" style={{ marginTop: "48px" }}>
           <h2 className="vnn-hanoi-teal-heading">
-            {lang === "vi" ? "Khách sạn & Nơi lưu trú tại Hà Nội" : "Accommodation in Hanoi"}
+            {lang === "vi" ? "Khách sạn & Lưu trú tại Hà Nội" : "Accommodation in Hanoi"}
           </h2>
-          <p style={{ fontSize: "15.5px", lineHeight: "1.85", color: "#333", textAlign: "justify" }}>
+          <p style={{ fontSize: "15.5px", lineHeight: "1.85", color: "#333", textAlign: "justify", marginBottom: "16px" }}>
             {lang === "vi"
-              ? "Tùy thuộc vào phong cách du lịch, bạn có thể lựa chọn 3 khu vực lưu trú hàng đầu: Phố Cổ (Quận Hoàn Kiếm) – trái tim của ẩm thực và các điểm tham quan; Hồ Tây (Quận Tây Hồ) – không gian nghỉ dưỡng thoáng đãng, nhiều quán cafe ven hồ xinh đẹp; và Khu phố Pháp (Quận Ba Đình / Hai Bà Trưng) – nơi tập trung những khách sạn di sản 5 sao sang trọng như Sofitel Legend Metropole."
-              : "Hanoi offers exceptional hospitality choices across three main neighborhoods: Hanoi Old Quarter (Hoan Kiem) is ideal for first-time visitors seeking vibrant street life and walking distance to top landmarks; Tay Ho (West Lake) offers peaceful lakeside boutique villas and expat dining; and the French Quarter boasts colonial grandeur and world-class luxury heritage hotels such as Sofitel Legend Metropole Hanoi."}
+              ? "Tại các thành phố lớn ở Việt Nam như Hà Nội, có rất nhiều lựa chọn lưu trú phục vụ mọi sở thích và ngân sách. Điểm lưu trú thuận tiện nhất để dạo chơi là khu vực 36 phố phường. Dù tọa lạc tại khu vực sầm uất nhất thành phố, bạn vẫn hoàn toàn có thể tìm thấy những nơi ở rất vừa túi tiền và tươm tất ngay khi vừa đặt chân đến."
+              : "In such major cities in Vietnam like Hanoi, there are many options of accommodation that cater for all preferences and budgets. The most convenient base to explore around is the 36-street area. Although located in the most bustling part of the city, it is possible to find very affordable and decent accommodations even on your arrival."}
+          </p>
+          <p style={{ fontSize: "15.5px", lineHeight: "1.85", color: "#333", textAlign: "justify", marginBottom: "20px" }}>
+            {lang === "vi" ? (
+              <>
+                Dưới đây là một số gợi ý khách sạn & nơi lưu trú tại Hà Nội, được trích xuất từ cẩm nang{" "}
+                <a href="https://tripion.ai" target="_blank" rel="noopener noreferrer" style={{ color: "#008b94", textDecoration: "underline" }}>
+                  Vietnam travel guide book
+                </a>.
+              </>
+            ) : (
+              <>
+                Here are some recommendations for accommodation in Hanoi, which are excerpted from the{" "}
+                <a href="https://tripion.ai" target="_blank" rel="noopener noreferrer" style={{ color: "#008b94", textDecoration: "underline" }}>
+                  Vietnam travel guide book
+                </a>.
+              </>
+            )}
+          </p>
+
+          {/* ACCOMMODATION INFOGRAPHIC CARD (SCREENSHOT 4) */}
+          <div className="vnn-hanoi-stay-infographic-card">
+            <div className="vnn-hanoi-stay-info-left">
+              <img
+                src="/guide/hanoi/hanoi-accommodation-hoankiem-hd.jpg"
+                alt="Hoan Kiem Lake Hanoi Accommodation"
+              />
+            </div>
+            <div className="vnn-hanoi-stay-info-right">
+              <div className="vnn-hanoi-stay-card-header">
+                <h4 className="vnn-hanoi-stay-card-title">ACCOMMODATION</h4>
+                <div className="vnn-hanoi-stay-card-subtitle">Hanoi</div>
+                <div className="vnn-hanoi-stay-card-divider"></div>
+              </div>
+
+              <div className="vnn-hanoi-stay-tier-group">
+                <div>
+                  <div className="vnn-hanoi-stay-tier-price">$ 5 - 10</div>
+                  <ul className="vnn-hanoi-stay-hotel-list">
+                    <li className="vnn-hanoi-stay-hotel-item">Vietnam Cheers Hostel (28 Nguyen Sieu)</li>
+                    <li className="vnn-hanoi-stay-hotel-item">Hanoi Buffalo Hostel (44 Hang Giay)</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="vnn-hanoi-stay-tier-price">$ 10 - 20</div>
+                  <ul className="vnn-hanoi-stay-hotel-list">
+                    <li className="vnn-hanoi-stay-hotel-item">Hanoi Golden Hostel (51 Nguyen Sieu)</li>
+                    <li className="vnn-hanoi-stay-hotel-item">Little Charm Hanoi Hostel (44 Hang Bo)</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="vnn-hanoi-stay-tier-price">$ 20 - 50</div>
+                  <ul className="vnn-hanoi-stay-hotel-list">
+                    <li className="vnn-hanoi-stay-hotel-item">Dragon Pearl Hotel (17E Phan Dinh Phung)</li>
+                    <li className="vnn-hanoi-stay-hotel-item">Rising Dragon Palace Hotel (24 Hang Ga)</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="vnn-hanoi-stay-tier-price">$ 50 - 100</div>
+                  <ul className="vnn-hanoi-stay-hotel-list">
+                    <li className="vnn-hanoi-stay-hotel-item">Acoustic Hotel & Spa (39 Tho Nhuom)</li>
+                    <li className="vnn-hanoi-stay-hotel-item">Grande Collection Hotel & Spa (46 - 48 Bat Su)</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="vnn-hanoi-stay-tier-price">$ 100 - 200</div>
+                  <ul className="vnn-hanoi-stay-hotel-list">
+                    <li className="vnn-hanoi-stay-hotel-item">Peridot Grand Hotel & Spa by AIRA (33 Duong Thanh)</li>
+                    <li className="vnn-hanoi-stay-hotel-item">The Oriental Jade Hotel (92 - 94 Hang Trong)</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="vnn-hanoi-stay-tier-price">$ 200 +</div>
+                  <ul className="vnn-hanoi-stay-hotel-list">
+                    <li className="vnn-hanoi-stay-hotel-item">JW Marriott Hotel Hanoi (8 Do Duc Duc)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-stay-page-num">67</div>
+            </div>
+          </div>
+
+          <p className="vnn-hanoi-editorial-caption" style={{ textAlign: "center", marginBottom: "40px" }}>
+            {lang === "vi"
+              ? "Gợi ý điểm lưu trú tại Hà Nội | Sách hướng dẫn du lịch Việt Nam"
+              : "Recommend places to stay in Hanoi | Vietnam travel guide book"}
           </p>
         </section>
 
-        {/* ─── 10. 15 MUST-VISIT ATTRACTIONS IN HANOI ─── */}
+        {/* ─── 10. 15 MUST-VISIT ATTRACTIONS IN HANOI (SCREENSHOT 5) ─── */}
         <section id="hanoi-attractions" style={{ marginTop: "48px" }}>
           <h2 className="vnn-hanoi-teal-heading">
-            {lang === "vi" ? "15 điểm tham quan đẹp nhất tại Hà Nội" : "15 must-visit attractions in Hanoi"}
+            {lang === "vi" ? "15 điểm tham quan phải đến tại Hà Nội" : "15 must-visit attractions in Hanoi"}
           </h2>
 
+          <p style={{ fontStyle: "italic", fontSize: "15px", lineHeight: "1.8", color: "#555", textAlign: "justify", marginBottom: "28px" }}>
+            {lang === "vi"
+              ? "Điều tuyệt vời nhất ở Hà Nội là phần lớn các điểm tham quan hấp dẫn đều tập trung ngay tại trung tâm thành phố và các điểm còn lại cũng không nằm quá xa. Khoảng cách hoàn toàn có thể đi bộ, đạp xe hoặc chạy xe máy. Dưới đây là top 15 điểm tham quan không thể bỏ qua được giới thiệu cho bạn."
+              : "What is great about Hanoi is that most of the must-see attractions assemble in the city center and the rest does not stretch out too far away. The distances are totally walkable and accessible by bicycle or motorbike. Here are the top 15 must-visit attractions recommended to you."}
+          </p>
+
+          {/* ITEM 1: THE THREE LAKES (SCREENSHOT 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "1. Ba hồ nước nổi tiếng (The Three Lakes)" : "1. The Three Lakes"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              {/* LEFT COLUMN: 2 STACKED IMAGES */}
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-hoankiem-turtle-tower-hd.jpg"
+                    alt="Hoan Kiem Lake"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Hồ Hoàn Kiếm" : "Hoan Kiem Lake"}
+                  </p>
+                </div>
+
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-westlake-trucbach-hd.jpg"
+                    alt="Truc Bach Lake (left) and West Lake (right)"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi"
+                      ? "Hồ Trúc Bạch (trái) và Hồ Tây (phải)"
+                      : "Truc Bach Lake (left) and West Lake (right)"}
+                  </p>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN: TEXT */}
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi" ? (
+                    <>
+                      Nếu <a href="/province/ho-chi-minh" style={{ color: "#008b94", textDecoration: "underline" }}>Sài Gòn</a> và các tỉnh miền Nam nổi tiếng với hệ thống sông rạch chằng chịt, thì Hà Nội lại được biết đến với những hồ nước thơ mộng, hữu tình rải rác khắp phố phường. Ba hồ nước mang tính biểu tượng và dễ tiếp cận nhất từ trung tâm Hà Nội là Hồ Hoàn Kiếm, Hồ Tây và Hồ Trúc Bạch.
+                    </>
+                  ) : (
+                    <>
+                      If <a href="/province/ho-chi-minh" style={{ color: "#008b94", textDecoration: "underline" }}>Saigon</a> and other southern provinces are famous for a dense system of rivers, Hanoi itself is well known for its poetic and scenic lakes scattered around the city. The three most iconic and accessible from the Hanoi center are Hoan Kiem Lake, West Lake and Truc Bach Lake.
+                    </>
+                  )}
+                </p>
+
+                <h4 className="vnn-hanoi-attraction-subh4">
+                  {lang === "vi" ? "Hồ Hoàn Kiếm" : "Hoan Kiem Lake"}
+                </h4>
+
+                <p>
+                  {lang === "vi"
+                    ? "Hồ Hoàn Kiếm (còn gọi là Hồ Gươm) tọa lạc ngay trái tim Hà Nội và ở giữa lòng phố cổ, cực kỳ thuận tiện cho chuyến tham quan của bạn."
+                    : "Hoan Kiem Lake (also known as Guom Lake) is located in the heart of Hanoi and in the middle of the old quarter, which means it is super convenient for your visit."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Tên gọi của hồ mang ý nghĩa hồ Trả Gươm gắn liền với truyền thuyết lịch sử ngàn năm trước. Tương truyền rùa vàng thần linh đã trao cho vua Lê Thái Tổ thanh gươm thần để đánh thắng giặc ngoại xâm; sau khi đại thắng, nhà vua đã hoàn trả gươm báu cho Rùa Vàng ngay trên chính hồ nước này."
+                    : "The name which literally means Sword-returning Lake (or Sword Lake) has been linked to a historical myth dating back thousand years ago. Legend has it that a divine Golden Turtle had lent King Le Thai To a magical sword to fight and win against the invaders; and after the victory, the King returned the sword to the Golden Turtle on this very lake."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Khi ghé thăm hồ, bạn không chỉ cảm nhận hơi thở của lịch sử mà còn bị cuốn hút bởi các công trình kiến trúc tuyệt mỹ tại đây. Nổi bật giữa lòng hồ là Tháp Rùa cổ kính và cây Cầu Thê Húc đỏ son dẫn vào Đền Ngọc Sơn với kiến trúc và khung cảnh độc đáo."
+                    : "When visiting this lake, you will not only feel the breath of history but also be amazed by other attractions built within it. In the middle of the lake are Thap Rua (the Turtle Tower) and the beautiful The Huc Bridge leading to Ngoc Son Temple which has unique architecture and setting."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* MORE ATTRACTIONS CARDS GRID */}
+          <h4 style={{ fontSize: "18px", fontWeight: "700", color: "#222", marginBottom: "16px" }}>
+            {lang === "vi" ? "Các điểm đến biểu tượng tiếp theo:" : "More iconic attractions in Hanoi:"}
+          </h4>
           <div className="vnn-hanoi-cards-grid">
             {/* 1. Hoan Kiem Lake */}
             <div className="vnn-hanoi-article-card">

@@ -639,6 +639,189 @@
   display: inline-block;
 }
 
+/* ─── 13. EDITORIAL IMAGES & CAPTIONS (SCREENSHOT 1, 2, 5) ─── */
+.vnn-hanoi-editorial-img-box {
+  margin: 28px 0 32px 0;
+}
+
+.vnn-hanoi-editorial-img {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.vnn-hanoi-editorial-caption {
+  font-size: 13.5px;
+  font-style: italic;
+  color: #777777;
+  margin-top: 8px;
+  margin-bottom: 0;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* ─── 14. ACCOMMODATION INFOGRAPHIC CARD (SCREENSHOT 3 & 4) ─── */
+.vnn-hanoi-stay-infographic-card {
+  max-width: 600px;
+  margin: 28px auto 8px auto;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  display: grid;
+  grid-template-columns: 46% 54%;
+}
+
+.vnn-hanoi-stay-info-left {
+  position: relative;
+  overflow: hidden;
+}
+
+.vnn-hanoi-stay-info-left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.vnn-hanoi-stay-info-right {
+  padding: 32px 26px 28px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.vnn-hanoi-stay-card-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.vnn-hanoi-stay-card-title {
+  font-size: 20px;
+  letter-spacing: 2px;
+  font-weight: 400;
+  color: #4a5568;
+  margin: 0;
+  text-transform: uppercase;
+  font-family: inherit;
+}
+
+.vnn-hanoi-stay-card-subtitle {
+  font-size: 14px;
+  color: #718096;
+  margin: 4px 0 10px 0;
+}
+
+.vnn-hanoi-stay-card-divider {
+  width: 70px;
+  height: 1.5px;
+  background-color: #2d3748;
+  margin: 0 auto;
+}
+
+.vnn-hanoi-stay-tier-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.vnn-hanoi-stay-tier-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 4px 0;
+}
+
+.vnn-hanoi-stay-hotel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vnn-hanoi-stay-hotel-item {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #4a5568;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.vnn-hanoi-stay-hotel-item::before {
+  content: "•";
+  color: #718096;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.vnn-hanoi-stay-page-num {
+  text-align: center;
+  font-size: 12px;
+  color: #a0aec0;
+  margin-top: 12px;
+}
+
+/* ─── 15. ATTRACTION 1: THE THREE LAKES (SCREENSHOT 5) ─── */
+.vnn-hanoi-attraction-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111111;
+  margin: 28px 0 20px 0;
+}
+
+.vnn-hanoi-attraction-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.vnn-hanoi-attraction-imgs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vnn-hanoi-attraction-img-item {
+  width: 100%;
+}
+
+.vnn-hanoi-attraction-img-item img {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.vnn-hanoi-attraction-text-col {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #333333;
+}
+
+.vnn-hanoi-attraction-text-col p {
+  margin: 0 0 16px 0;
+  text-align: justify;
+}
+
+.vnn-hanoi-attraction-subh4 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111111;
+  margin: 20px 0 10px 0;
+}
+
 /* ─── RESPONSIVE BREAKPOINTS ─── */
 @media (max-width: 992px) {
   .vnn-hanoi-hero-title {
@@ -652,6 +835,9 @@
   }
   .vnn-hanoi-cards-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .vnn-hanoi-attraction-split {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -667,5 +853,11 @@
   }
   .vnn-hanoi-cards-grid {
     grid-template-columns: 1fr;
+  }
+  .vnn-hanoi-stay-infographic-card {
+    grid-template-columns: 1fr;
+  }
+  .vnn-hanoi-stay-info-left {
+    height: 240px;
   }
 }
