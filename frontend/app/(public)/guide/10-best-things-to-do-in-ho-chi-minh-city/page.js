@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import NavbarAuthButton from "@/components/ui/NavbarAuthButton";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import { getLang } from "@/lib/prefs";
 import {
@@ -686,6 +687,7 @@ export default function TenBestThingsHCMCPage() {
           <div className="vnn-navbar__actions">
             <HeaderSearch />
             <LanguageSwitch variant="navbar" />
+            <NavbarAuthButton />
           </div>
         </div>
 

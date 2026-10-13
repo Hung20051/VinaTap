@@ -54,6 +54,7 @@ import { getLang } from "@/lib/prefs";
 import { t, getProvinceName, getProvinceDesc } from "@/lib/i18n";
 import { getProvinceCover } from "@/lib/provinceGuideData";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import NavbarAuthButton from "@/components/ui/NavbarAuthButton";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import "@/styles/home.css";
 
@@ -1444,6 +1445,7 @@ export default function HomePage() {
             <div className="vnn-navbar__actions">
               <HeaderSearch />
               <LanguageSwitch variant="navbar" />
+              <NavbarAuthButton />
             </div>
 
             {/* ─── HOVER MEGAMENU POPUP (HÌNH 1 - 5) ─── */}
