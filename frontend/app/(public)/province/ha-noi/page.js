@@ -262,7 +262,7 @@ const MEGA_MENUS_DATA = {
         title: "10 Days in Vietnam",
         titleVi: "10 ngày khám phá Việt Nam",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-2-10days.jpg",
         link: "/guide/10-days-in-vietnam",

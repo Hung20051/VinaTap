@@ -262,7 +262,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "13 Tháng 10, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-2-10days.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/10-days-in-vietnam",
       },
       {
         id: "itin-3",

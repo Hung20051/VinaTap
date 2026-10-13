@@ -243,14 +243,24 @@ const MEGA_MENUS_DATA = {
         id: "itin-1",
         title: "3-Week Vietnam Itinerary",
         titleVi: "Lịch trình 3 tuần xuyên Việt kinh điển",
-        date: "October 13, 2026",
-        dateVi: "13 Tháng 10, 2026",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Itinerary",
-        img: "/guide/megamenu/itin-2-3weeks.jpg",
+        img: "/guide/megamenu/itin-1-3weeks.jpg",
         link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "itin-2",
+        title: "10 Days in Vietnam",
+        titleVi: "Lịch trình 10 ngày tại Việt Nam",
+        date: "October 13, 2026",
+        dateVi: "13 Tháng 10, 2026",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-2-10days.jpg",
+        link: "/guide/10-days-in-vietnam",
+      },
+      {
+        id: "itin-3",
         title: "2 Weeks in Vietnam",
         titleVi: "Lịch trình 2 tuần xuyên Việt cân bằng",
         date: "October 13, 2026",
@@ -260,7 +270,7 @@ const MEGA_MENUS_DATA = {
         link: "/guide/2-weeks-in-vietnam",
       },
       {
-        id: "itin-3",
+        id: "itin-4",
         title: "1 Month in Vietnam",
         titleVi: "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam",
         date: "October 13, 2026",
@@ -268,16 +278,6 @@ const MEGA_MENUS_DATA = {
         badge: "Itinerary",
         img: "/guide/megamenu/itin-4-1month.jpg",
         link: "/guide/1-month-in-vietnam",
-      },
-      {
-        id: "itin-4",
-        title: "The Complete Guide to Vietnam",
-        titleVi: "Cẩm nang du lịch toàn diện Việt Nam 2026",
-        date: "October 12, 2026",
-        dateVi: "12 Tháng 10, 2026",
-        badge: "Itinerary",
-        img: "/guide/megamenu/inspired-3.jpg",
-        link: "/guide/the-complete-guide-to-vietnam",
       },
     ],
   },
@@ -941,7 +941,7 @@ export default function TwoWeeksInVietnamPage() {
           </h2>
           <div className="omi-other-itin-grid">
             <Link
-              href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+              href="/guide/10-days-in-vietnam"
               className="omi-other-itin-card"
             >
               <div className="omi-other-itin-img-wrap">

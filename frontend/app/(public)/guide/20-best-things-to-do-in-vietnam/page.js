@@ -261,10 +261,10 @@ const MEGA_MENUS_DATA = {
         title: "10-Day Northern Vietnam Highlights",
         titleVi: "10 ngày khám phá tinh hoa miền Bắc",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Itineraries",
         img: "/guide/megamenu/itin-2-10days.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/10-days-in-vietnam",
       },
       {
         id: "itin-3",

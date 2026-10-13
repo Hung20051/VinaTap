@@ -1092,7 +1092,7 @@ export default function OneMonthInVietnamPage() {
           </h2>
           <div className="omi-other-itin-grid">
             <Link
-              href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+              href="/guide/10-days-in-vietnam"
               className="omi-other-itin-card"
             >
               <div className="omi-other-itin-img-wrap">
