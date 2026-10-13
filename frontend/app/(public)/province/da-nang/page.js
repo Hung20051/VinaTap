@@ -966,7 +966,7 @@ export default function DaNangPage() {
           </h1>
 
           <div className="vnn-danang-meta">
-            <span>By Welcome To Vietnam</span>
+            <span>By VinaTap</span>
             <span>•</span>
             <span>{lang === "vi" ? "15 Tháng 9, 2026" : "September 15, 2026"}</span>
           </div>

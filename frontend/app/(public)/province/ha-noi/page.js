@@ -538,7 +538,7 @@ export default function HanoiPage() {
           </h1>
 
           <div className="vnn-hanoi-meta">
-            <span>By Welcome to Vietnam</span>
+            <span>By VinaTap</span>
             <span>•</span>
             <span>June 15, 2022</span>
           </div>

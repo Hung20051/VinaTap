@@ -588,7 +588,7 @@ export default function HoChiMinhCityPage() {
           </h1>
 
           <div className="vnn-hcmc-hero-meta">
-            <span className="author">By Welcome To Vietnam</span>
+            <span className="author">By VinaTap</span>
             <span>•</span>
             <span className="date">October 12, 2026</span>
           </div>

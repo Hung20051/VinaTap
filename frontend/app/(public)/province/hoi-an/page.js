@@ -741,7 +741,7 @@ export default function HoiAnPage() {
           <h1 className="vnn-hoian-hero-title">Hoi An</h1>
 
           <div className="vnn-hoian-hero-meta">
-            <span>By Welcome To Vietnam</span>
+            <span>By VinaTap</span>
             <span>•</span>
             <span>
               {lang === "vi" ? "22 Tháng 9, 2026" : "September 22, 2026"}

@@ -7,6 +7,7 @@ import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import VietnamItineraryMap from "@/components/itinerary/VietnamItineraryMap";
+import VietnamExtendedItineraryMap from "@/components/itinerary/VietnamExtendedItineraryMap";
 import { getLang } from "@/lib/prefs";
 import {
   Search,
@@ -23,6 +24,9 @@ import {
   ArrowRight,
   Download,
   Share2,
+  Train,
+  Bus,
+  Plane,
 } from "lucide-react";
 import "@/styles/home.css";
 import "@/styles/three-week-itinerary.css";
@@ -711,13 +715,13 @@ export default function ThreeWeekVietnamItineraryPage() {
 
           <div className="itin-hero__meta">
             {lang === "vi"
-              ? "Bởi Welcome to Vietnam   20 Tháng 7, 2025"
-              : "By Welcome to Vietnam   July 20, 2025"}
+              ? "Bởi VinaTap   20 Tháng 7, 2025"
+              : "By VinaTap   July 20, 2025"}
           </div>
         </div>
       </section>
 
-      {/* ─── FLOATING CTA (BOTTOM OF HERO - SCREENSHOT 1) ─── */}
+      {/* ─── FLOATING CTA (BOTTOM OF HERO) ─── */}
       <div className="itin-cta-wrap">
         <button
           type="button"
@@ -734,7 +738,7 @@ export default function ThreeWeekVietnamItineraryPage() {
       </div>
 
       <div className="itin-container">
-        {/* ─── 4. 3-WEEK VIETNAM ITINERARY MAP (SCREENSHOT 2 & 3) ─── */}
+        {/* ─── 4. 3-WEEK VIETNAM ITINERARY MAP ─── */}
         <section className="itin-map-section">
           <div className="itin-section-header">
             <h2 className="itin-section-title">
@@ -749,7 +753,6 @@ export default function ThreeWeekVietnamItineraryPage() {
             </p>
           </div>
 
-          {/* Interactive Sharp Vector Map */}
           <VietnamItineraryMap
             onSelectDestination={handleSelectDestination}
             activeId={activeTargetId}
@@ -757,7 +760,7 @@ export default function ThreeWeekVietnamItineraryPage() {
           />
         </section>
 
-        {/* ─── 5. TOP DESTINATIONS CALLOUT & AI ASSISTANT BOX (SCREENSHOT 4) ─── */}
+        {/* ─── 5. TOP DESTINATIONS CALLOUT & AI ASSISTANT BOX ─── */}
         <section className="itin-top-destinations-section">
           <div className="itin-top-banner-bar">
             {lang === "vi"
@@ -833,7 +836,7 @@ export default function ThreeWeekVietnamItineraryPage() {
           </div>
         </section>
 
-        {/* ─── 6. ITINERARY DETAILS (SCREENSHOT 4 & 5) ─── */}
+        {/* ─── 6. ITINERARY DETAILS (7 DESTINATION CARDS) ─── */}
         <section className="itin-details-section">
           <h2 className="itin-details-title">
             {lang === "vi" ? "Chi tiết lịch trình" : "Itinerary details"}
@@ -902,9 +905,532 @@ export default function ThreeWeekVietnamItineraryPage() {
             ))}
           </div>
         </section>
+
+        {/* ─── 7. NOTES (IMAGE 1) ─── */}
+        <section className="itin-notes-section">
+          <h3 className="itin-notes-title">
+            {lang === "vi" ? "Ghi chú quan trọng" : "Notes"}
+          </h3>
+          <ul className="itin-bullets-list">
+            <li>
+              {lang === "vi"
+                ? "Tỷ giá quy đổi giữa USD và VND năm 2026 xấp xỉ 1 USD ≈ 26.000 VNĐ."
+                : "The exchange rate between USD and VND in 2026 is approximately 1 USD ≈ 26,000 VND."}
+            </li>
+            <li>
+              {lang === "vi" ? (
+                <>
+                  Đối với di chuyển bằng tàu hỏa, chúng tôi khuyến nghị bạn nên đặt vé trên trang web chính thức của Tổng công ty Đường sắt Việt Nam:{" "}
+                  <a href="https://dsvn.vn" target="_blank" rel="noopener noreferrer">
+                    dsvn.vn
+                  </a>
+                  .
+                </>
+              ) : (
+                <>
+                  For train travel, we recommend booking tickets on the official website of the Vietnam Railway Corporation:{" "}
+                  <a href="https://dsvn.vn" target="_blank" rel="noopener noreferrer">
+                    dsvn.vn
+                  </a>
+                  .
+                </>
+              )}
+            </li>
+            <li>
+              {lang === "vi"
+                ? "Giá vé các phương tiện giao thông được cung cấp để tham khảo. Giá thực tế có thể thay đổi tùy thuộc vào loại chỗ ngồi, hạng vé và thời điểm đi vào cuối tuần hoặc ngày lễ."
+                : "The transportation prices are provided as a reference. Actual prices may vary based on seat type, ticket class, and whether you're traveling on weekends or holidays."}
+            </li>
+            <li>
+              {lang === "vi" ? (
+                <>
+                  Bạn có thể tham khảo{" "}
+                  <Link href="/guide/the-complete-guide-to-vietnam">
+                    bản đồ du lịch (tourist maps)
+                  </Link>{" "}
+                  của từng thành phố để chuyến đi thuận tiện và trọn vẹn hơn.
+                </>
+              ) : (
+                <>
+                  You can refer to{" "}
+                  <Link href="/guide/the-complete-guide-to-vietnam">
+                    tourist maps
+                  </Link>{" "}
+                  of each city to make your travel more convenient.
+                </>
+              )}
+            </li>
+          </ul>
+        </section>
+
+        {/* ─── 8. 3 WEEKS IN VIETNAM COSTS (IMAGE 1) ─── */}
+        <section className="itin-costs-section">
+          <h3 className="itin-costs-title">
+            {lang === "vi"
+              ? "Dự toán chi phí 3 tuần du lịch Việt Nam"
+              : "3 weeks in Vietnam costs"}
+          </h3>
+          <p className="itin-costs-intro">
+            {lang === "vi"
+              ? "Đối với chuyến đi 3 tuần tại Việt Nam, mức chi tiêu trung bình của đa số du khách rơi vào khoảng $900 (~23.400.000 VNĐ). Dưới đây là các khoản chi phí cố định ước tính giúp bạn lên kế hoạch ngân sách:"
+              : "For a 3-week trip to Vietnam, the average expenditure for many tourists is around $900. Here are some estimated fixed costs to help you plan your budget:"}
+          </p>
+          <ul className="itin-bullets-list">
+            <li>
+              {lang === "vi"
+                ? "Chi phí đi lại (phương tiện giao thông) khoảng $100."
+                : "Transportation costs are approximately $100."}
+            </li>
+            <li>
+              {lang === "vi"
+                ? "Chỗ ở tại khách sạn riêng hoặc homestay khoảng $15 đến $20 mỗi đêm. Với người đi một mình, phòng hostel là lựa chọn tiết kiệm hơn với giá từ $5 mỗi đêm."
+                : "Accommodation in a private hotel or homestay will cost around $15 to $20 per night. For solo travelers, hostels can be a more affordable option, with prices starting at around $5 per night."}
+            </li>
+            <li>
+              {lang === "vi"
+                ? "Chi phí ăn uống thông thường khoảng $15 mỗi người mỗi ngày."
+                : "Food costs are typically around $15 per person per day."}
+            </li>
+            <li>
+              {lang === "vi"
+                ? "Vé vào cổng các di tích, bảo tàng và danh lam thắng cảnh khoảng $1 – $5."
+                : "Admission to monuments, museums, and attractions costs around $1 – $5."}
+            </li>
+          </ul>
+        </section>
+
+        {/* ─── 9. 3-WEEK VIETNAM ITINERARY INFOGRAPHIC (IMAGES 2, 3, 4) ─── */}
+        <section className="itin-infographic-section">
+          <div className="itin-infographic-header">
+            <h2 className="itin-infographic-title">
+              {lang === "vi"
+                ? "Infographic lịch trình 3 tuần xuyên Việt"
+                : "3-week Vietnam itinerary infographic"}
+            </h2>
+            <p className="itin-infographic-disclaimer">
+              {lang === "vi"
+                ? "Lưu ý: Các dịch vụ vận chuyển và thương hiệu được nhắc đến là gợi ý dựa trên trải nghiệm cá nhân của tác giả, không mang tính chất tài trợ hay quảng cáo."
+                : "Note: The transportation services and brands mentioned are suggestions based on the author's personal experience, without any sponsorships or endorsements."}
+            </p>
+          </div>
+
+          {/* Detailed Itinerary Hero Strip */}
+          <div
+            className="itin-detailed-hero"
+            style={{
+              backgroundImage: `url("/guide/hcmc/hoi-an-lantern-boats.jpg")`,
+            }}
+          >
+            <h3 className="itin-detailed-hero__title">
+              {lang === "vi" ? "Lịch Trình Chi Tiết" : "Detailed Itinerary"}
+            </h3>
+            <div className="itin-detailed-hero__route">
+              HO CHI MINH CITY → NHA TRANG → DA NANG → HOI AN → DA NANG → HANOI → HA LONG → NINH BINH
+            </div>
+          </div>
+
+          {/* SUMMARY TABLE BOX */}
+          <div className="itin-summary-table-box">
+            <div className="itin-summary-table-header">
+              {lang === "vi" ? "BẢNG TỔNG HỢP / SUMMARY" : "SUMMARY"}
+            </div>
+            <div className="itin-summary-table-body">
+              <div className="itin-summary-table-item">
+                <span>{lang === "vi" ? "Điểm đến:" : "Destinations:"}</span>
+                <strong>7</strong>
+              </div>
+              <div className="itin-summary-table-item">
+                <span>{lang === "vi" ? "Chi phí đi lại (USD):" : "Transportation Costs (USD):"}</span>
+                <strong>100+</strong>
+              </div>
+              <div className="itin-summary-table-item">
+                <span>{lang === "vi" ? "Thời gian di chuyển (giờ):" : "Travel Time (hrs):"}</span>
+                <strong>27+</strong>
+              </div>
+              <div className="itin-summary-table-item">
+                <span>{lang === "vi" ? "Tổng chi phí ước tính (USD):" : "Estimated Total Cost (USD):"}</span>
+                <strong>900+</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* VERTICAL TIMELINE INFOGRAPHIC */}
+          <div className="itin-timeline">
+            {/* 1. Ho Chi Minh City */}
+            <div className="itin-timeline-item">
+              <div className="itin-timeline-card">
+                <div className="itin-timeline-thumb-wrap">
+                  <img
+                    src="/guide/hcmc/hcmc-hero-aerial-hd.jpg"
+                    alt="Ho Chi Minh City"
+                    className="itin-timeline-thumb"
+                  />
+                </div>
+                <div className="itin-timeline-content">
+                  <h4 className="itin-timeline-title">
+                    {lang === "vi" ? "TP. Hồ Chí Minh" : "Ho Chi Minh City"}{" "}
+                    <span>{lang === "vi" ? "(3 đêm)" : "(3 nights)"}</span>
+                  </h4>
+                  <div className="itin-timeline-columns">
+                    <ul className="itin-timeline-column-list">
+                      <li>(*) Cu Chi Tunnels</li>
+                      <li>War Remnants Museum</li>
+                      <li>Ben Thanh Market</li>
+                      <li>Chinatown</li>
+                    </ul>
+                    <ul className="itin-timeline-column-list">
+                      <li>Independence Palace</li>
+                      <li>Notre Dame Cathedral</li>
+                      <li>Jade Emperor Pagoda</li>
+                      <li>Bui Vien Street</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Transit: HCMC -> Nha Trang */}
+              <div className="itin-transit-connector">
+                <div className="itin-transit-line is-train" />
+                <div className="itin-transit-badge is-train">
+                  <div className="itin-transit-icon-circle is-train">
+                    <Train size={14} />
+                  </div>
+                  <div className="itin-transit-info">
+                    <span className="itin-transit-cost">$11 - $28 (7h**)</span>
+                    <span className="itin-transit-sub">SE2, SE6, SE8, SE22</span>
+                  </div>
+                </div>
+                <div className="itin-transit-line is-train" />
+              </div>
+            </div>
+
+            {/* 2. Nha Trang */}
+            <div className="itin-timeline-item">
+              <div className="itin-timeline-card">
+                <div className="itin-timeline-thumb-wrap">
+                  <img
+                    src="/guide/15-best-places/place-10-nha-trang.jpg"
+                    alt="Nha Trang"
+                    className="itin-timeline-thumb"
+                  />
+                </div>
+                <div className="itin-timeline-content">
+                  <h4 className="itin-timeline-title">
+                    Nha Trang{" "}
+                    <span>{lang === "vi" ? "(3 đêm)" : "(3 nights)"}</span>
+                  </h4>
+                  <div className="itin-timeline-columns">
+                    <ul className="itin-timeline-column-list">
+                      <li>Nha Trang Beach</li>
+                      <li>Dam Market</li>
+                      <li>Hon Chong Promontory</li>
+                      <li>Po Nagar Cham Towers</li>
+                    </ul>
+                    <ul className="itin-timeline-column-list">
+                      <li>Long Son Pagoda</li>
+                      <li>Oceanographic Museum</li>
+                      <li>Hon Tre Island</li>
+                      <li>Hon Mieu Island</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Transit: Nha Trang -> Da Nang */}
+              <div className="itin-transit-connector">
+                <div className="itin-transit-line is-train" />
+                <div className="itin-transit-badge is-train">
+                  <div className="itin-transit-icon-circle is-train">
+                    <Train size={14} />
+                  </div>
+                  <div className="itin-transit-info">
+                    <span className="itin-transit-cost">$16 - $58 (9h30m)</span>
+                    <span className="itin-transit-sub">SE2, SE4, SE6, SE8</span>
+                  </div>
+                </div>
+                <div className="itin-transit-line is-train" />
+              </div>
+            </div>
+
+            {/* 3. Da Nang */}
+            <div className="itin-timeline-item">
+              <div className="itin-timeline-card">
+                <div className="itin-timeline-thumb-wrap">
+                  <img
+                    src="/guide/danang/danang-hero-hd.jpg"
+                    alt="Da Nang"
+                    className="itin-timeline-thumb"
+                  />
+                </div>
+                <div className="itin-timeline-content">
+                  <h4 className="itin-timeline-title">
+                    {lang === "vi" ? "Đà Nẵng" : "Da Nang"}{" "}
+                    <span>{lang === "vi" ? "(3 đêm)" : "(3 nights)"}</span>
+                  </h4>
+                  <div className="itin-timeline-columns">
+                    <ul className="itin-timeline-column-list">
+                      <li>My Khe Beach</li>
+                      <li>Son Tra Peninsula</li>
+                      <li>Linh Ung Pagoda</li>
+                    </ul>
+                    <ul className="itin-timeline-column-list">
+                      <li>Con Market</li>
+                      <li>Marble Mountains</li>
+                      <li>Ba Na Hills</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Transit: Da Nang -> Hoi An */}
+              <div className="itin-transit-connector">
+                <div className="itin-transit-line is-bus" />
+                <div className="itin-transit-badge is-bus">
+                  <div className="itin-transit-icon-circle is-bus">
+                    <Bus size={14} />
+                  </div>
+                  <div className="itin-transit-info">
+                    <span className="itin-transit-cost">$1.4 (45m)</span>
+                    <span className="itin-transit-sub">LK02</span>
+                  </div>
+                </div>
+                <div className="itin-transit-line is-bus" />
+              </div>
+            </div>
+
+            {/* 4. Hoi An */}
+            <div className="itin-timeline-item" style={{ position: "relative" }}>
+              <div className="itin-timeline-card">
+                <div className="itin-timeline-thumb-wrap">
+                  <img
+                    src="/guide/hcmc/hoi-an-lantern-boats.jpg"
+                    alt="Hoi An"
+                    className="itin-timeline-thumb"
+                  />
+                </div>
+                <div className="itin-timeline-content">
+                  <h4 className="itin-timeline-title">
+                    {lang === "vi" ? "Hội An" : "Hoi An"}{" "}
+                    <span>{lang === "vi" ? "(3 đêm)" : "(3 nights)"}</span>
+                  </h4>
+                  <div className="itin-timeline-columns">
+                    <ul className="itin-timeline-column-list">
+                      <li>Hoi An Ancient Town</li>
+                      <li>An Bang Beach</li>
+                      <li>My Son Sanctuary</li>
+                    </ul>
+                    <ul className="itin-timeline-column-list">
+                      <li>Thanh Ha Pottery Village</li>
+                      <li>Bay Mau Coconut Forest</li>
+                      <li>Cham Islands</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Plane flight curve trajectory on the left */}
+              <div className="itin-flight-loop" />
+              <div className="itin-flight-badge-wrap">
+                <div className="itin-transit-icon-circle is-plane" style={{ width: 22, height: 22 }}>
+                  <Plane size={12} />
+                </div>
+                <strong style={{ color: "#0284c7" }}>$40 - $60</strong>
+                <span style={{ fontSize: 10, color: "#475569" }}>(1h30m)</span>
+                <span style={{ fontSize: 9.5, color: "#64748b" }}>Vietnam Airlines</span>
+              </div>
+
+              {/* Transit down connector */}
+              <div className="itin-transit-connector">
+                <div className="itin-transit-line is-bus" />
+                <div className="itin-transit-badge is-bus">
+                  <div className="itin-transit-icon-circle is-plane">
+                    <Plane size={14} />
+                  </div>
+                  <div className="itin-transit-info">
+                    <span className="itin-transit-cost">Hoi An → Da Nang → Hanoi</span>
+                    <span className="itin-transit-sub">Flight / Máy bay</span>
+                  </div>
+                </div>
+                <div className="itin-transit-line is-bus" />
+              </div>
+            </div>
+
+            {/* 5. Hanoi */}
+            <div className="itin-timeline-item">
+              <div className="itin-timeline-card">
+                <div className="itin-timeline-thumb-wrap">
+                  <img
+                    src="/guide/15-best-places/place-3-hanoi.jpg"
+                    alt="Hanoi"
+                    className="itin-timeline-thumb"
+                  />
+                </div>
+                <div className="itin-timeline-content">
+                  <h4 className="itin-timeline-title">
+                    {lang === "vi" ? "Hà Nội" : "Hanoi"}{" "}
+                    <span>{lang === "vi" ? "(3 đêm)" : "(3 nights)"}</span>
+                  </h4>
+                  <div className="itin-timeline-columns">
+                    <ul className="itin-timeline-column-list">
+                      <li>Hanoi Old Quarter</li>
+                      <li>Hoan Kiem Lake</li>
+                      <li>Temple of Literature</li>
+                    </ul>
+                    <ul className="itin-timeline-column-list">
+                      <li>Ho Chi Minh Mausoleum</li>
+                      <li>Dong Xuan Market</li>
+                      <li>Hoa Lo Prison</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Transit: Hanoi -> Ha Long */}
+              <div className="itin-transit-connector">
+                <div className="itin-transit-line is-bus" />
+                <div className="itin-transit-badge is-bus">
+                  <div className="itin-transit-icon-circle is-bus">
+                    <Bus size={14} />
+                  </div>
+                  <div className="itin-transit-info">
+                    <span className="itin-transit-cost">$12 (2h30m)</span>
+                    <span className="itin-transit-sub">Ha Long Travel Limousine / Phuc Xuyen</span>
+                  </div>
+                </div>
+                <div className="itin-transit-line is-bus" />
+              </div>
+            </div>
+
+            {/* 6. Ha Long */}
+            <div className="itin-timeline-item">
+              <div className="itin-timeline-card">
+                <div className="itin-timeline-thumb-wrap">
+                  <img
+                    src="/guide/15-best-places/place-6-ha-long.jpg"
+                    alt="Ha Long"
+                    className="itin-timeline-thumb"
+                  />
+                </div>
+                <div className="itin-timeline-content">
+                  <h4 className="itin-timeline-title">
+                    {lang === "vi" ? "Hạ Long" : "Ha Long"}{" "}
+                    <span>{lang === "vi" ? "(2 đêm)" : "(2 nights)"}</span>
+                  </h4>
+                  <div className="itin-timeline-columns">
+                    <ul className="itin-timeline-column-list">
+                      <li>Ha Long Bay</li>
+                      <li>Tuan Chau Island</li>
+                      <li>Bai Chay Beach</li>
+                    </ul>
+                    <ul className="itin-timeline-column-list">
+                      <li>Quang Ninh Museum</li>
+                      <li>Long Tien Pagoda</li>
+                      <li>Bai Tho Mountain</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Transit: Ha Long -> Ninh Binh */}
+              <div className="itin-transit-connector">
+                <div className="itin-transit-line is-bus" />
+                <div className="itin-transit-badge is-bus">
+                  <div className="itin-transit-icon-circle is-bus">
+                    <Bus size={14} />
+                  </div>
+                  <div className="itin-transit-info">
+                    <span className="itin-transit-cost">$12 - $14 (3h30m)</span>
+                    <span className="itin-transit-sub">Ninh Binh Travel / Cat Ba Express</span>
+                  </div>
+                </div>
+                <div className="itin-transit-line is-bus" />
+              </div>
+            </div>
+
+            {/* 7. Ninh Binh */}
+            <div className="itin-timeline-item">
+              <div className="itin-timeline-card">
+                <div className="itin-timeline-thumb-wrap">
+                  <img
+                    src="/guide/15-best-places/place-5-ninh-binh.jpg"
+                    alt="Ninh Binh"
+                    className="itin-timeline-thumb"
+                  />
+                </div>
+                <div className="itin-timeline-content">
+                  <h4 className="itin-timeline-title">
+                    {lang === "vi" ? "Ninh Bình" : "Ninh Binh"}{" "}
+                    <span>{lang === "vi" ? "(3 đêm)" : "(3 nights)"}</span>
+                  </h4>
+                  <div className="itin-timeline-columns">
+                    <ul className="itin-timeline-column-list">
+                      <li>Tam Coc - Bich Dong</li>
+                      <li>Mua Caves</li>
+                      <li>Hoa Lu Ancient Capital</li>
+                    </ul>
+                    <ul className="itin-timeline-column-list">
+                      <li>Trang An Landscape Complex</li>
+                      <li>Bai Dinh Pagoda</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Return transit: Ninh Binh -> Hanoi */}
+              <div className="itin-transit-connector">
+                <div className="itin-transit-line is-bus" />
+                <div className="itin-transit-badge is-bus">
+                  <div className="itin-transit-icon-circle is-bus">
+                    <Bus size={14} />
+                  </div>
+                  <div className="itin-transit-info">
+                    <span className="itin-transit-cost">$7 (1h30m)</span>
+                    <span className="itin-transit-sub">X.E Viet Nam</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="itin-timeline-footnotes">
+            <p>(*) {lang === "vi" ? "Điểm tham quan nổi tiếng tại thành phố." : "Popular attractions in the city."}</p>
+            <p>(**) {lang === "vi" ? "Thời gian di chuyển ước tính." : "Approximate travel time."}</p>
+          </div>
+        </section>
+
+        {/* ─── 10. 3-WEEK VIETNAM ITINERARY: EXTENDED EXPLORATION (IMAGE 5) ─── */}
+        <section className="itin-extended-section">
+          <div className="itin-section-header">
+            <h2 className="itin-section-title">
+              {lang === "vi"
+                ? "Lịch trình 3 tuần xuyên Việt: Mở rộng khám phá"
+                : "3-Week Vietnam itinerary: Extended exploration"}
+            </h2>
+            <p className="itin-map-intro">
+              {lang === "vi"
+                ? "Chúng tôi cũng cung cấp một lịch trình 3 tuần xuyên Việt khác để bạn tham khảo, được thiết kế dành cho những du khách yêu thích khám phá thêm nhiều điểm đến đa dạng."
+                : "We also offer another 3-week Vietnam itinerary for your reference, designed for those who enjoy exploring more destinations."}
+            </p>
+          </div>
+
+          {/* Extended Vector Map */}
+          <VietnamExtendedItineraryMap lang={lang} />
+
+          <div className="itin-top-banner-bar" style={{ marginTop: 24 }}>
+            {lang === "vi"
+              ? "LỊCH TRÌNH 3 TUẦN DU LỊCH VIỆT NAM: MỞ RỘNG KHÁM PHÁ"
+              : "3-WEEK VIETNAM ITINERARY: EXTENDED EXPLORATION"}
+          </div>
+
+          <div className="itin-banner-breadcrumb">
+            {lang === "vi"
+              ? "Lịch trình 3 tuần xuyên Việt: Mở rộng khám phá"
+              : "3-week Vietnam Itinerary: Extended exploration"}
+          </div>
+        </section>
       </div>
 
-      {/* ─── 7. FLOATING AI TRAVEL COMPANION ─── */}
+      {/* ─── FLOATING AI TRAVEL COMPANION ─── */}
       <div className="vnn-floating-widget">
         <button
           type="button"
@@ -936,7 +1462,7 @@ export default function ThreeWeekVietnamItineraryPage() {
         hideFab={true}
       />
 
-      {/* ─── 8. SEARCH MODAL ─── */}
+      {/* ─── SEARCH MODAL ─── */}
       {searchModalOpen && (
         <div
           className="vnn-search-modal"
@@ -1000,7 +1526,7 @@ export default function ThreeWeekVietnamItineraryPage() {
         </div>
       )}
 
-      {/* ─── 9. EDITORIAL FOOTER ─── */}
+      {/* ─── EDITORIAL FOOTER ─── */}
       <footer className="home-footer" style={{ marginTop: "60px" }}>
         <div className="home-footer__bottom">
           <p>

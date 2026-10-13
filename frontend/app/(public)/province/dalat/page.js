@@ -681,7 +681,7 @@ export default function DalatPage() {
           </h1>
 
           <div className="vnn-dalat-hero-meta">
-            <span className="author">By Welcome To Vietnam</span>
+            <span className="author">By VinaTap</span>
             <span>•</span>
             <span className="date">September 25, 2026</span>
           </div>

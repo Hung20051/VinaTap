@@ -971,7 +971,7 @@ export default function TwentyBestThingsPage() {
             {isVi ? "20 trải nghiệm tuyệt nhất tại Việt Nam" : "20 Best Things to Do in Vietnam"}
           </h1>
           <p className="things-hero__meta">
-            {isVi ? "Bởi Welcome to Vietnam • 10 Tháng 10, 2026" : "By Welcome to Vietnam • October 10, 2026"}
+            {isVi ? "Bởi VinaTap • 10 Tháng 10, 2026" : "By VinaTap • October 10, 2026"}
           </p>
         </div>
       </section>
