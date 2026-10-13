@@ -580,7 +580,7 @@ export default function AdminVouchers() {
                 <label>Mô Tả Ưu Đãi</label>
                 <input
                   type="text"
-                  placeholder="VD: Áp dụng cho tất cả đơn hàng thẻ NFC VinaTap"
+                  placeholder="VD: Áp dụng cho tất cả dịch vụ & sản phẩm du lịch VinaTap"
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 />

@@ -42,13 +42,13 @@ export default function ProvinceUnboxingModal({ province, onClose }) {
             <Sparkles size={36} className="province-unbox-sparkle-icon" />
           </div>
           <span className="province-unbox-tag">
-            <Trophy size={14} /> THẺ NFC ĐÃ MỞ KHÓA
+            <Trophy size={14} /> ĐÃ MỞ KHÓA ĐIỂM ĐẾN
           </span>
-          <h2>BẠN ĐÃ SỞ HỮU THẺ NFC</h2>
+          <h2>BẠN ĐÃ MỞ KHÓA HÀNH TRÌNH</h2>
           <h1>{province.name.toUpperCase()}</h1>
         </div>
 
-        {/* 3D NFC Card Piece Display */}
+        {/* 3D Card Piece Display */}
         <div className="province-unbox-card-3d-wrap">
           <div className="province-unbox-card-3d">
             {province.thumbnail_url ? (
@@ -59,13 +59,13 @@ export default function ProvinceUnboxingModal({ province, onClose }) {
                 <span>{province.name}</span>
               </div>
             )}
-            <div className="province-unbox-chip-badge">NFC VINATAP</div>
+            <div className="province-unbox-chip-badge">VINATAP PASS</div>
             <div className="province-unbox-shine" />
           </div>
         </div>
 
         <p className="province-unbox-desc">
-          🎉 Chúc mừng bạn đã bổ sung thẻ NFC <strong>{province.name}</strong> vào bộ sưu tập du lịch Việt Nam VinaTap!
+          🎉 Chúc mừng bạn đã bổ sung hành trình <strong>{province.name}</strong> vào bộ sưu tập du lịch Việt Nam VinaTap!
         </p>
 
         <div className="province-unbox-actions">
@@ -90,7 +90,7 @@ export default function ProvinceUnboxingModal({ province, onClose }) {
             className="btn btn-outline province-unbox-btn"
             onClick={handleShare}
           >
-            <Share2 size={18} /> {copied ? "Đã copy link!" : "Chia sẻ thẻ NFC"}
+            <Share2 size={18} /> {copied ? "Đã copy link!" : "Chia sẻ hành trình"}
           </button>
         </div>
       </div>

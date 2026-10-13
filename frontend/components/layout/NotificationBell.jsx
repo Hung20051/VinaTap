@@ -492,7 +492,7 @@ export default function NotificationBell() {
                         : "Bạn chưa có thông báo nào mới."}
                     </p>
                     <span className="notif-empty-sub">
-                      Các cập nhật về thẻ NFC, đơn hàng và sự kiện sẽ hiển thị tại đây.
+                      Các cập nhật về cẩm nang, hành trình du lịch và sự kiện sẽ hiển thị tại đây.
                     </span>
                     {user?.role === "admin" && (
                       <Link

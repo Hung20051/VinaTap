@@ -5,11 +5,11 @@ export default function ProvinceHeader({ onRefresh, onCreateClick }) {
     <div className="admin-prov-header">
       <div className="admin-prov-header-title-wrap">
         <h1 className="admin-dash-title">
-          <span className="title-desktop">🗺️ 34 Tỉnh Thành & Địa Danh</span>
-          <span className="title-mobile">🗺️ 34 Tỉnh Thành</span>
+          <span className="title-desktop">🗺️ 63 Tỉnh Thành & Địa Danh</span>
+          <span className="title-mobile">🗺️ 63 Tỉnh Thành</span>
         </h1>
         <p className="admin-dash-subtitle">
-          Quản lý danh mục 34 thẻ NFC VinaTap, ảnh bìa, trạng thái mở bán và điểm du lịch
+          Quản lý danh mục 63 tỉnh thành VinaTap, cẩm nang du lịch, ảnh bìa và điểm đến
         </p>
       </div>
       <div className="admin-prov-header__actions">

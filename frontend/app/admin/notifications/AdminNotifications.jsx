@@ -394,10 +394,10 @@ export default function AdminNotifications() {
                       👶 Khách hàng mới đăng ký (7 ngày qua)
                     </option>
                     <option value="activated_nfc">
-                      🏆 Khách hàng ĐÃ kích hoạt thẻ NFC
+                      🏆 Du khách ĐÃ có album hành trình
                     </option>
                     <option value="unactivated_nfc">
-                      🔑 Khách hàng CHƯA kích hoạt thẻ NFC nào
+                      🔑 Du khách MỚI (chưa tạo album)
                     </option>
                   </select>
                 </div>

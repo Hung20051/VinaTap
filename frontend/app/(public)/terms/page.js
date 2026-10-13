@@ -87,8 +87,8 @@ export default function TermsPage() {
             </div>
             <p className="legal-text">
               {isVi
-                ? "Chào mừng bạn đến với VinaTap. Khi truy cập website vinatap.vn, kích hoạt thẻ vật lý NFC, tạo album ảnh hoặc thực hiện bất kỳ giao dịch mua sắm nào, bạn đồng ý tuân thủ toàn bộ các điều khoản được quy định dưới đây. Nếu bạn không đồng ý với bất kỳ phần nào, vui lòng ngừng sử dụng dịch vụ của chúng tôi."
-                : "Welcome to VinaTap. By accessing vinatap.vn, activating physical NFC cards, creating photo albums, or making any purchases, you agree to comply with all terms stated herein. If you do not agree with any part, please cease using our services."}
+                ? "Chào mừng bạn đến với VinaTap. Khi truy cập website vinatap.vn, kích hoạt hành trình du lịch, tạo album ảnh hoặc thực hiện bất kỳ giao dịch mua sắm nào, bạn đồng ý tuân thủ toàn bộ các điều khoản được quy định dưới đây. Nếu bạn không đồng ý với bất kỳ phần nào, vui lòng ngừng sử dụng dịch vụ của chúng tôi."
+                : "Welcome to VinaTap. By accessing vinatap.vn, activating travel passes, creating photo albums, or making any purchases, you agree to comply with all terms stated herein. If you do not agree with any part, please cease using our services."}
             </p>
             <div className="legal-callout">
               <p>
@@ -112,15 +112,15 @@ export default function TermsPage() {
             </div>
             <p className="legal-text">
               {isVi
-                ? "Để quản lý thẻ NFC và tạo album kỷ niệm cá nhân, bạn cần tạo tài khoản VinaTap thông qua email hoặc đăng nhập Google OAuth:"
-                : "To manage NFC cards and create personalized travel albums, you must create a VinaTap account via email or Google OAuth:"}
+                ? "Để quản lý hành trình du lịch và tạo album kỷ niệm cá nhân, bạn cần tạo tài khoản VinaTap thông qua email hoặc đăng nhập Google OAuth:"
+                : "To manage itineraries and create personalized travel albums, you must create a VinaTap account via email or Google OAuth:"}
             </p>
             <ul className="legal-list">
               <li>
                 <strong>{isVi ? "Thông tin chính xác:" : "Accurate Information:"}</strong>{" "}
                 {isVi
-                  ? "Người dùng cam kết cung cấp thông tin liên hệ chính xác để phục vụ nhận thẻ vật lý và hỗ trợ tài khoản."
-                  : "Users commit to providing accurate contact information for physical delivery and account support."}
+                  ? "Người dùng cam kết cung cấp thông tin liên hệ chính xác để phục vụ giao nhận quà tặng du lịch và hỗ trợ tài khoản."
+                  : "Users commit to providing accurate contact information for delivery and account support."}
               </li>
               <li>
                 <strong>{isVi ? "Bảo mật thông tin đăng nhập:" : "Account Security:"}</strong>{" "}
@@ -144,32 +144,32 @@ export default function TermsPage() {
                 <Camera size={18} />
               </div>
               <h2 className="legal-section-title">
-                {isVi ? "3. Quyền sở hữu thẻ NFC và Album kỷ niệm" : "3. Card Ownership & Memory Albums"}
+                {isVi ? "3. Quyền sở hữu Hành trình và Album kỷ niệm" : "3. Itinerary Ownership & Memory Albums"}
               </h2>
             </div>
             <p className="legal-text">
               {isVi
-                ? "Mỗi thẻ NFC vật lý VinaTap đại diện cho một dấu ấn hành trình di sản Việt Nam với các quyền lợi đi kèm:"
-                : "Each physical VinaTap NFC card represents a Vietnamese heritage travel destination with associated benefits:"}
+                ? "Mỗi mã hành trình VinaTap đại diện cho một dấu ấn di sản Việt Nam với các quyền lợi đi kèm:"
+                : "Each VinaTap itinerary pass represents a Vietnamese heritage travel destination with associated benefits:"}
             </p>
             <ul className="legal-list">
               <li>
                 <strong>{isVi ? "Kích hoạt vĩnh viễn:" : "Lifetime Activation:"}</strong>{" "}
                 {isVi
-                  ? "Người đầu tiên kích hoạt thẻ sẽ trở thành chủ sở hữu hợp pháp của album tương ứng. Quyền lưu trữ kỷ niệm được duy trì trọn đời."
-                  : "The first person to activate a tile becomes the legitimate owner of the album. Memory storage privileges are lifetime."}
+                  ? "Người đầu tiên kích hoạt mã sẽ trở thành chủ sở hữu hợp pháp của album tương ứng. Quyền lưu trữ kỷ niệm được duy trì trọn đời."
+                  : "The first person to activate a pass becomes the legitimate owner of the album. Memory storage privileges are lifetime."}
               </li>
               <li>
                 <strong>{isVi ? "Quyền riêng tư:" : "Privacy Control:"}</strong>{" "}
                 {isVi
-                  ? "Người dùng có thể chuyển đổi giữa chế độ Riêng tư (chỉ chủ sở hữu xem) hoặc Công khai (cho phép người khác chạm thẻ để chiêm ngưỡng album)."
-                  : "Users can switch between Private mode (owner only) or Public mode (allows visitors tapping the card to view media)."}
+                  ? "Người dùng có thể chuyển đổi giữa chế độ Riêng tư (chỉ chủ sở hữu xem) hoặc Công khai (cho phép bạn bè quét mã để chiêm ngưỡng album)."
+                  : "Users can switch between Private mode (owner only) or Public mode (allows visitors scanning to view media)."}
               </li>
               <li>
-                <strong>{isVi ? "Chuyển nhượng thẻ:" : "Card Transfer:"}</strong>{" "}
+                <strong>{isVi ? "Chuyển nhượng hành trình:" : "Itinerary Transfer:"}</strong>{" "}
                 {isVi
-                  ? "Bạn có toàn quyền chuyển nhượng thẻ và toàn bộ album cho người khác thông qua tính năng Chuyển nhượng xác nhận qua email trong Dashboard."
-                  : "You maintain full authority to transfer card and album ownership via secure email verification in the Dashboard."}
+                  ? "Bạn có toàn quyền chuyển nhượng hành trình và toàn bộ album cho người khác thông qua tính năng Chuyển nhượng xác nhận qua email trong Dashboard."
+                  : "You maintain full authority to transfer itinerary and album ownership via secure email verification in the Dashboard."}
               </li>
             </ul>
           </div>

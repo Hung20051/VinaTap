@@ -13,7 +13,7 @@ export default function SettingsSupport() {
   const [lang, setLang] = useState("vi");
   const [userIsAdmin, setUserIsAdmin] = useState(false);
   const [supportInfo, setSupportInfo] = useState({
-    company_name: "VinaTap - Bản Đồ Du Lịch NFC Việt Nam",
+    company_name: "VinaTap - Cổng Cẩm Nang & Bản Đồ Du Lịch Việt Nam",
     company_email: "support@vinatap.vn",
     company_hotline: "1900 888 999",
     company_address: "Số 108 Phố Huế, Quận Hai Bà Trưng, Hà Nội",

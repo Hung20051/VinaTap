@@ -75,7 +75,7 @@ export default function CustomerLayout({ children }) {
     {
       href: "/shop",
       icon: <ShoppingBag size={20} />,
-      label: t(lang, "nfcStore"),
+      label: lang === "vi" ? "Cửa Hàng Du Lịch" : "Travel Store",
     },
   ];
 

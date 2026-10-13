@@ -11,7 +11,7 @@ export default function ProvincePreviewModal({ province, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="admin-prov-modal__header">
-          <h3>👁️ Xem Chi Tiết Thẻ NFC</h3>
+          <h3>👁️ Xem Chi Tiết Điểm Đến</h3>
           <button
             type="button"
             className="admin-prov-modal__close"

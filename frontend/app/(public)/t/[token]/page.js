@@ -167,7 +167,7 @@ export default function TapPage() {
       }
     } catch (err) {
       setStatus("error");
-      setMsg(err.message || "Thẻ NFC không tồn tại hoặc đường dẫn không chính xác.");
+      setMsg(err.message || "Hành trình không tồn tại hoặc đường dẫn không chính xác.");
     }
   };
 
@@ -243,7 +243,7 @@ export default function TapPage() {
     const url = getShareUrl();
     if (navigator.share) {
       navigator.share({
-        title: `Thẻ NFC VinaTap — ${card?.province_name}`,
+        title: `Hành Trình VinaTap — ${card?.province_name}`,
         text: `Khám phá cẩm nang du lịch và nhật ký ảnh ${card?.province_name} cùng VinaTap!`,
         url,
       });
@@ -255,8 +255,8 @@ export default function TapPage() {
   if (status === "loading") {
     return (
       <DinoLoader
-        text="Đang nhận diện chip NFC..."
-        subtext="Vui lòng giữ điện thoại gần thẻ thông minh"
+        text="Đang tải dữ liệu hành trình..."
+        subtext="Vui lòng chờ trong giây lát"
         size={260}
         fullScreen={true}
       />
@@ -266,8 +266,8 @@ export default function TapPage() {
   if (status === "error") {
     return (
       <Dino404
-        title="Thẻ NFC Không Tồn Tại"
-        message={msg || "Mã thẻ này không tồn tại trong hệ thống VinaTap hoặc đã bị vô hiệu hóa."}
+        title="Hành Trình Không Tồn Tại"
+        message={msg || "Mã hành trình này không tồn tại trong hệ thống VinaTap hoặc đã bị vô hiệu hóa."}
         backBtnText="Về Trang Chủ"
       />
     );
@@ -457,7 +457,7 @@ export default function TapPage() {
                     }}
                   >
                     <MapPin size={13} />
-                    <span>{regionInfo.label} • Thẻ NFC 3D</span>
+                    <span>{regionInfo.label} • Bản Đồ Du Lịch</span>
                   </div>
                   <div className="tap-to-status-pill">
                     <Radio size={12} style={{ color: "#16a34a" }} />
@@ -471,7 +471,7 @@ export default function TapPage() {
                 /* Trạng thái 1: Con Dấu Sáp 3D Mời Chạm */
                 <div className="tap-folio-unopened-box">
                   <p className="tap-folio-teaser-text">
-                    Thẻ NFC du lịch đã được nhận diện. Hãy chạm vào con dấu sáp hoàng gia để mở bưu thiếp kỷ niệm và cẩm nang khám phá!
+                    Hành trình du lịch đã được nhận diện. Hãy chạm vào con dấu sáp hoàng gia để mở bưu thiếp kỷ niệm và cẩm nang khám phá!
                   </p>
 
                   <div className="tap-envelope-seal-section">
@@ -504,7 +504,7 @@ export default function TapPage() {
                       className="tap-folio-btn-skip"
                       onClick={handleOpenDetail}
                     >
-                      <span>Vào thẳng cẩm nang &amp; thẻ NFC</span>
+                      <span>Vào thẳng cẩm nang &amp; bản đồ</span>
                       <ArrowRight size={15} />
                     </button>
                   </div>
@@ -515,7 +515,7 @@ export default function TapPage() {
                   <div className="tap-postcard-letter-box">
                     <span className="tap-quote-mark">“</span>
                     <p className="tap-letter-text">
-                      Chào mừng bạn đến với <strong>{pName}</strong>! Chiếc thẻ thông minh này đã sẵn sàng lưu giữ những khoảnh khắc đẹp nhất và đồng hành cùng bạn khám phá từng địa danh, món ngon đặc sắc nơi đây.
+                      Chào mừng bạn đến với <strong>{pName}</strong>! Hành trình du lịch này đã sẵn sàng lưu giữ những khoảnh khắc đẹp nhất và đồng hành cùng bạn khám phá từng địa danh, món ngon đặc sắc nơi đây.
                     </p>
                     <div className="tap-letter-signature">
                       <span>Đội ngũ VinaTap 💙</span>
@@ -531,7 +531,7 @@ export default function TapPage() {
                         disabled={claiming}
                       >
                         <Zap size={18} />
-                        <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Thẻ NFC"}</span>
+                        <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Hành Trình"}</span>
                       </button>
                     ) : status === "owned" ? (
                       album ? (
@@ -636,7 +636,7 @@ export default function TapPage() {
                 </div>
                 <div className="tap-card-nfc-chip">
                   <Radio size={15} className="tap-nfc-signal" />
-                  <span className="tap-chip-label">NFC 3D</span>
+                  <span className="tap-chip-label">DIGITAL PASS</span>
                 </div>
               </div>
 
@@ -645,13 +645,13 @@ export default function TapPage() {
                   {regionInfo.label}
                 </div>
                 <h2 className="tap-card-name">{pName}</h2>
-                <p className="tap-card-slogan">Thẻ NFC bản đồ du lịch số Việt Nam</p>
+                <p className="tap-card-slogan">Bản đồ du lịch số & cẩm nang Việt Nam</p>
               </div>
 
               <div className="tap-card-footer">
                 <div className="tap-card-serial-box">
-                  <span className="tap-serial-label">SERIAL NUMBER</span>
-                  <span className="tap-serial-val">{card?.serial_code || "VN-2026-NFC"}</span>
+                  <span className="tap-serial-label">MÃ HÀNH TRÌNH</span>
+                  <span className="tap-serial-val">{card?.serial_code || "VN-2026-PASS"}</span>
                 </div>
                 <div className="tap-card-holo-seal">
                   <ShieldCheck size={18} />
@@ -673,7 +673,7 @@ export default function TapPage() {
               {status === "owned" && (
                 <div className="tap-status-badge owned">
                   <CheckCircle2 size={15} />
-                  <span>Thẻ NFC của bạn (Chính chủ)</span>
+                  <span>Hành trình của bạn (Chính chủ)</span>
                 </div>
               )}
               {status === "claimed" && (
@@ -697,7 +697,7 @@ export default function TapPage() {
                   disabled={claiming}
                 >
                   <Zap size={18} />
-                  <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Thẻ NFC"}</span>
+                  <span>{claiming ? "Đang nhận diện..." : "Kích Hoạt Nhận Hành Trình"}</span>
                 </button>
               )}
 
@@ -888,11 +888,11 @@ export default function TapPage() {
               {status === "unclaimed" && (
                 <div className="tap-desktop-unclaimed-cta">
                   <Sparkles size={40} style={{ color: "#ea580c" }} />
-                  <h3>Thẻ NFC Chưa Có Chủ Nhân!</h3>
+                  <h3>Hành Trình Chưa Có Chủ Nhân!</h3>
                   <p>Hãy kích hoạt ngay để bắt đầu lưu lại những kỷ niệm check-in đầu tiên tại {pName}.</p>
                   <button type="button" className="tap-btn-gold-claim large" onClick={handleClaim}>
                     <Zap size={18} />
-                    <span>Kích Hoạt Sở Hữu Thẻ</span>
+                    <span>Kích Hoạt Sở Hữu Hành Trình</span>
                   </button>
                 </div>
               )}
@@ -901,7 +901,7 @@ export default function TapPage() {
                 <div className="tap-desktop-unclaimed-cta">
                   <Camera size={40} style={{ color: "#2563eb" }} />
                   <h3>Bắt Đầu Lưu Kỷ Niệm Tại {pName}!</h3>
-                  <p>Thẻ NFC này chưa có album. Hãy tạo album kỷ niệm đầu tiên để bắt đầu lưu giữ các bức ảnh &amp; video check-in đáng nhớ.</p>
+                  <p>Hành trình này chưa có album. Hãy tạo album kỷ niệm đầu tiên để bắt đầu lưu giữ các bức ảnh check-in đáng nhớ.</p>
                   <button
                     type="button"
                     className="tap-btn-primary large"
@@ -972,7 +972,7 @@ export default function TapPage() {
               <span className="tap-card-logo-badge">VinaTap Pass</span>
               <div className="tap-card-chip-badge">
                 <Radio size={13} className="tap-nfc-icon-pulse" />
-                <span>NFC 3D</span>
+                <span>DIGITAL PASS</span>
               </div>
             </div>
 
@@ -982,7 +982,7 @@ export default function TapPage() {
               </span>
               <h2 className="tap-card-heading">{pName}</h2>
               <div className="tap-card-serial-row">
-                <span>{card?.serial_code || "VN-2026-NFC"}</span>
+                <span>{card?.serial_code || "VN-2026-PASS"}</span>
                 <span className="tap-verified-chip">
                   <ShieldCheck size={13} />
                   <span>VERIFIED</span>
@@ -997,7 +997,7 @@ export default function TapPage() {
           {status === "unclaimed" && (
             <button type="button" className="tap-smart-action-btn claim" onClick={handleClaim}>
               <Zap size={18} />
-              <span>Kích Hoạt Nhận Thẻ NFC</span>
+              <span>Kích Hoạt Nhận Hành Trình</span>
             </button>
           )}
 
@@ -1025,7 +1025,7 @@ export default function TapPage() {
           {status === "claimed" && !album && (
             <div className="tap-friend-owner-pill">
               <ShieldCheck size={14} style={{ color: "#16a34a" }} />
-              <span>Thẻ NFC của <strong>{card?.owner_name || "Bạn bè"}</strong></span>
+              <span>Hành trình của <strong>{card?.owner_name || "Bạn bè"}</strong></span>
             </div>
           )}
         </div>
@@ -1173,7 +1173,7 @@ export default function TapPage() {
               <div className="tap-share-icon-circle">
                 <Share2 size={20} />
               </div>
-              <h3 className="tap-share-title">Chia Sẻ Thẻ NFC {pName}</h3>
+              <h3 className="tap-share-title">Chia Sẻ Hành Trình {pName}</h3>
               <p className="tap-share-subtitle">
                 Quét mã QR hoặc sao chép liên kết để gửi cho bạn bè
               </p>

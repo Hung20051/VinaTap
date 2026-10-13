@@ -29,7 +29,7 @@ export default function GiftNotificationBanner({ gifts = [], onGiftProcessed }) 
   };
 
   const handleReject = async (gift) => {
-    if (!confirm(`Bạn có chắc muốn từ chối nhận thẻ NFC ${gift.province_name}?`)) return;
+    if (!confirm(`Bạn có chắc muốn từ chối nhận hành trình ${gift.province_name}?`)) return;
     setProcessingId(gift.id);
     setErrorMsg("");
     try {

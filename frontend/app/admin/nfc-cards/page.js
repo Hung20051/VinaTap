@@ -1,4 +1,5 @@
-import AdminNfcCards from "./AdminNfcCards";
+import { redirect } from "next/navigation";
+
 export default function Page() {
-  return <AdminNfcCards />;
+  redirect("/admin/dashboard");
 }

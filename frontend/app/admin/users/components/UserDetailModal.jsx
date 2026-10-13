@@ -128,12 +128,12 @@ export default function UserDetailModal({ userId, onClose, showToast }) {
               {/* NFC Cards list */}
               <div className="admin-users-detail-box">
                 <div className="admin-users-detail-box__title">
-                  <CreditCard size={16} /> Thẻ NFC (
+                  <CreditCard size={16} /> Mã Điểm Đến & QR (
                   {detail.nfc_cards?.length || 0})
                 </div>
                 {!detail.nfc_cards?.length ? (
                   <p className="admin-users-detail-box__empty">
-                    Chưa kích hoạt thẻ NFC nào
+                    Chưa kích hoạt mã điểm đến / QR nào
                   </p>
                 ) : (
                   <div className="admin-users-detail-list">

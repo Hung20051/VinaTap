@@ -794,8 +794,8 @@ export default function CustomerDashboard() {
                         </h3>
                         <p className="card-prov-desc">
                           {isUnlocked
-                            ? `${t(lang, "cardSerialPrefix")}: ${matchedCard?.serial_code || "NFC-ACTIVE"}`
-                            : t(lang, "nfcMapTileDesc")}
+                            ? `Mã: ${matchedCard?.serial_code || "ACTIVE"}`
+                            : (lang === "vi" ? "Chưa kích hoạt hành trình này" : "Not yet unlocked")}
                         </p>
                       </div>
 

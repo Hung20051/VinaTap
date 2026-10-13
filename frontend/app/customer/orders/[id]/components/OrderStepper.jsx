@@ -72,7 +72,7 @@ export default function OrderStepper({ order }) {
     {
       step: 2,
       title: "Xưởng chuẩn bị",
-      subtext: "Chế tác laser & NFC",
+      subtext: "Đóng gói bưu phẩm & QR",
       icon: Package,
     },
     {

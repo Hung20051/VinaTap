@@ -52,7 +52,7 @@ export default function CartModal({
           </div>
           <div>
             <h3>🛒 Giỏ Hàng Của Bạn ({cart.length} sản phẩm)</h3>
-            <p className="text-muted">Quản lý danh sách thẻ NFC đã chọn mua</p>
+            <p className="text-muted">Quản lý danh sách sản phẩm du lịch đã chọn mua</p>
           </div>
         </div>
 

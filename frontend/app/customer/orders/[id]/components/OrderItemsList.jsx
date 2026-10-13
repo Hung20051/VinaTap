@@ -58,7 +58,7 @@ export default function OrderItemsList({ order }) {
             "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600";
 
           const itemName =
-            item.name || item.title || item.product_name || "Thẻ NFC Di Sản VinaTap";
+            item.name || item.title || item.product_name || "Cẩm Nang & Bản Đồ Du Lịch VinaTap";
 
           return (
             <div key={idx} className="detail-item-card">
@@ -78,7 +78,7 @@ export default function OrderItemsList({ order }) {
                 <h4 className="detail-item-name">{itemName}</h4>
                 <div className="detail-item-meta">
                   Phân loại:{" "}
-                  <strong>{item.wood_type || item.variant || "Thẻ NFC Khắc Laser Cao Cấp"}</strong>
+                  <strong>{item.wood_type || item.variant || "Bộ Bản Đồ Số & Cẩm Nang"}</strong>
                 </div>
 
                 <div className="detail-item-badges">
@@ -86,7 +86,7 @@ export default function OrderItemsList({ order }) {
                     <RefreshCcw size={11} /> Đổi ý 7 ngày
                   </span>
                   <span className="item-badge is-warranty">
-                    <ShieldCheck size={11} /> Bảo hành NFC 10 năm
+                    <ShieldCheck size={11} /> Cập nhật trọn đời
                   </span>
                 </div>
               </div>

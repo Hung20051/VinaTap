@@ -180,14 +180,14 @@ export default function ShopPage() {
     price: getStandardPrice(p),
     originalPrice: getStandardOriginalPrice(p),
     tag: p.tag || "BÁN CHẠY 🔥",
-    description: p.description || "Thẻ NFC kỷ niệm du lịch VinaTap.",
+    description: p.description || "Cẩm nang & bản đồ du lịch số VinaTap.",
     image:
       p.image ||
       "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
     features: [
-      "Chip NFC NXP chuẩn ISO",
-      "Chống nước & chống xước",
-      "Bảo hành chính hãng VinaTap",
+      "Bản đồ số & GPS thông minh",
+      "Cẩm nang chi tiết 63 tỉnh",
+      "Lưu giữ kỷ niệm hành trình",
     ],
   }));
 
@@ -470,14 +470,14 @@ export default function ShopPage() {
           <div className="shop-title-area">
             <div className="shop-brand-chip">
               <Sparkles size={13} />
-              <span>CỬA HÀNG THẺ NFC DI SẢN CHÍNH HÃNG</span>
+              <span>CẨM NANG & BẢN ĐỒ DU LỊCH CHÍNH HÃNG</span>
             </div>
             <h1 className="shop-main-title">
-              Sở Hữu Thẻ NFC <span>34 Tỉnh Thành</span>
+              Khám Phá Cẩm Nang <span>63 Tỉnh Thành</span>
             </h1>
             <p className="shop-main-desc">
-              Chạm thẻ NFC để mở khóa album ảnh kỷ niệm và lưu giữ trọn vẹn từng
-              khoảnh khắc du lịch của bạn.
+              Sở hữu bản đồ du lịch số và cẩm nang chi tiết để mở khóa album ảnh kỷ niệm và lưu giữ trọn vẹn từng
+              khoảnh khắc của bạn.
             </p>
           </div>
 
@@ -486,7 +486,7 @@ export default function ShopPage() {
               <Search size={16} className="shop-search-icon" />
               <input
                 type="text"
-                placeholder="Tìm kiếm thẻ NFC tỉnh thành..."
+                placeholder="Tìm kiếm cẩm nang & bản đồ tỉnh thành..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="shop-search-input"

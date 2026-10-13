@@ -246,7 +246,7 @@ export default function AdminUsers() {
                   <th>Liên hệ</th>
                   <th>Vai trò</th>
                   <th>Trạng thái</th>
-                  <th>Thẻ NFC</th>
+                  <th>Điểm Đến / QR</th>
                   <th>Album</th>
                   <th>Ngày đăng ký</th>
                   <th>Hành động</th>
@@ -313,7 +313,7 @@ export default function AdminUsers() {
                             type="button"
                             onClick={() => setSelectedUserId(u.id)}
                             className="admin-users-action-btn"
-                            title="Xem chi tiết hồ sơ, Thẻ NFC & Album"
+                            title="Xem chi tiết hồ sơ & Album hành trình"
                           >
                             <Eye size={15} />
                           </button>
@@ -410,7 +410,7 @@ export default function AdminUsers() {
                       {u.phone ? `📱 ${u.phone}` : "Chưa có SĐT"}
                     </span>
                     <span className="user-m-sep">•</span>
-                    <span className="user-m-stat">💳 {u.nfc_count} NFC</span>
+                    <span className="user-m-stat">📍 {u.nfc_count} Điểm/QR</span>
                     <span className="user-m-sep">•</span>
                     <span className="user-m-stat">🖼️ {u.album_count} Album</span>
                   </div>

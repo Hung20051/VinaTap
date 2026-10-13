@@ -88,27 +88,27 @@ export default function PolicyPage() {
             </div>
             <p className="legal-text">
               {isVi
-                ? "VinaTap cam kết chất lượng chuẩn quốc tế cho từng thẻ vật lý trao đến tay bạn:"
-                : "VinaTap commits to rigorous quality standards for every physical card delivered:"}
+                ? "VinaTap cam kết chất lượng chuẩn quốc tế cho từng sản phẩm và dịch vụ trao đến tay bạn:"
+                : "VinaTap commits to rigorous quality standards for every travel product delivered:"}
             </p>
             <ul className="legal-list">
               <li>
-                <strong>{isVi ? "Đổi mới miễn phí trong 30 ngày:" : "30-Day Free Replacement:"}</strong>{" "}
+                <strong>{isVi ? "Hỗ trợ đổi trả trong 30 ngày:" : "30-Day Support & Return:"}</strong>{" "}
                 {isVi
-                  ? "Nếu thẻ NFC gặp lỗi kỹ thuật từ nhà sản xuất (không nhận sóng, lỗi chip khi chạm điện thoại), VinaTap hỗ trợ đổi mới 1-1 hoàn toàn miễn phí."
-                  : "If an NFC tile exhibits any manufacturing defect (chip unresponsive on compatible devices), VinaTap replaces it free of charge."}
+                  ? "Nếu sản phẩm hoặc mã kích hoạt gặp lỗi kỹ thuật từ hệ thống, VinaTap hỗ trợ xử lý và đổi mới 1-1 hoàn toàn miễn phí."
+                  : "If any travel pass or activation code exhibits technical errors, VinaTap resolves and replaces it free of charge."}
               </li>
               <li>
-                <strong>{isVi ? "Độ bền chống nước & chống xước:" : "Waterproof & Scratch-Resistant:"}</strong>{" "}
+                <strong>{isVi ? "Nội dung chuẩn xác & cập nhật liên tục:" : "Accurate & Constantly Updated:"}</strong>{" "}
                 {isVi
-                  ? "Thẻ được sản xuất bằng vật liệu cao cấp, kháng nước chuẩn du lịch và hạn chế tối đa trầy xước trong suốt các hành trình dài ngày."
-                  : "Constructed with premium durable composite, water-resistant and scratch-resistant for rugged outdoor travel."}
+                  ? "Cẩm nang du lịch và bản đồ số 63 tỉnh thành được cập nhật thường xuyên, đảm bảo thông tin địa điểm luôn chính xác."
+                  : "Travel guides and 63-province digital maps are frequently updated to ensure all destination details remain accurate."}
               </li>
               <li>
-                <strong>{isVi ? "Mã Serial dự phòng an toàn:" : "Backup Serial Number Guarantee:"}</strong>{" "}
+                <strong>{isVi ? "Mã định danh kích hoạt an toàn:" : "Secure Activation Code Guarantee:"}</strong>{" "}
                 {isVi
-                  ? "Mỗi thẻ đều được in kèm mã Serial riêng biệt. Dù chip có bị hư hại vật lý nặng sau nhiều năm, bạn vẫn có thể nhập mã trên web để truy cập toàn bộ album ảnh kỷ niệm trọn đời."
-                  : "Each card bears a unique printed backup serial. Even if the chip is physically damaged, entering the serial on web guarantees lifetime album access."}
+                  ? "Mỗi gói cẩm nang đều đi kèm mã kích hoạt riêng biệt, đảm bảo bạn truy cập toàn bộ album ảnh kỷ niệm và dữ liệu du lịch trọn đời."
+                  : "Each package features a unique activation code, guaranteeing lifetime access to all photo albums and travel guides."}
               </li>
             </ul>
           </div>

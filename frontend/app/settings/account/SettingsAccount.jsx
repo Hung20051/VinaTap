@@ -108,7 +108,7 @@ export default function SettingsAccount() {
           <span className="title-mobile">👤 Hồ Sơ Tài Khoản</span>
         </h1>
         <p className="settings-acc-subtitle">
-          Cập nhật thông tin cá nhân và địa chỉ nhận ship thẻ chip NFC
+          Cập nhật thông tin cá nhân và tài khoản du khách VinaTap
         </p>
       </div>
 
@@ -203,7 +203,7 @@ export default function SettingsAccount() {
           {/* Số điện thoại */}
           <div className="settings-acc-field">
             <label className="settings-acc-label">
-              <Phone size={14} /> Số Điện Thoại Nhận Hàng (Ship NFC)
+              <Phone size={14} /> Số Điện Thoại Liên Hệ
             </label>
             <input
               type="tel"

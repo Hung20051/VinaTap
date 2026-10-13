@@ -204,7 +204,7 @@ export default function ProvinceFormModal({
                 : "➕ Thêm Tỉnh Thành Mới"}
             </h3>
             <p className="admin-prov-modal__sub">
-              Cập nhật thông tin bản đồ số, ảnh bìa thẻ NFC và đặc sản
+              Cập nhật thông tin bản đồ số, cẩm nang du lịch và điểm đến
             </p>
           </div>
           <button
@@ -395,7 +395,7 @@ export default function ProvinceFormModal({
               <div className="admin-prov-media-card">
                 <div className="admin-prov-mode-header">
                   <span className="admin-prov-media-title">
-                    🖼️ Ảnh Bìa Thẻ NFC / Thumbnail:
+                    🖼️ Ảnh Bìa Đại Diện / Thumbnail:
                   </span>
                   <div className="admin-prov-mode-tabs">
                     <button
@@ -636,7 +636,7 @@ export default function ProvinceFormModal({
                 💡{" "}
                 <em>
                   Mẹo: Tọa độ GPS giúp hệ thống hiển thị bản đồ số và chỉ đường
-                  chính xác khi khách hàng quét thẻ NFC.
+                  chính xác cho du khách khi xem hành trình.
                 </em>
               </p>
             </div>

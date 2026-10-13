@@ -53,7 +53,7 @@ export default function SystemSettings() {
   const [toast, setToast] = useState(null);
 
   const [settings, setSettings] = useState({
-    company_name: "VinaTap - Bản Đồ Du Lịch NFC Việt Nam",
+    company_name: "VinaTap - Cổng Cẩm Nang & Bản Đồ Du Lịch Việt Nam",
     company_hotline: "1900 888 999",
     company_email: "support@vinatap.vn",
     company_address: "Số 108 Phố Huế, Quận Hai Bà Trưng, Hà Nội",
@@ -66,11 +66,11 @@ export default function SystemSettings() {
     maintenance_mode: "false",
     allow_registration: "true",
     terms_content:
-      "Bằng việc sử dụng VinaTap, bạn đồng ý chỉ kích hoạt thẻ NFC do chính bạn sở hữu hoặc được chuyển nhượng hợp lệ qua tính năng chuyển thẻ trong app.\n\nNội dung album (ảnh, video, ghi chú) do bạn tải lên thuộc quyền sở hữu của bạn. VinaTap không chịu trách nhiệm với nội dung vi phạm pháp luật hoặc quyền sở hữu trí tuệ của bên thứ ba.\n\nAlbum đặt ở chế độ công khai (public) có thể được người khác xem mà không cần đăng nhập — vui lòng cân nhắc trước khi bật chế độ này.",
+      "Bằng việc sử dụng VinaTap, bạn cam kết sử dụng dịch vụ đúng mục đích và quy định pháp luật.\n\nNội dung album (ảnh, ghi chú) do bạn tải lên thuộc quyền sở hữu của bạn. VinaTap không chịu trách nhiệm với nội dung vi phạm pháp luật hoặc quyền sở hữu trí tuệ của bên thứ ba.\n\nAlbum đặt ở chế độ công khai (public) có thể được người khác xem mà không cần đăng nhập — vui lòng cân nhắc trước khi bật chế độ này.",
     privacy_content:
       "VinaTap thu thập: tên, email, số điện thoại, địa chỉ (nếu bạn cung cấp), ảnh đại diện, và nội dung album bạn tạo. Dữ liệu được lưu trữ bảo mật trên máy chủ VinaTap.\n\nMật khẩu được mã hóa một chiều (bcrypt), VinaTap không bao giờ lưu hoặc xem được mật khẩu gốc của bạn.\n\nVinaTap không chia sẻ dữ liệu cá nhân của bạn cho bên thứ ba ngoài mục đích vận hành dịch vụ.",
     app_version: "1.0",
-    about_desc: "VinaTap giúp bạn lưu giữ từng khoảnh khắc đáng nhớ qua từng thẻ NFC bản đồ Việt Nam.",
+    about_desc: "VinaTap giúp bạn lưu giữ từng khoảnh khắc đáng nhớ qua từng hành trình khám phá 63 tỉnh thành Việt Nam.",
   });
 
   useEffect(() => {

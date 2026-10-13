@@ -40,7 +40,7 @@ export default function ActivatePage() {
 
     const cleaned = serial.trim().toUpperCase();
     if (!cleaned) {
-      setError("Vui lòng nhập mã serial in trên thẻ NFC");
+      setError("Vui lòng nhập mã kích hoạt hành trình");
       return;
     }
 
@@ -96,10 +96,10 @@ export default function ActivatePage() {
 
             {/* Header Text */}
             <div className="activate-header">
-              <h1 className="activate-title">Kích Hoạt Thẻ NFC</h1>
+              <h1 className="activate-title">Kích Hoạt Mã Hành Trình</h1>
               <p className="activate-subtitle">
-                Chạm điện thoại vào chip trên thẻ NFC hoặc nhập mã Serial để
-                mở khóa bản đồ du lịch của bạn.
+                Nhập mã kích hoạt hoặc quét mã QR để mở khóa bản đồ du lịch và
+                album kỷ niệm của bạn.
               </p>
             </div>
 
@@ -115,9 +115,9 @@ export default function ActivatePage() {
             <form onSubmit={handleActivate} className="activate-form">
               <div>
                 <label className="activate-input-label">
-                  <span>MÃ SERIAL THẺ NFC</span>
+                  <span>MÃ KÍCH HOẠT HÀNH TRÌNH</span>
                   <span className="activate-input-hint">
-                    In ở mặt sau thẻ NFC
+                    Nhập mã từ email hoặc đơn hàng
                   </span>
                 </label>
                 <div className="activate-input-wrap">
@@ -140,11 +140,11 @@ export default function ActivatePage() {
                 disabled={loading || !serial.trim()}
               >
                 {loading ? (
-                  <>Đang xác thực thẻ NFC...</>
+                  <>Đang xác thực mã...</>
                 ) : (
                   <>
                     <Zap size={18} fill="currentColor" />
-                    <span>Kích Hoạt Thẻ NFC Ngay</span>
+                    <span>Kích Hoạt Hành Trình Ngay</span>
                   </>
                 )}
               </button>
@@ -154,19 +154,19 @@ export default function ActivatePage() {
             <div className="activate-guide-grid">
               <div className="activate-guide-item">
                 <div className="activate-guide-icon">📱</div>
-                <h4>Cách 1: Chạm NFC</h4>
-                <p>Bật NFC trên điện thoại và chạm nhẹ vào thẻ NFC.</p>
+                <h4>Cách 1: Quét Mã QR</h4>
+                <p>Mở camera điện thoại quét mã QR hành trình nhận được.</p>
               </div>
 
               <div className="activate-guide-item">
                 <div className="activate-guide-icon">✍️</div>
-                <h4>Cách 2: Nhập Serial</h4>
-                <p>Xem chuỗi ký tự in laser ở mặt sau thẻ NFC.</p>
+                <h4>Cách 2: Nhập Mã Kích Hoạt</h4>
+                <p>Xem chuỗi ký tự mã kích hoạt từ email hoặc đơn hàng.</p>
               </div>
             </div>
 
             <p className="activate-footer-note">
-              🔒 Mỗi thẻ NFC chỉ kích hoạt được 1 lần và gắn cố định với tài
+              🔒 Mỗi mã kích hoạt chỉ sử dụng được 1 lần và gắn cố định với tài
               khoản của bạn.
             </p>
           </>
@@ -181,7 +181,7 @@ export default function ActivatePage() {
               Mở Khóa Thành Công!
             </h1>
             <p className="activate-subtitle">
-              Thẻ NFC đã được gắn vào tài khoản của bạn và sẵn sàng lưu giữ
+              Hành trình đã được gắn vào tài khoản của bạn và sẵn sàng lưu giữ
               những kỷ niệm tuyệt đẹp.
             </p>
 
@@ -199,11 +199,11 @@ export default function ActivatePage() {
                   marginBottom: "0.5rem",
                 }}
               >
-                <MapPin size={16} /> Thẻ NFC tỉnh / thành phố
+                <MapPin size={16} /> Điểm đến tỉnh / thành phố
               </div>
               <h2 className="activate-province-name">{card.province_name}</h2>
               <span className="activate-serial-tag">
-                Serial: {card.serial_code}
+                Mã: {card.serial_code}
               </span>
             </div>
 

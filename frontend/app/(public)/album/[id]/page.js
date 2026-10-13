@@ -807,7 +807,7 @@ export default function AlbumPage() {
                     <p className="album-hero-quote">"{album.description}"</p>
                   ) : (
                     <p className="album-hero-empty-desc">
-                      Hành trình chạm thẻ NFC và lưu giữ những kỷ niệm quý giá
+                      Hành trình khám phá và lưu giữ những kỷ niệm quý giá
                       tại {album.province_name}.
                     </p>
                   )}
@@ -1079,7 +1079,7 @@ export default function AlbumPage() {
             </div>
             <h3>Chưa Có Khoảnh Khắc Nào</h3>
             <p>
-              Chạm thẻ NFC hoặc tải lên những bức ảnh & video đầu tiên của
+              Hãy tải lên những bức ảnh & video đầu tiên của
               chuyến đi {album.province_name}!
             </p>
             {(isOwner || isCollaborator) && album.status === "active" && (

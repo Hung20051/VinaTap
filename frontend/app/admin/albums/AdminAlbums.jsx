@@ -414,7 +414,7 @@ export default function AdminAlbums() {
                       <th>ID</th>
                       <th>Album &amp; Tỉnh Thành</th>
                       <th>Chủ Sở Hữu</th>
-                      <th>Thẻ NFC Serial</th>
+                      <th>Mã Hành Trình / Serial</th>
                       <th>Media / Dung lượng</th>
                       <th>Quyền Riêng Tư</th>
                       <th>Trạng Thái</th>

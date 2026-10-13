@@ -2,9 +2,9 @@ import { Suspense } from "react";
 import ShopPage from "./ShopPage";
 
 export const metadata = {
-  title: "Cửa Hàng Thẻ NFC VinaTap — Mua Thẻ & Combo 34 Tỉnh Thành",
+  title: "Cửa Hàng Du Lịch VinaTap — Cẩm Nang & Bản Đồ 63 Tỉnh Thành",
   description:
-    "Đặt mua Thẻ NFC 3D, Thẻ Kim Loại VIP và Combo 34 Tỉnh Thành Việt Nam chính hãng VinaTap.",
+    "Khám phá Bản Đồ Du Lịch Số, Cẩm Nang Hành Trình và Combo 63 Tỉnh Thành Việt Nam chính hãng VinaTap.",
 };
 
 export default function Page() {

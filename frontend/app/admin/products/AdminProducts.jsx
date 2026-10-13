@@ -270,7 +270,7 @@ export default function AdminProducts() {
     setConfirmDialog({
       title: "⚡ Xác Nhận Đồng Bộ Toàn Bộ Bảng Giá Chuẩn",
       message:
-        "Bạn có chắc chắn muốn đồng bộ toàn bộ bảng giá sản phẩm theo chính sách giá thống nhất của VinaTap?\n\n• 1 Thẻ NFC lẻ (34 tỉnh thành): 49.000đ (Gạch giá: 59.000đ)\n• Combo 3 thẻ tự chọn: 139.000đ (Gạch giá: 147.000đ)\n• Combo 5 thẻ (Bắc / Trung / Nam): 239.000đ (Gạch giá: 245.000đ)\n• Trọn bộ 34 thẻ toàn quốc: 1.400.000đ (Gạch giá: 1.700.000đ)",
+        "Bạn có chắc chắn muốn đồng bộ toàn bộ bảng giá sản phẩm theo chính sách giá thống nhất của VinaTap?\n\n• 1 Bản đồ du lịch số lẻ (63 tỉnh thành): 49.000đ (Gạch giá: 59.000đ)\n• Combo 3 tỉnh thành tự chọn: 139.000đ (Gạch giá: 147.000đ)\n• Combo 5 tỉnh thành (Bắc / Trung / Nam): 239.000đ (Gạch giá: 245.000đ)\n• Trọn bộ cẩm nang & bản đồ toàn quốc: 1.400.000đ (Gạch giá: 1.700.000đ)",
       confirmText: "Đồng Bộ Giá Ngay",
       confirmBg: "#ea580c",
       onConfirm: async () => {
@@ -604,7 +604,7 @@ export default function AdminProducts() {
                 <input
                   type="text"
                   required
-                  placeholder="VD: Thẻ NFC Du Lịch — Hà Nội"
+                  placeholder="VD: Bản Đồ & Cẩm Nang Du Lịch — Hà Nội"
                   className="admin-prod-form-input prod-name-input"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -620,9 +620,9 @@ export default function AdminProducts() {
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                   >
-                    <option value="single">Thẻ NFC Lẻ Tỉnh Thành</option>
+                    <option value="single">Bản Đồ Số Lẻ Tỉnh Thành</option>
                     <option value="combo">Combo Trọn Bộ / Fullbox</option>
-                    <option value="accessory">Thẻ VIP / Phụ Kiện</option>
+                    <option value="accessory">Gói Cao Cấp / Quà Tặng</option>
                   </select>
                 </div>
 
@@ -684,7 +684,7 @@ export default function AdminProducts() {
                 <label className="admin-prod-form-label">Mô tả sản phẩm:</label>
                 <textarea
                   rows={2}
-                  placeholder="Mô tả chất liệu, chip NFC..."
+                  placeholder="Mô tả chi tiết bản đồ, cẩm nang, tiện ích du lịch..."
                   className="admin-prod-form-textarea"
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}

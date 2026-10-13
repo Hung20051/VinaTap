@@ -45,7 +45,7 @@ function AcceptTransferContent() {
   if (status === "loading") {
     return (
       <DinoLoader
-        text="Đang xử lý nhận thẻ NFC..."
+        text="Đang xử lý nhận hành trình..."
         subtext="Vui lòng chờ trong giây lát"
         size={260}
         fullScreen={true}
@@ -56,8 +56,8 @@ function AcceptTransferContent() {
   if (status === "error") {
     return (
       <Dino404
-        title="Liên Kết Chuyển Thẻ Không Hợp Lệ"
-        message={msg || "Liên kết tặng thẻ này đã hết hạn, đã được nhận hoặc không tồn tại."}
+        title="Liên Kết Chuyển Giao Không Hợp Lệ"
+        message={msg || "Liên kết tặng hành trình này đã hết hạn, đã được nhận hoặc không tồn tại."}
         backBtnText="Quay Lại"
       />
     );
@@ -101,7 +101,7 @@ function AcceptTransferContent() {
                   marginBottom: ".75rem",
                 }}
               >
-                Nhận Thẻ NFC
+                Nhận Hành Trình Du Lịch
               </h1>
               <p
                 style={{
@@ -110,8 +110,8 @@ function AcceptTransferContent() {
                   fontSize: ".9rem",
                 }}
               >
-                Có người muốn tặng bạn một thẻ NFC VinaTap. Bấm xác nhận để
-                nhận thẻ về tài khoản của bạn.
+                Có người muốn tặng bạn một hành trình & album du lịch VinaTap. Bấm xác nhận để
+                nhận hành trình về tài khoản của bạn.
               </p>
               <button
                 className="btn btn-primary"
