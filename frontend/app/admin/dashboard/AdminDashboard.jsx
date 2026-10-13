@@ -205,7 +205,7 @@ export default function AdminDashboard() {
       ["Don hang da xac nhan", overview?.orders_count || 0, "Đơn"],
       ["Luot nhap Affiliate", overview?.affiliate_clicks || 0, "Clicks đối tác"],
       ["Tong so tinh thanh", overview?.provinces_total || 36, "Tỉnh thành"],
-      ["Bai viet cam nang", overview?.articles_total || 2, "Bài viết CMS"],
+      ["Bai viet cam nang", overview?.articles_total || 16, "Bài viết CMS"],
     ];
     const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -319,7 +319,7 @@ export default function AdminDashboard() {
             <KpiCard
               icon={<FileText size={22} />}
               label="BÀI VIẾT & CẨM NANG"
-              value={(overview?.articles_total || 2).toLocaleString("vi-VN")}
+              value={(overview?.articles_total || 16).toLocaleString("vi-VN")}
               sub="Cẩm nang du lịch chuẩn SEO đã xuất bản"
               accent="purple"
               badge="Nội dung CMS"
@@ -334,24 +334,6 @@ export default function AdminDashboard() {
               badge="Online 🟢"
               href="/admin/system-settings"
             />
-          </div>
-
-          {/* Cảnh báo bài viết cần cập nhật & Trạng thái hệ thống */}
-          <div className="dash-alerts-banner">
-            <div className="dash-alert-item alert--info">
-              <Sparkles size={18} className="alert-icon" />
-              <div className="alert-text">
-                <strong>Gợi ý biên tập:</strong> Cẩm nang mùa thu - đông các tỉnh Tây Bắc (Hà Giang, Sapa) đang tăng trưởng tìm kiếm +42%, đề xuất cập nhật thêm ảnh và lịch trình.
-              </div>
-              <Link href="/admin/articles" className="alert-btn">Cập nhật ngay ➔</Link>
-            </div>
-            <div className="dash-alert-item alert--success">
-              <CheckCircle2 size={18} className="alert-icon" />
-              <div className="alert-text">
-                <strong>Tình trạng hệ thống:</strong> API phản hồi nhanh (24ms), MySQL kết nối bảo mật SSL, Sơ đồ trang web (Sitemap XML) đã được Google Index thành công.
-              </div>
-              <span className="badge-online">Hoạt động tốt 100%</span>
-            </div>
           </div>
 
           {/* Biểu đồ tăng trưởng theo Ngày / Tuần / Tháng & Lối tắt */}
@@ -638,12 +620,12 @@ export default function AdminDashboard() {
               <div className="seo-metrics-grid">
                 <div className="seo-metric-card">
                   <span className="seo-metric-label">Tổng bài viết</span>
-                  <strong className="seo-metric-num">{overview?.articles_total ?? 2}</strong>
+                  <strong className="seo-metric-num">{overview?.articles_total ?? 16}</strong>
                   <span className="seo-metric-sub">Hệ thống CMS</span>
                 </div>
                 <div className="seo-metric-card">
                   <span className="seo-metric-label">Đã xuất bản</span>
-                  <strong className="seo-metric-num text-emerald">{overview?.articles_published ?? 2}</strong>
+                  <strong className="seo-metric-num text-emerald">{overview?.articles_published ?? 16}</strong>
                   <span className="seo-metric-sub">Đang hiển thị web</span>
                 </div>
                 <div className="seo-metric-card">
