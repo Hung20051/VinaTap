@@ -133,34 +133,36 @@ export default function AdminDashboard() {
     }
   };
 
-  // Chuẩn bị dữ liệu biểu đồ tăng trưởng theo Ngày / Tuần / Tháng
+  // Chuẩn bị dữ liệu biểu đồ tăng trưởng theo Ngày / Tuần / Tháng (từ ngày 10/10/2026 trở đi)
   const chartData = useMemo(() => {
-    const raw = overview?.traffic_timeline || [];
+    const raw = (overview?.traffic_timeline || []).filter((item) => {
+      if (!item.time_label) return false;
+      const parts = item.time_label.split("/");
+      if (parts.length === 2) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10);
+        if (month === 10 && day < 10) return false;
+        if (month < 10) return false;
+      }
+      return true;
+    });
+
     if (timeframe === "day") {
       if (raw.length > 0) return raw;
       return [
-        { time_label: "08/10", views: 18, visitors: 6 },
-        { time_label: "09/10", views: 24, visitors: 8 },
-        { time_label: "10/10", views: 29, visitors: 11 },
-        { time_label: "11/10", views: 22, visitors: 9 },
-        { time_label: "12/10", views: 38, visitors: 14 },
-        { time_label: "13/10", views: 56, visitors: 19 },
-        { time_label: "14/10", views: 68, visitors: 24 },
+        { time_label: "10/10", views: 24, visitors: 11 },
+        { time_label: "11/10", views: 32, visitors: 15 },
+        { time_label: "12/10", views: 45, visitors: 19 },
+        { time_label: "13/10", views: 58, visitors: 24 },
+        { time_label: "14/10", views: 68, visitors: 28 },
       ];
     } else if (timeframe === "week") {
       return [
-        { time_label: "Tuần 37", views: 95, visitors: 34 },
-        { time_label: "Tuần 38", views: 142, visitors: 52 },
-        { time_label: "Tuần 39", views: 188, visitors: 68 },
-        { time_label: "Tuần 40", views: 240, visitors: 89 },
-        { time_label: "Tuần 41", views: 310, visitors: 115 },
+        { time_label: "Tuần 41 (10/10 - 16/10)", views: 310, visitors: 115 },
+        { time_label: "Tuần 42 (17/10 - 23/10)", views: 420, visitors: 158 },
       ];
     } else {
       return [
-        { time_label: "T6/2026", views: 320, visitors: 120 },
-        { time_label: "T7/2026", views: 540, visitors: 210 },
-        { time_label: "T8/2026", views: 760, visitors: 290 },
-        { time_label: "T9/2026", views: 980, visitors: 380 },
         { time_label: "T10/2026", views: 1240, visitors: 490 },
       ];
     }

@@ -802,8 +802,8 @@ export default function TenBestThingsHCMCPage() {
 
           <p className="hcmc-hero__meta">
             {isVi
-              ? "Bởi VinaTap   5 Tháng 5, 2025"
-              : "By VinaTap   May 5, 2025"}
+              ? "Bởi VinaTap • 10 Tháng 10, 2026"
+              : "By VinaTap • October 10, 2026"}
           </p>
         </div>
       </section>

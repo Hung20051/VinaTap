@@ -710,8 +710,8 @@ export default function ThreeWeekVietnamItineraryPage() {
 
           <div className="itin-hero__meta">
             {lang === "vi"
-              ? "Bởi VinaTap   20 Tháng 7, 2025"
-              : "By VinaTap   July 20, 2025"}
+              ? "Bởi VinaTap • 11 Tháng 10, 2026"
+              : "By VinaTap • October 11, 2026"}
           </div>
         </div>
       </section>

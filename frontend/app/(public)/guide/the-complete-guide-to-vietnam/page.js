@@ -556,7 +556,7 @@ export default function CompleteGuideToVietnamPage() {
               {lang === "vi" ? "Ban Biên Tập VinaTap" : "By VinaTap"}
             </span>
             <span className="complete-guide-hero__date">
-              {lang === "vi" ? "9 Tháng 1, 2026" : "January 9, 2026"}
+              {lang === "vi" ? "14 Tháng 10, 2026" : "October 14, 2026"}
             </span>
           </div>
         </div>

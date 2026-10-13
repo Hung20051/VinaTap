@@ -68,7 +68,7 @@ const AdminStats = {
                 COUNT(*) AS views,
                 COUNT(DISTINCT ip_address) AS visitors
          FROM page_views
-         WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+         WHERE created_at >= '2026-10-10 00:00:00'
          GROUP BY DATE(created_at), DATE_FORMAT(created_at, '%d/%m')
          ORDER BY DATE(created_at) ASC`,
       ).catch(() => [[]]),

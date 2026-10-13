@@ -709,8 +709,8 @@ export default function EightBestThingsNhaTrangPage() {
 
           <p className="hcmc-hero__meta">
             {isVi
-              ? "Bởi VinaTap   1 Tháng 3, 2025"
-              : "By VinaTap   March 1, 2025"}
+              ? "Bởi VinaTap • 10 Tháng 10, 2026"
+              : "By VinaTap • October 10, 2026"}
           </p>
         </div>
       </section>

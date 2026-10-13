@@ -806,8 +806,8 @@ export default function HanoiTouristMapPage() {
             <span className="vnn-fullbleed-hero__dot">•</span>
             <span>
               {isVi
-                ? "1 Tháng 5, 2026"
-                : "May 1, 2026"}
+                ? "14 Tháng 10, 2026"
+                : "October 14, 2026"}
             </span>
           </div>
         </div>
@@ -1315,7 +1315,7 @@ export default function HanoiTouristMapPage() {
                     : "8 must-try foods in Hanoi"}
                 </h4>
                 <span className="vnn-related-card-date">
-                  {isVi ? "2 Tháng 10, 2026" : "October 2, 2026"}
+                  {isVi ? "12 Tháng 10, 2026" : "October 12, 2026"}
                 </span>
               </div>
             </Link>
@@ -1340,7 +1340,7 @@ export default function HanoiTouristMapPage() {
                     : "Pho – The Complete Guide to Vietnam's Iconic Dish"}
                 </h4>
                 <span className="vnn-related-card-date">
-                  {isVi ? "20 Tháng 9, 2026" : "September 20, 2026"}
+                  {isVi ? "13 Tháng 10, 2026" : "October 13, 2026"}
                 </span>
               </div>
             </Link>
@@ -1365,7 +1365,7 @@ export default function HanoiTouristMapPage() {
                     : "The Complete Guide to Vietnam"}
                 </h4>
                 <span className="vnn-related-card-date">
-                  {isVi ? "9 Tháng 1, 2026" : "January 9, 2026"}
+                  {isVi ? "14 Tháng 10, 2026" : "October 14, 2026"}
                 </span>
               </div>
             </Link>

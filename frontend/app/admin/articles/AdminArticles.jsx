@@ -72,6 +72,7 @@ const FALLBACK_ARTICLES = [
     title_en: "10 best things to do in Ho Chi Minh City",
     hero_image: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-hero-Vietnamnomad.jpg",
     author_name: "VinaTap",
+    published_date: "2026-10-10",
     status: "published",
     views_count: 2450,
     item_count: 2,
@@ -97,6 +98,7 @@ const FALLBACK_ARTICLES = [
     title_en: "8 best things to do in Nha Trang",
     hero_image: "/guide/nha-trang/Things-to-do-in-Nha-Trang-hero.jpg",
     author_name: "VinaTap",
+    published_date: "2026-10-10",
     status: "published",
     views_count: 1820,
     item_count: 2,
@@ -122,6 +124,7 @@ const FALLBACK_ARTICLES = [
     title_en: "15 Best Places to Visit in Vietnam in 2026",
     hero_image: "/guide/15-best-places/place-1-ho-chi-minh-city.jpg",
     author_name: "VinaTap Editorial",
+    published_date: "2026-10-11",
     status: "published",
     views_count: 5320,
     item_count: 4,
@@ -135,6 +138,7 @@ const FALLBACK_ARTICLES = [
     title_en: "20 Best Things to Do in Vietnam",
     hero_image: "/guide/hcmc/Vietnamnomad-header-banner-2026.jpg",
     author_name: "VinaTap Travel",
+    published_date: "2026-10-11",
     status: "published",
     views_count: 4890,
     item_count: 2,
@@ -148,6 +152,7 @@ const FALLBACK_ARTICLES = [
     title_en: "3-Week Complete Vietnam Itinerary",
     hero_image: "/guide/hcmc/Vietnamnomad-header-banner-2026.jpg",
     author_name: "VinaTap Expert",
+    published_date: "2026-10-11",
     status: "published",
     views_count: 3650,
     item_count: 2,
@@ -161,6 +166,7 @@ const FALLBACK_ARTICLES = [
     title_en: "12 Must-Try Street Foods in Ho Chi Minh City",
     hero_image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg",
     author_name: "Foodie VinaTap",
+    published_date: "2026-10-12",
     status: "published",
     views_count: 4120,
     item_count: 2,
@@ -174,6 +180,7 @@ const FALLBACK_ARTICLES = [
     title_en: "8 Must-Try Foods in Hanoi",
     hero_image: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
     author_name: "VinaTap Culinary",
+    published_date: "2026-10-12",
     status: "published",
     views_count: 3870,
     item_count: 2,
@@ -187,6 +194,7 @@ const FALLBACK_ARTICLES = [
     title_en: "5 Must-Try Dishes in Nha Trang",
     hero_image: "/guide/top-banner-companion.png",
     author_name: "VinaTap Team",
+    published_date: "2026-10-12",
     status: "published",
     views_count: 2240,
     item_count: 1,
@@ -200,6 +208,7 @@ const FALLBACK_ARTICLES = [
     title_en: "7 Must-Try Foods in Vung Tau",
     hero_image: "/guide/top-banner-companion.png",
     author_name: "VinaTap Team",
+    published_date: "2026-10-13",
     status: "published",
     views_count: 2150,
     item_count: 1,
@@ -213,6 +222,7 @@ const FALLBACK_ARTICLES = [
     title_en: "5 Best Beaches in Vung Tau",
     hero_image: "/guide/vung-tau/hero-vung-tau-beaches.jpg",
     author_name: "VinaTap Beach Guide",
+    published_date: "2026-10-13",
     status: "published",
     views_count: 2980,
     item_count: 1,
@@ -226,6 +236,7 @@ const FALLBACK_ARTICLES = [
     title_en: "Pho: The Complete Guide to Vietnamese Noodle Soup",
     hero_image: "/guide/pho/where-was-pho-first-created-vietnamnomad.jpg",
     author_name: "Culinary Heritage",
+    published_date: "2026-10-13",
     status: "published",
     views_count: 5120,
     item_count: 1,
@@ -239,6 +250,7 @@ const FALLBACK_ARTICLES = [
     title_en: "Ao Dai: Vietnamese Traditional Dress",
     hero_image: "/guide/top-banner-companion.png",
     author_name: "VinaTap Culture",
+    published_date: "2026-10-13",
     status: "published",
     views_count: 3410,
     item_count: 1,
@@ -252,6 +264,7 @@ const FALLBACK_ARTICLES = [
     title_en: "Where to Stay in Ho Chi Minh City",
     hero_image: "/guide/hcmc/where-to-stay-in-hcmc-hd.jpg",
     author_name: "VinaTap Stay Guide",
+    published_date: "2026-10-14",
     status: "published",
     views_count: 2780,
     item_count: 1,
@@ -265,6 +278,7 @@ const FALLBACK_ARTICLES = [
     title_en: "Hanoi Tourist Map & Destination Guide 2026",
     hero_image: "/guide/hanoi/hanoi-tourist-map-2026.jpg",
     author_name: "VinaTap Navigator",
+    published_date: "2026-10-14",
     status: "published",
     views_count: 3120,
     item_count: 1,
@@ -278,6 +292,7 @@ const FALLBACK_ARTICLES = [
     title_en: "Plan Your Vietnam Trip with Just One Prompt",
     hero_image: "/guide/megamenu/inspired-2.jpg",
     author_name: "VinaTap AI Lab",
+    published_date: "2026-10-14",
     status: "published",
     views_count: 4210,
     item_count: 1,
@@ -291,6 +306,7 @@ const FALLBACK_ARTICLES = [
     title_en: "The Complete Guide to Vietnam 2026",
     hero_image: "/guide/megamenu/inspired-3.jpg",
     author_name: "VinaTap Chief Editor",
+    published_date: "2026-10-14",
     status: "published",
     views_count: 6540,
     item_count: 1,
@@ -622,6 +638,12 @@ export default function AdminArticles() {
                   <span className="meta-slug">/guide/{art.slug}</span>
                   <div className="meta-stats-row">
                     <span>
+                      <Calendar size={13} />{" "}
+                      {art.published_date
+                        ? new Date(art.published_date).toLocaleDateString("vi-VN")
+                        : "10/10/2026"}
+                    </span>
+                    <span>
                       <Eye size={13} /> {art.views_count || 0} lượt xem
                     </span>
                     <span>
@@ -895,6 +917,15 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                   <option value="published">Đã xuất bản (Công khai ngoài website)</option>
                   <option value="draft">Bản nháp (Tạm ẩn)</option>
                 </select>
+              </div>
+
+              <div className="form-group">
+                <label>Ngày xuất bản (Từ 10/10/2026)</label>
+                <input
+                  type="date"
+                  value={formData.published_date ? String(formData.published_date).substring(0, 10) : "2026-10-10"}
+                  onChange={(e) => handleFieldChange("published_date", e.target.value)}
+                />
               </div>
             </div>
 

@@ -10,7 +10,7 @@ const ARTICLES_SEED = [
     title_en: "15 Best Places to Visit in Vietnam in 2026",
     hero_image: "/guide/15-best-places/place-1-ho-chi-minh-city.jpg",
     author_name: "VinaTap Editorial",
-    published_date: "2026-06-16",
+    published_date: "2026-10-11",
     status: "published",
     views_count: 5320,
     items: [
@@ -80,7 +80,7 @@ const ARTICLES_SEED = [
     title_en: "20 Best Things to Do in Vietnam",
     hero_image: "/guide/hcmc/Vietnamnomad-header-banner-2026.jpg",
     author_name: "VinaTap Travel",
-    published_date: "2026-10-10",
+    published_date: "2026-10-11",
     status: "published",
     views_count: 4890,
     items: [
@@ -122,7 +122,7 @@ const ARTICLES_SEED = [
     title_en: "3-Week Complete Vietnam Itinerary: North to South",
     hero_image: "/guide/hcmc/Vietnamnomad-header-banner-2026.jpg",
     author_name: "VinaTap Expert",
-    published_date: "2026-08-20",
+    published_date: "2026-10-11",
     status: "published",
     views_count: 3650,
     items: [
@@ -164,7 +164,7 @@ const ARTICLES_SEED = [
     title_en: "12 Must-Try Street Foods in Ho Chi Minh City",
     hero_image: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg",
     author_name: "Foodie VinaTap",
-    published_date: "2026-05-15",
+    published_date: "2026-10-12",
     status: "published",
     views_count: 4120,
     items: [
@@ -206,7 +206,7 @@ const ARTICLES_SEED = [
     title_en: "8 Must-Try Foods in Hanoi",
     hero_image: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
     author_name: "VinaTap Culinary",
-    published_date: "2026-07-12",
+    published_date: "2026-10-12",
     status: "published",
     views_count: 3870,
     items: [
@@ -248,7 +248,7 @@ const ARTICLES_SEED = [
     title_en: "5 Must-Try Dishes in Nha Trang",
     hero_image: "/guide/top-banner-companion.png",
     author_name: "VinaTap Team",
-    published_date: "2026-08-05",
+    published_date: "2026-10-12",
     status: "published",
     views_count: 2240,
     items: [
@@ -276,7 +276,7 @@ const ARTICLES_SEED = [
     title_en: "7 Must-Try Foods in Vung Tau",
     hero_image: "/guide/top-banner-companion.png",
     author_name: "VinaTap Team",
-    published_date: "2026-06-25",
+    published_date: "2026-10-13",
     status: "published",
     views_count: 2150,
     items: [
@@ -304,7 +304,7 @@ const ARTICLES_SEED = [
     title_en: "5 Best Beaches in Vung Tau You Shouldn't Miss",
     hero_image: "/guide/vung-tau/hero-vung-tau-beaches.jpg",
     author_name: "VinaTap Beach Guide",
-    published_date: "2026-07-01",
+    published_date: "2026-10-13",
     status: "published",
     views_count: 2980,
     items: [
@@ -332,7 +332,7 @@ const ARTICLES_SEED = [
     title_en: "Pho: The Complete Guide to Vietnamese Noodle Soup",
     hero_image: "/guide/pho/where-was-pho-first-created-vietnamnomad.jpg",
     author_name: "Culinary Heritage",
-    published_date: "2026-09-02",
+    published_date: "2026-10-13",
     status: "published",
     views_count: 5120,
     items: [
@@ -360,7 +360,7 @@ const ARTICLES_SEED = [
     title_en: "Ao Dai: Vietnamese Traditional Dress and Elegance",
     hero_image: "/guide/top-banner-companion.png",
     author_name: "VinaTap Culture",
-    published_date: "2026-04-18",
+    published_date: "2026-10-13",
     status: "published",
     views_count: 3410,
     items: [
@@ -388,7 +388,7 @@ const ARTICLES_SEED = [
     title_en: "Where to Stay in Ho Chi Minh City: Best Neighborhoods",
     hero_image: "/guide/hcmc/where-to-stay-in-hcmc-hd.jpg",
     author_name: "VinaTap Stay Guide",
-    published_date: "2026-06-10",
+    published_date: "2026-10-14",
     status: "published",
     views_count: 2780,
     items: [
@@ -416,7 +416,7 @@ const ARTICLES_SEED = [
     title_en: "Hanoi Tourist Map & Destination Guide 2026",
     hero_image: "/guide/hanoi/hanoi-tourist-map-2026.jpg",
     author_name: "VinaTap Navigator",
-    published_date: "2026-05-22",
+    published_date: "2026-10-14",
     status: "published",
     views_count: 3120,
     items: [
@@ -444,7 +444,7 @@ const ARTICLES_SEED = [
     title_en: "Plan Your Vietnam Trip with Just One Prompt",
     hero_image: "/guide/megamenu/inspired-2.jpg",
     author_name: "VinaTap AI Lab",
-    published_date: "2026-04-01",
+    published_date: "2026-10-14",
     status: "published",
     views_count: 4210,
     items: [
@@ -472,7 +472,7 @@ const ARTICLES_SEED = [
     title_en: "The Complete Guide to Vietnam 2026",
     hero_image: "/guide/megamenu/inspired-3.jpg",
     author_name: "VinaTap Chief Editor",
-    published_date: "2026-01-09",
+    published_date: "2026-10-14",
     status: "published",
     views_count: 6540,
     items: [

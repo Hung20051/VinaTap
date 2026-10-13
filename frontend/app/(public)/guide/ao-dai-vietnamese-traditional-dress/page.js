@@ -495,8 +495,8 @@ export default function AoDaiArticlePage() {
             </h1>
             <p className="ad-hero__meta">
               {isVi
-                ? "Bởi VinaTap    18 Tháng 9, 2026"
-                : "By VinaTap    September 18, 2026"}
+                ? "Bởi VinaTap • 13 Tháng 10, 2026"
+                : "By VinaTap • October 13, 2026"}
             </p>
           </div>
         </section>
