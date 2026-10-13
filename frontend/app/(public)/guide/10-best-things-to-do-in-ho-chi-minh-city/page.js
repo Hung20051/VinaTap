@@ -1,857 +1,994 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import HeaderSearch from "@/components/ui/HeaderSearch";
+import { getLang } from "@/lib/prefs";
 import {
-  Compass,
-  Calendar,
-  Eye,
-  Clock,
-  Bookmark,
-  Share2,
-  ChevronRight,
-  MapPin,
+  Search,
+  ChevronDown,
   Sparkles,
-  ExternalLink,
-  Copy,
-  Check,
-  Camera,
-  Utensils,
-  Landmark,
-  Music,
-  Coffee,
+  MapPin,
+  Calendar,
   X,
-  CreditCard,
+  Facebook,
+  Instagram,
+  Youtube,
   ArrowRight,
-  Info,
-  Ticket,
-  Zap,
 } from "lucide-react";
-import "@/styles/guide-editorial.css";
+import "@/styles/home.css";
+import "@/styles/hcmc-10-things.css";
 
-// ─── DỮ LIỆU: 10 ĐIỀU TUYỆT NHẤT NÊN LÀM Ở TP. HỒ CHÍ MINH ───
-const HCMC_GUIDE_ITEMS = [
+// ─── MEGAMENUS DATA ───
+const MEGA_MENUS_DATA = {
+  inspired: {
+    items: [
+      {
+        id: "insp-1",
+        title: "15 best places to visit in Vietnam in 2026",
+        titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
+        date: "June 16, 2026",
+        dateVi: "16 Tháng 6, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-1.jpg",
+        link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
+      },
+      {
+        id: "insp-2",
+        title: "Plan Your Vietnam Trip with Just One Prompt",
+        titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một prompt",
+        date: "April 1, 2026",
+        dateVi: "1 Tháng 4, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-2.jpg",
+        link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
+      },
+      {
+        id: "insp-3",
+        title: "The Complete Guide to Vietnam",
+        titleVi: "Cẩm nang du lịch toàn diện Việt Nam",
+        date: "January 9, 2026",
+        dateVi: "9 Tháng 1, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-3.jpg",
+        link: "/guide/the-complete-guide-to-vietnam",
+      },
+      {
+        id: "insp-4",
+        title: "20 Best Things to Do in Vietnam",
+        titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
+        badge: "#Trending",
+        img: "/guide/megamenu/inspired-4.jpg",
+        link: "/guide/20-best-things-to-do-in-vietnam",
+      },
+      {
+        id: "insp-5",
+        title: "Ao Dai – Vietnamese Traditional Dress",
+        titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
+        date: "October 10, 2026",
+        dateVi: "10 Tháng 10, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/inspired-5.jpg",
+        link: "/guide/ao-dai-vietnamese-traditional-dress",
+      },
+    ],
+  },
+  destinations: {
+    items: [
+      {
+        id: "dest-1",
+        title: "Ho Chi Minh City",
+        titleVi: "TP. Hồ Chí Minh",
+        date: "September 27, 2026",
+        dateVi: "27 Tháng 9, 2026",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-1-hcmc.jpg",
+        link: "/province/ho-chi-minh",
+      },
+      {
+        id: "dest-2",
+        title: "Da Lat",
+        titleVi: "Đà Lạt",
+        date: "September 21, 2026",
+        dateVi: "21 Tháng 9, 2026",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-2-dalat.jpg",
+        link: "/province/dalat",
+      },
+      {
+        id: "dest-3",
+        title: "Hoi An",
+        titleVi: "Hội An",
+        date: "September 15, 2026",
+        dateVi: "15 Tháng 9, 2026",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-3-hoian.jpg",
+        link: "/province/da-nang",
+      },
+      {
+        id: "dest-4",
+        title: "Da Nang",
+        titleVi: "Đà Nẵng",
+        date: "August 2, 2026",
+        dateVi: "2 Tháng 8, 2026",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-4-danang.jpg",
+        link: "/province/da-nang",
+      },
+      {
+        id: "dest-5",
+        title: "Hanoi",
+        titleVi: "Hà Nội",
+        date: "July 28, 2026",
+        dateVi: "28 Tháng 7, 2026",
+        badge: "Destinations",
+        img: "/guide/megamenu/dest-5-hanoi.jpg",
+        link: "/province/ha-noi",
+      },
+    ],
+  },
+  things: {
+    items: [
+      {
+        id: "things-1",
+        title: "3-week Vietnam Itinerary",
+        titleVi: "Lịch trình 3 tuần khám phá Việt Nam",
+        date: "May 10, 2026",
+        dateVi: "10 Tháng 5, 2026",
+        badge: "Things to do",
+        img: "/guide/megamenu/todo-1-3week.jpg",
+        link: "/guide/3-week-vietnam-itinerary",
+      },
+      {
+        id: "things-2",
+        title: "10 best things to do in Ho Chi Minh City",
+        titleVi: "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh",
+        date: "May 5, 2025",
+        dateVi: "5 Tháng 5, 2025",
+        badge: "Things to do",
+        img: "/guide/megamenu/todo-2-hcmc.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+      },
+      {
+        id: "things-3",
+        title: "8 best things to do in Nha Trang",
+        titleVi: "8 trải nghiệm tuyệt nhất tại Nha Trang",
+        date: "April 28, 2026",
+        dateVi: "28 Tháng 4, 2026",
+        badge: "Things to do",
+        img: "/guide/megamenu/todo-3-nhatrang.jpg",
+        link: "/province/khanh-hoa",
+      },
+      {
+        id: "things-4",
+        title: "20 Best Things to Do in Vietnam",
+        titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
+        date: "April 20, 2026",
+        dateVi: "20 Tháng 4, 2026",
+        badge: "Things to do",
+        img: "/guide/megamenu/todo-4-20things.jpg",
+        link: "/guide/20-best-things-to-do-in-vietnam",
+      },
+      {
+        id: "things-5",
+        title: "The 15 best attractions in Dalat",
+        titleVi: "15 điểm tham quan tuyệt nhất tại Đà Lạt",
+        date: "April 15, 2026",
+        dateVi: "15 Tháng 4, 2026",
+        badge: "Things to do",
+        img: "/guide/megamenu/todo-5-dalat.jpg",
+        link: "/province/dalat",
+      },
+    ],
+  },
+  eat: {
+    items: [
+      {
+        id: "eat-1",
+        title: "8 must-try foods in Hanoi",
+        titleVi: "8 món ngon nhất định phải thử tại Hà Nội",
+        date: "March 20, 2026",
+        dateVi: "20 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-1-hanoi.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-2",
+        title: "12 must-try foods in Ho Chi Minh City",
+        titleVi: "12 món ngon không thể bỏ lỡ tại TP. Hồ Chí Minh",
+        date: "March 15, 2026",
+        dateVi: "15 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-2-hcmc.jpg",
+        link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
+      },
+      {
+        id: "eat-3",
+        title: "Pho – The Soul of Vietnamese Cuisine",
+        titleVi: "Phở – Linh hồn ẩm thực Việt Nam",
+        date: "March 10, 2026",
+        dateVi: "10 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-3-pho.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "eat-4",
+        title: "7 must-try foods in Vung Tau",
+        titleVi: "7 món ngon độc đáo tại Vũng Tàu",
+        date: "March 5, 2026",
+        dateVi: "5 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-4-vungtau.jpg",
+        link: "/province/ba-ria-vung-tau",
+      },
+      {
+        id: "eat-5",
+        title: "5 must-try Nha Trang dishes",
+        titleVi: "5 món đặc sản khó quên tại Nha Trang",
+        date: "March 1, 2026",
+        dateVi: "1 Tháng 3, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/megamenu/eat-5-nhatrang.jpg",
+        link: "/province/khanh-hoa",
+      },
+    ],
+  },
+  itineraries: {
+    items: [
+      {
+        id: "itin-1",
+        title: "3-Week Vietnam Grand Tour",
+        titleVi: "Hành trình 3 tuần xuyên Việt đỉnh cao",
+        date: "February 20, 2026",
+        dateVi: "20 Tháng 2, 2026",
+        badge: "Itineraries",
+        img: "/guide/megamenu/itin-1-3week.jpg",
+        link: "/guide/3-week-vietnam-itinerary",
+      },
+      {
+        id: "itin-2",
+        title: "10-Day Northern Vietnam Highlights",
+        titleVi: "10 ngày khám phá tinh hoa miền Bắc",
+        date: "February 15, 2026",
+        dateVi: "15 Tháng 2, 2026",
+        badge: "Itineraries",
+        img: "/guide/megamenu/itin-2-10days.jpg",
+        link: "/province/ha-noi",
+      },
+      {
+        id: "itin-3",
+        title: "2-Week Heritage Trail: Hue to Hoi An",
+        titleVi: "2 tuần con đường di sản: Huế đến Hội An",
+        date: "February 10, 2026",
+        dateVi: "10 Tháng 2, 2026",
+        badge: "Itineraries",
+        img: "/guide/megamenu/itin-3-2weeks.jpg",
+        link: "/province/da-nang",
+      },
+      {
+        id: "itin-4",
+        title: "1-Month Complete Vietnam Odyssey",
+        titleVi: "1 tháng khám phá trọn vẹn dải đất hình chữ S",
+        date: "February 5, 2026",
+        dateVi: "5 Tháng 2, 2026",
+        badge: "Itineraries",
+        img: "/guide/megamenu/itin-4-1month.jpg",
+        link: "/guide/the-complete-guide-to-vietnam",
+      },
+    ],
+  },
+};
+
+// ─── 10 BEST THINGS TO DO IN HCMC DATA (Matching Screenshots 1, 2, 3, 4, 5) ───
+const HCMC_ITEMS = [
   {
-    id: 1,
-    num: "01",
-    title: "Khám Phá Dinh Độc Lập (Hội Trường Thống Nhất)",
-    subTitle: "Dấu ấn lịch sử vang dội giữa lòng Sài Gòn",
-    category: "Lịch sử & Di sản",
-    categoryKey: "history",
-    image:
-      "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg",
-    desc: "Được thiết kế bởi kiến trúc sư tài ba Ngô Viết Thụ, Dinh Độc Lập là tuyệt tác kết hợp hài hòa giữa kiến trúc hiện đại phương Tây và triết lý phong thủy phương Đông. Từng là cơ quan đầu não của chính quyền Sài Gòn, nơi đây ghi dấu thời khắc lịch sử trưa ngày 30/4/1975 khi chiếc xe tăng 390 húc đổ cổng chính. Du khách sẽ được chiêm ngưỡng phòng khánh tiết lộng lẫy, phòng họp nội các, sân bay trực thăng tầng thượng và mạng lưới hầm chỉ huy kiên cố dưới lòng đất với bản đồ tác chiến nguyên bản.",
-    tip: "Nên thuê máy thuyết minh tự động (audio guide đa ngôn ngữ) tại quầy vé để được dẫn dắt qua từng câu chuyện lịch sử sống động của mỗi căn phòng.",
-    cost: "40.000 VNĐ (~$1.6 USD)",
-    hours: "08:00 - 16:30 (Mở cửa cả tuần)",
-    address: "135 Nam Kỳ Khởi Nghĩa, Phường Bến Thành, Quận 1, TP.HCM",
-    mapsQuery: "Dinh Độc Lập Hồ Chí Minh",
-    affiliate: {
-      url: "https://shorten.asia/rhvFkFyD",
-      partner: "Klook",
-      badge: "Vé Điện Tử Chính Hãng",
-      title: "Vé Tham Quan Dinh Độc Lập (Hội Trường Thống Nhất)",
-      note: "Xác nhận tức thì • Quét mã QR vào cổng không cần xếp hàng mua vé giấy",
-      ctaText: "Đặt vé Dinh Độc Lập online",
-    },
+    id: "item-1",
+    num: 1,
+    titleEn: "1. Discover Vietnam’s rich history",
+    titleVi: "1. Khám phá bề dày lịch sử hào hùng của Việt Nam",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-War-Remnants-Museum-Vietnamnomad.jpg",
+    captionEn: "War Remnants Museum",
+    captionVi: "Bảo tàng Chứng tích Chiến tranh",
+    paragraphsEn: [
+      "History buffs will love Ho Chi Minh City’s range of museums. Start your journey at the Ho Chi Minh City Museum of History, where you’ll trace the story of the country from prehistoric times through to the Nguyen Dynasty. Keep an eye out for the one-of-a-kind mummy discovered in Saigon. The exhibits are well-curated and often overlooked by tourists, making it a peaceful place to start.",
+      "Next, prepare for an emotional and thought-provoking visit to the War Remnants Museum, which focuses on the Vietnam War. Allow 1–2 hours, and note that some content may be intense.",
+    ],
+    paragraphsVi: [
+      "Những ai đam mê lịch sử chắc chắn sẽ say mê hệ thống bảo tàng phong phú của TP. Hồ Chí Minh. Hãy bắt đầu hành trình tại Bảo tàng Lịch sử TP.HCM, nơi bạn sẽ lần theo dòng chảy lịch sử từ thời tiền sử đến triều Nguyễn. Đừng bỏ lỡ xác ướp Xóm Cải độc nhất vô nhị được phát hiện tại Sài Gòn. Các hiện vật được trưng bày công phu và không gian thanh bình, rất lý tưởng để khởi đầu chuyến đi.",
+      "Tiếp theo, hãy chuẩn bị cho một chuyến tham quan đầy cảm xúc tại Bảo tàng Chứng tích Chiến tranh, nơi tái hiện chân thực cuộc chiến tranh Việt Nam. Hãy dành khoảng 1–2 giờ và lưu ý một số hình ảnh có thể gây xúc động mạnh.",
+    ],
+    tipEn: "Both museums are located in District 1 and are easily accessible by taxi or ride-hailing apps. Entry fees range from 30,000 VND to 40,000 VND ($1.20–$1.60).",
+    tipVi: "Cả hai bảo tàng đều nằm tại Quận 1 và dễ dàng tiếp cận bằng taxi hoặc xe công nghệ. Giá vé vào cổng dao động từ 30.000 VNĐ đến 40.000 VNĐ (~$1.20–$1.60).",
   },
   {
-    id: 2,
-    num: "02",
-    title: "Ngắm Toàn Cảnh Sài Gòn Từ Đài Quan Sát Landmark 81 & Bitexco",
-    subTitle: "Bắt trọn đường chân trời tráng lệ của đô thị năng động bậc nhất",
-    category: "Ngắm cảnh & Trải nghiệm",
-    categoryKey: "sightseeing",
-    image: "/guide/hcmc/hcmc-10-things-bitexco.jpg",
-    desc: "Tòa tháp Landmark 81 sừng sững cao 461,3m (tòa nhà cao nhất Việt Nam) sở hữu đài quan sát SkyView trên 3 tầng cao nhất (tầng 79, 80 và 81). Từ độ cao gần 400m qua lớp kính viền vô cực trong suốt, bạn sẽ thu trọn vào tầm mắt khúc quanh mềm mại của sông Sài Gòn và sự chuyển mình rực rỡ của thành phố khi hoàng hôn buông xuống. Nếu muốn trải nghiệm phong vị Sài Gòn kinh điển hơn, Saigon Skydeck tại tháp Bitexco Financial Tower hình búp sen ngay trung tâm Quận 1 cũng là góc ngắm phố phường mãn nhãn.",
-    tip: "Thời điểm lý tưởng nhất để lên đài quan sát là từ 17:15 đến 18:30 chiều — bạn sẽ chiêm ngưỡng trọn vẹn cả hoàng hôn ráng vàng lẫn thành phố lung linh ánh đèn đêm.",
-    cost: "Landmark 81 SkyView: từ 300.000 VNĐ | Bitexco Skydeck: từ 200.000 VNĐ",
-    hours: "09:30 - 22:00 hàng ngày",
-    address: "720A Điện Biên Phủ, Phường 22, Bình Thạnh (Landmark 81)",
-    mapsQuery: "Landmark 81 SkyView Bình Thạnh",
-    affiliate: {
-      url: "https://shorten.asia/ZfZ4B5UM",
-      partner: "Klook",
-      badge: "View Triệu Đô",
-      title: "Vé Đài Quan Sát Landmark 81 SkyView & Saigon Skydeck Bitexco",
-      note: "Ưu đãi giá tốt độc quyền • Chiêm ngưỡng toàn cảnh thành phố từ độ cao gần 400m",
-      ctaText: "Đặt vé Landmark 81 / Bitexco",
-    },
+    id: "item-2",
+    num: 2,
+    titleEn: "2. Visit iconic historical buildings",
+    titleVi: "2. Tham quan các công trình kiến trúc lịch sử biểu tượng",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg",
+    captionEn: "Reunification Palace",
+    captionVi: "Dinh Độc Lập (Hội trường Thống Nhất)",
+    paragraphsEn: [
+      "Ho Chi Minh City’s heritage buildings are a visual treat. Start at the Reunification Palace (also known as the Independence Palace), where tours guide you through 1970s-era command bunkers and staterooms.",
+      "Just a short walk away, admire the Central Post Office, a beautiful colonial building designed by Marie-Alfred Foulhoux; the neighboring Notre Dame Cathedral (currently under renovation until 2027, but still worth a photo); and the Opera House.",
+    ],
+    paragraphsVi: [
+      "Các công trình di sản của TP. Hồ Chí Minh là một bữa tiệc thị giác tuyệt mỹ. Khởi đầu tại Dinh Độc Lập (Hội trường Thống Nhất), nơi các tour tham quan sẽ đưa bạn qua những căn hầm chỉ huy quân sự và các phòng khánh tiết tráng lệ thời kỳ thập niên 1970.",
+      "Chỉ cách đó vài bước đi bộ, bạn sẽ chiêm ngưỡng Bưu điện Trung tâm Sài Gòn – kiệt tác kiến trúc thuộc địa do kiến trúc sư Marie-Alfred Foulhoux thiết kế; Nhà thờ Đức Bà cổ kính kế bên (đang trùng tu đến năm 2027 nhưng vẫn rất đẹp khi chụp ảnh từ bên ngoài); và Nhà hát Thành phố.",
+    ],
+    tipEn: "Everything is within walking distance in District 1, or hop on the Hop-On Hop-Off Bus for an air-conditioned city tour.",
+    tipVi: "Tất cả các điểm tham quan này đều nằm trong cự ly đi bộ ở Quận 1, hoặc bạn có thể trải nghiệm xe buýt 2 tầng Hop-On Hop-Off máy lạnh thoáng mát.",
   },
   {
-    id: 3,
-    num: "03",
-    title: "Khám Phá Chợ Bến Thành & Thưởng Thức Thiên Đường Ẩm Thực Chợ",
-    subTitle: "Biểu tượng giao thương hơn một thế kỷ của Hòn Ngọc Viễn Đông",
-    category: "Ẩm thực & Mua sắm",
-    categoryKey: "food",
-    image: "/guide/hcmc/hcmc-12-attractions-ben-thanh.jpg",
-    desc: "Được khánh thành từ năm 1914 với tháp đồng hồ 4 mặt huyền thoại, Chợ Bến Thành không chỉ là trung tâm buôn bán tấp nập mà còn là biểu tượng văn hóa bất biến của Sài Gòn. Bên trong nhà lồng chợ là hơn 1.400 sạp hàng bày bán vải lụa, đồ thủ công mỹ nghệ, hạt điều rang củi và cà phê phin. Khu ẩm thực ở Cửa Nam là nơi quy tụ mọi món ngon ba miền: bún mắm đậm đà, bánh bèo chén tôm cháy, chè sương sa hạt lựu cốt dừa béo ngậy và gỏi cuốn tôm thịt chấm tương đen ngào ngạt.",
-    tip: "Khi mua quà lưu niệm hay vải vóc, bạn nên trả giá nhẹ nhàng xuống khoảng 20-30%. Khu ẩm thực niêm yết giá rõ ràng trên bảng hiệu từng quầy.",
-    cost: "Vào cửa tự do | Các món ăn từ 35.000 - 85.000 VNĐ",
-    hours: "Chợ ngày: 06:00 - 18:00 | Chợ đêm quanh cổng: 18:00 - 23:00",
-    address: "Đường Lê Lợi, Phường Bến Thành, Quận 1, TP.HCM",
-    mapsQuery: "Chợ Bến Thành Quận 1",
-    affiliate: {
-      url: "https://shorten.asia/yXvC4bfU",
-      partner: "Klook",
-      badge: "Food Tour Bản Địa",
-      title: "Tour Khám Phá Chợ Bến Thành & Trải Nghiệm Ẩm Thực Sài Gòn",
-      note: "Hướng dẫn viên bản địa • Thưởng thức các món đặc sản trứ danh ba miền",
-      ctaText: "Xem tour ẩm thực Bến Thành",
-    },
+    id: "item-3",
+    num: 3,
+    titleEn: "3. Explore the dynamic food scene",
+    titleVi: "3. Khám phá nền ẩm thực sôi động và phong phú",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da-Vietnamnomad.jpg",
+    captionEn: "Ca phe sua da",
+    captionVi: "Cà phê sữa đá Sài Gòn",
+    paragraphsEn: [
+      "Ho Chi Minh City is a food paradise. Whether you’re after a hearty bowl of pho, spicy bun bo Hue, or just a quick banh mi paired with creamy ca phe sua da (Vietnamese iced coffee)—a must-try combo—you’ll find it here.",
+      "But it’s not all street food—Vietnamese fine dining is having a moment. Book a table at Anan Saigon, where Chef Peter Cuong Franklin reinvents traditional dishes with modern flair. Or try Quince, a sleek space blending Vietnamese heritage with upscale presentation. For a truly immersive experience, NOIR. Dining in the Dark Saigon offers a multi-sensory meal prepared and served by visually impaired staff.",
+    ],
+    paragraphsVi: [
+      "TP. Hồ Chí Minh thực sự là một thiên đường ẩm thực. Dù bạn muốn thưởng thức một tô phở đậm đà, bún bò Huế cay nồng thơm lừng, hay một ổ bánh mì giòn rụm kết hợp với ly cà phê sữa đá béo ngậy – combo nhất định phải thử – bạn đều có thể tìm thấy ngay tại đây.",
+      "Không chỉ có ẩm thực đường phố, nền ẩm thực cao cấp (fine dining) của Sài Gòn cũng đang phát triển mạnh mẽ. Đặt bàn tại Anan Saigon, nơi đầu bếp Peter Cường Franklin làm mới các món ăn truyền thống với phong cách hiện đại. Hoặc ghé Quince, không gian tinh tế kết hợp di sản Việt Nam với nghệ thuật bài trí đẳng cấp. Để có trải nghiệm độc nhất, NOIR. Dining in the Dark mang đến bữa ăn đa giác quan do chính người khiếm thị phục vụ.",
+    ],
+    tipEn: "Skip your hotel breakfast and head out early; follow the locals to the busiest street stalls and you won’t be disappointed.",
+    tipVi: "Hãy bỏ qua bữa sáng tại khách sạn và dậy sớm ra phố; đi theo người bản địa tới những quán ăn đường phố đông khách nhất, bạn chắc chắn sẽ không thất vọng.",
   },
   {
-    id: 4,
-    num: "04",
-    title: "Du Hành Quá Khứ Tại Hệ Thống Địa Đạo Củ Chi",
-    subTitle: "Kỳ quan công sự ngầm huyền thoại trong lịch sử quân sự thế giới",
-    category: "Lịch sử & Di sản",
-    categoryKey: "history",
-    image:
-      "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Cu-Chi-Tunnels-Vietnamnomad.jpg",
-    desc: "Cách trung tâm TP.HCM khoảng 60km về phía Tây Bắc, Địa đạo Củ Chi là hệ thống đường hầm bí mật dài hơn 250km được đào hoàn toàn bằng tay và dụng cụ thô sơ qua nhiều thập kỷ chiến tranh. Mạng lưới hầm ngầm ba tầng sâu hút lòng đất bao gồm phòng hội họp, bếp Hoàng Cầm không khói, kho vũ khí, bệnh xá dã chiến và hệ thống hầm chông thông minh. Trải nghiệm khom mình bò qua đoạn hầm hẹp và thưởng thức củ mì luộc chấm muối mè bên cánh rừng bạt ngàn sẽ để lại ấn tượng khó phai.",
-    tip: "Khu Bến Dược giữ được nét nguyên bản hơn, còn khu Bến Đình được mở rộng lòng hầm phù hợp hơn cho du khách phương Tây. Hãy mang giày thể thao thoải mái.",
-    cost: "Vé tham quan: 35.000 VNĐ (Việt Nam) / 125.000 VNĐ (Quốc tế)",
-    hours: "07:30 - 17:00 hàng ngày",
-    address: "Ấp Phú Hiệp, Xã Phú Mỹ Hưng, Huyện Củ Chi, TP.HCM",
-    mapsQuery: "Địa đạo Củ Chi Bến Dược",
-    affiliate: {
-      url: "https://shorten.asia/p993NUTn",
-      partner: "Klook",
-      badge: "Tour Bán Chạy Nhất",
-      title: "Tour Trọn Gói Khám Phá Địa Đạo Củ Chi (Nửa Ngày / 1 Ngày)",
-      note: "Đưa đón tận nơi tại trung tâm Quận 1 • Bao gồm vé vào cổng & HDV giàu kinh nghiệm",
-      ctaText: "Đặt tour Địa đạo Củ Chi",
-    },
+    id: "item-4",
+    num: 4,
+    titleEn: "4. Marvel at religious architecture",
+    titleVi: "4. Chiêm ngưỡng kiến trúc tôn giáo độc đáo",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Tan-Dinh-Church-Vietnamnomad.jpg",
+    captionEn: "Tan Dinh Church",
+    captionVi: "Nhà thờ Tân Định (Nhà thờ màu hồng)",
+    paragraphsEn: [
+      "Vietnam is home to a unique blend of religions, and Ho Chi Minh City reflects that diversity. One striking example is the Tan Dinh Church, easily recognized by its vibrant pink facade—an architectural gem that has become a favorite for both photographers and history buffs. Not far away, the Jade Emperor Pagoda offers a more meditative experience; this atmospheric temple is filled with incense smoke, intricate carvings, and statues.",
+      "For a glimpse into a lesser-seen side of Vietnam’s spiritual life, the Mariamman Hindu Temple stands out with its colorful exterior and detailed sculptures, offering a rare look into Hinduism in the country. These sacred sites provide a meaningful cultural lens and are generally open daily with no entrance fee.",
+    ],
+    paragraphsVi: [
+      "Việt Nam sở hữu sự hòa quyện tôn giáo độc đáo, và Sài Gòn phản ánh rõ nét sự đa dạng đó. Ví dụ nổi bật là Nhà thờ Tân Định, dễ dàng nhận biết bởi màu sơn hồng rực rỡ – viên ngọc kiến trúc được cả nhiếp ảnh gia lẫn du khách yêu thích. Cách đó không xa, Chùa Ngọc Hoàng (Phước Hải Tự) mang đến cảm giác thanh tịnh; ngôi chùa cổ kính ngập tràn hương khói, những bức phù điêu chạm khắc tinh xảo và tượng Phật tôn nghiêm.",
+      "Để ngắm nhìn một khía cạnh tâm linh độc đáo khác, Đền thờ Ấn Độ giáo Mariamman nổi bật với mặt tiền rực rỡ và các tác phẩm điêu khắc chi tiết. Các địa điểm tôn nghiêm này mở cửa miễn phí hàng ngày cho du khách ghé thăm.",
+    ],
+    tipEn: "Dress modestly when visiting religious sites, and be respectful of worshippers.",
+    tipVi: "Hãy mặc trang phục lịch sự, kín đáo khi viếng thăm các nơi thờ tự tôn giáo và luôn tôn trọng người đi lễ.",
   },
   {
-    id: 5,
-    num: "05",
-    title: "Ngắm Sài Gòn Lên Đèn Bằng Du Thuyền Sông & Waterbus",
-    subTitle:
-      "Hành trình lãng mạn lướt sóng ngắm nhìn đô thị hiện đại bên sông",
-    category: "Ngắm cảnh & Trải nghiệm",
-    categoryKey: "sightseeing",
-    image:
-      "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bach-Dang-Bus-Station-Vietnamnomad.jpg",
-    desc: "Sông Sài Gòn là cái nôi nuôi dưỡng đô thị phương Nam từ thuở lập làng đến nay. Cách tuyệt vời và tiết kiệm nhất để ngắm thành phố từ mặt nước là đi Saigon Waterbus xuất phát từ Bến Bạch Đằng đến Bến Bình An/Linh Đông. Những cơn gió lộng xua tan cái nóng nhiệt đới, mở ra khung cảnh ngoạn mục của cầu Ba Son (Thủ Thiêm 2), bến cảng Ba Son cũ và cụm cao ốc bừng sáng phản chiếu lung linh xuống mặt nước.",
-    tip: "Đặt vé Waterbus trước qua website vào khung giờ 17:30 chiều để ngắm hoàng hôn, hoặc đặt tour du thuyền ăn tối cao cấp nếu đi cùng người thương.",
-    cost: "Saigon Waterbus: 15.000 VNĐ/lượt | Du thuyền ăn tối: 450.000 - 1.200.000 VNĐ",
-    hours: "Waterbus chạy từ 07:00 - 20:00 (chuyến cách 30-45 phút)",
-    address:
-      "Ga Tàu Thủy Bạch Đằng, Số 10B Tôn Đức Thắng, Phường Bến Nghé, Quận 1",
-    mapsQuery: "Ga tàu thủy Bạch Đằng Bến Nghé Quận 1",
-    affiliate: {
-      url: "https://shorten.asia/WNKx7pX8",
-      partner: "Klook",
-      badge: "Trải Nghiệm Lãng Mạn",
-      title: "Vé Saigon Waterbus & Du Thuyền Ăn Tối Ngắm Sông Sài Gòn",
-      note: "Ngắm thành phố lên đèn lộng lẫy • Đặt trước giữ chỗ đẹp ngắm hoàng hôn",
-      ctaText: "Đặt vé Du thuyền / Waterbus",
-    },
+    id: "item-5",
+    num: 5,
+    titleEn: "5. Shop until you drop",
+    titleVi: "5. Mua sắm thỏa thích từ bình dân đến cao cấp",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-the-Diamond-Plaza-Vietnamnomad.jpg",
+    captionEn: "Diamond Plaza",
+    captionVi: "Trung tâm thương mại Diamond Plaza",
+    paragraphsEn: [
+      "Whatever your budget, Ho Chi Minh City offers something for every kind of shopper. High-end fashionistas can head to Vincom Dong Khoi or Diamond Plaza, while bargain hunters should dive into Ben Thanh Market for souvenirs and snacks (just don’t forget to haggle!).",
+      "Looking for something more unique? Browse flea markets at Nha Van Hoa Thanh Nien, especially during weekends, or head up to the boutique stores hidden in repurposed apartments, where you’ll find handmade crafts, vintage items, and local art.",
+    ],
+    paragraphsVi: [
+      "Dù ngân sách của bạn là bao nhiêu, TP. Hồ Chí Minh đều có nơi mua sắm phù hợp. Những tín đồ thời trang cao cấp có thể ghé Vincom Đồng Khởi hoặc Diamond Plaza, trong khi người thích săn đồ lưu niệm và đặc sản có thể hòa mình vào không khí nhộn nhịp của Chợ Bến Thành (nhớ trả giá nhẹ nhàng!).",
+      "Bạn muốn tìm kiếm điều gì đó độc đáo hơn? Hãy dạo các hội chợ cuối tuần tại Nhà Văn hóa Thanh Niên, hoặc khám phá các cửa hàng boutique ẩn mình trong các chung cư cổ cải tạo, nơi bày bán đồ thủ công, thời trang vintage và nghệ thuật bản địa.",
+    ],
+    tipEn: "Try to avoid bargaining early in the morning, as it is considered a bad omen for sellers.",
+    tipVi: "Nên tránh trả giá quá gay gắt vào sáng sớm khi mở hàng, vì theo quan niệm buôn bán đây là điều kiêng kỵ của tiểu thương.",
   },
   {
-    id: 6,
-    num: "06",
-    title: "Thấu Cảm Lịch Sử Tại Bảo Tàng Chứng Tích Chiến Tranh",
-    subTitle: "Bảo tàng được du khách quốc tế ghé thăm nhiều nhất Việt Nam",
-    category: "Lịch sử & Di sản",
-    categoryKey: "history",
-    image:
-      "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-War-Remnants-Museum-Vietnamnomad.jpg",
-    desc: "Bảo tàng Chứng tích Chiến tranh là điểm đến đem lại nhiều xúc cảm lắng đọng sâu sắc nhất cho bất kỳ du khách nào. Với hơn 20.000 tài liệu, hiện vật và những bức ảnh tư liệu đắt giá của các phóng viên chiến trường quốc tế, bảo tàng phơi bày chân thực sự tàn khốc của chiến tranh và hậu quả của chất độc da cam. Sân ngoài trưng bày các khí tài quân sự đồ sộ như máy bay tiêm kích UH-1 Huey, xe tăng M48 Patton và bom điều khiển.",
-    tip: "Khu vực tầng 2 trưng bày phòng tranh 'Hồi niệm' (Requiem) của cố phóng viên Tim Page và Horst Faas mang giá trị nhân văn và nhiếp ảnh vô cùng cao quý.",
-    cost: "40.000 VNĐ (~$1.6 USD)",
-    hours: "07:30 - 17:30 (Mở cửa cả ngày lễ)",
-    address: "28 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, TP.HCM",
-    mapsQuery: "Bảo tàng Chứng tích Chiến tranh Quận 3",
-    affiliate: {
-      url: "https://shorten.asia/gXcAwua3",
-      partner: "Klook",
-      badge: "Di Sản Lịch Sử",
-      title: "Vé Tham Quan & City Tour Bảo Tàng Chứng Tích Chiến Tranh",
-      note: "Vé điện tử tiện lợi • Tùy chọn xe Hop-on Hop-off tham quan trọn gói các điểm",
-      ctaText: "Đặt vé / Tour bảo tàng",
-    },
+    id: "item-6",
+    num: 6,
+    titleEn: "6. Take to the water",
+    titleVi: "6. Trải nghiệm du ngoạn sông nước Sài Gòn",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bach-Dang-Bus-Station-Vietnamnomad.jpg",
+    captionEn: "Bach Dang Station",
+    captionVi: "Ga tàu thủy Bạch Đằng (Saigon Waterbus)",
+    paragraphsEn: [
+      "Escape the chaos of the city streets and explore the city from its rivers. A relaxing ride on the Saigon Water Bus offers a glimpse of lesser-known neighborhoods, with a cool breeze to boot.",
+      "If you’d like something more active, rent a SUP (stand-up paddleboard) or kayak and float along the Saigon River. Head out before 5 p.m. to catch the sunset, when the golden light reflects on the water.",
+      "For something more romantic, book a dinner cruise featuring traditional musical performances and Vietnamese cuisine.",
+    ],
+    paragraphsVi: [
+      "Rời xa sự hối hả của đường phố và ngắm nhìn Sài Gòn từ dòng sông là một trải nghiệm tuyệt vời. Chuyến đi thư thái trên Saigon Waterbus mang đến góc nhìn mới lạ về các khu dân cư ven sông cùng những làn gió mát rượi.",
+      "Nếu bạn thích vận động, hãy thuê ván chèo đứng (SUP) hoặc thuyền kayak trên sông Sài Gòn. Hãy xuất phát trước 5 giờ chiều để đón hoàng hôn rực rỡ khi ánh nắng vàng óng phản chiếu trên mặt nước.",
+      "Để có một buổi tối lãng mạn, bạn có thể đặt du thuyền ăn tối kết hợp thưởng thức biểu diễn âm nhạc dân tộc và ẩm thực Việt Nam tinh túy.",
+    ],
+    tipEn: "Always book tickets in advance to secure your best trip, as they tend to sell out quickly.",
+    tipVi: "Nên đặt vé trước qua website hoặc quầy vé sớm, đặc biệt là các chuyến ngắm hoàng hôn vì vé thường hết rất nhanh.",
   },
   {
-    id: 7,
-    num: "07",
-    title: "Thưởng Thức Văn Hóa Cà Phê Vợt & Cà Phê Bệt Sài Gòn",
-    subTitle: "Thức uống đánh thức mọi giác quan và nếp sống hào sảng mộc mạc",
-    category: "Văn hóa & Đời sống",
-    categoryKey: "culture",
-    image:
-      "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Ca-Phe-Sua-Da-Vietnamnomad.jpg",
-    desc: "Người Sài Gòn không chỉ 'uống cà phê' — họ sống cùng cà phê. Từ những quán cà phê vợt khói bốc nghi ngút tồn tại ngót nghét gần một thế kỷ ở hẻm Cheo Leo hay quán Ba Lù ở chợ Phùng Hưng, cà phê được ủ bằng ấm đất nung trên bếp than củi thơm lừng mùi bơ thảo mộc. Đến chiều mát, khu công viên 30/4 trước Nhà thờ Đức Bà lại rộn rã những góc 'cà phê bệt' trên tờ báo giấy, râm ran câu chuyện rôm rả của các thế hệ học sinh, sinh viên và nghệ sĩ.",
-    tip: "Hãy gọi một ly 'Cà phê sữa đá vợt' ít đường nhiều sữa đặc và thêm một dĩa bánh tiêu hoặc giò cháo quẩy để chấm kèm theo đúng lối ăn người Hoa xưa.",
-    cost: "15.000 - 30.000 VNĐ (~$0.6 - $1.2 USD)",
-    hours: "Cà phê Vợt Cheo Leo: 05:15 - 18:45 | Cà phê Bệt: Cả ngày",
-    address: "109/36 Nguyễn Thiện Thuật, Phường 2, Quận 3 (Cà phê Cheo Leo)",
-    mapsQuery: "Cà phê vợt Cheo Leo Quận 3",
-    affiliate: {
-      url: "https://shorten.asia/F4u2CkPX",
-      partner: "Klook",
-      badge: "Văn Hóa Bản Địa",
-      title: "Walking Tour Khám Phá Văn Hóa Cà Phê Vợt & Ngõ Hẻm Sài Gòn",
-      note: "Thưởng thức cà phê sữa đá vợt truyền thống • Cảm nhận nhịp sống chậm xưa cũ",
-      ctaText: "Đặt tour cà phê Sài Gòn",
-    },
+    id: "item-7",
+    num: 7,
+    titleEn: "7. Experience performing arts",
+    titleVi: "7. Thưởng thức nghệ thuật biểu diễn đặc sắc",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Saigon-Opera-House-Vietnamnomad.jpg",
+    captionEn: "Saigon Opera House",
+    captionVi: "Nhà hát Thành phố (Saigon Opera House)",
+    paragraphsEn: [
+      "Whether you’re drawn to traditional or contemporary performance art, Ho Chi Minh City delivers memorable experiences for all tastes. A standout is the A O Show at the historic Saigon Opera House—a visually stunning blend of acrobatics, contemporary dance, and traditional Vietnamese music, all set against the backdrop of one of the city’s most iconic colonial-era buildings. Tickets are easy to secure either online or directly at the venue.",
+      "If you’re looking for something more budget friendly yet equally rich in culture, catch a water puppet show at the Golden Dragon Water Puppet Theater or the Ho Chi Minh City Museum of History. These lively performances bring ancient Vietnamese folk tales to life through a unique blend of puppetry, music, and humor—all performed on a water stage in a tradition that dates back centuries.",
+    ],
+    paragraphsVi: [
+      "Dù bạn yêu thích nghệ thuật truyền thống hay đương đại, Sài Gòn đều mang đến những trải nghiệm biểu diễn khó quên. Nổi bật nhất là À Ố Show tại Nhà hát Thành phố – sự hòa quyện mãn nhãn giữa xiếc tre, múa đương đại và âm nhạc dân gian Việt Nam bên trong công trình kiến trúc Pháp cổ kính. Bạn có thể dễ dàng đặt vé trực tuyến hoặc mua trực tiếp tại sảnh.",
+      "Nếu bạn muốn lựa chọn tiết kiệm hơn nhưng vẫn đậm đà bản sắc văn hóa, hãy xem múa rối nước tại Nhà hát Múa rối nước Rồng Vàng hoặc Bảo tàng Lịch sử. Những vở diễn sống động tái hiện truyện cổ tích và đời sống làng quê Việt Nam trên sân khấu nước hàng trăm năm tuổi.",
+    ],
+    tipEn: "Arrive early for the A O Show to admire the beautiful interiors of the Opera House.",
+    tipVi: "Hãy đến sớm trước giờ biểu diễn À Ố Show khoảng 30 phút để chiêm ngưỡng kiến trúc nội thất lộng lẫy của Nhà hát Thành phố.",
   },
   {
-    id: 8,
-    num: "08",
-    title: "Hòa Mình Vào Nhịp Sống Về Đêm Tại Phố Đi Bộ Bùi Viện & Nguyễn Huệ",
-    subTitle: "Bản hòa ca của ánh sáng, âm nhạc và sự náo nhiệt không ngủ",
-    category: "Cuộc sống Về đêm",
-    categoryKey: "nightlife",
-    image:
-      "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bui-Vien-Street-Vietnamnomad.jpg",
-    desc: "Sài Gòn thực sự 'sống' trọn vẹn nhất khi màn đêm buông xuống. Phố đi bộ Nguyễn Huệ rộng thênh thang lát đá granite là nơi các bạn trẻ tụ họp xem biểu diễn nhạc nước, hòa vào âm nhạc acoustic đường phố và ngắm chung cư cà phê 42 Nguyễn Huệ lên đèn rực rỡ. Ngược lại, nếu bạn tìm kiếm sự sôi động và cuồng nhiệt, 'Phố Tây' Bùi Viện sẽ làm bạn choáng ngợp với dàn loa công suất lớn, ánh đèn neon, màn múa lửa nghệ thuật và những ly bia mát lạnh cùng bạn bè quốc tế.",
-    tip: "Muốn ngắm trọn vẹn phố đi bộ Nguyễn Huệ từ trên cao, hãy ghé một quán cà phê nhỏ tại chung cư 42 Nguyễn Huệ (% Arabica hoặc The Letter Cafe) vào khoảng 19:30 tối.",
-    cost: "Vào cổng miễn phí | Đồ uống từ 35.000 - 80.000 VNĐ",
-    hours:
-      "Phố đi bộ Nguyễn Huệ: 24/7 | Bùi Viện: Sôi động nhất từ 19:00 - 02:00 sáng",
-    address:
-      "Đường Nguyễn Huệ, Quận 1 & Đường Bùi Viện, Phường Phạm Ngũ Lão, Quận 1",
-    mapsQuery: "Phố đi bộ Nguyễn Huệ Hồ Chí Minh",
-    affiliate: {
-      url: "https://shorten.asia/XrHC2SBm",
-      partner: "Klook",
-      badge: "Night Tour Sôi Động",
-      title: "Tour Xe Máy Trải Nghiệm Sài Gòn Về Đêm & Phố Bùi Viện",
-      note: "Tài xế bản địa đưa đón tận nơi • Thưởng thức món ngon đường phố & ngắm phố đêm",
-      ctaText: "Đặt tour Sài Gòn về đêm",
-    },
+    id: "item-8",
+    num: 8,
+    titleEn: "8. Dive into nightlife",
+    titleVi: "8. Hòa mình vào nhịp sống về đêm náo nhiệt",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Bui-Vien-Street-Vietnamnomad.jpg",
+    captionEn: "Bui Vien Street",
+    captionVi: "Phố đi bộ Bùi Viện về đêm",
+    paragraphsEn: [
+      "As the sun sets, Ho Chi Minh City comes alive with energy. Start your evening with a stroll down Nguyen Hue Walking Street, where locals gather for music and street performances. Don’t miss the Cafe Apartment, a converted old building now packed with trendy cafés and bars.",
+      "Families can head to Thu Thiem Park or Bach Dang Riverside Park for a relaxed vibe with plenty of outdoor games for all ages.",
+      "If you’re looking for something wilder, head to Bui Vien Street, the city’s party central, where you’ll find backpacker bars, loud music, dance shows, and cold beer served until dawn.",
+    ],
+    paragraphsVi: [
+      "Khi màn đêm buông xuống, TP. Hồ Chí Minh bừng sáng với nguồn năng lượng bất tận. Bắt đầu buổi tối bằng việc tản bộ dọc phố đi bộ Nguyễn Huệ, nơi người dân tụ họp nghe nhạc đường phố. Đừng quên ghé Chung cư Cà phê 42 Nguyễn Huệ – khối nhà cổ chứa đầy những quán cà phê và quán bar độc đáo.",
+      "Các gia đình có thể đến Công viên Bến Bạch Đằng hoặc Công viên Bờ sông Thủ Thiêm để tận hưởng không gian thoáng mát ven sông.",
+      "Nếu muốn không khí sôi động, cuồng nhiệt hơn, hãy tới Phố Tây Bùi Viện – tâm điểm tiệc tùng của thành phố với vô số quán bar, âm nhạc rộn rã, những màn biểu diễn đường phố và bia lạnh phục vụ xuyên đêm.",
+    ],
+    tipEn: "Keep your belongings close in crowded nightlife areas and always ask about prices before ordering.",
+    tipVi: "Hãy giữ gìn tư trang cẩn thận ở những nơi đông người và luôn hỏi giá trước khi gọi đồ uống hoặc đồ ăn.",
   },
   {
-    id: 9,
-    num: "09",
-    title: "Lạc Bước Vào Khu Phố Người Hoa Chợ Lớn & Thăm Chùa Bà Thiên Hậu",
-    subTitle:
-      "Di sản văn hóa hơn 300 năm với kiến trúc cổ kính và ẩm thực phong phú",
-    category: "Văn hóa & Đời sống",
-    categoryKey: "culture",
-    image:
-      "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Chinatown-Vietnamnomad.jpg",
-    desc: "Chợ Lớn (trải dài qua Quận 5, Quận 6 và Quận 11) là một trong những khu phố người Hoa lâu đời nhất thế giới. Điểm nhấn linh thiêng nhất tại đây là Chùa Bà Thiên Hậu (Tuệ Thành Hội Quán) xây dựng từ năm 1760. Ngôi chùa nổi bật với những bức phù điêu gốm sứ tinh xảo trên mái ngói và những vòng nhang trầm khổng lồ treo lơ lửng trên giếng trời, mang theo ước nguyện bình an của khách thập phương. Dạo quanh khu phố, bạn sẽ bắt gặp các tiệm thuốc bắc ngào ngạt hương thảo mộc và những tiệm dimsum, sủi cảo gia truyền nức tiếng.",
-    tip: "Mua một khoanh nhang treo ghi tên gia đình mình để cầu bình an. Sau khi viếng chùa, hãy ghé thưởng thức chè nhà đèn cột điện hoặc sủi cảo gia truyền đường Hà Tôn Quyền.",
-    cost: "Miễn phí vé vào cửa Chùa Bà Thiên Hậu",
-    hours: "06:30 - 16:30 hàng ngày",
-    address: "710 Nguyễn Trãi, Phường 11, Quận 5, TP.HCM",
-    mapsQuery: "Chùa Bà Thiên Hậu Nguyễn Trãi Quận 5",
-    affiliate: null,
+    id: "item-9",
+    num: 9,
+    titleEn: "9. Explore Saigon Chinatown",
+    titleVi: "9. Khám phá Khu phố người Hoa (Chợ Lớn)",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Chinatown-Vietnamnomad.jpg",
+    captionEn: "Binh Tay Market",
+    captionVi: "Chợ Bình Tây (Chợ Lớn Quận 5)",
+    paragraphsEn: [
+      "Saigon Chinatown in District 5 is a world unto itself. Dive into the sensory overload of Binh Tay Market, one of the oldest and largest wholesale markets in the city.",
+      "Don’t miss ancient Chinese temples like Thien Hau Pagoda, and be sure to snack on authentic Chinese-Vietnamese cuisine—think sui cao (dumplings), xa xiu (Chinese barbecue pork), and sweet che desserts.",
+    ],
+    paragraphsVi: [
+      "Khu phố người Hoa (Chợ Lớn) tại Quận 5 và Quận 6 như một thế giới riêng biệt đầy màu sắc. Hãy hòa mình vào không khí tấp nập của Chợ Bình Tây, một trong những khu chợ đầu mối lâu đời và quy mô bậc nhất thành phố.",
+      "Đừng bỏ qua các ngôi miếu cổ như Chùa Bà Thiên Hậu, và hãy thưởng thức những món ăn gốc Hoa đậm đà khó cưỡng – như sủi cảo Hà Tôn Quyền, xá xíu thơm lừng, vịt quay và các món chè ngọt thanh mát.",
+    ],
+    tipEn: "Morning is the best time to visit markets and temples, before the midday heat sets in.",
+    tipVi: "Buổi sáng sớm là thời điểm lý tưởng nhất để khám phá chợ và viếng chùa, trước khi nắng nóng giữa trưa gay gắt.",
   },
   {
-    id: 10,
-    num: "10",
-    title: "Chiêm Ngưỡng Nhà Thờ Tân Định Màu Hồng & Thưởng Thức À Ố Show",
-    subTitle: "Nét duyên dáng kiến trúc phương Tây và tinh hoa xiếc tre Việt",
-    category: "Nghệ thuật & Kiến trúc",
-    categoryKey: "arts",
-    image:
-      "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Tan-Dinh-Church-Vietnamnomad.jpg",
-    desc: "Nhà thờ Tân Định khoác lên mình màu hồng pastel nổi bật rực rỡ, là một trong những công trình tôn giáo cổ nhất thành phố mang phong cách kiến trúc Gothic kết hợp Roman và Baroque. Cách đó không xa, Nhà hát Lớn TP.HCM (Saigon Opera House) là công trình biểu tượng tuyệt mỹ mang phong cách Tân cổ điển Pháp khánh thành năm 1900, nơi diễn ra vở diễn xiếc tre lừng danh quốc tế 'À Ố Show'.",
-    tip: "Chụp ảnh Nhà thờ Tân Định đẹp nhất từ phía quán cà phê Cộng đối diện để lấy trọn đỉnh tháp chuông vươn cao trên nền trời xanh.",
-    cost: "Tham quan ngoài miễn phí | Vé À Ố Show: 800.000 - 1.600.000 VNĐ",
-    hours: "Nhà thờ: 08:00 - 17:00 | Nhà hát: Theo lịch biểu diễn",
-    address:
-      "289 Hai Bà Trưng, Phường 8, Quận 3 & 07 Công Trường Lam Sơn, Quận 1",
-    mapsQuery: "Nhà thờ Tân Định Quận 3",
-    affiliate: {
-      url: "https://shorten.asia/8VqrNzdz",
-      partner: "Klook",
-      badge: "Show Diễn Đỉnh Cao",
-      title: "Vé Vở Diễn Nghệ Thuật Xiếc Tre À Ố Show (Nhà Hát Lớn Sài Gòn)",
-      note: "Đặt sớm giữ vị trí ghế trung tâm • Thưởng thức kiệt tác nghệ thuật sân khấu tre Việt",
-      ctaText: "Đặt vé À Ố Show online",
-    },
+    id: "item-10",
+    num: 10,
+    titleEn: "10. Take day trips from the city",
+    titleVi: "10. Tham gia các chuyến đi trong ngày khám phá vùng phụ cận",
+    img: "/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Cu-Chi-Tunnels-Vietnamnomad.jpg",
+    captionEn: "Cu Chi Tunnels",
+    captionVi: "Địa đạo Củ Chi",
+    paragraphsEn: [
+      "Ho Chi Minh City is ideally situated for some truly fascinating day trips that blend history, nature, and adventure. Just a couple of hours away, the Cu Chi Tunnels offer a powerful glimpse into Vietnam’s wartime past—you can even crawl through parts of the underground network.",
+      "For a more tranquil experience, head to the Mekong Delta, where you can cruise along winding waterways, explore bustling floating markets, and take in the lush, green scenery.",
+      "Nature lovers should also consider visiting Can Gio Mangrove Forest, an eco-paradise home to monkeys, crocodiles, and sprawling mangrove trees. These excursions are easy to arrange through most hotels or popular travel platforms.",
+    ],
+    paragraphsVi: [
+      "TP. Hồ Chí Minh là điểm xuất phát lý tưởng cho những chuyến đi trong ngày kết hợp lịch sử, thiên nhiên và khám phá. Chỉ cách trung tâm khoảng 1,5 đến 2 giờ chạy xe, Địa đạo Củ Chi mang đến góc nhìn chân thực về thời kỳ chiến tranh – bạn thậm chí có thể trải nghiệm chui qua các đoạn hầm ngầm kiên cố.",
+      "Nếu thích cảnh sắc thanh bình, hãy xuôi về Đồng bằng sông Cửu Long (Miền Tây sông nước), nơi bạn có thể xuôi thuyền qua những con rạch rợp bóng dừa nước, ghé chợ nổi và thưởng thức hoa quả nhiệt đới tươi ngon.",
+      "Những ai yêu thiên nhiên có thể ghé thăm Rừng ngập mặn Cần Giờ – khu dự trữ sinh quyển thế giới với đàn khỉ tự nhiên và rừng đước bạt ngàn.",
+    ],
+    tipEn: "Pack snacks, sunscreen, and plenty of water for a full day of exploring.",
+    tipVi: "Hãy chuẩn bị đồ ăn nhẹ, kem chống nắng và nhiều nước uống cho một ngày dài khám phá.",
+    closingEn: "We hope this list helps you enjoy a more diverse and authentic experience while making the most of your time in Ho Chi Minh City. Let us know which activity you’re most excited to try, and feel free to share any other awesome experiences you think we should add to the list in our Facebook group, Welcome to Vietnam.",
+    closingVi: "Chúng tôi hy vọng danh sách 10 trải nghiệm trên sẽ giúp bạn có chuyến du lịch TP. Hồ Chí Minh thật đáng nhớ và trọn vẹn. Hãy chia sẻ với VinaTap trải nghiệm mà bạn yêu thích nhất nhé!",
   },
 ];
 
-// Danh mục lọc
-const THINGS_CATEGORIES = [
-  { key: "all", label: "Tất cả 10 điều", icon: Compass },
-  { key: "history", label: "Lịch sử & Di sản", icon: Landmark },
-  { key: "sightseeing", label: "Ngắm cảnh & View đỉnh", icon: Camera },
-  { key: "food", label: "Ẩm thực bản địa", icon: Utensils },
-  { key: "culture", label: "Văn hóa & Đời sống", icon: Coffee },
-  { key: "nightlife", label: "Cuộc sống về đêm", icon: Music },
-  { key: "arts", label: "Nghệ thuật sân khấu", icon: Sparkles },
-];
+// Helper to render inline links for known keywords
+function renderInlineContent(text, isVi) {
+  if (typeof text !== "string") return text;
 
-export default function ThingsToDoInHCMCPage() {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [bookmarkedIds, setBookmarkedIds] = useState([]);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastVisible, setToastVisible] = useState(false);
-  const [lightboxItem, setLightboxItem] = useState(null);
+  const links = isVi
+    ? [
+        { key: "Dinh Độc Lập", href: "/province/ho-chi-minh" },
+        { key: "Bưu điện Trung tâm Sài Gòn", href: "/province/ho-chi-minh" },
+        { key: "Nhà thờ Tân Định", href: "/province/ho-chi-minh" },
+        { key: "Chợ Bến Thành", href: "/province/ho-chi-minh" },
+        { key: "Địa đạo Củ Chi", href: "/province/ho-chi-minh" },
+        { key: "Bảo tàng Chứng tích Chiến tranh", href: "/province/ho-chi-minh" },
+        { key: "TP. Hồ Chí Minh", href: "/province/ho-chi-minh" },
+        { key: "Đồng bằng sông Cửu Long", href: "/province/can-tho" },
+      ]
+    : [
+        { key: "Ho Chi Minh City", href: "/province/ho-chi-minh" },
+        { key: "Reunification Palace", href: "/province/ho-chi-minh" },
+        { key: "Central Post Office", href: "/province/ho-chi-minh" },
+        { key: "Tan Dinh Church", href: "/province/ho-chi-minh" },
+        { key: "Jade Emperor Pagoda", href: "/province/ho-chi-minh" },
+        { key: "Ben Thanh Market", href: "/province/ho-chi-minh" },
+        { key: "Saigon Opera House", href: "/province/ho-chi-minh" },
+        { key: "Cu Chi Tunnels", href: "/province/ho-chi-minh" },
+        { key: "Mekong Delta", href: "/province/can-tho" },
+        { key: "food paradise", href: "/guide/12-must-try-foods-in-ho-chi-minh-city" },
+      ];
+
+  for (const item of links) {
+    const idx = text.indexOf(item.key);
+    if (idx !== -1) {
+      const before = text.slice(0, idx);
+      const match = text.slice(idx, idx + item.key.length);
+      const after = text.slice(idx + item.key.length);
+      return (
+        <>
+          {renderInlineContent(before, isVi)}
+          <Link href={item.href} className="hcmc-inline-link">
+            {match}
+          </Link>
+          {renderInlineContent(after, isVi)}
+        </>
+      );
+    }
+  }
+
+  return text;
+}
+
+export default function TenBestThingsHCMCPage() {
+  const [lang, setLang] = useState("en");
+  const isVi = lang === "vi";
 
   useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const progress = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(Math.min(100, Math.max(0, progress)));
-      }
+    setLang(getLang());
+    const handleLang = (e) => setLang(e?.detail || getLang());
+    window.addEventListener("vinatap:lang-updated", handleLang);
+    window.addEventListener("storage", handleLang);
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLang);
+      window.removeEventListener("storage", handleLang);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("vinatap_guide_bookmarks");
-      if (saved) setBookmarkedIds(JSON.parse(saved));
-    } catch (e) {}
-  }, []);
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const menuTimeoutRef = useRef(null);
 
-  const showToast = (msg) => {
-    setToastMessage(msg);
-    setToastVisible(true);
-    setTimeout(() => {
-      setToastVisible(false);
-    }, 2800);
+  const handleMouseEnter = (menuKey) => {
+    if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
+    setActiveMenu(menuKey);
   };
 
-  const toggleBookmark = (id) => {
-    let next;
-    if (bookmarkedIds.includes(id)) {
-      next = bookmarkedIds.filter((item) => item !== id);
-      showToast("Đã bỏ lưu khỏi Sổ tay VinaTap");
-    } else {
-      next = [...bookmarkedIds, id];
-      showToast("Đã lưu vào Sổ tay hành trình VinaTap! ✨");
-    }
-    setBookmarkedIds(next);
-    try {
-      localStorage.setItem("vinatap_guide_bookmarks", JSON.stringify(next));
-    } catch (e) {}
+  const handleMouseLeave = () => {
+    menuTimeoutRef.current = setTimeout(() => {
+      setActiveMenu(null);
+    }, 250);
   };
-
-  const copyAddress = (address) => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(address);
-      showToast("Đã sao chép địa chỉ vào bộ nhớ tạm! 📋");
-    }
-  };
-
-  const filteredItems =
-    activeCategory === "all"
-      ? HCMC_GUIDE_ITEMS
-      : HCMC_GUIDE_ITEMS.filter((item) => item.categoryKey === activeCategory);
 
   return (
-    <div className="guide-page-wrapper">
-      {/* ─── THANH TIẾN TRÌNH ĐỌC ─── */}
-      <div
-        className="guide-progress-bar"
-        style={{ width: `${scrollProgress}%` }}
-      />
-
-      {/* ─── TOP NAVBAR ─── */}
-      <nav className="guide-nav" aria-label="Điều hướng cẩm nang">
-        <div className="guide-nav__inner">
-          <div className="guide-nav__left">
-            <Logo size={28} />
-            <div className="guide-breadcrumb">
-              <Link href="/">Trang chủ</Link>
-              <ChevronRight size={13} />
-              <Link href="/#destinations">Điểm đến</Link>
-              <ChevronRight size={13} />
-              <Link href="/province/ho-chi-minh">TP. Hồ Chí Minh</Link>
-              <ChevronRight size={13} />
-              <span className="guide-breadcrumb__curr">
-                10 điều tuyệt nhất nên làm
-              </span>
-            </div>
-          </div>
-          <div className="guide-nav__right" />
-        </div>
-      </nav>
-
-      {/* ─── NỘI DUNG CHÍNH ─── */}
-      <main className="guide-container">
-        {/* TIÊU ĐỀ & METADATA */}
-        <header className="guide-header">
-          <div className="guide-badge-pill">
-            <Compass size={14} />
-            <span>CẨM NANG ĐẶC BIỆT • VINATAP SIGNATURE EDITORIAL</span>
-          </div>
-
-          <h1 className="guide-title">
-            10 Điều Tuyệt Nhất Nên Làm &amp; Trải Nghiệm Tại TP. Hồ Chí Minh
-          </h1>
-
-          <p className="guide-subtitle">
-            Từ di sản lịch sử hào hùng, những góc cà phê bệt hoài niệm đến các
-            tòa cao ốc chọc trời và hẻm ẩm thực đêm rực rỡ — cẩm nang chọn lọc
-            giúp bạn chạm vào trọn vẹn linh hồn của “Hòn ngọc Viễn Đông”.
-          </p>
-
-          <div className="guide-meta-bar">
-            <div className="guide-author-box">
-              <div className="guide-author-avatar">VT</div>
-              <div>
-                <div className="guide-author-name">
-                  <span>Ban Biên Tập VinaTap</span>
-                  <Sparkles size={14} className="guide-verified-badge" />
-                </div>
-                <div className="guide-author-role">
-                  Chuyên trang Văn hóa &amp; Du lịch Bản địa Việt Nam
-                </div>
-              </div>
-            </div>
-
-            <div className="guide-meta-stats">
-              <span className="guide-meta-item">
-                <Calendar size={14} />
-                <span>28 Tháng 9, 2026</span>
-              </span>
-              <span className="guide-meta-item">
-                <Clock size={14} />
-                <span>8 phút đọc</span>
-              </span>
-              <span className="guide-meta-item">
-                <Eye size={14} />
-                <span>128.450 lượt xem</span>
-              </span>
-            </div>
-
-            <div className="guide-header-actions">
-              <button
-                type="button"
-                className={`guide-action-btn ${
-                  bookmarkedIds.length > 0 ? "active" : ""
-                }`}
-                onClick={() =>
-                  showToast(
-                    `Bạn đã lưu ${bookmarkedIds.length} địa điểm trong Sổ tay VinaTap`,
-                  )
-                }
-              >
-                <Bookmark size={14} />
-                <span>Đã lưu ({bookmarkedIds.length})</span>
-              </button>
-              <button
-                type="button"
-                className="guide-action-btn"
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: "10 Điều Tuyệt Nhất Nên Làm ở TP.HCM - VinaTap",
-                      url: window.location.href,
-                    });
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    showToast("Đã sao chép link bài viết! 🔗");
-                  }
-                }}
-              >
-                <Share2 size={14} />
-                <span>Chia sẻ</span>
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* ─── BANNER LIÊN KẾT NHANH SANG BÀI ẨM THỰC ─── */}
-        <div
-          style={{
-            background: "linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%)",
-            border: "1px solid #99f6e4",
-            borderRadius: "12px",
-            padding: "14px 18px",
-            margin: "18px 0 24px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "12px",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <Utensils size={20} color="#0d9488" />
-            <span
-              style={{ fontSize: "14px", color: "#0f766e", fontWeight: 600 }}
-            >
-              Khám phá thêm: Bạn đang tìm kiếm những món ăn đường phố ngon nhất
-              Sài Gòn?
-            </span>
-          </div>
-          <Link
-            href="/guide/12-must-try-foods-in-ho-chi-minh-city"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "6px 14px",
-              background: "#0d9488",
-              color: "#ffffff",
-              borderRadius: "8px",
-              fontSize: "13px",
-              fontWeight: 700,
-              textDecoration: "none",
-            }}
-          >
-            <span>12 Món Ăn Đường Phố Phải Thử</span>
-            <ArrowRight size={14} />
+    <div className="hcmc-page-wrap">
+      {/* ─── STICKY PROMO BANNER ─── */}
+      <div className="vnn-promo-banner">
+        <div className="vnn-promo-banner__content">
+          <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt">
+            <picture>
+              <source
+                media="(max-width: 768px)"
+                srcSet="/guide/hcmc/Vietnamnomad-header-banner-mobile-2026.jpg"
+              />
+              <img
+                src="/guide/hcmc/Vietnamnomad-header-banner-2026.jpg"
+                alt="Free AI Travel Assistant - AI Companion"
+                className="vnn-promo-banner__img"
+              />
+            </picture>
           </Link>
         </div>
-
-        {/* ─── HERO BANNER ─── */}
-        <section className="guide-hero-banner">
-          <div className="guide-hero-img-wrap">
-            <img
-              src="/guide/hcmc/Things-to-do-in-Ho-Chi-Minh-City-Reunification-Palace-Vietnamnomad.jpg"
-              alt="Khám phá TP. Hồ Chí Minh"
-              className="guide-hero-img"
-            />
-            <div className="guide-hero-overlay">
-              <div className="guide-hero-chips">
-                <span className="guide-hero-chip">Top 10 Trải Nghiệm</span>
-                <span className="guide-hero-chip">
-                  Địa chỉ thật &amp; Giá chuẩn
-                </span>
-                <span className="guide-hero-chip">
-                  Hỗ trợ dẫn đường Google Maps
-                </span>
-              </div>
-              <p className="guide-hero-caption">
-                TP. Hồ Chí Minh – Nơi giao thoa ngoạn mục giữa dòng chảy lịch sử
-                trăm năm và nhịp đập đô thị hiện đại không bao giờ ngủ.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── DẪN NHẬP (LEAD STORY) ─── */}
-        <section className="guide-lead-box">
-          <p>
-            <strong>Thành phố Hồ Chí Minh</strong> có một nguồn năng lượng sống
-            mãnh liệt mà bạn khó tìm thấy ở bất cứ nơi nào khác. Đó là âm thanh
-            rộn rã của tiếng xe cộ buổi sớm, là hương thơm nồng nàn từ những xe
-            đẩy bánh mì góc phố, là sự kiêu hãnh của những tòa tháp kính bên
-            cạnh những công trình thuộc địa cổ kính. Dù bạn chỉ có 24 giờ quá
-            cảnh hay một tuần thảnh thơi,{" "}
-            <strong>10 trải nghiệm đặc sắc</strong> dưới đây giúp bạn cảm nhận
-            sâu sắc nhất từng nhịp thở của thành phố.
-          </p>
-        </section>
-
-        {/* ─── THANH LỌC DANH MỤC ─── */}
-        <section className="guide-quicknav-sticky">
-          <div className="guide-quicknav-inner">
-            {THINGS_CATEGORIES.map((cat) => {
-              const Icon = cat.icon;
-              const isActive = activeCategory === cat.key;
-              return (
-                <button
-                  key={cat.key}
-                  type="button"
-                  className={`guide-filter-pill ${isActive ? "active" : ""}`}
-                  onClick={() => setActiveCategory(cat.key)}
-                >
-                  <Icon size={14} />
-                  <span>{cat.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ─── DANH SÁCH 10 TRẢI NGHIỆM ─── */}
-        <section className="guide-cards-list">
-          {filteredItems.map((item) => {
-            const isSaved = bookmarkedIds.includes(item.id);
-            return (
-              <article
-                key={item.id}
-                id={`item-${item.id}`}
-                className="guide-card"
-              >
-                <div className="guide-card__grid">
-                  {/* Cột ảnh */}
-                  <div
-                    className="guide-card__media"
-                    onClick={() => setLightboxItem(item)}
-                    style={{ cursor: "pointer" }}
-                    title="Nhấp để xem ảnh phóng to"
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      className="guide-card__img"
-                    />
-                    <div className="guide-card__number-badge">#{item.num}</div>
-                    <div className="guide-card__category-badge">
-                      <Sparkles size={12} color="#00c2cb" />
-                      <span>{item.category}</span>
-                    </div>
-                  </div>
-
-                  {/* Cột nội dung */}
-                  <div className="guide-card__body">
-                    <div>
-                      <h2 className="guide-card__title">
-                        {item.num}. {item.title}
-                      </h2>
-                      <div className="guide-card__subtitle">
-                        {item.subTitle}
-                      </div>
-                      <p className="guide-card__desc">{item.desc}</p>
-
-                      {/* Box Mẹo bản địa */}
-                      <div className="guide-tip-box">
-                        <Info size={17} className="guide-tip-icon" />
-                        <div className="guide-tip-text">
-                          <strong>Mẹo VinaTap:</strong> {item.tip}
-                        </div>
-                      </div>
-
-                      {/* Bảng thông tin nhanh */}
-                      <div className="guide-card__facts">
-                        <div className="guide-fact-item">
-                          <CreditCard size={15} />
-                          <div>
-                            <div>Chi phí tham khảo:</div>
-                            <span className="guide-fact-val">{item.cost}</span>
-                          </div>
-                        </div>
-                        <div className="guide-fact-item">
-                          <Clock size={15} />
-                          <div>
-                            <div>Thời gian hoạt động:</div>
-                            <span className="guide-fact-val">{item.hours}</span>
-                          </div>
-                        </div>
-                        <div
-                          className="guide-fact-item"
-                          style={{ gridColumn: "1 / -1" }}
-                        >
-                          <MapPin size={15} />
-                          <div>
-                            <div>Địa chỉ gợi ý:</div>
-                            <span className="guide-fact-val">
-                              {item.address}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Khung ưu đãi đặt vé / tour trực tuyến (Affiliate) */}
-                      {item.affiliate && (
-                        <div className="guide-affiliate-deal">
-                          <div className="guide-affiliate-deal__content">
-                            <div className="guide-affiliate-deal__top">
-                              <span className="guide-affiliate-deal__badge">
-                                <Ticket size={12} />
-                                <span>
-                                  {item.affiliate.badge || "Ưu đãi trực tuyến"}
-                                </span>
-                              </span>
-                              <span className="guide-affiliate-deal__partner">
-                                Đối tác tin cậy:{" "}
-                                <strong>
-                                  {item.affiliate.partner || "Klook"}
-                                </strong>
-                              </span>
-                            </div>
-                            <div className="guide-affiliate-deal__title">
-                              {item.affiliate.title}
-                            </div>
-                            <div className="guide-affiliate-deal__note">
-                              <Zap size={13} color="#ff5722" />
-                              <span>{item.affiliate.note}</span>
-                            </div>
-                          </div>
-                          <a
-                            href={item.affiliate.url}
-                            target="_blank"
-                            rel="noopener noreferrer sponsored"
-                            className="guide-affiliate-deal__cta"
-                          >
-                            <span>
-                              {item.affiliate.ctaText || "Đặt vé online ngay"}
-                            </span>
-                            <ArrowRight size={15} />
-                          </a>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Footer hàng nút hành động */}
-                    <div className="guide-card__footer">
-                      <div className="guide-card__address-group">
-                        <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                            item.mapsQuery || item.address,
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="guide-btn-action"
-                        >
-                          <ExternalLink size={14} />
-                          <span>Mở Google Maps</span>
-                        </a>
-
-                        <button
-                          type="button"
-                          className="guide-btn-copy"
-                          onClick={() => copyAddress(item.address)}
-                          title="Sao chép địa chỉ"
-                        >
-                          <Copy size={13} />
-                          <span>Copy địa chỉ</span>
-                        </button>
-                      </div>
-
-                      <button
-                        type="button"
-                        className={`guide-card__save-btn ${isSaved ? "saved" : ""}`}
-                        onClick={() => toggleBookmark(item.id)}
-                      >
-                        <Bookmark size={14} />
-                        <span>{isSaved ? "Đã lưu" : "Lưu vào sổ tay"}</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-        </section>
-
-        {/* ─── LIÊN KẾT BÀI VIẾT LIÊN QUAN ─── */}
-        <footer className="guide-article-footer">
-          <div>
-            <div className="guide-badge-pill">
-              <Compass size={13} />
-              <span>KHÁM PHÁ TIẾP TỤC CÙNG VINATAP</span>
-            </div>
-            <h3
-              style={{
-                fontSize: "1.45rem",
-                fontWeight: 800,
-                margin: "0.5rem 0 1rem",
-              }}
-            >
-              Cẩm Nang Du Lịch Các Tỉnh Thành Nổi Bật Khác
-            </h3>
-          </div>
-
-          <div className="guide-related-grid">
-            <Link
-              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
-              className="guide-related-card"
-            >
-              <img
-                src="/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Com-Tam.jpg"
-                alt="12 món ăn đường phố Sài Gòn"
-                className="guide-related-img"
-              />
-              <div className="guide-related-content">
-                <div className="guide-related-tag">Ẩm Thực Sài Gòn</div>
-                <div className="guide-related-title">
-                  12 Món Ăn Đường Phố Phải Thử Ở Sài Gòn Kèm Địa Chỉ Quán Ngon
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/guide/the-complete-guide-to-vietnam"
-              className="guide-related-card"
-            >
-              <img
-                src="/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg"
-                alt="Cẩm nang du lịch Việt Nam"
-                className="guide-related-img"
-              />
-              <div className="guide-related-content">
-                <div className="guide-related-tag">Toàn Diện 34 Tỉnh</div>
-                <div className="guide-related-title">
-                  Cẩm Nang Toàn Diện Du Lịch Việt Nam 2026: Bản Đồ, Visa &amp;
-                  Chi Phí
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
-              className="guide-related-card"
-            >
-              <img
-                src="/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg"
-                alt="15 Điểm Đến Tuyệt Nhất Việt Nam"
-                className="guide-related-img"
-              />
-              <div className="guide-related-content">
-                <div className="guide-related-tag">Bình Chọn 2026</div>
-                <div className="guide-related-title">
-                  15 Điểm Đến Tuyệt Nhất Việt Nam Năm 2026 Theo Du Khách
-                </div>
-              </div>
-            </Link>
-          </div>
-        </footer>
-      </main>
-
-      {/* ─── TOAST THÔNG BÁO ─── */}
-      <div className={`guide-toast ${toastVisible ? "show" : ""}`}>
-        <Check size={18} color="#00c2cb" />
-        <span>{toastMessage}</span>
       </div>
 
-      {/* ─── LIGHTBOX MODAL ─── */}
-      {lightboxItem && (
-        <div
-          className="guide-lightbox open"
-          onClick={() => setLightboxItem(null)}
-        >
+      {/* ─── EDITORIAL HEADER & NAVBAR ─── */}
+      <header className="vnn-navbar">
+        <div className="vnn-navbar__inner">
+          <div className="vnn-navbar__logo">
+            <Logo />
+          </div>
+
+          <ul className="vnn-navbar__menu">
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMouseEnter("inspired")}
+            >
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "inspired" ? "is-active" : ""}`}
+              >
+                <span>{isVi ? "CẢM HỨNG" : "BE INSPIRED"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
+              </button>
+            </li>
+
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMouseEnter("destinations")}
+            >
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "destinations" ? "is-active" : ""}`}
+              >
+                <span>{isVi ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
+              </button>
+            </li>
+
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMouseEnter("things")}
+            >
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "things" ? "is-active" : ""}`}
+              >
+                <span>{isVi ? "TRẢI NGHIỆM" : "THINGS TO DO"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
+              </button>
+            </li>
+
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMouseEnter("eat")}
+            >
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "eat" ? "is-active" : ""}`}
+              >
+                <span>{isVi ? "ẨM THỰC" : "EAT & DRINK"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
+              </button>
+            </li>
+
+            <li
+              className="vnn-navbar__item"
+              onMouseEnter={() => handleMouseEnter("itineraries")}
+            >
+              <button
+                type="button"
+                className={`vnn-navbar__link ${activeMenu === "itineraries" ? "is-active" : ""}`}
+              >
+                <span>{isVi ? "LỊCH TRÌNH" : "ITINERARIES"}</span>
+                <ChevronDown size={14} className="vnn-navbar__chevron" />
+              </button>
+            </li>
+          </ul>
+
+          <div className="vnn-navbar__actions">
+            <HeaderSearch />
+            <LanguageSwitch variant="navbar" />
+          </div>
+        </div>
+
+        {/* ─── HOVER MEGAMENU CONTAINER ─── */}
+        {activeMenu && MEGA_MENUS_DATA[activeMenu] && (
           <div
-            className="guide-lightbox__content"
+            className="vnn-megamenu"
+            onMouseEnter={() => {
+              if (menuTimeoutRef.current) clearTimeout(menuTimeoutRef.current);
+            }}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="vnn-megamenu__grid">
+              {MEGA_MENUS_DATA[activeMenu].items.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.link}
+                  className="vnn-megamenu__card"
+                  onClick={() => setActiveMenu(null)}
+                >
+                  <div className="vnn-megamenu__thumb">
+                    <img
+                      src={item.img}
+                      alt={isVi && item.titleVi ? item.titleVi : item.title}
+                      className="vnn-megamenu__img"
+                      loading="lazy"
+                    />
+                    {item.badge && (
+                      <span className="vnn-megamenu__badge">{item.badge}</span>
+                    )}
+                  </div>
+                  <div className="vnn-megamenu__content">
+                    <h4 className="vnn-megamenu__title">
+                      {isVi && item.titleVi ? item.titleVi : item.title}
+                    </h4>
+                    <span className="vnn-megamenu__date">
+                      {isVi && item.dateVi ? item.dateVi : item.date}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* ─── SEARCH MODAL OVERLAY ─── */}
+      {searchOpen && (
+        <div className="vnn-search-modal" onClick={() => setSearchOpen(false)}>
+          <div
+            className="vnn-search-modal__box"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              type="button"
-              className="guide-lightbox__close"
-              onClick={() => setLightboxItem(null)}
-              aria-label="Đóng"
-            >
-              <X size={20} />
-            </button>
-            <img
-              src={lightboxItem.image}
-              alt={lightboxItem.title}
-              className="guide-lightbox__img"
-            />
-            <div className="guide-lightbox__meta">
-              <h3
-                style={{
-                  fontSize: "1.2rem",
-                  fontWeight: 700,
-                  marginBottom: "4px",
-                }}
-              >
-                #{lightboxItem.num}. {lightboxItem.title}
+            <div className="vnn-search-modal__header">
+              <h3 className="vnn-search-modal__title">
+                {isVi ? "Tìm kiếm cẩm nang du lịch" : "Search Vietnam Travel Guide"}
               </h3>
-              <p style={{ fontSize: "0.9rem", color: "#94a3b8" }}>
-                {lightboxItem.address}
-              </p>
+              <button
+                type="button"
+                className="vnn-search-modal__close"
+                onClick={() => setSearchOpen(false)}
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="vnn-search-modal__body">
+              <div className="vnn-search-input-wrap">
+                <Search size={18} className="vnn-search-icon" />
+                <input
+                  type="text"
+                  placeholder={
+                    isVi
+                      ? "Nhập tên điểm đến (Hồ Chí Minh, Hà Nội, Hội An...)..."
+                      : "Search destination (Ho Chi Minh City, Hanoi, Hoi An...)..."
+                  }
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                />
+              </div>
             </div>
           </div>
         </div>
       )}
-      {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
-      <ProvinceChatbot
-        province={{ name: "TP. Hồ Chí Minh", slug: "ho-chi-minh" }}
-      />
+
+      {/* ─── HERO SECTION (Screenshot 1) ─── */}
+      <section
+        className="hcmc-hero"
+        style={{
+          backgroundImage: "url('/guide/hcmc/10-best-things-hcmc-hd.jpg')",
+        }}
+      >
+        <div className="hcmc-hero__overlay" />
+        <div className="hcmc-hero__content">
+          <div className="hcmc-hero__badges">
+            <span className="hcmc-badge">
+              {isVi ? "BÀI VIẾT" : "ARTICLES"}
+            </span>
+            <span className="hcmc-badge">
+              {isVi ? "TP. HỒ CHÍ MINH" : "HO CHI MINH CITY"}
+            </span>
+            <span className="hcmc-badge">
+              {isVi ? "TRẢI NGHIỆM" : "THINGS TO DO"}
+            </span>
+          </div>
+
+          <h1 className="hcmc-hero__title">
+            {isVi
+              ? "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh"
+              : "10 best things to do in Ho Chi Minh City"}
+          </h1>
+
+          <p className="hcmc-hero__meta">
+            {isVi
+              ? "Bởi Welcome to Vietnam   5 Tháng 5, 2025"
+              : "By Welcome to Vietnam   May 5, 2025"}
+          </p>
+        </div>
+      </section>
+
+      {/* ─── MAIN CONTENT CONTAINER ─── */}
+      <main className="hcmc-container">
+        {/* ACTION BUTTON (Screenshot 1) */}
+        <div className="hcmc-action-wrap">
+          <Link
+            href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+            className="hcmc-create-trip-btn"
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>
+              {isVi
+                ? "Tạo chuyến du lịch Việt Nam chỉ trong vài giây"
+                : "Create your Vietnam trip in seconds"}
+            </span>
+          </Link>
+        </div>
+
+        {/* INTRO PARAGRAPH (Screenshots 1 & 2) */}
+        <p className="hcmc-intro">
+          {isVi
+            ? "TP. Hồ Chí Minh, thường được người dân địa phương gọi thân thương là Sài Gòn, là sự giao thoa đầy lôi cuốn giữa nét cổ kính và hiện đại. Nơi đây kiến trúc thuộc địa Pháp tráng lệ đứng cạnh những tòa nhà chọc trời vút cao, và những ngôi chùa cổ kính ẩn mình giữa những quán cà phê thời thượng. Nếu bạn đang lên kế hoạch ghé thăm, dưới đây là 10 trải nghiệm tuyệt vời nhất mang đến cho bạn hương vị chân thực của thành phố sôi động, không ngừng chuyển mình này."
+            : "Ho Chi Minh City, still fondly called Saigon by locals, is an exciting fusion of the old and new. It's where French colonial architecture stands beside soaring skyscrapers and ancient temples are nestled among trendy cafés. If you're planning a visit, here are the top 10 things to do that offer an authentic taste of this vibrant, ever-moving city."}
+        </p>
+
+        {/* ─── 10 ITEMS LIST (Screenshots 2, 3, 4, 5) ─── */}
+        <div className="hcmc-list">
+          {HCMC_ITEMS.map((item) => (
+            <article key={item.id} id={item.id} className="hcmc-item">
+              <h2 className="hcmc-item__title">
+                {isVi ? item.titleVi : item.titleEn}
+              </h2>
+
+              <div className="hcmc-item__layout">
+                {/* Left Column: Image + Caption */}
+                <div className="hcmc-item__media">
+                  <div className="hcmc-item__img-wrap">
+                    <img
+                      src={item.img}
+                      alt={isVi ? item.captionVi : item.captionEn}
+                      className="hcmc-item__img"
+                      loading="lazy"
+                    />
+                  </div>
+                  <figcaption className="hcmc-item__caption">
+                    {isVi ? item.captionVi : item.captionEn}
+                  </figcaption>
+                </div>
+
+                {/* Right Column: Paragraphs + Tip */}
+                <div className="hcmc-item__body">
+                  {(isVi ? item.paragraphsVi : item.paragraphsEn).map(
+                    (p, pIdx) => (
+                      <p key={pIdx}>{renderInlineContent(p, isVi)}</p>
+                    )
+                  )}
+
+                  <p className="hcmc-item__tip">
+                    <strong>{isVi ? "Tip: " : "Tip: "}</strong>
+                    {isVi ? item.tipVi : item.tipEn}
+                  </p>
+
+                  {item.closingEn && (
+                    <p style={{ marginTop: "16px" }}>
+                      {isVi ? item.closingVi : item.closingEn}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* ─── RELATED GUIDES SECTION ─── */}
+        <section className="hcmc-related-section">
+          <h3 className="hcmc-related-title">
+            {isVi ? "Cẩm nang liên quan" : "Related Guides"}
+          </h3>
+          <div className="hcmc-related-grid">
+            <Link
+              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+              className="hcmc-related-card"
+            >
+              <div className="hcmc-related-thumb">
+                <img
+                  src="/guide/megamenu/eat-2-hcmc.jpg"
+                  alt="12 must-try foods in Ho Chi Minh City"
+                  className="hcmc-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="hcmc-related-info">
+                <h4 className="hcmc-related-card-title">
+                  {isVi
+                    ? "12 món ngon không thể bỏ lỡ tại TP. Hồ Chí Minh"
+                    : "12 must-try foods in Ho Chi Minh City"}
+                </h4>
+                <span className="hcmc-related-card-date">
+                  {isVi ? "15 Tháng 3, 2026" : "March 15, 2026"}
+                </span>
+              </div>
+            </Link>
+
+            <Link
+              href="/guide/3-week-vietnam-itinerary"
+              className="hcmc-related-card"
+            >
+              <div className="hcmc-related-thumb">
+                <img
+                  src="/guide/megamenu/todo-1-3week.jpg"
+                  alt="3-week Vietnam Itinerary"
+                  className="hcmc-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="hcmc-related-info">
+                <h4 className="hcmc-related-card-title">
+                  {isVi
+                    ? "Lịch trình 3 tuần khám phá Việt Nam"
+                    : "3-week Vietnam Itinerary"}
+                </h4>
+                <span className="hcmc-related-card-date">
+                  {isVi ? "10 Tháng 5, 2026" : "May 10, 2026"}
+                </span>
+              </div>
+            </Link>
+
+            <Link
+              href="/guide/20-best-things-to-do-in-vietnam"
+              className="hcmc-related-card"
+            >
+              <div className="hcmc-related-thumb">
+                <img
+                  src="/guide/megamenu/todo-4-20things.jpg"
+                  alt="20 Best Things to Do in Vietnam"
+                  className="hcmc-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="hcmc-related-info">
+                <h4 className="hcmc-related-card-title">
+                  {isVi
+                    ? "20 trải nghiệm tuyệt nhất tại Việt Nam"
+                    : "20 Best Things to Do in Vietnam"}
+                </h4>
+                <span className="hcmc-related-card-date">
+                  {isVi ? "20 Tháng 4, 2026" : "April 20, 2026"}
+                </span>
+              </div>
+            </Link>
+          </div>
+        </section>
+      </main>
+
+      {/* ─── FOOTER BANNER & FOOTER ─── */}
+      <footer className="vnn-footer">
+        <div className="vnn-footer__banner">
+          <picture>
+            <img
+              src="/guide/hcmc/Vietnamnomad-footer-banner-2026.jpg"
+              alt="Vietnam Travel Community"
+              className="vnn-footer__banner-img"
+              loading="lazy"
+            />
+          </picture>
+        </div>
+
+        <div className="vnn-footer__bottom">
+          <div className="vnn-footer__bottom-inner">
+            <p className="vnn-footer__copyright">
+              © 2026 VinaTap • Welcome to Vietnam. All rights reserved.
+            </p>
+            <div className="vnn-footer__socials">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
+                <Facebook size={18} />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+              >
+                <Youtube size={18} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* ─── FLOATING AI COMPANION ─── */}
+      <ProvinceChatbot provinceName="Hồ Chí Minh" />
     </div>
   );
 }
