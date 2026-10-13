@@ -17,7 +17,26 @@ import {
   ExternalLink,
   Compass,
   Activity,
+  DollarSign,
+  Share2,
+  FileText,
+  Search,
+  Sparkles,
+  Layers,
+  MousePointerClick,
+  Link2,
 } from "lucide-react";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+} from "recharts";
 import { analyticsAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminAnalytics.css";
@@ -30,19 +49,38 @@ const TIMEFRAME_OPTIONS = [
 ];
 
 export default function AdminAnalytics() {
+  const [activeTab, setActiveTab] = useState("audience"); // 'audience' | 'content' | 'sources' | 'affiliate'
   const [timeframe, setTimeframe] = useState("7days");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
+
+  // Dữ liệu lượt truy cập
   const [stats, setStats] = useState({
     total_views: 0,
     unique_visitors: 0,
     today_views: 0,
     bot_blocked_count: 0,
     nfc_scans_count: 0,
+    avg_duration_seconds: 0,
+    timeline: [],
     device_stats: [],
+    channel_stats: [],
+    top_pages: [],
     top_provinces: [],
+    top_referrers: [],
+    utm_campaigns: [],
     recent_views: [],
+  });
+
+  // Dữ liệu Affiliate
+  const [affiliateStats, setAffiliateStats] = useState({
+    total_clicks: 0,
+    unique_users: 0,
+    clicks_by_partner: [],
+    top_clicked_links: [],
+    top_pages_with_clicks: [],
+    recent_clicks: [],
   });
 
   useEffect(() => {
@@ -62,11 +100,18 @@ export default function AdminAnalytics() {
       setRefreshing(true);
     }
     try {
-      const res = await analyticsAPI.getStats(timeframe);
-      if (res?.stats) {
-        setStats(res.stats);
-        setLastUpdated(new Date());
+      const [resStats, resAffiliate] = await Promise.all([
+        analyticsAPI.getStats(timeframe).catch(() => ({ stats: null })),
+        analyticsAPI.getAffiliateStats(timeframe).catch(() => ({ stats: null })),
+      ]);
+
+      if (resStats?.stats) {
+        setStats(resStats.stats);
       }
+      if (resAffiliate?.stats) {
+        setAffiliateStats(resAffiliate.stats);
+      }
+      setLastUpdated(new Date());
     } catch (err) {
       console.error("Lỗi nạp thống kê truy cập:", err);
     } finally {
@@ -76,16 +121,21 @@ export default function AdminAnalytics() {
   };
 
   const getDevicePercentage = (type) => {
-    const total = stats.device_stats.reduce((acc, curr) => acc + curr.count, 0);
+    const total = (stats.device_stats || []).reduce(
+      (acc, curr) => acc + curr.count,
+      0,
+    );
     if (!total) return 0;
     const found = stats.device_stats.find((d) => d.device_type === type);
     return found ? Math.round((found.count / total) * 100) : 0;
   };
 
   const mobilePct = getDevicePercentage("mobile");
-  const desktopPct = stats.device_stats.length === 0 ? 0 : 100 - mobilePct;
+  const tabletPct = getDevicePercentage("tablet");
+  const desktopPct =
+    stats.device_stats?.length === 0 ? 0 : Math.max(0, 100 - mobilePct - tabletPct);
 
-  // Format relative or exact time
+  // Format relative time
   const formatTime = (dateStr) => {
     if (!dateStr) return "";
     const d = new Date(dateStr);
@@ -96,30 +146,41 @@ export default function AdminAnalytics() {
     });
   };
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
   return (
     <div className="admin-analytics-container">
-      {/* ─── Header ─── */}
+      {/* ─── HEADER ─────────────────────────────────────────────────── */}
       <div className="admin-analytics-header">
         <div className="admin-analytics-title-group">
           <div className="admin-analytics-badge-pill">
-            <span className="live-dot-pulse" />
-            <span>REALTIME ANALYTICS</span>
+            <span className="live-dot-pulse live-dot-green" />
+            <span>LIVE TRAFFIC & PERFORMANCE</span>
           </div>
-          <h1 className="admin-analytics-title">Thống Kê Lưu Lượng Truy Cập</h1>
+          <h1 className="admin-analytics-title">
+            Thống Kê Số Liệu & Báo Cáo Toàn Diện
+          </h1>
           <p className="admin-analytics-subtitle">
-            Đo lường người dùng thực tế, lượt chạm thẻ NFC &amp; tự động ngăn chặn bot / crawler
+            Theo dõi người xem thực tế, hiệu suất bài viết, kênh giới thiệu và chuyển đổi Affiliate của VinaTap.
           </p>
         </div>
 
         <div className="admin-analytics-actions">
-          {/* Segmented Timeframe Switcher */}
-          <div className="admin-analytics-timeframe-bar" role="tablist">
-            <Calendar size={14} className="timeframe-icon" />
+          {/* Timeframe Pill Filter */}
+          <div className="timeframe-pill-group">
             {TIMEFRAME_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 type="button"
-                className={`timeframe-btn ${timeframe === opt.value ? "is-active" : ""}`}
+                className={`timeframe-pill-btn ${timeframe === opt.value ? "is-active" : ""}`}
                 onClick={() => setTimeframe(opt.value)}
               >
                 {opt.label}
@@ -130,298 +191,603 @@ export default function AdminAnalytics() {
           {/* Refresh Button */}
           <button
             type="button"
-            className={`admin-analytics-btn-reload ${refreshing ? "is-spinning" : ""}`}
-            onClick={() => loadStats(false)}
-            disabled={loading || refreshing}
-            title="Làm mới dữ liệu"
+            className={`admin-analytics-refresh-btn ${refreshing ? "is-spin" : ""}`}
+            onClick={() => loadStats()}
+            title="Làm mới số liệu"
           >
-            <RefreshCw size={15} />
-            <span>{refreshing ? "Đang cập nhật..." : "Tải lại"}</span>
+            <RefreshCw size={16} />
+            <span>{refreshing ? "Đang cập nhật..." : "Làm mới"}</span>
           </button>
         </div>
       </div>
 
-      {/* ─── System Security Notice Bar ─── */}
-      {stats.bot_blocked_count > 0 && (
-        <div className="admin-analytics-notice">
-          <ShieldCheck size={16} className="notice-icon" />
-          <span>
-            Hệ thống VinaTap Bot-Shield đã tự động phân loại và loại trừ{" "}
-            <strong>{stats.bot_blocked_count}</strong> truy vấn spam/crawler để số liệu luôn chính xác 100%.
-          </span>
-          {lastUpdated && (
-            <span className="notice-time">
-              Cập nhật: {lastUpdated.toLocaleTimeString("vi-VN")}
-            </span>
-          )}
-        </div>
-      )}
+      {/* ─── TAB NAVIGATION BAR ────────────────────────────────────── */}
+      <div className="admin-analytics-tab-bar">
+        <button
+          type="button"
+          className={`analytics-tab-btn ${activeTab === "audience" ? "is-active" : ""}`}
+          onClick={() => setActiveTab("audience")}
+        >
+          <Users size={16} />
+          <span>Thống Kê Người Xem</span>
+        </button>
+
+        <button
+          type="button"
+          className={`analytics-tab-btn ${activeTab === "content" ? "is-active" : ""}`}
+          onClick={() => setActiveTab("content")}
+        >
+          <FileText size={16} />
+          <span>Thống Kê Nội Dung</span>
+        </button>
+
+        <button
+          type="button"
+          className={`analytics-tab-btn ${activeTab === "sources" ? "is-active" : ""}`}
+          onClick={() => setActiveTab("sources")}
+        >
+          <Share2 size={16} />
+          <span>Nguồn Truy Cập & UTM</span>
+        </button>
+
+        <button
+          type="button"
+          className={`analytics-tab-btn ${activeTab === "affiliate" ? "is-active" : ""}`}
+          onClick={() => setActiveTab("affiliate")}
+        >
+          <MousePointerClick size={16} />
+          <span>Thống Kê Affiliate</span>
+        </button>
+      </div>
 
       {loading ? (
-        <div className="admin-analytics-loader-wrap">
-          <DinoLoader
-            fullScreen={false}
-            size={180}
-            text="Đang phân tích dữ liệu lưu lượng truy cập..."
-            subtext="Đang tổng hợp thiết bị, lượt quét thẻ NFC và danh lam tỉnh thành"
-          />
+        <div style={{ minHeight: "45vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <DinoLoader fullScreen={false} size={200} text="Đang phân tích số liệu..." subtext="Đang tổng hợp dữ liệu lượt xem và kênh nguồn" />
         </div>
       ) : (
         <>
-          {/* ─── 4 Modern High-Impact KPI Cards ─── */}
-          <div className="admin-analytics-kpi-grid">
-            {/* Card 1: Tổng Lượt Xem Trang */}
-            <div className="admin-kpi-modern card-blue">
-              <div className="kpi-top">
-                <div className="kpi-icon-wrap kpi-icon-blue">
-                  <Eye size={22} />
-                </div>
-                <span className="kpi-badge kpi-badge-blue">
-                  +{stats.today_views} hôm nay
-                </span>
-              </div>
-              <div className="kpi-body">
-                <span className="kpi-label">Tổng Lượt Xem Trang</span>
-                <div className="kpi-value-row">
-                  <h2 className="kpi-value">{stats.total_views.toLocaleString("vi-VN")}</h2>
-                  <span className="kpi-unit">views</span>
-                </div>
-                <p className="kpi-desc">Lượt tải trang từ người dùng thực</p>
-              </div>
-            </div>
-
-            {/* Card 2: Khách Độc Nhất (IP Riêng Biệt) */}
-            <div className="admin-kpi-modern card-emerald">
-              <div className="kpi-top">
-                <div className="kpi-icon-wrap kpi-icon-emerald">
-                  <Users size={22} />
-                </div>
-                <span className="kpi-badge kpi-badge-emerald">Unique IP</span>
-              </div>
-              <div className="kpi-body">
-                <span className="kpi-label">Khách Xem Độc Nhất</span>
-                <div className="kpi-value-row">
-                  <h2 className="kpi-value">{stats.unique_visitors.toLocaleString("vi-VN")}</h2>
-                  <span className="kpi-unit">khách</span>
-                </div>
-                <p className="kpi-desc">Thiết bị &amp; địa chỉ IP phân biệt</p>
-              </div>
-            </div>
-
-            {/* Card 3: Tỷ Lệ Thiết Bị (Mobile vs Desktop) */}
-            <div className="admin-kpi-modern card-orange">
-              <div className="kpi-top">
-                <div className="kpi-icon-wrap kpi-icon-orange">
-                  <Smartphone size={22} />
-                </div>
-                <div className="device-pills">
-                  <span className="device-chip chip-mob">📱 {mobilePct}%</span>
-                  <span className="device-chip chip-pc">💻 {desktopPct}%</span>
-                </div>
-              </div>
-              <div className="kpi-body">
-                <span className="kpi-label">Tỷ Lệ Mobile / Desktop</span>
-                {/* Visual Ratio Progress Bar */}
-                <div className="device-ratio-track" title={`Mobile: ${mobilePct}% | Desktop: ${desktopPct}%`}>
-                  <div
-                    className="device-ratio-bar mobile-fill"
-                    style={{ width: `${Math.max(mobilePct, 2)}%` }}
-                  />
-                  <div
-                    className="device-ratio-bar desktop-fill"
-                    style={{ width: `${Math.max(desktopPct, 2)}%` }}
-                  />
-                </div>
-                <div className="device-legend-row">
-                  <span className="legend-item text-mob">
-                    <span className="legend-dot dot-mob" /> Mobile: {mobilePct}%
-                  </span>
-                  <span className="legend-item text-pc">
-                    <span className="legend-dot dot-pc" /> Desktop: {desktopPct}%
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 4: Lượt Quét Thẻ NFC */}
-            <div className="admin-kpi-modern card-purple">
-              <div className="kpi-top">
-                <div className="kpi-icon-wrap kpi-icon-purple">
-                  <Radio size={22} />
-                </div>
-                <span className="kpi-badge kpi-badge-purple">Thẻ Vật Lý</span>
-              </div>
-              <div className="kpi-body">
-                <span className="kpi-label">Lượt Quét Thẻ NFC</span>
-                <div className="kpi-value-row">
-                  <h2 className="kpi-value">{(stats.nfc_scans_count || 0).toLocaleString("vi-VN")}</h2>
-                  <span className="kpi-unit">chạm</span>
-                </div>
-                <p className="kpi-desc">Quét chip NFC mở khóa kỷ niệm du lịch</p>
-              </div>
-            </div>
-          </div>
-
-          {/* ─── 2-Column Responsive Dashboard Layout ─── */}
-          <div className="admin-analytics-layout">
-            {/* Cột Trái: Top 10 Tỉnh Thành Được Quan Tâm Nhất */}
-            <div className="admin-analytics-card">
-              <div className="admin-analytics-card-header">
-                <div className="card-header-left">
-                  <div className="card-header-icon-box">
-                    <MapPin size={18} />
+          {/* ════════════════════════════════════════════════════════════════
+              TAB 1: THỐNG KÊ NGƯỜI XEM (AUDIENCE)
+             ════════════════════════════════════════════════════════════════ */}
+          {activeTab === "audience" && (
+            <div className="analytics-tab-content">
+              {/* KPI Cards */}
+              <div className="analytics-kpi-grid">
+                <div className="analytics-kpi-card kpi-card-cyan">
+                  <div className="kpi-card-header">
+                    <span className="kpi-card-label">Tổng lượt xem trang</span>
+                    <div className="kpi-card-icon-wrap">
+                      <Eye size={18} />
+                    </div>
                   </div>
-                  <div>
-                    <h3>Top 10 Tỉnh Thành Được Xem Nhiều Nhất</h3>
-                    <p className="card-header-sub">Xu hướng điểm đến hấp dẫn du khách</p>
+                  <div className="kpi-card-value">{stats.total_views.toLocaleString("vi-VN")}</div>
+                  <div className="kpi-card-footer">
+                    <span className="kpi-trend-pill is-up">
+                      <TrendingUp size={12} /> Lượt xem thực
+                    </span>
+                    <span className="kpi-hint">Đã loại trừ bot ngầm</span>
                   </div>
                 </div>
-                <span className="admin-analytics-pill-hot">
-                  <TrendingUp size={13} /> HOT DESTINATIONS
-                </span>
+
+                <div className="analytics-kpi-card kpi-card-blue">
+                  <div className="kpi-card-header">
+                    <span className="kpi-card-label">Khách truy cập (Unique IP)</span>
+                    <div className="kpi-card-icon-wrap">
+                      <Users size={18} />
+                    </div>
+                  </div>
+                  <div className="kpi-card-value">{stats.unique_visitors.toLocaleString("vi-VN")}</div>
+                  <div className="kpi-card-footer">
+                    <span className="kpi-hint">Người dùng riêng biệt</span>
+                  </div>
+                </div>
+
+                <div className="analytics-kpi-card kpi-card-amber">
+                  <div className="kpi-card-header">
+                    <span className="kpi-card-label">Quét thẻ NFC VinaTap</span>
+                    <div className="kpi-card-icon-wrap">
+                      <Radio size={18} />
+                    </div>
+                  </div>
+                  <div className="kpi-card-value">{stats.nfc_scans_count.toLocaleString("vi-VN")}</div>
+                  <div className="kpi-card-footer">
+                    <span className="kpi-hint">Từ cổng chạm thẻ /t/[token]</span>
+                  </div>
+                </div>
+
+                <div className="analytics-kpi-card kpi-card-emerald">
+                  <div className="kpi-card-header">
+                    <span className="kpi-card-label">Xem trong ngày hôm nay</span>
+                    <div className="kpi-card-icon-wrap">
+                      <Calendar size={18} />
+                    </div>
+                  </div>
+                  <div className="kpi-card-value">{stats.today_views.toLocaleString("vi-VN")}</div>
+                  <div className="kpi-card-footer">
+                    <span className="kpi-hint">Cập nhật thời gian thực</span>
+                  </div>
+                </div>
               </div>
 
-              {stats.top_provinces.length === 0 ? (
-                <div className="admin-analytics-empty-box">
-                  <div className="empty-icon-circle">
-                    <Compass size={32} />
+              {/* Biểu đồ xu hướng thời gian */}
+              {stats.timeline && stats.timeline.length > 0 && (
+                <div className="analytics-chart-panel">
+                  <div className="chart-panel-header">
+                    <div>
+                      <h3 className="chart-panel-title">Biểu Đồ Xu Hướng Lượt Xem</h3>
+                      <p className="chart-panel-subtitle">Số lượt xem trang và số lượng khách truy cập theo thời gian</p>
+                    </div>
                   </div>
-                  <h4>Chưa ghi nhận lượt xem tỉnh thành</h4>
-                  <p>Khi du khách ghé thăm cẩm nang các tỉnh, thứ hạng sẽ tự động hiển thị tại đây.</p>
-                  <Link href="/admin/provinces" className="btn-explore-provinces">
-                    <span>Xem danh sách 34 tỉnh thành</span>
-                    <ExternalLink size={13} />
-                  </Link>
+                  <div className="chart-panel-body" style={{ height: "280px" }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={stats.timeline}>
+                        <defs>
+                          <linearGradient id="viewsGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#00c2cb" stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor="#00c2cb" stopOpacity={0}/>
+                          </linearGradient>
+                          <linearGradient id="visitorsGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#2563eb" stopOpacity={0.6}/>
+                            <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                        <XAxis dataKey="time_label" stroke="#94a3b8" fontSize={12} />
+                        <YAxis stroke="#94a3b8" fontSize={12} />
+                        <Tooltip
+                          contentStyle={{
+                            background: "#0f172a",
+                            color: "#fff",
+                            borderRadius: "8px",
+                            border: "none",
+                            fontSize: "12px",
+                          }}
+                        />
+                        <Area type="monotone" dataKey="views" name="Lượt xem" stroke="#00c2cb" strokeWidth={2.5} fillOpacity={1} fill="url(#viewsGrad)" />
+                        <Area type="monotone" dataKey="visitors" name="Khách riêng biệt" stroke="#2563eb" strokeWidth={2} fillOpacity={1} fill="url(#visitorsGrad)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
-              ) : (
-                <div className="admin-analytics-provinces-list">
-                  {stats.top_provinces.map((prov, index) => {
-                    const pct = Math.round(
-                      (prov.view_count / (stats.total_views || 1)) * 100,
-                    );
-                    const rank = index + 1;
-                    const isTop1 = rank === 1;
-                    const isTop2 = rank === 2;
-                    const isTop3 = rank === 3;
+              )}
 
-                    return (
-                      <div key={prov.province_slug} className="admin-analytics-prov-item">
-                        <div
-                          className={`admin-analytics-prov-rank ${
-                            isTop1 ? "rank-1" : isTop2 ? "rank-2" : isTop3 ? "rank-3" : ""
-                          }`}
-                        >
-                          {isTop1 ? "🥇 1" : isTop2 ? "🥈 2" : isTop3 ? "🥉 3" : `#${rank}`}
+              {/* Tỷ lệ thiết bị & Bảo mật */}
+              <div className="analytics-two-col-grid">
+                <div className="analytics-panel-card">
+                  <h3 className="panel-card-title">Phân Bổ Thiết Bị Truy Cập</h3>
+                  <div className="device-progress-list">
+                    <div className="device-progress-item">
+                      <div className="device-progress-header">
+                        <div className="device-progress-name">
+                          <Smartphone size={16} /> <span>Điện thoại di động (Mobile)</span>
                         </div>
-
-                        <div className="admin-analytics-prov-info">
-                          <div className="admin-analytics-prov-name-row">
-                            <Link
-                              href={`/province/${prov.province_slug}`}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="prov-name-link"
-                            >
-                              <span>{prov.province_name || prov.province_slug}</span>
-                              <ExternalLink size={12} className="link-arrow" />
-                            </Link>
-                            <span className="admin-analytics-prov-count">
-                              <strong>{prov.view_count.toLocaleString("vi-VN")}</strong> lượt xem
-                            </span>
-                          </div>
-
-                          <div className="admin-analytics-prov-bar-wrap">
-                            <div
-                              className={`admin-analytics-prov-bar-fill ${
-                                isTop1 ? "fill-gold" : isTop2 ? "fill-silver" : isTop3 ? "fill-bronze" : ""
-                              }`}
-                              style={{ width: `${Math.max(6, pct)}%` }}
-                            />
-                          </div>
-                        </div>
+                        <span className="device-progress-pct">{mobilePct}%</span>
                       </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+                      <div className="device-progress-bar">
+                        <div className="device-progress-fill" style={{ width: `${mobilePct}%`, background: "#00c2cb" }} />
+                      </div>
+                    </div>
 
-            {/* Cột Phải: Nhật Ký Truy Cập Thời Gian Thực (Live Feed) */}
-            <div className="admin-analytics-card">
-              <div className="admin-analytics-card-header">
-                <div className="card-header-left">
-                  <div className="card-header-icon-box card-header-icon-emerald">
-                    <Activity size={18} />
-                  </div>
-                  <div>
-                    <h3>Nhật Ký Truy Cập Người Dùng Thực</h3>
-                    <p className="card-header-sub">Theo dõi từng phiên truy cập mới nhất</p>
+                    <div className="device-progress-item">
+                      <div className="device-progress-header">
+                        <div className="device-progress-name">
+                          <Laptop size={16} /> <span>Máy tính để bàn (Desktop)</span>
+                        </div>
+                        <span className="device-progress-pct">{desktopPct}%</span>
+                      </div>
+                      <div className="device-progress-bar">
+                        <div className="device-progress-fill" style={{ width: `${desktopPct}%`, background: "#2563eb" }} />
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <span className="admin-analytics-badge--green">
-                  <span className="live-dot-pulse live-dot-green" /> Realtime Live
-                </span>
+
+                <div className="analytics-panel-card">
+                  <h3 className="panel-card-title">Lọc Bot Tự Động & An Toàn</h3>
+                  <div className="bot-filter-stat">
+                    <div className="bot-filter-icon">
+                      <ShieldCheck size={28} color="#16a34a" />
+                    </div>
+                    <div>
+                      <div className="bot-filter-num">{stats.bot_blocked_count}</div>
+                      <p className="bot-filter-desc">
+                        Lượt thu thập dữ liệu tự động (Googlebot, Bingbot, web crawlers, AI scraping) đã được hệ thống tách lọc để số liệu hiển thị là 100% người dùng thực.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════
+              TAB 2: THỐNG KÊ NỘI DUNG (CONTENT PERFORMANCE)
+             ════════════════════════════════════════════════════════════════ */}
+          {activeTab === "content" && (
+            <div className="analytics-tab-content">
+              <div className="analytics-two-col-grid">
+                {/* Top Trang / Bài Viết */}
+                <div className="analytics-panel-card">
+                  <div className="panel-card-header-flex">
+                    <h3 className="panel-card-title">Top Bài Viết & Trang Xem Nhiều Nhất</h3>
+                    <Link href="/admin/articles" className="panel-link-action">
+                      Quản lý bài viết ➔
+                    </Link>
+                  </div>
+                  <div className="analytics-table-wrap">
+                    <table className="analytics-table">
+                      <thead>
+                        <tr>
+                          <th>Đường dẫn trang (URL)</th>
+                          <th style={{ textAlign: "right" }}>Lượt xem</th>
+                          <th style={{ textAlign: "right" }}>Khách độc nhất</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {stats.top_pages && stats.top_pages.length > 0 ? (
+                          stats.top_pages.map((p, idx) => (
+                            <tr key={idx}>
+                              <td>
+                                <div className="page-path-cell">
+                                  <span className="page-path-text">{p.page_path}</span>
+                                  <a href={p.page_path} target="_blank" rel="noopener noreferrer" className="page-path-link-btn" title="Xem trang">
+                                    <ExternalLink size={12} />
+                                  </a>
+                                </div>
+                              </td>
+                              <td style={{ textAlign: "right", fontWeight: "600" }}>{p.view_count}</td>
+                              <td style={{ textAlign: "right", color: "#64748b" }}>{p.unique_visitors || "-"}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={3} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                              Chưa có dữ liệu trang xem trong khoảng thời gian này
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Top Tỉnh Thành */}
+                <div className="analytics-panel-card">
+                  <div className="panel-card-header-flex">
+                    <h3 className="panel-card-title">Top Tỉnh Thành Thu Hút</h3>
+                    <Link href="/admin/provinces" className="panel-link-action">
+                      Quản lý tỉnh thành ➔
+                    </Link>
+                  </div>
+                  <div className="analytics-table-wrap">
+                    <table className="analytics-table">
+                      <thead>
+                        <tr>
+                          <th>Tỉnh / Thành phố</th>
+                          <th style={{ textAlign: "right" }}>Lượt quan tâm</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {stats.top_provinces && stats.top_provinces.length > 0 ? (
+                          stats.top_provinces.map((prov, idx) => (
+                            <tr key={idx}>
+                              <td>
+                                <div className="prov-cell">
+                                  <MapPin size={14} color="#00c2cb" />
+                                  <span>{prov.province_name || prov.province_slug}</span>
+                                </div>
+                              </td>
+                              <td style={{ textAlign: "right", fontWeight: "600", color: "#00c2cb" }}>
+                                {prov.view_count} lượt
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={2} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                              Chưa có dữ liệu tỉnh thành
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════
+              TAB 3: NGUỒN TRUY CẬP & UTM (TRAFFIC ACQUISITION)
+             ════════════════════════════════════════════════════════════════ */}
+          {activeTab === "sources" && (
+            <div className="analytics-tab-content">
+              {/* Kênh nguồn truy cập chính */}
+              <div className="analytics-kpi-grid">
+                {(stats.channel_stats || []).map((ch, idx) => (
+                  <div key={idx} className="analytics-kpi-card">
+                    <div className="kpi-card-header">
+                      <span className="kpi-card-label">{ch.channel_name}</span>
+                      <Share2 size={16} color="#64748b" />
+                    </div>
+                    <div className="kpi-card-value">{ch.count.toLocaleString("vi-VN")}</div>
+                    <div className="kpi-card-footer">
+                      <span className="kpi-hint">
+                        {stats.total_views > 0
+                          ? Math.round((ch.count / stats.total_views) * 100) + "% tổng lượng truy cập"
+                          : ""}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              {stats.recent_views.length === 0 ? (
-                <div className="admin-analytics-empty-box">
-                  <div className="empty-icon-circle">
-                    <Clock size={32} />
-                  </div>
-                  <h4>Chưa có dữ liệu nhật ký truy cập</h4>
-                  <p>Hệ thống đang sẵn sàng ghi nhận các phiên truy cập mới.</p>
-                </div>
-              ) : (
-                <div className="admin-analytics-feed-container">
-                  <div className="admin-analytics-feed">
-                    {stats.recent_views.map((log) => {
-                      const isMobile = log.device_type === "mobile";
-                      const isNfc = log.page_path?.startsWith("/t/");
-                      const isHome = log.page_path === "/" || !log.page_path;
-
-                      return (
-                        <div key={log.id} className="admin-analytics-feed-item">
-                          <div className={`feed-device-badge ${isMobile ? "badge-mobile" : "badge-pc"}`}>
-                            {isMobile ? <Smartphone size={15} /> : <Laptop size={15} />}
-                          </div>
-
-                          <div className="admin-analytics-feed-content">
-                            <div className="admin-analytics-feed-path">
-                              {log.province_name ? (
-                                <span className="feed-dest prov-dest">
-                                  <MapPin size={13} /> {log.province_name}
-                                </span>
-                              ) : isNfc ? (
-                                <span className="feed-dest nfc-dest">
-                                  <Radio size={13} /> Chạm thẻ NFC: {log.page_path}
-                                </span>
-                              ) : isHome ? (
-                                <span className="feed-dest home-dest">
-                                  🏠 Trang chủ (/)
-                                </span>
-                              ) : (
-                                <span className="feed-dest generic-dest">
-                                  {log.page_path}
-                                </span>
-                              )}
-                            </div>
-
-                            <div className="admin-analytics-feed-meta">
-                              <span className="feed-ip-chip">
-                                IP: {log.ip_address || "Khách"}
-                              </span>
-                              <span className="feed-meta-dot">•</span>
-                              <span className="feed-time-chip">
-                                <Clock size={11} /> {formatTime(log.created_at)}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+              <div className="analytics-two-col-grid">
+                {/* Chiến dịch UTM */}
+                <div className="analytics-panel-card">
+                  <h3 className="panel-card-title">Chiến Dịch Tiếp Thị (UTM Campaigns)</h3>
+                  <div className="analytics-table-wrap">
+                    <table className="analytics-table">
+                      <thead>
+                        <tr>
+                          <th>Nguồn (utm_source)</th>
+                          <th>Phương thức</th>
+                          <th>Chiến dịch</th>
+                          <th style={{ textAlign: "right" }}>Lượt vào</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {stats.utm_campaigns && stats.utm_campaigns.length > 0 ? (
+                          stats.utm_campaigns.map((utm, idx) => (
+                            <tr key={idx}>
+                              <td><span className="badge-pill-source">{utm.utm_source}</span></td>
+                              <td>{utm.utm_medium || "-"}</td>
+                              <td>{utm.utm_campaign || "-"}</td>
+                              <td style={{ textAlign: "right", fontWeight: "600" }}>{utm.count}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={4} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                              Chưa có chiến dịch UTM nào được gắn vào link
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              )}
+
+                {/* Top Website giới thiệu (Referrers) */}
+                <div className="analytics-panel-card">
+                  <h3 className="panel-card-title">Top Website Giới Thiệu (Referrers)</h3>
+                  <div className="analytics-table-wrap">
+                    <table className="analytics-table">
+                      <thead>
+                        <tr>
+                          <th>Website nguồn</th>
+                          <th style={{ textAlign: "right" }}>Lượt chuyển hướng</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {stats.top_referrers && stats.top_referrers.length > 0 ? (
+                          stats.top_referrers.map((ref, idx) => (
+                            <tr key={idx}>
+                              <td style={{ maxWidth: "260px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                {ref.referrer}
+                              </td>
+                              <td style={{ textAlign: "right", fontWeight: "600" }}>{ref.count}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={2} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                              Hầu hết khách truy cập trực tiếp hoặc chưa có website giới thiệu bên ngoài
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════
+              TAB 4: THỐNG KÊ AFFILIATE & ĐỐI TÁC (AFFILIATE CLICKS)
+             ════════════════════════════════════════════════════════════════ */}
+          {activeTab === "affiliate" && (
+            <div className="analytics-tab-content">
+              {/* Affiliate KPI Cards */}
+              <div className="analytics-kpi-grid">
+                <div className="analytics-kpi-card kpi-card-cyan">
+                  <div className="kpi-card-header">
+                    <span className="kpi-card-label">Tổng lượt click Affiliate</span>
+                    <MousePointerClick size={18} />
+                  </div>
+                  <div className="kpi-card-value">
+                    {affiliateStats.total_clicks.toLocaleString("vi-VN")}
+                  </div>
+                  <div className="kpi-card-footer">
+                    <span className="kpi-hint">Click vào link đặt tour/vé/phòng</span>
+                  </div>
+                </div>
+
+                <div className="analytics-kpi-card kpi-card-blue">
+                  <div className="kpi-card-header">
+                    <span className="kpi-card-label">Khách click riêng biệt</span>
+                    <Users size={18} />
+                  </div>
+                  <div className="kpi-card-value">
+                    {affiliateStats.unique_users.toLocaleString("vi-VN")}
+                  </div>
+                  <div className="kpi-card-footer">
+                    <span className="kpi-hint">Người dùng quan tâm dịch vụ</span>
+                  </div>
+                </div>
+
+                <div className="analytics-kpi-card kpi-card-amber">
+                  <div className="kpi-card-header">
+                    <span className="kpi-card-label">Tỷ lệ click (CTR)</span>
+                    <TrendingUp size={18} />
+                  </div>
+                  <div className="kpi-card-value">
+                    {stats.total_views > 0
+                      ? ((affiliateStats.total_clicks / stats.total_views) * 100).toFixed(1) + "%"
+                      : "0%"}
+                  </div>
+                  <div className="kpi-card-footer">
+                    <span className="kpi-hint">Trên tổng số lượt xem trang</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bảng Top đối tác & Top liên kết */}
+              <div className="analytics-two-col-grid">
+                {/* Click theo Đối tác */}
+                <div className="analytics-panel-card">
+                  <h3 className="panel-card-title">Phân Bổ Theo Đối Tác</h3>
+                  <div className="analytics-table-wrap">
+                    <table className="analytics-table">
+                      <thead>
+                        <tr>
+                          <th>Đối tác</th>
+                          <th style={{ textAlign: "right" }}>Số lượt click</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {affiliateStats.clicks_by_partner && affiliateStats.clicks_by_partner.length > 0 ? (
+                          affiliateStats.clicks_by_partner.map((p, idx) => (
+                            <tr key={idx}>
+                              <td>
+                                <span className="badge-pill-partner">{p.partner_name.toUpperCase()}</span>
+                              </td>
+                              <td style={{ textAlign: "right", fontWeight: "700", color: "#00c2cb" }}>
+                                {p.count}
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={2} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                              Chưa có lượt click đối tác nào trong thời gian này
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Top Liên kết được click */}
+                <div className="analytics-panel-card">
+                  <h3 className="panel-card-title">Top Liên Kết Được Quan Tâm</h3>
+                  <div className="analytics-table-wrap">
+                    <table className="analytics-table">
+                      <thead>
+                        <tr>
+                          <th>Tên hiển thị / Dịch vụ</th>
+                          <th>Đối tác</th>
+                          <th style={{ textAlign: "right" }}>Click</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {affiliateStats.top_clicked_links && affiliateStats.top_clicked_links.length > 0 ? (
+                          affiliateStats.top_clicked_links.map((link, idx) => (
+                            <tr key={idx}>
+                              <td>
+                                <a href={link.destination_url} target="_blank" rel="noopener noreferrer" className="affiliate-dest-link">
+                                  {link.link_title || link.destination_url}
+                                </a>
+                              </td>
+                              <td><span className="badge-pill-partner">{link.partner_name}</span></td>
+                              <td style={{ textAlign: "right", fontWeight: "600" }}>{link.count}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan={3} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                              Chưa có dữ liệu liên kết
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ════════════════════════════════════════════════════════════════
+              NHẬT KÝ LƯỢT TRUY CẬP GẦN ĐÂY (REALTIME LOGS)
+             ════════════════════════════════════════════════════════════════ */}
+          <div className="analytics-panel-card" style={{ marginTop: "1.5rem" }}>
+            <div className="panel-card-header-flex">
+              <div>
+                <h3 className="panel-card-title">Nhật Ký 20 Lượt Truy Cập Mới Nhất</h3>
+                <p className="panel-card-subtitle">Cập nhật trực tiếp lượt ghé thăm từ người dùng</p>
+              </div>
+              <div className="live-status-indicator">
+                <span className="live-dot-pulse live-dot-green" />
+                <span>Thời gian thực</span>
+              </div>
+            </div>
+
+            <div className="analytics-table-wrap">
+              <table className="analytics-table">
+                <thead>
+                  <tr>
+                    <th>Thời gian</th>
+                    <th>Trang xem (Path)</th>
+                    <th>Tỉnh thành</th>
+                    <th>Thiết bị</th>
+                    <th>Nguồn vào</th>
+                    <th style={{ textAlign: "right" }}>IP</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {stats.recent_views && stats.recent_views.length > 0 ? (
+                    stats.recent_views.map((v) => (
+                      <tr key={v.id}>
+                        <td style={{ whiteSpace: "nowrap", color: "#64748b", fontSize: "0.82rem" }}>
+                          {formatTime(v.created_at)}
+                        </td>
+                        <td>
+                          <span className="page-path-text">{v.page_path}</span>
+                        </td>
+                        <td>
+                          {v.province_name ? (
+                            <span className="badge-pill-prov">{v.province_name}</span>
+                          ) : (
+                            <span style={{ color: "#94a3b8" }}>—</span>
+                          )}
+                        </td>
+                        <td>
+                          <span className={`badge-pill-device ${v.device_type === "mobile" ? "is-mobile" : "is-desktop"}`}>
+                            {v.device_type === "mobile" ? "Mobile" : "Desktop"}
+                          </span>
+                        </td>
+                        <td>
+                          <span style={{ fontSize: "0.8rem", color: "#475569" }}>
+                            {v.utm_source ? `UTM: ${v.utm_source}` : v.referrer ? v.referrer.slice(0, 30) : "Direct"}
+                          </span>
+                        </td>
+                        <td style={{ textAlign: "right", fontFamily: "monospace", fontSize: "0.8rem", color: "#64748b" }}>
+                          {v.ip_address}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={6} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                        Chưa có nhật ký truy cập
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </>

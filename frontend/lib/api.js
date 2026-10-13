@@ -511,13 +511,51 @@ export const systemSettingAPI = {
 
 // ─── ANALYTICS (admin & public traffic tracking) ──────────────
 export const analyticsAPI = {
-  track: (pagePath, provinceSlug) =>
-    request("/analytics/track", {
+  track: (data, provinceSlug) => {
+    const payload =
+      typeof data === "string"
+        ? { page_path: data, province_slug: provinceSlug }
+        : data;
+    return request("/analytics/track", {
       method: "POST",
-      body: JSON.stringify({ page_path: pagePath, province_slug: provinceSlug }),
+      body: JSON.stringify(payload),
+    });
+  },
+  trackAffiliate: (payload) =>
+    request("/analytics/affiliate-click", {
+      method: "POST",
+      body: JSON.stringify(payload),
     }),
   getStats: (timeframe = "7days") =>
     request(`/analytics/stats?timeframe=${timeframe}`),
+  getAffiliateStats: (timeframe = "7days") =>
+    request(`/analytics/affiliate-stats?timeframe=${timeframe}`),
+};
+
+// ─── CMS ARTICLES (Cẩm nang du lịch & bài viết) ───────────────
+export const articleAPI = {
+  getAll: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.entries(params).filter(([, v]) => v !== undefined && v !== ""),
+    ).toString();
+    return request(`/articles${qs ? `?${qs}` : ""}`);
+  },
+  getBySlug: (slug) => request(`/articles/${slug}`),
+  create: (body) =>
+    request("/articles", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  update: (id, body) =>
+    request(`/articles/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(body),
+    }),
+  delete: (id) =>
+    request(`/articles/${id}`, {
+      method: "DELETE",
+    }),
+  uploadImage: (formData) => upload("/provinces/upload", formData),
 };
 
 // ─── ORDERS & E-COMMERCE CHECKOUT ──────────────────────────────

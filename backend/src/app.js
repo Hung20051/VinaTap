@@ -82,6 +82,7 @@ app.use("/api/admin-stats", require("./routes/adminStats"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/system-settings", require("./routes/systemSettings"));
 app.use("/api/analytics", require("./routes/analytics"));
+app.use("/api/articles", require("./routes/articles"));
 app.use("/api/notifications", require("./routes/notifications"));
 app.use("/api/orders", require("./routes/orders"));
 app.use("/api/vouchers", require("./routes/vouchers"));

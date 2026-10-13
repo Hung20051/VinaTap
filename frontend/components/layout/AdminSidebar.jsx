@@ -22,6 +22,7 @@ import {
   TrendingUp,
   FolderTree,
   Shield,
+  FileText,
 } from "lucide-react";
 import Logo from "./Logo";
 import { getLang } from "@/lib/prefs";
@@ -66,6 +67,7 @@ export default function AdminSidebar({
       title: t(lang, "adminSecContent"),
       icon: MapPin,
       items: [
+        { href: "/admin/articles", icon: FileText, label: lang === "vi" ? "Bài viết cẩm nang" : "Articles & Guides" },
         { href: "/admin/provinces", icon: MapPin, label: t(lang, "adminProvinces") },
         { href: "/admin/albums", icon: Images, label: t(lang, "adminAlbums") },
         { href: "/admin/stickers", icon: Sticker, label: t(lang, "adminStickers") },
