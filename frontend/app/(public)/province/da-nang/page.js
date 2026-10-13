@@ -1648,13 +1648,22 @@ export default function DaNangPage() {
         </Link>
       </div>
 
-      {/* ─── 10. OTHER DESTINATIONS SECTION (BOTTOM SCREENSHOT 5) ─── */}
-      <section className="vnn-danang-section" style={{ marginTop: "40px" }}>
+      {/* ─── 10. OTHER DESTINATIONS SECTION (HÌNH 1) ─── */}
+      <div style={{ maxWidth: "1200px", margin: "40px auto 0 auto", padding: "0 24px" }}>
+        <div className="vnn-danang-section-divider" />
+      </div>
+
+      <section className="vnn-danang-section" style={{ marginTop: "32px", marginBottom: "48px" }}>
         <div className="vnn-danang-section-inner">
-          <div className="vnn-danang-section-header" style={{ justifyContent: "center" }}>
+          <div style={{ textAlign: "center", marginBottom: "32px" }}>
             <h2
-              className="vnn-danang-section-heading"
-              style={{ fontSize: "28px", textAlign: "center" }}
+              style={{
+                fontSize: "30px",
+                fontWeight: 700,
+                color: "#111111",
+                margin: 0,
+                textAlign: "center",
+              }}
             >
               {lang === "vi" ? "Điểm đến khác" : "Other Destinations"}
             </h2>
@@ -1664,8 +1673,7 @@ export default function DaNangPage() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "24px",
-              marginTop: "24px",
+              gap: "28px",
             }}
           >
             {/* Card 1: Ho Chi Minh City */}
@@ -1676,15 +1684,20 @@ export default function DaNangPage() {
                 color: "inherit",
                 display: "flex",
                 flexDirection: "column",
-                borderRadius: "8px",
-                overflow: "hidden",
-                border: "1px solid #eee",
-                background: "#fff",
-                transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                cursor: "pointer",
               }}
-              className="vnn-danang-other-dest-card"
+              className="vnn-danang-related-card"
             >
-              <div style={{ height: "200px", overflow: "hidden" }}>
+              <div
+                style={{
+                  width: "100%",
+                  aspectRatio: "16 / 10.5",
+                  borderRadius: "4px",
+                  overflow: "hidden",
+                  backgroundColor: "#f0f0f0",
+                }}
+                className="vnn-danang-related-img-wrap"
+              >
                 <img
                   src="/guide/danang/danang-related-hcmc.jpg"
                   alt="Ho Chi Minh City"
@@ -1693,52 +1706,47 @@ export default function DaNangPage() {
                     height: "100%",
                     objectFit: "cover",
                     display: "block",
+                    imageRendering: "-webkit-optimize-contrast",
                   }}
                 />
               </div>
-              <div style={{ padding: "18px 20px", flex: 1 }}>
-                <h3
-                  style={{
-                    fontSize: "19px",
-                    fontWeight: 700,
-                    margin: "0 0 10px 0",
-                    color: "#111",
-                  }}
-                >
-                  {lang === "vi" ? "TP. Hồ Chí Minh" : "Ho Chi Minh City"}
-                </h3>
-                <p
-                  style={{
-                    fontSize: "14px",
-                    lineHeight: "1.6",
-                    color: "#666",
-                    margin: 0,
-                  }}
-                >
-                  {lang === "vi"
-                    ? "TP. Hồ Chí Minh, hay cái tên thân thương Sài Gòn, là đô thị sôi động bậc nhất Việt Nam với nhịp sống không ngủ cùng vô vàn trải nghiệm cuốn hút."
-                    : "Ho Chi Minh City, or as it is often called intimately by the locals as Saigon, is one of the sought-after destinations while travelling in Vietnam. Saigon of the modern times attracts people for its dynamic lifestyle."}
-                </p>
-              </div>
+              <h3
+                style={{
+                  fontSize: "20px",
+                  fontWeight: 700,
+                  lineHeight: "1.25",
+                  color: "#111111",
+                  margin: "14px 0 0 0",
+                  textAlign: "left",
+                }}
+                className="vnn-danang-related-title"
+              >
+                {lang === "vi" ? "TP. Hồ Chí Minh" : "Ho Chi Minh City"}
+              </h3>
             </Link>
 
             {/* Card 2: Nha Trang */}
             <Link
-              href="/guide/8-best-things-to-do-in-nha-trang"
+              href="/province/khanh-hoa"
               style={{
                 textDecoration: "none",
                 color: "inherit",
                 display: "flex",
                 flexDirection: "column",
-                borderRadius: "8px",
-                overflow: "hidden",
-                border: "1px solid #eee",
-                background: "#fff",
-                transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                cursor: "pointer",
               }}
-              className="vnn-danang-other-dest-card"
+              className="vnn-danang-related-card"
             >
-              <div style={{ height: "200px", overflow: "hidden" }}>
+              <div
+                style={{
+                  width: "100%",
+                  aspectRatio: "16 / 10.5",
+                  borderRadius: "4px",
+                  overflow: "hidden",
+                  backgroundColor: "#f0f0f0",
+                }}
+                className="vnn-danang-related-img-wrap"
+              >
                 <img
                   src="/guide/danang/danang-related-nhatrang.jpg"
                   alt="Nha Trang"
@@ -1747,56 +1755,49 @@ export default function DaNangPage() {
                     height: "100%",
                     objectFit: "cover",
                     display: "block",
+                    imageRendering: "-webkit-optimize-contrast",
                   }}
                 />
               </div>
-              <div style={{ padding: "18px 20px", flex: 1 }}>
-                <h3
-                  style={{
-                    fontSize: "19px",
-                    fontWeight: 700,
-                    margin: "0 0 10px 0",
-                    color: "#111",
-                  }}
-                >
-                  {lang === "vi" ? "Nha Trang" : "Nha Trang"}
-                </h3>
-                <p
-                  style={{
-                    fontSize: "14px",
-                    lineHeight: "1.6",
-                    color: "#666",
-                    margin: 0,
-                  }}
-                >
-                  {lang === "vi"
-                    ? "Vịnh biển thiên đường nhiệt đới với làn nước trong xanh ngọc bích, hàng chục hòn đảo thơ mộng và bề dày văn hóa vương quốc Champa cổ kính."
-                    : "As one of the most beautiful beach cities in Vietnam, Nha Trang has long been known as a tropical paradise for beachgoers, endowed with crystal blue beaches and secluded islands."}
-                </p>
-              </div>
+              <h3
+                style={{
+                  fontSize: "20px",
+                  fontWeight: 700,
+                  lineHeight: "1.25",
+                  color: "#111111",
+                  margin: "14px 0 0 0",
+                  textAlign: "left",
+                }}
+                className="vnn-danang-related-title"
+              >
+                {lang === "vi" ? "Nha Trang" : "Nha Trang"}
+              </h3>
             </Link>
 
             {/* Card 3: Marble Mountains */}
-            <Link
-              href="#danang-attractions"
-              onClick={(e) => {
-                e.preventDefault();
-                setDetailModalItem(DANANG_DETAILS["danang-10-best-attractions"]);
-              }}
+            <div
+              onClick={() => setDetailModalItem(DANANG_DETAILS["danang-10-best-attractions"])}
               style={{
                 textDecoration: "none",
                 color: "inherit",
                 display: "flex",
                 flexDirection: "column",
-                borderRadius: "8px",
-                overflow: "hidden",
-                border: "1px solid #eee",
-                background: "#fff",
-                transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                cursor: "pointer",
               }}
-              className="vnn-danang-other-dest-card"
+              className="vnn-danang-related-card"
+              role="button"
+              tabIndex={0}
             >
-              <div style={{ height: "200px", overflow: "hidden" }}>
+              <div
+                style={{
+                  width: "100%",
+                  aspectRatio: "16 / 10.5",
+                  borderRadius: "4px",
+                  overflow: "hidden",
+                  backgroundColor: "#f0f0f0",
+                }}
+                className="vnn-danang-related-img-wrap"
+              >
                 <img
                   src="/guide/danang/danang-related-marble-mountains.jpg"
                   alt="Marble Mountains"
@@ -1805,37 +1806,31 @@ export default function DaNangPage() {
                     height: "100%",
                     objectFit: "cover",
                     display: "block",
+                    imageRendering: "-webkit-optimize-contrast",
                   }}
                 />
               </div>
-              <div style={{ padding: "18px 20px", flex: 1 }}>
-                <h3
-                  style={{
-                    fontSize: "19px",
-                    fontWeight: 700,
-                    margin: "0 0 10px 0",
-                    color: "#111",
-                  }}
-                >
-                  {lang === "vi" ? "Ngũ Hành Sơn" : "Marble Mountains"}
-                </h3>
-                <p
-                  style={{
-                    fontSize: "14px",
-                    lineHeight: "1.6",
-                    color: "#666",
-                    margin: 0,
-                  }}
-                >
-                  {lang === "vi"
-                    ? "Quần thể 5 ngọn núi đá vôi kỳ vĩ mang đậm dấu ấn tâm linh và lịch sử của vùng đất Đà Nẵng, điểm dừng chân không thể bỏ qua trên con đường di sản miền Trung."
-                    : "Being part of the Vietnamese heritage trail and serving as a symbol of nature and spirituality for the people of Da Nang, Ngu Hanh Son is a must-visit destination."}
-                </p>
-              </div>
-            </Link>
+              <h3
+                style={{
+                  fontSize: "20px",
+                  fontWeight: 700,
+                  lineHeight: "1.25",
+                  color: "#111111",
+                  margin: "14px 0 0 0",
+                  textAlign: "left",
+                }}
+                className="vnn-danang-related-title"
+              >
+                {lang === "vi" ? "Ngũ Hành Sơn" : "Marble Mountains"}
+              </h3>
+            </div>
           </div>
         </div>
       </section>
+
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
+        <div className="vnn-danang-section-divider" />
+      </div>
 
       {/* ─── 11. FOOTER ─── */}
       <footer className="home-footer" style={{ marginTop: "70px" }}>
