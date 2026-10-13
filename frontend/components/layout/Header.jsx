@@ -195,7 +195,7 @@ export default function Header({ onToggleDrawer, isDrawerOpen }) {
                       className="dropdown-item"
                       onClick={() => setUserDropdownOpen(false)}
                     >
-                      <ShoppingBag size={16} /> {t(lang, "nfcStore")}
+                      <ShoppingBag size={16} /> {lang === "vi" ? "Cửa Hàng Du Lịch" : "Travel Store"}
                     </Link>
                   </>
                 )}
