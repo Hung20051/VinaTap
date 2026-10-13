@@ -257,6 +257,17 @@ export const nfcAPI = {
       body: JSON.stringify(body),
     }),
   getByProvince: (provinceId) => request(`/nfc/province/${provinceId}`),
+  updateStatus: (id, status) =>
+    request(`/nfc/admin/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
+  unassignCard: (id) =>
+    request(`/nfc/admin/${id}/unassign`, {
+      method: "POST",
+    }),
+  getAccessLogs: (id) => request(`/nfc/admin/${id}/access-logs`),
+  deleteCard: (id) => request(`/nfc/admin/${id}`, { method: "DELETE" }),
 };
 
 // ─── ALBUMS ───────────────────────────────────────────────────

@@ -16,6 +16,10 @@ const {
   adminAssignCard,
   provisionCard,
   getCardsByProvince,
+  getCardAccessLogs,
+  updateCardStatus,
+  unassignCard,
+  deleteCard,
 } = require("../controllers/nfcController");
 
 const { protect } = require("../middleware/auth");
@@ -39,6 +43,10 @@ router.delete("/:id/transfer", protect, cancelTransfer); // người gửi hủy
 
 // ── ADMIN ────────────────────────────────────────────────────
 router.get("/admin/search", protect, requireRole("admin"), adminSearchCards);
+router.get("/admin/:id/access-logs", protect, requireRole("admin"), getCardAccessLogs);
+router.patch("/admin/:id/status", protect, requireRole("admin"), updateCardStatus);
+router.post("/admin/:id/unassign", protect, requireRole("admin"), unassignCard);
+router.delete("/admin/:id", protect, requireRole("admin"), deleteCard);
 router.post("/admin/assign", protect, requireRole("admin"), adminAssignCard);
 router.post("/admin/provision", protect, requireRole("admin"), provisionCard);
 router.post("/batch", protect, requireRole("admin"), createBatch);

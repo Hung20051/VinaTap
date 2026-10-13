@@ -76,6 +76,37 @@ export default function TrafficTracker() {
       })
       .catch(() => {});
 
+    // Gửi heartbeat cập nhật thời gian lưu lại trang (duration_seconds) mỗi 15 giây
+    const heartbeatTimer = setInterval(() => {
+      const elapsedSec = Math.round((Date.now() - entryTime.current) / 1000);
+      if (elapsedSec > 0 && elapsedSec <= 3600) {
+        analyticsAPI
+          .track({
+            page_path: pathname,
+            province_slug: provinceSlug,
+            session_id: sessionId,
+            duration_seconds: elapsedSec,
+          })
+          .catch(() => {});
+      }
+    }, 15000);
+
+    const sendExitDuration = () => {
+      const elapsedSec = Math.round((Date.now() - entryTime.current) / 1000);
+      if (elapsedSec > 2 && elapsedSec <= 3600) {
+        analyticsAPI
+          .track({
+            page_path: pathname,
+            province_slug: provinceSlug,
+            session_id: sessionId,
+            duration_seconds: elapsedSec,
+          })
+          .catch(() => {});
+      }
+    };
+
+    window.addEventListener("beforeunload", sendExitDuration);
+
     // Lắng nghe click tự động vào các link Affiliate/Đối tác (có data-partner hoặc link ra klook/booking/agoda/vinwonders)
     const handleDocumentClick = (e) => {
       const target = e.target.closest("a");
@@ -115,6 +146,8 @@ export default function TrafficTracker() {
 
     document.addEventListener("click", handleDocumentClick, { passive: true });
     return () => {
+      clearInterval(heartbeatTimer);
+      window.removeEventListener("beforeunload", sendExitDuration);
       document.removeEventListener("click", handleDocumentClick);
     };
   }, [pathname]);

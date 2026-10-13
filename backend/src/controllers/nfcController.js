@@ -26,6 +26,36 @@ const tapCard = async (req, res) => {
 
     const c = rows[0];
 
+    // Cập nhật lượt chạm và thời điểm truy cập gần nhất của thẻ NFC
+    try {
+      await db.execute(
+        `UPDATE nfc_cards 
+         SET tap_count = tap_count + 1, 
+             last_tapped_at = NOW() 
+         WHERE id = ?`,
+        [c.id],
+      );
+
+      const PageView = require("../models/PageView");
+      const ipAddress =
+        req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
+        req.socket.remoteAddress ||
+        "127.0.0.1";
+      const userAgent = req.headers["user-agent"] || "";
+
+      PageView.track({
+        pagePath: `/t/${c.nfc_token}`,
+        provinceSlug: c.province_slug,
+        ipAddress,
+        userAgent,
+        referrer: req.headers["referer"] || null,
+        utmSource: "nfc",
+        durationSeconds: 0,
+      }).catch((e) => console.warn("tapCard PageView log error:", e.message));
+    } catch (tapErr) {
+      console.warn("tapCard update tap_count error:", tapErr.message);
+    }
+
     // Lấy Album gắn với thẻ này nếu có
     // Lấy Album gắn với thẻ này nếu có (kèm danh sách ảnh preview)
     let album = null;
@@ -693,7 +723,7 @@ const createBatch = async (req, res) => {
 // ─── ADMIN: TRA CỨU & DANH SÁCH (GET /api/nfc/admin/search) ──
 const adminSearchCards = async (req, res) => {
   try {
-    const { q, province_id, status, limit = 50, offset = 0 } = req.query;
+    const { q, province_id, status, limit = 100, offset = 0 } = req.query;
 
     const where = [];
     const params = [];
@@ -701,14 +731,20 @@ const adminSearchCards = async (req, res) => {
     if (q && q.trim().length > 0) {
       const kw = `%${q.trim()}%`;
       where.push(
-        "(n.serial_code LIKE ? OR n.nfc_token LIKE ? OR u.email LIKE ? OR u.name LIKE ?)",
+        "(n.serial_code LIKE ? OR n.nfc_token LIKE ? OR u.email LIKE ? OR u.name LIKE ? OR u.phone LIKE ? OR p.name LIKE ?)",
       );
-      params.push(kw, kw, kw, kw);
+      params.push(kw, kw, kw, kw, kw, kw);
     }
 
     if (province_id) {
-      where.push("n.province_id = ?");
-      params.push(province_id);
+      // Hỗ trợ cả ID số lẫn Slug tỉnh thành
+      if (/^\d+$/.test(province_id)) {
+        where.push("n.province_id = ?");
+        params.push(parseInt(province_id, 10));
+      } else {
+        where.push("(p.slug = ? OR p.name = ?)");
+        params.push(province_id, province_id);
+      }
     }
 
     if (status && ["pending", "active", "disabled"].includes(status)) {
@@ -717,16 +753,21 @@ const adminSearchCards = async (req, res) => {
     }
 
     const whereClause = where.length ? `WHERE ${where.join(" AND ")}` : "";
-    const safeLimit = Math.max(1, Math.min(parseInt(limit, 10) || 50, 200));
+    const safeLimit = Math.max(1, Math.min(parseInt(limit, 10) || 100, 500));
     const safeOffset = Math.max(0, parseInt(offset, 10) || 0);
 
     const [cards] = await db.execute(
-      `SELECT n.id, n.serial_code, n.nfc_token, n.province_id, n.status, n.activated_at, n.created_at,
-              p.name AS province_name,
-              u.name AS owner_name, u.email AS owner_email
+      `SELECT n.id, n.serial_code, n.nfc_token, n.province_id, n.status, n.activated_at, n.created_at, n.updated_at,
+              n.tap_count, n.last_tapped_at, n.last_duration_seconds,
+              TIMESTAMPDIFF(SECOND, n.last_tapped_at, NOW()) AS last_tap_seconds_ago,
+              p.name AS province_name, p.slug AS province_slug, p.region AS province_region,
+              u.id AS owner_user_id, u.name AS owner_name, u.email AS owner_email, u.phone AS owner_phone,
+              a.id AS album_id, a.title AS album_title, a.share_code AS album_share_code,
+              (SELECT COUNT(*) FROM album_media m WHERE m.album_id = a.id AND m.status = 'active') AS album_media_count
        FROM nfc_cards n
        JOIN provinces p ON p.id = n.province_id
        LEFT JOIN users u ON u.id = n.owner_user_id
+       LEFT JOIN albums a ON a.nfc_card_id = n.id AND a.status != 'deleted'
        ${whereClause}
        ORDER BY n.created_at DESC
        LIMIT ${safeLimit} OFFSET ${safeOffset}`,
@@ -735,15 +776,181 @@ const adminSearchCards = async (req, res) => {
 
     const [totalRows] = await db.execute(
       `SELECT COUNT(*) AS total FROM nfc_cards n
+       JOIN provinces p ON p.id = n.province_id
        LEFT JOIN users u ON u.id = n.owner_user_id
        ${whereClause}`,
       params,
     );
 
-    res.json({ cards, total: totalRows[0]?.total || 0 });
+    // Tính toán số liệu thống kê tổng quát chuẩn dự án
+    const [statsRows] = await db.execute(
+      `SELECT 
+         COUNT(*) AS total,
+         SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) AS active,
+         SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending,
+         SUM(CASE WHEN status = 'disabled' THEN 1 ELSE 0 END) AS disabled,
+         COALESCE(SUM(tap_count), 0) AS total_taps,
+         COUNT(CASE WHEN last_tapped_at >= CURDATE() THEN 1 ELSE NULL END) AS active_today
+       FROM nfc_cards`
+    );
+
+    res.json({
+      cards,
+      total: totalRows[0]?.total || 0,
+      stats: {
+        total: Number(statsRows[0]?.total) || 0,
+        active: Number(statsRows[0]?.active) || 0,
+        pending: Number(statsRows[0]?.pending) || 0,
+        disabled: Number(statsRows[0]?.disabled) || 0,
+        total_taps: Number(statsRows[0]?.total_taps) || 0,
+        active_today: Number(statsRows[0]?.active_today) || 0,
+      },
+    });
   } catch (err) {
     console.error("adminSearchCards:", err);
-    res.status(500).json({ message: "Lỗi server" });
+    res.status(500).json({ message: "Lỗi server khi tải danh sách thẻ NFC" });
+  }
+};
+
+// ─── ADMIN: LỊCH SỬ TRUY CẬP THẺ NFC ───────────────────────
+// GET /api/nfc/admin/:id/access-logs
+const getCardAccessLogs = async (req, res) => {
+  try {
+    const cardId = req.params.id;
+    const [cardRows] = await db.execute(
+      `SELECT n.id, n.serial_code, n.nfc_token, n.tap_count, n.last_tapped_at, n.last_duration_seconds,
+              TIMESTAMPDIFF(SECOND, n.last_tapped_at, NOW()) AS last_tap_seconds_ago,
+              p.name AS province_name
+       FROM nfc_cards n
+       JOIN provinces p ON p.id = n.province_id
+       WHERE n.id = ? LIMIT 1`,
+      [cardId],
+    );
+
+    if (!cardRows.length) {
+      return res.status(404).json({ message: "Không tìm thấy thẻ NFC" });
+    }
+
+    const card = cardRows[0];
+    const pathPattern = `/t/${card.nfc_token}%`;
+
+    const [logs] = await db.execute(
+      `SELECT id, page_path, ip_address, user_agent, device_type, referrer, utm_source, 
+              duration_seconds, created_at,
+              TIMESTAMPDIFF(SECOND, created_at, NOW()) AS seconds_ago
+       FROM page_views
+       WHERE page_path LIKE ? OR (utm_source = 'nfc' AND page_path = ?)
+       ORDER BY created_at DESC
+       LIMIT 50`,
+      [pathPattern, `/t/${card.nfc_token}`],
+    );
+
+    res.json({
+      card,
+      logs: logs || [],
+      total_logs: logs?.length || 0,
+    });
+  } catch (err) {
+    console.error("getCardAccessLogs error:", err);
+    res.status(500).json({ message: "Lỗi khi tải lịch sử truy cập thẻ" });
+  }
+};
+
+// ─── ADMIN: ĐỔI TRẠNG THÁI THẺ ──────────────────────────────
+// PATCH /api/nfc/admin/:id/status
+const updateCardStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (!["pending", "active", "disabled"].includes(status)) {
+      return res.status(400).json({ message: "Trạng thái không hợp lệ (pending, active, disabled)" });
+    }
+
+    const [cardRows] = await db.execute(
+      `SELECT * FROM nfc_cards WHERE id = ? LIMIT 1`,
+      [req.params.id],
+    );
+    if (!cardRows.length) {
+      return res.status(404).json({ message: "Không tìm thấy thẻ" });
+    }
+
+    const card = cardRows[0];
+    let extraSql = "";
+    const params = [status];
+
+    if (status === "active" && !card.activated_at) {
+      extraSql = ", activated_at = NOW()";
+    }
+
+    params.push(card.id);
+    await db.execute(
+      `UPDATE nfc_cards SET status = ? ${extraSql} WHERE id = ?`,
+      params,
+    );
+
+    res.json({
+      message: `Đã cập nhật trạng thái thẻ ${card.serial_code} thành "${status === "active" ? "Đã kích hoạt" : status === "disabled" ? "Đã khóa" : "Chờ phát hành"}"`,
+      status,
+    });
+  } catch (err) {
+    console.error("updateCardStatus error:", err);
+    res.status(500).json({ message: "Lỗi cập nhật trạng thái thẻ" });
+  }
+};
+
+// ─── ADMIN: HỦY GÁN THẺ CHO USER ────────────────────────────
+// POST /api/nfc/admin/:id/unassign
+const unassignCard = async (req, res) => {
+  try {
+    const [cardRows] = await db.execute(
+      `SELECT * FROM nfc_cards WHERE id = ? LIMIT 1`,
+      [req.params.id],
+    );
+    if (!cardRows.length) {
+      return res.status(404).json({ message: "Không tìm thấy thẻ" });
+    }
+
+    const card = cardRows[0];
+    await db.execute(
+      `UPDATE nfc_cards SET owner_user_id = NULL, status = 'pending' WHERE id = ?`,
+      [card.id],
+    );
+
+    res.json({
+      message: `Đã hủy gán thẻ ${card.serial_code}. Thẻ đã trở về trạng thái Chờ phát hành.`,
+    });
+  } catch (err) {
+    console.error("unassignCard error:", err);
+    res.status(500).json({ message: "Lỗi hủy gán thẻ" });
+  }
+};
+
+// ─── ADMIN: XÓA THẺ CHƯA KÍCH HOẠT ──────────────────────────
+// DELETE /api/nfc/admin/:id
+const deleteCard = async (req, res) => {
+  try {
+    const [cardRows] = await db.execute(
+      `SELECT * FROM nfc_cards WHERE id = ? LIMIT 1`,
+      [req.params.id],
+    );
+    if (!cardRows.length) {
+      return res.status(404).json({ message: "Không tìm thấy thẻ" });
+    }
+
+    const card = cardRows[0];
+    if (card.owner_user_id || card.status === "active") {
+      return res.status(400).json({
+        message: "Không thể xóa thẻ đã kích hoạt hoặc đã có người sở hữu. Bạn có thể Khóa thẻ thay vì xóa.",
+      });
+    }
+
+    await db.execute(`DELETE FROM nfc_cards WHERE id = ?`, [card.id]);
+
+    res.json({
+      message: `Đã xóa thẻ ${card.serial_code} thành công.`,
+    });
+  } catch (err) {
+    console.error("deleteCard error:", err);
+    res.status(500).json({ message: "Lỗi xóa thẻ" });
   }
 };
 
@@ -1004,4 +1211,8 @@ module.exports = {
   adminAssignCard,
   provisionCard,
   getCardsByProvince,
+  getCardAccessLogs,
+  updateCardStatus,
+  unassignCard,
+  deleteCard,
 };

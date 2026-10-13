@@ -53,6 +53,39 @@ const PageView = {
     const cleanMedium = (utmMedium || "").slice(0, 100);
     const cleanCampaign = (utmCampaign || "").slice(0, 100);
     const cleanSession = (sessionId || "").slice(0, 64);
+    const duration = Math.max(0, parseInt(durationSeconds, 10) || 0);
+
+    // Nếu đã có session trên cùng page_path trong vòng 1 giờ, cập nhật duration_seconds thay vì tạo dòng mới
+    if (cleanSession && duration > 0) {
+      const [existing] = await db.execute(
+        `SELECT id, duration_seconds FROM page_views 
+         WHERE session_id = ? AND page_path = ? AND created_at >= DATE_SUB(NOW(), INTERVAL 1 HOUR)
+         ORDER BY id DESC LIMIT 1`,
+        [cleanSession, cleanPath]
+      );
+      if (existing.length > 0) {
+        const rowId = existing[0].id;
+        await db.execute(
+          `UPDATE page_views SET duration_seconds = GREATEST(duration_seconds, ?) WHERE id = ?`,
+          [duration, rowId]
+        );
+
+        // Đồng bộ thời lượng truy cập vào thẻ NFC nếu là trang thẻ /t/[token]
+        if (cleanPath.startsWith("/t/")) {
+          const token = cleanPath.replace(/^\/t\//, "").split("?")[0].split("#")[0].trim();
+          if (token) {
+            db.execute(
+              `UPDATE nfc_cards 
+               SET last_duration_seconds = GREATEST(COALESCE(last_duration_seconds, 0), ?) 
+               WHERE nfc_token = ?`,
+              [duration, token]
+            ).catch(() => {});
+          }
+        }
+
+        return { success: true, updated: true, insertId: rowId, deviceType, slug };
+      }
+    }
 
     const [result] = await db.execute(
       `INSERT INTO page_views 
@@ -70,9 +103,24 @@ const PageView = {
         cleanMedium || null,
         cleanCampaign || null,
         cleanSession || null,
-        Number(durationSeconds) || 0,
+        duration,
       ],
     );
+
+    // Nếu trang bắt đầu bằng /t/[token], cập nhật thông tin truy cập của thẻ
+    if (cleanPath.startsWith("/t/")) {
+      const token = cleanPath.replace(/^\/t\//, "").split("?")[0].split("#")[0].trim();
+      if (token) {
+        db.execute(
+          `UPDATE nfc_cards 
+           SET tap_count = tap_count + 1,
+               last_tapped_at = NOW(),
+               last_duration_seconds = GREATEST(COALESCE(last_duration_seconds, 0), ?) 
+           WHERE nfc_token = ?`,
+          [duration, token]
+        ).catch(() => {});
+      }
+    }
 
     return { success: true, insertId: result?.insertId, deviceType, slug };
   },
