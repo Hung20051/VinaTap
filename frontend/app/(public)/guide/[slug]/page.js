@@ -1128,16 +1128,16 @@ function GuideDetailContent() {
           </div>
 
           <div className="guide-related-grid">
-            <Link href="/province/ha-noi" className="guide-related-card">
+            <Link href="/guide/pho-the-complete-guide" className="guide-related-card">
               <img
                 src="/guide/hcmc/Top-Hanoi-foods-Pho-Vietnamnomad.jpg"
-                alt="Ẩm thực Hà Nội"
+                alt="Phở Hà Nội"
                 className="guide-related-img"
               />
               <div className="guide-related-content">
                 <div className="guide-related-tag">Ẩm Thực Bản Địa</div>
                 <div className="guide-related-title">
-                  Top 8 Món Ăn Nhất Định Phải Thử &amp; Địa Chỉ Quán Ngon Hà Nội
+                  Phở Việt Nam: Cẩm Nang Toàn Diện Về Món Nước Quốc Hồn Quốc Túy
                 </div>
               </div>
             </Link>
@@ -1156,7 +1156,7 @@ function GuideDetailContent() {
               </div>
             </Link>
 
-            <Link href="/province/ha-noi" className="guide-related-card">
+            <Link href="/guide/8-must-try-foods-in-hanoi" className="guide-related-card">
               <img
                 src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"
                 alt="Ẩm thực Hà Nội"

@@ -1432,3 +1432,162 @@
   }
 }
 
+/* ─── HANOI & EDITORIAL WHERE TO EAT BOX ─────────────────────── */
+.guide-where-to-eat-box {
+  background: var(--guide-card-bg);
+  border: 1px solid var(--guide-border);
+  border-left: 4.5px solid var(--guide-primary);
+  border-radius: var(--guide-radius-md);
+  padding: 1.25rem 1.5rem;
+  margin: 1.35rem 0 1.25rem;
+  box-shadow: var(--guide-shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.guide-where-to-eat-box:hover {
+  border-color: rgba(0, 194, 203, 0.4);
+  box-shadow: var(--guide-shadow-md);
+}
+
+.guide-where-to-eat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--guide-primary-dark);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--guide-border-subtle);
+}
+
+.guide-where-to-eat-title-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.guide-where-to-eat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.guide-where-to-eat-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: var(--guide-radius-sm);
+  background: var(--guide-border-subtle);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.guide-where-to-eat-item:hover {
+  background: var(--guide-card-bg);
+  border-color: var(--guide-border);
+  transform: translateX(3px);
+}
+
+.guide-where-to-eat-info {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.guide-where-to-eat-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--guide-text-main);
+}
+
+.guide-where-to-eat-address {
+  font-size: 0.86rem;
+  color: var(--guide-text-muted);
+}
+
+.guide-where-to-eat-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.guide-where-to-eat-price {
+  display: inline-flex;
+  align-items: center;
+  background: var(--guide-primary-light);
+  color: var(--guide-primary-dark);
+  font-weight: 800;
+  font-size: 0.86rem;
+  padding: 4px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  border: 1px solid rgba(0, 194, 203, 0.25);
+  box-shadow: 0 1px 3px rgba(0, 194, 203, 0.08);
+}
+
+.guide-where-to-eat-mapbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--guide-card-bg);
+  border: 1px solid var(--guide-border);
+  color: var(--guide-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.guide-where-to-eat-mapbtn:hover {
+  background: var(--guide-primary);
+  border-color: var(--guide-primary);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+[data-theme="dark"] .guide-where-to-eat-box {
+  background: #11202d;
+  border-color: #1e3345;
+  border-left-color: #00c2cb;
+}
+
+[data-theme="dark"] .guide-where-to-eat-item {
+  background: #0d1924;
+}
+
+[data-theme="dark"] .guide-where-to-eat-item:hover {
+  background: #142738;
+  border-color: #233d54;
+}
+
+[data-theme="dark"] .guide-where-to-eat-price {
+  background: rgba(0, 194, 203, 0.16);
+  color: #38d39f;
+  border-color: rgba(0, 194, 203, 0.35);
+}
+
+@media (max-width: 640px) {
+  .guide-where-to-eat-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .guide-where-to-eat-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+

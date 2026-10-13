@@ -136,7 +136,7 @@ const BE_INSPIRED_COMPACT = [
     date: "October 2, 2026",
     dateVi: "2 Tháng 10, 2026",
     img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
-    link: "/province/ha-noi",
+    link: "/guide/8-must-try-foods-in-hanoi",
   },
   {
     title: "10 best things to do in Ho Chi Minh City",
@@ -402,7 +402,7 @@ const FOODS_TO_TRY_ITEMS = [
     descVi:
       "Khám phá 8 món ăn tinh hoa ẩm thực phố cổ Hà Nội, nơi truyền thống và sự chăm chút tạo nên hương vị khó quên.",
     img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
-    link: "/province/ha-noi",
+    link: "/guide/8-must-try-foods-in-hanoi",
   },
   {
     title: "12 must-try foods in Ho Chi Minh City",
@@ -583,10 +583,10 @@ const POPULAR_POSTS_ITEMS = [
     link: "/province/ha-noi",
   },
   {
-    title: "15 Must-Try Vietnamese Dishes",
-    titleVi: "15 món ăn Việt Nam nhất định phải thử",
+    title: "8 Must-Try Foods in Hanoi",
+    titleVi: "8 món ngon nhất định phải thử tại Hà Nội",
     img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
-    link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
+    link: "/guide/8-must-try-foods-in-hanoi",
   },
 ];
 
@@ -763,7 +763,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "2 Tháng 10, 2026",
         badge: "Hanoi",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/8-must-try-foods-in-hanoi",
       },
       {
         id: "eat-2",
@@ -783,7 +783,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-3-pho.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/pho-the-complete-guide",
       },
       {
         id: "eat-4",

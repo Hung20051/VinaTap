@@ -203,7 +203,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "2 Tháng 10, 2026",
         badge: "Hanoi",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/8-must-try-foods-in-hanoi",
       },
       {
         id: "eat-2",
@@ -223,7 +223,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-3-pho.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/pho-the-complete-guide",
       },
       {
         id: "eat-4",

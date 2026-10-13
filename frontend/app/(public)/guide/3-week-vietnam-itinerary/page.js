@@ -199,13 +199,13 @@ const MEGA_MENUS_DATA = {
     items: [
       {
         id: "eat-1",
-        title: "Hanoi Street Food Guide",
-        titleVi: "Cẩm nang ẩm thực đường phố Hà Nội",
+        title: "8 must-try foods in Hanoi",
+        titleVi: "8 món ngon nhất định phải thử ở Hà Nội",
         date: "March 15, 2026",
         dateVi: "15 Tháng 3, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/8-must-try-foods-in-hanoi",
       },
       {
         id: "eat-2",
@@ -225,7 +225,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "5 Tháng 3, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-3-pho.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/pho-the-complete-guide",
       },
       {
         id: "eat-4",
@@ -1431,7 +1431,7 @@ export default function ThreeWeekVietnamItineraryPage() {
             {lang === "vi" ? "Bài viết liên quan" : "Related Articles"}
           </h3>
           <div className="itin-related-grid">
-            <Link href="/province/ha-noi" className="itin-related-card">
+            <Link href="/guide/8-must-try-foods-in-hanoi" className="itin-related-card">
               <div className="itin-related-card__thumb-wrap">
                 <img
                   src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"

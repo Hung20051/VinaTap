@@ -15,7 +15,7 @@ const SEARCH_POSTS = [
     date: "October 2, 2026",
     dateVi: "2 Tháng 10, 2026",
     img: "/guide/megamenu/eat-1-hanoi.jpg",
-    link: "/province/ha-noi",
+    link: "/guide/8-must-try-foods-in-hanoi",
     keywords: "8 must try foods in hanoi culinary bun cha pho street food bun dau",
   },
   {

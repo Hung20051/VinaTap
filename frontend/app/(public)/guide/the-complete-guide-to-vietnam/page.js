@@ -210,7 +210,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "2 Tháng 10, 2026",
         badge: "Hanoi",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/8-must-try-foods-in-hanoi",
       },
       {
         id: "eat-2",
@@ -230,7 +230,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-3-pho.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/pho-the-complete-guide",
       },
       {
         id: "eat-4",
@@ -1195,7 +1195,7 @@ export default function CompleteGuideToVietnamPage() {
 
           <div className="vnn-biggrid-5">
             {/* Card 1 (Large left): Phở Truyền Thống */}
-            <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="vnn-biggrid-item">
+            <Link href="/guide/pho-the-complete-guide" className="vnn-biggrid-item">
               <img
                 src="/guide/hcmc/Top-Hanoi-foods-Pho-Vietnamnomad.jpg"
                 alt={lang === "vi" ? "Phở Truyền Thống" : "Traditional Pho"}
@@ -1211,7 +1211,7 @@ export default function CompleteGuideToVietnamPage() {
             </Link>
 
             {/* Card 2 (Top-left right): Bún Chả Hà Nội */}
-            <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="vnn-biggrid-item">
+            <Link href="/guide/8-must-try-foods-in-hanoi" className="vnn-biggrid-item">
               <img
                 src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"
                 alt={lang === "vi" ? "Bún Chả Hà Nội" : "Hanoi Bun Cha"}
