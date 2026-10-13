@@ -196,7 +196,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "20 Tháng 3, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/8-must-try-foods-in-hanoi",
       },
       {
         id: "eat-2",
@@ -286,7 +286,7 @@ const MEGA_MENUS_DATA = {
   },
 };
 
-// ─── 10 BEST THINGS TO DO IN HCMC DATA (Matching Screenshots 1, 2, 3, 4, 5) ───
+// ─── 10 BEST THINGS TO DO IN HCMC DATA ───
 const HCMC_ITEMS = [
   {
     id: "item-1",
@@ -414,7 +414,7 @@ const HCMC_ITEMS = [
     captionVi: "Nhà hát Thành phố (Saigon Opera House)",
     paragraphsEn: [
       "Whether you’re drawn to traditional or contemporary performance art, Ho Chi Minh City delivers memorable experiences for all tastes. A standout is the A O Show at the historic Saigon Opera House—a visually stunning blend of acrobatics, contemporary dance, and traditional Vietnamese music, all set against the backdrop of one of the city’s most iconic colonial-era buildings. Tickets are easy to secure either online or directly at the venue.",
-      "If you’re looking for something more budget friendly yet equally rich in culture, catch a water puppet show at the Golden Dragon Water Puppet Theater or the Ho Chi Minh City Museum of History. These lively performances bring ancient Vietnamese folk tales to life through a unique blend of puppetry, music, and humor—all performed on a water stage in a tradition that dates back centuries.",
+      "If you’re looking for something more budget-friendly yet equally rich in culture, catch a water puppet show at the Golden Dragon Water Puppet Theater or the Ho Chi Minh City Museum of History. These lively performances bring ancient Vietnamese folk tales to life through a unique blend of puppetry, music, and humor—all performed on a water stage in a tradition that dates back centuries.",
     ],
     paragraphsVi: [
       "Dù bạn yêu thích nghệ thuật truyền thống hay đương đại, Sài Gòn đều mang đến những trải nghiệm biểu diễn khó quên. Nổi bật nhất là À Ố Show tại Nhà hát Thành phố – sự hòa quyện mãn nhãn giữa xiếc tre, múa đương đại và âm nhạc dân gian Việt Nam bên trong công trình kiến trúc Pháp cổ kính. Bạn có thể dễ dàng đặt vé trực tuyến hoặc mua trực tiếp tại sảnh.",
@@ -483,15 +483,16 @@ const HCMC_ITEMS = [
     ],
     tipEn: "Pack snacks, sunscreen, and plenty of water for a full day of exploring.",
     tipVi: "Hãy chuẩn bị đồ ăn nhẹ, kem chống nắng và nhiều nước uống cho một ngày dài khám phá.",
-    closingEn: "We hope this list helps you enjoy a more diverse and authentic experience while making the most of your time in Ho Chi Minh City. Let us know which activity you’re most excited to try, and feel free to share any other awesome experiences you think we should add to the list in our Facebook group, Welcome to Vietnam.",
-    closingVi: "Chúng tôi hy vọng danh sách 10 trải nghiệm trên sẽ giúp bạn có chuyến du lịch TP. Hồ Chí Minh thật đáng nhớ và trọn vẹn. Hãy chia sẻ với VinaTap trải nghiệm mà bạn yêu thích nhất nhé!",
   },
 ];
 
-// Helper to render inline links for known keywords
+// Helper to render inline links and formatting
 function renderInlineContent(text, isVi) {
   if (typeof text !== "string") return text;
 
+  // Render food terms with italic formatting if present
+  const foodItalics = ["sui cao", "xa xiu", "che", "pho", "bun bo Hue", "banh mi", "ca phe sua da"];
+  
   const links = isVi
     ? [
         { key: "Dinh Độc Lập", href: "/province/ho-chi-minh" },
@@ -531,6 +532,25 @@ function renderInlineContent(text, isVi) {
           {renderInlineContent(after, isVi)}
         </>
       );
+    }
+  }
+
+  // Handle italics for culinary terms in English mode
+  if (!isVi) {
+    for (const term of foodItalics) {
+      const termIdx = text.indexOf(term);
+      if (termIdx !== -1) {
+        const before = text.slice(0, termIdx);
+        const match = text.slice(termIdx, termIdx + term.length);
+        const after = text.slice(termIdx + term.length);
+        return (
+          <>
+            {renderInlineContent(before, isVi)}
+            <em>{match}</em>
+            {renderInlineContent(after, isVi)}
+          </>
+        );
+      }
     }
   }
 
@@ -843,51 +863,95 @@ export default function TenBestThingsHCMCPage() {
                   )}
 
                   <p className="hcmc-item__tip">
-                    <strong>{isVi ? "Tip: " : "Tip: "}</strong>
+                    <strong>Tip: </strong>
                     {isVi ? item.tipVi : item.tipEn}
                   </p>
-
-                  {item.closingEn && (
-                    <p style={{ marginTop: "16px" }}>
-                      {isVi ? item.closingVi : item.closingEn}
-                    </p>
-                  )}
                 </div>
               </div>
             </article>
           ))}
         </div>
 
-        {/* ─── RELATED GUIDES SECTION ─── */}
+        {/* ─── CLOSING PARAGRAPH (Screenshot 4) ─── */}
+        <div className="hcmc-closing-wrap">
+          <p className="hcmc-closing-text">
+            {isVi ? (
+              <>
+                Chúng tôi hy vọng danh sách này sẽ giúp bạn có được trải nghiệm đa dạng và chân thực nhất trong khoảng thời gian tại TP. Hồ Chí Minh. Hãy cho chúng tôi biết hoạt động nào khiến bạn hào hứng nhất, và đừng ngần ngại chia sẻ những trải nghiệm tuyệt vời khác vào nhóm Facebook của chúng tôi,{" "}
+                <a
+                  href="https://www.facebook.com/groups/welcome2vietnam"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Welcome to Vietnam
+                </a>
+                .
+              </>
+            ) : (
+              <>
+                We hope this list helps you enjoy a more diverse and authentic experience while making the most of your time in Ho Chi Minh City. Let us know which activity you’re most excited to try, and feel free to share any other awesome experiences you think we should add to the list in our Facebook group,{" "}
+                <a
+                  href="https://www.facebook.com/groups/welcome2vietnam"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Welcome to Vietnam
+                </a>
+                .
+              </>
+            )}
+          </p>
+        </div>
+
+        {/* ─── YOUTUBE VIDEO EMBED (Screenshot 4) ─── */}
+        <div className="hcmc-video-container">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/wwDGC-pmKPw?rel=0"
+            title="Ho Chi Minh City: A Guide to Visit Vietnam's Largest City"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="hcmc-video-iframe"
+          />
+        </div>
+
+        {/* ─── TAGS ROW (Screenshot 4) ─── */}
+        <div className="hcmc-tags-wrap">
+          <span className="hcmc-tag-badge">TAGS</span>
+          <Link href="/province/ho-chi-minh" className="hcmc-tag-pill">
+            {isVi ? "TP. Hồ Chí Minh" : "Ho Chi Minh City"}
+          </Link>
+          <Link href="/guide/20-best-things-to-do-in-vietnam" className="hcmc-tag-pill">
+            {isVi ? "Trải nghiệm" : "Things to do"}
+          </Link>
+        </div>
+
+        {/* ─── RELATED ARTICLES SECTION (Screenshots 4 & 5) ─── */}
         <section className="hcmc-related-section">
-          <h3 className="hcmc-related-title">
-            {isVi ? "Cẩm nang liên quan" : "Related Guides"}
-          </h3>
+          <h2 className="hcmc-related-title">
+            {isVi ? "Bài viết liên quan" : "Related Articles"}
+          </h2>
           <div className="hcmc-related-grid">
+            {/* Card 1: Where to Stay in Ho Chi Minh City */}
             <Link
-              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+              href="/guide/where-to-stay-in-ho-chi-minh-city"
               className="hcmc-related-card"
             >
               <div className="hcmc-related-thumb">
                 <img
-                  src="/guide/megamenu/eat-2-hcmc.jpg"
-                  alt="12 must-try foods in Ho Chi Minh City"
+                  src="/guide/hcmc/where-to-stay-in-hcmc-hd.jpg"
+                  alt="Where to Stay in Ho Chi Minh City"
                   className="hcmc-related-img"
                   loading="lazy"
                 />
               </div>
-              <div className="hcmc-related-info">
-                <h4 className="hcmc-related-card-title">
-                  {isVi
-                    ? "12 món ngon không thể bỏ lỡ tại TP. Hồ Chí Minh"
-                    : "12 must-try foods in Ho Chi Minh City"}
-                </h4>
-                <span className="hcmc-related-card-date">
-                  {isVi ? "15 Tháng 3, 2026" : "March 15, 2026"}
-                </span>
-              </div>
+              <h3 className="hcmc-related-card-title">
+                {isVi
+                  ? "Nơi lưu trú tại TP. Hồ Chí Minh"
+                  : "Where to Stay in Ho Chi Minh City"}
+              </h3>
             </Link>
 
+            {/* Card 2: 3-week Vietnam Itinerary */}
             <Link
               href="/guide/3-week-vietnam-itinerary"
               className="hcmc-related-card"
@@ -900,40 +964,31 @@ export default function TenBestThingsHCMCPage() {
                   loading="lazy"
                 />
               </div>
-              <div className="hcmc-related-info">
-                <h4 className="hcmc-related-card-title">
-                  {isVi
-                    ? "Lịch trình 3 tuần khám phá Việt Nam"
-                    : "3-week Vietnam Itinerary"}
-                </h4>
-                <span className="hcmc-related-card-date">
-                  {isVi ? "10 Tháng 5, 2026" : "May 10, 2026"}
-                </span>
-              </div>
+              <h3 className="hcmc-related-card-title">
+                {isVi
+                  ? "Lịch trình 3 tuần khám phá Việt Nam"
+                  : "3-week Vietnam Itinerary"}
+              </h3>
             </Link>
 
+            {/* Card 3: 8 must-try foods in Hanoi */}
             <Link
-              href="/guide/20-best-things-to-do-in-vietnam"
+              href="/guide/8-must-try-foods-in-hanoi"
               className="hcmc-related-card"
             >
               <div className="hcmc-related-thumb">
                 <img
-                  src="/guide/megamenu/todo-4-20things.jpg"
-                  alt="20 Best Things to Do in Vietnam"
+                  src="/guide/megamenu/eat-1-hanoi.jpg"
+                  alt="8 must-try foods in Hanoi"
                   className="hcmc-related-img"
                   loading="lazy"
                 />
               </div>
-              <div className="hcmc-related-info">
-                <h4 className="hcmc-related-card-title">
-                  {isVi
-                    ? "20 trải nghiệm tuyệt nhất tại Việt Nam"
-                    : "20 Best Things to Do in Vietnam"}
-                </h4>
-                <span className="hcmc-related-card-date">
-                  {isVi ? "20 Tháng 4, 2026" : "April 20, 2026"}
-                </span>
-              </div>
+              <h3 className="hcmc-related-card-title">
+                {isVi
+                  ? "8 món ngon nhất định phải thử tại Hà Nội"
+                  : "8 must-try foods in Hanoi"}
+              </h3>
             </Link>
           </div>
         </section>
