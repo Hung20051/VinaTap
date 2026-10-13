@@ -1696,20 +1696,38 @@ export default function HomePage() {
                 <span className="vnn-section-head__bar vnn-section-head__bar--green" />
               </div>
 
-              {/* Chỉ hiển thị icon Facebook theo yêu cầu */}
-              <div className="vnn-social-stats">
+              {/* Chỉ hiển thị icon Facebook theo yêu cầu — Kéo ra giữa đẹp mắt */}
+              <div className="vnn-social-stats" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "20px" }}>
                 <a
                   href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="vnn-social-stat-card vnn-social-stat-card--fb"
                   aria-label="Facebook Fanpage"
-                  title="Facebook"
+                  title="Facebook VinaTap"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px",
+                    padding: "12px 28px",
+                    width: "auto",
+                    minWidth: "150px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #1877f2",
+                    background: "#f0f6ff",
+                    color: "#1877f2",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    boxShadow: "0 2px 8px rgba(24, 119, 242, 0.12)",
+                    transition: "all 0.2s ease",
+                  }}
                 >
                   <Facebook
-                    size={26}
+                    size={22}
                     className="vnn-social-icon vnn-social-icon--fb"
                   />
+                  <span>Facebook</span>
                 </a>
               </div>
 

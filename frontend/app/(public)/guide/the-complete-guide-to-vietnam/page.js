@@ -1242,7 +1242,7 @@ export default function CompleteGuideToVietnamPage() {
 
           {/* ─── OTHER POSTS SECTION (HÌNH 5) ─── */}
           <section className="ad-related-section" style={{ borderTop: "1px solid #e5e7eb", marginTop: "50px", paddingTop: "40px", borderBottom: "1px solid #e5e7eb", paddingBottom: "50px", marginBottom: "40px" }}>
-            <h3 className="ad-related-title" style={{ fontFamily: '"Playfair Display", Georgia, "Times New Roman", serif', fontSize: "28px", fontWeight: "700" }}>
+            <h3 className="ad-related-title" style={{ fontSize: "28px", fontWeight: "700", textAlign: "center", color: "#111827", letterSpacing: "-0.01em" }}>
               {lang === "vi" ? "Bài viết khác" : "Other Posts"}
             </h3>
             <div className="ad-related-grid">
