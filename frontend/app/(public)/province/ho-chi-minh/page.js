@@ -1193,27 +1193,71 @@ export default function HoChiMinhCityPage() {
           <span className="vnn-hcmc-tag-pill">Ho Chi Minh City</span>
         </div>
 
-        {/* ─── 10. OTHER DESTINATIONS SECTION (SCREENSHOT 5) ─── */}
+        <div className="vnn-hcmc-divider" style={{ margin: "40px 0 48px 0" }} />
+
+        {/* ─── 10. OTHER DESTINATIONS SECTION (NEW USER SCREENSHOT) ─── */}
         <section className="vnn-hcmc-section">
           <h3 className="vnn-hcmc-other-dest-title">
             {lang === "vi" ? "Các Điểm Đến Khác" : "Other Destinations"}
           </h3>
 
-          <div className="vnn-hcmc-other-dest-grid">
-            {otherDestinations.map((dest) => (
-              <Link
-                key={dest.link}
-                href={dest.link}
-                className="vnn-hcmc-other-dest-card"
-              >
-                <img src={dest.img} alt={dest.name} loading="lazy" />
-                <div className="vnn-hcmc-other-dest-overlay">
-                  <h4 className="vnn-hcmc-other-dest-name">
-                    {lang === "vi" ? dest.nameVi : dest.name}
-                  </h4>
-                </div>
-              </Link>
-            ))}
+          <div className="vnn-hcmc-related-grid">
+            {/* Card 1: Where to Stay in Ho Chi Minh City */}
+            <Link
+              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+              className="vnn-hcmc-related-card"
+            >
+              <div className="vnn-hcmc-related-img-wrap">
+                <img
+                  src="/guide/hcmc/where-to-stay-in-hcmc-hd.jpg"
+                  alt="Where to Stay in Ho Chi Minh City"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="vnn-hcmc-related-title">
+                {lang === "vi"
+                  ? "Khu vực lưu trú ở TP. Hồ Chí Minh"
+                  : "Where to Stay in Ho Chi Minh City"}
+              </h4>
+            </Link>
+
+            {/* Card 2: 10 best things to do in Ho Chi Minh City */}
+            <Link
+              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+              className="vnn-hcmc-related-card"
+            >
+              <div className="vnn-hcmc-related-img-wrap">
+                <img
+                  src="/guide/hcmc/10-best-things-hcmc-hd.jpg"
+                  alt="10 best things to do in Ho Chi Minh City"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="vnn-hcmc-related-title">
+                {lang === "vi"
+                  ? "10 điều tuyệt nhất ở TP. Hồ Chí Minh"
+                  : "10 best things to do in Ho Chi Minh City"}
+              </h4>
+            </Link>
+
+            {/* Card 3: 12 must-try foods in Ho Chi Minh City */}
+            <Link
+              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+              className="vnn-hcmc-related-card"
+            >
+              <div className="vnn-hcmc-related-img-wrap">
+                <img
+                  src="/guide/hcmc/hcmc-12-foods-hd.jpg"
+                  alt="12 must-try foods in Ho Chi Minh City"
+                  loading="lazy"
+                />
+              </div>
+              <h4 className="vnn-hcmc-related-title">
+                {lang === "vi"
+                  ? "12 món ăn phải thử tại TP. Hồ Chí Minh"
+                  : "12 must-try foods in Ho Chi Minh City"}
+              </h4>
+            </Link>
           </div>
         </section>
       </main>
