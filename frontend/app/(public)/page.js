@@ -225,7 +225,7 @@ const REGIONAL_DESTINATIONS_DATA = [
         title: "Hanoi Tourist Map",
         titleVi: "Bản đồ du lịch Hà Nội",
         img: "/guide/hcmc/region-north-map.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/hanoi-tourist-map",
       },
       {
         title: "Ha Giang",

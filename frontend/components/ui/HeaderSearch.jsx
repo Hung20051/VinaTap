@@ -19,6 +19,16 @@ const SEARCH_POSTS = [
     keywords: "8 must try foods in hanoi culinary bun cha pho street food bun dau",
   },
   {
+    id: "hanoi-tourist-map",
+    title: "Hanoi Tourist Map | Map of Hanoi",
+    titleVi: "Bản đồ du lịch Hà Nội",
+    date: "May 1, 2024",
+    dateVi: "1 Tháng 5, 2024",
+    img: "/guide/hanoi/hanoi-tourist-map-2024.jpg",
+    link: "/guide/hanoi-tourist-map",
+    keywords: "hanoi tourist map ban do du lich ha noi map of hanoi old quarter hoan kiem ba dinh west lake pdf download",
+  },
+  {
     id: "vung-tau-beaches",
     title: "5 best Vung Tau beaches",
     titleVi: "5 bãi biển đẹp nhất tại Vũng Tàu",

@@ -1,0 +1,1113 @@
+/* ==========================================================================
+   HANOI TOURIST MAP ARTICLE - VIETNAMNOMAD & VINATAP EDITORIAL STYLE
+   Brand Teal: #00c2cb | Gradient: #5188f7 -> #00c2cb
+   ========================================================================== */
+
+.vnn-article-page {
+  background-color: #ffffff;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.75;
+  font-size: 16px;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ── STICKY HEADER ── */
+.vnn-navbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 99999 !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #ebebeb !important;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08) !important;
+  width: 100% !important;
+}
+
+/* ── Reading Progress Bar ── */
+.vnn-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #5188f7, #00c2cb);
+  z-index: 999999;
+  transition: width 0.1s ease-out;
+}
+
+/* ── FULL-BLEED HERO BANNER (ẢNH 3: TO CẢ 1 HÀNG NGANG KHÔNG CÁCH) ── */
+.vnn-fullbleed-hero {
+  position: relative;
+  width: 100vw;
+  max-width: 100%;
+  height: 500px;
+  min-height: 440px;
+  background-image: url("/guide/hanoi/hanoi-tourist-map-2024.jpg");
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.vnn-fullbleed-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.58) 0%,
+    rgba(0, 0, 0, 0.42) 50%,
+    rgba(0, 0, 0, 0.52) 100%
+  );
+  z-index: 1;
+}
+
+.vnn-fullbleed-hero__inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 960px;
+  padding: 0 24px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vnn-fullbleed-hero__tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.vnn-fullbleed-hero__tag {
+  display: inline-block;
+  padding: 5px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-radius: 30px;
+  line-height: 1.4;
+}
+
+.vnn-fullbleed-hero__title {
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
+}
+
+.vnn-fullbleed-hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.vnn-fullbleed-hero__author {
+  font-weight: 600;
+}
+
+.vnn-fullbleed-hero__dot {
+  opacity: 0.7;
+}
+
+/* ── Main Container (White Content Section) ── */
+.vnn-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 20px 100px;
+}
+
+/* ── Breadcrumb Navigation ── */
+.vnn-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: #888888;
+  margin-bottom: 24px;
+}
+
+.vnn-breadcrumb a {
+  color: #666666;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.vnn-breadcrumb a:hover {
+  color: #00c2cb;
+}
+
+.vnn-breadcrumb-separator {
+  color: #cccccc;
+}
+
+.vnn-breadcrumb-current {
+  color: #00aab2;
+  font-weight: 600;
+}
+
+/* ── Primary CTA Pill Button (Exact VietnamNomad Style from Ảnh 3) ── */
+.vnn-pill-cta-wrap {
+  text-align: center;
+  margin: 12px 0 40px;
+}
+
+.vnn-pill-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(-90deg, #5188f7, #00c2cb);
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 36px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0px 4px 20px rgba(0, 180, 220, 0.45);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  border: 2px solid #ffffff;
+  cursor: pointer;
+}
+
+.vnn-pill-cta-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 30px rgba(0, 180, 220, 0.65);
+}
+
+/* ── Article Lead & Highlights ── */
+.vnn-article-lead {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 32px;
+}
+
+.vnn-highlights-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.vnn-highlight-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.2s ease;
+}
+
+.vnn-highlight-card:hover {
+  border-color: #00c2cb;
+  background: #f0fbfb;
+  transform: translateY(-2px);
+}
+
+.vnn-highlight-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #e6f8f8;
+  color: #00aab2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vnn-highlight-num {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.1;
+}
+
+.vnn-highlight-label {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* ── High-Res Map Showcase Section ── */
+.vnn-map-showcase {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.vnn-map-showcase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.vnn-map-showcase-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vnn-map-showcase-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.vnn-map-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vnn-map-action-btn:hover {
+  background: #00c2cb;
+  color: #ffffff;
+  border-color: #00c2cb;
+}
+
+.vnn-map-action-btn--primary {
+  background: #00c2cb;
+  color: #ffffff;
+  border-color: #00c2cb;
+}
+
+.vnn-map-action-btn--primary:hover {
+  background: #00969e;
+  border-color: #00969e;
+}
+
+.vnn-map-img-container {
+  position: relative;
+  cursor: zoom-in;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.vnn-map-img {
+  width: 100%;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.vnn-map-img-container:hover .vnn-map-img {
+  transform: scale(1.01);
+}
+
+.vnn-map-zoom-badge {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Download Card (Tripion & PDF) ── */
+.vnn-download-card {
+  background: linear-gradient(135deg, #f0fbfb 0%, #ffffff 100%);
+  border: 1px solid #b3eaea;
+  border-left: 5px solid #00c2cb;
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 48px;
+  box-shadow: 0 6px 20px rgba(0, 194, 203, 0.08);
+}
+
+.vnn-hanoi-teal-heading {
+  font-size: 26px;
+  font-weight: 700;
+  color: #008779;
+  margin: 0 0 16px;
+  line-height: 1.3;
+}
+
+.vnn-download-desc {
+  font-size: 15.5px;
+  color: #475569;
+  margin-bottom: 18px;
+  line-height: 1.7;
+}
+
+.vnn-download-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px 20px;
+}
+
+.vnn-download-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  color: #334155;
+}
+
+.vnn-checklist-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00c2cb;
+  flex-shrink: 0;
+}
+
+.vnn-wire-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #008779;
+  border: 2px solid #00c2cb;
+  border-radius: 50px;
+  padding: 12px 30px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.vnn-wire-btn:hover {
+  background: #00c2cb;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 194, 203, 0.35);
+}
+
+/* ── Ordered List & Highlights Section ── */
+.vnn-section-divider {
+  border: 0;
+  height: 1px;
+  background: #e2e8f0;
+  margin: 48px 0;
+}
+
+.vnn-list-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+  margin: 20px 0 28px;
+  padding-left: 0;
+  list-style: none;
+  counter-reset: custom-counter;
+}
+
+.vnn-list-item {
+  counter-increment: custom-counter;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+  font-size: 15px;
+  color: #1e293b;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.vnn-list-item:hover {
+  background: #f0fbfb;
+  border-color: #b3eaea;
+  transform: translateX(3px);
+}
+
+.vnn-list-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #00c2cb;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.vnn-readmore-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #008779;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: gap 0.2s ease;
+}
+
+.vnn-readmore-link:hover {
+  color: #00aab2;
+  gap: 10px;
+  text-decoration: underline;
+}
+
+/* ── 4 District Breakdown Cards ── */
+.vnn-district-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin: 28px 0 40px;
+}
+
+.vnn-district-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.vnn-district-card:hover {
+  transform: translateY(-4px);
+  border-color: #00c2cb;
+  box-shadow: 0 12px 28px rgba(0, 194, 203, 0.15);
+}
+
+.vnn-district-thumb-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 60%;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.vnn-district-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.vnn-district-card:hover .vnn-district-thumb {
+  transform: scale(1.05);
+}
+
+.vnn-district-zone-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(0, 194, 203, 0.95);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.vnn-district-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.vnn-district-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.vnn-district-desc {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.vnn-district-spots {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  color: #334155;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vnn-district-spot-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vnn-district-spot-item svg {
+  color: #00c2cb;
+  flex-shrink: 0;
+}
+
+/* ── Food Showcase Visual Grid ── */
+.vnn-food-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 24px 0 32px;
+}
+
+.vnn-food-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.vnn-food-card:hover {
+  transform: translateY(-3px);
+  border-color: #00c2cb;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.vnn-food-thumb-wrap {
+  width: 100%;
+  padding-bottom: 70%;
+  position: relative;
+  overflow: hidden;
+}
+
+.vnn-food-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.vnn-food-card:hover .vnn-food-thumb {
+  transform: scale(1.06);
+}
+
+.vnn-food-info {
+  padding: 12px 14px;
+}
+
+.vnn-food-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 4px;
+}
+
+.vnn-food-sub {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+/* ── Transportation Tips Grid ── */
+.vnn-transport-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 24px 0 40px;
+}
+
+.vnn-transport-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.vnn-transport-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #e6f8f8;
+  color: #008779;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vnn-transport-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 6px;
+}
+
+.vnn-transport-desc {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Solid Separator ── */
+.vnn-editorial-separator {
+  margin: 60px 0 50px;
+  text-align: center;
+}
+
+.vnn-editorial-separator-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #ebebeb;
+  border: 0;
+}
+
+/* ── Related Articles Section (Matching User's Standard) ── */
+.vnn-related-section {
+  margin-top: 40px;
+  margin-bottom: 60px;
+}
+
+.vnn-related-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.vnn-related-title {
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  color: #111111;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.vnn-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.vnn-related-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.vnn-related-card:hover .vnn-related-card-title {
+  color: #00c2cb !important;
+}
+
+.vnn-related-card:hover .vnn-related-card-thumb {
+  transform: scale(1.05);
+}
+
+.vnn-related-card-thumb-wrap {
+  width: 100%;
+  padding-bottom: 80%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #f1f5f9;
+}
+
+.vnn-related-card-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.vnn-related-card-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #222222;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 6px 4px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.vnn-related-card-meta {
+  padding: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.vnn-related-card-title {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  color: #111111;
+  margin: 0 0 10px;
+  transition: color 0.2s ease;
+}
+
+.vnn-related-card-date {
+  font-size: 12px;
+  color: #767676;
+}
+
+/* ── Lightbox Modal for Map ── */
+.vnn-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 29, 0.92);
+  backdrop-filter: blur(10px);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.vnn-lightbox-modal {
+  position: relative;
+  max-width: 95vw;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vnn-lightbox-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(30, 41, 59, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.vnn-lightbox-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.vnn-lightbox-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vnn-lightbox-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.vnn-lightbox-btn:hover {
+  background: #00c2cb;
+  border-color: #00c2cb;
+}
+
+.vnn-lightbox-content {
+  overflow: auto;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vnn-lightbox-img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+
+/* ── Mobile Responsive ── */
+@media (max-width: 900px) {
+  .vnn-fullbleed-hero {
+    height: 400px;
+  }
+  .vnn-fullbleed-hero__title {
+    font-size: 38px;
+  }
+  .vnn-related-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .vnn-district-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .vnn-fullbleed-hero {
+    height: 350px;
+    min-height: 320px;
+  }
+
+  .vnn-fullbleed-hero__title {
+    font-size: 30px;
+  }
+
+  .vnn-fullbleed-hero__meta {
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  .vnn-container {
+    padding: 20px 16px 60px;
+  }
+
+  .vnn-pill-cta-btn {
+    font-size: 14.5px;
+    padding: 14px 24px;
+    width: 100%;
+  }
+
+  .vnn-list-columns {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .vnn-food-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .vnn-transport-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .vnn-related-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .vnn-related-card {
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .vnn-related-card-thumb-wrap {
+    width: 120px;
+    min-width: 120px;
+    padding-bottom: 85px;
+  }
+
+  .vnn-related-card-meta {
+    padding: 0;
+  }
+
+  .vnn-related-card-title {
+    font-size: 16px !important;
+  }
+
+  .vnn-related-title {
+    font-size: 24px !important;
+  }
+}
+
+/* ── Guaranteed Footer Styling (Dark Ink Theme) ── */
+.home-footer {
+  background: #0d1f2d !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  width: 100%;
+  clear: both;
+}
+
+.home-footer__grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 2.5rem;
+}
+
+.home-footer__brand-name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #ffffff !important;
+  margin-bottom: 0.85rem;
+}
+
+.home-footer__brand-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #00c2cb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.home-footer__brand-desc {
+  font-size: 0.85rem;
+  max-width: 280px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.home-footer__socials {
+  display: flex;
+  gap: 0.9rem;
+  margin-top: 1.3rem;
+}
+
+.home-footer__social-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.home-footer__social-btn:hover {
+  background: #00c2cb;
+  border-color: #00c2cb;
+  transform: translateY(-2px);
+}
+
+.home-footer__col-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #ffffff !important;
+  margin: 0 0 1rem;
+  letter-spacing: 0.5px;
+}
+
+.home-footer__col-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.home-footer__col-links a {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.home-footer__col-links a:hover {
+  color: #00c2cb;
+}
+
+.home-footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+}
+
+.home-footer__bottom-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .home-footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-footer__grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+}
