@@ -30,10 +30,15 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import "@/styles/province.css";
+import HoChiMinhCityPage from "../ho-chi-minh/page";
 
 export default function ProvincePage() {
   const { slug } = useParams();
   const searchParams = useSearchParams();
+
+  if (slug === "ho-chi-minh") {
+    return <HoChiMinhCityPage />;
+  }
 
   const [province, setProvince] = useState(null);
   const [landmarks, setLandmarks] = useState([]);

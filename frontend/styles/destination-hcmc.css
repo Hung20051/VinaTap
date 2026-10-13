@@ -1,0 +1,799 @@
+/* ═════════════════════════════════════════════════════════════════
+   HO CHI MINH CITY DESTINATION HUB STYLES (VIETNAMNOMAD ACCURATE)
+   ═════════════════════════════════════════════════════════════════ */
+
+.vnn-hcmc-page {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #222;
+  background-color: #fff;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ─── TOP AD BANNER ─── */
+.vnn-hcmc-top-banner {
+  width: 100%;
+  background: #f7f9fa;
+  border-bottom: 1px solid #eaeaea;
+  text-align: center;
+  overflow: hidden;
+}
+
+.vnn-hcmc-top-banner img {
+  width: 100%;
+  max-height: 85px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── HEADER / NAVBAR ─── */
+.vnn-hcmc-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.vnn-hcmc-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vnn-hcmc-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vnn-hcmc-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vnn-hcmc-nav-item {
+  position: relative;
+}
+
+.vnn-hcmc-nav-link {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #222222;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.vnn-hcmc-nav-link:hover,
+.vnn-hcmc-nav-link.active {
+  color: #00c2cb;
+}
+
+.vnn-hcmc-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.vnn-hcmc-search-btn {
+  background: none;
+  border: none;
+  color: #222;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.vnn-hcmc-search-btn:hover {
+  background: #f4f6f8;
+  color: #00c2cb;
+}
+
+/* ─── HERO SECTION ─── */
+.vnn-hcmc-hero {
+  position: relative;
+  min-height: 540px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-align: center;
+  overflow: hidden;
+  background-color: #111;
+}
+
+.vnn-hcmc-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.02);
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.vnn-hcmc-hero:hover .vnn-hcmc-hero-bg {
+  transform: scale(1.05);
+}
+
+.vnn-hcmc-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
+
+.vnn-hcmc-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 40px 20px;
+  margin: 0 auto;
+}
+
+.vnn-hcmc-hero-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.vnn-hcmc-pill-tag {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.vnn-hcmc-pill-tag:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: #ffffff;
+}
+
+.vnn-hcmc-hero-title {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.vnn-hcmc-hero-meta {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.vnn-hcmc-hero-meta span.author {
+  color: #ffffff;
+}
+
+.vnn-hcmc-hero-meta span.date {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ─── QUICK NAVIGATION PILLS BAR ─── */
+.vnn-hcmc-quicknav-wrap {
+  position: relative;
+  z-index: 10;
+  margin-top: -30px;
+  margin-bottom: 36px;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.vnn-hcmc-quicknav-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ebebeb;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.vnn-hcmc-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #444444;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.vnn-hcmc-quick-btn:hover {
+  background: #f7fafc;
+  color: #00c2cb;
+}
+
+.vnn-hcmc-quick-btn.active {
+  border-color: #00c2cb;
+  color: #00c2cb;
+  background: rgba(0, 194, 203, 0.06);
+}
+
+.vnn-hcmc-quick-btn svg {
+  color: inherit;
+  flex-shrink: 0;
+}
+
+/* ─── MAIN CONTAINER ─── */
+.vnn-hcmc-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 20px 80px 20px;
+}
+
+/* ─── SECTION HEADER ─── */
+.vnn-hcmc-section {
+  margin-bottom: 64px;
+  scroll-margin-top: 90px;
+}
+
+.vnn-hcmc-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.vnn-hcmc-section-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.vnn-hcmc-view-all {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555555;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.vnn-hcmc-view-all:hover {
+  color: #00c2cb;
+}
+
+.vnn-hcmc-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #ebebeb;
+  margin-bottom: 28px;
+}
+
+/* ─── TRAVEL GUIDE INTRO & VIDEO ─── */
+.vnn-hcmc-intro-text {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #444444;
+  margin-bottom: 28px;
+}
+
+.vnn-hcmc-intro-text p {
+  margin-bottom: 16px;
+}
+
+.vnn-hcmc-intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+.vnn-hcmc-video-container {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto 28px auto;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  background: #000;
+  aspect-ratio: 16 / 9;
+}
+
+.vnn-hcmc-video-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.vnn-hcmc-video-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.vnn-hcmc-video-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.vnn-hcmc-video-poster:hover img {
+  transform: scale(1.02);
+}
+
+.vnn-hcmc-video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 48px;
+  background: #ff0000;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.4);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.vnn-hcmc-video-poster:hover .vnn-hcmc-video-play-btn {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: #cc0000;
+}
+
+.vnn-hcmc-video-play-btn svg {
+  fill: #ffffff;
+  color: #ffffff;
+}
+
+.vnn-hcmc-expand-wrap {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.vnn-hcmc-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f2f2f2;
+  color: #333333;
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.vnn-hcmc-expand-btn:hover {
+  background-color: #e5e5e5;
+  color: #00c2cb;
+}
+
+/* ─── EXPANDED GUIDE CONTENT ─── */
+.vnn-hcmc-accordion-body {
+  margin-top: 32px;
+  padding: 32px;
+  background: #fbfbfb;
+  border: 1px solid #ebebeb;
+  border-radius: 16px;
+  animation: fadeIn 0.3s ease;
+}
+
+.vnn-hcmc-guide-subblock {
+  margin-bottom: 32px;
+}
+
+.vnn-hcmc-guide-subblock:last-child {
+  margin-bottom: 0;
+}
+
+.vnn-hcmc-guide-subblock h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 12px 0;
+}
+
+.vnn-hcmc-guide-subblock p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.vnn-hcmc-guide-subblock ul {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.vnn-hcmc-guide-subblock li {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+/* ─── TOP ATTRACTIONS MOSAIC GRID ─── */
+.vnn-hcmc-attractions-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr;
+  grid-template-rows: 210px 210px;
+  gap: 16px;
+}
+
+.vnn-hcmc-attraction-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #f0f0f0;
+  display: block;
+}
+
+.vnn-hcmc-attraction-card.large {
+  grid-row: span 2;
+}
+
+.vnn-hcmc-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.vnn-hcmc-attraction-card:hover .vnn-hcmc-card-img {
+  transform: scale(1.06);
+}
+
+.vnn-hcmc-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.15) 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 18px 20px;
+}
+
+.vnn-hcmc-card-title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.35;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.vnn-hcmc-attraction-card.large .vnn-hcmc-card-title {
+  font-size: 20px;
+}
+
+/* ─── MUST-TRY DISHES MOSAIC GRID ─── */
+.vnn-hcmc-dishes-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: repeat(3, 135px);
+  gap: 16px;
+}
+
+.vnn-hcmc-dish-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #f0f0f0;
+  display: block;
+}
+
+.vnn-hcmc-dish-card.large {
+  grid-row: span 3;
+}
+
+.vnn-hcmc-dish-card:hover .vnn-hcmc-card-img {
+  transform: scale(1.06);
+}
+
+.vnn-hcmc-dish-card.large .vnn-hcmc-card-title {
+  font-size: 20px;
+}
+
+/* ─── SPECIAL OFFERS CARDS ─── */
+.vnn-hcmc-offers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.vnn-hcmc-offer-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #ebebeb;
+  padding: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+.vnn-hcmc-offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+}
+
+.vnn-hcmc-offer-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f7f7f7;
+  margin-bottom: 16px;
+}
+
+.vnn-hcmc-offer-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.vnn-hcmc-offer-card:hover .vnn-hcmc-offer-img-wrap img {
+  transform: scale(1.03);
+}
+
+.vnn-hcmc-offer-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111111;
+  line-height: 1.45;
+  margin: 0 0 10px 0;
+  transition: color 0.2s ease;
+}
+
+.vnn-hcmc-offer-card:hover .vnn-hcmc-offer-title {
+  color: #00c2cb;
+}
+
+.vnn-hcmc-offer-validity {
+  font-size: 13.5px;
+  color: #666666;
+  margin-top: auto;
+  font-weight: 500;
+}
+
+/* ─── TAGS SECTION ─── */
+.vnn-hcmc-tags-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 48px 0 64px 0;
+  flex-wrap: wrap;
+}
+
+.vnn-hcmc-tag-label {
+  background: #00c2cb;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.vnn-hcmc-tag-pill {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  color: #444444;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.vnn-hcmc-tag-pill:hover {
+  border-color: #00c2cb;
+  color: #00c2cb;
+  background: rgba(0, 194, 203, 0.04);
+}
+
+/* ─── OTHER DESTINATIONS SECTION ─── */
+.vnn-hcmc-other-dest-title {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  color: #111111;
+  margin: 0 0 36px 0;
+}
+
+.vnn-hcmc-other-dest-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.vnn-hcmc-other-dest-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  text-decoration: none;
+  background: #f0f0f0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.vnn-hcmc-other-dest-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.vnn-hcmc-other-dest-card:hover img {
+  transform: scale(1.08);
+}
+
+.vnn-hcmc-other-dest-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.vnn-hcmc-other-dest-name {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── FLOATING AI COMPANION ─── */
+.vnn-hcmc-floating-ai {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  cursor: pointer;
+  filter: drop-shadow(0 6px 16px rgba(0, 194, 203, 0.35));
+  transition: transform 0.25s ease;
+}
+
+.vnn-hcmc-floating-ai:hover {
+  transform: scale(1.08);
+}
+
+.vnn-hcmc-floating-ai img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: block;
+}
+
+/* ─── RESPONSIVE BREAKPOINTS ─── */
+@media (max-width: 992px) {
+  .vnn-hcmc-hero-title {
+    font-size: 48px;
+  }
+  .vnn-hcmc-attractions-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .vnn-hcmc-attraction-card.large {
+    grid-column: span 2;
+    grid-row: span 1;
+    height: 280px;
+  }
+  .vnn-hcmc-attraction-card {
+    height: 200px;
+  }
+  .vnn-hcmc-dishes-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .vnn-hcmc-dish-card.large {
+    grid-row: span 1;
+    height: 280px;
+  }
+  .vnn-hcmc-dish-card {
+    height: 160px;
+  }
+  .vnn-hcmc-other-dest-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .vnn-hcmc-hero {
+    min-height: 420px;
+  }
+  .vnn-hcmc-hero-title {
+    font-size: 38px;
+  }
+  .vnn-hcmc-quicknav-bar {
+    gap: 6px;
+    padding: 6px 10px;
+  }
+  .vnn-hcmc-quick-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  .vnn-hcmc-offers-grid {
+    grid-template-columns: 1fr;
+  }
+  .vnn-hcmc-nav-menu {
+    display: none;
+  }
+}

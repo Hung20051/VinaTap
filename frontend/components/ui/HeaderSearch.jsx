@@ -49,6 +49,16 @@ const SEARCH_POSTS = [
     keywords: "top 8 must visit attractions in hue citadel thien mu tomb perfume river",
   },
   {
+    id: "dest-hcmc",
+    title: "Ho Chi Minh City",
+    titleVi: "TP. Hồ Chí Minh",
+    date: "April 19, 2025",
+    dateVi: "19 Tháng 4, 2025",
+    img: "/guide/hcmc/hcmc-hero-aerial-hd.jpg",
+    link: "/province/ho-chi-minh",
+    keywords: "ho chi minh city saigon sai gon destination cẩm nang du lịch tp hcm thanh pho ho chi minh",
+  },
+  {
     id: "eat-hcmc",
     title: "12 must-try foods in Ho Chi Minh City",
     titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
