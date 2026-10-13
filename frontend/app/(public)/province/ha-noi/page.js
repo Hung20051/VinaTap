@@ -1532,8 +1532,279 @@ export default function HanoiPage() {
                     {lang === "vi" ? "Tour khởi hành từ 19:00 các ngày Thứ Sáu và cuối tuần" : "Tour starts from 7:00 PM on Fridays and weekends"}
                   </li>
                   <li>
-                    <strong>{lang === "vi" ? "Giá vé: " : "Tickets: "}</strong>
+                    <strong>{lang === "vi" ? "Giá vé tour đêm: " : "Tickets: "}</strong>
                     {lang === "vi" ? "300.000 VNĐ ($13) cho người lớn và 150.000 VNĐ ($6.5) cho trẻ em" : "300,000 VND ($13) for adults and 150,000 VND ($6.5) for children"}
+                  </li>
+                  <li>
+                    {lang === "vi" ? (
+                      <>
+                        Xem thêm thông tin chi tiết tại{" "}
+                        <a href="http://hoangthanhthanglong.com" target="_blank" rel="noopener noreferrer" style={{ color: "#008b94", textDecoration: "underline" }}>
+                          trang web chính thức
+                        </a>
+                      </>
+                    ) : (
+                      <>
+                        Check out their{" "}
+                        <a href="http://hoangthanhthanglong.com" target="_blank" rel="noopener noreferrer" style={{ color: "#008b94", textDecoration: "underline" }}>
+                          website
+                        </a>{" "}
+                        for more information
+                      </>
+                    )}
+                  </li>
+                </ul>
+
+                <p style={{ marginBottom: "8px" }}>
+                  {lang === "vi"
+                    ? "2. Hoàng thành Thăng Long nằm trong một khuôn viên rộng lớn, vì vậy nếu tham quan vào ban ngày, hãy nhớ mang theo đồ chống nắng (mũ, nón hoặc ô) và nước uống."
+                    : "2. The Imperial Citadel sits on a large campus, so if you visit it during the daytime, make sure you have your sun protection (hats or umbrellas) and water."}
+                </p>
+
+                <p style={{ marginBottom: "16px" }}>
+                  {lang === "vi"
+                    ? "3. Trong khuôn viên có một số quán cà phê xinh xắn dưới bóng cây cổ thụ mát rượi, nơi bạn có thể ngồi thưởng thức đồ uống và tận hưởng bầu không khí thanh bình."
+                    : "3. There are some lovely cafes on the campus where you can sit down under the shade of big trees to enjoy a drink while embracing the peaceful vibes in the air."}
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                    {lang === "vi" ? "19 Phố Hoàng Diệu, Quận Ba Đình" : "19 Hoang Dieu Street, Ba Dinh District"}
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giá vé ban ngày: " : "Tickets: "}</strong>
+                    30,000 VND
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giờ mở cửa: " : "Opening Hours: "}</strong>
+                    8:00 AM – 5:00 PM
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 9: HANOI OPERA HOUSE (SCREENSHOT 1 & 2) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "9. Nhà hát Lớn Hà Nội (Hanoi Opera House)" : "9. Hanoi Opera House"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-operahouse-hd.jpg"
+                    alt="Hanoi Opera House Nha Hat Lon"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Nhà hát Lớn Hà Nội – Biểu tượng kiến trúc nghệ thuật thủ đô" : "Hanoi Opera House"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Nhà hát Lớn Hà Nội được biết đến như một biểu tượng nghệ thuật và văn hóa của thành phố. Đây cũng là điểm đến du lịch tại Hà Nội được đông đảo du khách yêu thích. Nơi đây là thánh đường của nhiều buổi biểu diễn nghệ thuật cấp quốc gia cũng như các chương trình biểu diễn nghệ thuật quốc tế đỉnh cao. Đến đây, bạn sẽ được thưởng thức nhiều loại hình nghệ thuật đặc sắc, từ các vở tuồng, chèo, cải lương kinh điển của Việt Nam cho đến opera Pháp, opera cổ điển Ý, kinh kịch và múa Ballet."
+                    : "Hanoi Opera House is known as an artistic and cultural symbol of the city. It's also a tourist destination in Hanoi that is loved by many visitors. Hanoi Opera House is the place for many national-level performances, as well as international art performances. Coming here, you will enjoy many unique art forms, not only famous Vietnamese plays such as Tuong, Cheo and Cai Luong but also the French opera, classical Italian opera, Chinese opera and Ballet."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Đáng tiếc là nhà hát không mở cửa tự do cho công chúng vào tham quan thông thường. Tuy nhiên, vé xem các chương trình nghệ thuật được bán từ 400.000 VNĐ, cho phép bạn chiêm ngưỡng trọn vẹn vẻ đẹp lộng lẫy của kiến trúc, văn hóa cũng như không gian âm nhạc nghệ thuật hàn lâm nơi đây. Hãy truy cập trang web để cập nhật lịch biểu diễn mới nhất và đặt vé sớm để có vị trí ngồi đẹp."
+                    : "Unfortunately, it is not open for public visits. However, art show tickets are available from 400,000 VND, which allows you to fully enjoy the beauty of architecture and culture as well as the music and art space here. Please visit the website to update information about the performance schedule. Also, you can book early to get a good position."}
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                    {lang === "vi" ? "1 Phố Tràng Tiền, Quận Hoàn Kiếm" : "1 Trang Tien Street, Hoan Kiem District"}
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Trang web: " : "Website: "}</strong>
+                    <a href="http://hanoioperahouse.org.vn" target="_blank" rel="noopener noreferrer" style={{ color: "#008b94", textDecoration: "underline" }}>
+                      hanoioperahouse.org.vn
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 10: LONG BIEN BRIDGE (SCREENSHOT 2 & 3) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "10. Cầu Long Biên (Long Bien Bridge)" : "10. Long Bien Bridge"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-longbien-hd.jpg"
+                    alt="Long Bien Bridge Red River"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Cầu Long Biên – Chứng nhân lịch sử bắc qua sông Hồng" : "Long Bien Bridge"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Đây là cây cầu thép đầu tiên được xây dựng bắc qua sông Hồng, ban đầu nhằm phục vụ công cuộc khai thác thuộc địa của thực dân Pháp. Có thể bạn chưa biết công trình lịch sử này từng là cây cầu dài thứ hai trên thế giới (chỉ xếp sau Cầu Brooklyn ở Mỹ) và thậm chí còn được ví von như tháp Eiffel nằm ngang giữa lòng Hà Nội."
+                    : "This is the first steel bridge built across the Red River initially to facilitate the process of colonial exploitation under the French invasion. Little did you know about this historical construction is that it used to be the second-longest bridge in the world (just ranked after Brooklyn Bridge in the U.S) and even called the horizontal version of the Eiffel in Hanoi."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Giữa vô vàn công trình cầu tại thủ đô, Cầu Long Biên vẫn là biểu tượng đặc sắc nhất và được ưu ái gọi bằng cái tên \"chứng nhân lịch sử\". Bởi lẽ cây cầu đã chứng kiến trọn vẹn những thăng trầm buồn vui của dân tộc: kiên cường đứng vững qua các đợt ném bom ác liệt và là nhịp cầu nối hàng ngàn người từ khắp các vùng miền đổ về Quảng trường Ba Đình ngày Chủ tịch Hồ Chí Minh đọc bản Tuyên ngôn Độc lập."
+                    : "Among countless bridge constructions, Long Bien Bridge remains the most iconic and is favorably nicknamed \"the historical witness\". This is because the bridge witnessed all the bittersweet the nation went through: it survived several bombing campaigns and it bridged thousands of people from all remote and inaccessible areas to Hanoi's Ba Dinh Square where President Ho Chi Minh read the Declaration of Independence."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Cầu Long Biên được chia làm hai làn đường chủ yếu dành cho phương tiện thô sơ, người đi bộ và tuyến đường sắt chạy ở giữa. Đứng trên cầu ngắm nhìn đoàn tàu hỏa chạy lướt qua là một trải nghiệm đầy mê hoặc, và việc tản bộ trên cầu sẽ mang lại góc nhìn toàn cảnh Hà Nội từ xa. Phía dưới cầu là bãi bồi chuối xanh mướt ngập tràn phong cảnh làng quê thanh bình mà bạn có thể tiếp cận bằng những bậc thang bí mật ở giữa cầu (xe đạp cũng có thể dắt xuống)."
+                    : "Long Bien Bridge is divided into two traffic lanes mostly used for light vehicles and pedestrians and a railway in the middle. Being on the bridge when the trains go by is a fascinating experience and walking on the bridge will give you a panorama view of Hanoi from a distance. Under the bridge is a lush banana island with peaceful countryside landscapes which you can access by taking the secret stairs in the middle of the bridge (possible for bicycles also)."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "Cầu Long Biên, Quận Hoàn Kiếm" : "Long Bien, Hoan Kiem District"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 11: THANG LONG WATER PUPPET THEATER (SCREENSHOT 3 & 4) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "11. Nhà hát Múa rối nước Thăng Long (Thang Long Water Puppet Theater)" : "11. Thang Long Water Puppet Theater"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-waterpuppet-hd.jpg"
+                    alt="Thang Long Water Puppet Theater"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Nghệ thuật Múa rối nước Thăng Long trên sân khấu nước" : "Thang Long Water Puppet Theater"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Năm 1969, Nhà hát Múa rối nước Thăng Long được thành lập và nhanh chóng trở thành một trong những điểm biểu diễn nghệ thuật múa rối nước nổi tiếng nhất tại Việt Nam. Những câu chuyện cổ tích và truyền thuyết lịch sử Việt Nam được tái hiện sống động qua những con rối gỗ biểu diễn độc đáo trên mặt nước. Đây là một trải nghiệm kỳ thú không thể bỏ lỡ đối với du khách khi ghé thăm Hà Nội. Thưởng thức múa rối nước sẽ giúp bạn hiểu sâu sắc hơn về văn hóa và các loại hình nghệ thuật dân gian truyền thống. Vé có thể đặt trước và thông tin chi tiết có trên trang web của nhà hát."
+                    : "In 1969, Thang Long Water Puppet Theater was established, and it quickly became one of the most famous water puppet art venues in Vietnam. The fairy tales and Vietnam historical legends are vividly reproduced by wooden puppets and uniquely performed on water. It is an exciting experience not to be missed for visitors when visiting Hanoi. Watching a water puppet show will help you learn more about Vietnam's traditional culture and art forms. Tickets can be booked in advance and more information can be found on the website."}
+                </p>
+
+                <p>
+                  <em>
+                    {lang === "vi"
+                      ? "Lưu ý: Có phụ thu nhỏ 20.000 VNĐ và 60.000 VNĐ nếu mang theo máy chụp ảnh hoặc quay phim."
+                      : "Note: small charges of 20,000 VND and 60,000 VND are applied for taking pictures and recording videos."}
+                  </em>
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "49 Phố Đinh Tiên Hoàng, Quận Hoàn Kiếm" : "49 Dinh Tien Hoang, Hoan Kiem District"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 12: QUANG BA FLOWER MARKET (SCREENSHOT 4 & 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "12. Chợ hoa đêm Quảng Bá (Quang Ba Flower Market)" : "12. Quang Ba Flower Market"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-flowermarket-hd.jpg"
+                    alt="Quang Ba Flower Market night"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Chợ hoa đêm Quảng Bá lung linh sắc hoa giữa đêm khuya" : "Quang Ba Flower Market"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Nếu bạn là một người yêu hoa hoặc đơn giản muốn tìm kiếm một hoạt động về đêm mang đậm hơi thở bản địa, Chợ hoa Quảng Bá chắc chắn sẽ khiến bạn choáng ngợp. Khác với các khu chợ truyền thống họp suốt cả ngày, Chợ hoa Quảng Bá bắt đầu dọn hàng và xếp các bó hoa rực rỡ từ khoảng 23:00 đêm và tan chợ vào rạng sáng khoảng 6:00 sáng. Khoảng thời gian nhộn nhịp và sống động nhất là từ 1:00 – 2:00 sáng. Khi phần còn lại của thành phố chìm vào giấc ngủ, Chợ Quảng Bá bắt đầu thức giấc, rộn rã tiếng cười nói, ngã giá mặc cả cùng hương thơm ngào ngạt đánh thức mọi giác quan của bạn. Vì là chợ đầu mối nên hoa được bán theo bó lớn với mức giá cực kỳ phải chăng."
+                    : "If you are a flower lover or simply looking for a night-life activity with a local breath, Quang Ba Flower Market will definitely blow your mind. Unlike other traditional markets which open throughout the day, Quang Ba Flower Market starts setting and stacking up flowers around 11:00 PM and closing at dawn at around 6:00 AM. The most bustling and lively time is from 1:00 AM – 2:00 AM. When the rest of the city is falling asleep, Quang Ba Market starts waking up, filled with laughter, bargains and fragrance, which will stimulate all your senses. Since this is a wholesale market, flowers are sold in bulk and very reasonably priced."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Tùy thuộc vào việc bạn là người dậy sớm hay cú đêm, bạn có thể chọn ghé thăm chợ vào khoảng nửa đêm hoặc lúc 5:00 sáng. Đây là trải nghiệm rất đáng để thức giấc và chắc chắn sẽ mang đến cho bạn kỷ niệm độc nhất vô nhị."
+                    : "Depending on whether you are an early riser or a night owl, you can choose to visit the market around midnight or around 5:00 AM. This is worth getting up for and will surely bring you a unique experience."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "Nghi Tàm, Đường Âu Cơ, Quận Tây Hồ" : "Nghi Tam, Au Co, Tay Ho District"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 13: ONE PILLAR PAGODA (SCREENSHOT 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "13. Chùa Một Cột (One Pillar Pagoda)" : "13. One Pillar Pagoda"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-chuamotcot-hd.jpg"
+                    alt="One Pillar Pagoda Chua Mot Cot"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Chùa Một Cột – Kiến trúc đóa sen độc nhất vô nhị" : "One Pillar Pagoda"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Chùa Một Cột (tên chữ Diên Hựu tự) được xây dựng vào năm 1049 dưới thời vua Lý Thái Tông và đã trải qua nhiều lần trùng tu do sự tàn phá của chiến tranh. Tương truyền vua Lý Thái Tông mộng thấy Phật Bà Quan Âm ngự trên tòa sen dắt vua lên tòa; sau giấc mơ, ngài đã truyền lệnh dựng ngôi chùa tựa như một đóa sen ngát hương vươn lên khỏi mặt nước – biểu tượng Phật giáo của sự thanh tịnh và giác ngộ. Đây là nơi nhà vua thường xuyên lui tới hành lễ và đạo Phật cũng chứng kiến thời kỳ hưng thịnh rực rỡ từ đó."
+                    : "One-pillar Pagoda or Chua Mot Cot as it is locally known was built in 1049 by Emperor Ly Thai Tong and has undergone many restorations due to the destruction of wars. Legend has it that the Emperor dreamed of Deity Quan Am (or Lady Buddha) sitting on a blooming lotus and asking him to join her enlightenment journey; after the dream, he ordered to build this pagoda which resembles a lotus blossom – a Buddhist symbol for purity and enlightenment. This is where the Emperor practiced his religion and Buddhism also witnessed its flourishing and prosperity since then."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Dù ngôi chùa không có quy mô bề thế hoành tráng, kiến trúc độc bản tựa đài sen trên một cột đá duy nhất giữa hồ sen đã biến nơi đây thành biểu tượng kiến trúc văn hóa vang danh toàn cầu của Việt Nam."
+                    : "Although the pagoda is not a spectacular and large-scale complex, its unique architecture shaped like a lotus blossom emerging from the water makes it a world-renowned architectural icon of Vietnam."}
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                    {lang === "vi" ? "Phố Chùa Một Cột, Đội Cấn, Quận Ba Đình" : "Chua Mot Cot Street, Doi Can, Ba Dinh District"}
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giờ mở cửa: " : "Opening hours: "}</strong>
+                    7:00 AM – 6:00 PM
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giá vé: " : "Ticket price: "}</strong>
+                    {lang === "vi" ? "Miễn phí (25.000 VNĐ cho khách quốc tế)" : "Free for Vietnamese, 25,000 VND for foreign visitors"}
                   </li>
                 </ul>
               </div>
