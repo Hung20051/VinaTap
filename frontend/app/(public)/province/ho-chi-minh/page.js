@@ -278,7 +278,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "13 Tháng 10, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-3-2weeks.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/2-weeks-in-vietnam",
       },
       {
         id: "itin-4",

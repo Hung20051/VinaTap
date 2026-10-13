@@ -266,10 +266,10 @@ const MEGA_MENUS_DATA = {
         title: "2 Weeks in Vietnam: North to South",
         titleVi: "2 tuần tại Việt Nam: Xuyên Việt từ Bắc vào Nam",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Itineraries",
         img: "/guide/megamenu/itin-3-2weeks.jpg",
-        link: "/guide/3-week-vietnam-itinerary",
+        link: "/guide/2-weeks-in-vietnam",
       },
       {
         id: "itin-4",

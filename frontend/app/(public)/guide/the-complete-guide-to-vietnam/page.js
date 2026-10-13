@@ -285,7 +285,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "13 Tháng 10, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-3-2weeks.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/2-weeks-in-vietnam",
       },
       {
         id: "itin-4",
@@ -1117,7 +1117,7 @@ export default function CompleteGuideToVietnamPage() {
             </Link>
 
             {/* Card 3 (Right row 2): 2 Weeks in Vietnam */}
-            <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt" className="vnn-biggrid-item">
+            <Link href="/guide/2-weeks-in-vietnam" className="vnn-biggrid-item">
               <img
                 src="/guide/megamenu/itin-3-2weeks.jpg"
                 alt={lang === "vi" ? "Lịch trình 2 tuần cân bằng" : "2 Weeks in Vietnam"}

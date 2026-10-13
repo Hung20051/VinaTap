@@ -271,10 +271,10 @@ const MEGA_MENUS_DATA = {
         title: "2-Week Heritage Trail: Hue to Hoi An",
         titleVi: "2 tuần con đường di sản: Huế đến Hội An",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Itineraries",
         img: "/guide/megamenu/itin-3-2weeks.jpg",
-        link: "/province/da-nang",
+        link: "/guide/2-weeks-in-vietnam",
       },
       {
         id: "itin-4",

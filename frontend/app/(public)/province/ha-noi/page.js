@@ -272,7 +272,7 @@ const MEGA_MENUS_DATA = {
         title: "2 Weeks in Vietnam",
         titleVi: "2 tuần du lịch Việt Nam",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-3-2weeks.jpg",
         link: "/guide/2-weeks-in-vietnam",

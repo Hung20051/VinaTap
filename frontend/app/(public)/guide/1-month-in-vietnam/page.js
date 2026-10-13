@@ -1109,7 +1109,7 @@ export default function OneMonthInVietnamPage() {
             </Link>
 
             <Link
-              href="/guide/the-complete-guide-to-vietnam"
+              href="/guide/2-weeks-in-vietnam"
               className="omi-other-itin-card"
             >
               <div className="omi-other-itin-img-wrap">

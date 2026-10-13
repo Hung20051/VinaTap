@@ -269,7 +269,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "12 Tháng 10, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-3-2weeks.jpg",
-        link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
+        link: "/guide/2-weeks-in-vietnam",
       },
       {
         id: "itin-4",
