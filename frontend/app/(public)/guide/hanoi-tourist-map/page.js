@@ -128,8 +128,8 @@ const MEGA_MENUS_DATA = {
         id: "dest-5",
         title: "Hanoi",
         titleVi: "Hà Nội",
-        date: "May 1, 2024",
-        dateVi: "1 Tháng 5, 2024",
+        date: "May 1, 2026",
+        dateVi: "1 Tháng 5, 2026",
         badge: "Destinations",
         img: "/guide/hanoi/hanoi-hero-hd.jpg",
         link: "/province/ha-noi",
@@ -162,10 +162,10 @@ const MEGA_MENUS_DATA = {
         id: "act-3",
         title: "Hanoi Tourist Map & Attractions",
         titleVi: "Bản đồ du lịch & Điểm đến Hà Nội",
-        date: "May 1, 2024",
-        dateVi: "1 Tháng 5, 2024",
+        date: "May 1, 2026",
+        dateVi: "1 Tháng 5, 2026",
         badge: "Things to do",
-        img: "/guide/hanoi/hanoi-tourist-map-2024.jpg",
+        img: "/guide/hanoi/hanoi-tourist-map-2026.jpg",
         link: "/guide/hanoi-tourist-map",
       },
       {
@@ -806,8 +806,8 @@ export default function HanoiTouristMapPage() {
             <span className="vnn-fullbleed-hero__dot">•</span>
             <span>
               {isVi
-                ? "1 Tháng 5, 2024 (Cập nhật 2026)"
-                : "May 1, 2024"}
+                ? "1 Tháng 5, 2026"
+                : "May 1, 2026"}
             </span>
           </div>
         </div>
@@ -933,8 +933,8 @@ export default function HanoiTouristMapPage() {
                 <span>{isVi ? "Phóng to" : "Expand"}</span>
               </button>
               <a
-                href="/guide/hanoi/hanoi-tourist-map-2024.jpg"
-                download="Hanoi-Tourist-Map-2024.jpg"
+                href="/guide/hanoi/hanoi-tourist-map-2026.jpg"
+                download="Hanoi-Tourist-Map-2026.jpg"
                 className="vnn-map-action-btn vnn-map-action-btn--primary"
               >
                 <Download size={14} />
@@ -956,7 +956,7 @@ export default function HanoiTouristMapPage() {
             }
           >
             <img
-              src="/guide/hanoi/hanoi-tourist-map-2024.jpg"
+              src="/guide/hanoi/hanoi-tourist-map-2026.jpg"
               alt="Hanoi Tourist Map Full"
               className="vnn-map-img"
             />
@@ -1026,8 +1026,8 @@ export default function HanoiTouristMapPage() {
 
           <div style={{ textAlign: "center", marginTop: "12px" }}>
             <a
-              href="/guide/hanoi/hanoi-tourist-map-2024.jpg"
-              download="Hanoi-Tourist-Map-2024.jpg"
+              href="/guide/hanoi/hanoi-tourist-map-2026.jpg"
+              download="Hanoi-Tourist-Map-2026.jpg"
               className="vnn-wire-btn"
             >
               <Download size={18} />
@@ -1419,8 +1419,8 @@ export default function HanoiTouristMapPage() {
                   100%
                 </button>
                 <a
-                  href="/guide/hanoi/hanoi-tourist-map-2024.jpg"
-                  download="Hanoi-Tourist-Map-2024.jpg"
+                  href="/guide/hanoi/hanoi-tourist-map-2026.jpg"
+                  download="Hanoi-Tourist-Map-2026.jpg"
                   className="vnn-lightbox-btn"
                   style={{ background: "#00c2cb", borderColor: "#00c2cb" }}
                 >
@@ -1439,7 +1439,7 @@ export default function HanoiTouristMapPage() {
             </div>
             <div className="vnn-lightbox-content">
               <img
-                src="/guide/hanoi/hanoi-tourist-map-2024.jpg"
+                src="/guide/hanoi/hanoi-tourist-map-2026.jpg"
                 alt="Hanoi Tourist Map Full HD"
                 className="vnn-lightbox-img"
                 style={{ transform: `scale(${modalZoom})` }}
