@@ -548,3 +548,157 @@
   margin-top: 4px;
 }
 
+/* ─── OTHER ITINERARIES SECTION (IMAGE 1) ─── */
+.omi-other-itin-section {
+  max-width: 800px;
+  margin: 50px auto 40px;
+}
+
+.omi-other-itin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+@media (max-width: 640px) {
+  .omi-other-itin-grid {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+    margin: 24px auto 0;
+  }
+}
+
+.omi-other-itin-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.omi-other-itin-card:hover {
+  transform: translateY(-4px);
+}
+
+.omi-other-itin-img-wrap {
+  width: 100%;
+  aspect-ratio: 145 / 204;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f8fafc;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.omi-other-itin-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transition: transform 0.3s ease;
+}
+
+.omi-other-itin-card:hover .omi-other-itin-img {
+  transform: scale(1.03);
+}
+
+.omi-other-itin-caption {
+  margin-top: 10px;
+  text-align: center;
+  font-style: italic;
+  font-size: 13.5px;
+  color: #475569;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.omi-other-itin-card:hover .omi-other-itin-caption {
+  color: #00a8b5;
+}
+
+/* ─── HORIZONTAL DIVIDER (IMAGE 2) ─── */
+.omi-divider {
+  border: 0;
+  height: 1px;
+  background: #e2e8f0;
+  max-width: 860px;
+  margin: 50px auto;
+}
+
+/* ─── RELATED ARTICLES SECTION (IMAGE 2) ─── */
+.omi-related-section {
+  max-width: 900px;
+  margin: 40px auto 70px;
+}
+
+.omi-related-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 32px;
+  letter-spacing: -0.01em;
+}
+
+.omi-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 768px) {
+  .omi-related-grid {
+    grid-template-columns: 1fr;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+}
+
+.omi-related-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.omi-related-card:hover {
+  transform: translateY(-4px);
+}
+
+.omi-related-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f1f5f9;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.omi-related-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transition: transform 0.3s ease;
+}
+
+.omi-related-card:hover .omi-related-img {
+  transform: scale(1.05);
+}
+
+.omi-related-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #0f172a;
+  margin: 14px 0 0;
+  transition: color 0.2s ease;
+}
+
+.omi-related-card:hover .omi-related-card-title {
+  color: #00a8b5;
+}
+
+

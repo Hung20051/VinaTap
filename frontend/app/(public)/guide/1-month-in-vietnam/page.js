@@ -1050,85 +1050,163 @@ export default function OneMonthInVietnamPage() {
           </ul>
         </section>
 
-        {/* ─── 1 MONTH IN VIETNAM COSTS (SCREENSHOT 5) ─── */}
+        {/* ─── 1 MONTH IN VIETNAM COSTS (IMAGE 1) ─── */}
         <section className="omi-costs-box">
           <h2 className="omi-section-title">
             {isVi ? "Chi phí du lịch Việt Nam 1 tháng" : "1 month in Vietnam costs"}
           </h2>
-          <p className="omi-costs-intro">
+          <p className="omi-costs-intro" style={{ textAlign: "left", marginBottom: "16px" }}>
             {isVi
-              ? "Nếu bạn đang lên kế hoạch cho chuyến du lịch 1 tháng tại Việt Nam, việc chuẩn bị ngân sách dự kiến là rất hữu ích. Trung bình, nhiều du khách chi tiêu từ 1.000 đến 1.500 USD cho một tháng tại Việt Nam, tùy thuộc vào phong cách du lịch, lựa chọn lưu trú và các hoạt động trải nghiệm."
-              : "If you're planning a 1-month trip to Vietnam, it's helpful to have an estimated budget in mind. On average, many travelers spend between $1,000 and $1,500 USD for a month in Vietnam, depending on travel style, accommodation preferences, and activities."}
+              ? "Nếu bạn đang lên kế hoạch cho chuyến du lịch 1 tháng tại Việt Nam, việc chuẩn bị ngân sách dự kiến là rất cần thiết. Trung bình, nhiều du khách chi tiêu khoảng 1.000 USD cho chuyến đi của mình. Dưới đây là bảng phân bổ chi phí cố định ước tính giúp bạn lên kế hoạch:"
+              : "If you're planning a 1-month trip to Vietnam, it's helpful to have an estimated budget in mind. On average, many tourists spend around $1,000 on their trip. Here's a breakdown of estimated fixed costs to help you plan:"}
           </p>
 
-          <div className="omi-costs-grid">
-            <div className="omi-cost-card">
-              <div className="omi-cost-card__header">
-                <span className="omi-cost-card__title">
-                  {isVi ? "Lưu trú (30 đêm)" : "Accommodation (30 nights)"}
-                </span>
-                <span className="omi-cost-card__price">$300 – $600 USD</span>
-              </div>
-              <p className="omi-cost-card__desc">
-                {isVi
-                  ? "Hostel / Homestay tiện nghi: $10–$15/đêm hoặc Khách sạn boutique 3 sao: $20–$35/đêm."
-                  : "Hostels & guesthouses ($10–$15/night) or comfortable 3-star boutique hotels ($20–$35/night)."}
-              </p>
-            </div>
-
-            <div className="omi-cost-card">
-              <div className="omi-cost-card__header">
-                <span className="omi-cost-card__title">
-                  {isVi ? "Ẩm thực & Đồ uống" : "Food & Drinks"}
-                </span>
-                <span className="omi-cost-card__price">$300 – $450 USD</span>
-              </div>
-              <p className="omi-cost-card__desc">
-                {isVi
-                  ? "Thưởng thức phở, bánh mì, cà phê trứng, hải sản tươi sống và ẩm thực địa phương (~$10–$15/ngày)."
-                  : "Street food favorites (pho, banh mi), egg coffee, fresh seafood, and casual local eateries (~$10–$15/day)."}
-              </p>
-            </div>
-
-            <div className="omi-cost-card">
-              <div className="omi-cost-card__header">
-                <span className="omi-cost-card__title">
-                  {isVi ? "Phương tiện di chuyển nội địa" : "Domestic Transportation"}
-                </span>
-                <span className="omi-cost-card__price">$250 – $350 USD</span>
-              </div>
-              <p className="omi-cost-card__desc">
-                {isVi
-                  ? "Vé máy bay Sài Gòn - Phú Quốc, tàu hỏa Bắc-Nam, xe limousine giường nằm, phà biển Cát Bà và Grab."
-                  : "Domestic flights to Phu Quoc, scenic trains, sleeper & limousine buses, speed ferries, and city Grab rides."}
-              </p>
-            </div>
-
-            <div className="omi-cost-card">
-              <div className="omi-cost-card__header">
-                <span className="omi-cost-card__title">
-                  {isVi ? "Vé tham quan & Tour trải nghiệm" : "Activities & Sightseeing"}
-                </span>
-                <span className="omi-cost-card__price">$150 – $250 USD</span>
-              </div>
-              <p className="omi-cost-card__desc">
-                {isVi
-                  ? "Du thuyền Vịnh Hạ Long, cáp treo Fansipan & Bà Nà Hills, tour khám phá hang động Phong Nha."
-                  : "Ha Long Bay cruise, Fansipan cable car, Ba Na Hills, Phong Nha cave explorations, and entrance fees."}
-              </p>
-            </div>
-          </div>
-
-          <div className="omi-costs-total-box">
-            <div className="omi-costs-total-label">
-              {isVi ? "Tổng chi phí ước tính trọn gói 1 tháng:" : "Estimated Total Cost for 1 Month:"}
-            </div>
-            <div className="omi-costs-total-amount">$1,000 – $1,650 USD</div>
-            <div className="omi-costs-total-sub">
+          <ul className="omi-notes-list" style={{ marginTop: "12px" }}>
+            <li>
               {isVi
-                ? "(Tương đương khoảng 25.000.000 – 41.000.000 VNĐ / người cho toàn bộ 17 điểm đến)"
-                : "(Approximately 25,000,000 – 41,000,000 VND per person for all 17 destinations)"}
-            </div>
+                ? "Chi phí phương tiện di chuyển ước tính khoảng 250 USD."
+                : "Transportation costs are approximately $250."}
+            </li>
+            <li>
+              {isVi
+                ? "Chi phí lưu trú tại khách sạn riêng hoặc homestay dao động khoảng 15 đến 20 USD mỗi đêm. Đối với du khách đi một mình, phòng ký túc xá (hostel) là lựa chọn tiết kiệm hơn với mức giá từ khoảng 5 USD mỗi đêm."
+                : "Accommodation in a private hotel or homestay will cost around $15 to $20 per night. For solo travelers, hostels can be a more affordable option, with prices starting at around $5 per night."}
+            </li>
+            <li>
+              {isVi
+                ? "Chi phí ăn uống thông thường khoảng 15 USD mỗi người mỗi ngày."
+                : "Food costs are typically around $15 per person per day."}
+            </li>
+            <li>
+              {isVi
+                ? "Vé vào cổng các di tích lịch sử, bảo tàng và danh lam thắng cảnh dao động khoảng 1 – 5 USD."
+                : "Admission to monuments, museums, and attractions costs around $1 – $5."}
+            </li>
+          </ul>
+        </section>
+
+        {/* ─── OTHER ITINERARIES (IMAGE 1) ─── */}
+        <section className="omi-other-itin-section">
+          <h2 className="omi-section-title">
+            {isVi ? "Các lịch trình khác" : "Other itineraries"}
+          </h2>
+          <div className="omi-other-itin-grid">
+            <Link
+              href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+              className="omi-other-itin-card"
+            >
+              <div className="omi-other-itin-img-wrap">
+                <img
+                  src="/guide/vietnam/10-day-vietnam-itinerary-map.jpg"
+                  alt="10-day Vietnam Itinerary"
+                  className="omi-other-itin-img"
+                  loading="lazy"
+                />
+              </div>
+              <span className="omi-other-itin-caption">
+                {isVi ? "Lịch trình 10 ngày tại Việt Nam" : "10-day Vietnam Itinerary"}
+              </span>
+            </Link>
+
+            <Link
+              href="/guide/the-complete-guide-to-vietnam"
+              className="omi-other-itin-card"
+            >
+              <div className="omi-other-itin-img-wrap">
+                <img
+                  src="/guide/vietnam/2-week-vietnam-itinerary-map.jpg"
+                  alt="2-week Vietnam Itinerary"
+                  className="omi-other-itin-img"
+                  loading="lazy"
+                />
+              </div>
+              <span className="omi-other-itin-caption">
+                {isVi ? "Lịch trình 2 tuần tại Việt Nam" : "2-week Vietnam Itinerary"}
+              </span>
+            </Link>
+
+            <Link
+              href="/guide/3-week-vietnam-itinerary"
+              className="omi-other-itin-card"
+            >
+              <div className="omi-other-itin-img-wrap">
+                <img
+                  src="/guide/vietnam/3-week-vietnam-itinerary-map.jpg"
+                  alt="3-week Vietnam Itinerary"
+                  className="omi-other-itin-img"
+                  loading="lazy"
+                />
+              </div>
+              <span className="omi-other-itin-caption">
+                {isVi ? "Lịch trình 3 tuần tại Việt Nam" : "3-week Vietnam Itinerary"}
+              </span>
+            </Link>
+          </div>
+        </section>
+
+        {/* ─── HORIZONTAL DIVIDER (IMAGE 2) ─── */}
+        <hr className="omi-divider" />
+
+        {/* ─── RELATED ARTICLES (IMAGE 2) ─── */}
+        <section className="omi-related-section">
+          <h2 className="omi-related-title">
+            {isVi ? "Bài viết liên quan" : "Related Articles"}
+          </h2>
+          <div className="omi-related-grid">
+            <Link
+              href="/guide/3-week-vietnam-itinerary"
+              className="omi-related-card"
+            >
+              <div className="omi-related-img-wrap">
+                <img
+                  src="/guide/hcmc/3-week-vietnam-itinerary.jpg"
+                  alt="3-week Vietnam Itinerary"
+                  className="omi-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="omi-related-card-title">
+                {isVi ? "Lịch trình 3 tuần xuyên Việt hoàn hảo" : "3-week Vietnam Itinerary"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+              className="omi-related-card"
+            >
+              <div className="omi-related-img-wrap">
+                <img
+                  src="/guide/hcmc/hcmc-10-things-bitexco.jpg"
+                  alt="10 best things to do in Ho Chi Minh City"
+                  className="omi-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="omi-related-card-title">
+                {isVi
+                  ? "10 trải nghiệm tuyệt nhất ở TP. Hồ Chí Minh"
+                  : "10 best things to do in Ho Chi Minh City"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/8-best-things-to-do-in-nha-trang"
+              className="omi-related-card"
+            >
+              <div className="omi-related-img-wrap">
+                <img
+                  src="/guide/nha-trang/Top-8-things-to-do-in-Nha-Trang-Vietnamnomad.jpg"
+                  alt="8 best things to do in Nha Trang"
+                  className="omi-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="omi-related-card-title">
+                {isVi
+                  ? "8 trải nghiệm hấp dẫn nhất tại Nha Trang"
+                  : "8 best things to do in Nha Trang"}
+              </h3>
+            </Link>
           </div>
         </section>
       </main>
