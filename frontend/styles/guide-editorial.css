@@ -1232,3 +1232,203 @@
   }
 }
 
+/* ─── LANDING PAGE HERO HEADER (FOR PHỞ & SIGNATURE HUBS) ──────── */
+.guide-landing-hero {
+  position: relative;
+  width: 100%;
+  min-height: 580px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center 42%;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  padding: 100px 24px 80px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.guide-landing-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 22, 33, 0.65) 0%,
+    rgba(10, 22, 33, 0.55) 35%,
+    rgba(10, 22, 33, 0.88) 80%,
+    #0d1f2d 100%
+  );
+  z-index: 1;
+}
+
+.guide-landing-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.guide-landing-hero__badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.guide-hero-pill-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fbbf24;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.guide-hero-pill-cyan {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  background: rgba(0, 194, 203, 0.2);
+  border: 1px solid rgba(0, 194, 203, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #5eead4;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.guide-landing-hero__title {
+  font-size: clamp(2.3rem, 5.5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin: 0 0 16px 0;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.guide-landing-hero__subtitle {
+  font-size: clamp(1.05rem, 2vw, 1.32rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 820px;
+  margin: 0 auto 32px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Floating highlight stats */
+.guide-landing-hero__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 860px;
+  margin-bottom: 32px;
+}
+
+.guide-hero-stat-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 16px 12px;
+  text-align: center;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.guide-hero-stat-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(0, 194, 203, 0.5);
+}
+
+.guide-hero-stat-value {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #00c2cb;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.guide-hero-stat-label {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Quick Jump Navigation Chips */
+.guide-landing-hero__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.guide-hero-jump-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.guide-hero-jump-pill:hover {
+  background: #00c2cb;
+  border-color: #00c2cb;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 194, 203, 0.4);
+}
+
+@media (max-width: 768px) {
+  .guide-landing-hero {
+    min-height: 520px;
+    padding: 70px 16px 50px;
+  }
+  .guide-landing-hero__stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .guide-hero-stat-value {
+    font-size: 1.35rem;
+  }
+  .guide-hero-jump-pill {
+    font-size: 0.8rem;
+    padding: 6px 14px;
+  }
+}
+

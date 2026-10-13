@@ -646,42 +646,37 @@ export default function ThreeWeekVietnamItineraryPage() {
         {/* ─── DROPDOWN MEGAMENU CONTENT ─── */}
         {activeMegaMenu && (
           <div
-            className="vnn-megamenu-panel"
+            className="vnn-megamenu"
             onMouseEnter={handleMegaMouseEnter}
             onMouseLeave={handleMenuLeave}
           >
-            <div className="vnn-megamenu-panel__inner">
-              <div className="vnn-megamenu-cards">
-                {MEGA_MENUS_DATA[activeMegaMenu]?.items.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={item.link}
-                    className="vnn-megamenu-card"
-                  >
-                    <div className="vnn-megamenu-card__img-wrap">
-                      <img
-                        src={item.img}
-                        alt={item.title}
-                        className="vnn-megamenu-card__img"
-                        loading="lazy"
-                      />
-                      {item.badge && (
-                        <span className="vnn-megamenu-card__badge">
-                          {item.badge}
-                        </span>
-                      )}
-                    </div>
-                    <div className="vnn-megamenu-card__info">
-                      <h4 className="vnn-megamenu-card__title">
-                        {lang === "vi" ? item.titleVi || item.title : item.title}
-                      </h4>
-                      <p className="vnn-megamenu-card__date">
-                        {lang === "vi" ? item.dateVi || item.date : item.date}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+            <div className="vnn-megamenu__grid">
+              {(MEGA_MENUS_DATA[activeMegaMenu]?.items || []).map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.link}
+                  className="vnn-megamenu__card"
+                  onClick={() => setActiveMegaMenu(null)}
+                >
+                  <div className="vnn-megamenu__thumb">
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="vnn-megamenu__img"
+                      loading="lazy"
+                    />
+                    {item.badge && (
+                      <span className="vnn-megamenu__badge">{item.badge}</span>
+                    )}
+                  </div>
+                  <h4 className="vnn-megamenu__title">
+                    {lang === "vi" ? item.titleVi || item.title : item.title}
+                  </h4>
+                  <p className="vnn-megamenu__date">
+                    {lang === "vi" ? item.dateVi || item.date : item.date}
+                  </p>
+                </Link>
+              ))}
             </div>
           </div>
         )}

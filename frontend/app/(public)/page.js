@@ -420,7 +420,7 @@ const FOODS_TO_TRY_ITEMS = [
     descVi:
       "Phở không chỉ là món ăn quốc hồn quốc túy mà còn là niềm tự hào văn hóa gắn liền với ký ức và tâm hồn người Việt.",
     img: "/guide/hcmc/Top-Hanoi-foods-Pho-Vietnamnomad.jpg",
-    link: "/province/ha-noi",
+    link: "/guide/pho-the-complete-guide",
   },
   {
     title: "7 must-try foods in Vung Tau",

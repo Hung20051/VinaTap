@@ -351,7 +351,17 @@ export default function HanoiPage() {
       <header className="vnn-hanoi-header">
         <div className="vnn-hanoi-nav-inner">
           <Link href="/" className="vnn-hanoi-logo-wrap">
-            <Logo />
+            <Logo size={32} showText={false} noLink href={null} as="span" />
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: "800",
+                letterSpacing: "-0.5px",
+                color: "#111",
+              }}
+            >
+              VinaTap
+            </span>
           </Link>
 
           <nav>
