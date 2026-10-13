@@ -200,8 +200,8 @@ const MEGA_MENUS_DATA = {
         date: "May 19, 2025",
         dateVi: "19 Tháng 5, 2025",
         badge: "Hanoi",
-        img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi#hanoi-dishes",
+        img: "/guide/megamenu/eat-1.jpg",
+        link: "/guide/8-must-try-foods-in-hanoi",
       },
       {
         id: "eat-2",
@@ -363,7 +363,17 @@ export default function HanoiPage() {
       <header className="vnn-hanoi-header">
         <div className="vnn-hanoi-nav-inner">
           <Link href="/" className="vnn-hanoi-logo-wrap">
-            <Logo />
+            <Logo size={32} showText={false} noLink href={null} as="span" />
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: "800",
+                letterSpacing: "-0.5px",
+                color: "#111",
+              }}
+            >
+              VinaTap
+            </span>
           </Link>
 
           <nav>
@@ -1925,11 +1935,53 @@ export default function HanoiPage() {
             {lang === "vi" ? "10 món ngon nhất định phải thử ở Hà Nội" : "10 must-try dishes in Hanoi"}
           </h2>
 
-          <p style={{ fontStyle: "italic", fontSize: "15px", lineHeight: "1.8", color: "#555", textAlign: "justify", marginBottom: "32px" }}>
+          <p style={{ fontStyle: "italic", fontSize: "15px", lineHeight: "1.8", color: "#555", textAlign: "justify", marginBottom: "20px" }}>
             {lang === "vi"
               ? "Hà Nội – thủ đô ngàn năm văn hiến, là cái nôi của tinh hoa ẩm thực Việt Nam. Bên cạnh những món ăn đã vang danh thế giới như Phở hay Bún chả, Hà Nội vẫn còn rất nhiều món ăn đặc sắc mang đậm hương vị truyền thống. Dưới đây là top 10 món ăn hàng đầu bạn không thể bỏ lỡ trong hành trình ẩm thực tại Hà Nội."
               : "Hanoi – the capital of a thousand years of civilization, is the cradle of Vietnamese cuisine. In addition to the dishes that have made Vietnam famous such as Pho or Bun Cha, Hanoi still has very typical dishes. Here are the top 10 dishes you should not miss on your culinary journey in Hanoi."}
           </p>
+
+          <div style={{
+            background: "linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%)",
+            border: "1px solid #99f6e4",
+            borderRadius: "12px",
+            padding: "16px 20px",
+            marginBottom: "32px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "12px",
+          }}>
+            <div>
+              <div style={{ fontWeight: 700, color: "#0f766e", fontSize: "15px" }}>
+                {lang === "vi" ? "👉 Cẩm nang chuyên sâu ẩm thực Phố Cổ:" : "👉 Signature Hanoi Food Editorial:"}
+              </div>
+              <div style={{ fontSize: "13px", color: "#64748b" }}>
+                {lang === "vi"
+                  ? "8 món ngon nhất định phải thử tại Hà Nội (kèm địa chỉ quán gia truyền & giá cả chi tiết)"
+                  : "8 Must-Try Foods in Hanoi & Where to Eat Them (with authentic addresses & transparent prices)"}
+              </div>
+            </div>
+            <Link
+              href="/guide/8-must-try-foods-in-hanoi"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "8px 18px",
+                background: "#00c2cb",
+                color: "#ffffff",
+                borderRadius: "999px",
+                fontSize: "13px",
+                fontWeight: 700,
+                textDecoration: "none",
+              }}
+            >
+              <span>{lang === "vi" ? "Xem bài viết chi tiết" : "Read Full Article"}</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
 
           {/* DISH 1: PHO (SCREENSHOT 3 & 4) */}
           <div style={{ marginBottom: "44px" }}>
@@ -2002,6 +2054,11 @@ export default function HanoiPage() {
                   <li>13 Phố Lò Đúc, Quận Hoàn Kiếm (40,000 VND – 60,000 VND)</li>
                   <li>10 Phố Lý Quốc Sư, Quận Hoàn Kiếm (50,000 VND – 80,000 VND)</li>
                 </ul>
+                <p style={{ marginTop: "12px" }}>
+                  <Link href="/guide/pho-the-complete-guide" style={{ color: "#008b94", fontWeight: "600", textDecoration: "underline" }}>
+                    {lang === "vi" ? "👉 Xem Cẩm nang chi tiết về Phở Việt Nam" : "👉 Read The Complete Guide to Vietnamese Pho"}
+                  </Link>
+                </p>
               </div>
             </div>
           </div>
@@ -2063,6 +2120,11 @@ export default function HanoiPage() {
                   <li>74 Hang Quat Street, Hoan Kiem District (30,000 VND – 50,000 VND)</li>
                   <li>24 Le Van Huu Street, Hoan Kiem District (40,000 VND – 60,000 VND)</li>
                 </ul>
+                <p style={{ marginTop: "12px" }}>
+                  <Link href="/guide/8-must-try-foods-in-hanoi" style={{ color: "#008b94", fontWeight: "600", textDecoration: "underline" }}>
+                    {lang === "vi" ? "👉 Khám phá thêm: 8 món ngon nhất định phải thử tại Hà Nội" : "👉 Explore more: 8 Must-Try Foods in Hanoi"}
+                  </Link>
+                </p>
               </div>
             </div>
           </div>
@@ -2607,25 +2669,15 @@ export default function HanoiPage() {
         <List size={22} />
       </div>
 
-      {/* ─── FLOATING CIRCULAR AI COMPANION (SCREENSHOT 2, 3, 4, 5) ─── */}
-      <div
-        className="vnn-hanoi-floating-ai"
-        onClick={() => setAiCompanionOpen(true)}
-        role="button"
-        tabIndex={0}
-        title={lang === "vi" ? "Trò chuyện với AI Companion" : "Chat with AI Companion"}
-      >
-        <img
-          src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
-          alt="AI Companion"
-        />
-      </div>
-
-      {/* ─── AI COMPANION CHATBOT MODAL ─── */}
+      {/* ─── AI COMPANION CHATBOT MODAL & FLOATING FAB ─── */}
       <ProvinceChatbot
         isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
         onClose={() => setAiCompanionOpen(false)}
-        provinceName={lang === "vi" ? "Hà Nội" : "Hanoi"}
+        province={{
+          name: lang === "vi" ? "Hà Nội" : "Hanoi",
+          slug: "ha-noi",
+        }}
       />
 
       {/* ─── MAP LIGHTBOX MODAL ─── */}

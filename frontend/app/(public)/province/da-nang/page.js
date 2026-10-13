@@ -1864,25 +1864,15 @@ export default function DaNangPage() {
         </div>
       </footer>
 
-      {/* ─── FLOATING AI COMPANION BUTTON (EXACT POSITION IN SCREENSHOT) ─── */}
-      <div
-        className="vnn-danang-floating-ai"
-        onClick={() => setAiCompanionOpen(true)}
-        role="button"
-        tabIndex={0}
-        title={lang === "vi" ? "Trò chuyện với AI Companion" : "Chat with AI Companion"}
-      >
-        <img
-          src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
-          alt="AI Companion"
-        />
-      </div>
-
-      {/* ─── AI CHATBOT MODAL ─── */}
+      {/* ─── AI CHATBOT MODAL & FLOATING FAB ─── */}
       <ProvinceChatbot
         isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
         onClose={() => setAiCompanionOpen(false)}
-        provinceName={lang === "vi" ? "Đà Nẵng" : "Da Nang"}
+        province={{
+          name: lang === "vi" ? "Đà Nẵng" : "Da Nang",
+          slug: "da-nang",
+        }}
       />
 
       {/* ─── LIGHTBOX MODAL FOR DA NANG TOURIST MAP ─── */}

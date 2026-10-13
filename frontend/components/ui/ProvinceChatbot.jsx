@@ -89,19 +89,33 @@ const ChatMessageBubble = memo(function ChatMessageBubble({ message, userAvatar,
 
 export default function ProvinceChatbot({
   province,
+  provinceName,
   spots = [],
   specialties = "",
   isOpen: externalIsOpen,
   onToggleOpen,
+  onClose,
   hideFab = false,
 }) {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
-  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+
+  // Sync internal state with externalIsOpen if passed
+  useEffect(() => {
+    if (externalIsOpen !== undefined) {
+      setInternalIsOpen(Boolean(externalIsOpen));
+    }
+  }, [externalIsOpen]);
+
+  const isOpen = externalIsOpen !== undefined && onToggleOpen ? externalIsOpen : internalIsOpen;
+
   const setIsOpen = (val) => {
+    const nextVal = typeof val === "function" ? val(isOpen) : val;
+    setInternalIsOpen(nextVal);
     if (onToggleOpen) {
-      onToggleOpen(typeof val === "function" ? val(isOpen) : val);
-    } else {
-      setInternalIsOpen(val);
+      onToggleOpen(nextVal);
+    }
+    if (onClose && !nextVal) {
+      onClose();
     }
   };
   const [isExpanded, setIsExpanded] = useState(false);
@@ -159,8 +173,17 @@ export default function ProvinceChatbot({
     };
   }, []);
 
-  const pName = province?.name || "Việt Nam";
-  const pSlug = province?.slug || "general";
+  const pName = province?.name || provinceName || "Việt Nam";
+  const pSlug =
+    province?.slug ||
+    (provinceName
+      ? provinceName
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+      : "general");
   const userId = currentUser?.id || "guest";
   const storageKey = `vinatap_chat_${userId}_${pSlug}`;
 
@@ -330,7 +353,7 @@ export default function ProvinceChatbot({
           {/* Header */}
           <div className="prov-ai-header">
             <div className="prov-ai-header-left">
-              <div className="prov-ai-header-icon" style={{ background: "rgba(0, 194, 203, 0.15)", color: "#00aab2" }}>
+              <div className="prov-ai-header-icon" style={{ background: "rgba(255, 255, 255, 0.2)", color: "#ffffff" }}>
                 <Sparkles size={20} />
               </div>
               <div className="prov-ai-header-info">

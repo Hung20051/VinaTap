@@ -204,7 +204,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "2 Tháng 10, 2026",
         badge: "Hanoi",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/8-must-try-foods-in-hanoi",
       },
       {
         id: "eat-2",
@@ -1299,27 +1299,15 @@ export default function HoChiMinhCityPage() {
         </div>
       </footer>
 
-      {/* ─── 12. FLOATING AI COMPANION ─── */}
-      <div
-        className="vnn-hcmc-floating-ai"
-        onClick={() => setAiCompanionOpen(true)}
-        title="AI Companion Travel Assistant"
-        role="button"
-        tabIndex={0}
-      >
-        <img
-          src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
-          alt="AI Companion"
-        />
-      </div>
-
-      {/* ─── AI CHATBOT MODAL ─── */}
+      {/* ─── 12. AI CHATBOT MODAL & FLOATING FAB ─── */}
       <ProvinceChatbot
         isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
         onClose={() => setAiCompanionOpen(false)}
-        provinceName={
-          lang === "vi" ? "TP. Hồ Chí Minh (Sài Gòn)" : "Ho Chi Minh City (Saigon)"
-        }
+        province={{
+          name: lang === "vi" ? "TP. Hồ Chí Minh" : "Ho Chi Minh City",
+          slug: "ho-chi-minh",
+        }}
       />
 
       {/* ─── TOURIST MAP LIGHTBOX MODAL ─── */}

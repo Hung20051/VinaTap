@@ -196,7 +196,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "2 Tháng 10, 2026",
         badge: "Hanoi",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
+        link: "/guide/8-must-try-foods-in-hanoi",
       },
       {
         id: "eat-2",
@@ -1360,25 +1360,15 @@ export default function HoiAnPage() {
         </div>
       </footer>
 
-      {/* ─── FLOATING AI COMPANION BUTTON (EXACT POSITION IN SCREENSHOT) ─── */}
-      <div
-        className="vnn-hoian-floating-ai"
-        onClick={() => setAiCompanionOpen(true)}
-        role="button"
-        tabIndex={0}
-        title={lang === "vi" ? "Trò chuyện với AI Companion" : "Chat with AI Companion"}
-      >
-        <img
-          src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
-          alt="AI Companion"
-        />
-      </div>
-
-      {/* ─── AI CHATBOT MODAL ─── */}
+      {/* ─── AI CHATBOT MODAL & FLOATING FAB ─── */}
       <ProvinceChatbot
         isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
         onClose={() => setAiCompanionOpen(false)}
-        provinceName={lang === "vi" ? "Hội An (Quảng Nam)" : "Hoi An (Quang Nam)"}
+        province={{
+          name: lang === "vi" ? "Hội An" : "Hoi An",
+          slug: "hoi-an",
+        }}
       />
 
       {/* ─── LIGHTBOX MODAL FOR HOI AN TOURIST MAP ─── */}
