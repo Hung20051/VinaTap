@@ -292,7 +292,7 @@ const MEGA_MENUS_DATA = {
   },
 };
 
-// ─── 17 DESTINATIONS DATA (SCREENSHOT 5) ───
+// ─── 17 DESTINATIONS DATA (SCREENSHOTS 1, 2, 3, 4, 5) ───
 const ITINERARY_17_DESTINATIONS = [
   {
     num: 1,
@@ -308,31 +308,32 @@ const ITINERARY_17_DESTINATIONS = [
     nextRoute: "Ho Chi Minh City → Phu Quoc",
     nextRouteVi: "TP. Hồ Chí Minh → Phú Quốc",
     transport: "Plane (Vietnam Airlines, Vietjet Air, Pacific Airlines, and Bamboo Airways)",
-    transportVi: "Máy bay (Vietnam Airlines, Vietjet Air, Bamboo Airways)",
+    transportVi: "Máy bay (Vietnam Airlines, Vietjet Air, Pacific Airlines, Bamboo Airways)",
     time: "1 hr 5 min",
     timeVi: "1 giờ 5 phút",
     fare: "800,000 – 1,200,000 VND",
-    fareVi: "800.000 – 1.200.000 VNĐ (~$32 - $48 USD)",
+    fareVi: "800.000 – 1.200.000 VNĐ",
+    isFlight: true,
   },
   {
     num: 2,
     name: "Phu Quoc",
-    nameVi: "Đảo Ngọc Phú Quốc",
+    nameVi: "Phú Quốc",
     days: "2 days",
     daysVi: "2 ngày",
     image: "/guide/15-best-places/place-11-phu-quoc.jpg",
     thingsToDo:
-      "Long Beach, Star Beach (Bai Sao), Hon Thom, Phu Quoc Prison, Phu Quoc Night Market, Vinpearl Safari.",
+      "Long Beach, Star Beach, Hon Thom, Phu Quoc Prison, Phu Quoc Night Market, Vinpearl Safari.",
     thingsToDoVi:
-      "Bãi Dài, Bãi Sao, Cáp treo Hòn Thơm vượt biển, Nhà tù Phú Quốc, Chợ đêm Phú Quốc, Vinpearl Safari.",
+      "Bãi Dài, Bãi Sao, Cáp treo Hòn Thơm, Nhà tù Phú Quốc, Chợ đêm Phú Quốc, Vinpearl Safari.",
     nextRoute: "Phu Quoc → Ha Tien",
     nextRouteVi: "Phú Quốc → Hà Tiên",
     transport: "Ferry (Superdong)",
-    transportVi: "Tàu cao tốc (Superdong / Phú Quốc Express)",
+    transportVi: "Tàu cao tốc (Superdong)",
     time: "1 hr 15 min",
     timeVi: "1 giờ 15 phút",
     fare: "185,000 VND",
-    fareVi: "185.000 VNĐ (~$7.5 USD)",
+    fareVi: "185.000 VNĐ",
   },
   {
     num: 3,
@@ -342,297 +343,298 @@ const ITINERARY_17_DESTINATIONS = [
     daysVi: "1 ngày",
     image: "/guide/20-best-things/4-mekong-delta.jpg",
     thingsToDo:
-      "Phu Dung Pagoda, Da Dung Mountain, Mac Family Temple, Ha Tien Night Market, Mui Nai Beach.",
+      "Phu Dung Pagoda, Da Dung Mountain, Mac Family Temple, Ha Tien Night Market.",
     thingsToDoVi:
-      "Chùa Phù Dung, Núi Đá Dựng, Đền thờ họ Mạc, Chợ đêm Hà Tiên, Bãi biển Mũi Nai hoang sơ.",
+      "Chùa Phù Dung, Núi Đá Dựng, Đền thờ họ Mạc, Chợ đêm Hà Tiên.",
     nextRoute: "Ha Tien → Can Tho",
     nextRouteVi: "Hà Tiên → Cần Thơ",
     transport: "Bus (Tan Nien)",
-    transportVi: "Xe khách liên tỉnh (Tân Niên / Phương Trang)",
+    transportVi: "Xe khách (Tân Niên)",
     time: "5 hr",
     timeVi: "5 giờ",
     fare: "130,000 VND",
-    fareVi: "130.000 VNĐ (~$5 USD)",
+    fareVi: "130.000 VNĐ",
   },
   {
     num: 4,
     name: "Can Tho",
-    nameVi: "Cần Thơ (Tây Đô)",
-    days: "1-2 days",
-    daysVi: "1-2 ngày",
+    nameVi: "Cần Thơ",
+    days: "1 day",
+    daysVi: "1 ngày",
     image: "/guide/15-best-places/place-13-can-tho.jpg",
     thingsToDo:
-      "Cai Rang Floating Market, Ninh Kieu Wharf, Binh Thuy Ancient House, Phong Dien Floating Market, Fruit Orchards.",
+      "Cai Rang Floating Market, Ong Temple, Binh Thuy Ancient House, Muoi Cuong Cocoa Farm.",
     thingsToDoVi:
-      "Chợ nổi Cái Răng lúc bình minh, Bến Ninh Kiều về đêm, Nhà cổ Bình Thủy, Vườn trái cây trĩu quả.",
+      "Chợ nổi Cái Răng, Chùa Ông, Nhà cổ Bình Thủy, Vườn cacao Mười Cương.",
     nextRoute: "Can Tho → Mui Ne",
     nextRouteVi: "Cần Thơ → Mũi Né",
-    transport: "Sleeper Bus",
-    transportVi: "Xe khách giường nằm cao cấp",
-    time: "7 hr",
-    timeVi: "7 giờ",
-    fare: "250,000 – 350,000 VND",
-    fareVi: "250.000 – 350.000 VNĐ (~$10 - $14 USD)",
+    transport: "Bus (Lien Hung)",
+    transportVi: "Xe khách (Liên Hưng)",
+    time: "10 hr 30 min",
+    timeVi: "10 giờ 30 phút",
+    fare: "400,000 VND",
+    fareVi: "400.000 VNĐ",
   },
   {
     num: 5,
     name: "Mui Ne",
-    nameVi: "Mũi Né (Phan Thiết)",
-    days: "2 days",
-    daysVi: "2 ngày",
+    nameVi: "Mũi Né",
+    days: "1 day",
+    daysVi: "1 ngày",
     image: "/guide/15-best-places/place-12-mui-ne.jpg",
     thingsToDo:
-      "White Sand Dunes, Red Sand Dunes, Fairy Stream (Suoi Tien), Mui Ne Fishing Village, Po Shanu Cham Towers.",
+      "Mui Ne Beach, Ta Cu Mountain, Sand Dunes, Po Shanu Cham Towers.",
     thingsToDoVi:
-      "Đồi Cát Trắng (Bàu Trắng), Đồi Cát Bay, Suối Tiên Mũi Né, Làng chài Mũi Né, Tháp Chàm Po Shanu.",
+      "Bãi biển Mũi Né, Núi Tà Cú, Đồi cát bay, Tháp Chàm Po Shanu.",
     nextRoute: "Mui Ne → Dalat",
     nextRouteVi: "Mũi Né → Đà Lạt",
-    transport: "Bus / Limousine",
-    transportVi: "Xe Limousine / Xe khách tuyến đèo",
-    time: "4 - 5 hr",
-    timeVi: "4 - 5 giờ",
-    fare: "160,000 – 220,000 VND",
-    fareVi: "160.000 – 220.000 VNĐ (~$6.5 - $9 USD)",
+    transport: "Bus (An Phu Bus)",
+    transportVi: "Xe khách (An Phú Bus)",
+    time: "3 h 45 min",
+    timeVi: "3 giờ 45 phút",
+    fare: "150,000 VND",
+    fareVi: "150.000 VNĐ",
   },
   {
     num: 6,
     name: "Dalat",
-    nameVi: "Đà Lạt (Thành Phố Ngàn Hoa)",
-    days: "2-3 days",
-    daysVi: "2-3 ngày",
+    nameVi: "Đà Lạt",
+    days: "2 days",
+    daysVi: "2 ngày",
     image: "/guide/15-best-places/place-9-da-lat.jpg",
     thingsToDo:
-      "Xuan Huong Lake, Crazy House, Datanla Falls, Linh Phuoc Pagoda, Dalat Railway Station, Tuyen Lam Lake.",
+      "Xuan Huong Lake, Dalat Railway Station, Chicken Church, Linh Phuoc Pagoda, Dalat Night Market.",
     thingsToDoVi:
-      "Hồ Xuân Hương, Biệt thự Hằng Nga (Crazy House), Thác Datanla máng trượt, Chùa Linh Phước, Ga Đà Lạt cổ.",
+      "Hồ Xuân Hương, Ga Đà Lạt, Nhà thờ Con Gà, Chùa Linh Phước, Chợ đêm Đà Lạt.",
     nextRoute: "Dalat → Nha Trang",
     nextRouteVi: "Đà Lạt → Nha Trang",
-    transport: "Bus / Limousine",
-    transportVi: "Xe Limousine vượt đèo Khánh Lê",
-    time: "3 - 4 hr",
-    timeVi: "3 - 4 giờ",
-    fare: "180,000 – 250,000 VND",
-    fareVi: "180.000 – 250.000 VNĐ (~$7 - $10 USD)",
+    transport: "Bus (Phuong Trang, The Sinh Bus)",
+    transportVi: "Xe khách (Phương Trang, The Sinh Bus)",
+    time: "3 hr",
+    timeVi: "3 giờ",
+    fare: "250,000 VND",
+    fareVi: "250.000 VNĐ",
   },
   {
     num: 7,
     name: "Nha Trang",
-    nameVi: "Nha Trang (Vịnh Ngọc)",
+    nameVi: "Nha Trang",
     days: "2 days",
     daysVi: "2 ngày",
     image: "/guide/15-best-places/place-10-nha-trang.jpg",
     thingsToDo:
-      "Ponagar Cham Towers, Long Son Pagoda, Hon Mun Island Snorkeling, VinWonders, Bai Dai Beach.",
+      "Nha Trang Beach, Vinpearl Land, Po Nagar Cham Towers, Dam Market.",
     thingsToDoVi:
-      "Tháp Bà Ponagar, Chùa Long Sơn tượng Phật trắng, Lặn ngắm san hô Hòn Mun, VinWonders, Bãi Dài lướt sóng.",
+      "Bãi biển Nha Trang, Vinpearl Land, Tháp Bà Po Nagar, Chợ Đầm.",
     nextRoute: "Nha Trang → Quy Nhon",
     nextRouteVi: "Nha Trang → Quy Nhơn",
-    transport: "Train / Bus",
-    transportVi: "Tàu hỏa đường sắt ven biển / Xe khách",
-    time: "4 - 5 hr",
-    timeVi: "4 - 5 giờ",
-    fare: "150,000 – 220,000 VND",
-    fareVi: "150.000 – 220.000 VNĐ (~$6 - $9 USD)",
+    transport: "Bus (Thanh Thuy)",
+    transportVi: "Xe khách (Thanh Thủy)",
+    time: "5 hr",
+    timeVi: "5 giờ",
+    fare: "200,000 VND",
+    fareVi: "200.000 VNĐ",
   },
   {
     num: 8,
     name: "Quy Nhon",
-    nameVi: "Quy Nhơn (Bình Định)",
-    days: "2 days",
-    daysVi: "2 ngày",
+    nameVi: "Quy Nhơn",
+    days: "1 day",
+    daysVi: "1 ngày",
     image: "/guide/20-best-things/15-quy-nhon.jpg",
     thingsToDo:
-      "Eo Gio Cliff, Ky Co Beach, Twin Cham Towers (Thap Doi), Ghenh Rang Tien Sa, Queen Beach.",
+      "Ky Co, Eo Gio, Twin Towers, Queen's Beach.",
     thingsToDoVi:
-      "Eo Gió ngắm hoàng hôn, Bãi biển Kỳ Co trong vắt, Tháp Đôi Chămpa cổ kính, Ghềnh Ráng Tiên Sa.",
+      "Kỳ Co, Eo Gió, Tháp Đôi, Bãi tắm Hoàng Hậu.",
     nextRoute: "Quy Nhon → Da Nang",
     nextRouteVi: "Quy Nhơn → Đà Nẵng",
-    transport: "Train (Reunification Express)",
-    transportVi: "Tàu hỏa Thống Nhất Bắc - Nam",
-    time: "5 - 6 hr",
-    timeVi: "5 - 6 giờ",
-    fare: "200,000 – 350,000 VND",
-    fareVi: "200.000 – 350.000 VNĐ (~$8 - $14 USD)",
+    transport: "Bus (Phuong Trang, Lien Hung)",
+    transportVi: "Xe khách (Phương Trang, Liên Hưng)",
+    time: "6 hr 30 min",
+    timeVi: "6 giờ 30 phút",
+    fare: "250,000 VND",
+    fareVi: "250.000 VNĐ",
   },
   {
     num: 9,
     name: "Da Nang",
     nameVi: "Đà Nẵng",
-    days: "2-3 days",
-    daysVi: "2-3 ngày",
+    days: "2 days",
+    daysVi: "2 ngày",
     image: "/guide/15-best-places/place-4-da-nang.jpg",
     thingsToDo:
-      "Golden Bridge at Ba Na Hills, My Khe Beach, Marble Mountains, Dragon Bridge Fire Show, Son Tra Peninsula.",
+      "My Khe Beach, Ba Na Hills, Marble Mountains, Museum of Cham Sculpture.",
     thingsToDoVi:
-      "Cầu Vàng Bà Nà Hills, Bãi biển Mỹ Khê, Danh thắng Ngũ Hành Sơn, Cầu Rồng phun lửa, Bán đảo Sơn Trà.",
+      "Bãi biển Mỹ Khê, Bà Nà Hills, Ngũ Hành Sơn, Bảo tàng Điêu khắc Chăm.",
     nextRoute: "Da Nang → Hoi An",
     nextRouteVi: "Đà Nẵng → Hội An",
-    transport: "Taxi / Private Car / Bus",
-    transportVi: "Taxi / Xe đưa đón riêng / Xe buýt",
+    transport: "Bus (01)",
+    transportVi: "Xe buýt (tuyến 01)",
     time: "45 min",
     timeVi: "45 phút",
-    fare: "200,000 – 300,000 VND",
-    fareVi: "200.000 – 300.000 VNĐ (~$8 - $12 USD)",
+    fare: "30,000 VND",
+    fareVi: "30.000 VNĐ",
   },
   {
     num: 10,
     name: "Hoi An",
-    nameVi: "Hội An (Di Sản Thế Giới)",
-    days: "2-3 days",
-    daysVi: "2-3 ngày",
+    nameVi: "Hội An",
+    days: "1 day",
+    daysVi: "1 ngày",
     image: "/guide/15-best-places/place-2-hoi-an.jpg",
     thingsToDo:
-      "Ancient Town Walking Tour, Japanese Covered Bridge, Lantern Boat Ride on Hoai River, An Bang Beach, Cam Thanh Coconut Village.",
+      "Hoi An Ancient Town, An Bang Beach, Bay Mau Coconut Forest.",
     thingsToDoVi:
-      "Dạo bộ Phố Cổ Hội An, Chùa Cầu, Thả hoa đăng sông Hoài, Biển An Bàng, Thuyền thúng Rừng dừa Bảy Mẫu.",
+      "Phố cổ Hội An, Biển An Bàng, Rừng dừa Bảy Mẫu.",
     nextRoute: "Hoi An → Hue",
     nextRouteVi: "Hội An → Huế",
-    transport: "Train via Hai Van Pass / Bus",
-    transportVi: "Tàu du lịch ngắm cảnh Đèo Hải Vân / Xe du lịch",
-    time: "3 - 4 hr",
-    timeVi: "3 - 4 giờ",
-    fare: "120,000 – 200,000 VND",
-    fareVi: "120.000 – 200.000 VNĐ (~$5 - $8 USD)",
+    transport: "Bus (Hanh Cafe, The Sinh Bus)",
+    transportVi: "Xe khách (Hạnh Cafe, The Sinh Bus)",
+    time: "3 hr 45 min",
+    timeVi: "3 giờ 45 phút",
+    fare: "180,000 VND",
+    fareVi: "180.000 VNĐ",
   },
   {
     num: 11,
     name: "Hue",
-    nameVi: "Cố Đô Huế",
-    days: "2 days",
-    daysVi: "2 ngày",
+    nameVi: "Huế",
+    days: "1 day",
+    daysVi: "1 ngày",
     image: "/guide/15-best-places/place-8-hue.jpg",
     thingsToDo:
-      "Hue Imperial Citadel, Thien Mu Pagoda, Royal Tombs (Khai Dinh, Tu Duc), Perfume River Cruise, Dong Ba Market.",
+      "The Imperial Citadel of Hue, Thien Mu Pagoda, Khai Dinh Tomb, Tu Duc Tomb, Dong Ba Market.",
     thingsToDoVi:
-      "Đại Nội Huế, Chùa Thiên Mụ, Lăng Khải Định & Lăng Tự Đức, Du thuyền ca Huế sông Hương, Chợ Đông Ba.",
+      "Đại Nội Huế, Chùa Thiên Mụ, Lăng Khải Định, Lăng Tự Đức, Chợ Đông Ba.",
     nextRoute: "Hue → Quang Binh",
-    nextRouteVi: "Huế → Quảng Bình (Phong Nha)",
-    transport: "Train / Bus",
-    transportVi: "Tàu hỏa / Xe khách chất lượng cao",
+    nextRouteVi: "Huế → Quảng Bình",
+    transport: "Bus (Camel Travel)",
+    transportVi: "Xe khách (Camel Travel)",
     time: "4 hr",
     timeVi: "4 giờ",
-    fare: "150,000 – 250,000 VND",
-    fareVi: "150.000 – 250.000 VNĐ (~$6 - $10 USD)",
+    fare: "400,000 VND",
+    fareVi: "400.000 VNĐ",
   },
   {
     num: 12,
     name: "Quang Binh",
-    nameVi: "Quảng Bình (Vương Quốc Hang Động)",
-    days: "2-3 days",
-    daysVi: "2-3 ngày",
+    nameVi: "Quảng Bình",
+    days: "2 days",
+    daysVi: "2 ngày",
     image: "/guide/20-best-things/12-quang-binh.jpg",
     thingsToDo:
-      "Phong Nha Cave, Paradise Cave, Dark Cave Zipline & Mud Bath, Phong Nha-Ke Bang National Park.",
+      "Phong Nha – Ke Bang National Park, Paradise Cave, Nhat Le Beach.",
     thingsToDoVi:
-      "Động Phong Nha ngồi thuyền, Động Thiên Đường tráng lệ, Zipline và tắm bùn Hang Tối, Vườn quốc gia Phong Nha.",
+      "Vườn quốc gia Phong Nha – Kẻ Bàng, Động Thiên Đường, Biển Nhật Lệ.",
     nextRoute: "Quang Binh → Ninh Binh",
     nextRouteVi: "Quảng Bình → Ninh Bình",
-    transport: "Overnight Sleeper Train",
-    transportVi: "Tàu hỏa giường nằm đêm Thống Nhất",
-    time: "7 - 8 hr",
-    timeVi: "7 - 8 giờ",
-    fare: "350,000 – 600,000 VND",
-    fareVi: "350.000 – 600.000 VNĐ (~$14 - $24 USD)",
+    transport: "Train (Dong Hoi – Ninh Binh)",
+    transportVi: "Tàu hỏa (Đồng Hới – Ninh Bình)",
+    time: "8 hr",
+    timeVi: "8 giờ",
+    fare: "300,000 VND",
+    fareVi: "300.000 VNĐ",
   },
   {
     num: 13,
     name: "Ninh Binh",
-    nameVi: "Ninh Bình (Hạ Long Trên Cạn)",
+    nameVi: "Ninh Bình",
     days: "2 days",
     daysVi: "2 ngày",
     image: "/guide/15-best-places/place-5-ninh-binh.jpg",
     thingsToDo:
-      "Trang An Scenic Landscape Boat Tour, Hang Mua Peak Viewpoint, Tam Coc, Bai Dinh Pagoda, Hoa Lu Ancient Capital.",
+      "Tam Coc – Bich Dong, Mua Cave, Trang An Landscape Complex, Bai Dinh Pagoda.",
     thingsToDoVi:
-      "Chèo đò Quần thể Tràng An, Chinh phục đỉnh Hang Múa, Tam Cốc Bích Động mùa lúa, Chùa Bái Đính, Cố đô Hoa Lư.",
+      "Tam Cốc – Bích Động, Hang Múa, Quần thể danh thắng Tràng An, Chùa Bái Đính.",
     nextRoute: "Ninh Binh → Cat Ba Island",
     nextRouteVi: "Ninh Bình → Đảo Cát Bà",
-    transport: "Tourist Bus + Speed Ferry",
-    transportVi: "Xe du lịch trọn gói + Phà cao tốc",
-    time: "4 - 5 hr",
-    timeVi: "4 - 5 giờ",
-    fare: "300,000 – 400,000 VND",
-    fareVi: "300.000 – 400.000 VNĐ (~$12 - $16 USD)",
+    transport: "Bus (Cat Ba Express)",
+    transportVi: "Xe khách (Cát Bà Express)",
+    time: "5 hr",
+    timeVi: "5 giờ",
+    fare: "280,000 VND",
+    fareVi: "280.000 VNĐ",
   },
   {
     num: 14,
     name: "Cat Ba Island",
-    nameVi: "Đảo Cát Bà (Hải Phòng)",
-    days: "2 days",
-    daysVi: "2 ngày",
+    nameVi: "Đảo Cát Bà",
+    days: "1 day",
+    daysVi: "1 ngày",
     image: "/guide/20-best-things/14-cat-ba.jpg",
     thingsToDo:
-      "Lan Ha Bay Boat Cruise & Kayaking, Cat Ba National Park Trekking, Cannon Fort, Hospital Cave, Monkey Island.",
+      "Lan Ha Bay, Monkey Island, Cat Ba National Park.",
     thingsToDoVi:
-      "Du thuyền Vịnh Lan Hạ chèo kayak, Trekking Rừng Quốc Gia Cát Bà, Pháo đài Thần công, Hang Quân Y.",
+      "Vịnh Lan Hạ, Đảo Khỉ, Vườn quốc gia Cát Bà.",
     nextRoute: "Cat Ba Island → Ha Long Bay",
-    nextRouteVi: "Cát Bà → Vịnh Hạ Long",
-    transport: "Ferry / Speedboat",
-    transportVi: "Phà biển Tuần Châu / Tàu cao tốc",
-    time: "1 hr",
-    timeVi: "1 giờ",
-    fare: "150,000 – 250,000 VND",
-    fareVi: "150.000 – 250.000 VNĐ (~$6 - $10 USD)",
+    nextRouteVi: "Đảo Cát Bà → Vịnh Hạ Long",
+    transport: "Ferry (Cat Ba – Tuan Chau)",
+    transportVi: "Phà biển (Cát Bà – Tuần Châu)",
+    time: "45 min",
+    timeVi: "45 phút",
+    fare: "80,000 VND",
+    fareVi: "80.000 VNĐ",
   },
   {
     num: 15,
     name: "Ha Long Bay",
-    nameVi: "Vịnh Hạ Long (Kỳ Quan Thiên Nhiên)",
+    nameVi: "Vịnh Hạ Long",
     days: "2 days",
     daysVi: "2 ngày",
     image: "/guide/15-best-places/place-6-ha-long.jpg",
     thingsToDo:
-      "Overnight Luxury Cruise, Sung Sot Cave, Ti Top Island Beach & Viewpoint, Kayaking in Luon Cave, Floating Fishing Villages.",
+      "Ha Long Bay, Tuan Chau Island, Bai Chay Beach.",
     thingsToDoVi:
-      "Du thuyền nghỉ đêm trên Vịnh, Hang Sửng Sốt, Ngắm toàn cảnh đỉnh Ti Tốp, Chèo thuyền Hang Luồn, Làng chài nổi Cửa Vạn.",
+      "Vịnh Hạ Long, Đảo Tuần Châu, Bãi Cháy.",
     nextRoute: "Ha Long Bay → Hanoi",
     nextRouteVi: "Vịnh Hạ Long → Hà Nội",
-    transport: "Expressway Limousine Van",
-    transportVi: "Xe Limousine cao tốc Hạ Long - Hà Nội",
-    time: "2.5 hr",
-    timeVi: "2.5 giờ",
-    fare: "200,000 – 300,000 VND",
-    fareVi: "200.000 – 300.000 VNĐ (~$8 - $12 USD)",
+    transport: "Bus (Trung Thanh Limousine)",
+    transportVi: "Xe Limousine (Trung Thành Limousine)",
+    time: "1 hr 30 min",
+    timeVi: "1 giờ 30 phút",
+    fare: "260,000 VND",
+    fareVi: "260.000 VNĐ",
   },
   {
     num: 16,
     name: "Hanoi",
-    nameVi: "Thủ Đô Hà Nội (Nghìn Năm Văn Hiến)",
-    days: "2-3 days",
-    daysVi: "2-3 ngày",
+    nameVi: "Hà Nội",
+    days: "2 days",
+    daysVi: "2 ngày",
     image: "/guide/15-best-places/place-3-hanoi.jpg",
     thingsToDo:
-      "Hanoi Old Quarter 36 Guild Streets, Hoan Kiem Lake & Ngoc Son Temple, Temple of Literature, Train Street, Hanoi Street Food Tour.",
+      "Hoan Kiem Lake, Hanoi Old Quarter, Temple of Literature, Dong Xuan Market, Ho Chi Minh Mausoleum.",
     thingsToDoVi:
-      "36 Phố Phường Phố Cổ, Hồ Hoàn Kiếm & Đền Ngọc Sơn, Văn Miếu Quốc Tử Giám, Phố đường tàu, Thưởng thức ẩm thực Phở & Bún Chả.",
+      "Hồ Hoàn Kiếm, Phố cổ Hà Nội, Văn Miếu – Quốc Tử Giám, Chợ Đồng Xuân, Lăng Chủ tịch Hồ Chí Minh.",
     nextRoute: "Hanoi → Sapa",
     nextRouteVi: "Hà Nội → Sa Pa",
-    transport: "Sleeper Bus / Luxury Cabin Bus or Chapa Train to Lao Cai",
-    transportVi: "Xe Cabin Cung Điện / Tàu hỏa du lịch Hà Nội - Lào Cai",
-    time: "5.5 - 6 hr",
-    timeVi: "5.5 - 6 giờ",
-    fare: "300,000 – 450,000 VND",
-    fareVi: "300.000 – 450.000 VNĐ (~$12 - $18 USD)",
+    transport: "Bus (Fansipan Express Bus)",
+    transportVi: "Xe khách (Fansipan Express Bus)",
+    time: "6 hr 10 min",
+    timeVi: "6 giờ 10 phút",
+    fare: "250,000 VND",
+    fareVi: "250.000 VNĐ",
   },
   {
     num: 17,
     name: "Sapa",
-    nameVi: "Sa Pa (Thị Xã Trong Mây)",
-    days: "2-3 days",
-    daysVi: "2-3 ngày",
+    nameVi: "Sa Pa",
+    days: "2 days",
+    daysVi: "2 ngày",
     image: "/guide/15-best-places/place-7-sapa.jpg",
     thingsToDo:
-      "Fansipan Legend Cable Car to Indochina Peak, Cat Cat Village, Muong Hoa Valley Terraced Fields, Silver Waterfall, Ta Van Trekking.",
+      "Sapa Stone Church, Ham Rong Mountain, Cat Cat Village, Ta Van Village.",
     thingsToDoVi:
-      "Chinh phục Đỉnh Fansipan 3.143m (Nóc nhà Đông Dương), Bản Cát Cát, Thung lũng Mường Hoa ruộng bậc thang, Thác Bạc, Trekking Tả Van.",
-    nextRoute: "Sapa → Hanoi Airport (HAN)",
-    nextRouteVi: "Sa Pa → Sân bay Nội Bài (HAN)",
-    transport: "Expressway Limousine directly to Noi Bai International Airport",
-    transportVi: "Xe Limousine cao tốc chạy thẳng về Sân bay Quốc tế Nội Bài",
-    time: "5 hr",
-    timeVi: "5 giờ",
-    fare: "350,000 – 450,000 VND",
-    fareVi: "350.000 – 450.000 VNĐ (~$14 - $18 USD)",
+      "Nhà thờ Đá Sa Pa, Núi Hàm Rồng, Bản Cát Cát, Bản Tả Van.",
+    nextRoute: "Sapa → Hanoi",
+    nextRouteVi: "Sa Pa → Hà Nội",
+    directTransit: "Bus (Fansipan Express Bus)",
+    directTransitVi: "Xe khách (Fansipan Express Bus)",
+    isDirectTransitLine: true,
+    airportNote:
+      "You take bus number 86 (35,000 VND) to Noi Bai International Airport from Hanoi city center, ending your 1-month itinerary in Vietnam.",
+    airportNoteVi:
+      "Bạn bắt xe buýt số 86 (35.000 VNĐ) từ trung tâm Hà Nội đến Sân bay Quốc tế Nội Bài, kết thúc chuyến hành trình 1 tháng tại Việt Nam.",
   },
 ];
 
@@ -931,9 +933,9 @@ export default function OneMonthInVietnamPage() {
           </div>
         </div>
 
-        {/* ─── SECTION 4: ITINERARY DETAILS (SCREENSHOT 5) ─── */}
+        {/* ─── SECTION 4: ITINERARY DETAILS (SCREENSHOTS 1 TO 5) ─── */}
         <h2 className="omi-section-title">
-          {isVi ? "Chi tiết lịch trình 17 điểm đến" : "Itinerary details"}
+          {isVi ? "Chi tiết lịch trình" : "Itinerary details"}
         </h2>
 
         <div className="omi-cards-grid">
@@ -950,42 +952,185 @@ export default function OneMonthInVietnamPage() {
 
               <div className="omi-card__body">
                 <h3 className="omi-card__title">
-                  {dest.num}. {isVi ? dest.nameVi : dest.name}
+                  {isVi && dest.nameVi ? dest.nameVi : dest.name}
                 </h3>
                 <div className="omi-card__days">
-                  ({isVi ? dest.daysVi : dest.days})
+                  ({isVi && dest.daysVi ? dest.daysVi : dest.days})
                 </div>
 
                 <div className="omi-card__section">
                   <span className="omi-card__label">
-                    {isVi ? "Điểm tham quan & Trải nghiệm: " : "Things to do: "}
+                    {isVi ? "Things to do: " : "Things to do: "}
                   </span>
-                  <span>{isVi ? dest.thingsToDoVi : dest.thingsToDo}</span>
+                  <span>{isVi && dest.thingsToDoVi ? dest.thingsToDoVi : dest.thingsToDo}</span>
                 </div>
 
-                <div className="omi-card__transit-title">
-                  <ArrowRight size={14} color="#00a8b5" />
-                  <span>{isVi ? dest.nextRouteVi : dest.nextRoute}:</span>
-                </div>
+                {dest.isDirectTransitLine ? (
+                  <>
+                    <div className="omi-card__direct-transit">
+                      <strong>{isVi ? dest.nextRouteVi : dest.nextRoute}:</strong>{" "}
+                      {isVi && dest.directTransitVi ? dest.directTransitVi : dest.directTransit}
+                    </div>
+                    {dest.airportNote && (
+                      <p className="omi-card__airport-note">
+                        {isVi && dest.airportNoteVi ? dest.airportNoteVi : dest.airportNote}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <div className="omi-card__transit-title">
+                      <strong>{isVi ? dest.nextRouteVi : dest.nextRoute}:</strong>
+                    </div>
 
-                <ul className="omi-card__transit-list">
-                  <li>
-                    <strong>{isVi ? "Phương tiện: " : "Transportation: "}</strong>
-                    {isVi ? dest.transportVi : dest.transport}
-                  </li>
-                  <li>
-                    <strong>{isVi ? "Thời gian: " : "Travel time: "}</strong>
-                    {isVi ? dest.timeVi : dest.time}
-                  </li>
-                  <li>
-                    <strong>{isVi ? "Giá vé: " : "Fare: "}</strong>
-                    {isVi ? dest.fareVi : dest.fare}
-                  </li>
-                </ul>
+                    <ul className="omi-card__transit-list">
+                      <li>
+                        <strong>{isVi ? "Transportation: " : "Transportation: "}</strong>
+                        {isVi && dest.transportVi ? dest.transportVi : dest.transport}
+                      </li>
+                      <li>
+                        <strong>
+                          {dest.isFlight
+                            ? (isVi ? "Flying time: " : "Flying time: ")
+                            : (isVi ? "Travel time: " : "Travel time: ")}
+                        </strong>
+                        {isVi && dest.timeVi ? dest.timeVi : dest.time}
+                      </li>
+                      <li>
+                        <strong>
+                          {dest.isFlight
+                            ? (isVi ? "Airfare: " : "Airfare: ")
+                            : (isVi ? "Fare: " : "Fare: ")}
+                        </strong>
+                        {isVi && dest.fareVi ? dest.fareVi : dest.fare}
+                      </li>
+                    </ul>
+                  </>
+                )}
               </div>
             </article>
           ))}
         </div>
+
+        {/* ─── A FEW NOTES (SCREENSHOT 5) ─── */}
+        <section className="omi-notes-box">
+          <h2 className="omi-section-title">
+            {isVi ? "Một số lưu ý quan trọng" : "A few notes"}
+          </h2>
+          <ul className="omi-notes-list">
+            <li>
+              {isVi
+                ? "Tỷ giá hối đoái USD sang VNĐ dao động quanh mức 1 USD ≈ 25.000 VNĐ."
+                : "The USD to VND exchange rate in 2024 is around 1 USD ≈ 25,000 VND."}
+            </li>
+            <li>
+              {isVi ? (
+                <>
+                  Đối với việc đi tàu hỏa, chúng tôi khuyên bạn nên đặt vé trên trang web chính thức của Tổng công ty Đường sắt Việt Nam:{" "}
+                  <a href="https://dsvn.vn" target="_blank" rel="noopener noreferrer">
+                    dsvn.vn
+                  </a>
+                  .
+                </>
+              ) : (
+                <>
+                  For train travel, we recommend booking tickets on the official website of the Vietnam Railway Corporation:{" "}
+                  <a href="https://dsvn.vn" target="_blank" rel="noopener noreferrer">
+                    dsvn.vn
+                  </a>
+                  .
+                </>
+              )}
+            </li>
+            <li>
+              {isVi
+                ? "Các khuyến nghị trên về tour, khách sạn, nhà xe và hãng hàng không được chọn lọc dựa trên sự thuận tiện, chất lượng dịch vụ, hoàn toàn không có quảng cáo hay tiếp thị liên kết, giúp bạn hoàn toàn an tâm khi tham khảo."
+                : "The above recommendations for tours, hotels, bus operators, and airlines were selected based on suitability, without any advertising or affiliate marketing, so you can rest assured of these suggestions."}
+            </li>
+          </ul>
+        </section>
+
+        {/* ─── 1 MONTH IN VIETNAM COSTS (SCREENSHOT 5) ─── */}
+        <section className="omi-costs-box">
+          <h2 className="omi-section-title">
+            {isVi ? "Chi phí du lịch Việt Nam 1 tháng" : "1 month in Vietnam costs"}
+          </h2>
+          <p className="omi-costs-intro">
+            {isVi
+              ? "Nếu bạn đang lên kế hoạch cho chuyến du lịch 1 tháng tại Việt Nam, việc chuẩn bị ngân sách dự kiến là rất hữu ích. Trung bình, nhiều du khách chi tiêu từ 1.000 đến 1.500 USD cho một tháng tại Việt Nam, tùy thuộc vào phong cách du lịch, lựa chọn lưu trú và các hoạt động trải nghiệm."
+              : "If you're planning a 1-month trip to Vietnam, it's helpful to have an estimated budget in mind. On average, many travelers spend between $1,000 and $1,500 USD for a month in Vietnam, depending on travel style, accommodation preferences, and activities."}
+          </p>
+
+          <div className="omi-costs-grid">
+            <div className="omi-cost-card">
+              <div className="omi-cost-card__header">
+                <span className="omi-cost-card__title">
+                  {isVi ? "Lưu trú (30 đêm)" : "Accommodation (30 nights)"}
+                </span>
+                <span className="omi-cost-card__price">$300 – $600 USD</span>
+              </div>
+              <p className="omi-cost-card__desc">
+                {isVi
+                  ? "Hostel / Homestay tiện nghi: $10–$15/đêm hoặc Khách sạn boutique 3 sao: $20–$35/đêm."
+                  : "Hostels & guesthouses ($10–$15/night) or comfortable 3-star boutique hotels ($20–$35/night)."}
+              </p>
+            </div>
+
+            <div className="omi-cost-card">
+              <div className="omi-cost-card__header">
+                <span className="omi-cost-card__title">
+                  {isVi ? "Ẩm thực & Đồ uống" : "Food & Drinks"}
+                </span>
+                <span className="omi-cost-card__price">$300 – $450 USD</span>
+              </div>
+              <p className="omi-cost-card__desc">
+                {isVi
+                  ? "Thưởng thức phở, bánh mì, cà phê trứng, hải sản tươi sống và ẩm thực địa phương (~$10–$15/ngày)."
+                  : "Street food favorites (pho, banh mi), egg coffee, fresh seafood, and casual local eateries (~$10–$15/day)."}
+              </p>
+            </div>
+
+            <div className="omi-cost-card">
+              <div className="omi-cost-card__header">
+                <span className="omi-cost-card__title">
+                  {isVi ? "Phương tiện di chuyển nội địa" : "Domestic Transportation"}
+                </span>
+                <span className="omi-cost-card__price">$250 – $350 USD</span>
+              </div>
+              <p className="omi-cost-card__desc">
+                {isVi
+                  ? "Vé máy bay Sài Gòn - Phú Quốc, tàu hỏa Bắc-Nam, xe limousine giường nằm, phà biển Cát Bà và Grab."
+                  : "Domestic flights to Phu Quoc, scenic trains, sleeper & limousine buses, speed ferries, and city Grab rides."}
+              </p>
+            </div>
+
+            <div className="omi-cost-card">
+              <div className="omi-cost-card__header">
+                <span className="omi-cost-card__title">
+                  {isVi ? "Vé tham quan & Tour trải nghiệm" : "Activities & Sightseeing"}
+                </span>
+                <span className="omi-cost-card__price">$150 – $250 USD</span>
+              </div>
+              <p className="omi-cost-card__desc">
+                {isVi
+                  ? "Du thuyền Vịnh Hạ Long, cáp treo Fansipan & Bà Nà Hills, tour khám phá hang động Phong Nha."
+                  : "Ha Long Bay cruise, Fansipan cable car, Ba Na Hills, Phong Nha cave explorations, and entrance fees."}
+              </p>
+            </div>
+          </div>
+
+          <div className="omi-costs-total-box">
+            <div className="omi-costs-total-label">
+              {isVi ? "Tổng chi phí ước tính trọn gói 1 tháng:" : "Estimated Total Cost for 1 Month:"}
+            </div>
+            <div className="omi-costs-total-amount">$1,000 – $1,650 USD</div>
+            <div className="omi-costs-total-sub">
+              {isVi
+                ? "(Tương đương khoảng 25.000.000 – 41.000.000 VNĐ / người cho toàn bộ 17 điểm đến)"
+                : "(Approximately 25,000,000 – 41,000,000 VND per person for all 17 destinations)"}
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* ─── LIGHTBOX MODAL BẢN ĐỒ ─── */}
