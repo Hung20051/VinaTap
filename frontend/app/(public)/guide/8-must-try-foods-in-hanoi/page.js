@@ -316,7 +316,7 @@ const HANOI_8_DISHES = [
     id: "banh-cuon",
     index: 3,
     title: "3. Banh Cuon",
-    titleVi: "3. Bánh Cuốn Nóng",
+    titleVi: "3. Bánh Cuốn",
     img: "/guide/hcmc/Top-Hanoi-foods-Banh-Cuon-Vietnamnomad.jpg",
     alt: "Banh Cuon - Steamed Rice Rolls Hanoi",
     desc: (
@@ -326,11 +326,11 @@ const HANOI_8_DISHES = [
     ),
     descVi: (
       <>
-        Bánh cuốn là một món ăn thanh nhã nhưng vô cùng đậm đà đã nhận được nhiều sự chú ý khi xuất hiện trong Cẩm nang Michelin Guide. Bánh được làm từ những tấm bột gạo tráng mỏng tang cuộn lấy nhân thịt băm xào mộc nhĩ giòn rụm. Lớp vỏ mềm mướt kết hợp với nhân thịt giòn sần sật tạo nên cảm giác rất thú vị khi ăn. Dù là món hấp, hương vị lại đậm đà nhờ chả quế ăn kèm và chén nước chấm chua ngọt ấm áp.
+        Bánh cuốn (bánh gạo tráng hấp) là một món ăn thanh nhã nhưng vô cùng thơm ngon gần đây đã thu hút nhiều sự chú ý sau khi được vinh danh trong Cẩm nang Michelin Guide. Bánh được làm từ những tấm bột gạo tráng mỏng tang cuộn lấy nhân thịt lợn băm và mộc nhĩ giòn sần sật. Lớp vỏ mềm mướt kết hợp cùng phần nhân giòn rụm tạo nên sự hòa quyện thú vị. Dù là món hấp, hương vị lại đậm đà nhờ chả nướng thơm lừng và chén nước chấm chua ngọt ấm áp. Bánh thường được ăn kèm giò chả, đặc biệt là chả quế thơm ngậy. Bạn có thể thưởng thức món này vào bất cứ thời điểm nào trong ngày. Quy trình tráng bánh điêu luyện và lớp bánh mịn màng chính là điểm quyến rũ lớn nhất của món ăn này.
       </>
     ),
-    tip: "Order a glass of herbal tea (tra da) or warm corn milk—both pair really well with banh cuon.",
-    tipVi: "Gọi thêm một cốc trà đá mát lạnh hoặc sữa ngô non ấm áp – cả hai đều là thức uống kèm hoàn hảo cho đĩa bánh cuốn thanh nhẹ.",
+    tip: "Order a glass of herbal tea or corn milk — both pair really well with banh cuon.",
+    tipVi: "Hãy gọi thêm một cốc trà thảo mộc hoặc sữa ngô — cả hai đều kết hợp rất tuyệt vời với bánh cuốn.",
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
@@ -351,16 +351,16 @@ const HANOI_8_DISHES = [
     alt: "Bun Thang - Traditional Hanoi Chicken Noodle Soup",
     desc: (
       <>
-        Not many tourists know <span className="vnn-link-highlight"><em>bun thang</em></span>, but it&apos;s one of Hanoi&apos;s best noodle dishes. &ldquo;Thang&rdquo; means soup, and the highlight here is the clear, sweet broth made from bones and vegetables. It&apos;s topped with thin slices of egg, pork sausage, chicken, mushrooms, and fried onions, all neatly arranged. It looks beautiful and tastes light but filling—perfect for breakfast and a great way to start a day of exploring. It&apos;s a true showcase of balance, care, and flavor, with a touch of elegance in every bowl.
+        Not many tourists know <em>bun thang</em>, but it&apos;s one of Hanoi&apos;s best noodle dishes. &ldquo;Thang&rdquo; means soup, and the highlight here is the clear, sweet broth made from bones and vegetables. It&apos;s topped with thin slices of egg, pork sausage, chicken, mushrooms, and fried onions, all neatly arranged. It looks beautiful and tastes light but filling—perfect for breakfast and a great way to start a day of exploring. It&apos;s a true showcase of balance, care, and flavor, with a touch of elegance in every bowl.
       </>
     ),
     descVi: (
       <>
-        Không nhiều du khách biết đến bún thang, nhưng đây là một trong những món bún tinh túy nhất của Hà Nội. &ldquo;Thang&rdquo; có nghĩa là canh súp, và điểm sáng ở đây chính là nồi nước dùng thanh ngọt nấu từ xương gà và tôm he trong vắt. Bát bún được phủ đều những sợi trứng tráng mỏng thái chỉ, giò lụa thái nhỏ, thịt gà xé phay, nấm hương và hành hoa, tất cả xếp đối xứng đẹp như một bông hoa ngũ sắc.
+        Không nhiều du khách biết đến <em>bún thang</em>, nhưng đây là một trong những món bún tinh túy nhất của Hà Nội. &ldquo;Thang&rdquo; có nghĩa là canh súp, và điểm sáng ở đây chính là nồi nước dùng thanh ngọt trong vắt nấu từ xương và rau củ quả. Bát bún được phủ đều những sợi trứng tráng mỏng thái chỉ, giò lụa, thịt gà xé, nấm hương và hành phi thơm lừng, tất cả xếp gọn gàng đẹp mắt. Món ăn vừa có hình thức bắt mắt vừa mang hương vị thanh tao nhưng đầy đặn—hoàn hảo cho bữa sáng khởi đầu ngày khám phá. Đây thực sự là minh chứng cho sự hài hòa, chăm chút và hương vị tao nhã trong từng bát bún.
       </>
     ),
-    tip: "Add a tiny dab of shrimp paste (mam tom) or a squeeze of lime/kumquat juice for extraordinary depth of flavor.",
-    tipVi: "Thêm một đầu đũa mắm tôm đánh tan vào bát nước dùng nóng và vắt một lát quất tươi để đánh thức trọn vẹn tầng tầng lớp lớp hương vị sâu lắng của món bún thang.",
+    tip: "Add a few drops of shrimp paste or a slice of lime for extra depth.",
+    tipVi: "Thêm vài giọt mắm tôm hoặc một lát chanh tươi để tạo chiều sâu hương vị đậm đà hơn.",
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
@@ -381,16 +381,16 @@ const HANOI_8_DISHES = [
     alt: "Cha Ca La Vong - Grilled Turmeric Fish with Dill",
     desc: (
       <>
-        <span className="vnn-link-highlight"><em>Cha ca La Vong</em></span> (La Vong grilled fish) is not only a Hanoi treasure but also one of Vietnam&apos;s culinary highlights. The star is ca lang (bagrid catfish)—a freshwater fish known for being tender, flavorful, and nutritious. It&apos;s cooked in a way that eliminates any fishiness while preserving its juicy texture. When served, it&apos;s heated in a pan with lots of dill and spring onions—simple ingredients that bring out the best in each other. It&apos;s eaten with rice noodles, roasted peanuts, and shrimp paste for extra flavor. The sizzling sound and aroma as it cooks at the table make the meal even better.
+        <em>Cha ca La Vong</em> (La Vong grilled fish) is not only a Hanoi treasure but also one of Vietnam&apos;s culinary highlights. The star is <em>ca lang</em> (bagrid catfish)—a freshwater fish known for being tender, flavorful, and nutritious. It&apos;s cooked in a way that eliminates any fishiness while preserving its juicy texture. When served, it&apos;s heated in a pan with lots of dill and spring onions—simple ingredients that bring out the best in each other. It&apos;s eaten with rice noodles, roasted peanuts, and shrimp paste for extra flavor. Locals often add chili and lime juice to the mix for more punch. The sizzling sound and aroma as it cooks at the table make the meal even better.
       </>
     ),
     descVi: (
       <>
-        Chả cá Lã Vọng không chỉ là một báu vật của Hà Nội mà còn là một trong những điểm nhấn ẩm thực lớn nhất của Việt Nam. Ngôi sao của món ăn là cá lăng—loài cá nước ngọt nổi tiếng với thịt ngọt mềm, ít xương và giàu dinh dưỡng. Cá được ướp với riềng, nghệ, mẻ rồi nướng sơ để khử mùi tanh mà vẫn giữ được độ ngọt mọng. Khi phục vụ, cá được xào ngay trên chảo mỡ nóng cùng hàng núi thì là tươi và hành hoa.
+        <em>Chả cá Lã Vọng</em> (chả cá nướng Lã Vọng) không chỉ là bảo vật ẩm thực của Hà Nội mà còn là một trong những nét chấm phá đặc sắc nhất của Việt Nam. Ngôi sao của món ăn là <em>cá lăng</em>—loài cá nước ngọt nổi tiếng với thớ thịt mềm ngọt, đậm đà và giàu dinh dưỡng. Cá được chế biến khéo léo để khử sạch mùi tanh mà vẫn giữ được độ ngọt mọng. Khi phục vụ, cá được xào nóng trên chảo cùng rất nhiều thì là tươi và hành hoa—những nguyên liệu mộc mạc tôn lên hương vị tuyệt hảo của nhau. Món ăn được dùng kèm với bún tươi, lạc rang giòn bùi và mắm tôm đậm đà. Người bản địa thường thêm ớt tươi và nước cốt chanh vào mắm tôm để dậy vị cay nồng. Tiếng xèo xèo vui tai và làn khói thơm phức lan tỏa ngay tại bàn khiến bữa ăn càng thêm phần hấp dẫn.
       </>
     ),
     tip: "If shrimp paste is too strong for you, you can use fish sauce instead. Ask for both if you're curious and want to compare.",
-    tipVi: "Nếu mắm tôm quá nồng đối với bạn, bạn có thể xin đổi sang nước mắm chua ngọt. Tuy nhiên, nếu tò mò, hãy thử cả hai để cảm nhận trọn vẹn sự khác biệt.",
+    tipVi: "Nếu mắm tôm quá nồng đối với bạn, bạn có thể dùng nước mắm thay thế. Hãy xin cả hai loại nếu tò mò muốn so sánh hương vị.",
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
@@ -406,21 +406,21 @@ const HANOI_8_DISHES = [
     id: "pho-cuon",
     index: 6,
     title: "6. Pho Cuon & Pho Ran",
-    titleVi: "6. Phở Cuốn & Phở Rán Ngũ Xã",
+    titleVi: "6. Phở Cuốn & Phở Rán",
     img: "/guide/hcmc/Pho-Cuon-Hanoi-food.jpg",
     alt: "Pho Cuon & Pho Ran - Rolled & Fried Pho Hanoi",
     desc: (
       <>
-        To cool down in Hanoi&apos;s summer, locals created dry versions of pho: <span className="vnn-link-highlight"><em>pho cuon</em></span> and <em>pho ran</em> (pho rolls and deep-fried pho). These dishes still use pho noodles, beef, and herbs. Pho cuon wraps stir-fried beef and herbs in wide rice noodle sheets, like a soft spring roll. It&apos;s eaten with a tangy dipping sauce and is light and refreshing. Pho ran is different—it fries the noodles until crispy, then adds stir-fried beef and veggies. There&apos;s also pho chien phong, where noodle squares are fried into golden puffs and topped with beef and onions. Each version gives you the classic pho flavor in a fun, new way.
+        To cool down in Hanoi&apos;s summer, locals created dry versions of <em>pho</em>: <em>pho cuon</em> and <em>pho ran</em> (pho rolls and deep-fried pho). These dishes still use pho noodles, beef, and herbs. <em>Pho cuon</em> wraps stir-fried beef and herbs in wide rice noodle sheets, like a soft spring roll. It&apos;s eaten with a tangy dipping sauce and is light and refreshing. <em>Pho ran</em> is different—it fries the noodles until crispy, then adds stir-fried beef and veggies. There&apos;s also <em>pho chien phong</em>, where noodle squares are fried into golden puffs and topped with beef and onions. Each version gives you the classic <em>pho</em> flavor in a fun, new way.
       </>
     ),
     descVi: (
       <>
-        Để giải nhiệt cho những ngày hè oi bức ở Hà Nội, người dân địa phương tại làng đúc đồng Ngũ Xã ven hồ Trúc Bạch đã sáng tạo ra các phiên bản phở &ldquo;khô&rdquo;: phở cuốn và phở rán. Những món ăn này vẫn sử dụng bánh phở, thịt bò và rau thơm. Phở cuốn cuộn chặt thịt bò xào lăn cùng xà lách, rau mùi trong lá phở mềm mướt như một chiếc gỏi cuốn, chấm cùng nước mắm tỏi ớt chua ngọt thanh mát.
+        Để giải nhiệt những ngày hè oi ả ở Hà Nội, người dân địa phương đã sáng tạo ra các phiên bản phở khô: <em>phở cuốn</em> và <em>phở rán</em>. Các món ăn này vẫn sử dụng bánh phở, thịt bò và rau thơm tươi ngon. <em>Phở cuốn</em> cuộn đều thịt bò xào lăn cùng rau thơm trong tấm bánh phở bản rộng mềm mại, tương tự như món gỏi cuốn tươi mát. Bánh được chấm cùng nước chấm chua ngọt thanh thanh, rất nhẹ nhàng và dễ chịu. <em>Phở rán</em> lại mang phong cách khác biệt—bánh phở được chiên giòn rụm rồi phủ lên trên thịt bò xào rau củ sốt đậm đà. Ngoài ra còn có <em>phở chiên phồng</em>, nơi các miếng bánh phở vuông vắn được chiên phồng xốp vàng ươm và phủ thịt bò xào hành tây. Mỗi phiên bản đều mang đến hương vị phở kinh điển theo một cách mới lạ đầy thú vị.
       </>
     ),
-    tip: "These dishes come in big portions—great for sharing. If eating alone, just pick one. Make sure to try 'Ngo chien bo' (popcorn-style sweet corn fritters) as a side snack!",
-    tipVi: "Các món ăn này thường được làm theo đĩa lớn—rất thích hợp để đi ăn cùng bạn bè hoặc gia đình chia sẻ. Nếu đi một mình, hãy chọn một món và đừng quên gọi thêm đĩa 'Ngô chiên bơ' thơm giòn ngọt bùi ăn kèm!",
+    tip: "These dishes come in big portions—great for sharing. If eating alone, just pick one.",
+    tipVi: "Các món ăn này thường được phục vụ theo phần ăn lớn—rất thích hợp để chia sẻ cùng nhau. Nếu đi ăn một mình, bạn chỉ cần chọn một món là vừa đủ no.",
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
@@ -441,47 +441,47 @@ const HANOI_8_DISHES = [
     alt: "Ngan Chay Toi - Garlic Crispy Duck Hanoi",
     desc: (
       <>
-        <span className="vnn-link-highlight"><em>Ngan chay toi</em></span> is crispy duck fried with garlic. The duck is marinated, then fried with lots of garlic until golden and crunchy. You get juicy duck with crispy garlic that&apos;s hard to resist. A full meal comes with duck (fried or boiled—or both), your choice of noodles (rice vermicelli or glass noodles), bamboo shoot soup, fresh herbs, and a strong garlic-ginger fish sauce. It&apos;s served on a tray with low stools—just like locals eat. This dish is hearty, flavorful, and perfect for cooler evenings in Hanoi.
+        <em>Ngan chay toi</em> is crispy duck fried with garlic. The duck is marinated, then fried with lots of garlic until golden and crunchy. You get juicy duck with crispy garlic that&apos;s hard to resist. A full meal comes with duck (fried or boiled—or both), your choice of noodles (rice vermicelli or glass noodles), bamboo shoot soup, fresh herbs, and a strong garlic-ginger fish sauce. It&apos;s served on a tray with low stools—just like locals eat. This dish is hearty, flavorful, and perfect for cooler evenings in Hanoi.
       </>
     ),
     descVi: (
       <>
-        Ngan cháy tỏi là món thịt ngan chiên già lửa cùng hàng vốc tép tỏi ta thơm nức. Thịt ngan được tẩm ướp đậm đà, sau đó chiên cùng rất nhiều tỏi cho đến khi thịt chuyển màu vàng nâu óng ả và tỏi giòn tan khó cưỡng. Bạn sẽ có những miếng thịt ngan mọng nước ăn kèm từng lát tỏi giòn rụm. Một suất ăn đầy đủ thường gồm thịt ngan, bún tươi hoặc miến, một bát canh măng tiết nóng hổi và chén nước chấm gừng tỏi ớt cay nồng đậm vị.
+        <em>Ngan cháy tỏi</em> là món thịt ngan chiên giòn ngập trong tỏi thơm lừng. Thịt ngan được tẩm ướp đậm đà, sau đó chiên cùng rất nhiều tỏi cho đến khi ngả màu vàng ươm và giòn rụm. Bạn sẽ được thưởng thức từng miếng thịt ngan mọng nước bọc ngoài lớp tỏi chiên giòn bùi khó lòng cưỡng lại. Một mâm ăn trọn vẹn thường gồm thịt ngan (chiên cháy tỏi hoặc luộc—hoặc cả hai loại), bún tươi hoặc miến tùy chọn, bát canh măng tiết nóng hổi, rau thơm tươi non và chén nước chấm mắm gừng tỏi ớt thơm nồng. Món ăn được dọn trên mâm nhôm đặt trên những chiếc ghế nhựa con—đúng phong cách ăn uống vỉa hè của người Hà Nội. Đây là món ăn đầy đặn, đậm đà và đặc biệt lý tưởng cho những buổi tối se lạnh tại Hà Nội.
       </>
     ),
-    tip: "A full combo of half a duck, noodles, and bamboo shoot soup is ideal for 2-3 people!",
-    tipVi: "Một phần nửa con ngan cháy tỏi kèm bún và canh măng tiết là khẩu phần lý tưởng cho nhóm từ 2 đến 3 người ăn no nê!",
+    tip: "Get half-fried and half-boiled duck to try both styles. Mix the meat with the noodles and dip for the best balance of taste.",
+    tipVi: "Hãy gọi nửa phần ngan cháy tỏi và nửa phần ngan luộc để thưởng thức cả hai hương vị. Trộn thịt cùng bún và chấm ngập nước mắm gừng để cảm nhận sự cân bằng vị giác tuyệt vời nhất.",
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
-      "Ngan Chay Toi Hang Thiec (71 Hang Thiec): 150,000 - 250,000 VND",
-      "Ngan Chay Toi Thuy Ngan (51 Hang Luoc): 160,000 - 280,000 VND",
+      "Ngan Chay Toi Thuy Luong (51 Hang Luoc): 230,000 VND",
+      "Bun Ngan Hang Thiec Dung Huyen (61 Hang Thiec): 250,000 VND",
     ],
     whereToEatVi: [
-      "Ngan Cháy Tỏi Hàng Thiếc (71 Hàng Thiếc): 150.000 - 250.000 VNĐ",
-      "Ngan Cháy Tỏi Thủy Ngan (51 Hàng Lược): 160.000 - 280.000 VNĐ",
+      "Ngan Cháy Tỏi Thủy Lương (51 Hàng Lược): 230.000 VNĐ",
+      "Bún Ngan Hàng Thiếc Dũng Huyền (61 Hàng Thiếc): 250.000 VNĐ",
     ],
   },
   {
     id: "ca-phe-trung",
     index: 8,
-    title: "8. Ca Phe Trung (Egg Coffee)",
-    titleVi: "8. Cà Phê Trứng Hà Nội",
+    title: "8. Ca Phe Trung",
+    titleVi: "8. Cà Phê Trứng",
     img: "/guide/hcmc/Top-Hanoi-foods-Ca-Phe-Trung-Vietnamnomad.jpg",
     alt: "Ca Phe Trung - Vietnamese Egg Coffee Hanoi",
     desc: (
       <>
-        You cannot leave Hanoi without trying <span className="vnn-link-highlight"><em>ca phe trung</em></span> (egg coffee). Invented in the late 1940s by Mr. Nguyen Van Giang when milk was scarce, egg yolks are whipped with sugar and condensed milk into an airy, custardy foam that floats atop strong Vietnamese drip coffee. It tastes like a warm liquid tiramisu—sweet, velvety, and deeply aromatic.
+        It&apos;s not food, but <em>ca phe trung</em> (egg coffee) is a key part of Hanoi&apos;s food scene. This drink stands out because of its unique mix: whipped egg yolk and hot black coffee. Some people think it tastes like dessert because it&apos;s rich and creamy, like whipped cream. It&apos;s simple—just eggs and coffee—but balanced perfectly to create a famous Hanoi drink. Many cafes use a hidden recipe that has been passed down for generations. It&apos;s sweet, strong, and unlike anything else.
       </>
     ),
     descVi: (
       <>
-        Bạn không thể rời Hà Nội mà chưa từng nếm thử <span className="vnn-link-highlight"><em>cà phê trứng</em></span>. Được sáng tạo vào cuối những năm 1940 bởi cụ Nguyễn Văn Giảng khi nguồn sữa còn khan hiếm, lòng đỏ trứng gà được đánh bông xốp mịn cùng đường và sữa đặc, nổi bồng bềnh trên lớp cà phê phin đậm đặc nóng hổi. Hương vị béo ngậy ngọt ngào như một ly tiramisu dạng lỏng quyến rũ lòng người.
+        Tuy không phải là món ăn, nhưng <em>cà phê trứng</em> chính là một mảnh ghép không thể thiếu trong bức tranh ẩm thực Hà Nội. Thức uống này nổi bật nhờ sự pha trộn độc đáo: lòng đỏ trứng gà đánh bông mịn và cà phê đen nóng đậm đà. Nhiều thực khách cảm nhận nó có vị ngọt béo ngậy tựa như một món tráng miệng với lớp kem tươi bông mềm. Thành phần đơn giản—chỉ gồm trứng và cà phê—nhưng được cân bằng một cách hoàn hảo để tạo nên thức uống trứ danh của Hà Thành. Rất nhiều quán cà phê gìn giữ bí quyết pha chế gia truyền qua nhiều thế hệ. Một ly cà phê ngọt thơm, đậm vị và mang dấu ấn độc nhất vô nhị.
       </>
     ),
-    tip: "Keep the cup in the small bowl of hot water provided to keep the egg foam silky and warm until the last sip.",
-    tipVi: "Hãy luôn để cốc cà phê trong chiếc bát nước nóng đi kèm để lớp kem trứng luôn giữ được độ ấm nóng mịn màng đến giọt cuối cùng.",
-    whereToEatTitle: "Where to try:",
+    tip: "Drink it while it's still hot. If it cools down, it can taste a little eggy. For first-timers, stir gently and sip slowly to enjoy the texture.",
+    tipVi: "Hãy thưởng thức khi cà phê còn nóng hổi. Nếu để nguội, thức uống có thể hơi vương vị tanh của trứng. Với những người lần đầu nếm thử, hãy khuấy thật nhẹ và nhấp từng ngụm chậm rãi để tận hưởng trọn vẹn lớp bọt kem bồng bềnh.",
+    whereToEatTitle: "Where to drink:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
       "Cafe Giang (39 Nguyen Huu Huan): 35,000 VND",
