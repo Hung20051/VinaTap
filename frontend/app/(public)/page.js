@@ -437,8 +437,8 @@ const FOODS_TO_TRY_ITEMS = [
     desc: "From aromatic broths to grilled delights, Nha Trang's food is a perfect celebration of coastal flavors and fresh local catches.",
     descVi:
       "Nem nướng, bún chả cá, bánh căn và hải sản tươi rói tôn vinh nét đậm đà ẩm thực vịnh biển miền Trung.",
-    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
-    link: "/province/da-nang",
+    img: "/guide/nha-trang/5-must-try-food-in-Nha-Trang-Vietnamnomad.jpg",
+    link: "/guide/5-must-try-nha-trang-dishes",
   },
 ];
 
