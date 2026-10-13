@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import PublicFooter from "@/components/layout/PublicFooter";
@@ -8,27 +8,18 @@ import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import { getLang } from "@/lib/prefs";
-import {
-  ChevronDown,
-  Share2,
-  MapPin,
-  Lightbulb,
-  CheckCircle,
-  Sparkles,
-  Maximize2,
-  X,
-} from "lucide-react";
+import { ChevronDown, Sparkles } from "lucide-react";
 import "@/styles/home.css";
 import "./nha-trang-food.css";
 
-// ─── MEGAMENUS DATA (STANDARDIZED VNN EDITORIAL NAVBAR 2026) ───
+// ─── STANDARDIZED MEGAMENUS DATA ───
 const MEGA_MENUS_DATA = {
   inspired: {
     items: [
       {
         id: "insp-1",
         title: "15 best places to visit in Vietnam in 2026",
-        titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
+        titleVi: "15 địa điểm đẹp nhất Việt Nam năm 2026",
         date: "October 11, 2026",
         dateVi: "11 Tháng 10, 2026",
         badge: "#Trending",
@@ -65,177 +56,139 @@ const MEGA_MENUS_DATA = {
         img: "/guide/megamenu/inspired-4.jpg",
         link: "/guide/20-best-things-to-do-in-vietnam",
       },
-      {
-        id: "insp-5",
-        title: "Ao Dai – Vietnamese Traditional Dress",
-        titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
-        date: "October 13, 2026",
-        dateVi: "13 Tháng 10, 2026",
-        badge: "Featured Articles",
-        img: "/guide/megamenu/inspired-5.jpg",
-        link: "/guide/ao-dai-vietnamese-traditional-dress",
-      },
     ],
   },
   destinations: {
-    items: [
+    regions: [
       {
-        id: "dest-1",
-        title: "Ho Chi Minh City",
-        titleVi: "TP. Hồ Chí Minh",
-        date: "October 11, 2026",
-        dateVi: "12 Tháng 10, 2026",
-        badge: "Destinations",
-        img: "/guide/megamenu/dest-1-hcmc.jpg",
-        link: "/province/ho-chi-minh",
+        name: "Miền Bắc",
+        nameEn: "Northern Vietnam",
+        provinces: [
+          { name: "Hà Nội", slug: "ha-noi" },
+          { name: "Hải Phòng", slug: "hai-phong" },
+          { name: "Quảng Ninh", slug: "quang-ninh" },
+          { name: "Ninh Bình", slug: "ninh-binh" },
+          { name: "Hà Giang", slug: "ha-giang" },
+          { name: "Lào Cai (Sa Pa)", slug: "lao-cai" },
+          { name: "Cao Bằng", slug: "cao-bang" },
+          { name: "Mai Châu (Hòa Bình)", slug: "hoa-binh" },
+        ],
       },
       {
-        id: "dest-2",
-        title: "Dalat",
-        titleVi: "Đà Lạt",
-        date: "October 12, 2026",
-        dateVi: "12 Tháng 10, 2026",
-        badge: "Destinations",
-        img: "/guide/megamenu/dest-2-dalat.jpg",
-        link: "/province/dalat",
+        name: "Miền Trung",
+        nameEn: "Central Vietnam",
+        provinces: [
+          { name: "Đà Nẵng", slug: "da-nang" },
+          { name: "Quảng Nam (Hội An)", slug: "hoi-an" },
+          { name: "Thừa Thiên Huế", slug: "thua-thien-hue" },
+          { name: "Khánh Hòa (Nha Trang)", slug: "khanh-hoa" },
+          { name: "Lâm Đồng (Đà Lạt)", slug: "dalat" },
+          { name: "Bình Định (Quy Nhơn)", slug: "binh-dinh" },
+          { name: "Phú Yên", slug: "phu-yen" },
+          { name: "Quảng Bình (Phong Nha)", slug: "quang-binh" },
+        ],
       },
       {
-        id: "dest-3",
-        title: "Hoi An",
-        titleVi: "Hội An",
-        date: "October 12, 2026",
-        dateVi: "12 Tháng 10, 2026",
-        badge: "Destinations",
-        img: "/guide/megamenu/dest-3-hoian.jpg",
-        link: "/province/hoi-an",
-      },
-      {
-        id: "dest-4",
-        title: "Nha Trang (Khanh Hoa)",
-        titleVi: "Nha Trang (Khánh Hòa)",
-        date: "October 13, 2026",
-        dateVi: "13 Tháng 10, 2026",
-        badge: "Destinations",
-        img: "/guide/megamenu/dest-4-danang.jpg",
-        link: "/province/khanh-hoa",
-      },
-      {
-        id: "dest-5",
-        title: "Hanoi",
-        titleVi: "Hà Nội",
-        date: "October 13, 2026",
-        dateVi: "13 Tháng 10, 2026",
-        badge: "Destinations",
-        img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/province/ha-noi",
+        name: "Miền Nam",
+        nameEn: "Southern Vietnam",
+        provinces: [
+          { name: "TP. Hồ Chí Minh", slug: "ho-chi-minh" },
+          { name: "Bà Rịa - Vũng Tàu", slug: "ba-ria-vung-tau" },
+          { name: "Kiên Giang (Phú Quốc)", slug: "kien-giang" },
+          { name: "Cần Thơ", slug: "can-tho" },
+          { name: "An Giang (Châu Đốc)", slug: "an-giang" },
+          { name: "Bến Tre", slug: "ben-tre" },
+          { name: "Tây Ninh", slug: "tay-ninh" },
+          { name: "Cà Mau", slug: "ca-mau" },
+        ],
       },
     ],
   },
   thingsToDo: {
     items: [
       {
-        id: "todo-1",
-        title: "3-week Vietnam Itinerary",
-        titleVi: "Lịch trình 3 tuần xuyên Việt",
-        date: "October 11, 2026",
-        dateVi: "12 Tháng 10, 2026",
-        badge: "Things to Do",
-        img: "/guide/megamenu/todo-1-3week.jpg",
-        link: "/guide/3-week-vietnam-itinerary",
+        id: "th-1",
+        title: "10 best things to do in Ho Chi Minh City",
+        titleVi: "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Experiences",
+        img: "/guide/megamenu/todo-1.jpg",
+        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
       },
       {
-        id: "todo-2",
-        title: "8 best things to do in Nha Trang",
+        id: "th-2",
+        title: "8 Best Things to Do in Nha Trang",
         titleVi: "8 trải nghiệm tuyệt nhất tại Nha Trang",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
-        badge: "Things to Do",
-        img: "/guide/megamenu/todo-3-nhatrang.jpg",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Experiences",
+        img: "/guide/megamenu/todo-2.jpg",
         link: "/guide/8-best-things-to-do-in-nha-trang",
       },
       {
-        id: "todo-3",
-        title: "10 Best Things to Do in HCMC",
-        titleVi: "10 trải nghiệm tuyệt nhất tại TP.HCM",
-        date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
-        badge: "Things to Do",
-        img: "/guide/megamenu/todo-2-hcmc.jpg",
-        link: "/province/ho-chi-minh",
-      },
-      {
-        id: "todo-4",
-        title: "20 Best Things to Do in Vietnam",
-        titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
-        date: "October 10, 2026",
-        dateVi: "10 Tháng 10, 2026",
-        badge: "Things to Do",
-        img: "/guide/megamenu/todo-4-vietnam.jpg",
-        link: "/guide/20-best-things-to-do-in-vietnam",
-      },
-      {
-        id: "todo-5",
-        title: "5 Best Vung Tau Beaches",
+        id: "th-3",
+        title: "5 Best Beaches in Vung Tau",
         titleVi: "5 bãi biển đẹp nhất tại Vũng Tàu",
         date: "October 13, 2026",
         dateVi: "13 Tháng 10, 2026",
-        badge: "Things to Do",
-        img: "/guide/vung-tau/hero-vung-tau-beaches.jpg",
+        badge: "Experiences",
+        img: "/guide/megamenu/todo-3.jpg",
         link: "/guide/5-best-vung-tau-beaches",
+      },
+      {
+        id: "th-4",
+        title: "Ao Dai: Vietnamese Traditional Dress",
+        titleVi: "Áo Dài: Quốc phục truyền thống Việt Nam",
+        date: "October 13, 2026",
+        dateVi: "13 Tháng 10, 2026",
+        badge: "Culture",
+        img: "/guide/megamenu/todo-4.jpg",
+        link: "/guide/ao-dai-vietnamese-traditional-dress",
       },
     ],
   },
-  eat: {
+  eatDrink: {
     items: [
       {
         id: "eat-1",
-        title: "5 must-try Nha Trang dishes",
-        titleVi: "5 món ăn phải nếm khi đến Nha Trang",
+        title: "Pho: The Complete Guide to Vietnam's National Dish",
+        titleVi: "Phở: Cẩm nang trọn vẹn về quốc hồn ẩm thực Việt Nam",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
-        badge: "Eat & Drink",
-        img: "/guide/nha-trang/5-must-try-food-in-Nha-Trang-Vietnamnomad.jpg",
-        link: "/guide/5-must-try-nha-trang-dishes",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Cuisine",
+        img: "/guide/megamenu/eat-1-pho.jpg",
+        link: "/guide/pho-the-complete-guide",
       },
       {
         id: "eat-2",
-        title: "7 must-try foods in Vung Tau",
-        titleVi: "7 món ăn nhất định phải thử ở Vũng Tàu",
+        title: "12 Must-Try Foods in Ho Chi Minh City",
+        titleVi: "12 món ăn nhất định phải thử tại TP. Hồ Chí Minh",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
-        badge: "Eat & Drink",
-        img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
-        link: "/guide/7-must-try-foods-in-vung-tau",
-      },
-      {
-        id: "eat-3",
-        title: "8 must-try foods in Hanoi",
-        titleVi: "8 món ăn phải thử tại Hà Nội",
-        date: "October 12, 2026",
-        dateVi: "12 Tháng 10, 2026",
-        badge: "Eat & Drink",
-        img: "/guide/megamenu/eat-1-hanoi.jpg",
-        link: "/guide/8-must-try-foods-in-hanoi",
-      },
-      {
-        id: "eat-4",
-        title: "12 must-try foods in Ho Chi Minh City",
-        titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
-        date: "October 13, 2026",
-        dateVi: "13 Tháng 10, 2026",
-        badge: "Eat & Drink",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Cuisine",
         img: "/guide/megamenu/eat-2-hcmc.jpg",
         link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
       },
       {
-        id: "eat-5",
-        title: "8 must-try foods in Dalat",
-        titleVi: "8 món ăn phải thử tại Đà Lạt",
-        date: "October 12, 2026",
-        dateVi: "12 Tháng 10, 2026",
-        badge: "Eat & Drink",
-        img: "/guide/megamenu/dest-2-dalat.jpg",
-        link: "/province/dalat",
+        id: "eat-3",
+        title: "8 Must-Try Foods in Hanoi",
+        titleVi: "8 món ngon nức tiếng tại Hà Nội",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Cuisine",
+        img: "/guide/megamenu/eat-3-hanoi.jpg",
+        link: "/guide/8-must-try-foods-in-hanoi",
+      },
+      {
+        id: "eat-4",
+        title: "5 Must-Try Nha Trang Dishes",
+        titleVi: "5 món ăn đặc sản không thể bỏ qua tại Nha Trang",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Cuisine",
+        img: "/guide/megamenu/eat-4-nhatrang.jpg",
+        link: "/guide/5-must-try-nha-trang-dishes",
       },
     ],
   },
@@ -243,41 +196,41 @@ const MEGA_MENUS_DATA = {
     items: [
       {
         id: "itin-1",
-        title: "3-week Vietnam Itinerary",
+        title: "3-Week Vietnam Itinerary",
         titleVi: "Lịch trình 3 tuần xuyên Việt",
-        date: "October 11, 2026",
-        dateVi: "12 Tháng 10, 2026",
-        badge: "Itineraries",
-        img: "/guide/megamenu/todo-1-3week.jpg",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Itinerary",
+        img: "/guide/megamenu/itin-1-3weeks.jpg",
         link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "itin-2",
-        title: "10 Days in Vietnam: The Best Route",
-        titleVi: "10 ngày tại Việt Nam: Lộ trình hoàn hảo",
-        date: "October 14, 2026",
-        dateVi: "14 Tháng 10, 2026",
-        badge: "Itineraries",
+        title: "10 Days in Vietnam",
+        titleVi: "Lịch trình 10 ngày tại Việt Nam",
+        date: "October 13, 2026",
+        dateVi: "13 Tháng 10, 2026",
+        badge: "Itinerary",
         img: "/guide/megamenu/itin-2-10days.jpg",
         link: "/guide/10-days-in-vietnam",
       },
       {
         id: "itin-3",
-        title: "2 Weeks in Vietnam: North to South",
-        titleVi: "2 tuần tại Việt Nam: Xuyên Việt từ Bắc vào Nam",
-        date: "October 14, 2026",
-        dateVi: "14 Tháng 10, 2026",
-        badge: "Itineraries",
+        title: "2 Weeks in Vietnam",
+        titleVi: "Lịch trình 2 tuần xuyên Việt",
+        date: "October 13, 2026",
+        dateVi: "13 Tháng 10, 2026",
+        badge: "Itinerary",
         img: "/guide/megamenu/itin-3-2weeks.jpg",
         link: "/guide/2-weeks-in-vietnam",
       },
       {
         id: "itin-4",
-        title: "1 Month in Vietnam: The Ultimate Journey",
-        titleVi: "1 tháng tại Việt Nam: Hành trình trọn vẹn",
-        date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
-        badge: "Itineraries",
+        title: "1 Month in Vietnam",
+        titleVi: "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam",
+        date: "October 13, 2026",
+        dateVi: "13 Tháng 10, 2026",
+        badge: "Itinerary",
         img: "/guide/megamenu/itin-4-1month.jpg",
         link: "/guide/1-month-in-vietnam",
       },
@@ -285,333 +238,237 @@ const MEGA_MENUS_DATA = {
   },
 };
 
-// ─── 5 DISHES DATA (AUTHENTIC NHA TRANG LOCAL SPECIALTIES) ───
-const DISHES_DATA = [
+// ─── 5 MUST-TRY NHA TRANG DISHES DATA (MATCHING SCREENSHOTS 2, 3, 4, 5) ───
+const NHA_TRANG_5_DISHES = [
   {
     id: "bun-ca",
     index: 1,
-    name: "Bun Ca (Fish Noodle Soup)",
-    nameVi: "Bún chả cá Nha Trang (Fish Noodle Soup)",
-    tag: "Nước dùng thanh trong",
-    tagEn: "Signature coastal broth",
+    title: "1. Bun Ca (Fish Noodle Soup)",
+    titleVi: "1. Bún Cá (Fish Noodle Soup)",
     img: "/guide/nha-trang/Top-Nha-Trang-Dishes-Bun-Cha-Ca-Vietnamnomad.jpg",
-    caption:
-      "Tô bún chả cá Nha Trang với nước dùng thanh ngọt nấu từ xương cá biển, cà chua và dứa",
-    captionEn:
-      "Nha Trang fish cake noodle soup served in a naturally sweet and tangy seafood broth",
-    desc:
-      "Bun Ca is a beloved dish that showcases the abundant seafood of this coastal region. The broth is gently simmered with fresh fish bones, ripe tomatoes, and pineapple, creating a beautiful balance of sweet and tangy flavors without being heavy or oily. The dish is served in a steaming bowl with rice noodles and generous slices of golden fried fish cakes, steamed fish cakes, tuna or mackerel fillets, garnished with fresh scallions and dill. The fish cakes are crafted from fresh mackerel puree beaten vigorously with local herbs and peppercorn until bouncy and chewy. It is the absolute favorite choice for breakfast or lunch across Nha Trang.",
-    descVi:
-      "Bún chả cá là món ăn mang tính biểu tượng, tôn vinh nguồn hải sản dồi dào của vịnh biển Nha Trang. Khác với bún cá nhiều nơi ninh từ xương heo, nước dùng bún cá Nha Trang được ninh hoàn toàn từ xương cá thu, cá cờ biển tươi cùng cà chua và dứa (thơm), tạo nên vị thanh ngọt tự nhiên, không hề váng mỡ. Điểm nhấn làm nên linh hồn bát bún chính là những miếng chả cá thu chiên vàng ruộm và chả cá hấp trắng mịn. Thịt cá được quết nhuyễn tay cùng thì là, tiêu sọ cay nồng tạo độ dai giòn sần sật khó quên. Bát bún nghi ngút khói, ăn kèm rau sống thái nhỏ, thêm chút ớt hiểm và mắm tôm tạo nên trải nghiệm ấm lòng cả sáng lẫn trưa.",
-    tip:
-      "Go for Bun Cha Ca if you’re keen on chewy fish cakes, or Bun Ca if you prefer whole fresh fish fillets. You can also opt for Banh Canh Cha Ca, which features thick, bouncy round tapioca noodles in the same luscious broth.",
-    tipVi:
-      "Nếu thích độ dai giòn thơm ngậy hãy gọi Bún Chả Cá, hoặc chọn Bún Cá nếu thích thịt cá thu phi lê nguyên miếng. Ngoài bún sợi nhỏ, bạn có thể thử Bánh Canh Chả Cá với sợi bột gạo/lọc dẻo dai đặc trưng.",
-    places: [
-      {
-        name: "Bún Chả Cá Hạnh Nhiên",
-        address: "32C Lê Đại Hành, P. Tân Lập, Nha Trang",
-        price: "35,000 VND – 55,000 VND (~$1.4 – $2.2)",
-      },
-      {
-        name: "Bún Cá Nguyên Loan",
-        address: "123 Ngô Gia Tự, P. Tân Lập, Nha Trang",
-        price: "45,000 VND (~$1.8)",
-      },
-      {
-        name: "Bún Cá Mịn",
-        address: "170 Bạch Đằng, P. Tân Lập, Nha Trang",
-        price: "40,000 VND – 50,000 VND (~$1.6 – $2.0)",
-      },
+    alt: "Bun Ca - Fish Noodle Soup Nha Trang",
+    desc: (
+      <>
+        <span className="vnn-link-highlight">Bun Ca</span> is a beloved dish that showcases the abundant seafood of this region. The broth is simmered with fish bones, tomatoes, and pineapple, creating a beautiful balance of sweet and tangy flavors. Bun Ca is served in a bowl with rice noodles in a flavorful broth and topped with fish cakes, tuna or mackerel fillets, and fresh herbs for garnish. Fish cakes are made from fish puree mixed with spices such as dill and pepper before being steamed or fried (or steamed and then fried) until golden brown. Their chewiness adds texture to the dish and is a highlight of Bun Ca Nha Trang. This fish noodle soup is ideal for breakfast or lunch, given its light yet filling profile.
+      </>
+    ),
+    descVi: (
+      <>
+        <span className="vnn-link-highlight">Bún cá</span> là món ăn được yêu thích hàng đầu, tôn vinh nguồn hải sản phong phú của vùng biển Nha Trang. Nước dùng được ninh từ xương cá biển, cà chua và dứa, tạo nên sự cân bằng tuyệt vời giữa vị ngọt thanh và chua nhẹ tự nhiên. Bún cá được phục vụ trong tô bún ngập nước dùng đậm đà, phủ lên trên là chả cá, phi lê cá ngừ hoặc cá cờ và các loại rau thơm. Chả cá được làm từ thịt cá tươi quết cùng thì là, hạt tiêu trước khi hấp hoặc chiên vàng ruộm. Độ dai giòn sần sật làm tăng thêm hương vị và là điểm nhấn đặc trưng của bún cá Nha Trang. Món bún này rất lý tưởng cho bữa sáng hoặc trưa bởi vị thanh nhẹ nhưng no lâu.
+      </>
+    ),
+    tipsTitle: "Tips:",
+    tipsTitleVi: "Tips:",
+    tips: [
+      "Go for Bun Cha Ca if you're keen on fish cakes or Bun Ca if you prefer only fish fillet.",
+      "Apart from the typical rice noodles (Bun), you can opt for Banh Canh Cha Ca, which is served with thick, round noodles.",
+    ],
+    tipsVi: [
+      "Hãy chọn Bún Chả Cá nếu bạn thích chả cá dai giòn hoặc Bún Cá nếu bạn thích phi lê cá nguyên miếng.",
+      "Bên cạnh bún sợi thông thường, bạn có thể chọn Bánh Canh Chả Cá với sợi bánh canh to tròn, dẻo dai đặc trưng.",
+    ],
+    whereToTryTitle: "Where to try:",
+    whereToTryTitleVi: "Where to try:",
+    whereToTry: [
+      "Bun Cha Ca Hanh Nhien (32c Le Dai Hanh): 35,000 VND – 55,000 VND ($1.4 – $2.2)",
+    ],
+    whereToTryVi: [
+      "Bún Chả Cá Hạnh Nhiên (32c Lê Đại Hành): 35.000 VNĐ – 55.000 VNĐ ($1.4 – $2.2)",
     ],
   },
   {
     id: "bun-sua",
     index: 2,
-    name: "Bun Sua (Jellyfish Noodle Soup)",
-    nameVi: "Bún sứa Nha Trang (Jellyfish Noodle Soup)",
-    tag: "Đặc sản biển thanh mát",
-    tagEn: "Crunchy coastal delicacy",
+    title: "2. Bun Sua (Jellyfish Noodle Soup)",
+    titleVi: "2. Bún Sứa (Jellyfish Noodle Soup)",
     img: "/guide/nha-trang/Top-Nha-Trang-Dishes-Bun-Sua-by-Vietnamnomad.jpg",
-    caption:
-      "Những miếng sứa biển trắng trong giòn sần sật hòa cùng chả cá thu trong tô bún thanh mát",
-    captionEn:
-      "Crisp, translucent offshore jellyfish paired with savoury fish cakes in a light seafood broth",
-    desc:
-      "Another traditional seafood noodle dish, but this time with a delightful coastal twist. Bun Sua is essentially an extension of the iconic Bun Ca, but loaded with bite-sized chunks of translucent jellyfish caught far offshore in the deep sea. Unlike seasonal stinging jellyfish, this edible type is small, thick-walled, and incredibly crisp. The crunchiness of the chilled jellyfish contrasts magnificently against the soft warmth of the rice noodles and the chewy fish cake. A squeeze of fresh lime juice and a spoonful of fried chili paste elevate the broth into an explosion of umami that lingers long on the palate.",
-    descVi:
-      "Bún sứa là khúc biến tấu độc đáo bậc nhất của ẩm thực miền biển Khánh Hòa. Người Nha Trang sử dụng loại sứa nhỏ bằng ngón tay cái, màu trắng đục, mình dày được đánh bắt tận ngoài khơi xa. Sứa được ngâm nước lá ổi hoặc phèn trong vắt để giữ trọn độ giòn tan, thanh mát mà không hề tanh. Khi thưởng thức, từng miếng sứa sần sật mọng nước tan đều trong miệng, tương phản hoàn hảo với sợi bún mềm mại và miếng chả cá đậm đà. Nước dùng nấu từ cá liệt biển ngọt lịm, vắt thêm lát chanh tươi và thìa ớt sa tế cay nồng là chuẩn phong vị sảng khoái ngày nắng biển.",
-    tip:
-      "Diners can order 'Bun Ca Sua' to enjoy both savory fish cakes and crunchy jellyfish in one bowl. The same crunchy jellyfish is also widely used in delicious local appetizers like Goi Sua (jellyfish mango salad).",
-    tipVi:
-      "Hãy gọi ngay một tô 'Bún Cá Sứa' để thưởng thức trọn vẹn cả chả cá thu dai bùi và sứa biển giòn sần sật. Sứa biển giòn ngon này cũng là nguyên liệu chính của món Gỏi sứa bắp chuối trứ danh.",
-    places: [
-      {
-        name: "Bún Cá Nguyên Loan",
-        address: "123 Ngô Gia Tự, P. Tân Lập, Nha Trang",
-        price: "45,000 VND (~$1.8)",
-      },
-      {
-        name: "Bún Sứa Cô Ba",
-        address: "105 Hoàng Hoa Thám, P. Lộc Thọ, Nha Trang",
-        price: "48,000 VND (~$1.9)",
-      },
-      {
-        name: "Bún Sứa Năm Beo",
-        address: "Chung cư B2 Phan Bội Châu, Nha Trang",
-        price: "40,000 VND – 50,000 VND (~$1.6 – $2.0)",
-      },
+    alt: "Bun Sua - Jellyfish Noodle Soup Nha Trang",
+    desc: (
+      <>
+        Another traditional seafood noodle dish, but this time with a twist. Bun Sua is essentially an extension of Bun Ca, the fish noodle soup mentioned earlier. With a light yet flavorful broth as its base, the jellyfish adds an interesting crunch to contrast with the softness of the noodles. Diners can order Bun Sua or Bun Ca Sua, which includes both fish and jellyfish. Don't forget to add some fresh chili and a squeeze of lime juice for a burst of flavor. Bun Sua is a great choice for those looking for something unique and unexpectedly delicious.
+      </>
+    ),
+    descVi: (
+      <>
+        Một món bún hải sản truyền thống khác nhưng mang nét biến tấu độc đáo. Bún sứa về cơ bản là khúc biến tấu mở rộng từ món bún cá. Với nền nước dùng thanh ngọt, từng miếng sứa biển trắng giòn sần sật tạo sự tương phản thú vị với sợi bún mềm mại. Thực khách có thể gọi Bún Sứa hoặc Bún Cá Sứa kết hợp cả chả cá lẫn sứa tươi. Đừng quên thêm chút ớt tươi và vắt lát chanh để hương vị bùng nổ. Bún sứa là lựa chọn tuyệt vời cho những ai tìm kiếm trải nghiệm ẩm thực độc đáo và ngon bất ngờ.
+      </>
+    ),
+    tipsTitle: "Tip:",
+    tipsTitleVi: "Tip:",
+    tips: [
+      "Besides Bun Sua, the crunchy jellyfish is also used in many other regional dishes like Goi Sua (jellyfish salad).",
+    ],
+    tipsVi: [
+      "Ngoài bún sứa, sứa biển giòn sần sật còn được dùng trong nhiều món đặc sản miền biển khác như Gỏi Sứa.",
+    ],
+    whereToTryTitle: "Where to try:",
+    whereToTryTitleVi: "Where to try:",
+    whereToTry: [
+      "Nguyen Loan (123 Ngo Gia Tu): 45,000 VND",
+      "Co Ba (105 Hoang Hoa Tham): 48,000 VND",
+    ],
+    whereToTryVi: [
+      "Nguyên Loan (123 Ngô Gia Tự): 45.000 VNĐ",
+      "Cô Ba (105 Hoàng Hoa Thám): 48.000 VNĐ",
     ],
   },
   {
     id: "banh-can",
     index: 3,
-    name: "Banh Can (Crispy Mini Rice Pancakes)",
-    nameVi: "Bánh căn Nha Trang (Crispy Terracotta Mini Pancakes)",
-    tag: "Đồ ăn vặt số 1",
-    tagEn: "Top all-day street snack",
+    title: "3. Banh Can (Mini Pancakes)",
+    titleVi: "3. Bánh Căn (Mini Pancakes)",
     img: "/guide/nha-trang/Top-Nha-Trang-Dishes-Banh-Can-Vietnamnomad.jpg",
-    caption:
-      "Bánh căn đúc nóng hổi trong khuôn gốm nung than củi cùng mực cơm, tôm tươi và trứng cút",
-    captionEn:
-      "Golden crispy mini rice pancakes freshly baked in terracotta clay molds over charcoal",
-    desc:
-      "Banh Can are small, savory rice flour pancakes that stand as a favorite all-day snack in Nha Trang. Cooked in unglazed earthen clay moulds directly over glowing charcoal fires, they form an irresistible crispy base while maintaining a soft, fluffy interior. The toppings highlight Nha Trang's coastal abundance: tiny baby squids that burst with natural sweetness, fresh prawns, quail eggs, and seasoned minced beef or pork. The magic of Banh Can lies in its warm dipping sauce, enriched with green onion oil (mo hanh), roasted chili, and served alongside tender xiu mai (pork meatballs) or cha bo wrapped in banana leaves.",
-    descVi:
-      "Bánh căn là món ăn đường phố mà bất kỳ du khách nào ghé Nha Trang cũng đem lòng say đắm. Những chiếc bánh nhỏ tròn xoe được đổ trong khuôn đất nung không tráng dầu, đặt trên lò than hồng rực lửa. Nhiệt độ của gốm nung giúp vỏ bánh nở giòn rụm bên dưới nhưng ruột bánh vẫn mềm xốp thơm bùi mùi gạo nếp. Phía trên là topping ngập tràn: mực cơm tươi rói cắn ngập chân răng, tôm biển, trứng cút lòng đào hoặc thịt băm. Nước chấm bánh căn Nha Trang rất đa dạng: mắm nêm đậm đà thơm mùi dứa hoặc nước mắm pha mỡ hành thơm nức, dầm cùng xíu mại thịt viên béo ngậy và xoài xanh băm nhỏ.",
-    tip:
-      "When ordering, look for 'thap cam' or 'day du' on the menu—both mean 'with a bit of everything', allowing you to sample squid, shrimp, quail egg, and beef in a single plate.",
-    tipVi:
-      "Khi gọi món, hãy chọn đĩa 'thập cẩm' hoặc 'đầy đủ' để thưởng thức trọn vẹn cả mực sữa, tôm, trứng cút và thịt băm trong cùng một mẹt bánh nóng giòn.",
-    places: [
-      {
-        name: "Bánh Xèo & Bánh Căn 134",
-        address: "134 Trần Quý Cáp, P. Phương Sài, Nha Trang",
-        price: "30,000 VND – 50,000 VND (~$1.2 – $2.0)",
-      },
-      {
-        name: "Bánh Căn Út Năm",
-        address: "19 Ngô Đến, P. Vĩnh Phước, Nha Trang",
-        price: "25,000 VND – 60,000 VND (~$1.0 – $2.4)",
-      },
-      {
-        name: "Bánh Căn 51",
-        address: "51 Tô Hiến Thành, P. Tân Lập, Nha Trang",
-        price: "40,000 VND – 80,000 VND (~$1.6 – $3.2)",
-      },
+    alt: "Banh Can - Mini Rice Pancakes Nha Trang",
+    desc: (
+      <>
+        <p style={{ margin: "0 0 14px" }}>
+          Banh Can are small, savory rice flour pancakes that are a favorite all-day snack in Nha Trang. Cooked in small clay molds over a charcoal fire, they develop a crispy exterior and a soft, slightly fluffy interior. The toppings come in a great variety, including quail eggs, shrimp, minced pork or beef, and baby squid.
+        </p>
+        <p style={{ margin: "0 0 14px" }}>
+          The star of the Banh Can dish is the tangy dipping sauce, perfected with finely chopped green onions, fresh chili, and fried shallots. For a heartier meal, you can pair Banh Can with Xiu Mai, which consists of minced pork mixed with spices like red onion and pepper, combined with breadcrumbs. Another popular side dish is Cha Bo, steamed beef sausages wrapped in banana leaves. Breakfast and dinner are the perfect times to enjoy this bite-sized delight.
+        </p>
+      </>
+    ),
+    descVi: (
+      <>
+        <p style={{ margin: "0 0 14px" }}>
+          Bánh căn là những chiếc bánh bột gạo nhỏ tròn xoe, món ăn vặt được yêu thích suốt cả ngày tại Nha Trang. Được đổ trong các khuôn đất nung nhỏ trên lò than củi đỏ rực, bánh có lớp vỏ ngoài giòn rụm và phần ruột mềm xốp. Phần nhân topping rất phong phú, từ trứng cút, tôm tươi, thịt heo hoặc bò băm cho đến mực cơm tươi rói.
+        </p>
+        <p style={{ margin: "0 0 14px" }}>
+          Ngôi sao làm nên linh hồn món bánh căn là chén nước chấm thơm ngon, hòa quyện cùng mỡ hành thái nhỏ, ớt tươi và hành phi. Để bữa ăn thêm trọn vẹn, bạn có thể ăn kèm bánh căn với xíu mại thịt viên béo ngậy. Một món kèm phổ biến khác là chả bò gói lá chuối thơm lừng. Bữa sáng và bữa tối là thời điểm lý tưởng nhất để thưởng thức món ăn nóng hổi này.
+        </p>
+      </>
+    ),
+    tipsTitle: "Tip:",
+    tipsTitleVi: "Tip:",
+    tips: [
+      'When in doubt, look for "thap cam" or "day du" – both mean "a bit of everything", allowing you to sample a variety of Banh Can fillings.',
+    ],
+    tipsVi: [
+      'Nếu phân vân, hãy gọi đĩa "thập cẩm" hoặc "đầy đủ" – nghĩa là có mỗi loại một ít, giúp bạn nếm thử trọn vẹn các loại nhân bánh căn.',
+    ],
+    whereToTryTitle: "Where to try:",
+    whereToTryTitleVi: "Where to try:",
+    whereToTry: [
+      "Banh Xeo 134 (134 Tran Quy Cap): 30,000 VND – 50,000 VND",
+      "Banh Can Ut Nam (19 Ngo Den): 25,000 VND – 60,000 VND",
+    ],
+    whereToTryVi: [
+      "Bánh Xèo 134 (134 Trần Quý Cáp): 30.000 VNĐ – 50.000 VNĐ",
+      "Bánh Căn Út Năm (19 Ngô Đến): 25.000 VNĐ – 60.000 VNĐ",
     ],
   },
   {
     id: "xoi-ca",
     index: 4,
-    name: "Xoi Ca (Caramelized Fish Sticky Rice)",
-    nameVi: "Xôi cá cơm kho đậm đà (Caramelized Fish Sticky Rice)",
-    tag: "Đặc sản độc bản",
-    tagEn: "Unique coastal breakfast",
+    title: "4. Xoi Ca (Caramelized Fish Sticky Rice)",
+    titleVi: "4. Xôi Cá (Caramelized Fish Sticky Rice)",
     img: "/guide/nha-trang/Top-Nha-Trang-Dishes-Xoi-Ca-Vietnamnomad.jpg",
-    caption:
-      "Hạt xôi dẻo ngậy cốt dừa kết hợp cá cơm mờm kho kẹo cay mặn ngọt bùi béo khó quên",
-    captionEn:
-      "Fragrant sticky rice served with slow-braised caramelized anchovies and golden fried shallots",
-    desc:
-      "Xoi Ca is a true culinary staple of Nha Trang City that is rarely encountered anywhere else in Vietnam. It is a deceptively simple yet deeply comforting breakfast that brings together the aromatic fragrance of the rice fields and the savory depth of the open ocean. The sticky glutinous rice is steamed with a touch of rich coconut milk. The undisputed champion of the dish is the caramelized fish—typically fresh anchovies (ca com) or scad (ca nuc)—slow-simmered in earthen pots until the bones turn completely tender and melt into sweet, salty, and chili-spiced caramel perfection.",
-    descVi:
-      "Xôi cá là món ngon 'độc bản' của riêng phố biển Nha Trang mà bạn hiếm khi tìm thấy ở bất kỳ vùng miền nào khác. Sự kết hợp giữa hạt nếp dẻo thơm của đồng bằng và cá biển tươi mặn mòi tạo nên nét dung dị mà gây thương nhớ khôn nguôi. Gạo nếp cái hoa vàng được đồ cùng chút nước cốt dừa béo thoang thoảng. Điểm nhấn là phần cá cơm hoặc cá nục được kho liu riu trong nồi đất suốt nhiều giờ liền, gia giảm ớt cay, đường thốt nốt và nước mắm nhỉ cho đến khi thịt cá săn lại, xương mềm rục có thể nhai tan. Rưới thêm muỗng nước kho kẹo quánh và rắc chút hành phi giòn tan, ăn vào buổi sáng bên bờ biển thật không gì sánh bằng.",
-    tip:
-      "Xoi Ca is primarily a morning street takeaway food. Grab a warm banana-leaf-wrapped box to enjoy with hot Vietnamese milk coffee right by the breezy Nha Trang coastline.",
-    tipVi:
-      "Xôi cá chủ yếu được bán vào buổi sáng mang đi. Bạn nên mua một gói xôi bọc lá chuối ấm nóng rồi ghé quán cà phê ven biển Trần Phú vừa ngắm bình minh vừa thưởng thức.",
-    places: [
-      {
-        name: "Quán Xôi Sáu Khải",
-        address: "1 Phật Học, P. Phương Sơn, Nha Trang",
-        price: "30,000 VND (~$1.2)",
-      },
-      {
-        name: "Xôi Cá Cơm Ngô Sĩ Liên",
-        address: "9 Ngô Sĩ Liên, P. Vạn Thắng, Nha Trang",
-        price: "20,000 VND – 25,000 VND (~$0.8 – $1.0)",
-      },
+    alt: "Xoi Ca - Caramelized Fish Sticky Rice Nha Trang",
+    desc: (
+      <>
+        <p style={{ margin: "0 0 14px" }}>
+          Xoi Ca is a true staple of Nha Trang City, rarely found anywhere else. It&apos;s a simple yet comforting and savory dish, bringing together the fragrance of the land and the taste of the sea. The <span className="vnn-link-highlight">sticky rice</span> is steamed with a bit of coconut milk for extra richness.
+        </p>
+        <p style={{ margin: "0 0 14px" }}>
+          The unbeatable hero of this dish is the caramelized fish, most likely mackerel or anchovy, that&apos;s been seasoned and cooked to perfection: it&apos;s sweet, salty, and spicy; all the flavors are there. The fish is slow-braised until the bones are soft and can be chewed easily. Xoi Ca is also topped with pickled carrots and fried shallots, creating a balanced overall flavor. This dish is quite filling, making it best suited for breakfast or lunch.
+        </p>
+      </>
+    ),
+    descVi: (
+      <>
+        <p style={{ margin: "0 0 14px" }}>
+          Xôi cá là món ngon đặc sản độc đáo của thành phố Nha Trang, hiếm thấy ở nơi nào khác. Đây là món ăn giản dị nhưng ấm lòng và đậm đà, kết hợp giữa hương thơm đồng bằng và vị mặn mòi của biển cả. Hạt <span className="vnn-link-highlight">gạo nếp</span> được đồ cùng chút nước cốt dừa để tăng thêm độ béo bùi dẻo thơm.
+        </p>
+        <p style={{ margin: "0 0 14px" }}>
+          Linh hồn không thể thay thế của món ăn là phần cá kho kẹo, thường là cá cơm hoặc cá nục tươi, được nêm nếm và kho đến độ hoàn hảo: ngọt, mặn và cay nồng hòa quyện. Cá được kho liu riu cho đến khi xương mềm nhừ có thể nhai tan. Xôi cá còn được ăn kèm cà rốt chua ngọt và hành phi vàng thơm, tạo nên hương vị cân bằng trọn vẹn. Món ăn này rất chắc bụng, lý tưởng cho bữa sáng hoặc bữa trưa.
+        </p>
+      </>
+    ),
+    tipsTitle: "Tip:",
+    tipsTitleVi: "Tip:",
+    tips: [
+      "Xoi Ca is commonly a takeaway dish. You can either sit down at a café and order it through food delivery apps or buy a box (or two) to take with you to a café or the beach.",
+    ],
+    tipsVi: [
+      "Xôi cá thường được bán mang đi. Bạn có thể ngồi ở quán cà phê và đặt qua app giao đồ ăn hoặc mua một hộp mang ra bãi biển hay quán cà phê vừa ngắm cảnh vừa thưởng thức.",
+    ],
+    whereToTryTitle: "Where to try:",
+    whereToTryTitleVi: "Where to try:",
+    whereToTry: [
+      "Quan Xoi Sau Khai (1 Phat Hoc): 30,000 VND",
+      "Xoi Ca Com (9 Ngo Si Lien): 20,000 VND",
+    ],
+    whereToTryVi: [
+      "Quán Xôi Sáu Khải (1 Phật Học): 30.000 VNĐ",
+      "Xôi Cá Cơm (9 Ngô Sĩ Liên): 20.000 VNĐ",
     ],
   },
   {
     id: "nem-nuong",
     index: 5,
-    name: "Nem Nuong (Nha Trang Grilled Pork Platter)",
-    nameVi: "Nem nướng Ninh Hòa – Nha Trang (Grilled Pork Rolls)",
-    tag: "Quốc hồn ẩm thực",
-    tagEn: "Culinary royal icon",
+    title: "5. Nem Nuong (Grilled Pork Platter)",
+    titleVi: "5. Nem Nướng (Grilled Pork Platter)",
     img: "/guide/nha-trang/Top-Nha-Trang-Dishes-Nem-Nuong-Vietnamnomad.jpg",
-    caption:
-      "Mẹt nem nướng than hoa thơm lừng cuộn cùng ram chiên giòn, xoài xanh và nước sốt tương tôm nếp sánh mịn",
-    captionEn:
-      "Grilled pork skewers served with crispy rice paper rolls, pickled green mango, and warm dipping puree",
-    desc:
-      "Nem Nuong is the undisputed king of Nha Trang gastronomy that no traveler should ever miss. Prime cuts of pork are finely minced, seasoned with garlic, shallots, and fish sauce, skewered onto bamboo sticks or fragrant lemongrass stalks, and grilled over charcoal embers until sizzled and smoky. A standard platter is a colorful feast: glistening grilled pork, crunchy golden fried rice paper rolls (ram), cucumber, crisp green mango shreds, starfruit, and fragrant herbs. Rolled tightly in chewy rice paper and dipped into the legendary warm, velvety orange sauce brewed from glutinous rice, minced pork, and shrimp paste, it delivers pure culinary bliss.",
-    descVi:
-      "Nem nướng Ninh Hòa chính là 'ngôi sao sáng nhất' trên bản đồ ẩm thực Nha Trang. Thịt heo nạc đùi tươi nóng hổi được quết nhuyễn cùng mỡ hạt lựu, tỏi, đường và nước mắm cốt, ghim vào que tre nướng trên than hoa đỏ rực cho đến khi xém vàng óng ánh và thơm nức mũi. Một mẹt nem nướng dọn ra như bức tranh rực rỡ sắc màu: nem que nóng hổi, ram chiên giòn tan (bánh tráng cuốn nhỏ chiên ngập dầu), dưa leo, xoài xanh bào sợi chua thanh, chuối chát, khế cùng đĩa rau thơm phong phú. Linh hồn quyết định của món ăn nằm ở chén nước chấm sền sệt màu vàng cam đặc trưng nấu từ nếp xay nhuyễn, gan heo băm, tôm biển và đậu phộng bùi ngậy, ngon đến mê mẩn.",
-    tip:
-      "The signature dipping sauce contains pureed shrimp; if you have a seafood allergy, request regular peanut sauce or chili fish sauce. If you prefer not wrapping with your bare hands, ask for 'Bun Nem Nuong' served convenient in a bowl.",
-    tipVi:
-      "Nước chấm nem nướng truyền thống có thành phần tôm xay nhuyễn; nếu bạn dị ứng hải sản hãy báo quán đổi sang nước tương hoặc nước mắm chua ngọt. Ngoài ra, bạn có thể gọi tô 'Bún Nem Nướng' để thưởng thức nhanh gọn.",
-    places: [
-      {
-        name: "Nem Nướng Đặng Văn Quyên",
-        address: "16A Lãn Ông / 02-04 Phan Bội Châu, Nha Trang",
-        price: "52,000 VND (~$2.1)",
-      },
-      {
-        name: "Nem Nướng Ninh Hòa – Tố Hữu",
-        address: "80 Tố Hữu, P. Phước Hải, Nha Trang",
-        price: "39,000 VND (~$1.6)",
-      },
-      {
-        name: "Nem Nướng Vũ Thành An",
-        address: "15 Lê Lợi, P. Xương Huân, Nha Trang",
-        price: "45,000 VND (~$1.8)",
-      },
+    alt: "Nem Nuong - Nha Trang Grilled Pork Platter",
+    desc: (
+      <>
+        <p style={{ margin: "0 0 14px" }}>
+          Nem Nuong is the most well-known Nha Trang specialty that you won&apos;t want to miss. These are pork sausages skewered on wooden sticks, or ideally on lemongrass stems, and chargrilled, giving them a distinctive smoky and aromatic fragrance. A portion of Nem Nuong is served on a tray with crispy fried rice paper rolls, fresh vegetables, shredded green mango, cucumber, and chives.
+        </p>
+        <p style={{ margin: "0 0 14px" }}>
+          The star of the show is the warm, savory-sweet dipping sauce made from glutinous rice, minced pork, and shrimp paste. Dipping each fresh roll into this rich sauce creates an explosion of flavors that will leave an unforgettable impression.
+        </p>
+      </>
+    ),
+    descVi: (
+      <>
+        <p style={{ margin: "0 0 14px" }}>
+          Nem nướng là món đặc sản Nha Trang nổi tiếng nhất mà bạn chắc chắn không muốn bỏ lỡ. Thịt heo nạc được quết nhuyễn ghim vào que tre hoặc thân sả rồi nướng trên than hoa đỏ rực, mang đến mùi thơm khói quyến rũ đặc trưng. Một mẹt nem nướng dọn ra với nem nướng nóng hổi, ram chiên giòn rụm, đĩa rau sống tươi non, xoài xanh bào sợi, dưa leo và hẹ.
+        </p>
+        <p style={{ margin: "0 0 14px" }}>
+          Điểm sáng rực rỡ nhất là bát nước chấm ấm nóng, béo bùi nấu từ gạo nếp xay, thịt băm, tôm biển và đậu phộng. Cuộn chặt tay và chấm ngập vào bát nước sốt sánh mịn sẽ mang đến trải nghiệm hương vị mê mẩn khó quên.
+        </p>
+      </>
+    ),
+    tipsTitle: "Tip:",
+    tipsTitleVi: "Tip:",
+    tips: [
+      "Wrap a little bit of each accompaniment—a piece of grilled pork, crispy ram roll, herbs, mango, and cucumber—into rice paper, roll tightly, and dip generously into the sauce.",
     ],
-  },
-];
-
-// ─── RELATED ARTICLES (STANDARDIZED TO 2026) ───
-const RELATED_ARTICLES = [
-  {
-    title: "8 best things to do in Nha Trang",
-    titleVi: "8 trải nghiệm tuyệt nhất tại Nha Trang",
-    date: "October 14, 2026",
-    dateVi: "111 Tháng 10, 2026",
-    badge: "Things to Do",
-    badgeVi: "Trải nghiệm",
-    img: "/guide/megamenu/todo-3-nhatrang.jpg",
-    link: "/guide/8-best-things-to-do-in-nha-trang",
-  },
-  {
-    title: "7 must-try foods in Vung Tau",
-    titleVi: "7 món ăn nhất định phải thử ở Vũng Tàu",
-    date: "October 14, 2026",
-    dateVi: "111 Tháng 10, 2026",
-    badge: "Eat & Drink",
-    badgeVi: "Ẩm thực",
-    img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
-    link: "/guide/7-must-try-foods-in-vung-tau",
-  },
-  {
-    title: "12 must-try foods in Ho Chi Minh City",
-    titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
-    date: "October 13, 2026",
-    dateVi: "13 Tháng 10, 2026",
-    badge: "Eat & Drink",
-    badgeVi: "Ẩm thực",
-    img: "/guide/megamenu/eat-2-hcmc.jpg",
-    link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
+    tipsVi: [
+      "Hãy cuốn một chút của từng món: một miếng nem que, bánh tráng chiên giòn, rau thơm, xoài xanh, dưa leo vào bánh tráng dẻo, cuộn tròn lại và chấm đẫm vào bát nước sốt.",
+    ],
+    whereToTryTitle: "Where to try:",
+    whereToTryTitleVi: "Where to try:",
+    whereToTry: [
+      "Nem Nuong Dang Van Quyen (16A Lan Ong / 02-04 Phan Boi Chau): 52,000 VND",
+      "Nem Nuong Vu Thanh An (15 Le Loi): 45,000 VND",
+    ],
+    whereToTryVi: [
+      "Nem Nướng Đặng Văn Quyên (16A Lãn Ông / 02-04 Phan Bội Châu): 52.000 VNĐ",
+      "Nem Nướng Vũ Thành An (15 Lê Lợi): 45.000 VNĐ",
+    ],
   },
 ];
 
 export default function NhaTrangFoodGuidePage() {
   const [lang, setLang] = useState("vi");
-  const [activeMenu, setActiveMenu] = useState(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [lightboxImg, setLightboxImg] = useState(null);
-  const [toastMessage, setToastMessage] = useState("");
-  const menuTimerRef = useRef(null);
+  const [activeMegaMenu, setActiveMegaMenu] = useState(null);
+  const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
 
-  // Sync language with global VinaTap prefs
   useEffect(() => {
-    setLang(getLang() || "vi");
-
-    const handleLangUpdated = (e) => {
-      if (e.detail) setLang(e.detail);
-    };
-
-    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
-    const onStorage = (e) => {
-      if (e.key === "vinatap_lang" && e.newValue) setLang(e.newValue);
-    };
-    window.addEventListener("storage", onStorage);
-
-    return () => {
-      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
-      window.removeEventListener("storage", onStorage);
-    };
+    setLang(getLang());
+    const handleStorage = () => setLang(getLang());
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
-  // Safe Scroll Progress indicator (RAF-throttled)
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const totalScroll =
-            document.documentElement.scrollHeight - window.innerHeight;
-          const currentScroll = window.scrollY;
-          if (totalScroll > 0) {
-            setScrollProgress(
-              Math.min(100, Math.max(0, (currentScroll / totalScroll) * 100))
-            );
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Toast auto-hide
-  useEffect(() => {
-    if (!toastMessage) return;
-    const timer = setTimeout(() => setToastMessage(""), 2600);
-    return () => clearTimeout(timer);
-  }, [toastMessage]);
-
-  const handleMenuEnter = (menuKey) => {
-    if (menuTimerRef.current) clearTimeout(menuTimerRef.current);
-    setActiveMenu(menuKey);
-  };
-
-  const handleMenuLeave = () => {
-    menuTimerRef.current = setTimeout(() => {
-      setActiveMenu(null);
-    }, 200);
-  };
-
-  const handleMegaMouseEnter = () => {
-    if (menuTimerRef.current) clearTimeout(menuTimerRef.current);
-  };
-
-  const handleShare = async () => {
-    if (navigator.clipboard) {
-      await navigator.clipboard.writeText(window.location.href);
-      setToastMessage(
-        lang === "vi"
-          ? "Đã sao chép liên kết vào bộ nhớ tạm!"
-          : "Article link copied to clipboard!"
-      );
-    }
-  };
-
-  const handleCopyAddress = (address) => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(address);
-      setToastMessage(
-        lang === "vi"
-          ? `Đã sao chép địa chỉ: ${address}`
-          : `Copied address: ${address}`
-      );
-    }
-  };
+  const isVi = lang === "vi";
 
   return (
     <div className="vnn-article-page">
-      {/* ── Reading Progress Bar ── */}
-      <div
-        className="vnn-progress-bar"
-        style={{ width: `${scrollProgress}%` }}
-      />
-
-      {/* ── Top Companion Banner ── */}
+      {/* ── Top Companion Banner (Screenshot 1) ── */}
       <div className="vnn-top-banner">
         <div className="vnn-top-banner__container">
           <a
@@ -622,15 +479,18 @@ export default function NhaTrangFoodGuidePage() {
           >
             <img
               src="/guide/top-banner-companion.png"
-              alt="Vietnam Travel Companion 2026"
+              alt="Vietnam Travel Companion"
               className="vnn-top-banner__img"
             />
           </a>
         </div>
       </div>
 
-      {/* ── Sticky Editorial Header Navbar ── */}
-      <header className="vnn-navbar" onMouseLeave={handleMenuLeave}>
+      {/* ── Sticky Standard Navbar ── */}
+      <header
+        className="vnn-navbar"
+        onMouseLeave={() => setActiveMegaMenu(null)}
+      >
         <div className="vnn-navbar__inner">
           <Link href="/" className="vnn-navbar__brand">
             <div className="vnn-navbar__brand-vinatap">
@@ -640,82 +500,67 @@ export default function NhaTrangFoodGuidePage() {
           </Link>
 
           <ul className="vnn-navbar__menu">
-            {/* BE INSPIRED */}
             <li
               className="vnn-navbar__item"
-              onMouseEnter={() => handleMenuEnter("inspired")}
+              onMouseEnter={() => setActiveMegaMenu("inspired")}
             >
               <button
                 type="button"
-                className={`vnn-navbar__link ${
-                  activeMenu === "inspired" ? "is-active" : ""
-                }`}
+                className={`vnn-navbar__link ${activeMegaMenu === "inspired" ? "is-active" : ""}`}
               >
-                <span>{lang === "vi" ? "CẢM HỨNG" : "BE INSPIRED"}</span>
+                <span>{isVi ? "CẢM HỨNG" : "BE INSPIRED"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
 
-            {/* DESTINATIONS */}
             <li
               className="vnn-navbar__item"
-              onMouseEnter={() => handleMenuEnter("destinations")}
+              onMouseEnter={() => setActiveMegaMenu("destinations")}
             >
               <button
                 type="button"
-                className={`vnn-navbar__link ${
-                  activeMenu === "destinations" ? "is-active" : ""
-                }`}
+                className={`vnn-navbar__link ${activeMegaMenu === "destinations" ? "is-active" : ""}`}
               >
-                <span>{lang === "vi" ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
+                <span>{isVi ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
 
-            {/* THINGS TO DO */}
             <li
               className="vnn-navbar__item"
-              onMouseEnter={() => handleMenuEnter("thingsToDo")}
+              onMouseEnter={() => setActiveMegaMenu("thingsToDo")}
             >
               <button
                 type="button"
-                className={`vnn-navbar__link ${
-                  activeMenu === "thingsToDo" ? "is-active" : ""
-                }`}
+                className={`vnn-navbar__link ${activeMegaMenu === "thingsToDo" ? "is-active" : ""}`}
               >
-                <span>{lang === "vi" ? "TRẢI NGHIỆM" : "THINGS TO DO"}</span>
+                <span>{isVi ? "TRẢI NGHIỆM" : "THINGS TO DO"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
 
-            {/* EAT & DRINK */}
             <li
               className="vnn-navbar__item"
-              onMouseEnter={() => handleMenuEnter("eat")}
+              onMouseEnter={() => setActiveMegaMenu("eatDrink")}
             >
               <button
                 type="button"
-                className={`vnn-navbar__link ${
-                  activeMenu === "eat" ? "is-active" : ""
-                }`}
+                className={`vnn-navbar__link is-active`}
               >
-                <span>{lang === "vi" ? "ẨM THỰC" : "EAT & DRINK"}</span>
+                <span>{isVi ? "ẨM THỰC" : "EAT & DRINK"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
 
-            {/* ITINERARIES */}
             <li
               className="vnn-navbar__item"
-              onMouseEnter={() => handleMenuEnter("itineraries")}
+              onMouseEnter={() => setActiveMegaMenu("itineraries")}
             >
               <button
                 type="button"
-                className={`vnn-navbar__link ${
-                  activeMenu === "itineraries" ? "is-active" : ""
-                }`}
+                className={`vnn-navbar__link ${activeMegaMenu === "itineraries" ? "is-active" : ""}`}
               >
-                <span>{lang === "vi" ? "LỊCH TRÌNH" : "ITINERARIES"}</span>
+                <span>{isVi ? "LỊCH TRÌNH" : "ITINERARIES"}</span>
                 <ChevronDown size={14} className="vnn-navbar__chevron" />
               </button>
             </li>
@@ -723,233 +568,167 @@ export default function NhaTrangFoodGuidePage() {
 
           <div className="vnn-navbar__actions">
             <HeaderSearch />
-            <LanguageSwitch variant="navbar" />
+            <LanguageSwitch />
           </div>
         </div>
 
-        {/* ─── HOVER MEGAMENU CONTAINER ─── */}
-        {activeMenu && (
+        {/* ─── MEGAMENU DROPDOWN ─── */}
+        {activeMegaMenu && (
           <div
             className="vnn-megamenu"
-            onMouseEnter={handleMegaMouseEnter}
-            onMouseLeave={handleMenuLeave}
+            onMouseEnter={() => setActiveMegaMenu(activeMegaMenu)}
+            onMouseLeave={() => setActiveMegaMenu(null)}
           >
-            <div className="vnn-megamenu__grid">
-              {(MEGA_MENUS_DATA[activeMenu]?.items || []).map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.link}
-                  className="vnn-megamenu__card"
-                  onClick={() => setActiveMenu(null)}
-                >
-                  <div className="vnn-megamenu__thumb">
-                    <img
-                      src={item.img}
-                      alt={lang === "vi" && item.titleVi ? item.titleVi : item.title}
-                      className="vnn-megamenu__img"
-                      loading="lazy"
-                    />
-                    {item.badge && (
-                      <span className="vnn-megamenu__badge">{item.badge}</span>
-                    )}
-                  </div>
-                  <h4 className="vnn-megamenu__title">
-                    {lang === "vi" && item.titleVi ? item.titleVi : item.title}
-                  </h4>
-                  <span className="vnn-megamenu__date">
-                    {lang === "vi" && item.dateVi ? item.dateVi : item.date}
-                  </span>
-                </Link>
-              ))}
+            <div className="vnn-megamenu__inner">
+              {activeMegaMenu === "destinations" ? (
+                <div className="vnn-megamenu__grid vnn-megamenu__grid--regions">
+                  {MEGA_MENUS_DATA.destinations.regions.map((region, idx) => (
+                    <div key={idx} className="vnn-megamenu__region-col">
+                      <h4 className="vnn-megamenu__region-title">
+                        {isVi ? region.name : region.nameEn}
+                      </h4>
+                      <ul className="vnn-megamenu__province-list">
+                        {region.provinces.map((prov) => (
+                          <li key={prov.slug}>
+                            <Link
+                              href={`/province/${prov.slug}`}
+                              className="vnn-megamenu__province-link"
+                              onClick={() => setActiveMegaMenu(null)}
+                            >
+                              {prov.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="vnn-megamenu__grid">
+                  {MEGA_MENUS_DATA[activeMegaMenu]?.items?.map((item) => (
+                    <Link
+                      key={item.id}
+                      href={item.link}
+                      className="vnn-megamenu__card"
+                      onClick={() => setActiveMegaMenu(null)}
+                    >
+                      <div className="vnn-megamenu__img-wrap">
+                        <img
+                          src={item.img}
+                          alt={isVi ? item.titleVi : item.title}
+                          className="vnn-megamenu__img"
+                          loading="lazy"
+                        />
+                        <span className="vnn-megamenu__badge">{item.badge}</span>
+                      </div>
+                      <div className="vnn-megamenu__card-body">
+                        <span className="vnn-megamenu__date">
+                          {isVi ? item.dateVi : item.date}
+                        </span>
+                        <h4 className="vnn-megamenu__card-title">
+                          {isVi ? item.titleVi : item.title}
+                        </h4>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
       </header>
 
-      {/* ── FULL-BLEED HERO BANNER (ẢNH TO CẢ 1 HÀNG NGANG KHÔNG CÁCH) ── */}
+      {/* ── FULL-BLEED HERO BANNER (SCREENSHOT 1) ── */}
       <section className="vnn-fullbleed-hero">
         <div className="vnn-fullbleed-hero__inner">
           <div className="vnn-fullbleed-hero__tags">
-            <span className="vnn-fullbleed-hero__tag vnn-fullbleed-hero__tag--primary">
-              {lang === "vi" ? "ẨM THỰC" : "EAT & DRINK"}
-            </span>
+            <span className="vnn-fullbleed-hero__tag">ARTICLES</span>
+            <span className="vnn-fullbleed-hero__tag">EAT & DRINK</span>
             <span className="vnn-fullbleed-hero__tag">NHA TRANG</span>
-            <span className="vnn-fullbleed-hero__tag">
-              {lang === "vi" ? "CẨM NANG 2026" : "2026 GUIDE"}
-            </span>
           </div>
 
           <h1 className="vnn-fullbleed-hero__title">
-            {lang === "vi"
-              ? "5 món ăn phải nếm khi đến Nha Trang"
-              : "5 Must-Try Dishes in Nha Trang & Where to Find Them"}
+            {isVi ? "5 món ngon Nha Trang nhất định phải thử" : "5 must-try Nha Trang dishes"}
           </h1>
 
-          <div className="vnn-fullbleed-hero__meta">
-            <span className="vnn-fullbleed-hero__author">VinaTap Editorial</span>
-            <span className="vnn-fullbleed-hero__dot">•</span>
-            <span>{lang === "vi" ? "11 Tháng 10, 2026" : "October 14, 2026"}</span>
-            <span className="vnn-fullbleed-hero__dot">•</span>
-            <span>{lang === "vi" ? "5 phút đọc" : "5 mins read"}</span>
-            <span className="vnn-fullbleed-hero__dot">•</span>
-            <button
-              type="button"
-              onClick={handleShare}
-              className="vnn-meta-share-btn"
-              title="Share article"
-              style={{
-                background: "transparent",
-                border: "none",
-                color: "#ffffff",
-                cursor: "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "5px",
-                fontSize: "13.5px",
-              }}
-            >
-              <Share2 size={15} />
-              <span>{lang === "vi" ? "Chia sẻ" : "Share"}</span>
-            </button>
-          </div>
+          <p className="vnn-fullbleed-hero__byline">
+            {isVi
+              ? "Bởi Welcome to Vietnam   17 Tháng 2, 2025"
+              : "By Welcome to Vietnam   February 17, 2025"}
+          </p>
         </div>
       </section>
 
-      {/* ── Main Editorial Content Section ── */}
+      {/* ── MAIN CONTENT (SCREENSHOTS 1, 2, 3, 4, 5) ── */}
       <main className="vnn-container">
-
-        {/* Primary CTA Button to Tripion.ai */}
+        {/* Pill Button: Create your Vietnam trip in seconds */}
         <div className="vnn-pill-cta-wrap">
-          <a
-            href="https://tripion.ai/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
             className="vnn-pill-cta-btn"
+            onClick={() => setAiCompanionOpen(true)}
           >
-            <Sparkles size={18} />
+            <Sparkles size={16} />
             <span>
-              {lang === "vi"
-                ? "Lên kế hoạch du lịch Nha Trang chỉ trong 30 giây"
-                : "Create your Nha Trang trip in seconds with AI"}
+              {isVi
+                ? "Tạo chuyến đi Việt Nam của bạn trong vài giây"
+                : "Create your Vietnam trip in seconds"}
             </span>
-          </a>
+          </button>
         </div>
 
-        {/* Lead Introduction */}
+        {/* Lead Introduction Paragraph */}
         <div className="vnn-article-lead">
-          {lang === "vi" ? (
-            <p>
-              Ẩm thực <strong>Nha Trang</strong> là sự kết hợp hoàn hảo giữa nguồn
-              nguyên liệu hải sản tươi rói từ vịnh biển và hương vị đậm đà, tinh tế
-              của dải đất miền Trung. Từ những bát nước dùng thanh ngọt nấu từ cá
-              biển, từng đĩa bánh căn gốm nung nóng hổi trên than hồng cho đến mẹt nem
-              nướng nức tiếng, cùng <strong>VinaTap</strong> khám phá ngay{" "}
-              <strong>5 món ăn tinh hoa phải nếm</strong> cùng danh sách những quán
-              ăn chuẩn vị người bản địa nhất!
-            </p>
-          ) : (
-            <p>
-              <strong>Nha Trang’s food</strong> is a perfect blend of fresh coastal
-              ingredients and bold, memorable flavors. From naturally sweet broths
-              simmered with oceanic fish and fragrant clay-mould pancakes to smoky
-              chargrilled pork platters, let’s dive into the diverse food scene of
-              this coastal gem with <strong>5 must-try Nha Trang dishes</strong> that
-              will take your taste buds on an unforgettable journey.
-            </p>
-          )}
+          <p>
+            {isVi
+              ? "Từ những nồi nước dùng thơm ngọt đến những món nướng than hoa hấp dẫn, ẩm thực Nha Trang là sự hòa quyện hoàn hảo giữa nguyên liệu tươi ngon của biển cả và hương vị đậm đà. Hãy cùng khám phá ẩm thực đa dạng của phố biển này qua 5 món ăn đặc sản Nha Trang nhất định phải thử, đưa vị giác của bạn vào một hành trình khó quên."
+              : "From aromatic broths to grilled delights, Nha Trang's food is a perfect blend of fresh ingredients and bold flavors. Let's dive into the diverse food scene of this coastal gem with 5 must-try Nha Trang dishes that will take your taste buds on a journey."}
+          </p>
         </div>
 
-        {/* ── 5 Dish Breakdown Sections ── */}
-        <div className="vnn-dishes-wrapper">
-          {DISHES_DATA.map((dish) => (
-            <article key={dish.id} id={dish.id} className="vnn-dish-card">
-              <div className="vnn-dish-header">
-                <h2 className="vnn-dish-title">
-                  {dish.index}. {lang === "vi" ? dish.nameVi : dish.name}
-                </h2>
-                <div className="vnn-dish-badges">
-                  <span className="vnn-dish-badge vnn-dish-badge--sea">
-                    {lang === "vi" ? dish.tag : dish.tagEn}
-                  </span>
-                  <span className="vnn-dish-badge">Nha Trang 2026</span>
-                </div>
-              </div>
+        {/* ── 5 DISHES LISTING (SCREENSHOTS 2, 3, 4, 5) ── */}
+        <div className="vnn-dishes-list">
+          {NHA_TRANG_5_DISHES.map((dish) => (
+            <article key={dish.id} id={dish.id} className="vnn-dish-item">
+              <h2 className="vnn-dish-title">
+                {isVi ? dish.titleVi : dish.title}
+              </h2>
 
-              <div className="vnn-dish-columns">
-                {/* Left Column: Image with Lightbox Zoom */}
-                <div>
-                  <div
-                    className="vnn-dish-image-wrap"
-                    onClick={() =>
-                      setLightboxImg({
-                        src: dish.img,
-                        caption:
-                          lang === "vi" ? dish.caption : dish.captionEn,
-                      })
-                    }
-                  >
-                    <img
-                      src={dish.img}
-                      alt={lang === "vi" ? dish.nameVi : dish.name}
-                      className="vnn-dish-img"
-                      loading="lazy"
-                    />
-                    <div className="vnn-dish-img-overlay">
-                      <Maximize2 size={16} />
-                      <span>{lang === "vi" ? "Xem ảnh lớn" : "Zoom photo"}</span>
-                    </div>
-                  </div>
-                  <p className="vnn-dish-caption">
-                    {lang === "vi" ? dish.caption : dish.captionEn}
-                  </p>
+              <div className="vnn-dish-layout">
+                {/* Left Column: Dish Image */}
+                <div className="vnn-dish-img-col">
+                  <img
+                    src={dish.img}
+                    alt={dish.alt}
+                    className="vnn-dish-img"
+                    loading="lazy"
+                  />
                 </div>
 
-                {/* Right Column: Description, Tip, and Places to Try */}
-                <div className="vnn-dish-body">
-                  <p className="vnn-dish-desc">
-                    {lang === "vi" ? dish.descVi : dish.desc}
-                  </p>
-
-                  {/* Local Tip Box */}
-                  <div className="vnn-tip-box">
-                    <Lightbulb size={20} className="flex-shrink-0" />
-                    <div>
-                      <strong>
-                        {lang === "vi" ? "Mẹo thưởng thức: " : "Tip: "}
-                      </strong>
-                      <span>{lang === "vi" ? dish.tipVi : dish.tip}</span>
-                    </div>
+                {/* Right Column: Dish Content */}
+                <div className="vnn-dish-content-col">
+                  <div className="vnn-dish-text">
+                    {isVi ? dish.descVi : dish.desc}
                   </div>
 
-                  {/* Places to Try Box */}
-                  <div className="vnn-places-box">
-                    <h4 className="vnn-places-title">
-                      <MapPin size={16} color="#00c2cb" />
-                      <span>
-                        {lang === "vi" ? "Địa chỉ nên thử" : "Where to try"}
-                      </span>
-                    </h4>
-                    <ul className="vnn-places-list">
-                      {dish.places.map((place, idx) => (
-                        <li key={idx} className="vnn-place-item">
-                          <div className="vnn-place-info">
-                            <span className="vnn-place-name">{place.name}</span>
-                            <span
-                              className="vnn-place-address"
-                              onClick={() => handleCopyAddress(place.address)}
-                              title={
-                                lang === "vi"
-                                  ? "Nhấn để sao chép địa chỉ"
-                                  : "Click to copy address"
-                              }
-                              style={{ cursor: "pointer" }}
-                            >
-                              <MapPin size={12} />
-                              <span>{place.address}</span>
-                            </span>
-                          </div>
-                          <span className="vnn-place-price">{place.price}</span>
-                        </li>
+                  <div className="vnn-dish-tips-block">
+                    <strong className="vnn-dish-subhead">
+                      {isVi ? dish.tipsTitleVi : dish.tipsTitle}
+                    </strong>
+                    <ul className="vnn-dish-bullets">
+                      {(isVi ? dish.tipsVi : dish.tips).map((tip, idx) => (
+                        <li key={idx}>{tip}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="vnn-dish-whereto-block">
+                    <strong className="vnn-dish-subhead">
+                      {isVi ? dish.whereToTryTitleVi : dish.whereToTryTitle}
+                    </strong>
+                    <ul className="vnn-dish-bullets">
+                      {(isVi ? dish.whereToTryVi : dish.whereToTry).map((place, idx) => (
+                        <li key={idx}>{place}</li>
                       ))}
                     </ul>
                   </div>
@@ -958,124 +737,17 @@ export default function NhaTrangFoodGuidePage() {
             </article>
           ))}
         </div>
-
-        {/* Note Disclaimer */}
-        <div style={{ marginTop: "20px", marginBottom: "30px", textAlign: "center" }}>
-          <small style={{ color: "#888888", fontStyle: "italic", fontSize: "13px" }}>
-            {lang === "vi"
-              ? "* Lưu ý: Giá cả và giờ mở cửa có thể thay đổi nhẹ tùy theo từng thời điểm trong năm."
-              : "* Note: Recommendations are based on local reviews; prices may vary slightly over time."}
-          </small>
-        </div>
-
-        {/* Article Tags */}
-        <div className="vnn-tags-section">
-          <span style={{ fontWeight: 700, fontSize: "12px", textTransform: "uppercase" }}>
-            {lang === "vi" ? "Thẻ:" : "Tags:"}
-          </span>
-          <Link href="/province/khanh-hoa" className="vnn-tag-pill">
-            {lang === "vi" ? "Ẩm thực Nha Trang" : "Nha Trang Food"}
-          </Link>
-          <Link href="/province/khanh-hoa" className="vnn-tag-pill">
-            {lang === "vi" ? "Đặc sản Khánh Hòa" : "Khanh Hoa Specialties"}
-          </Link>
-          <Link href="/guide/8-best-things-to-do-in-nha-trang" className="vnn-tag-pill">
-            {lang === "vi" ? "Du lịch Nha Trang 2026" : "Nha Trang Travel 2026"}
-          </Link>
-          <Link href="/province/khanh-hoa" className="vnn-tag-pill">
-            {lang === "vi" ? "Khánh Hòa" : "Khanh Hoa"}
-          </Link>
-          <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="vnn-tag-pill">
-            {lang === "vi" ? "Ẩm thực đường phố Việt Nam" : "Vietnamese Street Food"}
-          </Link>
-        </div>
-
-        {/* ── RELATED ARTICLES (LOWEST CONTENT POINT - NO FOOTER AS REQUESTED) ── */}
-        <section className="vnn-related-section">
-          <div className="vnn-related-header">
-            <h3 className="vnn-related-title">
-              {lang === "vi" ? "BÀI VIẾT LIÊN QUAN" : "RELATED ARTICLES"}
-            </h3>
-            <span className="vnn-related-bar" />
-          </div>
-
-          <div className="vnn-related-grid">
-            {RELATED_ARTICLES.map((article, idx) => (
-              <Link
-                key={idx}
-                href={article.link}
-                className="vnn-related-card"
-              >
-                <div className="vnn-related-img-wrap">
-                  <img
-                    src={article.img}
-                    alt={article.title}
-                    className="vnn-related-img"
-                    loading="lazy"
-                  />
-                  <span className="vnn-related-badge">
-                    {lang === "vi" ? (article.badgeVi || article.badge) : article.badge}
-                  </span>
-                </div>
-                <div className="vnn-related-body">
-                  <h4 className="vnn-related-card-title">
-                    {lang === "vi" ? article.titleVi : article.title}
-                  </h4>
-                  <span className="vnn-related-date">
-                    {lang === "vi" ? article.dateVi : article.date}
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
       </main>
 
-      {/* ─── FULL EDITORIAL FOOTER ─── */}
+      {/* ── PUBLIC FOOTER FROM HOMEPAGE ── */}
       <PublicFooter lang={lang} />
 
-      {/* ── Lightbox Modal ── */}
-      {lightboxImg && (
-        <div
-          className="vnn-lightbox-overlay"
-          onClick={() => setLightboxImg(null)}
-        >
-          <div
-            className="vnn-lightbox-container"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="vnn-lightbox-close"
-              onClick={() => setLightboxImg(null)}
-              aria-label="Close"
-            >
-              <X size={20} />
-            </button>
-            <img
-              src={lightboxImg.src}
-              alt="Zoomed"
-              className="vnn-lightbox-img"
-            />
-            {lightboxImg.caption && (
-              <p className="vnn-lightbox-caption">{lightboxImg.caption}</p>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* ── Toast notification ── */}
-      {toastMessage && (
-        <div className="vnn-toast" role="status">
-          <CheckCircle size={18} color="#00c2cb" />
-          <span>{toastMessage}</span>
-        </div>
-      )}
-
-      {/* ── Floating Province Chatbot (Nha Trang / Khánh Hòa with Teal Theme) ── */}
+      {/* ── FLOATING PROVINCE CHATBOT ── */}
       <ProvinceChatbot
+        isOpen={aiCompanionOpen}
+        onToggleOpen={setAiCompanionOpen}
         province={{
-          name: lang === "vi" ? "Khánh Hòa" : "Khanh Hoa",
+          name: isVi ? "Khánh Hòa" : "Khanh Hoa",
           slug: "khanh-hoa",
         }}
       />
