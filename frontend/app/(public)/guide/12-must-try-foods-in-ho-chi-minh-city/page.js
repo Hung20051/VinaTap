@@ -383,23 +383,23 @@ const HCMC_12_DISHES = [
     alt: "Hu Tieu - Southern Clear Noodle Soup",
     desc: (
       <>
-        If you want to understand the depth of southern Vietnamese noodle culture, start with a bowl of <em>hu tieu</em>. Chewy rice noodles are served in a clear, delicately sweet pork and dried squid broth, topped with shrimp, minced pork, quail eggs, and golden crispy garlic. You can enjoy it as a piping hot soup or &ldquo;dry&rdquo; (<em>hu tieu kho</em>), tossed in a savory soy-based sauce with the broth on the side.
+        If you want to dive into southern Vietnam&apos;s noodle culture, start with <span className="vnn-link-highlight"><em>hu tieu</em></span>. The chewy, clear noodles bathe in a sweet-savory broth made from pork bones and daikon. You can go for the dry version with sauce or the classic soupy style. Toppings vary from sliced pork, shrimp, and quail eggs to crispy shallots and greens. Versions like <em>hu tieu Sadec</em>, <em>hu tieu My Tho</em>, and <em>hu tieu Nam Vang</em> (Phnom Penh style), each tied to a specific city, add an exciting twist to the dish. You&apos;ll find legendary <em>hu tieu</em> shops run by generations of the same family, each with its own secret recipe.
       </>
     ),
     descVi: (
       <>
-        Để thấu hiểu văn hóa ẩm thực sợi phương Nam, hãy bắt đầu bằng một tô <em>hủ tiếu</em>. Sợi hủ tiếu dai mướt chan trong nước lèo ngọt thanh ninh từ xương heo và mực nướng, đầy ắp tôm tươi, thịt nạc, thịt băm, trứng cút và tỏi phi thơm lừng. Bạn có thể chọn ăn nước hoặc ăn khô trộn sốt tương đen đậm vị.
+        Nếu bạn muốn đắm mình vào văn hóa mì nước phương Nam, hãy bắt đầu bằng <span className="vnn-link-highlight"><em>hủ tiếu</em></span>. Sợi hủ tiếu trong suốt, dai sần sật chan trong làn nước lèo ngọt thanh ninh từ xương heo và củ cải. Bạn có thể chọn ăn hủ tiếu khô trộn nước sốt đậm đà hoặc hủ tiếu nước truyền thống. Topping phong phú từ thịt nạc thái mỏng, tôm tươi, trứng cút đến hành phi vàng ruộm và rau thơm xanh mướt.
       </>
     ),
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
-      "Hu Tieu My Tho Thanh Xuan (62 Ton That Thiep): 75,000 VND",
-      "Hu Tieu Nam Vang Nhan Quan (122 Nguyen Trai): 85,000 VND",
+      "Hu Tieu Thanh Xuan My Tho (62 Ton That Thiep): 75,000 VND",
+      "Hu Tieu Nhan Quan (122D Cach Mang Thang Tam): 90,000 VND",
     ],
     whereToEatVi: [
-      "Hủ Tiếu Mỹ Tho Thanh Xuân (62 Tôn Thất Thiệp): 75.000 VNĐ",
-      "Hủ Tiếu Nam Vang Nhân Quán (122 Nguyễn Trãi): 85.000 VNĐ",
+      "Hủ Tiếu Thanh Xuân Mỹ Tho (62 Tôn Thất Thiệp): 75.000 VNĐ",
+      "Hủ Tiếu Nhân Quán (122D Cách Mạng Tháng Tám): 90.000 VNĐ",
     ],
   },
   {
@@ -411,136 +411,124 @@ const HCMC_12_DISHES = [
     alt: "Bun Rieu - Crab Paste Noodle Soup",
     desc: (
       <>
-        A colorful, savory feast in a bowl, <em>bun rieu</em> showcases sweet freshwater crab meat cooked into savory floating clusters alongside fried tofu, blood cubes, and ripe tomatoes in a tart tamarind-scented broth. Served with shredded morning glory, banana blossoms, and a dab of pungent shrimp paste to elevate every spoonful.
+        <em>Bun rieu</em> is absolutely not for the faint of heart. This tangy, tomato-based broth is layered with crab paste, tofu, tomatoes, and sometimes snails or pork. The <em>rieu</em> (crab mixture) is made by grinding crabs into a paste and simmering it until it forms tender, fluffy clumps. Served with thin rice vermicelli noodles, fresh herbs, shredded banana blossom, and a squeeze of lime, this dish hits the spot—especially on a rainy day.
       </>
     ),
     descVi: (
       <>
-        Bát <em>bún riêu</em> rực rỡ sắc màu với từng tảng riêu cua đồng thơm bùi nổi bồng bềnh, đậu hũ chiên vàng ươm mọng nước, cà chua tươi và nước lèo chua thanh mát dịu từ me chín. Thêm muỗng mắm tôm nồng nàn và dĩa rau muống chẻ xanh mướt là đúng chuẩn phong vị Sài Gòn.
+        <em>Bún riêu</em> chắc chắn không dành cho người sợ hương vị đậm đà. Nước dùng cà chua chua thanh đậm đà hòa quyện cùng riêu cua đồng thơm bùi, đậu hũ chiên, cà chua và đôi khi có thêm ốc bươu giòn sần sật hay thịt heo. Riêu cua được giã nhuyễn rồi nấu chín tới khi kết thành những mảng xốp mềm nổi bồng bềnh. Ăn cùng bún tươi, rau sống, bắp chuối bào sợi và vắt miếng chanh tươi, món ăn đặc biệt ấm lòng trong những ngày mưa.
       </>
     ),
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
-      "Bun Rieu Ganh Ben Thanh (163 Le Thanh Ton): 65,000 VND",
-      "Bun Rieu Cua Oc 66 (66 Nguyen Thai Binh): 60,000 VND",
+      "Bun Rieu Ganh Cho Ben Thanh (163 Le Thanh Ton): 65,000 VND",
+      "Bun Rieu Goc (TK18/5 Nguyen Canh Chan): 75,000 VND",
     ],
     whereToEatVi: [
-      "Bún Riêu Gánh Bến Thành (163 Lê Thánh Tôn): 65.000 VNĐ",
-      "Bún Riêu Cua Ốc 66 (66 Nguyễn Thái Bình): 60.000 VNĐ",
-    ],
-  },
-  {
-    id: "bun-thit-nuong",
-    index: 8,
-    title: "8. Bun Thit Nuong",
-    titleVi: "8. Bún Thịt Nướng",
-    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
-    alt: "Bun Thit Nuong - Grilled Pork Vermicelli",
-    desc: (
-      <>
-        Smoky chargrilled pork slices and crispy fried spring rolls piled atop a bed of soft rice vermicelli, fresh herbs, pickled carrots, and crushed peanuts. Drizzle generously with sweet garlic chili fish sauce and toss everything together for a balanced, texturally thrilling meal that epitomizes Saigon street gastronomy.
-      </>
-    ),
-    descVi: (
-      <>
-        Tô <em>bún thịt nướng</em> thơm nức mũi với từng lát thịt heo ướp sả nướng than hoa vàng óng, chả giò giòn rụm xếp trên lớp bún tươi, rau sống mát lành và đậu phộng rang giòn. Chan ngập chén nước mắm tỏi ớt chua ngọt rồi trộn đều, vị béo ngọt giòn tươi hòa quyện khó cưỡng.
-      </>
-    ),
-    whereToEatTitle: "Where to eat:",
-    whereToEatTitleVi: "Địa chỉ gợi ý:",
-    whereToEat: [
-      "Bun Thit Nuong Chi Tuyen (175 Co Giang): 65,000 VND",
-      "Bun Thit Nuong Hai Dang (149 Chan Hung): 55,000 VND",
-    ],
-    whereToEatVi: [
-      "Bún Thịt Nướng Chị Tuyền (175 Cô Giang): 65.000 VNĐ",
-      "Bún Thịt Nướng Hải Đăng (149 Chấn Hưng): 55.000 VNĐ",
+      "Bún Riêu Gánh Chợ Bến Thành (163 Lê Thánh Tôn): 65.000 VNĐ",
+      "Bún Riêu Gốc (TK18/5 Nguyễn Cảnh Chân): 75.000 VNĐ",
     ],
   },
   {
     id: "bun-mam",
-    index: 9,
-    title: "9. Bun Mam",
-    titleVi: "9. Bún Mắm",
+    index: 8,
+    title: "8. Bun Mam",
+    titleVi: "8. Bún Mắm",
     img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Mam.jpg",
     alt: "Bun Mam - Mekong Fermented Fish Noodle Soup",
     desc: (
       <>
-        Known as the &ldquo;gumbo of Vietnam,&rdquo; <em>bun mam</em> features a deeply flavorful fermented fish broth simmered with lemongrass and eggplant. Laden with peeled prawns, squid, crispy roast pork belly, and fish fillets, it is served alongside an abundant platter of water lilies, bitter herbs, and banana blossoms.
+        <span className="vnn-link-highlight"><em>Bun mam</em></span> is one of the specialties of Southern Vietnam, featuring a broth made from fermented fish. To prepare it, the fermented fish sauce is boiled, the bones are removed to extract the liquid, and then shallots, lemongrass, eggplant, and spices are added. A bowl of <em>bun mam</em> typically includes thick rice vermicelli, shrimp, squid, grilled pork, and eggplant. It&apos;s usually served with a variety of vegetables like shredded water spinach, bitter herbs, and water lily stems.
       </>
     ),
     descVi: (
       <>
-        Được ví như món súp gumbo của phương Nam, <em>bún mắm</em> sở hữu làn nước lèo nấu từ mắm cá linh, cá sặc đậm đà thơm ngát hương sả và cà tím. Topping ngập tràn với tôm sú tươi ngọt, mực ống giòn sần sật, heo quay giòn bì và đĩa rau miệt vườn với bông súng, kèo nèo xanh mướt.
+        <span className="vnn-link-highlight"><em>Bún mắm</em></span> là một trong những đặc sản độc đáo nhất của miền Nam, nổi bật với làn nước dùng nấu từ mắm cá linh, cá sặc ủ kỹ. Mắm cá được nấu sôi, lọc bỏ xương lấy nước cốt trong rồi ninh cùng sả băm, hành tím, cà tím và gia vị. Một tô bún mắm thường đầy đặn với tôm tươi, mực giòn, heo quay giòn rụm và cà tím. Món ăn được dọn kèm dĩa rau sống phong phú như rau muống chẻ, rau đắng và cọng bông súng giòn ngọt.
       </>
     ),
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
-      "Bun Mam Co Ba (59 Chau Van Liem): 85,000 VND",
-      "Bun Mam 444 (375 Huynh Tan Phat): 75,000 VND",
+      "Bun Mam Mien Tay (124 Tran Khac Chan): 50,000 VND",
+      "Di Sau Mien Tay (25/22 Ton That Tung): 59,000 VND",
     ],
     whereToEatVi: [
-      "Bún Mắm Cô Ba (59 Châu Văn Liêm): 85.000 VNĐ",
-      "Bún Mắm 444 (375 Huỳnh Tấn Phát): 75.000 VNĐ",
+      "Bún Mắm Miền Tây (124 Trần Khắc Chân): 50.000 VNĐ",
+      "Dì Sáu Miền Tây (25/22 Tôn Thất Tùng): 59.000 VNĐ",
+    ],
+  },
+  {
+    id: "bun-thit-nuong",
+    index: 9,
+    title: "9. Bun Thit Nuong",
+    titleVi: "9. Bún Thịt Nướng",
+    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Thit-Nuong.jpg",
+    alt: "Bun Thit Nuong - Grilled Pork Vermicelli",
+    desc: (
+      <>
+        Don&apos;t overlook this flavor-packed dry noodle dish. <em>Bun thit nuong</em> is a beautiful bowl of grilled pork, vermicelli noodles, fresh herbs, pickled vegetables, and crispy spring rolls, all brought together with a sweet-sour fish sauce dressing. It&apos;s a light yet filling meal that&apos;s perfect for Saigon&apos;s tropical heat. Every element adds something: smokiness from the meat, crunch from the rolls, and freshness from the greens. Stir it up for a mouthful of texture and flavor in every bite.
+      </>
+    ),
+    descVi: (
+      <>
+        Đừng bỏ lỡ món bún khô ngập tràn hương vị này. <em>Bún thịt nướng</em> là một tô bún hấp dẫn với thịt nướng thơm lừng, bún tươi, rau sống mát lành, đồ chua và chả giò giòn rụm, tất cả hòa quyện cùng nước mắm chua ngọt pha khéo. Đây là bữa ăn nhẹ nhàng nhưng chắc dạ, hoàn hảo cho tiết trời nhiệt đới Sài Gòn. Mỗi nguyên liệu đều đóng góp vào sự thăng hoa: mùi khói quyến rũ từ thịt, độ giòn rụm của chả giò và sự tươi mát của rau ghém.
+      </>
+    ),
+    whereToEatTitle: "Where to eat:",
+    whereToEatTitleVi: "Địa chỉ gợi ý:",
+    whereToEat: [
+      "Bun Thit Nuong Cha Gio (01 Nguyen Trung Truc): 70,000 VND",
+      "Quan Bun Thit Nuong (88 Mac Dinh Chi): 48,000 VND",
+    ],
+    whereToEatVi: [
+      "Bún Thịt Nướng Chả Giò (01 Nguyễn Trung Trực): 70.000 VNĐ",
+      "Quán Bún Thịt Nướng (88 Mạc Đĩnh Chi): 48.000 VNĐ",
     ],
   },
   {
     id: "oc",
     index: 10,
-    title: "10. Oc (Snails & Shellfish)",
-    titleVi: "10. Ốc & Hải Sản Vỉa Hè",
+    title: "10. Oc",
+    titleVi: "10. Ốc",
     img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Shellfish.jpg",
     alt: "Oc - Snails & Shellfish Saigon",
     desc: (
       <>
-        An evening snail feast is an quintessential Saigon rite of passage. Sidewalk stalls showcase dozens of fresh shellfish stir-fried in salted egg sauce, roasted with chili salt, sautéed in garlic butter, or grilled with scallion oil and peanuts. Dip crusty baguettes into the rich gravies and wash it down with a cold local lager.
+        Eating shellfish in Saigon isn&apos;t just about food—it&apos;s an experience. From stir-fried snails to grilled oysters, clams steamed with lemongrass to scallops with green onion oil, each bite bursts with bold seasoning. <em>Oc</em> joints are often crowded, lively places where friends gather over beer, laughter, and endless small plates. There&apos;s even an entire street—Vinh Khanh in District 4—dedicated to this seafood. Don&apos;t be shy about trying new varieties or dipping everything into sweet tamarind or salted egg yolk sauce. Order a cold beer and just like that, you&apos;re experiencing Saigon&apos;s night scene like a true local.
       </>
     ),
     descVi: (
       <>
-        Ăn ốc đêm vỉa hè là nét văn hóa đặc trưng nhất của Sài Gòn. Hàng chục loại ốc và hải sản tươi sống được biến tấu tài tình: sốt trứng muối béo ngậy, rang muối ớt cay nồng, xào bơ tỏi thơm lừng hay nướng mỡ hành đậu phộng. Chấm bánh mì nóng giòn vào nước sốt và nhâm nhi cùng ly bia mát lạnh.
+        Thưởng thức ốc ở Sài Gòn không chỉ đơn thuần là ăn uống — đó là cả một trải nghiệm văn hóa. Từ ốc xào me, hàu nướng phô mai, nghêu hấp sả cho đến sò điệp nướng mỡ hành đậu phộng, mỗi món đều bùng nổ hương vị đậm đà. Các quán ốc vỉa hè luôn tấp nập, náo nhiệt, nơi bạn bè quây quần bên ly bia, tiếng cười rộn rã và vô vàn đĩa ốc nhỏ xinh. Thậm chí có cả một con phố — Vĩnh Khánh ở Quận 4 — dành riêng cho thiên đường hải sản này.
       </>
     ),
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
-    whereToEat: [
-      "Oc Dao (212B/C79 Nguyen Trai): 80,000 - 150,000 VND",
-      "Oc Oanh (534 Vinh Khanh, District 4): 90,000 - 180,000 VND",
-    ],
-    whereToEatVi: [
-      "Ốc Đào (212B/C79 Nguyễn Trãi): 80.000 - 150.000 VNĐ",
-      "Ốc Oanh (534 Vĩnh Khánh, Quận 4): 90.000 - 180.000 VNĐ",
-    ],
+    whereToEatText: "This street food favorite can be found along lively streets like Bui Vien (District 1) and Vinh Khanh (District 4).",
+    whereToEatTextVi: "Món ăn đường phố được yêu thích này có thể dễ dàng tìm thấy dọc theo các con phố sôi động như Bùi Viện (Quận 1) và phố ốc Vĩnh Khánh (Quận 4).",
   },
   {
     id: "xoi-man",
     index: 11,
     title: "11. Xoi Man",
-    titleVi: "11. Xôi Mặn Thập Cẩm",
+    titleVi: "11. Xôi Mặn",
     img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Xoi-Man.jpg",
     alt: "Xoi Man - Savory Sticky Rice",
     desc: (
       <>
-        Steaming savory sticky rice packed inside banana leaves, loaded with Chinese sausage (<em>lap xuong</em>), shredded chicken, pork floss, quail eggs, scallion oil, and crunchy peanuts, all tied together by a ladle of rich braised chicken reduction. Hearty, portable, and utterly delicious.
+        You want something for breakfast, dinner, or post-party hunger? <span className="vnn-link-highlight"><em>Xoi man</em></span>, please! <em>Xoi man</em>, savory sticky rice, is Saigon&apos;s ultimate comfort food. Made with glutinous rice and topped with sausage, pork floss, pickled radish, quail eggs, and slices of pork roll, it&apos;s a complete meal in one portable package. Often wrapped in banana leaves to lock in flavor, this dish is especially popular among night owls and early risers alike. Whether you&apos;re recovering from a late night or grabbing something to-go before exploring the city, <em>xoi man</em> has your back with its warm, savory goodness.
       </>
     ),
     descVi: (
       <>
-        Gói <em>xôi mặn</em> bọc trong lá chuối xanh mộc mạc bốc khói nghi ngút. Từng hạt nếp dẻo thơm bóng bẩy quyện cùng lạp xưởng Mai Quế Lộ chiên bóng, gà xé đậm vị, chà bông tơi xốp, trứng cút, mỡ hành và chan thìa nước sốt rim đậm đà chắc dạ cho buổi sáng sớm.
+        Bạn muốn một món ăn chắc dạ cho bữa sáng, bữa tối hay sau những cuộc vui đêm? <span className="vnn-link-highlight"><em>Xôi mặn</em></span> chính là lựa chọn hoàn hảo! Xôi mặn là món ăn an ủi tâm hồn thân thương bậc nhất của người Sài Gòn. Từng hạt nếp dẻo thơm được phủ đầy lạp xưởng, chà bông heo, củ cải ngâm, trứng cút và chả lụa thái lát — một bữa ăn trọn vẹn gói gọn trong lớp lá chuối xanh thơm lừng. Rất được lòng cả những cú đêm lẫn những người dậy sớm.
       </>
     ),
     whereToEatTitle: "Where to eat:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
-    whereToEat: [
-      "Xoi Ga Ba Chieu (Ba Chieu Market, Binh Thanh): 40,000 VND",
-      "Xoi Binh Tien (88 Minh Phung): 25,000 VND",
-    ],
-    whereToEatVi: [
-      "Xôi Gà Bà Chiểu (Chợ Bà Chiểu, Bình Thạnh): 40.000 VNĐ",
-      "Xôi Bình Tiên (88 Minh Phụng): 25.000 VNĐ",
-    ],
+    whereToEatText: "This popular street food is priced at 15,000–30,000 VND. You'll find it at street stalls and sidewalk vendors all over the city.",
+    whereToEatTextVi: "Món ăn đường phố bình dân này có giá từ 15.000 – 30.000 VNĐ. Bạn sẽ dễ dàng tìm thấy tại các gánh hàng rong và quầy xôi vỉa hè trên khắp các con phố.",
   },
   {
     id: "ca-phe-sua-da",
@@ -551,24 +539,18 @@ const HCMC_12_DISHES = [
     alt: "Ca Phe Sua Da - Vietnamese Iced Coffee",
     desc: (
       <>
-        Finishing the list with Saigon&apos;s liquid obsession: Vietnamese iced coffee with sweetened condensed milk. Slow-dripped dark Robusta coffee mixed with rich condensed milk and poured over crushed ice. Bold, sweet, creamy, and revitalizing, it is sipped leisurely at street corners and chic cafes alike.
+        We&apos;re ending this list with a drink that helped put Saigon on the map: <span className="vnn-link-highlight"><em>ca phe sua da</em></span>. This bold blend of Vietnamese coffee and sweetened condensed milk poured over ice is the drink that fuels the city. Locals sip it slowly at sidewalk cafes while people-watching or chatting with friends. It&apos;s versatile enough to pair with any meal and gives you that perfect energy kick. Don&apos;t forget to stir well before sipping for that creamy finish. Whether you&apos;re new to coffee or a die-hard fan, this drink will leave a lasting impression—and probably start a new addiction.
       </>
     ),
     descVi: (
       <>
-        Khép lại danh sách bằng thức uống đại diện cho linh hồn và nhịp sống của người Sài Gòn: <em>cà phê sữa đá</em>. Từng giọt cà phê Robusta đen đậm nhỏ giọt tí tách từ phin nhôm xuống lớp sữa đặc ngọt ngào béo ngậy, khuấy đều cùng đá bi mát lạnh, đánh thức mọi giác quan trong sớm mai.
+        Chúng ta khép lại danh sách với thức uống đã đưa tên tuổi Sài Gòn ra thế giới: <span className="vnn-link-highlight"><em>cà phê sữa đá</em></span>. Sự hòa quyện đậm đà giữa cà phê Robusta rang đậm và sữa đặc béo ngọt rót trên lớp đá bi mát lạnh chính là nguồn năng lượng nuôi dưỡng nhịp đập thành phố. Người dân địa phương nhâm nhi từng ngụm chậm rãi tại các quán cà phê cóc vỉa hè trong lúc ngắm phố phường hoặc trò chuyện cùng bạn bè. Dù bạn mới thử cà phê hay là tín đồ sành sỏi, ly cà phê sữa đá chắc chắn sẽ để lại ấn tượng sâu đậm.
       </>
     ),
-    whereToEatTitle: "Where to eat:",
+    whereToEatTitle: "Where to try:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
-    whereToEat: [
-      "Ca Phe Vot Cheo Leo (109/36 Nguyen Thien Thuat - Since 1938): 20,000 VND",
-      "Ca Phe Bet (30/4 Park, District 1): 20,000 VND",
-    ],
-    whereToEatVi: [
-      "Cà Phê Vợt Cheo Leo (109/36 Nguyễn Thiện Thuật - Từ 1938): 20.000 VNĐ",
-      "Cà Phê Bệt Công Viên 30/4 (Quận 1): 20.000 VNĐ",
-    ],
+    whereToEatText: "Ca phe sua da is so popular in Ho Chi Minh City that you can find it on nearly every street corner, with prices typically ranging from 15,000–50,000 VND.",
+    whereToEatTextVi: "Cà phê sữa đá phổ biến đến mức bạn có thể tìm thấy ở hầu như mọi góc phố tại TP. Hồ Chí Minh, với mức giá thường dao động từ 15.000 – 50.000 VNĐ.",
   },
 ];
 
