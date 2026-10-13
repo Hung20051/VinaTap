@@ -1,57 +1,58 @@
 /* ==========================================================================
-   7 MUST-TRY FOODS IN VUNG TAU - VIETNAMNOMAD & VINATAP EDITORIAL STYLE
-   Brand Teal: #00c2cb | Primary Button: #00aab2 | Coral Accent: #ff5757
-   Standardized to 2026 throughout
+   7 MUST-TRY FOODS IN VUNG TAU - EDITORIAL CSS (MATCHING USER SCREENSHOTS)
    ========================================================================== */
 
 .vnn-article-page {
   background-color: #ffffff;
-  color: #222222;
+  color: #1e293b;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.75;
-  font-size: 16px;
+  line-height: 1.7;
+  font-size: 15px;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ── Top Companion Banner (Screenshot 3) ── */
+.vnn-top-banner {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  overflow: hidden;
+}
+
+.vnn-top-banner__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.vnn-top-banner__link {
+  display: block;
   width: 100%;
 }
 
-/* ── STICKY HEADER ── */
-.vnn-navbar {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 99999 !important;
-  background: #ffffff !important;
-  border-bottom: 1px solid #ebebeb !important;
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.08) !important;
-  width: 100% !important;
+.vnn-top-banner__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 100px;
+  object-fit: cover;
 }
 
-/* ── Reading Progress Bar ── */
-.vnn-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #5188f7, #00c2cb);
-  z-index: 999999;
-  transition: width 0.1s ease-out;
-}
-
-/* ── FULL-BLEED HERO BANNER (ẢNH TO CẢ 1 HÀNG NGANG KHÔNG CÁCH) ── */
+/* ── Full-Bleed Hero Banner (Screenshot 3) ── */
 .vnn-fullbleed-hero {
   position: relative;
-  width: 100vw;
-  max-width: 100%;
-  height: 520px;
-  min-height: 460px;
+  width: 100%;
+  height: 480px;
+  min-height: 420px;
   background-image: url("/guide/vung-tau/7-must-try-foods-vung-tau.jpg");
   background-size: cover;
-  background-position: center 40%;
+  background-position: center center;
   background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0;
-  padding: 0;
+  text-align: center;
   overflow: hidden;
 }
 
@@ -60,10 +61,10 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.65) 0%,
-    rgba(0, 0, 0, 0.45) 50%,
-    rgba(0, 0, 0, 0.55) 100%
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.68) 100%
   );
   z-index: 1;
 }
@@ -71,793 +72,193 @@
 .vnn-fullbleed-hero__inner {
   position: relative;
   z-index: 2;
-  text-align: center;
-  max-width: 960px;
+  max-width: 900px;
   padding: 0 24px;
   color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 14px;
 }
 
 .vnn-fullbleed-hero__tags {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
 }
 
 .vnn-fullbleed-hero__tag {
   display: inline-block;
-  padding: 5px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);
-  color: #ffffff;
+  padding: 4px 14px;
+  border-radius: 9999px;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-radius: 30px;
-  line-height: 1.4;
-}
-
-.vnn-fullbleed-hero__tag--primary {
-  background: #00c2cb;
-  border-color: #00c2cb;
   color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
 }
 
 .vnn-fullbleed-hero__title {
-  font-size: 52px;
+  font-size: 46px;
+  line-height: 1.15;
   font-weight: 800;
-  line-height: 1.18;
   color: #ffffff;
-  margin: 0 0 18px;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
   letter-spacing: -0.02em;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.4);
 }
 
-.vnn-fullbleed-hero__meta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-size: 14.5px;
-  color: rgba(255, 255, 255, 0.95);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+.vnn-fullbleed-hero__byline {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-top: 4px;
 }
 
-.vnn-fullbleed-hero__author {
-  font-weight: 600;
+@media (max-width: 768px) {
+  .vnn-fullbleed-hero {
+    height: 380px;
+  }
+  .vnn-fullbleed-hero__title {
+    font-size: 32px;
+  }
 }
 
-.vnn-fullbleed-hero__dot {
-  opacity: 0.7;
-}
-
-/* ── Main Container (White Content Section) ── */
+/* ── Content Container (Screenshots 3, 4, 5) ── */
 .vnn-container {
   max-width: 980px;
   margin: 0 auto;
-  padding: 30px 20px 80px;
+  padding: 36px 24px 60px;
 }
 
-/* ── Breadcrumb Navigation ── */
-.vnn-breadcrumb {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  font-size: 13px;
-  color: #888888;
-  margin-bottom: 24px;
-}
-
-.vnn-breadcrumb a {
-  color: #666666;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.vnn-breadcrumb a:hover {
-  color: #00c2cb;
-}
-
-.vnn-breadcrumb-separator {
-  color: #cccccc;
-}
-
-.vnn-breadcrumb-current {
-  color: #00aab2;
-  font-weight: 600;
-}
-
-/* ── Primary CTA Pill Button (Tripion AI Assistant) ── */
+/* ── Pill CTA Button (Screenshot 3 & 4) ── */
 .vnn-pill-cta-wrap {
-  text-align: center;
-  margin: 12px 0 36px;
+  display: flex;
+  justify-content: center;
+  margin: 8px auto 32px;
 }
 
 .vnn-pill-cta-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  background: linear-gradient(-90deg, #5188f7, #00c2cb);
+  gap: 8px;
+  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
   color: #ffffff !important;
-  font-size: 16px;
+  font-size: 14.5px;
   font-weight: 600;
-  padding: 16px 36px;
-  border-radius: 50px;
+  padding: 12px 32px;
+  border-radius: 9999px;
   text-decoration: none;
-  box-shadow: 0px 4px 20px rgba(0, 180, 220, 0.45);
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  border: 2px solid #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 180, 216, 0.35);
+  transition: all 0.25s ease;
+  border: none;
   cursor: pointer;
 }
 
 .vnn-pill-cta-btn:hover {
-  transform: scale(1.04);
-  box-shadow: 0px 8px 30px rgba(0, 180, 220, 0.65);
-}
-
-/* ── Article Lead & Highlights ── */
-.vnn-article-lead {
-  font-size: 18.5px;
-  line-height: 1.85;
-  color: #334155;
-  margin-bottom: 32px;
-}
-
-.vnn-article-lead strong {
-  color: #0f172a;
-}
-
-.vnn-highlights-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 36px;
-}
-
-.vnn-highlight-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  transition: all 0.2s ease;
-}
-
-.vnn-highlight-card:hover {
-  border-color: #00c2cb;
-  background: #f0fbfb;
   transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 180, 216, 0.5);
+  background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%);
 }
 
-.vnn-highlight-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: #e6f8f8;
-  color: #00aab2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.vnn-highlight-num {
-  font-size: 20px;
-  font-weight: 800;
-  color: #111827;
-  line-height: 1.1;
-}
-
-.vnn-highlight-label {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 2px;
-}
-
-/* ── Table of Contents / Quick Jump Menu ── */
-.vnn-toc-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-left: 4px solid #00c2cb;
-  border-radius: 10px;
-  padding: 24px 28px;
-  margin: 32px 0 44px;
-}
-
-.vnn-toc-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0 0 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.vnn-toc-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 10px 24px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.vnn-toc-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* ── Lead Intro (Screenshot 3 & 4) ── */
+.vnn-article-lead {
+  max-width: 960px;
+  margin: 0 auto 46px;
+  font-size: 15px;
+  line-height: 1.7;
   color: #334155;
-  text-decoration: none;
-  font-size: 14.5px;
-  padding: 6px 0;
-  transition: all 0.2s ease;
+  text-align: left;
 }
 
-.vnn-toc-link:hover {
-  color: #00aab2;
-  transform: translateX(4px);
-}
-
-.vnn-toc-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #e6f8f8;
-  color: #00aab2;
-  font-size: 12px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-/* ── 7 DISH CARDS (NEWSPAPER / VIETNAMNOMAD EDITORIAL DESIGN) ── */
-.vnn-dish-card {
-  margin-bottom: 56px;
-  padding-bottom: 48px;
-  border-bottom: 1px dashed #e2e8f0;
-}
-
-.vnn-dish-card:last-of-type {
-  border-bottom: none;
-  margin-bottom: 40px;
-  padding-bottom: 20px;
-}
-
-.vnn-dish-header {
-  margin-bottom: 20px;
+/* ── 7 Dishes Section (Screenshots 4, 5) ── */
+.vnn-dish-item {
+  margin-bottom: 52px;
 }
 
 .vnn-dish-title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
-  color: #111827;
-  margin: 0 0 10px;
+  color: #0f172a;
+  margin: 0 0 18px 0;
   line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
-.vnn-dish-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.vnn-dish-badge {
-  font-size: 11.5px;
-  font-weight: 600;
-  padding: 4px 12px;
-  border-radius: 20px;
-  background: #f1f5f9;
-  color: #475569;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.vnn-dish-badge--hot {
-  background: #fef2f2;
-  color: #ef4444;
-}
-
-.vnn-dish-badge--sea {
-  background: #e6f8f8;
-  color: #00aab2;
-}
-
-/* Two-column layout: 35% Image | 65% Text & Places */
-.vnn-dish-columns {
+.vnn-dish-layout {
   display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 28px;
+  grid-template-columns: 420px 1fr;
+  gap: 32px;
   align-items: start;
 }
 
-.vnn-dish-image-wrap {
-  position: relative;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  background: #f8fafc;
-  cursor: pointer;
-  group: pointer;
+@media (max-width: 860px) {
+  .vnn-dish-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.vnn-dish-img-col {
+  width: 100%;
 }
 
 .vnn-dish-img {
   width: 100%;
-  height: 270px;
+  height: auto;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
-
-.vnn-dish-image-wrap:hover .vnn-dish-img {
-  transform: scale(1.05);
-}
-
-.vnn-dish-img-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 600;
-  gap: 6px;
-  transition: opacity 0.25s ease;
-}
-
-.vnn-dish-image-wrap:hover .vnn-dish-img-overlay {
-  opacity: 1;
-}
-
-.vnn-dish-caption {
-  font-size: 12px;
-  color: #64748b;
-  text-align: center;
-  margin-top: 8px;
-  font-style: italic;
-}
-
-.vnn-dish-body {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.vnn-dish-desc {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #334155;
-  margin: 0;
-}
-
-.vnn-dish-desc em {
-  font-weight: 600;
-  color: #0f172a;
-}
-
-/* Tip Callout Box */
-.vnn-tip-box {
-  background: #fefce8;
-  border: 1px solid #fef08a;
-  border-left: 4px solid #eab308;
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 14.5px;
-  color: #713f12;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  line-height: 1.6;
-}
-
-.vnn-tip-box strong {
-  color: #854d0e;
-  font-weight: 700;
-}
-
-/* Where to try Box */
-.vnn-places-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 16px 20px;
-}
-
-.vnn-places-title {
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.vnn-places-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.vnn-place-item {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 14.5px;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed #e2e8f0;
-}
-
-.vnn-place-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.vnn-place-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.vnn-place-name {
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.vnn-place-address {
-  font-size: 13px;
-  color: #64748b;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.vnn-place-price {
-  font-weight: 700;
-  color: #00aab2;
-  white-space: nowrap;
-  font-size: 14px;
-  background: #e6f8f8;
-  padding: 3px 10px;
-  border-radius: 20px;
-}
-
-/* ── Tags and Author Box ── */
-.vnn-tags-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 40px 0;
-  flex-wrap: wrap;
-}
-
-.vnn-tag-pill {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 30px;
-  border: 1px solid #e2e8f0;
-  color: #334155;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  background: #ffffff;
-}
-
-.vnn-tag-pill:hover {
-  background: #00c2cb;
-  border-color: #00c2cb;
-  color: #ffffff;
-}
-
-.vnn-author-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 24px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 60px;
-}
-
-.vnn-author-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.vnn-author-info {
-  flex: 1;
-}
-
-.vnn-author-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0 0 4px;
-}
-
-.vnn-author-bio {
-  font-size: 14px;
-  color: #64748b;
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* ── RELATED ARTICLES (NEWSPAPER THEME EDITORIAL STYLE) ── */
-.vnn-related-section {
-  margin-top: 50px;
-  padding-top: 40px;
-  border-top: 2px solid #ebebeb;
-}
-
-.vnn-related-header {
-  position: relative;
-  margin-bottom: 24px;
-}
-
-.vnn-related-title {
-  font-size: 18px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #111111;
-  margin: 0 0 10px;
-  letter-spacing: 0.5px;
-  display: inline-block;
-}
-
-.vnn-related-bar {
-  display: block;
-  width: 50px;
-  height: 3px;
-  background-color: #00c2cb;
-}
-
-.vnn-related-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.vnn-related-card {
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: all 0.25s ease;
-  text-decoration: none;
-  border: 1px solid #f1f5f9;
-}
-
-.vnn-related-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-.vnn-related-img-wrap {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  overflow: hidden;
-  background: #f1f5f9;
-}
-
-.vnn-related-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.35s ease;
-}
-
-.vnn-related-card:hover .vnn-related-img {
-  transform: scale(1.06);
-}
-
-.vnn-related-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: rgba(0, 0, 0, 0.7);
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 3px 8px;
   border-radius: 4px;
-  letter-spacing: 0.5px;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
-.vnn-related-body {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.vnn-related-card-title {
+.vnn-dish-content-col {
   font-size: 15px;
+  line-height: 1.7;
+  color: #334155;
+}
+
+.vnn-dish-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 16px;
+}
+
+.vnn-dish-subhead {
+  display: block;
   font-weight: 700;
-  line-height: 1.4;
-  color: #111827;
-  margin: 0 0 8px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.vnn-related-card:hover .vnn-related-card-title {
-  color: #00c2cb;
-}
-
-.vnn-related-date {
-  font-size: 12px;
-  color: #94a3b8;
-  margin-top: auto;
-}
-
-/* ── Lightbox Modal for Zooming Images ── */
-.vnn-lightbox-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.88);
-  backdrop-filter: blur(8px);
-  z-index: 9999999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  animation: vnnFadeIn 0.25s ease;
-}
-
-.vnn-lightbox-container {
-  position: relative;
-  max-width: 90vw;
-  max-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.vnn-lightbox-img {
-  max-width: 100%;
-  max-height: 75vh;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-.vnn-lightbox-caption {
-  margin-top: 12px;
-  color: #ffffff;
+  color: #0f172a;
+  margin-top: 16px;
+  margin-bottom: 8px;
   font-size: 15px;
-  font-weight: 600;
-  text-align: center;
 }
 
-.vnn-lightbox-close {
-  position: absolute;
-  top: -44px;
-  right: 0;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: #ffffff;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.vnn-dish-bullets {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0 0 16px 0;
 }
 
-.vnn-lightbox-close:hover {
-  background: #00c2cb;
-  transform: scale(1.1);
+.vnn-dish-bullets li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+  color: #334155;
 }
 
-/* ── Toast notification for copy action ── */
-.vnn-toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #111827;
-  color: #ffffff;
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  z-index: 9999999;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: vnnSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes vnnFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes vnnSlideUp {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 20px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
-
-/* ── Responsive Queries ── */
-@media (max-width: 900px) {
-  .vnn-fullbleed-hero__title {
-    font-size: 40px;
-  }
-  .vnn-dish-columns {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .vnn-dish-img {
-    height: 300px;
-  }
-  .vnn-related-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .vnn-related-img-wrap {
-    height: 220px;
-  }
-}
-
-@media (max-width: 640px) {
-  .vnn-fullbleed-hero {
-    height: 420px;
-    min-height: 400px;
-  }
-  .vnn-fullbleed-hero__title {
-    font-size: 30px;
-  }
-  .vnn-highlights-row {
-    grid-template-columns: 1fr;
-  }
-  .vnn-dish-title {
-    font-size: 22px;
-  }
-  .vnn-place-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.vnn-link-highlight {
+  color: #00c2cb;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }

@@ -417,7 +417,7 @@ const NHA_TRANG_5_DISHES = [
           Nem Nuong is the most well-known Nha Trang specialty that you won&apos;t want to miss. These are pork sausages skewered on wooden sticks, or ideally on lemongrass stems, and chargrilled, giving them a distinctive smoky and aromatic fragrance. A portion of Nem Nuong is served on a tray with crispy fried rice paper rolls, fresh vegetables, shredded green mango, cucumber, and chives.
         </p>
         <p style={{ margin: "0 0 14px" }}>
-          The star of the show is the warm, savory-sweet dipping sauce made from glutinous rice, minced pork, and shrimp paste. Dipping each fresh roll into this rich sauce creates an explosion of flavors that will leave an unforgettable impression.
+          When eating, grab a sheet of rice paper, place all the ingredients on it, then roll it tightly and dip the roll in the sweet, purée-like dipping sauce. It&apos;s amazing how all the separate ingredients come together in a rich and delightful flavor and texture. If you&apos;re down for a hands-on dining experience, Nem Nuong is what to look for.
         </p>
       </>
     ),
@@ -427,27 +427,29 @@ const NHA_TRANG_5_DISHES = [
           Nem nướng là món đặc sản Nha Trang nổi tiếng nhất mà bạn chắc chắn không muốn bỏ lỡ. Thịt heo nạc được quết nhuyễn ghim vào que tre hoặc thân sả rồi nướng trên than hoa đỏ rực, mang đến mùi thơm khói quyến rũ đặc trưng. Một mẹt nem nướng dọn ra với nem nướng nóng hổi, ram chiên giòn rụm, đĩa rau sống tươi non, xoài xanh bào sợi, dưa leo và hẹ.
         </p>
         <p style={{ margin: "0 0 14px" }}>
-          Điểm sáng rực rỡ nhất là bát nước chấm ấm nóng, béo bùi nấu từ gạo nếp xay, thịt băm, tôm biển và đậu phộng. Cuộn chặt tay và chấm ngập vào bát nước sốt sánh mịn sẽ mang đến trải nghiệm hương vị mê mẩn khó quên.
+          Khi ăn, bạn lấy một miếng bánh tráng, đặt tất cả nguyên liệu lên trên, cuộn chặt tay rồi chấm ngập vào chén nước chấm sền sệt béo ngọt. Thật tuyệt vời khi từng nguyên liệu hòa quyện tạo nên hương vị thơm ngon khó quên. Nếu bạn thích trải nghiệm tự tay cuốn đồ ăn, nem nướng chính là lựa chọn số 1.
         </p>
       </>
     ),
-    tipsTitle: "Tip:",
-    tipsTitleVi: "Tip:",
+    tipsTitle: "Tips:",
+    tipsTitleVi: "Tips:",
     tips: [
-      "Wrap a little bit of each accompaniment—a piece of grilled pork, crispy ram roll, herbs, mango, and cucumber—into rice paper, roll tightly, and dip generously into the sauce.",
+      "Nem Nuong is a meat-based dish, but the dipping sauce is made from puréed shrimp. So if you're allergic to seafood, ask for another type of dipping sauce.",
+      "Nem Nuong can also be served in a bowl with rice noodles. In case you don't want to touch the food with your bare hands, opt for Bun Nem Nuong.",
     ],
     tipsVi: [
-      "Hãy cuốn một chút của từng món: một miếng nem que, bánh tráng chiên giòn, rau thơm, xoài xanh, dưa leo vào bánh tráng dẻo, cuộn tròn lại và chấm đẫm vào bát nước sốt.",
+      "Nem nướng là món từ thịt heo, nhưng nước chấm được nấu từ tôm xay nhuyễn. Nếu bạn dị ứng hải sản, hãy yêu cầu đổi sang nước mắm hoặc nước chấm khác.",
+      "Nem nướng cũng có thể được phục vụ dưới dạng tô bún. Nếu không muốn ăn bốc bằng tay, bạn có thể gọi Bún Nem Nướng.",
     ],
     whereToTryTitle: "Where to try:",
     whereToTryTitleVi: "Where to try:",
     whereToTry: [
-      "Nem Nuong Dang Van Quyen (16A Lan Ong / 02-04 Phan Boi Chau): 52,000 VND",
-      "Nem Nuong Vu Thanh An (15 Le Loi): 45,000 VND",
+      "Nem Nuong Dang Van Quyen (16A Lan Ong): 52,000 VND",
+      "Nem Nuong Ninh Hoa - To Huu (80 To Huu): 39,000 VND",
     ],
     whereToTryVi: [
-      "Nem Nướng Đặng Văn Quyên (16A Lãn Ông / 02-04 Phan Bội Châu): 52.000 VNĐ",
-      "Nem Nướng Vũ Thành An (15 Lê Lợi): 45.000 VNĐ",
+      "Nem Nướng Đặng Văn Quyên (16A Lãn Ông): 52.000 VNĐ",
+      "Nem Nướng Ninh Hòa - Tố Hữu (80 Tố Hữu): 39.000 VNĐ",
     ],
   },
 ];
@@ -737,6 +739,155 @@ export default function NhaTrangFoodGuidePage() {
             </article>
           ))}
         </div>
+
+        {/* ── Closing Paragraph (Image 1) ── */}
+        <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#334155", margin: "36px 0 24px" }}>
+          {isVi ? (
+            <>
+              Năm món ăn kể trên sẽ mang đến cho du khách hương vị chân thực và sống động nhất về{" "}
+              <Link href="/province/khanh-hoa" style={{ color: "#00c2cb", textDecoration: "underline" }}>
+                Nha Trang
+              </Link>
+              , dù bạn đang tìm kiếm một tô bún nóng hổi đậm đà, những món cuốn chấm hay các món ăn vặt đường phố. Nếu có dịp ghé thăm thành phố biển này, nhất định đừng bỏ lỡ những hương vị biểu tượng ấy.
+            </>
+          ) : (
+            <>
+              The five dishes listed above will offer visitors a dynamic and genuine taste of{" "}
+              <Link href="/province/khanh-hoa" style={{ color: "#00c2cb", textDecoration: "underline" }}>
+                Nha Trang
+              </Link>
+              , whether you&apos;re in the mood for a hearty bowl of soup, a wrap-and-roll treat, or takeout snacks. If you find yourself in the city, make sure to try these iconic flavors.
+            </>
+          )}
+        </p>
+
+        {/* ── Disclaimer Note (Image 2) ── */}
+        <p style={{ fontSize: "14px", lineHeight: 1.6, color: "#334155", margin: "0 0 28px" }}>
+          <strong>Note:</strong>{" "}
+          {isVi
+            ? "Các đề xuất nhà hàng chỉ dựa trên trải nghiệm của tác giả; giá cả thực tế có thể thay đổi tùy thời điểm."
+            : "Restaurant recommendations are only suggestions based on the authors' experiences; prices may vary."}
+        </p>
+
+        {/* ── Tags (Image 2) ── */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "24px 0 40px", flexWrap: "wrap" }}>
+          <span
+            style={{
+              background: "#00c2cb",
+              color: "#ffffff",
+              padding: "5px 14px",
+              borderRadius: "9999px",
+              fontSize: "12px",
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+            }}
+          >
+            TAGS
+          </span>
+          <Link
+            href="/province/khanh-hoa"
+            style={{
+              border: "1px solid #e2e8f0",
+              borderRadius: "9999px",
+              padding: "5px 14px",
+              fontSize: "13px",
+              color: "#334155",
+              textDecoration: "none",
+            }}
+          >
+            Nha Trang
+          </Link>
+          <Link
+            href="/guide/5-must-try-nha-trang-dishes"
+            style={{
+              border: "1px solid #e2e8f0",
+              borderRadius: "9999px",
+              padding: "5px 14px",
+              fontSize: "13px",
+              color: "#334155",
+              textDecoration: "none",
+            }}
+          >
+            Nha Trang Dishes
+          </Link>
+        </div>
+
+        {/* ── Divider (Image 2) ── */}
+        <hr style={{ border: 0, height: "1px", background: "#e2e8f0", margin: "40px 0" }} />
+
+        {/* ── Related Articles (Image 2) ── */}
+        <section style={{ margin: "40px 0 60px" }}>
+          <h2
+            style={{
+              textAlign: "center",
+              fontSize: "26px",
+              fontWeight: 700,
+              color: "#0f172a",
+              marginBottom: "32px",
+            }}
+          >
+            {isVi ? "Bài viết liên quan" : "Related Articles"}
+          </h2>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "24px",
+            }}
+          >
+            <Link
+              href="/guide/3-week-vietnam-itinerary"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/3-week-vietnam-itinerary.jpg"
+                  alt="3-week Vietnam Itinerary"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "Lịch trình 3 tuần xuyên Việt" : "3-week Vietnam Itinerary"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/8-must-try-foods-in-hanoi"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"
+                  alt="8 must-try foods in Hanoi"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "8 món ăn nhất định phải thử ở Hà Nội" : "8 must-try foods in Hanoi"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/hcmc-10-things-bitexco.jpg"
+                  alt="10 best things to do in Ho Chi Minh City"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh" : "10 best things to do in Ho Chi Minh City"}
+              </h3>
+            </Link>
+          </div>
+        </section>
       </main>
 
       {/* ── PUBLIC FOOTER FROM HOMEPAGE ── */}
