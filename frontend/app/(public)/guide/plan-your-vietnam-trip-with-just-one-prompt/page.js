@@ -149,7 +149,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "5 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/todo-1-3week.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "todo-2",
@@ -257,7 +257,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "5 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/itin-1-3week.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "itin-2",

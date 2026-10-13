@@ -126,7 +126,7 @@ const BE_INSPIRED_FEATURED = {
   descVi:
     "Khám phá lịch trình 3 tuần xuyên Việt trọn vẹn qua 7 điểm đến hàng đầu. Cẩm nang bao gồm bản đồ lộ trình chi tiết và bảng dự toán chi phí du lịch.",
   img: "/guide/hcmc/3-week-vietnam-itinerary.jpg",
-  link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+  link: "/guide/3-week-vietnam-itinerary",
 };
 
 const BE_INSPIRED_COMPACT = [
@@ -709,7 +709,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "5 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/todo-1-3week.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "todo-2",
@@ -817,7 +817,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "5 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/itin-1-3week.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "itin-2",

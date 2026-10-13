@@ -205,7 +205,7 @@ const SEARCH_POSTS = [
     date: "October 5, 2026",
     dateVi: "5 Tháng 10, 2026",
     img: "/guide/megamenu/todo-1-3week.jpg",
-    link: "/guide/the-complete-guide-to-vietnam",
+    link: "/guide/3-week-vietnam-itinerary",
     keywords: "3 week vietnam itinerary north south central route",
   },
 ];

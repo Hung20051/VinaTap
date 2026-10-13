@@ -145,7 +145,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "20 Tháng 1, 2026",
         badge: "Things to Do",
         img: "/guide/megamenu/todo-1-3week.jpg",
-        link: "/guide/the-complete-guide-to-vietnam",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "todo-2",
@@ -253,7 +253,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "20 Tháng 2, 2026",
         badge: "Itineraries",
         img: "/guide/megamenu/itin-1-3week.jpg",
-        link: "/guide/the-complete-guide-to-vietnam",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "itin-2",

@@ -156,7 +156,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "5 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/todo-1-3week.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "todo-2",
@@ -264,7 +264,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "5 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/itin-1-3week.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        link: "/guide/3-week-vietnam-itinerary",
       },
       {
         id: "itin-2",
@@ -1120,7 +1120,7 @@ export default function CompleteGuideToVietnamPage() {
 
           <div className="vnn-biggrid-4">
             {/* Card 1 (Large left): 3-week Vietnam Itinerary */}
-            <Link href="/guide/plan-your-vietnam-trip-with-just-one-prompt" className="vnn-biggrid-item">
+            <Link href="/guide/3-week-vietnam-itinerary" className="vnn-biggrid-item">
               <img
                 src="/guide/hcmc/3-week-vietnam-itinerary.jpg"
                 alt={lang === "vi" ? "Lịch trình 3 tuần xuyên Việt" : "3-week Vietnam Itinerary"}
