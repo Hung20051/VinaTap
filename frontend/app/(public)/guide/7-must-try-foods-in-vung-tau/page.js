@@ -357,7 +357,7 @@ const VUNG_TAU_7_DISHES = [
     alt: "Hau ne - sizzling oysters Vung Tau",
     desc: (
       <>
-        A lesser-known but fascinating (and personally my favorite) dish in Vung Tau is <em>hau ne</em>. Think of it as the ocean&apos;s answer to <em>bo ne</em> (sizzling steak), a breakfast favorite among locals and expats. Plump oysters are bathed in a savory tomato sauce and runny egg and served sizzling hot straight from the cast-iron pan. The dish comes with crusty bread, making it a truly hearty and delicious dining experience.
+        A lesser-known but fascinating (and personally my favorite) dish in Vung Tau is <em>hau ne</em>. Think of it as the ocean&apos;s answer to <em>bo ne</em>, sizzling or dodging beef steak, a breakfast favorite among locals and expats. Plump oysters are bathed in a savory tomato sauce and runny egg and served sizzling hot straight from the pan. The dish comes with crusty bread, making it a truly hearty and delicious dining experience.
       </>
     ),
     descVi: (
@@ -368,20 +368,18 @@ const VUNG_TAU_7_DISHES = [
     tipsTitle: "Tip:",
     tipsTitleVi: "Tip:",
     tips: [
-      "You can also explore other mouthwatering oyster dishes in Vung Tau, like hot oyster porridge (chao hau) or oysters grilled with green scallion oil and roasted peanuts (hau nuong mo hanh).",
+      "You can also try other oyster dishes, like oyster porridge or oysters grilled with cheese or green onion oil and peanuts.",
     ],
     tipsVi: [
-      "Bạn cũng có thể khám phá thêm các món hàu hấp dẫn khác tại Vũng Tàu như cháo hàu ấm bụng hoặc hàu nướng mỡ hành đậu phộng béo ngậy.",
+      "Bạn cũng có thể thử thêm các món hàu khác như cháo hàu ấm bụng hoặc hàu nướng phô mai, mỡ hành đậu phộng béo ngậy.",
     ],
-    whereToTryTitle: "Where to try:",
-    whereToTryTitleVi: "Where to try:",
+    whereToTryTitle: "Top pick:",
+    whereToTryTitleVi: "Top pick:",
     whereToTry: [
-      "Hau Ne Tam Nguyen (03 Hoang Dieu): 47,000 VND (~$1.9)",
-      "Quan Hao Long Son (Quoc Lo 51, Long Son): 50,000 VND",
+      "Hau Ne Tam Nguyen (3 Hoang Dieu): 47,000 VND",
     ],
     whereToTryVi: [
-      "Hàu Né Tâm Nguyên (03 Hoàng Diệu): 47.000 VNĐ (~$1.9)",
-      "Quán Hàu Long Sơn (Quốc lộ 51, Long Sơn): 50.000 VNĐ",
+      "Hàu Né Tâm Nguyên (3 Hoàng Diệu): 47.000 VNĐ",
     ],
   },
   {
@@ -404,20 +402,20 @@ const VUNG_TAU_7_DISHES = [
     tipsTitle: "Tip:",
     tipsTitleVi: "Tip:",
     tips: [
-      "Hotpot is traditionally a communal feast – make sure to bring friends or family along to share the generous pot and savor the breezy coastal night!",
+      "Hotpot is a communal dish, so gather your friends, share the dish, and have fun!",
     ],
     tipsVi: [
-      "Lẩu là món ăn dành cho đông người – hãy rủ bạn bè hoặc gia đình cùng quây quần bên nồi lẩu để tận hưởng trọn vẹn không khí đêm phố biển!",
+      "Lẩu là món ăn dành cho số đông, vì vậy hãy rủ bạn bè quây quần, cùng sẻ chia món ăn và tận hưởng niềm vui!",
     ],
     whereToTryTitle: "Where to try:",
     whereToTryTitleVi: "Where to try:",
     whereToTry: [
-      "Lau Ca Duoi Ba Sau (158 Ha Long): 250,000 VND (~$10.0)",
-      "Lau Ca Duoi Co Hoa (61B Phan Chu Trinh): 150,000 VND (~$6.0)",
+      "Lau Ca Duoi Vung Tau Ba Sau (158 Ha Long): 250,000 VND",
+      "Lau Ca Duoi Co Hoa (61B Phan Chu Trinh): 150,000 VND",
     ],
     whereToTryVi: [
-      "Lẩu Cá Đuối Bà Sáu (158 Hạ Long): 250.000 VNĐ (~$10.0)",
-      "Lẩu Cá Đuối Cô Hoa (61B Phan Chu Trinh): 150.000 VNĐ (~$6.0)",
+      "Lẩu Cá Đuối Vũng Tàu Bà Sáu (158 Hạ Long): 250.000 VNĐ",
+      "Lẩu Cá Đuối Cô Hoa (61B Phan Chu Trinh): 150.000 VNĐ",
     ],
   },
   {
@@ -429,29 +427,33 @@ const VUNG_TAU_7_DISHES = [
     alt: "Cha gio ca trich - herring fish spring rolls Vung Tau",
     desc: (
       <>
-        Yes, you heard it right! In Vung Tau, people roll spring rolls with herring fish, and oh my, it&apos;s unbelievably delicious. Herring is a nutritious fish with a strong flavor, and thanks to the skillful fishermen and creative chefs, this dish has a unique taste. The fish is filleted, marinated with traditional spices, then mixed with cassava and red radish before being tightly rolled in thin rice paper. The spring rolls are deep-fried until golden and crispy on the outside. When eating, you roll them in fresh greens and rice paper: the freshness of the veggies balances the rich, crispy spring rolls, dipped in a sweet and sour fish sauce. It&apos;s perfect for adding fiber and enjoying on hot days when a bowl of soup is just too much to handle.
+        Yes, you heard it right! In Vung Tau, people roll{" "}
+        <Link href="/guide" style={{ color: "#00c2cb", textDecoration: "none" }}>
+          spring rolls
+        </Link>{" "}
+        with herring fish, and oh my, it&apos;s unbelievably delicious. I was skeptical at first when I came across this combination, but I was determined to try it, and now I can never eat spring rolls the same way again. Herring is a nutritious fish with a strong flavor, and thanks to the skillful fishermen and creative chefs, this dish has a unique taste. The fish is filleted, marinated with traditional spices, then mixed with cassava and red radish before being tightly rolled in thin rice paper. The spring rolls are deep-fried until golden and crispy on the outside. When eating, you roll them in fresh greens and rice paper: the freshness of the veggies balances the rich, crispy spring rolls, dipped in a sweet and sour fish sauce. It&apos;s perfect for adding fiber and enjoying on hot days when a bowl of soup is just too much to handle.
       </>
     ),
     descVi: (
       <>
-        Đúng vậy, tại Vũng Tàu, người ta cuốn chả giò bằng cá trích biển tươi rói, và hương vị của nó thì ngon khó cưỡng. Cá trích giàu dinh dưỡng được phi lê sạch xương, tẩm ướp cùng gia vị, trộn cùng củ sắn và cà rốt bào sợi rồi cuộn chặt trong lớp bánh tráng mỏng. Chả giò được chiên ngập dầu đến khi vàng ruộm. Khi ăn cuốn cùng bánh tráng dẻo, xà lách, rau rừng rồi chấm vào chén nước mắm chua ngọt hoặc tương đậu phộng béo bùi, ăn mãi không ngấy.
+        Đúng vậy, tại Vũng Tàu, người ta cuốn chả giò bằng cá trích biển tươi rói, và hương vị của nó thì ngon khó cưỡng. Cá trích giàu dinh dưỡng được phi lê sạch xương, tẩm ướp cùng gia vị, trộn cùng củ sắn và củ cải đỏ bào sợi rồi cuộn chặt trong lớp bánh tráng mỏng. Chả giò được chiên ngập dầu đến khi vàng ruộm giòn tan. Khi ăn cuốn cùng bánh tráng dẻo, xà lách, rau rừng rồi chấm vào chén nước mắm chua ngọt, ăn mãi không ngấy.
       </>
     ),
     tipsTitle: "Tip:",
     tipsTitleVi: "Tip:",
     tips: [
-      "Enjoy them with a generous amount of fresh herbs and wild leaves to perfectly balance the rich, crispy texture of the fried rolls.",
+      "Enjoy them with a generous amount of fresh herbs to balance the rich and crispy texture of the fried rolls.",
     ],
     tipsVi: [
-      "Hãy cuốn cùng thật nhiều rau rừng và rau sống tươi để cân bằng hoàn hảo vị giòn béo của chả giò rán!",
+      "Hãy thưởng thức kèm thật nhiều rau sống tươi ngon để cân bằng trọn vẹn vị đậm đà và giòn rụm của những cuốn chả giò rán.",
     ],
-    whereToTryTitle: "Where to try:",
-    whereToTryTitleVi: "Where to try:",
+    whereToTryTitle: "Top pick:",
+    whereToTryTitleVi: "Top pick:",
     whereToTry: [
-      "Chang Cha Gio (43 Mac Dinh Chi): 70,000 VND (~$2.8)",
+      "Chang Cha Gio (43 Mac Dinh Chi): 70,000 VND",
     ],
     whereToTryVi: [
-      "Chàng Chả Giò (43 Mạc Đĩnh Chi): 70.000 VNĐ (~$2.8)",
+      "Chàng Chả Giò (43 Mạc Đĩnh Chi): 70.000 VNĐ",
     ],
   },
   {
@@ -468,26 +470,26 @@ const VUNG_TAU_7_DISHES = [
     ),
     descVi: (
       <>
-        Sau khi đã thỏa thê với các món mặn hải sản cay nồng, <em>bánh bông lan trứng muối</em> là món ngọt hoàn hảo để khép lại bữa ăn. Đây cũng là món quà ăn vặt trứ danh mà hầu như ai ghé Vũng Tàu cũng mua về làm quà. Cốt bánh bông lan nướng than xốp mềm mịn màng, thơm ngậy mùi bơ trứng, bên trên là lòng đỏ trứng muối bùi bùi mằn mặn, phô mai dẻo quánh cùng lớp chà bông heo tơi xốp hòa quyện tạo nên vị ngon khó cưỡng.
+        Sau khi đã thỏa thê với các món mặn hải sản cay nồng, <em>bánh bông lan trứng muối</em> là món ngọt hoàn hảo để khép lại bữa ăn. Cốt bánh bông lan xốp mềm mịn màng, thơm ngậy mùi bơ trứng, bên trên là phô mai béo ngậy, chà bông heo tơi xốp và trứng muối bùi bùi hòa quyện tạo nên vị ngon khó cưỡng. Bánh thường được bán theo hộp 10 cái nhỏ xinh vừa một muỗng, rất tiện để ăn vặt dọc đường hoặc mua làm quà.
       </>
     ),
     tipsTitle: "Tip:",
     tipsTitleVi: "Tip:",
     tips: [
-      "These cakes are best eaten fresh! They can be kept in the fridge for 3-5 days, or 1-2 days at room temperature in a cool place.",
+      "These cakes are best eaten fresh, as they can only be kept in the fridge for 3-5 days, or 1-2 days at room temperature.",
     ],
     tipsVi: [
-      "Bánh ngon nhất khi ăn trong ngày; nếu mua làm quà có thể để ở nhiệt độ phòng thoáng mát 1-2 ngày hoặc trong tủ lạnh 3-5 ngày.",
+      "Bánh ngon nhất khi ăn lúc còn tươi mới, vì chỉ bảo quản được trong tủ lạnh 3-5 ngày hoặc 1-2 ngày ở nhiệt độ phòng.",
     ],
     whereToTryTitle: "Where to try:",
     whereToTryTitleVi: "Where to try:",
     whereToTry: [
-      "Banh Bong Lan Goc Cot Dien (17B Nguyen Truong To): 45,000 VND (~$1.8)",
-      "Golden Bakery (195 Le Hong Phong): 35,000 VND (~$1.4)",
+      "Goc Cot Dien (17B Nguyen Truong To): 45,000 VND",
+      "Golden Bakery (195 Le Hong Phong): 35,000 VND",
     ],
     whereToTryVi: [
-      "Bánh Bông Lan Gốc Cột Điện (17B Nguyễn Trường Tộ): 45.000 VNĐ (~$1.8)",
-      "Golden Bakery (195 Lê Hồng Phong): 35.000 VNĐ (~$1.4)",
+      "Gốc Cột Điện (17B Nguyễn Trường Tộ): 45.000 VNĐ",
+      "Golden Bakery (195 Lê Hồng Phong): 35.000 VNĐ",
     ],
   },
 ];
@@ -792,36 +794,27 @@ export default function VungTauFoodGuidePage() {
           ))}
         </div>
 
-        {/* ── Closing Paragraph ── */}
+        {/* ── Closing Paragraph (Screenshot 4) ── */}
         <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#334155", margin: "36px 0 24px" }}>
           {isVi ? (
             <>
-              7 món ăn kể trên đại diện cho văn hóa ẩm thực đặc sắc và phong phú của{" "}
-              <Link href="/province/ba-ria-vung-tau" style={{ color: "#00c2cb", textDecoration: "underline" }}>
-                Vũng Tàu
-              </Link>
-              , kết hợp hài hòa giữa hải sản tươi ngon và nét mộc mạc của dải đất phương Nam. Hãy nhớ lưu lại danh sách này cho chuyến đi tiếp theo của bạn!
+              Khám phá những món ăn hấp dẫn này chắc chắn sẽ làm phong phú thêm trải nghiệm du lịch của bạn. Hãy thêm các món ăn nhất định phải thử này vào danh sách việc cần làm tại Vũng Tàu và cảm nhận phong vị địa phương. Nền ẩm thực Vũng Tàu chắc chắn sẽ thay đổi cách bạn nghĩ về thành phố biển duyên dáng và đầy cuốn hút này.
             </>
           ) : (
             <>
-              The seven foods listed above highlight the rich culinary tradition of{" "}
-              <Link href="/province/ba-ria-vung-tau" style={{ color: "#00c2cb", textDecoration: "underline" }}>
-                Vung Tau
-              </Link>
-              , blending fresh seafood with unique coastal flavors. If you visit this seaside town, make sure to taste these iconic dishes for an unforgettable gastronomic journey.
+              Discovering these delicious dishes will definitely add variety to your travel experience. Make sure to add these must-tries to your Vung Tau to-do list and let the local flavors sink in. Vung Tau&apos;s food scene will certainly change the way you think about this charming, yet somehow underrated, coastal city.
             </>
           )}
         </p>
 
-        {/* ── Disclaimer Note ── */}
-        <p style={{ fontSize: "14px", lineHeight: 1.6, color: "#334155", margin: "0 0 28px" }}>
-          <strong>Note:</strong>{" "}
+        {/* ── Disclaimer Note (Screenshot 4) ── */}
+        <p style={{ fontSize: "14px", lineHeight: 1.6, color: "#334155", margin: "0 0 28px", fontStyle: "italic" }}>
           {isVi
-            ? "Các đề xuất nhà hàng chỉ dựa trên trải nghiệm của tác giả; giá cả thực tế có thể thay đổi tùy thời điểm."
-            : "Restaurant recommendations are only suggestions based on the authors' experiences; prices may vary."}
+            ? "Note: Các gợi ý nhà hàng chỉ dựa trên trải nghiệm của tác giả; giá cả thực tế có thể thay đổi tùy thời điểm."
+            : "Note: Restaurant recommendations are based on the authors' experiences; prices may vary."}
         </p>
 
-        {/* ── Tags ── */}
+        {/* ── Tags (Screenshot 4: TAGS + Vietnamese food) ── */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "24px 0 40px", flexWrap: "wrap" }}>
           <span
             style={{
@@ -837,7 +830,7 @@ export default function VungTauFoodGuidePage() {
             TAGS
           </span>
           <Link
-            href="/province/ba-ria-vung-tau"
+            href="/guide"
             style={{
               border: "1px solid #e2e8f0",
               borderRadius: "9999px",
@@ -847,27 +840,14 @@ export default function VungTauFoodGuidePage() {
               textDecoration: "none",
             }}
           >
-            Vung Tau
-          </Link>
-          <Link
-            href="/guide/7-must-try-foods-in-vung-tau"
-            style={{
-              border: "1px solid #e2e8f0",
-              borderRadius: "9999px",
-              padding: "5px 14px",
-              fontSize: "13px",
-              color: "#334155",
-              textDecoration: "none",
-            }}
-          >
-            Vung Tau Foods
+            Vietnamese food
           </Link>
         </div>
 
-        {/* ── Divider ── */}
+        {/* ── Divider (Screenshot 5) ── */}
         <hr style={{ border: 0, height: "1px", background: "#e2e8f0", margin: "40px 0" }} />
 
-        {/* ── Related Articles ── */}
+        {/* ── Related Articles (Screenshot 5) ── */}
         <section style={{ margin: "40px 0 60px" }}>
           <h2
             style={{
@@ -889,36 +869,19 @@ export default function VungTauFoodGuidePage() {
             }}
           >
             <Link
-              href="/guide/5-best-vung-tau-beaches"
+              href="/guide/3-week-vietnam-itinerary"
               style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
             >
               <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
                 <img
-                  src="/guide/vung-tau/hero-vung-tau-beaches.jpg"
-                  alt="5 Best Vung Tau Beaches"
+                  src="/guide/hcmc/3-week-vietnam-itinerary.jpg"
+                  alt="3-week Vietnam Itinerary"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   loading="lazy"
                 />
               </div>
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
-                {isVi ? "5 bãi biển đẹp nhất tại Vũng Tàu" : "5 Best Vung Tau Beaches"}
-              </h3>
-            </Link>
-
-            <Link
-              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
-              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
-            >
-              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
-                <img
-                  src="/guide/megamenu/eat-2-hcmc.jpg"
-                  alt="12 must-try foods in Ho Chi Minh City"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  loading="lazy"
-                />
-              </div>
-              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
-                {isVi ? "12 món ăn nhất định phải thử tại TP. Hồ Chí Minh" : "12 must-try foods in Ho Chi Minh City"}
+                {isVi ? "Lịch trình 3 tuần xuyên Việt" : "3-week Vietnam Itinerary"}
               </h3>
             </Link>
 
@@ -928,7 +891,7 @@ export default function VungTauFoodGuidePage() {
             >
               <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
                 <img
-                  src="/guide/megamenu/eat-3-hanoi.jpg"
+                  src="/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg"
                   alt="8 must-try foods in Hanoi"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   loading="lazy"
@@ -936,6 +899,23 @@ export default function VungTauFoodGuidePage() {
               </div>
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
                 {isVi ? "8 món ăn nhất định phải thử ở Hà Nội" : "8 must-try foods in Hanoi"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/hcmc-10-things-bitexco.jpg"
+                  alt="10 best things to do in Ho Chi Minh City"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh" : "10 best things to do in Ho Chi Minh City"}
               </h3>
             </Link>
           </div>
