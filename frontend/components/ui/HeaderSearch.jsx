@@ -39,6 +39,16 @@ const SEARCH_POSTS = [
     keywords: "5 best vung tau beaches 5 bai bien dep nhat vung tau bai sau bai truoc bai dau bai dua bai vong nguyet sea ocean coastal",
   },
   {
+    id: "eat-vungtau",
+    title: "7 must-try foods in Vung Tau",
+    titleVi: "7 món ăn nhất định phải thử ở Vũng Tàu",
+    date: "April 25, 2026",
+    dateVi: "25 Tháng 4, 2026",
+    img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
+    link: "/guide/7-must-try-foods-in-vung-tau",
+    keywords: "7 must try foods in vung tau 7 mon an nhat dinh phai thu o vung tau banh khot hu tieu muc bun rieu tom hau ne lau ca duoi cha gio ca trich banh bong lan trung muoi am thuc vung tau",
+  },
+  {
     id: "dest-dalat",
     title: "Dalat",
     titleVi: "Đà Lạt",
@@ -127,16 +137,6 @@ const SEARCH_POSTS = [
     img: "/guide/megamenu/eat-2-hcmc.jpg",
     link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
     keywords: "12 must try foods in ho chi minh city saigon com tam banh mi pho",
-  },
-  {
-    id: "eat-vungtau",
-    title: "7 must-try foods in Vung Tau",
-    titleVi: "7 món ăn tuyệt vời tại Vũng Tàu",
-    date: "September 30, 2026",
-    dateVi: "30 Tháng 9, 2026",
-    img: "/guide/megamenu/eat-4-vungtau.jpg",
-    link: "/province/ba-ria-vung-tau",
-    keywords: "7 must try foods in vung tau banh khot seafood beach",
   },
   {
     id: "ao-dai",

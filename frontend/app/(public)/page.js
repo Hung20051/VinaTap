@@ -428,8 +428,8 @@ const FOODS_TO_TRY_ITEMS = [
     desc: "Vung Tau is a favorite destination for both domestic and international travelers, not only for its convenient location but also for its incredibly diverse and unique cuisine. Here are seven must-try local dishes to enjoy during your visit.",
     descVi:
       "Vũng Tàu không chỉ hấp dẫn bởi biển xanh mà còn bởi ẩm thực hải sản và bánh khọt trứ danh.",
-    img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Banh-Xeo.jpg",
-    link: "/province/hai-phong",
+    img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
+    link: "/guide/7-must-try-foods-in-vung-tau",
   },
   {
     title: "5 must-try Nha Trang dishes",
@@ -788,12 +788,12 @@ const MEGA_MENUS_DATA = {
       {
         id: "eat-4",
         title: "7 must-try foods in Vung Tau",
-        titleVi: "7 món ăn tuyệt vời tại Vũng Tàu",
-        date: "September 30, 2026",
-        dateVi: "30 Tháng 9, 2026",
-        badge: "Articles",
-        img: "/guide/megamenu/eat-4-vungtau.jpg",
-        link: "/province/hai-phong",
+        titleVi: "7 món ăn nhất định phải thử ở Vũng Tàu",
+        date: "April 25, 2026",
+        dateVi: "25 Tháng 4, 2026",
+        badge: "Eat & Drink",
+        img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
+        link: "/guide/7-must-try-foods-in-vung-tau",
       },
       {
         id: "eat-5",
