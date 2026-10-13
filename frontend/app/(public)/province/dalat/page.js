@@ -304,6 +304,162 @@ function formatBadge(badge, lang) {
   return map[badge] || badge;
 }
 
+const DALAT_DETAILS = {
+  stay: {
+    titleEn: "Where to stay in Dalat",
+    titleVi: "Nơi lưu trú ở Đà Lạt",
+    badgeEn: "Accommodation Guide",
+    badgeVi: "Cẩm nang lưu trú",
+    img: "/guide/dalat/dalat-stay-hd.jpg",
+    paragraphsEn: [
+      "Nestled in the lush pine-covered Langbiang plateau at an altitude of 1,500 meters, Dalat offers some of the most charming, romantic, and varied accommodation choices anywhere in Vietnam. From historic French-colonial heritage villas with working brick fireplaces to contemporary glass cabins perched on misty valleys and luxury lakeside eco-resorts, where you choose to stay will profoundly shape your Dalat experience.",
+      "For first-timers and active explorers, the Xuan Huong Lake and City Center district provides unmatched walkability. You are steps away from the bustling Dalat Night Market, colonial landmarks like the Dalat Railway Station and St. Nicholas Cathedral, and an endless array of cozy cafes.",
+      "If you crave silence, serenity, and nature, head southwest to the Tuyen Lam Lake precinct. Here, secluded 5-star lakeside resorts and wellness retreats are surrounded by endless pine forests and serene waters, perfect for kayaking, forest trekking, and stargazing.",
+      "For photography lovers and couples seeking the iconic 'cloud-hunting' experience, hillside homestays in Trai Mat, Cau Dat, and Da Quy valley offer private wooden decks overlooking terraced flower farms and greenhouse valleys that illuminate magically like constellations once the sun sets."
+    ],
+    paragraphsVi: [
+      "Tọa lạc trên cao nguyên Lâm Viên xanh ngát ở độ cao 1.500m so với mực nước biển, Đà Lạt mang đến những trải nghiệm lưu trú lãng mạn và đa dạng bậc nhất Việt Nam. Từ những căn biệt thự Pháp cổ kính với lò sưởi củi ấm cúng, những căn homestay nhà kính ngắm thung lũng mây bồng bềnh, cho đến các khu resort nghỉ dưỡng sinh thái ven hồ tĩnh lặng.",
+      "Nếu bạn đến Đà Lạt lần đầu và yêu thích sự nhộn nhịp, khu vực quanh hồ Xuân Hương và trung tâm thành phố là lựa chọn số một. Tại đây, bạn chỉ mất vài bước chân để dạo chợ đêm Đà Lạt, ga xe lửa cổ, nhà thờ Con Gà và hàng trăm quán cà phê xinh xắn.",
+      "Nếu tìm kiếm không gian thanh bình và hòa mình vào thiên nhiên hoang sơ, khu vực hồ Tuyền Lâm là điểm đến lý tưởng với các resort cao cấp nép mình giữa rừng thông bạt ngàn, phù hợp cho chèo thuyền SUP, trekking và nghỉ dưỡng phục hồi sức khỏe.",
+      "Dành cho các cặp đôi và tín đồ mê 'săn mây', các homestay triền đồi tại Trại Mát, Cầu Đất hay thung lũng Dã Quỳ sẽ mang đến góc nhìn bao trọn biển mây sớm và thung lũng đèn lồng rực sáng lung linh như ngàn vì sao khi đêm về."
+    ],
+    highlightsEn: [
+      "Xuan Huong Lake & Center: Best for nightlife, street food, and walking convenience.",
+      "Tuyen Lam Lake: Best for luxury resorts, nature lovers, and peaceful retreats.",
+      "Trai Mat & Cau Dat: Best for sunrise cloud hunting, valley views, and romantic homestays.",
+      "French Quarter (Tran Hung Dao): Best for French colonial architecture and heritage boutique villas."
+    ],
+    highlightsVi: [
+      "Khu trung tâm & Hồ Xuân Hương: Tiện lợi đi lại, gần chợ đêm và ngập tràn ẩm thực đường phố.",
+      "Khu vực Hồ Tuyền Lâm: Không gian sinh thái biệt lập, resort 5 sao sang trọng giữa rừng thông.",
+      "Trại Mát & Đồi Cầu Đất: Cung đường săn mây đắt giá, view thung lũng nhà đèn kỳ ảo về đêm.",
+      "Khu biệt thự cổ Trần Hưng Đạo: Kiến trúc Pháp cổ điển hoài niệm, yên bình và đậm chất thơ."
+    ]
+  },
+  foods: {
+    titleEn: "8 must-try foods in Dalat",
+    titleVi: "8 món ăn phải thử tại Đà Lạt",
+    badgeEn: "Culinary Highlights",
+    badgeVi: "Đặc sản ẩm thực",
+    img: "/guide/dalat/dalat-8-foods-hd.jpg",
+    paragraphsEn: [
+      "The chilly highland climate of Dalat creates the ultimate atmosphere for enjoying hot, steaming, and soul-comforting street foods. From sizzling earthenware stoves tucked inside misty alleyways to bustling night-market charcoal braziers, Dalat's food culture is an irresistible celebration of fresh local produce and warm companionship.",
+      "1. Banh Can (Mini Rice Pancakes): Cooked in traditional clay molds over glowing coals, these bite-sized crispy cakes are filled with quail eggs or minced pork, dipped into a hot bowl of scallion oil, savory pork meatballs (xiu mai), and chili.",
+      "2. Banh Trang Nuong ('Vietnamese Pizza'): Crispy grilled rice paper layered with quail eggs, butter, cheese, minced scallions, dried shrimp, and sausage, toasted over charcoal until golden and crunchy.",
+      "3. Lau Ga La E (Chicken Hotpot with É Leaves): A signature Dalat comfort specialty featuring tender chicken simmered in a mildly spicy, aromatic broth packed with indigenous é herb leaves, bamboo shoots, and mushrooms.",
+      "4. Lau Bo Ba Toa (Ba Toa Beef Hotpot): A legendary cold-weather feast featuring hearty clay pots overflowing with succulent beef cuts, tendon, tofu, and fresh highland mountain greens.",
+      "5. Banh Uot Long Ga: Delicate steamed rice crepes paired with shredded organic free-range chicken and seasoned innards, tossed in sweet-tangy fish sauce and fresh Vietnamese coriander.",
+      "6. Hot Soy Milk & Pastries: An iconic night-time ritual around Tang Bat Ho street, sipping warm frothy soy or mung-bean milk alongside fresh pastries like banh tieu and croissants.",
+      "7. Kem Bo (Avocado Ice Cream): Ultra-creamy ripe Dalat avocado blended smooth, crowned with a scoop of coconut milk ice cream and toasted coconut flakes.",
+      "8. Night Market Grilled Skewers: Sizzling arrays of grilled pork, beef rolls with enoki mushrooms, sweet potatoes, and roasted corn right by the market steps."
+    ],
+    paragraphsVi: [
+      "Tiết trời se lạnh quanh năm biến Đà Lạt thành thiên đường của những món ngon nóng hổi, xì xụp ấm lòng. Từ những gánh hàng rong nghi ngút khói bên vách đá đến khu chợ đêm nhộn nhịp than hồng, ẩm thực Đà Lạt làm say lòng bất cứ ai:",
+      "1. Bánh căn Đà Lạt: Đổ trong khuôn đất nung mộc mạc trên than hồng đỏ rực, bánh giòn rụm bên ngoài, béo ngậy trứng cút hoặc thịt bằm, chấm cùng chén xíu mại ngập mỡ hành thơm phức.",
+      "2. Bánh tráng nướng ('Pizza Việt Nam'): Bánh tráng nướng giòn rụm trên than hoa, phết bơ, mỡ hành, trứng cút, phô mai, xúc xích và tép khô đậm đà khó cưỡng.",
+      "3. Lẩu gà lá é: Đặc sản nức tiếng với nước dùng ngọt thanh cay nồng ấm bụng, thịt gà ta dai ngon hòa cùng vị thơm đặc trưng the mát của lá é vùng cao.",
+      "4. Lẩu bò Ba Toa (Quán Gỗ): Nồi lẩu đất nghi ngút khói đầy đặn thịt bò nạm, gân, đuôi bò mềm rục, ăn kèm đĩa rau cải non xanh mướt của nhà vườn Đà Lạt.",
+      "5. Bánh ướt lòng gà: Bánh ướt tráng mỏng mềm mượt, kết hợp thịt gà xé phay, lòng gà xào đậm đà và nước mắm chua ngọt thanh tao cùng rau răm.",
+      "6. Sữa đậu nành nóng & Bánh tiêu: Thú vui tao nhã khi đêm xuống dạo phố Tăng Bạt Hổ, ôm ly sữa đậu nóng hổi thơm bùi và thưởng thức cùng bánh tiêu giòn ngọt.",
+      "7. Kem bơ sáp: Bơ sáp dẻo quánh xay mịn không pha đá, ăn cùng viên kem dừa béo ngậy và dừa khô giòn rụm.",
+      "8. Xiên nướng & Khoai nướng chợ đêm: Vô vàn xiên thịt bò cuốn nấm kim châm, chân gà nướng, bắp nướng mỡ hành tỏa hương thơm quyến rũ khắp các bậc thang."
+    ],
+    highlightsEn: [
+      "Best spots for Banh Can: Nha Chung Street, Tang Bat Ho Street.",
+      "Best spots for Lau Ga La E: Tao Ngo (3/4 Street), 664 Hai Ba Trung.",
+      "Best spots for Kem Bo: Thanh Thao (Nguyen Van Troi Street).",
+      "Best spots for Lau Bo: Quan Go Ba Toa (Hoang Dieu Alley)."
+    ],
+    highlightsVi: [
+      "Địa chỉ bánh căn ngon: Dốc Nhà Chung, đường Tăng Bạt Hổ.",
+      "Địa chỉ lẩu gà lá é: Quán Tao Ngộ (đầu đường 3/4), Quán 664 Hai Bà Trưng.",
+      "Địa chỉ kem bơ: Kem bơ Thanh Thảo (đường Nguyễn Văn Trỗi).",
+      "Địa chỉ lẩu bò: Lẩu bò Ba Toa Quán Gỗ (hẻm Hoàng Diệu)."
+    ]
+  },
+  banhMi: {
+    titleEn: "Banh Mi Dalat",
+    titleVi: "Bánh Mì Xíu Mại Đà Lạt",
+    badgeEn: "Iconic Breakfast",
+    badgeVi: "Bữa sáng đặc sản",
+    img: "/guide/dalat/dalat-banh-mi-hd.jpg",
+    paragraphsEn: [
+      "In Dalat, banh mi is enjoyed differently than in Saigon or Hanoi. Rather than a pre-stuffed sandwich to take on the go, Dalat's signature style is 'Banh Mi Xiu Mai' (Baguette with Meatball Dipping Soup), meant to be savored slowly at low wooden tables in the cool morning air.",
+      "You receive a fresh, extra-crispy baguette warmed by the stove alongside a steaming small ceramic bowl of savory broth. Inside the broth float two plump, melt-in-your-mouth pork meatballs, stewed pork skin with gelatinous richness, a slice of cha lua, and a generous layer of fragrant scallion oil.",
+      "To eat like a local, tear off a piece of crusty bread, submerge it into the peppery soup to absorb the flavors, add a touch of fiery fresh chili sauce, and take a blissful bite."
+    ],
+    paragraphsVi: [
+      "Tại Đà Lạt, món bánh mì mang một phong cách thưởng thức rất riêng biệt so với Sài Gòn hay Hà Nội. Thay vì kẹp nhân mang đi, người Đà Lạt chuộng bánh mì xíu mại chén nóng hổi, ngồi nhâm nhi bên những chiếc bàn gỗ nhỏ giữa làn sương sớm.",
+      "Mỗi phần ăn gồm một ổ bánh mì mới ra lò giòn rụm kèm chén nước súp xíu mại nghi ngút khói. Trong chén là hai viên xíu mại thịt nạc băm mềm ngọt, miếng da heo giòn sần sật béo ngậy, chả lụa và ngập tràn mỡ hành thơm nức.",
+      "Cách ăn chuẩn điệu là xé từng miếng bánh mì giòn tan chấm ngập vào chén nước dùng cay nồng, húp một ngụm súp ngọt thanh để cảm nhận hơi ấm lan tỏa khắp cơ thể giữa sớm mai lạnh giá."
+    ],
+    highlightsEn: [
+      "Best spots: Banh Mi Xiu Mai Hoang Dieu (26 Hoang Dieu), Co Suong (Anh Sang hamlet).",
+      "Price range: 15,000 – 30,000 VND per set.",
+      "Pro tip: Pair with a warm glass of fresh soy milk for the complete morning ritual."
+    ],
+    highlightsVi: [
+      "Quán ngon gợi ý: Bánh mì xíu mại Hoàng Diệu (26 Hoàng Diệu), Bánh mì Cô Sương (Ấp Ánh Sáng).",
+      "Giá cả: Chỉ từ 15.000 – 30.000 VNĐ/phần đầy đặn.",
+      "Mẹo nhỏ: Gọi thêm một ly sữa đậu nành nóng ăn kèm để có bữa sáng chuẩn phong vị người bản địa."
+    ]
+  },
+  banhCuon: {
+    titleEn: "Banh Cuon & Banh Uot Dalat",
+    titleVi: "Bánh Cuốn Nóng & Bánh Ướt Lòng Gà",
+    badgeEn: "Local Delicacy",
+    badgeVi: "Món ngon dân dã",
+    img: "/guide/dalat/dalat-banh-cuon-hd.jpg",
+    paragraphsEn: [
+      "Freshly made steamed rice rolls in Dalat come in two distinct beloved varieties: traditional hot Banh Cuon filled with minced wood-ear mushrooms and pork, and Dalat's very own regional innovation — Banh Uot Long Ga (Steamed Rice Crepes with Shredded Chicken and Innards).",
+      "The rice batter is freshly ground and steamed paper-thin on fabric stretched over boiling water. While ordinary banh uot is served with pork roll, Dalat chefs cleverly combined it with free-range hill chicken, marinated chicken gizzards and hearts, crispy golden shallots, and fragrant Vietnamese coriander.",
+      "The soul of the dish lies in the dipping sauce: a light, tangy, and sweet fish sauce infused with garlic and lime that ties together the smooth rice crepes and tender, savory chicken."
+    ],
+    paragraphsVi: [
+      "Món bánh tráng mỏng cuốn nóng ở Đà Lạt nổi tiếng với hai biến tấu làm say đắm thực khách: Bánh cuốn nóng truyền thống nhân thịt mộc nhĩ và niềm tự hào ẩm thực phố núi mang tên Bánh ướt lòng gà.",
+      "Bột gạo tẻ được ngâm xay mịn, tráng trên nồi hơi nước bốc nghi ngút tạo nên từng lớp bánh mỏng mềm êm ái. Thay vì chỉ ăn với chả lụa thông thường, người Đà Lạt khéo léo kết hợp bánh ướt cùng thịt gà đồi săn chắc xé phay, lòng gà mề gà xào thơm lừng và hành phi vàng ươm.",
+      "Linh hồn của món ăn nằm ở chén nước mắm chua ngọt pha khéo léo với tỏi ớt băm nhuyễn và chanh tươi, hòa quyện tuyệt vời với hương thơm nồng ấm của rau răm."
+    ],
+    highlightsEn: [
+      "Best spots: Banh Uot Long Ga Trang (15F Tang Bat Ho), Long (Hem 202 Phan Dinh Phung).",
+      "Price range: 35,000 – 50,000 VND per portion.",
+      "Best time to eat: Ideal for late breakfast or afternoon snacks."
+    ],
+    highlightsVi: [
+      "Quán ngon gợi ý: Bánh ướt lòng gà Trang (15F Tăng Bạt Hổ), Quán Long (Hẻm 202 Phan Đình Phùng).",
+      "Giá cả: Khoảng 35.000 – 50.000 VNĐ/tô thập cẩm.",
+      "Thời điểm thưởng thức: Thích hợp nhất cho bữa điểm tâm muộn hoặc lót dạ xế chiều."
+    ]
+  },
+  miQuang: {
+    titleEn: "Mi Quang Dalat Style",
+    titleVi: "Mì Quảng Đà Lạt",
+    badgeEn: "Central-Highland Fusion",
+    badgeVi: "Đặc sản giao thoa",
+    img: "/guide/dalat/dalat-mi-quang-hd.jpg",
+    paragraphsEn: [
+      "Though originating in Central Vietnam's Quang Nam province, Mi Quang in Dalat has developed a unique highland character that surprises even travelers familiar with the lowland original.",
+      "Unlike the relatively dry version in Central Vietnam, Dalat's Mi Quang features a richer, soupier broth tinted a brilliant reddish-orange from cashew oil. The thick yellow turmeric noodles are accompanied by slow-simmered tender pork ribs, shrimp, and quail eggs.",
+      "What truly sets Dalat's version apart is the mountain of fresh vegetables served on the side: finely shredded banana blossoms, fragrant herbs, and mountain greens grown right in the fertile soils of the surrounding valleys, topped with crunchy toasted sesame rice crackers."
+    ],
+    paragraphsVi: [
+      "Dù có nguồn gốc từ xứ Quảng miền Trung, khi du nhập lên vùng đất cao nguyên lạnh giá, Mì Quảng Đà Lạt đã biến tấu mang một sắc thái và hương vị rất riêng làm nức lòng thực khách.",
+      "Khác với mì Quảng truyền thống ăn khô ít nước, mì Quảng Đà Lạt có lượng nước lèo ngập hơn, màu đỏ cam óng ánh đẹp mắt từ dầu hạt điều. Sợi mì màu vàng nghệ dai mềm kết hợp cùng sườn heo hầm nhừ, tôm tươi và trứng cút thấm đẫm gia vị.",
+      "Điểm đặc sắc nhất chính là rổ rau sống tươi non ngút ngàn ăn kèm: bắp chuối thái mỏng, xà lách giòn ngọt đặc sản Đà Lạt và rau thơm xanh tươi, rắc thêm đậu phộng rang giòn bùi và bánh tráng mè nướng rụm."
+    ],
+    highlightsEn: [
+      "Best spots: Mi Quang Hoi An (14 Yersin), Mi Quang Ba Xi (Mac Dinh Chi Street).",
+      "Price range: 35,000 – 50,000 VND per bowl.",
+      "Pro tip: Mix in lime juice and fresh sliced chili for authentic bold flavor."
+    ],
+    highlightsVi: [
+      "Quán ngon gợi ý: Mì Quảng Hội An (14 Yersin), Mì Quảng Bà Xí (đường Mạc Đĩnh Chi).",
+      "Giá cả: 35.000 – 50.000 VNĐ/tô.",
+      "Mẹo nhỏ: Vắt thêm lát chanh và chút ớt tươi để làm bùng nổ hương vị thơm cay đậm đà."
+    ]
+  }
+};
+
 export default function DalatPage() {
   const [lang, setLang] = useState("vi");
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
@@ -315,6 +471,8 @@ export default function DalatPage() {
 
   // Lightbox modal for Dalat Tourist Map
   const [mapModalOpen, setMapModalOpen] = useState(false);
+  // Rich detail article modal for Stay, Food, and Dishes
+  const [detailModalItem, setDetailModalItem] = useState(null);
 
   useEffect(() => {
     setLang(getLang());
@@ -896,23 +1054,31 @@ export default function DalatPage() {
           </div>
         </section>
 
-        {/* ─── 7. WHERE TO STAY IN DALAT (SCREENSHOT 4 & 5) ─── */}
+        {/* ─── 7. WHERE TO STAY IN DALAT (SCREENSHOT 1) ─── */}
         <section id="accommodation" className="vnn-dalat-section">
           <div className="vnn-dalat-section-header">
             <h2 className="vnn-dalat-section-title">
               {lang === "vi" ? "Nơi lưu trú ở Đà Lạt" : "Where to stay in Dalat"}
             </h2>
-            <Link href="/guide/10-best-things-to-do-in-ho-chi-minh-city" className="vnn-dalat-view-all">
+            <button
+              type="button"
+              onClick={() => setDetailModalItem(DALAT_DETAILS.stay)}
+              className="vnn-dalat-view-all"
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            >
               <span>{lang === "vi" ? "Xem tất cả" : "View all"}</span>
               <ChevronRight size={15} />
-            </Link>
+            </button>
           </div>
           <div className="vnn-dalat-divider" />
 
           <div className="vnn-dalat-stay-grid">
-            <Link
-              href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+            <div
               className="vnn-dalat-stay-card"
+              onClick={() => setDetailModalItem(DALAT_DETAILS.stay)}
+              role="button"
+              tabIndex={0}
+              title={lang === "vi" ? "Xem chi tiết Nơi lưu trú ở Đà Lạt" : "View Where to stay in Dalat"}
             >
               <img
                 src="/guide/dalat/dalat-stay-hd.jpg"
@@ -924,30 +1090,38 @@ export default function DalatPage() {
                   {lang === "vi" ? "Nghỉ dưỡng tại Đà Lạt" : "Stay in Dalat"}
                 </h3>
               </div>
-            </Link>
+            </div>
             <div className="vnn-dalat-stay-placeholder" />
             <div className="vnn-dalat-stay-placeholder" />
           </div>
         </section>
 
-        {/* ─── 8. MUST-TRY DISHES IN DALAT (SCREENSHOT 5) ─── */}
+        {/* ─── 8. MUST-TRY DISHES IN DALAT (SCREENSHOT 2) ─── */}
         <section id="food" className="vnn-dalat-section">
           <div className="vnn-dalat-section-header">
             <h2 className="vnn-dalat-section-title">
               {lang === "vi" ? "Món ngon phải thử ở Đà Lạt" : "Must-try dishes in Dalat"}
             </h2>
-            <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="vnn-dalat-view-all">
+            <button
+              type="button"
+              onClick={() => setDetailModalItem(DALAT_DETAILS.foods)}
+              className="vnn-dalat-view-all"
+              style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            >
               <span>{lang === "vi" ? "Xem tất cả" : "View all"}</span>
               <ChevronRight size={15} />
-            </Link>
+            </button>
           </div>
           <div className="vnn-dalat-divider" />
 
           <div className="vnn-dalat-dishes-grid">
             {/* Card 1: 8 Must-try foods in Dalat (Large Left - 3 Rows) */}
-            <Link
-              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+            <div
               className="vnn-dalat-dish-card large"
+              onClick={() => setDetailModalItem(DALAT_DETAILS.foods)}
+              role="button"
+              tabIndex={0}
+              title={lang === "vi" ? "Xem 8 món ăn phải thử tại Đà Lạt" : "View 8 must-try foods in Dalat"}
             >
               <img
                 src="/guide/dalat/dalat-8-foods-hd.jpg"
@@ -959,12 +1133,15 @@ export default function DalatPage() {
                   {lang === "vi" ? "8 món ăn phải thử tại Đà Lạt" : "8 must-try foods in Dalat"}
                 </h3>
               </div>
-            </Link>
+            </div>
 
             {/* Card 2: Banh Mi (Right Top) */}
-            <Link
-              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+            <div
               className="vnn-dalat-dish-card"
+              onClick={() => setDetailModalItem(DALAT_DETAILS.banhMi)}
+              role="button"
+              tabIndex={0}
+              title={lang === "vi" ? "Xem chi tiết Bánh Mì Xíu Mại Đà Lạt" : "View Banh Mi Dalat"}
             >
               <img
                 src="/guide/dalat/dalat-banh-mi-hd.jpg"
@@ -973,15 +1150,18 @@ export default function DalatPage() {
               />
               <div className="vnn-dalat-card-overlay">
                 <h3 className="vnn-dalat-card-title">
-                  {lang === "vi" ? "Bánh Mì Xíu Mại Đà Lạt" : "Banh Mi"}
+                  {lang === "vi" ? "Bánh Mì" : "Banh Mi"}
                 </h3>
               </div>
-            </Link>
+            </div>
 
             {/* Card 3: Banh Cuon (Right Middle) */}
-            <Link
-              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+            <div
               className="vnn-dalat-dish-card"
+              onClick={() => setDetailModalItem(DALAT_DETAILS.banhCuon)}
+              role="button"
+              tabIndex={0}
+              title={lang === "vi" ? "Xem chi tiết Bánh Cuốn / Bánh Ướt Lòng Gà" : "View Banh Cuon & Banh Uot"}
             >
               <img
                 src="/guide/dalat/dalat-banh-cuon-hd.jpg"
@@ -990,15 +1170,18 @@ export default function DalatPage() {
               />
               <div className="vnn-dalat-card-overlay">
                 <h3 className="vnn-dalat-card-title">
-                  {lang === "vi" ? "Bánh Cuốn / Bánh Ướt Lòng Gà" : "Banh Cuon"}
+                  {lang === "vi" ? "Bánh Cuốn" : "Banh Cuon"}
                 </h3>
               </div>
-            </Link>
+            </div>
 
             {/* Card 4: Mi Quang (Right Bottom) */}
-            <Link
-              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+            <div
               className="vnn-dalat-dish-card"
+              onClick={() => setDetailModalItem(DALAT_DETAILS.miQuang)}
+              role="button"
+              tabIndex={0}
+              title={lang === "vi" ? "Xem chi tiết Mì Quảng Đà Lạt" : "View Mi Quang Dalat"}
             >
               <img
                 src="/guide/dalat/dalat-mi-quang-hd.jpg"
@@ -1007,25 +1190,24 @@ export default function DalatPage() {
               />
               <div className="vnn-dalat-card-overlay">
                 <h3 className="vnn-dalat-card-title">
-                  {lang === "vi" ? "Mì Quảng Đà Lạt" : "Mi Quang"}
+                  {lang === "vi" ? "Mì Quảng" : "Mi Quang"}
                 </h3>
               </div>
-            </Link>
+            </div>
           </div>
         </section>
 
-        {/* ─── 9. TAGS SECTION ─── */}
+        {/* ─── 9. TAGS SECTION (SCREENSHOT 2) ─── */}
         <div className="vnn-dalat-tags-section">
           <span className="vnn-dalat-tag-label">TAGS</span>
           <Link href="/#top-destinations" className="vnn-dalat-tag-pill">
             Destinations
           </Link>
-          <span className="vnn-dalat-tag-pill">Dalat</span>
         </div>
 
-        <div className="vnn-dalat-divider" style={{ margin: "40px 0 48px 0" }} />
+        <div className="vnn-dalat-divider" style={{ margin: "32px 0 44px 0" }} />
 
-        {/* ─── 10. OTHER DESTINATIONS SECTION (3 RELATED CARDS) ─── */}
+        {/* ─── 10. OTHER DESTINATIONS SECTION (SCREENSHOT 3) ─── */}
         <section className="vnn-dalat-section">
           <h3 className="vnn-dalat-other-dest-title">
             {lang === "vi" ? "Các Điểm Đến Khác" : "Other Destinations"}
@@ -1221,6 +1403,73 @@ export default function DalatPage() {
                   borderRadius: "8px",
                 }}
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── DETAIL ARTICLE MODAL (HIỂN THỊ ĐẦY ĐỦ ĐOẠN TEXT) ─── */}
+      {detailModalItem && (
+        <div
+          className="vnn-dalat-detail-backdrop"
+          onClick={() => setDetailModalItem(null)}
+        >
+          <div
+            className="vnn-dalat-detail-dialog"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="vnn-dalat-detail-close"
+              onClick={() => setDetailModalItem(null)}
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="vnn-dalat-detail-hero">
+              <img
+                src={detailModalItem.img}
+                alt={lang === "vi" ? detailModalItem.titleVi : detailModalItem.titleEn}
+              />
+              <div className="vnn-dalat-detail-hero-gradient" />
+              <h2 className="vnn-dalat-detail-hero-title">
+                {lang === "vi" ? detailModalItem.titleVi : detailModalItem.titleEn}
+              </h2>
+            </div>
+
+            <div className="vnn-dalat-detail-content">
+              <span className="vnn-dalat-detail-badge">
+                {lang === "vi" ? detailModalItem.badgeVi : detailModalItem.badgeEn}
+              </span>
+
+              <div className="vnn-dalat-detail-paragraphs">
+                {(lang === "vi"
+                  ? detailModalItem.paragraphsVi
+                  : detailModalItem.paragraphsEn
+                ).map((p, idx) => (
+                  <p key={idx}>{p}</p>
+                ))}
+              </div>
+
+              {((lang === "vi" && detailModalItem.highlightsVi) ||
+                detailModalItem.highlightsEn) && (
+                <div className="vnn-dalat-detail-highlights">
+                  <h5>
+                    {lang === "vi"
+                      ? "Điểm nổi bật & Địa chỉ gợi ý"
+                      : "Key Highlights & Recommended Spots"}
+                  </h5>
+                  <ul>
+                    {(lang === "vi"
+                      ? detailModalItem.highlightsVi
+                      : detailModalItem.highlightsEn
+                    ).map((hl, hIdx) => (
+                      <li key={hIdx}>{hl}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>
