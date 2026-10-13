@@ -1,3 +1,5 @@
+@import "./admin-sidebar.css";
+
 /* ============================================================
    VinaTap — Khung nội dung admin (app/admin/layout.js)
    Bố cục Modern SaaS: Sidebar cố định bên trái, Header & Content bên phải
@@ -52,6 +54,7 @@
 
 /* ─── DOCKED LEFT SIDEBAR TRÊN DESKTOP (>= 1024px) ────────────── */
 @media (min-width: 1024px) {
+  .admin-shell-layout .admin-sidebar,
   .admin-shell-layout .app-sidebar-drawer {
     position: sticky !important;
     top: 0 !important;
@@ -69,7 +72,8 @@
     flex-shrink: 0 !important;
   }
 
-  .admin-shell-layout .app-drawer-overlay {
+  .admin-shell-layout .app-drawer-overlay,
+  .admin-shell-layout .admin-sidebar-backdrop {
     display: none !important;
   }
 

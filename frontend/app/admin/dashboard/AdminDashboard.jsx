@@ -319,7 +319,7 @@ export default function AdminDashboard() {
             <KpiCard
               icon={<FileText size={22} />}
               label="BÀI VIẾT & CẨM NANG"
-              value={(overview?.articles_total ?? 2).toLocaleString("vi-VN")}
+              value={(overview?.articles_total || 2).toLocaleString("vi-VN")}
               sub="Cẩm nang du lịch chuẩn SEO đã xuất bản"
               accent="purple"
               badge="Nội dung CMS"

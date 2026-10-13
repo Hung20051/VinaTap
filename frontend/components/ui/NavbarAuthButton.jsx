@@ -117,32 +117,14 @@ export default function NavbarAuthButton() {
 
           {/* Menu dành cho Quản trị viên */}
           {userAdmin ? (
-            <>
-              <Link
-                href="/admin/dashboard"
-                className="vnn-nav-auth-dropdown-item"
-                onClick={() => setDropdownOpen(false)}
-              >
-                <ShieldCheck size={15} color="#00c2cb" />
-                <span>{isVi ? "Bảng Điều Khiển Admin" : "Admin Dashboard"}</span>
-              </Link>
-              <Link
-                href="/admin/analytics"
-                className="vnn-nav-auth-dropdown-item"
-                onClick={() => setDropdownOpen(false)}
-              >
-                <BarChart3 size={15} color="#2563eb" />
-                <span>{isVi ? "Thống Kê Số Liệu" : "Analytics & Traffic"}</span>
-              </Link>
-              <Link
-                href="/admin/articles"
-                className="vnn-nav-auth-dropdown-item"
-                onClick={() => setDropdownOpen(false)}
-              >
-                <FileText size={15} color="#0d9488" />
-                <span>{isVi ? "Quản Lý Bài Viết Cẩm Nang" : "Article CMS"}</span>
-              </Link>
-            </>
+            <Link
+              href="/admin/dashboard"
+              className="vnn-nav-auth-dropdown-item"
+              onClick={() => setDropdownOpen(false)}
+            >
+              <ShieldCheck size={15} color="#00c2cb" />
+              <span>{isVi ? "Bảng Điều Khiển Admin" : "Admin Dashboard"}</span>
+            </Link>
           ) : (
             /* Menu dành cho Khách hàng */
             <>

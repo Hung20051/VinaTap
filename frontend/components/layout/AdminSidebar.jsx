@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import Logo from "./Logo";
 import { getLang } from "@/lib/prefs";
-import "@/styles/sidebar.css";
+import "@/styles/admin-sidebar.css";
 
 export default function AdminSidebar({
   user,

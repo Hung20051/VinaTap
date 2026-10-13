@@ -1785,33 +1785,6 @@ export default function DaNangPage() {
               Facebook
             </a>
             <span>•</span>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="home-footer__social-link"
-            >
-              Instagram
-            </a>
-            <span>•</span>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="home-footer__social-link"
-            >
-              X
-            </a>
-            <span>•</span>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="home-footer__social-link"
-            >
-              YouTube
-            </a>
-            <span>•</span>
             <Link href="/terms" className="home-footer__social-link">
               {lang === "vi" ? "Điều khoản dịch vụ" : "Terms"}
             </Link>

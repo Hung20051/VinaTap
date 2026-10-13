@@ -917,22 +917,6 @@ export default function EightBestThingsNhaTrangPage() {
               >
                 <Facebook size={18} />
               </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="YouTube"
-              >
-                <Youtube size={18} />
-              </a>
             </div>
           </div>
         </div>

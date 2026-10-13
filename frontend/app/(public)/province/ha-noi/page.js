@@ -2634,16 +2634,8 @@ export default function HanoiPage() {
           </div>
 
           <div className="home-footer__socials">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="home-footer__social-link">
+            <a href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN" target="_blank" rel="noopener noreferrer" className="home-footer__social-link">
               Facebook
-            </a>
-            <span>•</span>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="home-footer__social-link">
-              Instagram
-            </a>
-            <span>•</span>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="home-footer__social-link">
-              YouTube
             </a>
             <span>•</span>
             <Link href="/terms" className="home-footer__social-link">

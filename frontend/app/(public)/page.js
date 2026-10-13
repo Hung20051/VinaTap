@@ -1696,7 +1696,7 @@ export default function HomePage() {
                 <span className="vnn-section-head__bar vnn-section-head__bar--green" />
               </div>
 
-              {/* 3 icon mạng xã hội Facebook, Instagram, Youtube */}
+              {/* Chỉ hiển thị icon Facebook theo yêu cầu */}
               <div className="vnn-social-stats">
                 <a
                   href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
@@ -1709,34 +1709,6 @@ export default function HomePage() {
                   <Facebook
                     size={26}
                     className="vnn-social-icon vnn-social-icon--fb"
-                  />
-                </a>
-
-                <a
-                  href="https://www.instagram.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="vnn-social-stat-card vnn-social-stat-card--ig"
-                  aria-label="Instagram"
-                  title="Instagram"
-                >
-                  <Instagram
-                    size={26}
-                    className="vnn-social-icon vnn-social-icon--ig"
-                  />
-                </a>
-
-                <a
-                  href="https://www.youtube.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="vnn-social-stat-card vnn-social-stat-card--yt"
-                  aria-label="YouTube Channel"
-                  title="YouTube"
-                >
-                  <Youtube
-                    size={26}
-                    className="vnn-social-icon vnn-social-icon--yt"
                   />
                 </a>
               </div>
@@ -2113,7 +2085,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Social Icons */}
+            {/* Social Icons — Chỉ hiển thị Facebook */}
             <div className="vnn-clean-footer__socials">
               <a
                 href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
@@ -2123,40 +2095,6 @@ export default function HomePage() {
                 className="vnn-clean-footer__social-link"
               >
                 <Facebook size={18} />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="vnn-clean-footer__social-link"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="X (Twitter)"
-                className="vnn-clean-footer__social-link"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="YouTube"
-                className="vnn-clean-footer__social-link"
-              >
-                <Youtube size={19} />
               </a>
             </div>
 

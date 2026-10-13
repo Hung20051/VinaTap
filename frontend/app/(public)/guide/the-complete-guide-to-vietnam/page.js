@@ -1452,12 +1452,6 @@ export default function CompleteGuideToVietnamPage() {
             >
               <Facebook size={18} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af" }}>
-              <Instagram size={18} />
-            </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" style={{ color: "#9ca3af" }}>
-              <Youtube size={18} />
-            </a>
           </div>
         </div>
       </footer>
