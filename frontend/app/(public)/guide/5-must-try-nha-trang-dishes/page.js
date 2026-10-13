@@ -11,16 +11,11 @@ import {
   ChevronDown,
   Share2,
   MapPin,
-  Utensils,
   Lightbulb,
   CheckCircle,
   Sparkles,
   Maximize2,
   X,
-  Compass,
-  Clock,
-  Flame,
-  Fish,
 } from "lucide-react";
 import "@/styles/home.css";
 import "./nha-trang-food.css";
@@ -858,79 +853,6 @@ export default function NhaTrangFoodGuidePage() {
               will take your taste buds on an unforgettable journey.
             </p>
           )}
-        </div>
-
-        {/* Fast Highlights Row */}
-        <div className="vnn-highlights-row">
-          <div className="vnn-highlight-card">
-            <div className="vnn-highlight-icon">
-              <Utensils size={22} />
-            </div>
-            <div>
-              <div className="vnn-highlight-num">5</div>
-              <div className="vnn-highlight-label">
-                {lang === "vi" ? "Món ăn đặc sản tiêu biểu" : "Iconic dishes"}
-              </div>
-            </div>
-          </div>
-
-          <div className="vnn-highlight-card">
-            <div className="vnn-highlight-icon">
-              <Fish size={22} />
-            </div>
-            <div>
-              <div className="vnn-highlight-num">100%</div>
-              <div className="vnn-highlight-label">
-                {lang === "vi" ? "Hải sản tươi vịnh biển" : "Fresh ocean catch"}
-              </div>
-            </div>
-          </div>
-
-          <div className="vnn-highlight-card">
-            <div className="vnn-highlight-icon">
-              <Clock size={22} />
-            </div>
-            <div>
-              <div className="vnn-highlight-num">&gt;40 năm</div>
-              <div className="vnn-highlight-label">
-                {lang === "vi" ? "Bề dày tinh hoa ẩm thực" : "Culinary heritage"}
-              </div>
-            </div>
-          </div>
-
-          <div className="vnn-highlight-card">
-            <div className="vnn-highlight-icon">
-              <Flame size={22} />
-            </div>
-            <div>
-              <div className="vnn-highlight-num">20k - 60k</div>
-              <div className="vnn-highlight-label">
-                {lang === "vi" ? "Mức giá bình dân (VND)" : "Price range (VND)"}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Table of Contents Box */}
-        <div className="vnn-toc-box">
-          <h3 className="vnn-toc-title">
-            <Compass size={20} color="#00c2cb" />
-            <span>
-              {lang === "vi"
-                ? "Mục lục: 5 món ngon Nha Trang chọn lọc"
-                : "Table of Contents: 5 Must-Try Nha Trang Dishes"}
-            </span>
-          </h3>
-          <ul className="vnn-toc-grid">
-            {DISHES_DATA.map((dish) => (
-              <li key={dish.id}>
-                <a href={`#${dish.id}`} className="vnn-toc-link">
-                  <span className="vnn-toc-badge">{dish.index}</span>
-                  <span>{lang === "vi" ? dish.nameVi : dish.name}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
         </div>
 
         {/* ── 5 Dish Breakdown Sections ── */}
