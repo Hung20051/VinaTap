@@ -122,7 +122,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "12 Tháng 11, 2024",
         badge: "Destinations",
         img: "/guide/megamenu/dest-3-hoian.jpg",
-        link: "/province/quang-nam",
+        link: "/province/hoi-an",
       },
       {
         id: "dest-4",
@@ -755,7 +755,7 @@ export default function CompleteGuideToVietnamPage() {
                       Đà Nẵng
                     </Link>
                     ,{" "}
-                    <Link href="/province/quang-nam" className="cg-inline-link">
+                    <Link href="/province/hoi-an" className="cg-inline-link">
                       Phố cổ Hội An
                     </Link>
                     , Phong Nha - Kẻ Bàng (Quảng Trị), Nha Trang (Khánh Hòa), Quy Nhơn (Gia Lai),{" "}
@@ -771,7 +771,7 @@ export default function CompleteGuideToVietnamPage() {
                       Da Nang
                     </Link>
                     ,{" "}
-                    <Link href="/province/quang-nam" className="cg-inline-link">
+                    <Link href="/province/hoi-an" className="cg-inline-link">
                       Hoi An Ancient Town
                     </Link>
                     , Phong Nha-Ke Bang (Quang Tri), Nha Trang (Khanh Hoa), Quy Nhon (Gia Lai),{" "}
@@ -1093,7 +1093,7 @@ export default function CompleteGuideToVietnamPage() {
             </Link>
 
             {/* Card 5 (Bottom-right right): Hội An */}
-            <Link href="/province/quang-nam" className="vnn-biggrid-item">
+            <Link href="/province/hoi-an" className="vnn-biggrid-item">
               <img
                 src="/guide/hcmc/top-dest-hoian.jpg"
                 alt={lang === "vi" ? "Hội An" : "Hoi An"}

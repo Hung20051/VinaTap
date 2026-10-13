@@ -114,7 +114,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "19 Tháng 4, 2025",
         badge: "Destinations",
         img: "/guide/megamenu/dest-3.jpg",
-        link: "/province/quang-nam",
+        link: "/province/hoi-an",
       },
       {
         id: "dest-4",
@@ -188,7 +188,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "20 Tháng 5, 2025",
         badge: "Things to Do",
         img: "/guide/megamenu/dest-3.jpg",
-        link: "/province/quang-nam",
+        link: "/province/hoi-an",
       },
     ],
   },
@@ -286,7 +286,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "20 Tháng 2, 2025",
         badge: "Heritage",
         img: "/guide/megamenu/itin-3.jpg",
-        link: "/province/quang-nam",
+        link: "/province/hoi-an",
       },
       {
         id: "itin-5",
@@ -1170,7 +1170,7 @@ export default function AoDaiArticlePage() {
               <ul className="ad-bullet-list">
                 <li className="ad-bullet-item">
                   <strong>Ao Dai Custom Tailors</strong> (96 Nguyễn Thái Học,{" "}
-                  <Link href="/province/quang-nam">Hội An</Link>)
+                  <Link href="/province/hoi-an">Hội An</Link>)
                 </li>
                 <li className="ad-bullet-item">
                   <strong>Áo Dài Xưa &amp; Nay</strong> (601 Nguyễn Đình Chiểu, Quận 3,{" "}

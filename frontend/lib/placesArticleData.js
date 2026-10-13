@@ -24,14 +24,14 @@ export const PLACES_ARTICLE_DATA = [
     title: "Hoi An",
     titleVi: "Hội An",
     slug: "hoi-an",
-    provinceSlug: "quang-nam",
+    provinceSlug: "hoi-an",
     image: "/guide/15-best-places/place-2-hoi-an.jpg",
     paragraphs: [
-      "The ancient town of [Hoi An](/province/quang-nam) is where magic meets beauty. Recognized as a UNESCO World Heritage site, this little town has earned its reputation far beyond its label. Whether you’re wandering its narrow alleys, cycling past golden rice paddy fields, sunbathing on An Bang beach, or feasting on white rose dumplings and Cao Lau noodles, you’ll feel like you’ve stepped into a movie.",
+      "The ancient town of [Hoi An](/province/hoi-an) is where magic meets beauty. Recognized as a UNESCO World Heritage site, this little town has earned its reputation far beyond its label. Whether you’re wandering its narrow alleys, cycling past golden rice paddy fields, sunbathing on An Bang beach, or feasting on white rose dumplings and Cao Lau noodles, you’ll feel like you’ve stepped into a movie.",
       "For anyone who’s ever had a childhood dream, Hoi An is where magic comes to life: a tailor’s paradise where your dream dress is made within hours, just like Cinderella’s charming gown from her Fairy Godmother; a city of light reminiscent of Rapunzel’s lantern-filled sky – where candle-lit paper flowers float on the water, colorful lanterns illuminate the streets, and the gentle sound of splashing water accompanies your boat ride along the Hoai River. Hoi An is where you go to live your own fairytale."
     ],
     paragraphsVi: [
-      "Phố cổ [Hội An](/province/quang-nam) là nơi vẻ đẹp cổ tích gặp gỡ thực tại. Được UNESCO công nhận là Di sản Văn hóa Thế giới, thị trấn nhỏ này vượt xa những danh xưng mỹ miều. Dạo bước qua những con ngõ rêu phong, đạp xe qua những cánh đồng lúa vàng óng ả, tắm nắng trên bãi biển An Bàng hay thưởng thức tô Cao Lầu và đĩa bánh hoa hồng trắng, bạn sẽ ngỡ như mình đang bước vào một thước phim điện ảnh.",
+      "Phố cổ [Hội An](/province/hoi-an) là nơi vẻ đẹp cổ tích gặp gỡ thực tại. Được UNESCO công nhận là Di sản Văn hóa Thế giới, thị trấn nhỏ này vượt xa những danh xưng mỹ miều. Dạo bước qua những con ngõ rêu phong, đạp xe qua những cánh đồng lúa vàng óng ả, tắm nắng trên bãi biển An Bàng hay thưởng thức tô Cao Lầu và đĩa bánh hoa hồng trắng, bạn sẽ ngỡ như mình đang bước vào một thước phim điện ảnh.",
       "Hội An biến mọi giấc mơ tuổi thơ thành hiện thực: thiên đường may đo nơi bộ váy mơ ước được hoàn thành chỉ trong vài giờ; thành phố lung linh ánh đèn gợi nhớ bầu trời đèn lồng rực rỡ – nơi những bông hoa đăng trôi nhẹ trên dòng sông Hoài thơ mộng. Hội An là nơi bạn sống trọn vẹn trong câu chuyện cổ tích của chính mình."
     ]
   },

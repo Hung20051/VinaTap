@@ -1,0 +1,926 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   HOI AN DESTINATION EDITORIAL HUB STYLES (VIETNAMNOMAD REPLICA)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.vnn-hoian-page {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #222222;
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* ─── 1. TOP BANNER ─── */
+.vnn-hoian-top-banner {
+  width: 100%;
+  background-color: #0b1a2d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vnn-hoian-top-banner img {
+  width: 100%;
+  max-width: 1920px;
+  height: auto;
+  max-height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── 2. EDITORIAL NAVBAR ─── */
+.vnn-hoian-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ebebeb;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.vnn-hoian-nav-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vnn-hoian-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.vnn-hoian-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vnn-hoian-nav-item {
+  position: relative;
+}
+
+.vnn-hoian-nav-link {
+  background: none;
+  border: none;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #222222;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s ease;
+}
+
+.vnn-hoian-nav-link:hover,
+.vnn-hoian-nav-link.active {
+  color: #00c2cb;
+}
+
+.vnn-hoian-search-btn {
+  background: none;
+  border: none;
+  color: #222222;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.vnn-hoian-search-btn:hover {
+  color: #00c2cb;
+}
+
+/* ─── 3. HERO SECTION ─── */
+.vnn-hoian-hero-section {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background-color: #1a1a1a;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.vnn-hoian-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+  filter: brightness(0.85);
+  transform: scale(1.02);
+  transition: transform 10s ease;
+}
+
+.vnn-hoian-hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.25) 45%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+.vnn-hoian-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0 20px;
+  color: #ffffff;
+}
+
+.vnn-hoian-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.vnn-hoian-badge {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.vnn-hoian-badge:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.vnn-hoian-hero-title {
+  font-size: 64px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0 0 16px 0;
+  color: #ffffff;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  line-height: 1.1;
+}
+
+.vnn-hoian-hero-meta {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* ─── 4. QUICK NAVIGATION PILL BAR ─── */
+.vnn-hoian-nav-pills-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 8px 16px;
+  background-color: #ffffff;
+}
+
+.vnn-hoian-pills-container {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.vnn-hoian-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #4a5568;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.vnn-hoian-pill-btn:hover {
+  color: #00c2cb;
+  background-color: #f7fafc;
+}
+
+.vnn-hoian-pill-btn.active {
+  background-color: #f0fdf4;
+  color: #00b4b6;
+  font-weight: 700;
+}
+
+/* ─── 5. MAIN CONTAINER ─── */
+.vnn-hoian-main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px 60px 24px;
+}
+
+.vnn-hoian-section {
+  margin-top: 48px;
+}
+
+.vnn-hoian-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.vnn-hoian-section-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0;
+}
+
+.vnn-hoian-view-all {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #666666;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.vnn-hoian-view-all:hover {
+  color: #00c2cb;
+}
+
+.vnn-hoian-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #ebebeb;
+  margin-bottom: 24px;
+}
+
+/* ─── HOI AN TRAVEL GUIDE (SCREENSHOT 2) ─── */
+.vnn-hoian-guide-section {
+  max-width: 900px;
+  margin: 32px auto 0 auto;
+}
+
+.vnn-hoian-guide-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111111;
+  margin: 0 0 16px 0;
+  text-align: left;
+}
+
+.vnn-hoian-guide-intro {
+  margin-bottom: 28px;
+}
+
+.vnn-hoian-guide-intro p {
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #444444;
+  margin: 0 0 16px 0;
+}
+
+/* Video Embed container */
+.vnn-hoian-video-box {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto 24px auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  background-color: #000;
+  position: relative;
+}
+
+.vnn-hoian-video-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.vnn-hoian-video-custom-thumb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.vnn-hoian-video-custom-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.vnn-hoian-video-custom-thumb:hover img {
+  transform: scale(1.03);
+}
+
+.vnn-hoian-video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 48px;
+  background: rgba(255, 0, 0, 0.85);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.vnn-hoian-video-custom-thumb:hover .vnn-hoian-video-play-btn {
+  background: #cc0000;
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.vnn-hoian-video-play-btn svg {
+  fill: #ffffff;
+  color: #ffffff;
+}
+
+.vnn-hoian-expand-wrap {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.vnn-hoian-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f2f2f2;
+  color: #333333;
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.vnn-hoian-expand-btn:hover {
+  background-color: #e5e5e5;
+  color: #00c2cb;
+}
+
+/* ─── EXPANDED ACCORDION CONTENT ─── */
+.vnn-hoian-accordion-body {
+  margin-top: 32px;
+  padding: 32px;
+  background: #fbfbfb;
+  border: 1px solid #ebebeb;
+  border-radius: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vnn-hoian-guide-subblock {
+  margin-bottom: 28px;
+}
+
+.vnn-hoian-guide-subblock:last-child {
+  margin-bottom: 0;
+}
+
+.vnn-hoian-guide-subblock h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 10px 0;
+}
+
+.vnn-hoian-guide-subblock h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #222;
+  margin: 14px 0 6px 0;
+}
+
+.vnn-hoian-guide-subblock p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #555;
+  margin: 0 0 10px 0;
+}
+
+.vnn-hoian-guide-subblock ul {
+  padding-left: 20px;
+  margin: 0 0 12px 0;
+}
+
+.vnn-hoian-guide-subblock li {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+/* ─── 6. TOP ATTRACTIONS MOSAIC GRID (SCREENSHOT 3) ─── */
+.vnn-hoian-attractions-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr;
+  grid-template-rows: 210px 210px;
+  gap: 16px;
+}
+
+.vnn-hoian-attraction-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #f0f0f0;
+  display: block;
+}
+
+.vnn-hoian-attraction-card.large {
+  grid-row: span 2;
+}
+
+.vnn-hoian-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.vnn-hoian-attraction-card:hover .vnn-hoian-card-img {
+  transform: scale(1.06);
+}
+
+.vnn-hoian-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.15) 50%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 16px 18px;
+}
+
+.vnn-hoian-card-title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.35;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.vnn-hoian-attraction-card.large .vnn-hoian-card-title {
+  font-size: 20px;
+}
+
+.vnn-hoian-placeholder-card {
+  background: #e3e3e3;
+  border-radius: 4px;
+  height: 100%;
+}
+
+/* ─── 7. WHERE TO STAY IN HOI AN (SCREENSHOT 4) ─── */
+.vnn-hoian-stay-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  min-height: 260px;
+}
+
+.vnn-hoian-stay-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #f0f0f0;
+  display: block;
+  height: 270px;
+  cursor: pointer;
+}
+
+.vnn-hoian-stay-card:hover .vnn-hoian-card-img {
+  transform: scale(1.06);
+}
+
+.vnn-hoian-stay-card .vnn-hoian-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.vnn-hoian-stay-placeholder {
+  background: #e3e3e3;
+  border-radius: 4px;
+  height: 270px;
+  border: none;
+}
+
+/* ─── 8. MUST-TRY DISHES IN HOI AN (SCREENSHOT 5) ─── */
+.vnn-hoian-dishes-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  grid-template-rows: repeat(3, 128px);
+  gap: 12px;
+}
+
+.vnn-hoian-dish-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #f0f0f0;
+  display: block;
+  cursor: pointer;
+}
+
+.vnn-hoian-dish-card.large {
+  grid-row: span 3;
+}
+
+.vnn-hoian-dish-card:hover .vnn-hoian-card-img {
+  transform: scale(1.06);
+}
+
+.vnn-hoian-dish-card.large .vnn-hoian-card-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.vnn-hoian-dish-card:not(.large) .vnn-hoian-card-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ─── 9. TAGS SECTION (SCREENSHOT 5) ─── */
+.vnn-hoian-tags-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 44px 0 28px 0;
+  flex-wrap: wrap;
+}
+
+.vnn-hoian-tag-label {
+  background: #00bcc6;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.vnn-hoian-tag-pill {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  padding: 4px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #555555;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  line-height: 1.3;
+}
+
+.vnn-hoian-tag-pill:hover {
+  border-color: #00bcc6;
+  color: #00bcc6;
+  background: rgba(0, 188, 198, 0.05);
+}
+
+/* ─── 10. OTHER DESTINATIONS SECTION ─── */
+.vnn-hoian-other-dest-title {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: #111111;
+  margin: 36px 0 32px 0;
+}
+
+.vnn-hoian-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.vnn-hoian-related-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease;
+}
+
+.vnn-hoian-related-card:hover {
+  transform: translateY(-4px);
+}
+
+.vnn-hoian-related-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10.5;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.vnn-hoian-related-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.vnn-hoian-related-card:hover .vnn-hoian-related-img-wrap img {
+  transform: scale(1.06);
+}
+
+.vnn-hoian-related-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #111111;
+  margin: 14px 0 0 0;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.vnn-hoian-related-card:hover .vnn-hoian-related-title {
+  color: #00bcc6;
+}
+
+/* ─── RICH DETAIL ARTICLE MODAL (HIỂN THỊ ĐẦY ĐỦ ĐOẠN TEXT) ─── */
+.vnn-hoian-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+.vnn-hoian-detail-dialog {
+  background: #ffffff;
+  width: 100%;
+  max-width: 820px;
+  max-height: 90vh;
+  border-radius: 12px;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: scaleUp 0.25s ease;
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.vnn-hoian-detail-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vnn-hoian-detail-close:hover {
+  background: #00bcc6;
+  transform: scale(1.08);
+}
+
+.vnn-hoian-detail-hero {
+  width: 100%;
+  height: 340px;
+  position: relative;
+  overflow: hidden;
+}
+
+.vnn-hoian-detail-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vnn-hoian-detail-hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.75) 100%);
+}
+
+.vnn-hoian-detail-hero-title {
+  position: absolute;
+  bottom: 24px;
+  left: 28px;
+  right: 28px;
+  color: #ffffff;
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.vnn-hoian-detail-content {
+  padding: 32px 36px 40px 36px;
+}
+
+.vnn-hoian-detail-badge {
+  display: inline-block;
+  background: #00bcc6;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.vnn-hoian-detail-paragraphs p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #333333;
+  margin-bottom: 18px;
+}
+
+.vnn-hoian-detail-highlights {
+  background: #f7f9fa;
+  border-left: 4px solid #00bcc6;
+  padding: 18px 22px;
+  border-radius: 0 8px 8px 0;
+  margin: 24px 0;
+}
+
+.vnn-hoian-detail-highlights h5 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 10px 0;
+}
+
+.vnn-hoian-detail-highlights ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.vnn-hoian-detail-highlights li {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+/* ─── FLOATING AI COMPANION ─── */
+.vnn-hoian-floating-ai {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  cursor: pointer;
+  filter: drop-shadow(0 6px 16px rgba(0, 194, 203, 0.35));
+  transition: transform 0.25s ease;
+}
+
+.vnn-hoian-floating-ai:hover {
+  transform: scale(1.08);
+}
+
+.vnn-hoian-floating-ai img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: block;
+}
+
+/* ─── RESPONSIVE BREAKPOINTS ─── */
+@media (max-width: 992px) {
+  .vnn-hoian-hero-title {
+    font-size: 46px;
+  }
+  .vnn-hoian-attractions-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .vnn-hoian-attraction-card.large {
+    grid-column: span 2;
+    grid-row: span 1;
+    height: 280px;
+  }
+  .vnn-hoian-dishes-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .vnn-hoian-dish-card.large {
+    grid-row: span 1;
+    height: 280px;
+  }
+  .vnn-hoian-related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .vnn-hoian-nav-menu {
+    display: none;
+  }
+  .vnn-hoian-hero-section {
+    height: 420px;
+  }
+  .vnn-hoian-hero-title {
+    font-size: 38px;
+  }
+  .vnn-hoian-stay-grid {
+    grid-template-columns: 1fr;
+  }
+  .vnn-hoian-stay-placeholder {
+    display: none;
+  }
+  .vnn-hoian-related-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -32,6 +32,7 @@ import {
 import "@/styles/province.css";
 import HoChiMinhCityPage from "../ho-chi-minh/page";
 import DalatPage from "../dalat/page";
+import HoiAnPage from "../hoi-an/page";
 
 export default function ProvincePage() {
   const { slug } = useParams();
@@ -42,6 +43,9 @@ export default function ProvincePage() {
   }
   if (slug === "dalat" || slug === "lam-dong") {
     return <DalatPage />;
+  }
+  if (slug === "hoi-an" || slug === "quang-nam") {
+    return <HoiAnPage />;
   }
 
   const [province, setProvince] = useState(null);

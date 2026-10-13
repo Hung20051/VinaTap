@@ -110,7 +110,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "12 Tháng 11, 2024",
         badge: "Destinations",
         img: "/guide/megamenu/dest-3-hoian.jpg",
-        link: "/province/quang-nam",
+        link: "/province/hoi-an",
       },
       {
         id: "dest-4",
@@ -1250,7 +1250,7 @@ export default function DalatPage() {
 
             {/* Card 3: Hoi An */}
             <Link
-              href="/province/quang-nam"
+              href="/province/hoi-an"
               className="vnn-dalat-related-card"
             >
               <div className="vnn-dalat-related-img-wrap">

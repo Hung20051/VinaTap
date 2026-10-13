@@ -115,7 +115,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "12 Tháng 11, 2024",
         badge: "Destinations",
         img: "/guide/megamenu/dest-3-hoian.jpg",
-        link: "/province/quang-nam",
+        link: "/province/hoi-an",
       },
       {
         id: "dest-4",
