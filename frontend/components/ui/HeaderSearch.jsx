@@ -215,7 +215,7 @@ const SEARCH_POSTS = [
     date: "March 1, 2025",
     dateVi: "1 Tháng 3, 2025",
     img: "/guide/megamenu/todo-3-nhatrang.jpg",
-    link: "/province/khanh-hoa",
+    link: "/guide/8-best-things-to-do-in-nha-trang",
     keywords: "8 best things to do in nha trang islands beach vinpearl",
   },
   {

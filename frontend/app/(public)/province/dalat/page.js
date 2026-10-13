@@ -164,7 +164,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 3, 2025",
         badge: "Articles",
         img: "/guide/megamenu/todo-3-nhatrang.jpg",
-        link: "/province/khanh-hoa",
+        link: "/guide/8-best-things-to-do-in-nha-trang",
       },
       {
         id: "thing-4",

@@ -162,7 +162,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "28 Tháng 4, 2026",
         badge: "Things to do",
         img: "/guide/megamenu/todo-3-nhatrang.jpg",
-        link: "/province/khanh-hoa",
+        link: "/guide/8-best-things-to-do-in-nha-trang",
       },
       {
         id: "things-4",
@@ -236,7 +236,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "1 Tháng 3, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-5-nhatrang.jpg",
-        link: "/province/khanh-hoa",
+        link: "/guide/8-best-things-to-do-in-nha-trang",
       },
     ],
   },
