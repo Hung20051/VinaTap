@@ -2049,6 +2049,243 @@ export default function HanoiPage() {
                     ? "Bún chả được bán cả ngày, tuy nhiên thời điểm lý tưởng nhất để thưởng thức là vào bữa trưa, vì thịt nướng có thể hơi nhiều đạm cho bữa sáng và khẩu phần một suất rất đầy đặn – cung cấp dồi dào năng lượng cho phần còn lại trong ngày của bạn. Bạn cũng rất nên gọi thêm Nem Rán (chả giò rán giòn rụm) để bữa ăn thêm trọn vị."
                     : "Bun Cha is available all day, however, it is ideal to eat Bun Cha for lunch, as it could be a bit too fatty for breakfast and its serving portion is huge and very filling – which will give you energy for the rest of the day. It is also recommended to order Nem Ran – a square version of spring rolls."}
                 </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Một số địa chỉ gợi ý dành cho bạn:" : "Some recommendations for you:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>1 Hang Manh Street, Hoan Kiem District (50,000 VND – 60,000 VND)</li>
+                  <li>74 Hang Quat Street, Hoan Kiem District (30,000 VND – 50,000 VND)</li>
+                  <li>24 Le Van Huu Street, Hoan Kiem District (40,000 VND – 60,000 VND)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* DISH 3: BUN THANG (SCREENSHOT 1 & 2) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "3. Bún Thang Hà Nội (Bun Thang)" : "3. Bun Thang"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-bunthang-hd.jpg"
+                    alt="Bun Thang Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Bát bún thang cầu kỳ, thanh tao và rực rỡ sắc màu của ẩm thực Hà thành" : "Bun Thang Hanoi"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Trái ngược với vị ngọt thanh tao, dịu nhẹ và giản dị của nước dùng, bạn sẽ vô cùng kinh ngạc khi biết rằng cần đến hơn 20 loại nguyên liệu khác nhau để làm nên một bát Bún Thang trọn vẹn."
+                    : "In contrast with the light sweetness and simple taste of the broth, you will be amazed that it requires more than 20 different ingredients to make up a bowl of Bun Thang."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Khi được bưng ra phục vụ, bát bún thang được bày biện tỉ mỉ với trứng rán thái chỉ mỏng như sợi tơ, thịt gà xé, nấm hương, hành hoa, giò lụa thái sợi, tôm khô/ruốc tôm... Mọi thứ đều được thái chỉ sợi nhỏ đều tăm tắp và xếp đặt gọn gàng, đan xen rực rỡ trên nền bún trắng ngần. Nhờ vậy, Bún Thang không chỉ thơm ngon bổ dưỡng mà còn vô cùng bắt mắt như một bức tranh ẩm thực đa sắc màu."
+                    : "When being served, Bun Thang will be presented with fried eggs, chicken, shiitake mushrooms, green onions, pork cake, dried shrimp and so on. Everything is sliced up and neatly placed on the bed of rice noodles. So, Bun Thang is not only tasty but also eye catching with all the colorful ingredients."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Mẹo thưởng thức (Tips):" : "Tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Hương vị của Bún Thang đối với một số người có thể khá \"thanh nhẹ và tinh tế\", vì vậy món ăn này đặc biệt thích hợp cho bữa điểm tâm sáng. Nếu bạn muốn vị đậm đà hơn một chút, hãy nêm thêm vài giọt nước mắm ngon nguyên chất."
+                    : "The taste of Bun Thang is, for some people, quite \"light and plain\"; so, it will be suitable for breakfast. If you like it a bit more savory, add a tiny bit of fish sauce."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Bạn có thể thưởng thức Bún Thang tại một số địa chỉ sau:" : "You can try Bun Thang in some of the following locations:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>48 Cau Go Street, Hoan Kiem District (35,000 VND – 50,000 VND)</li>
+                  <li>29 Hang Hanh Street, Hoan Kiem District (35,000 VND)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* DISH 4: BANH MI (SCREENSHOT 2 & 3) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "4. Bánh Mì Hà Nội (Banh Mi)" : "4. Banh Mi"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-banhmi-hd.jpg"
+                    alt="Banh Mi Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Bánh mì kẹp pa-tê gan béo ngậy đặc trưng của Hà Nội" : "Banh Mi Hanoi"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Bánh mì ngày càng khẳng định vị thế vững chắc trong nền văn hóa ẩm thực Việt Nam, khi nhà báo David Farley của đài BBC từng hết lời ca ngợi Bánh mì Việt Nam là món bánh mì kẹp ngon nhất thế giới."
+                    : "Banh Mi gradually asserts its position in Vietnamese culinary culture, as the BBC's David Farley once praised Banh Mi of Vietnam as the best sandwich in the world."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Có thể bạn đã quen thuộc với Bánh mì vì danh tiếng lan tỏa khắp toàn cầu; nhưng khác với Bánh mì ở Sài Gòn thường chú trọng vào nước sốt đậm đà, Bánh mì ở Hà Nội lại đặc biệt và dễ nhận biết nhất nhờ lớp pa-tê gan béo ngậy đặc trưng. Lớp pa-tê thơm lừng, đậm vị được phết khéo léo bên trong ổ bánh mì vừa ra lò vàng ruộm – ruột mềm xốp và lớp vỏ giòn rụm bên ngoài."
+                    : "You may already be familiar with Banh Mi as it is quite globally widespread; but unlike Banh Mi in Saigon which emphasizes the sauce, Banh Mi in Hanoi is special and recognizable for its pâté. The rich and flavorful pâté is spread between a freshly-baked baguette that is soft inside and crispy outside."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Ngày nay, bạn có thể tìm thấy Bánh mì theo hai phiên bản: bánh mì kẹp truyền thống và bánh mì chảo (thịt, xúc xích, trứng ốp la nóng hổi trên chảo gang phục vụ kèm bánh mì). Bánh mì kẹp truyền thống chắc chắn là lựa chọn bạn nên trải nghiệm trước tiên vì đó là cách ăn nguyên bản để cảm nhận trọn vẹn mọi phong vị chỉ trong một miếng cắn."
+                    : "Now, you can find Banh Mi in two versions: Banh Mi sandwiches and one-pan toppings served with Banh Mi on the side. Traditional Banh Mi sandwiches are definitely recommended as it is how Banh Mi is originally eaten and how you fully taste Banh Mi in one bite."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Mẹo thưởng thức (Tips):" : "Tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Trải nghiệm thưởng thức bánh mì sẽ chưa thể trọn vẹn nếu thiếu đi một ly cà phê đen hoặc cà phê sữa đậm đà kiểu Việt Nam. Đây là bộ đôi bất hủ đi cùng năm tháng."
+                    : "A Banh Mi experience is not complete without being combined with Vietnamese black / milk coffee. This is the all time go to combo."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Một số gợi ý quán ngon dành cho bạn:" : "Some suggestions for you:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>25 Hang Ca, Hoan Kiem District (15,000 VND – 25,000 VND)</li>
+                  <li>38 Dinh Liet Street, Hoan Kiem District (15,000 VND – 35,000 VND)</li>
+                  <li>34 Lo Su Street, Hoan Kiem District (15,000 VND – 25,000 VND)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* DISH 5: LA VONG GRILLED FISH (SCREENSHOT 3 & 4) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "5. Chả Cá Lã Vọng (La Vong Grilled Fish)" : "5. La Vong Grilled Fish"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-chaca-hd.jpg"
+                    alt="Cha Ca La Vong Grilled Fish"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Chả cá Lã Vọng xèo xèo trên chảo nóng cùng thì là và hành hoa" : "La Vong Grilled Fish"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Chả Cá từ lâu đã là một món ăn đặc sản tinh hoa của Hà Nội. Đây là món ăn cầu kỳ ngay từ khâu tuyển chọn nguyên liệu. Thịt cá được lấy từ cá lăng tươi ngon nhất hoặc cá quả thịt chắc nịch để giữ được độ dai ngọt tự nhiên. Khi từng miếng cá tẩm nghệ đã chín vàng xèo xèo trên chảo mỡ sôi, hành hoa cắt khúc và thì là tươi non được trút ngập vào chảo đảo đều hòa quyện cùng các nguyên liệu khác."
+                    : "Cha Ca (grilled fish cakes) has long been a specialty of Hanoi. It is a complicated dish right from the stage of selecting ingredients. Made from the freshest Hemibagrus fish and Snakehead fish so the texture will be firm and chewy. When the fish is almost cooked, green onion and dill are added to the hot pan and well mixed with other ingredients."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Thật thú vị, quán Chả Cá Lã Vọng đầu tiên do gia tộc họ Đoàn gây dựng đã trải qua hơn 5 thế hệ tiếp nối, và chính con phố nơi quán tọa lạc xưa kia đã được đổi tên theo món ăn biểu tượng này (Phố Chả Cá)."
+                    : "Interestingly, the first Cha Ca La Vong restaurant has been surviving for 5 generations and the street on which it is located now was renamed after this iconic food (Cha Ca Street)."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Mẹo thưởng thức (Tips):" : "Tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Chả cá Lã Vọng được ăn kèm với bún rối, lạc rang giòn bùi và \"mắm tôm\" đánh sủi bọt – thứ nước chấm có thể hơi nồng đối với những ai chưa quen. Bạn hãy vắt thêm nước cốt chanh hoặc quất tươi, thêm chút đường và vài lát ớt rồi đánh bông mắm tôm lên để làm dịu mùi nồng và dậy lên vị chua cay mặn ngọt hài hòa tuyệt hảo."
+                    : "Cha Ca La Vong is eaten with noodles, roasted peanuts and \"mắm tôm\" – shrimp paste which could be too strong for those who are not familiar with it. It is suggested that you add a bit of lime or kumquat juice to the paste and well mix it to reduce the strong smell and taste."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Chúng tôi gợi ý các nhà hàng sau để bạn thưởng thức món ăn này tại Hà Nội:" : "We recommend these restaurants for you to enjoy this dish in Hanoi:"}</strong>
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>14 Cha Ca Street and 107 Nguyen Truong To Street, Hoan Kiem District (170,000 VND)</li>
+                  <li>120 K1 Giang Vo Street, Ba Dinh District (140,000 VND)</li>
+                  <li>171 Thai Ha Street, Hoan Kiem District (139,000 VND)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* DISH 6: PHO CUON AND PHO CHIEN (SCREENSHOT 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "6. Phở Cuốn & Phở Chiên (Pho Cuon and Pho Chien)" : "6. Pho Cuon and Pho Chien"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-phocuon-hd.jpg"
+                    alt="Pho Cuon and Pho Chien Hanoi"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Hộp phở cuốn thanh mát ăn kèm nước mắm chấm chua ngọt" : "Pho Cuon and Pho Chien"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Như chúng tôi đã đề cập trước đó, mùa hè ở Hà Nội vô cùng oi ả và nắng nóng. Vì vậy, dù rất yêu thích phở, việc xì xụp một bát phở nước nóng hổi giữa tiết trời hè đôi khi không phải là lựa chọn hấp dẫn nhất. Đó chính là lý do người Hà Nội đã sáng tạo nên món Phở Cuốn và Phở Chiên vô cùng tài tình – những phiên bản \"khô\" độc đáo kế thừa tinh hoa của phở truyền thống."
+                    : "As we mentioned before, the summer in Hanoi is extremely unpleasantly hot. And so, although we love Pho, the idea of slurping a hot bowl of Pho under that weather condition does not sound very tempting. That's why Hanoians came up with the genius creation of Pho Cuon and Pho Chien (Pho rolls and pan-fried Pho) – which is somehow the dry version of traditional Pho."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Bạn vẫn sẽ bắt gặp các nguyên liệu chủ đạo của phở gồm bánh phở, thịt bò và rau thơm. Tuy nhiên, thay vì thái sợi nhỏ, người ta dùng nguyên lá bánh phở vuông mềm mỏng cuốn tròn bên trong thịt bò xào lăn đậm đà cùng các loại rau thơm tươi mát. Phở cuốn chấm cùng bát nước mắm chua ngọt thanh dịu là món ăn mùa hè tuyệt vời nhất mà bạn từng trải nghiệm. Phở chiên cũng dùng những nguyên liệu này, nhưng thịt bò và rau cải ngọt được xào sốt đậm đà rồi trút lên trên đĩa bánh phở chiên giòn rụm."
+                    : "You can still find the star ingredients of Pho which are noodles, beef and herbs. However, instead of being cut into stripes, they use Pho sheets to wrap seasoned and stir-fried together with green herbs inside. Pho Cuon is complemented by dipping in light, vinegary sauce, which is the best summery food you could ever have. Pho Chien also uses the same ingredients but beef and vegetables are stir-fried and top on a bed of deep-fried, crispy Pho noodles."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Một biến thể nổi tiếng khác của phở chiên là Phở Chiên Phồng (bánh phở hình vuông phồng rộp). Những lá bánh phở được cắt vuông vức rồi thả vào chảo dầu sôi già cho đến khi phồng căng xốp như những chiếc gối nhỏ – giòn rụm bên ngoài và mềm xốp rỗng bên trong. Món này ăn kèm với thịt bò xào mềm thơm nức, hành tây và rau cải xanh sốt sánh mịn."
+                    : "Another version of Pho Chien is Pho Chien Phong (Pho crackers in squared-shape). Pho sheets are cut into squares and deep-fried until they turn into Pho crackers – airy in the middle and crispy outside. These are again stir-fried with tender beef, onion and green vegetables."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Ghi chú & Mẹo thưởng thức (Notes and tips):" : "Notes and tips:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Tại các quán Phở Cuốn (đặc biệt quanh khu làng Ngũ Xã), thường phục vụ món ăn vặt kèm theo là \"Ngô chiên bơ\" – hạt ngô ngọt tẩm bột chiên bơ vàng ươm, thơm ngậy như bắp rang bơ kiểu Việt Nam. Bạn sẽ khó tìm thấy món này ở nơi nào khác và chúng tôi phải thừa nhận đây là món ăn vặt cực kỳ gây nghiện. Hãy chắc chắn rằng bạn sẽ gọi thử một đĩa."
+                    : "At Pho Cuon restaurants, there is often a snack called \"Ngô chiên bơ\" – which is basically popcorn but in Vietnamese style. You could not find it anywhere else and we have to admit that it is a very addictive snack. Make sure you will give it a try."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Các món ăn này thường được phục vụ theo đĩa lớn đủ cho 2-3 người ăn chung. Do đó, bạn nên gọi món lần lượt từng đĩa một để tránh bị quá tải thức ăn, đồng thời luôn được thưởng thức món ăn khi vừa mới nấu xong còn nóng giòn tươi ngon."
+                    : "These dishes are served in big portions which are enough for 2-3 people. So, it is recommended that you order one by one to make sure you are not overloaded with foods and also can enjoy them while they are freshly cooked and served."}
+                </p>
               </div>
             </div>
           </div>
@@ -2057,67 +2294,7 @@ export default function HanoiPage() {
             {lang === "vi" ? "Các món đặc sản trứ danh tiếp theo:" : "More must-try Hanoi specialties:"}
           </h4>
           <div className="vnn-hanoi-cards-grid">
-            {/* 1. Pho Hanoi */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-pho-hd.jpg"
-                  alt="Traditional Pho Hanoi"
-                />
-              </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Phở Hà Nội" : "Pho Hanoi"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
-                  {lang === "vi"
-                    ? "Món quốc hồn quốc túy với nước dùng thanh ngọt ninh kỹ từ xương bò, bánh phở mềm mướt và hành hoa thơm nức."
-                    : "Vietnam's quintessential national dish with clear, aromatic bone broth, tender beef slices, and fresh herbs."}
-                </p>
-              </div>
-            </div>
-
-            {/* 2. Bun Cha */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-buncha-hd.jpg"
-                  alt="Bun Cha Hanoi"
-                />
-              </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Bún Chả Hà Nội" : "Bun Cha Hanoi"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
-                  {lang === "vi"
-                    ? "Chả nướng than hoa thơm lừng chấm cùng bát nước mắm chua ngọt ấm nóng, bún tươi và rau sống giòn mát."
-                    : "Charcoal-grilled pork patties and belly slices served in sweet-tangy dipping broth with vermicelli and herbs."}
-                </p>
-              </div>
-            </div>
-
-            {/* 3. Cha Ca La Vong */}
-            <div className="vnn-hanoi-article-card">
-              <div className="vnn-hanoi-card-img-wrap">
-                <img
-                  src="/guide/hanoi/hanoi-chaca-hd.jpg"
-                  alt="Cha Ca La Vong"
-                />
-              </div>
-              <div className="vnn-hanoi-card-body">
-                <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Chả Cá Lã Vọng" : "Cha Ca La Vong"}
-                </h3>
-                <p className="vnn-hanoi-card-desc">
-                  {lang === "vi"
-                    ? "Cá lăng ướp riềng nghệ nướng xém xèo xèo cùng thì là, hành hoa trên chảo mỡ sôi sùng sục, ăn kèm mắm tôm bùi béo."
-                    : "Turmeric-marinated river fish sizzled table-side with fresh dill, spring onions, peanuts, and fermented shrimp paste."}
-                </p>
-              </div>
-            </div>
-
-            {/* 4. Ca Phe Trung */}
+            {/* 7. Ca Phe Trung */}
             <div className="vnn-hanoi-article-card">
               <div className="vnn-hanoi-card-img-wrap">
                 <img
@@ -2127,7 +2304,7 @@ export default function HanoiPage() {
               </div>
               <div className="vnn-hanoi-card-body">
                 <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Cà Phê Trứng" : "Hanoi Egg Coffee"}
+                  {lang === "vi" ? "7. Cà Phê Trứng" : "7. Hanoi Egg Coffee"}
                 </h3>
                 <p className="vnn-hanoi-card-desc">
                   {lang === "vi"
@@ -2137,7 +2314,7 @@ export default function HanoiPage() {
               </div>
             </div>
 
-            {/* 5. Banh Cuon */}
+            {/* 8. Banh Cuon */}
             <div className="vnn-hanoi-article-card">
               <div className="vnn-hanoi-card-img-wrap">
                 <img
@@ -2147,7 +2324,7 @@ export default function HanoiPage() {
               </div>
               <div className="vnn-hanoi-card-body">
                 <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Bánh Cuốn Thanh Trì" : "Banh Cuon"}
+                  {lang === "vi" ? "8. Bánh Cuốn Thanh Trì" : "8. Banh Cuon"}
                 </h3>
                 <p className="vnn-hanoi-card-desc">
                   {lang === "vi"
@@ -2157,22 +2334,42 @@ export default function HanoiPage() {
               </div>
             </div>
 
-            {/* 6. Bun Thang */}
+            {/* 9. Bun Rieu Cua */}
             <div className="vnn-hanoi-article-card">
               <div className="vnn-hanoi-card-img-wrap">
                 <img
-                  src="/guide/hanoi/hanoi-bunthang-hd.jpg"
-                  alt="Bun Thang Hanoi"
+                  src="/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Bun-Rieu.jpg"
+                  alt="Bun Rieu Cua Hanoi"
                 />
               </div>
               <div className="vnn-hanoi-card-body">
                 <h3 className="vnn-hanoi-card-title">
-                  {lang === "vi" ? "Bún Thang" : "Bun Thang"}
+                  {lang === "vi" ? "9. Bún Riêu Cua Đồng" : "9. Bun Rieu Cua"}
                 </h3>
                 <p className="vnn-hanoi-card-desc">
                   {lang === "vi"
-                    ? "Bát bún tinh tế tựa bức tranh ngũ sắc với giò lụa thái chỉ, thịt gà xé, trứng tráng mỏng, củ cải khô và tinh dầu cà cuống."
-                    : "An intricate culinary mosaic featuring shredded chicken, silk sausage, paper-thin egg shreds, and dry radish."}
+                    ? "Bát bún riêu thanh mát với gạch cua đồng béo ngậy, đậu phụ rán vàng, cà chua đỏ mọng và vị chua thanh thanh của giấm bỗng."
+                    : "Tangy freshwater crab noodle soup cooked with ripe tomatoes, fried tofu, and traditional wine vinegar broth."}
+                </p>
+              </div>
+            </div>
+
+            {/* 10. Xoi Xeo */}
+            <div className="vnn-hanoi-article-card">
+              <div className="vnn-hanoi-card-img-wrap">
+                <img
+                  src="/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Xoi-Man.jpg"
+                  alt="Xoi Xeo Hanoi"
+                />
+              </div>
+              <div className="vnn-hanoi-card-body">
+                <h3 className="vnn-hanoi-card-title">
+                  {lang === "vi" ? "10. Xôi Xéo Hà Nội" : "10. Xoi Xeo"}
+                </h3>
+                <p className="vnn-hanoi-card-desc">
+                  {lang === "vi"
+                    ? "Gói xôi nếp vàng óng ả thơm dẻo bọc lá chuối, phủ lớp đỗ xanh thái mỏng bùi ngậy, hành phi giòn tan và rưới mỡ gà thơm lừng."
+                    : "Golden turmeric sticky rice served with shaved mung bean paste, fragrant fried shallots, and rich rendered chicken oil."}
                 </p>
               </div>
             </div>
