@@ -599,7 +599,7 @@ export default function BestVungTauBeachesPage() {
             <div className="vnn-author-wrap">
               <span className="vnn-author-avatar">VT</span>
               <span className="vnn-author-name">
-                {lang === "vi" ? "Welcome to Vietnam (VinaTap)" : "Welcome to Vietnam"}
+                {lang === "vi" ? "VinaTap" : "VinaTap"}
               </span>
             </div>
             <span className="vnn-meta-dot">•</span>

@@ -801,7 +801,7 @@ export default function HanoiTouristMapPage() {
 
           <div className="vnn-fullbleed-hero__meta">
             <span className="vnn-fullbleed-hero__author">
-              {isVi ? "Bởi Welcome to Vietnam" : "By Welcome to Vietnam"}
+              {isVi ? "Bởi VinaTap" : "By VinaTap"}
             </span>
             <span className="vnn-fullbleed-hero__dot">•</span>
             <span>

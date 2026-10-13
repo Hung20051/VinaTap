@@ -612,8 +612,8 @@ export default function TenBestThingsHCMCPage() {
       {/* ─── EDITORIAL HEADER & NAVBAR ─── */}
       <header className="vnn-navbar">
         <div className="vnn-navbar__inner">
-          <div className="vnn-navbar__logo">
-            <Logo />
+          <div className="vnn-navbar__brand">
+            <Logo size={32} showText={true} />
           </div>
 
           <ul className="vnn-navbar__menu">
@@ -800,8 +800,8 @@ export default function TenBestThingsHCMCPage() {
 
           <p className="hcmc-hero__meta">
             {isVi
-              ? "Bởi Welcome to Vietnam   5 Tháng 5, 2025"
-              : "By Welcome to Vietnam   May 5, 2025"}
+              ? "Bởi VinaTap   5 Tháng 5, 2025"
+              : "By VinaTap   May 5, 2025"}
           </p>
         </div>
       </section>
@@ -883,7 +883,7 @@ export default function TenBestThingsHCMCPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Welcome to Vietnam
+                  VinaTap
                 </a>
                 .
               </>
@@ -895,7 +895,7 @@ export default function TenBestThingsHCMCPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Welcome to Vietnam
+                  VinaTap
                 </a>
                 .
               </>
@@ -1010,7 +1010,7 @@ export default function TenBestThingsHCMCPage() {
         <div className="vnn-footer__bottom">
           <div className="vnn-footer__bottom-inner">
             <p className="vnn-footer__copyright">
-              © 2026 VinaTap • Welcome to Vietnam. All rights reserved.
+              © 2026 VinaTap . All rights reserved.
             </p>
             <div className="vnn-footer__socials">
               <a

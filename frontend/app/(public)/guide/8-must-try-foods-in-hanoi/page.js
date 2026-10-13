@@ -643,7 +643,7 @@ export default function MustTryFoodsInHanoiPage() {
             <div className="vnn-author-wrap">
               <span className="vnn-author-avatar">VT</span>
               <span className="vnn-author-name">
-                {lang === "vi" ? "Welcome to Vietnam (VinaTap)" : "Welcome to Vietnam"}
+                {lang === "vi" ? "VinaTap" : "VinaTap"}
               </span>
             </div>
             <span className="vnn-meta-dot">•</span>
@@ -675,7 +675,7 @@ export default function MustTryFoodsInHanoiPage() {
             </p>
           ) : (
             <p>
-              Hanoi is where food means <strong>tradition and care</strong>. Dishes here are made better by the city’s old charm and the chefs’ loyalty to handmade cooking. These chefs refuse shortcuts and prefer to do things the traditional way. Every meal in Hanoi tells a story, reflecting the city’s history, culture, and pride in its culinary identity. Let’s explore <strong>8 specialties</strong> that make Hanoi’s food scene so special with Vietnamnomad.
+              Hanoi is where food means <strong>tradition and care</strong>. Dishes here are made better by the city’s old charm and the chefs’ loyalty to handmade cooking. These chefs refuse shortcuts and prefer to do things the traditional way. Every meal in Hanoi tells a story, reflecting the city’s history, culture, and pride in its culinary identity. Let’s explore <strong>8 specialties</strong> that make Hanoi’s food scene so special.
             </p>
           )}
         </div>

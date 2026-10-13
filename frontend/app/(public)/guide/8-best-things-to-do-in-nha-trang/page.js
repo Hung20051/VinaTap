@@ -410,10 +410,10 @@ const NHA_TRANG_ITEMS = [
     captionEn: "Tran Phu Beach at night",
     captionVi: "Phố biển Trần Phú rực rỡ khi đêm về",
     paragraphsEn: [
-      "As the day winds down, take a moment to soak in the majestic sunset as the sun dips below the horizon. Whether you're sipping cocktails on a luxury cruise while enjoying a 5-course dinner and live music or catching the sunset on a stand-up paddleboard (with a more budget-friendly vibe), Nha Trang's sunsets radiate a magical light that'll stick with you long after your travels. Look up 'sunset cruise/yacht' or 'sunset SUP' and choose one that interests you.",
+      "As the day winds down, take a moment to soak in the majestic sunset as the sun dips below the horizon. Whether you're sipping cocktails on a luxury cruise while enjoying a 5 course dinner and live music or catching the sunset on a stand-up paddleboard (with a more budget-friendly vibe), Nha Trang's sunsets radiate a magical light that'll stick with you long after your travels. Look up \"sunset cruise/yacht\" or \"sunset SUP\" and choose one that interests you.",
     ],
     paragraphsVi: [
-      "Khi ánh ngày dần tắt, hãy dành những phút giây lắng đọng để ngắm mặt trời buông xuống sau rặng núi xa. Dù bạn chọn nhâm nhi ly cocktail trên du thuyền ngắm hoàng hôn sang trọng kết hợp bữa tối 5 món và violin sống động, hay chèo ván SUP lững lờ trên sóng biển, khoảnh khắc hoàng hôn Nha Trang luôn mang vẻ đẹp kỳ ảo khó quên.",
+      "Khi ánh ngày dần tắt, hãy dành những phút giây lắng đọng để ngắm mặt trời buông xuống sau rặng núi xa. Dù bạn chọn nhâm nhi ly cocktail trên du thuyền ngắm hoàng hôn sang trọng kết hợp bữa tối 5 món và violin sống động, hay chèo ván SUP lững lờ trên sóng biển, khoảnh khắc hoàng hôn Nha Trang luôn mang vẻ đẹp kỳ ảo khó quên. Tìm kiếm \"sunset cruise/yacht\" hoặc \"sunset SUP\" và chọn trải nghiệm mà bạn yêu thích nhất.",
     ],
   },
 ];
@@ -518,8 +518,8 @@ export default function EightBestThingsNhaTrangPage() {
       {/* ─── EDITORIAL HEADER & NAVBAR ─── */}
       <header className="vnn-navbar">
         <div className="vnn-navbar__inner">
-          <div className="vnn-navbar__logo">
-            <Logo />
+          <div className="vnn-navbar__brand">
+            <Logo size={32} showText={true} />
           </div>
 
           <ul className="vnn-navbar__menu">
@@ -707,8 +707,8 @@ export default function EightBestThingsNhaTrangPage() {
 
           <p className="hcmc-hero__meta">
             {isVi
-              ? "Bởi Welcome to Vietnam   1 Tháng 3, 2025"
-              : "By Welcome to Vietnam   March 1, 2025"}
+              ? "Bởi VinaTap   1 Tháng 3, 2025"
+              : "By VinaTap   March 1, 2025"}
           </p>
         </div>
       </section>
@@ -774,12 +774,16 @@ export default function EightBestThingsNhaTrangPage() {
           ))}
         </div>
 
-        {/* ─── CLOSING PARAGRAPH ─── */}
+        {/* ─── CLOSING PARAGRAPHS (Screenshots 1 & 2) ─── */}
         <div className="hcmc-closing-wrap">
           <p className="hcmc-closing-text">
             {isVi ? (
               <>
-                Nha Trang mang đến nhiều trải nghiệm hơn là chỉ nằm dài thư giãn trên bãi biển hay đi thuyền thăm đảo. Sự hòa quyện giữa vẻ đẹp thiên nhiên ngoạn mục và chiều sâu văn hóa chắc chắn sẽ để lại trong bạn những kỷ niệm khó phai. Chúng tôi hy vọng 8 gợi ý trên sẽ giúp bạn có thêm nhiều lựa chọn vui chơi thú vị. Lần tới khi đến Nha Trang, hãy thử bước chân khỏi bờ cát quen thuộc để tận hưởng những trải nghiệm tuyệt vời này nhé!
+                Nha Trang mang đến nhiều trải nghiệm hơn là chỉ nằm dài thư giãn trên bãi biển hay đi thuyền thăm đảo. Sự hòa quyện giữa vẻ đẹp thiên nhiên ngoạn mục và chiều sâu văn hóa chắc chắn sẽ để lại trong bạn những kỷ niệm khó phai. Chúng tôi hy vọng 8 gợi ý trên sẽ giúp bạn có thêm nhiều lựa chọn vui chơi thú vị. Lần tới khi đến{" "}
+                <Link href="/province/khanh-hoa" className="hcmc-inline-link">
+                  Nha Trang
+                </Link>
+                , hãy thử bước chân khỏi bờ cát quen thuộc để tận hưởng những trải nghiệm tuyệt vời này nhé!
               </>
             ) : (
               <>
@@ -791,16 +795,27 @@ export default function EightBestThingsNhaTrangPage() {
               </>
             )}
           </p>
+          <p className="hcmc-closing-note">
+            {isVi ? (
+              <>
+                <strong>Ghi chú:</strong> Mọi thương hiệu, địa điểm hoặc điểm tham quan được đề cập đều dựa trên gợi ý và trải nghiệm cá nhân của tác giả, hoàn toàn không phải quảng cáo.
+              </>
+            ) : (
+              <>
+                <strong>Note:</strong> Any brands, companies, or attractions mentioned are based on the author's recommendations and personal opinions, not advertisements.
+              </>
+            )}
+          </p>
         </div>
 
-        {/* ─── TAGS ROW ─── */}
+        {/* ─── TAGS ROW (Screenshot 2) ─── */}
         <div className="hcmc-tags-wrap">
           <span className="hcmc-tag-badge">TAGS</span>
           <Link href="/province/khanh-hoa" className="hcmc-tag-pill">
             {isVi ? "Nha Trang" : "Nha Trang"}
           </Link>
-          <Link href="/guide/20-best-things-to-do-in-vietnam" className="hcmc-tag-pill">
-            {isVi ? "Trải nghiệm" : "Things to do"}
+          <Link href="/province/khanh-hoa" className="hcmc-tag-pill">
+            {isVi ? "Điểm tham quan Nha Trang" : "Nha Trang attractions"}
           </Link>
         </div>
 
@@ -889,7 +904,7 @@ export default function EightBestThingsNhaTrangPage() {
         <div className="vnn-footer__bottom">
           <div className="vnn-footer__bottom-inner">
             <p className="vnn-footer__copyright">
-              © 2026 VinaTap • Welcome to Vietnam. All rights reserved.
+              © 2026 VinaTap . All rights reserved.
             </p>
             <div className="vnn-footer__socials">
               <a

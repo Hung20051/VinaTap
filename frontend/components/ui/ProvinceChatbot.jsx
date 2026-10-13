@@ -334,8 +334,8 @@ export default function ProvinceChatbot({
             <span className="vnn-floating-widget__halo-mid" />
             <span className="vnn-floating-widget__avatar">
               <img
-                src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
-                alt="AI Companion"
+                src="/logo.png"
+                alt="VinaTap AI Companion"
                 className="vnn-floating-widget__avatar-img"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";

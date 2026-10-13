@@ -385,7 +385,7 @@ export default function VietnamExtendedItineraryMap({ lang = "en" }) {
             fontWeight="500"
             fontFamily="sans-serif"
           >
-            © Vietnamnomad
+            © VinaTap
           </text>
         </svg>
       </div>

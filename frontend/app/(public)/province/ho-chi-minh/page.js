@@ -699,14 +699,15 @@ export default function HoChiMinhCityPage() {
                       }}
                     >
                       <img
-                        src="/guide/hcmc/Vietnamnomad-logo-by-Welcome-to-Vietnam-official.png"
-                        alt="Logo"
+                        src="/logo.png"
+                        alt="VinaTap"
                         style={{
                           width: "36px",
                           height: "36px",
                           borderRadius: "50%",
                           background: "#fff",
                           padding: "2px",
+                          objectFit: "contain",
                         }}
                       />
                       <div>

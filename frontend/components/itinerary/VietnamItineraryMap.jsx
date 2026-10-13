@@ -433,7 +433,7 @@ export default function VietnamItineraryMap({ onSelectDestination, activeId, lan
             fontWeight="500"
             fontFamily="sans-serif"
           >
-            © Vietnamnomad
+            © VinaTap
           </text>
         </svg>
       </div>

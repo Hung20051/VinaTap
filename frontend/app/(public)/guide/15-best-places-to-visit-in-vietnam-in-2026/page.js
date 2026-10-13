@@ -772,7 +772,7 @@ export default function BestPlaces2026Page() {
           <span className="vnn-floating-widget__halo-mid" />
           <span className="vnn-floating-widget__avatar">
             <img
-              src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
+              src="/logo.png"
               alt="AI Companion"
               className="vnn-floating-widget__avatar-img"
               onError={(e) => {

@@ -1498,7 +1498,7 @@ export default function ThreeWeekVietnamItineraryPage() {
         >
           <span className="vnn-floating-widget__icon-wrap">
             <img
-              src="/guide/hcmc/Icon-Bubble-Chat-AI-Companion-Vietnamnomad.png"
+              src="/logo.png"
               alt="AI Travel Companion"
               className="vnn-floating-widget__logo"
               onError={(e) => {

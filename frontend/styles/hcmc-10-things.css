@@ -263,6 +263,18 @@
   text-decoration: underline;
 }
 
+.hcmc-closing-note {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #4a5568;
+  margin: 20px 0 0;
+}
+
+.hcmc-closing-note strong {
+  color: #1a202c;
+  font-weight: 700;
+}
+
 /* ─── YOUTUBE VIDEO EMBED (Screenshot 4) ─── */
 .hcmc-video-container {
   max-width: 780px;
