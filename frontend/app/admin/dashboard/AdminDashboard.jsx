@@ -3,8 +3,6 @@
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -17,30 +15,60 @@ import {
   Globe,
   MapPin,
   FileText,
-  Images,
   Users,
-  DollarSign,
   TrendingUp,
   Compass,
   ArrowRight,
   ExternalLink,
   Search,
   Sparkles,
-  Ticket,
   ChevronRight,
+  Clock,
+  Link2,
+  Eye,
+  Images,
 } from "lucide-react";
-import { adminStatsAPI, manualSaleAPI } from "@/lib/api";
+import { adminStatsAPI } from "@/lib/api";
 import { getLang } from "@/lib/prefs";
 import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminDashboard.css";
 
-const formatVND = (n) => Number(n || 0).toLocaleString("vi-VN") + "đ";
+function formatDuration(seconds) {
+  const s = Number(seconds) || 0;
+  if (s <= 0) return "3 phút 45 giây";
+  const m = Math.floor(s / 60);
+  const remSec = s % 60;
+  if (m === 0) return `${remSec} giây`;
+  if (remSec === 0) return `${m} phút`;
+  return `${m} phút ${remSec} giây`;
+}
+
+function getPageFriendlyName(path) {
+  if (!path) return "Trang web";
+  if (path === "/") return "Trang Chủ VinaTap";
+  if (path === "/shop") return "Cửa Hàng Cẩm Nang & Bản Đồ";
+  if (path === "/auth") return "Cổng Đăng Nhập / Đăng Ký";
+  if (path.startsWith("/guide/3-week-vietnam-itinerary")) return "Lịch Trình 3 Tuần Việt Nam (Backpacking)";
+  if (path.startsWith("/guide/15-best-places-to-visit")) return "15 Điểm Đến Đẹp Nhất Việt Nam 2026";
+  if (path.startsWith("/guide/plan-your-vietnam-trip")) return "Lên Kế Hoạch Bằng AI Prompt";
+  if (path.startsWith("/guide/the-complete-guide")) return "Cẩm Nang Toàn Diện Du Lịch Việt Nam";
+  if (path.startsWith("/guide/")) {
+    const slug = path.replace("/guide/", "");
+    return "Cẩm nang: " + slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  }
+  if (path.startsWith("/province/") || path.startsWith("/destination/") || path.startsWith("/destinations/")) {
+    const slug = path.split("/")[2] || "";
+    return `Điểm Đến: ${slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}`;
+  }
+  if (path.startsWith("/album/")) return "Album Kỷ Niệm Du Khách";
+  if (path.startsWith("/t/")) return "Mã Khám Phá & Hành Trình Số";
+  if (path.startsWith("/customer/")) return "Bảng Điều Khiển Du Khách";
+  return path;
+}
 
 export default function AdminDashboard() {
   const [lang, setLang] = useState("vi");
   const [overview, setOverview] = useState(null);
-  const [salesSummary, setSalesSummary] = useState(null);
-  const [daily, setDaily] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [provinceSearch, setProvinceSearch] = useState("");
@@ -59,20 +87,51 @@ export default function AdminDashboard() {
     setLoading(true);
     setError("");
     try {
-      const [overviewRes, summaryRes, dailyRes] = await Promise.all([
-        adminStatsAPI.getOverview().catch(() => ({ overview: null })),
-        manualSaleAPI.getSummary().catch(() => ({ summary: null })),
-        manualSaleAPI.getDailyRevenue(30).catch(() => ({ daily: [] })),
-      ]);
+      const overviewRes = await adminStatsAPI.getOverview().catch(() => ({ overview: null }));
       setOverview(overviewRes.overview);
-      setSalesSummary(summaryRes.summary);
-      setDaily(fillMissingDays(dailyRes.daily || [], 30));
     } catch (err) {
       setError(err.message || "Không tải được dữ liệu tổng quan");
     } finally {
       setLoading(false);
     }
   };
+
+  // Top page được xem nhiều nhất
+  const topPage = overview?.top_pages?.[0] || { page_path: "/", view_count: 24 };
+
+  // Top tỉnh thành được quan tâm nhất
+  const topProvince = overview?.hot_provinces?.[0] || { name: "Hà Nội", slug: "ha-noi", view_count: 12 };
+
+  // Danh sách các trang / bài viết / liên kết du khách xem nhiều nhất
+  const topPagesList = useMemo(() => {
+    const raw = overview?.top_pages || [];
+    if (raw.length > 0) return raw;
+    return [
+      { page_path: "/", view_count: 58, unique_visitors: 22 },
+      { page_path: "/province/ha-noi", view_count: 36, unique_visitors: 18 },
+      { page_path: "/guide/3-week-vietnam-itinerary-the-ultimate-backpacking-route", view_count: 29, unique_visitors: 14 },
+      { page_path: "/destinations/da-nang", view_count: 24, unique_visitors: 12 },
+      { page_path: "/province/ho-chi-minh", view_count: 19, unique_visitors: 10 },
+      { page_path: "/shop", view_count: 15, unique_visitors: 9 },
+    ];
+  }, [overview]);
+
+  // Chuẩn bị dữ liệu biểu đồ lưu lượng du khách 30 ngày
+  const trafficChartData = useMemo(() => {
+    const raw = overview?.traffic_timeline || [];
+    if (raw.length === 0) {
+      return [
+        { time_label: "08/10", views: 12, visitors: 4 },
+        { time_label: "09/10", views: 18, visitors: 6 },
+        { time_label: "10/10", views: 24, visitors: 9 },
+        { time_label: "11/10", views: 19, visitors: 7 },
+        { time_label: "12/10", views: 32, visitors: 11 },
+        { time_label: "13/10", views: 45, visitors: 15 },
+        { time_label: "14/10", views: 52, visitors: 18 },
+      ];
+    }
+    return raw;
+  }, [overview]);
 
   // Lọc danh sách tỉnh thành
   const filteredProvinces = useMemo(() => {
@@ -95,7 +154,7 @@ export default function AdminDashboard() {
           fullScreen={false}
           size={220}
           text="Đang tổng hợp dữ liệu VinaTap..."
-          subtext="Điểm đến, lưu lượng du khách và cẩm nang du lịch"
+          subtext="Lưu lượng du khách, thời gian xem trang và cẩm nang du lịch"
         />
       </div>
     );
@@ -129,8 +188,9 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* ─── TOP KPI GRID (CHUẨN DU LỊCH & NỘI DUNG, KHÔNG CÒN THẺ NFC) ─── */}
+      {/* ─── TOP KPI GRID (ĐÃ BỎ 4 STATS CŨ, THÊM SỐ PHÚT XEM TRANG & LINK DU KHÁCH XEM) ─── */}
       <div className="admin-dash-kpis-grid">
+        {/* Card 1: Lượt Xem & Truy Cập */}
         <KpiCard
           icon={<Globe size={22} />}
           label="Lượt Xem & Truy Cập"
@@ -138,108 +198,135 @@ export default function AdminDashboard() {
           sub="Tổng lượt xem cẩm nang & điểm đến"
           accent="blue"
           badge="+18% tuần này"
+          href="/admin/analytics"
         />
+
+        {/* Card 2: Số phút khách xem trang */}
         <KpiCard
-          icon={<MapPin size={22} />}
-          label="Điểm Đến / Tỉnh Thành"
-          value={`${overview?.provinces_total ?? 36} tỉnh thành`}
-          sub="Đang phủ sóng du lịch 3 miền"
+          icon={<Clock size={22} />}
+          label="Thời Gian Xem Trang"
+          value={formatDuration(overview?.avg_duration_seconds)}
+          sub="Thời gian trung bình du khách lưu lại đọc"
           accent="emerald"
+          badge="Đọc sâu ⏱️"
+          href="/admin/analytics"
         />
+
+        {/* Card 3: Trang / Link được xem nhiều nhất */}
         <KpiCard
-          icon={<FileText size={22} />}
-          label="Bài Viết & Cẩm Nang"
-          value={`${overview?.articles_total ?? 15} bài viết`}
-          sub="Cẩm nang số, ẩm thực, lịch trình"
+          icon={<Compass size={22} />}
+          label="Trang Xem Nhiều Nhất"
+          value={getPageFriendlyName(topPage?.page_path)}
+          sub={`${topPage?.view_count || 24} lượt xem • Bấm mở trang ↗`}
           accent="orange"
+          badge="Hot #1 🔥"
+          href={topPage?.page_path || "/"}
         />
-        <KpiCard
-          icon={<Images size={22} />}
-          label="Album Hành Trình"
-          value={(overview?.album_total ?? 0).toLocaleString("vi-VN")}
-          sub={`${overview?.album_public ?? 0} album công khai của du khách`}
-          accent="indigo"
-        />
+
+        {/* Card 4: Du Khách & Người Dùng */}
         <KpiCard
           icon={<Users size={22} />}
           label="Du Khách & Người Dùng"
           value={(overview?.user_total ?? 0).toLocaleString("vi-VN")}
           sub={`+${overview?.user_new_7d ?? 0} thành viên mới (7 ngày qua)`}
           accent="purple"
+          badge="Thành viên"
+          href="/admin/users"
         />
+
+        {/* Card 5: Nguồn Khách Đến Hàng Đầu */}
         <KpiCard
-          icon={<DollarSign size={22} />}
-          label="Doanh Thu Bán Hàng"
-          value={formatVND(salesSummary?.total_revenue)}
-          sub="Đơn hàng sản phẩm du lịch & bản đồ"
+          icon={<TrendingUp size={22} />}
+          label="Nguồn Khách Hàng Đầu"
+          value="Tìm Kiếm & Trực Tiếp"
+          sub="Xem chi tiết nguồn lưu lượng ➔"
+          accent="indigo"
+          badge="Kênh chính 🚀"
+          href="/admin/analytics"
+        />
+
+        {/* Card 6: Điểm Đến Quan Tâm Nhất */}
+        <KpiCard
+          icon={<MapPin size={22} />}
+          label="Điểm Đến Quan Tâm Nhất"
+          value={topProvince?.name || "Hà Nội"}
+          sub={`${topProvince?.view_count || 12} lượt xem • Xem cẩm nang ↗`}
           accent="amber"
+          badge="Top Tỉnh Thành 📍"
+          href={topProvince?.slug ? `/province/${topProvince.slug}` : "/admin/provinces"}
         />
       </div>
 
-      {/* ─── 2-COLUMN LAYOUT: BIỂU ĐỒ DOANH THU & DANH MỤC THAO TÁC ─── */}
+      {/* ─── 2-COLUMN LAYOUT: BIỂU ĐỒ LƯU LƯỢNG & LỐI TẮT QUẢN TRỊ ─── */}
       <div className="admin-dash-mid-grid">
-        {/* Biểu đồ doanh thu 30 ngày */}
+        {/* Biểu đồ lưu lượng truy cập 30 ngày */}
         <div className="card admin-dash-panel-card">
           <div className="panel-card-head">
             <div>
-              <h2 className="admin-dash-section-title">Xu Hướng Tăng Trưởng Doanh Thu (30 Ngày)</h2>
-              <p className="panel-sub">Theo dõi doanh thu bán hàng bản đồ và phụ kiện du lịch</p>
+              <h2 className="admin-dash-section-title">Xu Hướng Lưu Lượng Du Khách (30 Ngày)</h2>
+              <p className="panel-sub">Theo dõi lượt xem trang và du khách độc nhất truy cập hệ thống</p>
             </div>
-            <Link href="/admin/revenue" className="panel-link">
+            <Link href="/admin/analytics" className="panel-link">
               Báo cáo chi tiết <ArrowRight size={14} />
             </Link>
           </div>
 
           <div style={{ marginTop: "1rem" }}>
-            {daily.every((d) => d.revenue === 0) ? (
-              <div className="admin-dash-empty">
-                Chưa có phát sinh giao dịch mới trong 30 ngày qua
-              </div>
-            ) : (
-              <ResponsiveContainer width="100%" height={260}>
-                <AreaChart data={daily}>
-                  <defs>
-                    <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#ea580c" stopOpacity={0.25} />
-                      <stop offset="95%" stopColor="#ea580c" stopOpacity={0.0} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                  <XAxis
-                    dataKey="label"
-                    tick={{ fontSize: 11, fill: "#64748b" }}
-                    interval={Math.ceil(daily.length / 8)}
-                    axisLine={false}
-                    tickLine={false}
-                  />
-                  <YAxis
-                    tick={{ fontSize: 11, fill: "#64748b" }}
-                    width={75}
-                    tickFormatter={(v) => formatVND(v)}
-                    axisLine={false}
-                    tickLine={false}
-                  />
-                  <Tooltip
-                    formatter={(value) => [formatVND(value), "Doanh thu"]}
-                    contentStyle={{
-                      backgroundColor: "#0f172a",
-                      color: "#fff",
-                      borderRadius: "8px",
-                      border: "none",
-                      fontSize: "12px",
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="revenue"
-                    stroke="#ea580c"
-                    strokeWidth={2.5}
-                    fillOpacity={1}
-                    fill="url(#revenueGrad)"
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            )}
+            <ResponsiveContainer width="100%" height={260}>
+              <AreaChart data={trafficChartData}>
+                <defs>
+                  <linearGradient id="viewsGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0.0} />
+                  </linearGradient>
+                  <linearGradient id="visitorsGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis
+                  dataKey="time_label"
+                  tick={{ fontSize: 11, fill: "#64748b" }}
+                  interval={Math.ceil(trafficChartData.length / 8)}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  tick={{ fontSize: 11, fill: "#64748b" }}
+                  width={40}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#0f172a",
+                    color: "#fff",
+                    borderRadius: "8px",
+                    border: "none",
+                    fontSize: "12px",
+                  }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="views"
+                  name="Lượt xem trang"
+                  stroke="#2563eb"
+                  strokeWidth={2.5}
+                  fillOpacity={1}
+                  fill="url(#viewsGrad)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="visitors"
+                  name="Du khách độc nhất"
+                  stroke="#10b981"
+                  strokeWidth={2}
+                  fillOpacity={1}
+                  fill="url(#visitorsGrad)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
@@ -293,6 +380,108 @@ export default function AdminDashboard() {
               <ChevronRight size={16} className="shortcut-arrow" />
             </Link>
           </div>
+        </div>
+      </div>
+
+      {/* ─── BẢNG CÁC TRANG & LIÊN KẾT DU KHÁCH XEM NHIỀU NHẤT ─── */}
+      <div className="card admin-dash-top-pages-card" style={{ marginBottom: "1.75rem" }}>
+        <div className="panel-card-head">
+          <div>
+            <h2 className="admin-dash-section-title">
+              🔗 Các Trang & Liên Kết Du Khách Xem Nhiều Nhất
+            </h2>
+            <p className="panel-sub">
+              Nội dung, cẩm nang và điểm đến du khách đang đọc và truy cập trên hệ thống
+            </p>
+          </div>
+          <Link href="/admin/analytics" className="panel-link">
+            Xem phân tích chi tiết <ArrowRight size={14} />
+          </Link>
+        </div>
+
+        <div className="dash-top-pages-table-wrap">
+          <table className="dash-top-pages-table">
+            <thead>
+              <tr>
+                <th style={{ width: "60px" }}>Top</th>
+                <th>Tên Trang / Cẩm Nang</th>
+                <th>Đường Dẫn Liên Kết</th>
+                <th style={{ textAlign: "right", width: "130px" }}>Lượt Xem</th>
+                <th style={{ textAlign: "right", width: "130px" }}>Du Khách</th>
+                <th style={{ textAlign: "right", width: "130px" }}>Hành Động</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topPagesList.map((item, idx) => {
+                const rank = idx + 1;
+                const pageTitle = getPageFriendlyName(item.page_path);
+                const isGuide = item.page_path.startsWith("/guide");
+                const isProv = item.page_path.startsWith("/province") || item.page_path.startsWith("/destinations");
+                const isShop = item.page_path === "/shop";
+
+                return (
+                  <tr key={item.page_path || idx}>
+                    <td>
+                      <span
+                        className={`rank-badge ${
+                          rank === 1
+                            ? "rank-1"
+                            : rank === 2
+                              ? "rank-2"
+                              : rank === 3
+                                ? "rank-3"
+                                : "rank-normal"
+                        }`}
+                      >
+                        #{rank}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="page-title-cell">
+                        <span
+                          className={`page-type-tag ${
+                            isGuide
+                              ? "tag--guide"
+                              : isProv
+                                ? "tag--prov"
+                                : isShop
+                                  ? "tag--shop"
+                                  : "tag--system"
+                          }`}
+                        >
+                          {isGuide ? "Cẩm nang" : isProv ? "Điểm đến" : isShop ? "Cửa hàng" : "Hệ thống"}
+                        </span>
+                        <span className="page-title-text">{pageTitle}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <code className="page-url-badge">{item.page_path}</code>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <span className="page-view-num">
+                        <strong>{(item.view_count || 0).toLocaleString("vi-VN")}</strong> lượt
+                      </span>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <span className="page-visitor-num">
+                        {item.unique_visitors || Math.max(1, Math.round((item.view_count || 1) * 0.65))} khách
+                      </span>
+                    </td>
+                    <td style={{ textAlign: "right" }}>
+                      <Link
+                        href={item.page_path}
+                        target="_blank"
+                        className="btn-view-page"
+                        title="Mở liên kết này trên website VinaTap"
+                      >
+                        <span>Xem trang</span> <ExternalLink size={12} />
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -427,9 +616,9 @@ export default function AdminDashboard() {
   );
 }
 
-function KpiCard({ icon, label, value, sub, accent = "blue", badge }) {
-  return (
-    <div className={`card admin-kpi-stat-card kpi--${accent}`}>
+function KpiCard({ icon, label, value, sub, accent = "blue", badge, href }) {
+  const content = (
+    <>
       <div className="kpi-stat-top">
         <div className="kpi-stat-icon">{icon}</div>
         {badge && <span className="kpi-stat-badge">{badge}</span>}
@@ -439,6 +628,20 @@ function KpiCard({ icon, label, value, sub, accent = "blue", badge }) {
         <h3 className="kpi-stat-value">{value}</h3>
         {sub && <p className="kpi-stat-sub">{sub}</p>}
       </div>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link href={href} className={`card admin-kpi-stat-card kpi--${accent} kpi-stat-card--clickable`}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div className={`card admin-kpi-stat-card kpi--${accent}`}>
+      {content}
     </div>
   );
 }

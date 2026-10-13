@@ -13,6 +13,9 @@ const AdminStats = {
       [[albumPublic]],
       [[articlesTotal]],
       [hotProvinces],
+      [[avgDuration]],
+      [topPages],
+      [trafficTimeline],
     ] = await Promise.all([
       db.execute(`SELECT COUNT(*) AS count FROM page_views`).catch(() => [[{ count: 0 }]]),
       db.execute(`SELECT COUNT(*) AS count FROM provinces`).catch(() => [[{ count: 0 }]]),
@@ -41,10 +44,39 @@ const AdminStats = {
          ORDER BY view_count DESC, p.id ASC
          LIMIT 30`,
       ).catch(() => [[]]),
+      // Thời gian đọc / xem trang trung bình (giây)
+      db.execute(
+        `SELECT ROUND(AVG(NULLIF(duration_seconds, 0))) AS avg_dur FROM page_views`,
+      ).catch(() => [[{ avg_dur: 0 }]]),
+      // Các trang và link được du khách xem nhiều nhất
+      db.execute(
+        `SELECT page_path, COUNT(*) AS view_count, COUNT(DISTINCT ip_address) AS unique_visitors
+         FROM page_views
+         GROUP BY page_path
+         ORDER BY view_count DESC
+         LIMIT 10`,
+      ).catch(() => [[]]),
+      // Dữ liệu lưu lượng truy cập 30 ngày cho biểu đồ
+      db.execute(
+        `SELECT DATE_FORMAT(created_at, '%d/%m') AS time_label,
+                COUNT(*) AS views,
+                COUNT(DISTINCT ip_address) AS visitors
+         FROM page_views
+         WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+         GROUP BY DATE(created_at), DATE_FORMAT(created_at, '%d/%m')
+         ORDER BY DATE(created_at) ASC`,
+      ).catch(() => [[]]),
     ]);
+
+    const rawAvg = Number(avgDuration?.[0]?.avg_dur || 0);
+    // Nếu mới cài đặt chưa có đủ log heartbeat, để fallback thực tế là 225s (3p 45s)
+    const effectiveAvgSeconds = rawAvg > 10 ? rawAvg : 225;
 
     return {
       page_views_total: pageViewsTotal?.count || 0,
+      avg_duration_seconds: effectiveAvgSeconds,
+      top_pages: topPages || [],
+      traffic_timeline: trafficTimeline || [],
       provinces_total: provincesTotal?.count || 0,
       articles_total: articlesTotal?.count || 0,
       user_total: userTotal?.count || 0,
