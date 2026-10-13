@@ -5,6 +5,7 @@ import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import { articleAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
@@ -36,6 +37,7 @@ import {
   Award,
 } from "lucide-react";
 import "@/styles/guide-editorial.css";
+import "@/styles/home.css";
 
 // ─── DỮ LIỆU CẨM NANG: 10 ĐIỀU TUYỆT NHẤT NÊN LÀM Ở TP. HỒ CHÍ MINH ───
 const HCMC_GUIDE_ITEMS = [
@@ -1323,6 +1325,9 @@ function GuideDetailContent() {
           </div>
         </footer>
       </main>
+
+      {/* ─── FULL EDITORIAL FOOTER ─── */}
+      <PublicFooter lang="vi" />
 
       {/* ─── TOAST THÔNG BÁO TƯƠNG TÁC ─────────────────────────────── */}
       <div className={`guide-toast ${toastVisible ? "show" : ""}`}>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import {
   Compass,
@@ -27,6 +28,7 @@ import {
   Award,
 } from "lucide-react";
 import "@/styles/guide-editorial.css";
+import "@/styles/home.css";
 
 // ─── DỮ LIỆU: 12 MÓN ĂN NHẤT ĐỊNH PHẢI THỬ Ở TP. HỒ CHÍ MINH ───
 const HCMC_FOOD_ITEMS = [
@@ -913,6 +915,9 @@ export default function MustTryFoodsInHCMCPage() {
           </div>
         </footer>
       </main>
+
+      {/* ─── FULL EDITORIAL FOOTER ─── */}
+      <PublicFooter lang="vi" />
 
       {/* ─── TOAST THÔNG BÁO ─── */}
       <div className={`guide-toast ${toastVisible ? "show" : ""}`}>

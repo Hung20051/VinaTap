@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import NavbarAuthButton from "@/components/ui/NavbarAuthButton";
@@ -890,37 +891,8 @@ export default function EightBestThingsNhaTrangPage() {
         </section>
       </main>
 
-      {/* ─── FOOTER BANNER & FOOTER ─── */}
-      <footer className="vnn-footer">
-        <div className="vnn-footer__banner">
-          <picture>
-            <img
-              src="/guide/hcmc/Vietnamnomad-footer-banner-2026.jpg"
-              alt="Vietnam Travel Community"
-              className="vnn-footer__banner-img"
-              loading="lazy"
-            />
-          </picture>
-        </div>
-
-        <div className="vnn-footer__bottom">
-          <div className="vnn-footer__bottom-inner">
-            <p className="vnn-footer__copyright">
-              © 2026 VinaTap . All rights reserved.
-            </p>
-            <div className="vnn-footer__socials">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-              >
-                <Facebook size={18} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* ─── FOOTER ─── */}
+      <PublicFooter lang={lang} />
 
       {/* ─── FLOATING AI COMPANION ─── */}
       <ProvinceChatbot provinceName="Khánh Hòa" />

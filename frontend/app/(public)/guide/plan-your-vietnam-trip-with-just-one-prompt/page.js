@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
@@ -557,64 +558,6 @@ export default function PlanYourVietnamTripPage() {
             and manage your entire itinerary with just one prompt.
           </p>
 
-          {/* ─── VIDEO PLAYER SECTION (SCREENSHOT 2) ─── */}
-          <div className="plan-trip-video-card">
-            {!isVideoPlaying ? (
-              <div
-                className="plan-trip-video-cover"
-                onClick={() => setIsVideoPlaying(true)}
-              >
-                <img
-                  src="/guide/plan-trip/video-cover.jpg"
-                  alt="Plan your Vietnam trip with just 1 prompt - YouTube Video Cover"
-                  className="plan-trip-video-img"
-                />
-                <div className="plan-trip-video-header">
-                  <div className="plan-trip-video-avatar">
-                    <Logo size={24} showText={false} noLink />
-                  </div>
-                  <div className="plan-trip-video-channel">
-                    <span className="plan-trip-video-channel-name">
-                      Plan your Vietnam trip with just 1 prompt
-                    </span>
-                    <span className="plan-trip-video-channel-sub">
-                      VinaTap
-                    </span>
-                  </div>
-                </div>
-
-                <div className="plan-trip-video-center-btn">
-                  <div className="plan-trip-video-play-icon">
-                    <Play size={28} fill="#ffffff" />
-                  </div>
-                  <div className="plan-trip-video-badge-banner">
-                    PLAN VIETNAM ITINERARY IN 1 PROMPT
-                  </div>
-                </div>
-
-                <a
-                  href="https://www.youtube.com/watch?v=DRYGz-p6d3U"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="plan-trip-video-yt-link"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <span>Xem trên YouTube</span>
-                </a>
-              </div>
-            ) : (
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/DRYGz-p6d3U?autoplay=1"
-                title="Plan your Vietnam trip with just 1 prompt"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                style={{ width: "100%", height: "100%", border: "none" }}
-              />
-            )}
-          </div>
 
           {/* ─── SECTION 1: CREATE YOUR ITINERARY INSTANTLY (SCREENSHOT 3) ─── */}
           <h2>Create Your Itinerary Instantly</h2>
@@ -897,21 +840,7 @@ export default function PlanYourVietnamTripPage() {
       )}
 
       {/* ─── 7. EDITORIAL FOOTER ─── */}
-      <footer className="home-footer" style={{ marginTop: "60px" }}>
-        <div className="home-footer__bottom">
-          <p>© 2026 VinaTap. Tất cả quyền được bảo lưu. Cẩm nang du lịch 34 tỉnh thành Việt Nam.</p>
-          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-            <a
-              href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#9ca3af" }}
-            >
-              <Facebook size={18} />
-            </a>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter lang={lang} />
     </div>
   );
 }

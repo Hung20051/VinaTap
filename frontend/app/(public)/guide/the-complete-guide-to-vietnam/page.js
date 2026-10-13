@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
@@ -591,42 +592,6 @@ export default function CompleteGuideToVietnamPage() {
             </p>
           )}
 
-          {/* ─── VIDEO PLAYER SECTION ─── */}
-          <div className="complete-guide-video-card">
-            {!isVideoPlaying ? (
-              <div
-                className="complete-guide-video-cover"
-                onClick={() => setIsVideoPlaying(true)}
-              >
-                <img
-                  src="/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg"
-                  alt="Vietnam Travel Guide Video Series"
-                  className="complete-guide-video-img"
-                />
-                <div className="complete-guide-video-center-btn">
-                  <div className="complete-guide-video-play-icon">
-                    <Play size={32} fill="#ffffff" />
-                  </div>
-                  <div className="complete-guide-video-badge-banner">
-                    {lang === "vi"
-                      ? "CẨM NANG TOÀN DIỆN DU LỊCH VIỆT NAM 2026"
-                      : "VIETNAM COMPLETE TRAVEL GUIDE 2026"}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/BvP3G1Xfth8?autoplay=1"
-                title="Vietnam Travel Guide: Climate, Visas, Destinations, Cuisine & Tips"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                style={{ width: "100%", height: "100%", border: "none" }}
-              />
-            )}
-          </div>
 
           {/* ─── PHẦN 1: ĐỊA HÌNH VÀ KHÍ HẬU ─── */}
           <h2>
@@ -1436,25 +1401,7 @@ export default function CompleteGuideToVietnamPage() {
       )}
 
       {/* ─── 7. EDITORIAL FOOTER ─── */}
-      <footer className="home-footer" style={{ marginTop: "60px" }}>
-        <div className="home-footer__bottom">
-          <p>
-            {lang === "vi"
-              ? "© 2026 VinaTap. Tất cả quyền được bảo lưu. Cẩm nang du lịch 34 tỉnh thành Việt Nam."
-              : "© 2026 VinaTap. All rights reserved. Travel guide to 34 provinces of Vietnam."}
-          </p>
-          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-            <a
-              href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#9ca3af" }}
-            >
-              <Facebook size={18} />
-            </a>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter lang={lang} />
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -801,6 +802,9 @@ export default function MustTryFoodsInHanoiPage() {
           </div>
         </section>
       </main>
+
+      {/* ─── FULL EDITORIAL FOOTER ─── */}
+      <PublicFooter lang={lang} />
 
       {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
       <ProvinceChatbot

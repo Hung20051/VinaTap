@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -787,7 +788,7 @@ export default function NhaTrangFoodGuidePage() {
           <div className="vnn-fullbleed-hero__meta">
             <span className="vnn-fullbleed-hero__author">VinaTap Editorial</span>
             <span className="vnn-fullbleed-hero__dot">•</span>
-            <span>{lang === "vi" ? "111 Tháng 10, 2026" : "October 14, 2026"}</span>
+            <span>{lang === "vi" ? "11 Tháng 10, 2026" : "October 14, 2026"}</span>
             <span className="vnn-fullbleed-hero__dot">•</span>
             <span>{lang === "vi" ? "5 phút đọc" : "5 mins read"}</span>
             <span className="vnn-fullbleed-hero__dot">•</span>
@@ -1029,6 +1030,9 @@ export default function NhaTrangFoodGuidePage() {
           </div>
         </section>
       </main>
+
+      {/* ─── FULL EDITORIAL FOOTER ─── */}
+      <PublicFooter lang={lang} />
 
       {/* ── Lightbox Modal ── */}
       {lightboxImg && (

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -885,15 +886,10 @@ export default function WhereToStayInHCMCPage() {
           </section>
         </article>
 
-        {/* FOOTER BẢN QUYỀN */}
-        <footer style={{ marginTop: "4rem", textAlign: "center", borderTop: "1px solid var(--guide-border)", paddingTop: "2rem", color: "var(--guide-text-muted)", fontSize: "0.88rem" }}>
-          <p style={{ margin: 0 }}>
-            {lang === "vi"
-              ? "© 2026 VinaTap. Tất cả quyền được bảo lưu. Cẩm nang du lịch và lưu trú TP. Hồ Chí Minh."
-              : "© 2026 VinaTap. All rights reserved. Ho Chi Minh City Travel & Accommodation Guide."}
-          </p>
-        </footer>
       </main>
+
+      {/* ─── FULL EDITORIAL FOOTER ─── */}
+      <PublicFooter lang={lang} />
 
       {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
       <ProvinceChatbot

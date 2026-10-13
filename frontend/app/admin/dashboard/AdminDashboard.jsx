@@ -445,7 +445,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className="shortcut-info">
                     <h4>Phân Tích Nguồn Khách</h4>
-                    <p>Theo dõi kênh Google SEO, TikTok, Mạng xã hội</p>
+                    <p>Theo dõi kênh Google SEO, Facebook</p>
                   </div>
                   <ChevronRight size={16} className="shortcut-arrow" />
                 </Link>
@@ -537,30 +537,23 @@ export default function AdminDashboard() {
                 <div className="source-item">
                   <div className="source-header">
                     <span>Google Tìm Kiếm (SEO Organic)</span>
-                    <strong className="text-blue">48%</strong>
+                    <strong className="text-blue">58%</strong>
                   </div>
-                  <div className="progress-bar"><div className="progress-fill bg-blue" style={{ width: "48%" }} /></div>
+                  <div className="progress-bar"><div className="progress-fill bg-blue" style={{ width: "58%" }} /></div>
                 </div>
                 <div className="source-item">
                   <div className="source-header">
-                    <span>Mạng Xã Hội (Facebook, Instagram)</span>
-                    <strong className="text-indigo">26%</strong>
+                    <span>Mạng Xã Hội (Facebook)</span>
+                    <strong className="text-indigo">30%</strong>
                   </div>
-                  <div className="progress-bar"><div className="progress-fill bg-indigo" style={{ width: "26%" }} /></div>
-                </div>
-                <div className="source-item">
-                  <div className="source-header">
-                    <span>Video Ngắn TikTok Du Lịch</span>
-                    <strong className="text-orange">16%</strong>
-                  </div>
-                  <div className="progress-bar"><div className="progress-fill bg-orange" style={{ width: "16%" }} /></div>
+                  <div className="progress-bar"><div className="progress-fill bg-indigo" style={{ width: "30%" }} /></div>
                 </div>
                 <div className="source-item">
                   <div className="source-header">
                     <span>Truy Cập Trực Tiếp (Direct URL)</span>
-                    <strong className="text-emerald">10%</strong>
+                    <strong className="text-emerald">12%</strong>
                   </div>
-                  <div className="progress-bar"><div className="progress-fill bg-emerald" style={{ width: "10%" }} /></div>
+                  <div className="progress-bar"><div className="progress-fill bg-emerald" style={{ width: "12%" }} /></div>
                 </div>
               </div>
 
@@ -905,7 +898,7 @@ export default function AdminDashboard() {
                       <td style={{ textAlign: "right", color: "#64748b" }}>7.000đ</td>
                     </tr>
                     <tr>
-                      <td><strong style={{ color: "#dc2626" }}>Shopee / TikTok Shop</strong></td>
+                      <td><strong style={{ color: "#dc2626" }}>Shopee / Sàn TMĐT</strong></td>
                       <td style={{ textAlign: "right", fontWeight: "600" }}>12</td>
                       <td style={{ textAlign: "right" }}>2 đơn</td>
                       <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>32.000đ</td>

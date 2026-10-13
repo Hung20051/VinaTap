@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -1217,6 +1218,9 @@ export default function PhoGuidePage() {
           </div>
         </section>
       </article>
+
+      {/* ─── FULL EDITORIAL FOOTER ─── */}
+      <PublicFooter lang={isVi ? "vi" : "en"} />
 
       {/* ─── AI TRAVEL COMPANION (CHATBOT) ─── */}
       <ProvinceChatbot

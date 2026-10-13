@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
+import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import HeaderSearch from "@/components/ui/HeaderSearch";
@@ -1514,25 +1515,7 @@ export default function AoDaiArticlePage() {
       </main>
 
       {/* ─── FOOTER ─── */}
-      <footer className="home-footer" style={{ marginTop: "60px" }}>
-        <div className="home-footer__bottom">
-          <p>
-            {isVi
-              ? "© 2026 VinaTap. Tất cả quyền được bảo lưu. Cẩm nang du lịch 34 tỉnh thành Việt Nam."
-              : "© 2026 VinaTap. All rights reserved. Travel guide to 34 provinces of Vietnam."}
-          </p>
-          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-            <a
-              href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#9ca3af" }}
-            >
-              <Facebook size={18} />
-            </a>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter lang={lang} />
 
       {/* ─── FLOATING CHATBOT ─── */}
       <ProvinceChatbot />
