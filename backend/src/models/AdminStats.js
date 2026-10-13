@@ -5,58 +5,53 @@ const AdminStats = {
   // song thay vì tuần tự, giảm thời gian chờ khi load trang Tổng quan.
   async getOverview() {
     const [
-      [[nfcTotal]],
-      [[nfcActivated]],
+      [[pageViewsTotal]],
+      [[provincesTotal]],
       [[userTotal]],
       [[userNew7d]],
       [[albumTotal]],
       [[albumPublic]],
-      [[pendingShares]],
+      [[articlesTotal]],
       [hotProvinces],
     ] = await Promise.all([
-      db.execute(`SELECT COUNT(*) AS count FROM nfc_cards`),
-      db.execute(
-        `SELECT COUNT(*) AS count FROM nfc_cards WHERE status = 'active'`,
-      ),
+      db.execute(`SELECT COUNT(*) AS count FROM page_views`).catch(() => [[{ count: 0 }]]),
+      db.execute(`SELECT COUNT(*) AS count FROM provinces`).catch(() => [[{ count: 0 }]]),
       db.execute(
         `SELECT COUNT(*) AS count FROM users WHERE status != 'banned'`,
-      ),
+      ).catch(() => [[{ count: 0 }]]),
       db.execute(
         `SELECT COUNT(*) AS count FROM users
          WHERE created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)`,
-      ),
+      ).catch(() => [[{ count: 0 }]]),
       db.execute(
         `SELECT COUNT(*) AS count FROM albums WHERE status = 'active'`,
-      ),
+      ).catch(() => [[{ count: 0 }]]),
       db.execute(
         `SELECT COUNT(*) AS count FROM albums
          WHERE status = 'active' AND is_public = 1`,
-      ),
+      ).catch(() => [[{ count: 0 }]]),
+      db.execute(`SELECT COUNT(*) AS count FROM articles`).catch(() => [[{ count: 0 }]]),
+      // Danh sách các tỉnh thành thu hút quan tâm du lịch thực tế
       db.execute(
-        `SELECT COUNT(*) AS count FROM album_shares WHERE status = 'pending'`,
-      ),
-      // Top 5 tỉnh có nhiều serial kích hoạt nhất — tỉnh nào "hot"
-      db.execute(
-        `SELECT p.name, COUNT(*) AS activated_count
-         FROM nfc_cards nc
-         JOIN provinces p ON p.id = nc.province_id
-         WHERE nc.status = 'active'
-         GROUP BY p.id, p.name
-         ORDER BY activated_count DESC
-         LIMIT 5`,
-      ),
+        `SELECT p.id, p.name, p.slug, p.region,
+                COUNT(pv.id) AS view_count
+         FROM provinces p
+         LEFT JOIN page_views pv ON (pv.province_slug = p.slug OR pv.page_path LIKE CONCAT('/province/', p.slug, '%') OR pv.page_path LIKE CONCAT('/destination/', p.slug, '%'))
+         GROUP BY p.id, p.name, p.slug, p.region
+         ORDER BY view_count DESC, p.id ASC
+         LIMIT 30`,
+      ).catch(() => [[]]),
     ]);
 
     return {
-      nfc_total: nfcTotal.count,
-      nfc_activated: nfcActivated.count,
-      nfc_pending: nfcTotal.count - nfcActivated.count,
-      user_total: userTotal.count,
-      user_new_7d: userNew7d.count,
-      album_total: albumTotal.count,
-      album_public: albumPublic.count,
-      pending_share_requests: pendingShares.count,
-      hot_provinces: hotProvinces,
+      page_views_total: pageViewsTotal?.count || 0,
+      provinces_total: provincesTotal?.count || 0,
+      articles_total: articlesTotal?.count || 0,
+      user_total: userTotal?.count || 0,
+      user_new_7d: userNew7d?.count || 0,
+      album_total: albumTotal?.count || 0,
+      album_public: albumPublic?.count || 0,
+      hot_provinces: hotProvinces || [],
     };
   },
 };

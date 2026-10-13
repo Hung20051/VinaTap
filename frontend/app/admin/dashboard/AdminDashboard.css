@@ -1,219 +1,502 @@
-/* ─── ADMIN DASHBOARD CSS (DESKTOP NGUYÊN BẢN - MOBILE SLIDER & RESPONSIVE) ──────────── */
+/* ============================================================
+   VinaTap — Admin Dashboard Styling (AdminDashboard.css)
+   Linear / Stripe Inspired Modern SaaS Analytics Dashboard
+   ============================================================ */
+
+.admin-dash-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ─── HEADER BAR ─────────────────────────────────────────────── */
+.admin-dash-header-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
 
 .admin-dash-title {
-  font-size: 1.65rem;
+  font-size: 1.6rem;
   font-weight: 800;
   color: #0f172a;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dash-live-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  letter-spacing: normal;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dash-live-badge::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulseLive 2s infinite;
+}
+
+@keyframes pulseLive {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 .admin-dash-subtitle {
-  font-size: 0.9rem;
-  color: var(--text-muted, #64748b);
-  margin-top: 0.35rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-top: 0.3rem;
+  margin-bottom: 0;
 }
 
-/* 📊 KPI GRID — DESKTOP: Grid nhiều cột */
-.admin-dash-kpi-grid {
+.admin-dash-quick-links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-sm {
+  padding: 7px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+/* ─── 6-CARD KPI GRID ────────────────────────────────────────── */
+.admin-dash-kpis-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 1.75rem;
 }
 
-.admin-kpi-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  padding: 1.25rem;
-  border-radius: var(--radius-lg, 14px);
+.admin-kpi-stat-card {
+  padding: 1.25rem 1.15rem;
   background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.admin-kpi-card__icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: var(--radius-md, 10px);
-  background: var(--primary-light, #fff1eb);
-  color: var(--primary, #e85d04);
+.admin-kpi-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  border-color: #cbd5e1;
+}
+
+.admin-kpi-stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.kpi--blue::before { background: #2563eb; }
+.kpi--emerald::before { background: #059669; }
+.kpi--orange::before { background: #ea580c; }
+.kpi--indigo::before { background: #4f46e5; }
+.kpi--purple::before { background: #9333ea; }
+.kpi--amber::before { background: #d97706; }
+
+.kpi-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.kpi-stat-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.admin-kpi-card--orange .admin-kpi-card__icon {
-  background: var(--primary, #e85d04);
-  color: #ffffff;
+.kpi--blue .kpi-stat-icon { background: #eff6ff; color: #2563eb; }
+.kpi--emerald .kpi-stat-icon { background: #ecfdf5; color: #059669; }
+.kpi--orange .kpi-stat-icon { background: #fff7ed; color: #ea580c; }
+.kpi--indigo .kpi-stat-icon { background: #eef2ff; color: #4f46e5; }
+.kpi--purple .kpi-stat-icon { background: #faf5ff; color: #9333ea; }
+.kpi--amber .kpi-stat-icon { background: #fefce8; color: #d97706; }
+
+.kpi-stat-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
 }
 
-.admin-kpi-card--warning .admin-kpi-card__icon {
-  background: #fef3c7;
-  color: #b45309;
+.kpi-stat-label {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #64748b;
+  display: block;
+  margin-bottom: 4px;
 }
 
-.admin-kpi-card__label {
-  font-size: 0.8rem;
-  color: var(--text-muted, #64748b);
-  font-weight: 600;
-  margin: 0;
-}
-
-.admin-kpi-card__value {
-  font-size: 1.4rem;
+.kpi-stat-value {
+  font-size: 1.5rem;
   font-weight: 800;
   color: #0f172a;
-  margin-top: 0.2rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  margin: 0;
+  line-height: 1.2;
 }
 
-.admin-kpi-card__sub {
-  font-size: 0.72rem;
-  color: var(--text-muted, #94a3b8);
-  margin-top: 0.2rem;
+.kpi-stat-sub {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  margin: 4px 0 0;
+  font-weight: 400;
 }
 
-/* 📈 CHART & TOP PROVINCES CARDS */
-.admin-dash-chart-card {
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-radius: var(--radius-lg, 14px);
+/* ─── 2-COLUMN MID GRID ──────────────────────────────────────── */
+.admin-dash-mid-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+@media (max-width: 1024px) {
+  .admin-dash-mid-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-dash-panel-card,
+.admin-dash-shortcuts-card,
+.admin-dash-provinces-card {
   background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  padding: 1.5rem;
+}
+
+.panel-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .admin-dash-section-title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #0f172a;
-  margin-bottom: 1rem;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.panel-sub {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 3px 0 0;
+}
+
+.panel-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ea580c;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.15s;
+}
+
+.panel-link:hover {
+  text-decoration: underline;
+  gap: 6px;
 }
 
 .admin-dash-empty {
-  padding: 2.5rem;
+  padding: 3rem 1rem;
   text-align: center;
-  color: var(--text-muted, #94a3b8);
+  color: #94a3b8;
+  font-size: 0.88rem;
 }
 
-.admin-dash-hot-card {
-  padding: 1.5rem;
-  border-radius: var(--radius-lg, 14px);
-  background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-}
-
-.admin-dash-hot-list {
+/* ─── SHORTCUTS LIST ─────────────────────────────────────────── */
+.shortcuts-list {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+  gap: 8px;
+  margin-top: 1rem;
 }
 
-.admin-dash-hot-item {
+.shortcut-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.65rem 0.85rem;
-  border-radius: var(--radius-md, 8px);
-  background: var(--bg-subtle, #f8fafc);
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
   border: 1px solid #f1f5f9;
+  background: #f8fafc;
+  text-decoration: none;
+  transition: all 0.15s ease;
 }
 
-.admin-dash-hot-rank {
-  font-weight: 800;
-  color: var(--primary, #e85d04);
-  width: 28px;
-  font-size: 0.88rem;
-}
-
-.admin-dash-hot-name {
-  flex: 1;
-  font-weight: 600;
-  font-size: 0.88rem;
-  color: #1e293b;
-}
-
-.admin-dash-hot-count {
-  font-size: 0.82rem;
-  color: var(--text-muted, #64748b);
+.shortcut-item:hover {
   background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transform: translateX(2px);
+}
+
+.shortcut-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bg-orange-soft { background: #fff7ed; }
+.bg-emerald-soft { background: #ecfdf5; }
+.bg-blue-soft { background: #eff6ff; }
+.bg-indigo-soft { background: #eef2ff; }
+
+.shortcut-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.shortcut-info h4 {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.shortcut-info p {
+  font-size: 0.76rem;
+  color: #64748b;
+  margin: 2px 0 0;
+}
+
+.shortcut-arrow {
+  color: #94a3b8;
+  transition: transform 0.15s;
+}
+
+.shortcut-item:hover .shortcut-arrow {
+  color: #0f172a;
+  transform: translateX(3px);
+}
+
+/* ─── TOP TỈNH THÀNH TABLE & TOOLBAR ─────────────────────────── */
+.provinces-filter-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.provinces-search-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 4px 10px;
+  color: #64748b;
+}
+
+.provinces-search-box input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 0.8rem;
+  color: #0f172a;
+  width: 140px;
+}
+
+.provinces-region-tabs {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.region-tab-btn {
+  background: none;
+  border: none;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #64748b;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.region-tab-btn.is-active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.dash-provinces-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.dash-provinces-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  white-space: nowrap;
+}
+
+.dash-provinces-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f8fafc;
+  padding: 9px 14px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.dash-provinces-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dash-provinces-table tr:hover {
+  background: #f8fafc;
+}
+
+/* Rank badges */
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.rank-1 { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.rank-2 { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+.rank-3 { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+.rank-normal { color: #94a3b8; font-weight: 600; }
+
+.prov-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prov-pin-icon {
+  color: #ea580c;
+  flex-shrink: 0;
+}
+
+.prov-name-text {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.prov-slug-badge {
+  font-size: 0.7rem;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.prov-region-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
   padding: 2px 8px;
   border-radius: 6px;
-  border: 1px solid #e2e8f0;
+  display: inline-block;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   📱 MOBILE & TABLET RESPONSIVE (IPHONE SE, SAMSUNG, IPAD...)
-   ───────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .admin-dash-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-  }
+.pill--north { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.pill--central { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+.pill--south { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+.pill--island { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
 
-  .admin-dash-subtitle {
-    font-size: 0.76rem;
-    margin-top: 0.15rem;
-    margin-bottom: 0.85rem;
-  }
+.prov-view-count strong {
+  font-size: 0.95rem;
+  color: #0f172a;
+  font-weight: 800;
+}
 
-  /* 🌟 CARDS TRỞ THÀNH 1 HÀNG VUỐT SLIDE NGANG (CAROUSEL) */
-  .admin-dash-kpi-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 0.75rem;
-    margin-left: -0.75rem;
-    margin-right: -0.75rem;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.15rem;
-    scrollbar-width: none; /* Ẩn thanh cuộn mặc định */
-    cursor: grab;
-    user-select: none;
-    touch-action: pan-x;
-  }
+.btn-view-prov {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s;
+}
 
-  .admin-dash-kpi-grid.is-dragging {
-    cursor: grabbing;
-    scroll-snap-type: none;
-    scroll-behavior: auto;
-  }
-
-  .admin-dash-kpi-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .admin-kpi-card {
-    flex: 0 0 82%;
-    max-width: 310px;
-    scroll-snap-align: start;
-    padding: 1rem;
-    border-radius: 12px;
-    user-select: none;
-  }
-
-  .admin-kpi-card__icon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .admin-kpi-card__value {
-    font-size: 1.25rem;
-  }
-
-  .admin-dash-chart-card,
-  .admin-dash-hot-card {
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 12px;
-  }
+.btn-view-prov:hover {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
 }

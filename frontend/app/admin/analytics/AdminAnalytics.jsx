@@ -83,6 +83,22 @@ export default function AdminAnalytics() {
     recent_clicks: [],
   });
 
+  const [provFilterQuery, setProvFilterQuery] = useState("");
+  const [provRegionTab, setProvRegionTab] = useState("all");
+
+  const displayedProvinces = useMemo(() => {
+    const list = stats.top_provinces || [];
+    return list.filter((p) => {
+      const name = p.province_name || p.province_slug || "";
+      const matchQ =
+        !provFilterQuery.trim() ||
+        name.toLowerCase().includes(provFilterQuery.trim().toLowerCase()) ||
+        p.province_slug?.toLowerCase().includes(provFilterQuery.trim().toLowerCase());
+      const matchReg = provRegionTab === "all" || p.region === provRegionTab;
+      return matchQ && matchReg;
+    });
+  }, [stats.top_provinces, provFilterQuery, provRegionTab]);
+
   useEffect(() => {
     loadStats();
     // Tự động làm mới mỗi 60 giây
@@ -284,14 +300,14 @@ export default function AdminAnalytics() {
 
                 <div className="analytics-kpi-card kpi-card-amber">
                   <div className="kpi-card-header">
-                    <span className="kpi-card-label">Quét thẻ NFC VinaTap</span>
+                    <span className="kpi-card-label">Mã QR & Link Du Lịch Số</span>
                     <div className="kpi-card-icon-wrap">
                       <Radio size={18} />
                     </div>
                   </div>
                   <div className="kpi-card-value">{stats.nfc_scans_count.toLocaleString("vi-VN")}</div>
                   <div className="kpi-card-footer">
-                    <span className="kpi-hint">Từ cổng chạm thẻ /t/[token]</span>
+                    <span className="kpi-hint">Từ cổng trải nghiệm cẩm nang số</span>
                   </div>
                 </div>
 
@@ -453,39 +469,133 @@ export default function AdminAnalytics() {
 
                 {/* Top Tỉnh Thành */}
                 <div className="analytics-panel-card">
-                  <div className="panel-card-header-flex">
-                    <h3 className="panel-card-title">Top Tỉnh Thành Thu Hút</h3>
-                    <Link href="/admin/provinces" className="panel-link-action">
-                      Quản lý tỉnh thành ➔
-                    </Link>
+                  <div className="panel-card-header-flex" style={{ flexWrap: "wrap", gap: "10px" }}>
+                    <div>
+                      <h3 className="panel-card-title">Top Tỉnh Thành Thu Hút ({displayedProvinces.length} Tỉnh Thành)</h3>
+                      <p style={{ fontSize: "0.78rem", color: "#64748b", margin: "2px 0 0" }}>
+                        Danh sách các điểm đến du lịch trên hệ thống VinaTap
+                      </p>
+                    </div>
+
+                    <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "4px", background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: "6px", padding: "2px 8px" }}>
+                        <Search size={13} color="#64748b" />
+                        <input
+                          type="text"
+                          placeholder="Lọc tỉnh thành..."
+                          value={provFilterQuery}
+                          onChange={(e) => setProvFilterQuery(e.target.value)}
+                          style={{ border: "none", background: "none", outline: "none", fontSize: "0.76rem", width: "100px" }}
+                        />
+                      </div>
+
+                      <div style={{ display: "flex", background: "#f1f5f9", borderRadius: "6px", padding: "2px" }}>
+                        {[
+                          { id: "all", label: "Tất cả" },
+                          { id: "north", label: "Bắc" },
+                          { id: "central", label: "Trung" },
+                          { id: "south", label: "Nam" },
+                        ].map((rg) => (
+                          <button
+                            key={rg.id}
+                            type="button"
+                            onClick={() => setProvRegionTab(rg.id)}
+                            style={{
+                              border: "none",
+                              background: provRegionTab === rg.id ? "#ffffff" : "transparent",
+                              color: provRegionTab === rg.id ? "#0f172a" : "#64748b",
+                              fontWeight: 600,
+                              fontSize: "0.72rem",
+                              padding: "2px 6px",
+                              borderRadius: "4px",
+                              cursor: "pointer",
+                            }}
+                          >
+                            {rg.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      <Link href="/admin/provinces" className="panel-link-action" style={{ fontSize: "0.76rem" }}>
+                        Quản lý ➔
+                      </Link>
+                    </div>
                   </div>
-                  <div className="analytics-table-wrap">
+
+                  <div className="analytics-table-wrap" style={{ maxHeight: "380px", overflowY: "auto" }}>
                     <table className="analytics-table">
                       <thead>
                         <tr>
+                          <th style={{ width: "45px" }}>#</th>
                           <th>Tỉnh / Thành phố</th>
+                          <th>Vùng miền</th>
                           <th style={{ textAlign: "right" }}>Lượt quan tâm</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {stats.top_provinces && stats.top_provinces.length > 0 ? (
-                          stats.top_provinces.map((prov, idx) => (
-                            <tr key={idx}>
-                              <td>
-                                <div className="prov-cell">
-                                  <MapPin size={14} color="#00c2cb" />
-                                  <span>{prov.province_name || prov.province_slug}</span>
-                                </div>
-                              </td>
-                              <td style={{ textAlign: "right", fontWeight: "600", color: "#00c2cb" }}>
-                                {prov.view_count} lượt
-                              </td>
-                            </tr>
-                          ))
+                        {displayedProvinces.length > 0 ? (
+                          displayedProvinces.map((prov, idx) => {
+                            const rank = idx + 1;
+                            return (
+                              <tr key={prov.id || prov.province_slug || idx}>
+                                <td>
+                                  <span
+                                    style={{
+                                      display: "inline-block",
+                                      width: "20px",
+                                      height: "20px",
+                                      textAlign: "center",
+                                      lineHeight: "20px",
+                                      borderRadius: "50%",
+                                      fontSize: "0.7rem",
+                                      fontWeight: 700,
+                                      background: rank === 1 ? "#fef3c7" : rank === 2 ? "#f1f5f9" : rank === 3 ? "#ffedd5" : "transparent",
+                                      color: rank === 1 ? "#b45309" : rank === 2 ? "#475569" : rank === 3 ? "#c2410c" : "#94a3b8",
+                                    }}
+                                  >
+                                    {rank}
+                                  </span>
+                                </td>
+                                <td>
+                                  <div className="prov-cell">
+                                    <MapPin size={13} color="#ea580c" />
+                                    <span style={{ fontWeight: 600 }}>{prov.province_name || prov.province_slug}</span>
+                                    {prov.province_slug && (
+                                      <Link
+                                        href={`/province/${prov.province_slug}`}
+                                        target="_blank"
+                                        style={{ color: "#94a3b8", marginLeft: "4px" }}
+                                        title="Xem trang web"
+                                      >
+                                        <ExternalLink size={11} />
+                                      </Link>
+                                    )}
+                                  </div>
+                                </td>
+                                <td>
+                                  <span
+                                    style={{
+                                      fontSize: "0.68rem",
+                                      fontWeight: 600,
+                                      padding: "1px 6px",
+                                      borderRadius: "4px",
+                                      background: prov.region === "north" ? "#eff6ff" : prov.region === "central" ? "#fff7ed" : "#ecfdf5",
+                                      color: prov.region === "north" ? "#1d4ed8" : prov.region === "central" ? "#c2410c" : "#047857",
+                                    }}
+                                  >
+                                    {prov.region === "north" ? "Miền Bắc" : prov.region === "central" ? "Miền Trung" : prov.region === "south" ? "Miền Nam" : "Biển Đảo"}
+                                  </span>
+                                </td>
+                                <td style={{ textAlign: "right", fontWeight: "700", color: "#0f172a" }}>
+                                  {prov.view_count || 0} lượt
+                                </td>
+                              </tr>
+                            );
+                          })
                         ) : (
                           <tr>
-                            <td colSpan={2} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
-                              Chưa có dữ liệu tỉnh thành
+                            <td colSpan={4} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                              Không tìm thấy tỉnh thành phù hợp
                             </td>
                           </tr>
                         )}

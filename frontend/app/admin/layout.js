@@ -98,18 +98,20 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="app-shell-vertical admin-shell-root">
-      <AdminHeader
-        isDrawerOpen={drawerOpen}
-        onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
-      />
+    <div className="admin-shell-layout admin-shell-root">
       <AdminSidebar
         isOpen={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         user={user}
         onLogout={handleLogout}
       />
-      <main className="app-main-content admin-main-content">{children}</main>
+      <div className="admin-body-column">
+        <AdminHeader
+          isDrawerOpen={drawerOpen}
+          onToggleDrawer={() => setDrawerOpen(!drawerOpen)}
+        />
+        <main className="admin-main-content">{children}</main>
+      </div>
     </div>
   );
 }

@@ -40,47 +40,46 @@ export default function AdminSidebar({
   const [lang, setLang] = useState("vi");
   const [mounted, setMounted] = useState(false);
 
-  // Danh mục điều hướng phân nhóm Accordion
+  // Danh mục điều hướng chuẩn hệ sinh thái Du Lịch VinaTap
   const adminSections = [
     {
       id: "overview",
-      title: t(lang, "adminSecOverview"),
+      title: lang === "vi" ? "Tổng Quan & Dữ Liệu" : "Overview & Analytics",
       icon: BarChart3,
       items: [
-        { href: "/admin/dashboard", icon: LayoutDashboard, label: t(lang, "adminOverview") },
-        { href: "/admin/revenue", icon: DollarSign, label: t(lang, "adminRevenue") },
-        { href: "/admin/analytics", icon: TrendingUp, label: t(lang, "adminTrafficStats") },
+        { href: "/admin/dashboard", icon: LayoutDashboard, label: lang === "vi" ? "Bảng điều khiển" : "Dashboard" },
+        { href: "/admin/analytics", icon: TrendingUp, label: lang === "vi" ? "Lượt truy cập & Nguồn khách" : "Traffic & Acquisition" },
+        { href: "/admin/revenue", icon: DollarSign, label: lang === "vi" ? "Báo cáo doanh thu" : "Revenue Reports" },
       ],
     },
     {
-      id: "sales",
-      title: t(lang, "adminSecSales"),
-      icon: Package,
-      items: [
-        { href: "/admin/products", icon: Package, label: t(lang, "adminProductsShipping") },
-        { href: "/admin/vouchers", icon: Ticket, label: t(lang, "vouchers") },
-        { href: "/admin/nfc-cards", icon: CreditCard, label: t(lang, "adminNfcCards") },
-      ],
-    },
-    {
-      id: "content",
-      title: t(lang, "adminSecContent"),
+      id: "travel",
+      title: lang === "vi" ? "Điểm Đến & Cẩm Nang" : "Destinations & Guides",
       icon: MapPin,
       items: [
-        { href: "/admin/articles", icon: FileText, label: lang === "vi" ? "Bài viết cẩm nang" : "Articles & Guides" },
-        { href: "/admin/provinces", icon: MapPin, label: t(lang, "adminProvinces") },
-        { href: "/admin/albums", icon: Images, label: t(lang, "adminAlbums") },
-        { href: "/admin/stickers", icon: Sticker, label: t(lang, "adminStickers") },
+        { href: "/admin/provinces", icon: MapPin, label: lang === "vi" ? "63 Tỉnh thành & Điểm đến" : "Provinces & Places" },
+        { href: "/admin/articles", icon: FileText, label: lang === "vi" ? "Bài viết & Cẩm nang du lịch" : "Travel Guides & CMS" },
+        { href: "/admin/albums", icon: Images, label: lang === "vi" ? "Nhật ký & Album chuyến đi" : "Trip Albums & Memories" },
+        { href: "/admin/stickers", icon: Sticker, label: lang === "vi" ? "Nhãn dán & Sticker du lịch" : "Travel Stickers" },
+      ],
+    },
+    {
+      id: "customers",
+      title: lang === "vi" ? "Du Khách & Ưu Đãi" : "Customers & Vouchers",
+      icon: Users,
+      items: [
+        { href: "/admin/users", icon: Users, label: lang === "vi" ? "Quản lý người dùng" : "User Management" },
+        { href: "/admin/vouchers", icon: Ticket, label: lang === "vi" ? "Mã ưu đãi & Vouchers" : "Promo Vouchers" },
+        { href: "/admin/products", icon: Package, label: lang === "vi" ? "Sản phẩm & Bản đồ du lịch" : "Travel Products" },
       ],
     },
     {
       id: "system",
-      title: t(lang, "adminSecSystem"),
+      title: lang === "vi" ? "Hệ Thống & Cấu Hình" : "System & Settings",
       icon: Settings,
       items: [
-        { href: "/admin/users", icon: Users, label: t(lang, "adminUsers") },
-        { href: "/admin/notifications", icon: Bell, label: t(lang, "adminNotifications") },
-        { href: "/admin/system-settings", icon: Settings, label: t(lang, "adminSystemSettings") },
+        { href: "/admin/notifications", icon: Bell, label: lang === "vi" ? "Thông báo hệ thống" : "Notifications" },
+        { href: "/admin/system-settings", icon: Settings, label: lang === "vi" ? "Cài đặt & Cấu hình" : "System Settings" },
       ],
     },
   ];

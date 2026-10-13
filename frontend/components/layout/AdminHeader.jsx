@@ -63,7 +63,7 @@ export default function AdminHeader({ onToggleDrawer, isDrawerOpen }) {
     if (pathname.includes("/admin/system-settings")) return { parent: "Admin", page: t(lang, "adminSystemSettings") };
     if (pathname.includes("/admin/albums")) return { parent: "Admin", page: t(lang, "adminAlbums") };
     if (pathname.includes("/admin/users")) return { parent: "Admin", page: t(lang, "adminUsers") };
-    if (pathname.includes("/admin/nfc-cards")) return { parent: "Admin", page: t(lang, "adminNfcCards") };
+    if (pathname.includes("/admin/articles")) return { parent: "Admin", page: lang === "vi" ? "Bài viết & Cẩm nang" : "Articles & Guides" };
     if (pathname.includes("/admin/notifications")) return { parent: "Admin", page: t(lang, "adminNotifications") };
     if (pathname.includes("/admin/products")) return { parent: "Admin", page: t(lang, "adminProductsShippingFull") };
     if (pathname.includes("/admin/revenue")) return { parent: "Admin", page: t(lang, "adminRevenue") };

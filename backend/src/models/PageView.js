@@ -252,7 +252,7 @@ const PageView = {
       const [res] = await db.execute(
         `SELECT 
            CASE 
-             WHEN pv.page_path LIKE '/t/%' OR pv.utm_source = 'nfc' THEN 'NFC Card'
+             WHEN pv.page_path LIKE '/t/%' OR pv.utm_source = 'nfc' THEN 'Mã QR & Link Du Lịch'
              WHEN pv.referrer LIKE '%google.%' OR pv.referrer LIKE '%bing.%' OR pv.referrer LIKE '%yahoo.%' THEN 'Google / SEO'
              WHEN pv.referrer LIKE '%facebook.%' OR pv.referrer LIKE '%fb.me%' OR pv.referrer LIKE '%instagram.%' OR pv.referrer LIKE '%tiktok.%' OR pv.referrer LIKE '%youtube.%' OR pv.referrer LIKE '%zalo.%' THEN 'Mạng xã hội'
              WHEN pv.referrer IS NULL OR pv.referrer = '' THEN 'Trực tiếp / Direct'
@@ -284,16 +284,15 @@ const PageView = {
       console.error("PageView top pages error:", e.message);
     }
 
-    // 10. Top Tỉnh thành
+    // 10. Top Tỉnh thành (Hiển thị đầy đủ các tỉnh thành trong hệ thống)
     try {
       const [res] = await db.execute(
-        `SELECT pv.province_slug, COALESCE(pr.name, pv.province_slug) AS province_name, COUNT(*) AS view_count
-         FROM page_views pv
-         LEFT JOIN provinces pr ON (pv.province_slug = pr.slug)
-         ${whereClause ? `${whereClause} AND` : "WHERE"} pv.province_slug IS NOT NULL AND pv.province_slug != ''
-         GROUP BY pv.province_slug, COALESCE(pr.name, pv.province_slug)
-         ORDER BY view_count DESC
-         LIMIT 10`,
+        `SELECT pr.id, pr.name AS province_name, pr.slug AS province_slug, pr.region,
+                COUNT(pv.id) AS view_count
+         FROM provinces pr
+         LEFT JOIN page_views pv ON (pv.province_slug = pr.slug)
+         GROUP BY pr.id, pr.name, pr.slug, pr.region
+         ORDER BY view_count DESC, pr.id ASC`,
       );
       topProvincesRows = res || [];
     } catch (e) {
