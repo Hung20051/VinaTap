@@ -291,13 +291,13 @@ const ITINERARY_8_DESTINATIONS = [
     nameVi: "TP. Hồ Chí Minh",
     days: "2 days",
     daysVi: "2 ngày",
-    image: "/guide/hcmc/hcmc-10-things-bitexco.jpg",
+    image: "/guide/vietnam/dest-1-hcmc.jpg",
     subNote: "From Tan Son Nhat International Airport, you can take bus 109 to get to the center (District 1).",
-    subNoteVi: "Từ Sân bay Quốc tế Tân Sơn Nhất, bạn có thể bắt tuyến xe buýt 109 để vào trung tâm Quận 1.",
+    subNoteVi: "Từ Sân bay Quốc tế Tân Sơn Nhất, bạn có thể bắt tuyến xe buýt 109 để vào trung tâm (Quận 1).",
     thingsToDo:
       "War Remnants Museum, Ben Thanh Market, Saigon Skydeck, Bui Vien Street, Cu Chi Tunnels.",
     thingsToDoVi:
-      "Bảo tàng Chứng tích Chiến tranh, Chợ Bến Thành, Saigon Skydeck (Bitexco), Phố Tây Bùi Viện, Địa đạo Củ Chi.",
+      "Bảo tàng Chứng tích Chiến tranh, Chợ Bến Thành, Saigon Skydeck, Phố Bùi Viện, Địa đạo Củ Chi.",
     nextRoute: "Ho Chi Minh City → Dalat",
     nextRouteVi: "TP. Hồ Chí Minh → Đà Lạt",
     transport: "Bus (Thanh Buoi, Phuong Trang)",
@@ -313,13 +313,13 @@ const ITINERARY_8_DESTINATIONS = [
     nameVi: "Đà Lạt",
     days: "1 day",
     daysVi: "1 ngày",
-    image: "/guide/dalat/dalat-how-to-get-hd.jpg",
+    image: "/guide/vietnam/dest-2-dalat.jpg",
     subNote: "All buses offer free shuttle service to your hotel.",
-    subNoteVi: "Các nhà xe đều có xe trung chuyển miễn phí đưa đón về tận khách sạn của bạn.",
+    subNoteVi: "Tất cả các nhà xe đều có xe trung chuyển miễn phí đưa đón về khách sạn của bạn.",
     thingsToDo:
       "Xuan Huong Lake area, Dalat Railway Station, Chicken Church, Linh Phuoc Pagoda.",
     thingsToDoVi:
-      "Khu vực Hồ Xuân Hương, Ga Đà Lạt cổ, Nhà thờ Con Gà, Chùa Linh Phước.",
+      "Khu vực Hồ Xuân Hương, Ga Đà Lạt, Nhà thờ Con Gà, Chùa Linh Phước.",
     nextRoute: "Dalat → Nha Trang",
     nextRouteVi: "Đà Lạt → Nha Trang",
     transport: "Bus (Phuong Trang, The Sinh Bus)",
@@ -335,9 +335,9 @@ const ITINERARY_8_DESTINATIONS = [
     nameVi: "Nha Trang",
     days: "1 day",
     daysVi: "1 ngày",
-    image: "/guide/15-best-places/place-10-nha-trang.jpg",
+    image: "/guide/vietnam/dest-3-nhatrang.jpg",
     subNote: "All buses offer free shuttle service to your hotel.",
-    subNoteVi: "Các nhà xe đều có xe trung chuyển miễn phí đưa đón về tận khách sạn của bạn.",
+    subNoteVi: "Tất cả các nhà xe đều có xe trung chuyển miễn phí đưa đón về khách sạn của bạn.",
     thingsToDo:
       "Nha Trang Beach, Vinpearl Land, Po Nagar Cham Towers, Dam Market.",
     thingsToDoVi:
@@ -345,7 +345,7 @@ const ITINERARY_8_DESTINATIONS = [
     nextRoute: "Nha Trang → Da Nang",
     nextRouteVi: "Nha Trang → Đà Nẵng",
     transport: "Plane (Vietnam Airlines, Vietjet Air, Pacific Airlines, and Bamboo Airways)",
-    transportVi: "Máy bay (Vietnam Airlines, Vietjet Air, Pacific Airlines, Bamboo Airways)",
+    transportVi: "Máy bay (Vietnam Airlines, Vietjet Air, Pacific Airlines và Bamboo Airways)",
     time: "1 hr 5 min",
     timeVi: "1 giờ 5 phút",
     fare: "800,000 – 1,200,000 VND",
@@ -358,13 +358,13 @@ const ITINERARY_8_DESTINATIONS = [
     nameVi: "Đà Nẵng",
     days: "2 days",
     daysVi: "2 ngày",
-    image: "/guide/hcmc/top-dest-danang.jpg",
-    subNote: "You can take a Grab or taxi directly from Da Nang Airport to your hotel in the city center or beach.",
-    subNoteVi: "Bạn có thể bắt Grab hoặc taxi từ Sân bay Quốc tế Đà Nẵng về khách sạn trung tâm hoặc bãi biển Mỹ Khê.",
+    image: "/guide/vietnam/dest-4-danang.jpg",
+    subNote: "Da Nang Airport is about 3 km from the city center and 6 km from My Khe Beach. Beachfront accommodation is a great option.",
+    subNoteVi: "Sân bay Đà Nẵng cách trung tâm thành phố khoảng 3 km và cách bãi biển Mỹ Khê 6 km. Khách sạn ven biển là một lựa chọn tuyệt vời.",
     thingsToDo:
       "My Khe Beach, Ba Na Hills, Marble Mountains, Museum of Cham Sculpture.",
     thingsToDoVi:
-      "Bãi biển Mỹ Khê, Cầu Vàng Bà Nà Hills, Danh thắng Ngũ Hành Sơn, Bảo tàng Điêu khắc Chăm.",
+      "Bãi biển Mỹ Khê, Bà Nà Hills, Ngũ Hành Sơn, Bảo tàng Điêu khắc Chăm.",
     nextRoute: "Da Nang → Hoi An",
     nextRouteVi: "Đà Nẵng → Hội An",
     transport: "Bus (01)",
@@ -380,66 +380,67 @@ const ITINERARY_8_DESTINATIONS = [
     nameVi: "Hội An",
     days: "2 days",
     daysVi: "2 ngày",
-    image: "/guide/15-best-places/place-2-hoi-an.jpg",
-    subNote: "Rent a bicycle to explore the peaceful pedestrian streets and surrounding lantern villages.",
-    subNoteVi: "Thuê xe đạp thong dong khám phá các tuyến phố đi bộ thanh bình và làng dừa xung quanh.",
+    image: "/guide/vietnam/dest-5-hoian.jpg",
+    subNote: "Bus stops near the Ancient Town of Hoi An; choose a place to stay in the ancient town's heart to feel the rhythm of life here.",
+    subNoteVi: "Xe buýt dừng gần Phố cổ Hội An; hãy chọn nơi lưu trú ngay trung tâm phố cổ để cảm nhận trọn vẹn nhịp sống nơi đây.",
     thingsToDo:
-      "Hoi An Ancient Town, An Bang Beach, Bay Mau Coconut Forest.",
+      "An Bang Beach, the ancient town, Bay Mau Coconut Forest.",
     thingsToDoVi:
-      "Phố cổ Hội An, Biển An Bàng, Thuyền thúng Rừng dừa Bảy Mẫu.",
-    nextRoute: "Hoi An → Ha Long Bay",
-    nextRouteVi: "Hội An → Vịnh Hạ Long",
-    transport: "Plane (Da Nang to Hai Phong / Van Don Airport)",
-    transportVi: "Máy bay (Đà Nẵng đi Sân bay Cát Bi Hải Phòng hoặc Vân Đồn)",
-    time: "1 hr 15 min",
-    timeVi: "1 giờ 15 phút",
-    fare: "800,000 – 1,300,000 VND",
-    fareVi: "800.000 – 1.300.000 VNĐ",
+      "Biển An Bàng, Phố cổ Hội An, Rừng dừa Bảy Mẫu.",
+    isHoiAnTransit: true,
+    transitIntro:
+      "To get to Van Don Airport from Hoi An, take bus 01 to Da Nang, where you can catch flights with Vietnam Airlines, Vietjet Air, or Bamboo Airways.",
+    transitIntroVi:
+      "Để đến Sân bay Vân Đồn từ Hội An, bạn bắt xe buýt 01 đến Đà Nẵng, nơi bạn có thể bay cùng Vietnam Airlines, Vietjet Air hoặc Bamboo Airways.",
+    time: "1 hr 20 min",
+    timeVi: "1 giờ 20 phút",
+    fare: "800,000 – 1,200,000 VND",
+    fareVi: "800.000 – 1.200.000 VNĐ",
     isFlight: true,
   },
   {
     num: 6,
     name: "Ha Long Bay",
     nameVi: "Vịnh Hạ Long",
-    days: "2 days",
-    daysVi: "2 ngày",
-    image: "/guide/15-best-places/place-6-ha-long.jpg",
-    subNote: "Most cruise operators provide shuttle transfers from the port.",
-    subNoteVi: "Hầu hết các hãng du thuyền đều có dịch vụ xe đón trả tại bến cảng Tuần Châu.",
+    days: "1 day",
+    daysVi: "1 ngày",
+    image: "/guide/vietnam/dest-6-halong.jpg",
+    subNote: "From Van Don Airport, you take bus 14A or 14B to get to Ha Long Bay (free).",
+    subNoteVi: "Từ Sân bay Vân Đồn, bạn đi xe buýt 14A hoặc 14B để đến Vịnh Hạ Long (miễn phí).",
     thingsToDo:
-      "Overnight Luxury Cruise, Sung Sot Cave, Ti Top Island Beach & Viewpoint, Kayaking in Luon Cave.",
+      "Ha Long Bay, Tuan Chau Island.",
     thingsToDoVi:
-      "Du thuyền nghỉ đêm trên Vịnh, Hang Sửng Sốt, Chinh phục đỉnh Ti Tốp, Chèo kayak ngắm Hang Luồn.",
+      "Vịnh Hạ Long, Đảo Tuần Châu.",
     nextRoute: "Ha Long Bay → Ninh Binh",
     nextRouteVi: "Vịnh Hạ Long → Ninh Bình",
-    transport: "Bus (The Sinh Tourist, Limousine)",
-    transportVi: "Xe du lịch / Limousine cao tốc",
-    time: "3 hr 30 min",
-    timeVi: "3 giờ 30 phút",
-    fare: "220,000 VND",
-    fareVi: "220.000 VNĐ",
+    transport: "Bus (The Long Bus)",
+    transportVi: "Xe khách (The Long Bus)",
+    time: "5 hr",
+    timeVi: "5 giờ",
+    fare: "300,000 VND",
+    fareVi: "300.000 VNĐ",
   },
   {
     num: 7,
     name: "Ninh Binh",
     nameVi: "Ninh Bình",
-    days: "1 day",
-    daysVi: "1 ngày",
-    image: "/guide/15-best-places/place-5-ninh-binh.jpg",
-    subNote: "Rent a motorbike or bicycle to visit Trang An and Tam Coc caves.",
-    subNoteVi: "Thuê xe máy hoặc xe đạp thuận tiện khám phá Quần thể danh thắng Tràng An và Tam Cốc.",
+    days: "2 days",
+    daysVi: "2 ngày",
+    image: "/guide/vietnam/dest-7-ninhbinh.jpg",
+    subNote: "The bus stops in Tam Coc, one of the most attractive tourist destinations in Ninh Binh.",
+    subNoteVi: "Xe dừng tại Tam Cốc, một trong những điểm du lịch hấp dẫn nhất ở Ninh Bình.",
     thingsToDo:
       "Tam Coc – Bich Dong, Mua Cave, Trang An Landscape Complex, Bai Dinh Pagoda.",
     thingsToDoVi:
-      "Tam Cốc – Bích Động, Chinh phục đỉnh Hang Múa, Quần thể danh thắng Tràng An, Chùa Bái Đính.",
+      "Tam Cốc – Bích Động, Hang Múa, Quần thể danh thắng Tràng An, Chùa Bái Đính.",
     nextRoute: "Ninh Binh → Hanoi",
     nextRouteVi: "Ninh Bình → Hà Nội",
-    transport: "Bus / Train",
-    transportVi: "Xe Limousine / Tàu hỏa",
-    time: "1 hr 30 min",
-    timeVi: "1 giờ 30 phút",
-    fare: "100,000 – 150,000 VND",
-    fareVi: "100.000 – 150.000 VNĐ",
+    transport: "Bus (Trang An Limousine)",
+    transportVi: "Xe khách (Tràng An Limousine)",
+    time: "2 hr",
+    timeVi: "2 giờ",
+    fare: "170,000 VND",
+    fareVi: "170.000 VNĐ",
   },
   {
     num: 8,
@@ -447,22 +448,18 @@ const ITINERARY_8_DESTINATIONS = [
     nameVi: "Hà Nội",
     days: "2 days",
     daysVi: "2 ngày",
-    image: "/guide/15-best-places/place-3-hanoi.jpg",
-    subNote: "You take bus number 86 (35,000 VND) to Noi Bai International Airport from Hanoi city center.",
-    subNoteVi: "Bạn bắt xe buýt số 86 (35.000 VNĐ) từ trung tâm Hà Nội đến Sân bay Quốc tế Nội Bài.",
+    image: "/guide/vietnam/dest-8-hanoi.jpg",
+    subNote: "The last destination in the itinerary is Hanoi – the capital.",
+    subNoteVi: "Điểm đến cuối cùng trong hành trình là Hà Nội – thủ đô ngàn năm văn hiến.",
     thingsToDo:
       "Hoan Kiem Lake, Hanoi Old Quarter, Temple of Literature, Dong Xuan Market, Ho Chi Minh Mausoleum.",
     thingsToDoVi:
-      "Hồ Hoàn Kiếm, 36 Phố Phường Hà Nội, Văn Miếu – Quốc Tử Giám, Chợ Đồng Xuân, Lăng Chủ tịch Hồ Chí Minh.",
-    nextRoute: "Hanoi → Noi Bai International Airport (HAN)",
-    nextRouteVi: "Hà Nội → Sân bay Quốc tế Nội Bài (HAN)",
-    directTransit: "Bus 86 (Fansipan Express / Airport Express)",
-    directTransitVi: "Xe buýt số 86 (Tuyến xe buýt chất lượng cao ra Sân bay)",
-    isDirectTransitLine: true,
-    airportNote:
-      "You take bus number 86 (35,000 VND) to Noi Bai International Airport from Hanoi city center, ending your 2-week itinerary in Vietnam.",
-    airportNoteVi:
-      "Bạn bắt xe buýt số 86 (35.000 VNĐ) từ trung tâm Hà Nội đến Sân bay Quốc tế Nội Bài, khép lại trọn vẹn hành trình 2 tuần khám phá Việt Nam.",
+      "Hồ Hoàn Kiếm, Phố cổ Hà Nội, Văn Miếu, Chợ Đồng Xuân, Lăng Chủ tịch Hồ Chí Minh.",
+    isHanoiEnd: true,
+    endNote:
+      "You can take bus number 86 (35,000 VND) to Noi Bai International Airport from Hanoi city center, ending your 2-week itinerary in Vietnam.",
+    endNoteVi:
+      "Bạn có thể đi xe buýt số 86 (35.000 VNĐ) ra Sân bay Quốc tế Nội Bài từ trung tâm thành phố Hà Nội, kết thúc chuyến hành trình 2 tuần tại Việt Nam.",
   },
 ];
 
@@ -799,18 +796,26 @@ export default function TwoWeeksInVietnamPage() {
                   <span>{isVi && dest.thingsToDoVi ? dest.thingsToDoVi : dest.thingsToDo}</span>
                 </div>
 
-                {dest.isDirectTransitLine ? (
+                {dest.isHoiAnTransit ? (
                   <>
-                    <div className="omi-card__direct-transit">
-                      <strong>{isVi ? dest.nextRouteVi : dest.nextRoute}:</strong>{" "}
-                      {isVi && dest.directTransitVi ? dest.directTransitVi : dest.directTransit}
-                    </div>
-                    {dest.airportNote && (
-                      <p className="omi-card__airport-note">
-                        {isVi && dest.airportNoteVi ? dest.airportNoteVi : dest.airportNote}
-                      </p>
-                    )}
+                    <p style={{ marginTop: "14px", marginBottom: "8px", fontSize: "14px", lineHeight: 1.6, color: "#334155" }}>
+                      {isVi ? dest.transitIntroVi : dest.transitIntro}
+                    </p>
+                    <ul className="omi-card__transit-list">
+                      <li>
+                        <strong>{isVi ? "Flying time: " : "Flying time: "}</strong>
+                        {isVi && dest.timeVi ? dest.timeVi : dest.time}
+                      </li>
+                      <li>
+                        <strong>{isVi ? "Airfare: " : "Airfare: "}</strong>
+                        {isVi && dest.fareVi ? dest.fareVi : dest.fare}
+                      </li>
+                    </ul>
                   </>
+                ) : dest.isHanoiEnd ? (
+                  <p style={{ marginTop: "14px", fontSize: "14px", lineHeight: 1.6, color: "#334155" }}>
+                    {isVi ? dest.endNoteVi : dest.endNote}
+                  </p>
                 ) : (
                   <>
                     <div className="omi-card__transit-title">
@@ -846,7 +851,7 @@ export default function TwoWeeksInVietnamPage() {
           ))}
         </div>
 
-        {/* ─── A FEW NOTES ─── */}
+        {/* ─── A FEW NOTES (SCREENSHOT 3 & 4) ─── */}
         <section className="omi-notes-box">
           <h2 className="omi-section-title">
             {isVi ? "Một số lưu ý quan trọng" : "A few notes"}
@@ -854,72 +859,82 @@ export default function TwoWeeksInVietnamPage() {
           <ul className="omi-notes-list">
             <li>
               {isVi
-                ? "Tỷ giá hối đoái USD sang VNĐ dao động quanh mức 1 USD ≈ 25.000 VNĐ."
-                : "The USD to VND exchange rate in 2024 is around 1 USD ≈ 25,000 VND."}
-            </li>
-            <li>
-              {isVi ? (
-                <>
-                  Đối với việc đi tàu hỏa, chúng tôi khuyên bạn nên đặt vé trên trang web chính thức của Tổng công ty Đường sắt Việt Nam:{" "}
-                  <a href="https://dsvn.vn" target="_blank" rel="noopener noreferrer">
-                    dsvn.vn
-                  </a>
-                  .
-                </>
-              ) : (
-                <>
-                  For train travel, we recommend booking tickets on the official website of the Vietnam Railway Corporation:{" "}
-                  <a href="https://dsvn.vn" target="_blank" rel="noopener noreferrer">
-                    dsvn.vn
-                  </a>
-                  .
-                </>
-              )}
+                ? "Tính đến năm 2024, tỷ giá hối đoái xấp xỉ từ USD sang VNĐ là 1 USD ≈ 25.000 VNĐ."
+                : "As of 2024, the approximate exchange rate for USD to VND is 1 USD ≈ 25,000 VND."}
             </li>
             <li>
               {isVi
-                ? "Các khuyến nghị trên về tour, khách sạn, nhà xe và hãng hàng không được chọn lọc dựa trên sự thuận tiện, chất lượng dịch vụ, hoàn toàn không có quảng cáo hay tiếp thị liên kết, giúp bạn hoàn toàn an tâm khi tham khảo."
-                : "The above recommendations for tours, hotels, bus operators, and airlines were selected based on suitability, without any advertising or affiliate marketing, so you can rest assured of these suggestions."}
+                ? "Thời gian di chuyển được đề cập cho từng phần của lịch trình không bao gồm thời gian cần thiết để làm thủ tục tại sân bay."
+                : "The travel time mentioned for each part of the itinerary does not include the time required for airport check-in."}
+            </li>
+            <li>
+              {isVi
+                ? "Hai tuần là không đủ để khám phá toàn bộ Việt Nam, vì vậy chúng tôi ưu tiên lựa chọn những điểm đến nổi tiếng nhất dành cho du khách quốc tế."
+                : "Two weeks is not enough to explore Vietnam, so we prioritize selecting the most popular destinations for international tourists."}
+            </li>
+            <li>
+              {isVi
+                ? "Các khuyến nghị trên về khách sạn, đơn vị vận chuyển và hãng hàng không được lựa chọn dựa trên sự phù hợp, hoàn toàn không có quảng cáo hay tiếp thị liên kết, vì vậy bạn có thể hoàn toàn tin tưởng vào những gợi ý này."
+                : "The above recommendations for hotels, bus operators, and airlines were selected based on suitability and without any advertising or affiliate marketing, so you can trust these suggestions."}
+            </li>
+            <li>
+              {isVi
+                ? "Nếu bạn khởi hành từ Hà Nội hoặc các tỉnh phía Bắc, bạn có thể đi ngược lại lịch trình này."
+                : "If you are departing from Hanoi or the northern provinces, you can reverse the itinerary."}
             </li>
           </ul>
         </section>
 
-        {/* ─── 2 WEEKS IN VIETNAM COSTS ─── */}
+        {/* ─── 2 WEEKS IN VIETNAM COSTS (SCREENSHOT 4) ─── */}
         <section className="omi-costs-box">
           <h2 className="omi-section-title">
             {isVi ? "Chi phí du lịch Việt Nam 2 tuần" : "2 weeks in Vietnam costs"}
           </h2>
           <p className="omi-costs-intro" style={{ textAlign: "left", marginBottom: "16px" }}>
             {isVi
-              ? "Nếu bạn đang lên kế hoạch cho chuyến du lịch 2 tuần tại Việt Nam, việc chuẩn bị ngân sách dự kiến là rất cần thiết. Trung bình, nhiều du khách chi tiêu khoảng 550 USD cho chuyến đi của mình. Dưới đây là bảng phân bổ chi phí cố định ước tính giúp bạn lên kế hoạch:"
-              : "If you're planning a 2-week trip to Vietnam, it's helpful to have an estimated budget in mind. On average, many tourists spend around $550 on their trip. Here's a breakdown of estimated fixed costs to help you plan:"}
+              ? "Nhiều du khách có thể dự trù chi tiêu khoảng 550 USD cho chuyến du lịch 2 tuần tại Việt Nam. Dưới đây là một số chi phí cố định ước tính giúp bạn lên kế hoạch ngân sách:"
+              : "Many tourists can expect to spend around $550 for a two-week trip to Vietnam. Here are some estimated fixed costs to help with your budget planning:"}
           </p>
 
           <ul className="omi-notes-list" style={{ marginTop: "12px" }}>
             <li>
               {isVi
-                ? "Chi phí phương tiện di chuyển ước tính khoảng 125 USD."
-                : "Transportation costs are approximately $125."}
+                ? "Chi phí di chuyển khoảng 125 USD. Đặt vé máy bay trước có thể giúp bạn có được mức giá thấp hơn."
+                : "Transportation costs are approximately $125. Booking flights in advance can help you secure lower prices."}
+            </li>
+            <li>
+              {isVi ? (
+                <>
+                  Khách sạn riêng và homestay có giá khoảng 15–20 USD mỗi đêm. Du khách đi một mình có thể cân nhắc các hostel, một lựa chọn tiết kiệm hơn với giá khoảng 5 USD mỗi đêm. Tìm hiểu thêm về các lựa chọn{" "}
+                  <Link href="/guide/where-to-stay-in-ho-chi-minh-city" style={{ color: "#00c2cb", textDecoration: "underline" }}>
+                    chỗ ở
+                  </Link>{" "}
+                  tại Việt Nam.
+                </>
+              ) : (
+                <>
+                  Private hotels and homestays cost around $15–$20 per night. Solo travelers can consider hostels, which are a more economical option at around $5 per night. Learn more about{" "}
+                  <Link href="/guide/where-to-stay-in-ho-chi-minh-city" style={{ color: "#00c2cb", textDecoration: "underline" }}>
+                    accommodation
+                  </Link>{" "}
+                  options in Vietnam.
+                </>
+              )}
             </li>
             <li>
               {isVi
-                ? "Chi phí lưu trú tại khách sạn riêng hoặc homestay dao động khoảng 15 đến 20 USD mỗi đêm. Đối với du khách đi một mình, phòng ký túc xá (hostel) là lựa chọn tiết kiệm hơn với mức giá từ khoảng 5 USD mỗi đêm."
-                : "Accommodation in a private hotel or homestay will cost around $15 to $20 per night. For solo travelers, hostels can be a more affordable option, with prices starting at around $5 per night."}
+                ? "Chi phí ăn uống ước tính khoảng 15 USD mỗi người mỗi ngày."
+                : "Food expenses are estimated at $15 per person per day."}
             </li>
             <li>
               {isVi
-                ? "Chi phí ăn uống thông thường khoảng 15 USD mỗi người mỗi ngày."
-                : "Food costs are typically around $15 per person per day."}
-            </li>
-            <li>
-              {isVi
-                ? "Vé vào cổng các di tích lịch sử, bảo tàng và danh lam thắng cảnh dao động khoảng 1 – 5 USD."
-                : "Admission to monuments, museums, and attractions costs around $1 – $5."}
+                ? "Giá vé tham quan các di tích, viện bảo tàng và điểm du lịch thường dao động từ 1 đến 5 USD."
+                : "Admission fees for monuments, museums, and attractions typically range from $1 to $5."}
             </li>
           </ul>
         </section>
 
-        {/* ─── OTHER ITINERARIES ─── */}
+        {/* ─── OTHER ITINERARIES (SCREENSHOT 4 & 5) ─── */}
         <section className="omi-other-itin-section">
           <h2 className="omi-section-title">
             {isVi ? "Các lịch trình khác" : "Other itineraries"}
@@ -965,14 +980,14 @@ export default function TwoWeeksInVietnamPage() {
             >
               <div className="omi-other-itin-img-wrap">
                 <img
-                  src="/guide/vietnam/travel-routes-map.jpg"
-                  alt="1-Month Vietnam Itinerary"
+                  src="/guide/vietnam/1-month-in-vietnam-itinerary-map.jpg"
+                  alt="1-month Vietnam Itinerary"
                   className="omi-other-itin-img"
                   loading="lazy"
                 />
               </div>
               <span className="omi-other-itin-caption">
-                {isVi ? "Lịch trình 1 tháng tại Việt Nam" : "1 Month in Vietnam"}
+                {isVi ? "Lịch trình 1 tháng tại Việt Nam" : "1-month Vietnam Itinerary"}
               </span>
             </Link>
           </div>
@@ -981,7 +996,7 @@ export default function TwoWeeksInVietnamPage() {
         {/* ─── HORIZONTAL DIVIDER ─── */}
         <hr className="omi-divider" />
 
-        {/* ─── RELATED ARTICLES ─── */}
+        {/* ─── RELATED ARTICLES (SCREENSHOT 5) ─── */}
         <section className="omi-related-section">
           <h2 className="omi-related-title">
             {isVi ? "Bài viết liên quan" : "Related Articles"}
@@ -1000,26 +1015,7 @@ export default function TwoWeeksInVietnamPage() {
                 />
               </div>
               <h3 className="omi-related-card-title">
-                {isVi ? "Lịch trình 3 tuần xuyên Việt hoàn hảo" : "3-week Vietnam Itinerary"}
-              </h3>
-            </Link>
-
-            <Link
-              href="/guide/1-month-in-vietnam"
-              className="omi-related-card"
-            >
-              <div className="omi-related-img-wrap">
-                <img
-                  src="/guide/megamenu/itin-4-1month.jpg"
-                  alt="1 Month in Vietnam"
-                  className="omi-related-img"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="omi-related-card-title">
-                {isVi
-                  ? "Lịch trình 1 tháng trọn vẹn khám phá Việt Nam"
-                  : "1 Month in Vietnam"}
+                {isVi ? "Lịch trình 3 tuần xuyên Việt" : "3-week Vietnam Itinerary"}
               </h3>
             </Link>
 
@@ -1039,6 +1035,25 @@ export default function TwoWeeksInVietnamPage() {
                 {isVi
                   ? "10 trải nghiệm tuyệt nhất ở TP. Hồ Chí Minh"
                   : "10 best things to do in Ho Chi Minh City"}
+              </h3>
+            </Link>
+
+            <Link
+              href="/guide/8-best-things-to-do-in-nha-trang"
+              className="omi-related-card"
+            >
+              <div className="omi-related-img-wrap">
+                <img
+                  src="/guide/hcmc/Top-8-things-to-do-in-Nha-Trang-Vietnamnomad.jpg"
+                  alt="8 best things to do in Nha Trang"
+                  className="omi-related-img"
+                  loading="lazy"
+                />
+              </div>
+              <h3 className="omi-related-card-title">
+                {isVi
+                  ? "8 trải nghiệm tuyệt nhất tại Nha Trang"
+                  : "8 best things to do in Nha Trang"}
               </h3>
             </Link>
           </div>
