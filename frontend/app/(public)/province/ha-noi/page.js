@@ -1326,6 +1326,220 @@ export default function HanoiPage() {
             </div>
           </div>
 
+          {/* ITEM 5: HANOI CATHEDRAL (SCREENSHOT 2) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "5. Nhà thờ Lớn Hà Nội (Hanoi Cathedral)" : "5. Hanoi Cathedral"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-nhatho-hd.jpg"
+                    alt="Hanoi Cathedral St. Joseph Cathedral"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Nhà thờ Lớn Hà Nội (Nhà thờ Chính tòa Thánh Giuse)" : "Hanoi Cathedral"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Tọa lạc tại trung tâm thành phố lân cận hồ Hoàn Kiếm, Nhà thờ Lớn Hà Nội (hay Nhà thờ Chính tòa Thánh Giuse) là một công trình kiến trúc lịch sử tuyệt mỹ mang phong cách Gothic cổ điển. Nhà thờ được người Pháp xây dựng trên nền đất cũ của Chùa Báo Thiên sau khi tiến vào Hà Nội năm 1882."
+                    : "Located in the city center neighboring Hoan Kiem Lake, Hanoi Cathedral (or St.Joseph's Cathedral) is a beautiful and historic architecture with Gothic style. The cathedral was built on the original site of Bao Thien Pagoda by the French after they entered Hanoi in 1882."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Dù có ý kiến cho rằng diện mạo sau trùng tu đã vơi bớt vẻ rêu phong cổ kính của thời gian, nơi đây vẫn là điểm hẹn yêu thích với rất nhiều quán cà phê, nhà hàng trang trí xinh xắn xung quanh. Vào dịp Giáng sinh, cả khu vực bừng sáng với những ánh đèn lung linh và cây thông trang hoàng lộng lẫy. Nếu thời gian cho phép, bạn nên ghé thăm vào cả ban ngày lẫn ban đêm để cảm nhận trọn vẹn những nét quyến rũ rất riêng."
+                    : "Although it is claimed to lose its vintage and weather-beaten look after the renovation, it remains a favorite gathering spot with many goods and well-decorated cafes and restaurants around. During Christmas time, the whole area is lit up with glorious lights and ornaments. If time allows, you should pay a visit at day and night time to see the different vibes it offers."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "40 Phố Nhà Chung, Quận Hoàn Kiếm" : "40 Nha Chung Street, Hoan Kiem District"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 6: HOA LO PRISON (SCREENSHOT 2 & 3) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "6. Di tích Nhà tù Hỏa Lò (Hoa Lo Prison)" : "6. Hoa Lo Prison"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-hoalo-hd.jpg"
+                    alt="Hoa Lo Prison Maison Centrale"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Cổng vào Di tích Lịch sử Nhà tù Hỏa Lò – Maison Centrale" : "Hoa Lo Prison"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Nhà tù Hỏa Lò, còn được gọi với cái tên tiếng Pháp \"Maison Centrale\", được thực dân Pháp xây dựng năm 1896 để giam giữ các chiến sĩ cách mạng kiên trung chống lại chế độ thực dân. Tổng diện tích khu trại giam trước đây rộng hơn 12.000 m2; tuy nhiên hiện tại chỉ còn 2.434 m2 được bảo tồn phục vụ mục đích tham quan du lịch. Khuôn viên được chia làm 4 phân khu: A và B (dành cho tù nhân phạm tội nhẹ hoặc cảnh cáo), C (dành cho phạm nhân người Pháp và nước ngoài), và D (dành cho phạm nhân trọng tội và án tử hình). Bạn sẽ được tận mắt chứng kiến điều kiện giam cầm khắc nghiệt cùng những hình phạt tàn bạo mà các chiến sĩ đã phải trải qua, từ đó thấu hiểu sâu sắc vì sao người dân Việt Nam luôn trân trọng hòa bình và lòng yêu nước nồng nàn trong bất kỳ sự kiện nào."
+                    : "Hoa Lo Prison, also goes with the name \"Maison Centrale\", was built in 1896 by the French to capture revolutionary soldiers against the colonial regime. The total area of the former prison is more than 12,000 m2. However, only 2,434 m2 is used for tourist purposes. The campus is divided into 4 zones: A and B (for minor crimes and warning sentences), C (for French and foreign perpetrators), and D (for serious and death-sentenced perpetrators). You will have to see with your own eyes the extreme conditions that the soldiers had to go through and how cruel the punishments were so that you can understand why the Vietnamese so explicitly and passionately show appreciation and patriotism in any events possible."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Với vai trò lịch sử quan trọng, Nhà tù Hỏa Lò đã trở thành một điểm đến hấp dẫn đầy ý nghĩa tại Hà Nội, thu hút đông đảo du khách trong nước và quốc tế."
+                    : "With its significant historical role, Hoa Lo Prison has become an exciting place to visit in Hanoi, attracting many domestic and foreign tourists."}
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Giờ mở cửa: " : "Opening hours: "}</strong>
+                    8:00 AM – 5:00 PM
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giá vé: " : "Tickets: "}</strong>
+                    30,000 VND
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                    {lang === "vi" ? "1 Phố Hỏa Lò, Quận Hoàn Kiếm" : "1 Hoa Lo, Hoan Kiem District"}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 7: DONG XUAN MARKET (SCREENSHOT 3 & 4) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "7. Chợ Đồng Xuân (Dong Xuan Market)" : "7. Dong Xuan Market"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-dongxuan-hd.jpg"
+                    alt="Dong Xuan Market Cho Dong Xuan"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Chợ Đồng Xuân – Khu chợ đầu mối lâu đời nhất Hà Nội" : "Dong Xuan Market"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Chợ Đồng Xuân là khu mua sắm sầm uất và lâu đời nhất ở Hà Nội, được xây dựng từ năm 1889 dưới triều Nguyễn. Chợ Đồng Xuân là chợ đầu mối bán buôn hàng đầu ở miền Bắc. Nơi đây bày bán bạt ngàn các mặt hàng đa dạng từ vải vóc, quần áo, thổ cẩm lụa là, đồ khô, mứt, bánh kẹo, đồ ăn, quà lưu niệm đến các thiết bị điện tử gia dụng. Dù đây là nơi tuyệt vời để tìm hiểu đời sống giao thương thường nhật của người dân, chúng tôi không khuyến khích bạn mua sắm đồ lưu niệm lẻ tại đây vì mục đích chính của chợ là bán buôn nên bạn khó có thể có được mức giá tốt nhất."
+                    : "Dong Xuan Market is the busiest and oldest shopping area in Hanoi, which was built in 1889 under the Nguyen Dynasty. Dong Xuan Market is the leading wholesale market in the North. There is a wide variety of items on sale here, ranging from fabrics, clothes, silk brocade, dry food, jam, confectionery, food and souvenirs to electronic appliances. Although it is a good way to learn about the trading activities of the locals, it is not recommended for souvenir shopping since, as mentioned, it aims at wholesale, so you would probably not get the best prices."}
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "Nếu bạn vẫn muốn trải nghiệm mua sắm thú vị tại Chợ Đồng Xuân, dưới đây là một số mẹo hữu ích:"
+                    : "If you are still keen on having an experience shopping at Dong Xuan Market, here are some tips:"}
+                </p>
+
+                <p style={{ marginBottom: "6px" }}>
+                  {lang === "vi"
+                    ? "1. Bạn hoàn toàn có thể mặc cả (và nên trả giá khéo léo nhưng không vượt quá 50% so với giá người bán đưa ra ban đầu)."
+                    : "1. It is acceptable to bargain (and bargain hard but not exceed 50% off the initial price)."}
+                </p>
+                <p style={{ marginBottom: "6px" }}>
+                  {lang === "vi"
+                    ? "2. Bạn nên đi theo nhóm vì số lượng hàng mua càng lớn thì mức chiết khấu bạn có thể đề xuất càng cao."
+                    : "2. You should go in groups and the bigger the quantity is, the bigger discount you could possibly ask for."}
+                </p>
+                <p style={{ marginBottom: "16px" }}>
+                  {lang === "vi"
+                    ? "3. Kẻ gian móc túi có thể lợi dụng khung cảnh đông đúc, tấp nập, hãy luôn chú ý giữ gìn tư trang và đồ dùng cá nhân."
+                    : "3. Pickpockets could take advantage of the busy and crowded scene, so make sure you always keep an eye on your belongings."}
+                </p>
+
+                <p>
+                  <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
+                  {lang === "vi" ? "Phố Đồng Xuân, Quận Hoàn Kiếm" : "Dong Xuan Street, Hoan Kiem District"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ITEM 8: IMPERIAL CITADEL OF THANG LONG (SCREENSHOT 4 & 5) */}
+          <div style={{ marginBottom: "44px" }}>
+            <h3 className="vnn-hanoi-attraction-title">
+              {lang === "vi" ? "8. Hoàng thành Thăng Long (Imperial Citadel of Thang Long)" : "8. Imperial Citadel of Thang Long"}
+            </h3>
+
+            <div className="vnn-hanoi-attraction-split">
+              <div className="vnn-hanoi-attraction-imgs-col">
+                <div className="vnn-hanoi-attraction-img-item">
+                  <img
+                    src="/guide/hanoi/hanoi-hoangthanh-hd.jpg"
+                    alt="Imperial Citadel of Thang Long Doan Mon"
+                  />
+                  <p className="vnn-hanoi-editorial-caption">
+                    {lang === "vi" ? "Cửa Đoan Môn – Hoàng thành Thăng Long" : "Imperial Citadel of Thang Long"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="vnn-hanoi-attraction-text-col">
+                <p>
+                  {lang === "vi"
+                    ? "Hoàng thành Thăng Long là di tích lịch sử và văn hóa đặc biệt quan trọng của Việt Nam, được UNESCO vinh danh là Di sản Văn hóa Thế giới vào năm 2010 đúng dịp đại lễ kỷ niệm 1.000 năm Thăng Long – Hà Nội. Khuôn viên này là nơi tọa lạc của nhiều cung điện hoàng gia và các công trình cổ kính trải qua hàng ngàn năm triều đại phong kiến, đồng thời tiếp tục giữ vai trò trung tâm chính trị của đất nước cho đến tận ngày nay. Một số điểm nhấn nổi bật bao gồm:"
+                    : "Hoang Thanh Thang Long (Imperial Citadel of Thang Long) is an important historical and cultural relic of Vietnam, which was recognized by UNESCO as a World Heritage Site in 2010 when it celebrated its 1,000th anniversary. This campus is home to various imperial palaces and other ancient royal constructions under thousands of years of feudal regime and continues to be the political center of the country up to now. Some of the highlighted attractions are listed below (just to name a few):"}
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    {lang === "vi"
+                      ? "Cột cờ Hà Nội: được xây dựng từ thế kỷ 19 với cầu thang xoắn ốc dẫn lên đỉnh, nơi bạn có thể phóng tầm mắt ngắm nhìn 360 độ toàn cảnh Hoàng thành."
+                      : "The Flagpole (or Hanoi Flagtower) was built in the 19th century with spiral stairs leading to the top where you can have a 360-degree view of the whole Imperial Citadel of Thang Long."}
+                  </li>
+                  <li>
+                    {lang === "vi"
+                      ? "Các cổng thành: được xây dựng theo 4 hướng phản ánh vẻ uy nghiêm và phong cách kiến trúc đặc sắc thời bấy giờ."
+                      : "The gates were built to the four directions which reflect the magnificence and iconic architectural style at the time."}
+                  </li>
+                  <li>
+                    {lang === "vi"
+                      ? "Điện Kính Thiên: tòa thành di tích và nơi ngự triều cũ của hoàng gia, nơi diễn ra các đại lễ trang trọng bậc nhất của triều đình."
+                      : "Dien Kinh Thien (Kinh Thien Palace) is a historic fort and former royal residence where all the significant ceremonies of the royalty took place."}
+                  </li>
+                </ul>
+
+                <p>
+                  <strong>{lang === "vi" ? "Một số lưu ý & mẹo hữu ích:" : "Some tips and notes:"}</strong>
+                </p>
+
+                <p>
+                  {lang === "vi"
+                    ? "1. Đầu năm 2022, tour đêm kéo dài 90 phút mang tên \"Giải mã Hoàng Thành Thăng Long\" đã chính thức ra mắt – đưa bạn khám phá mọi di tích lịch sử quan trọng với nhiều hoạt động dâng hương và biểu diễn nghệ thuật đặc sắc. Tour đêm này rất được khuyến khích vì vừa là thời điểm lý tưởng mát mẻ để tản bộ, vừa mang đến trải nghiệm ánh sáng vàng lung linh và sự thanh tịnh huyền bí khác biệt."
+                    : "1. In early 2022, a 90-minute night tour \"Giải mã Hoàng Thành Thăng Long\" (Decoding the Imperial Citadel of Thang Long) was launched – which takes you through all the significant landmarks with many worshiping and performing activities along the way. This is highly recommended not only because it is the best time to walk the citadel but also because the golden light and the tranquility yet mystique of the night will bring up a whole new experience."}
+                </p>
+
+                <ul className="vnn-hanoi-attraction-bullets">
+                  <li>
+                    <strong>{lang === "vi" ? "Thời gian: " : "Time: "}</strong>
+                    {lang === "vi" ? "Tour khởi hành từ 19:00 các ngày Thứ Sáu và cuối tuần" : "Tour starts from 7:00 PM on Fridays and weekends"}
+                  </li>
+                  <li>
+                    <strong>{lang === "vi" ? "Giá vé: " : "Tickets: "}</strong>
+                    {lang === "vi" ? "300.000 VNĐ ($13) cho người lớn và 150.000 VNĐ ($6.5) cho trẻ em" : "300,000 VND ($13) for adults and 150,000 VND ($6.5) for children"}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           {/* MORE ATTRACTIONS CARDS GRID */}
           <h4 style={{ fontSize: "18px", fontWeight: "700", color: "#222", marginBottom: "16px" }}>
             {lang === "vi" ? "Các điểm đến biểu tượng tiếp theo:" : "More iconic attractions in Hanoi:"}
