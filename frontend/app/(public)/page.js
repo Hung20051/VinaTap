@@ -309,8 +309,8 @@ const REGIONAL_DESTINATIONS_DATA = [
           {
             title: "The 10 best attractions in Da Nang",
             titleVi: "10 điểm tham quan đẹp nhất Đà Nẵng",
-            img: "/guide/hcmc/region-central-10things.jpg",
-            link: "/province/da-nang",
+            img: "/guide/danang/danang-10-best-attractions-hd.jpg",
+            link: "/guide/the-10-best-attractions-in-da-nang",
           },
           {
             title: "Nha Trang",
@@ -519,8 +519,8 @@ const THINGS_TO_DO_PAGES = [
       desc: "Da Nang is the most famous coastal city in Vietnam as it is endowed with stunning natural assets and has invested in modern infrastructures. Here are the 10 best attractions in Da Nang.",
       descVi:
         "Khám phá thành phố biển đáng sống nhất Việt Nam: Cầu Rồng, Ngũ Hành Sơn, Bà Nà Hills và bãi biển Mỹ Khê tuyệt đẹp.",
-      img: "/guide/hcmc/region-central-10things.jpg",
-      link: "/province/da-nang",
+      img: "/guide/danang/danang-10-best-attractions-hd.jpg",
+      link: "/guide/the-10-best-attractions-in-da-nang",
     },
     {
       title: "20 Best Things to Do in Vietnam",

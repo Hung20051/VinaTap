@@ -9,6 +9,16 @@ import { getLang } from "@/lib/prefs";
 // ─── COMPREHENSIVE SEARCH INDEX MATCHING SCREENSHOT ───
 const SEARCH_POSTS = [
   {
+    id: "the-10-best-attractions-in-da-nang",
+    title: "The 10 Best Attractions in Da Nang | Top Places to Visit",
+    titleVi: "10 Điểm Tham Quan Đẹp Nhất Đà Nẵng | Danh Thắng & Trải Nghiệm",
+    date: "October 15, 2026",
+    dateVi: "15 Tháng 10, 2026",
+    img: "/guide/danang/danang-10-best-attractions-hd.jpg",
+    link: "/guide/the-10-best-attractions-in-da-nang",
+    keywords: "da nang danang 10 best attractions things to do my khe ba na hills golden bridge son tra linh ung marble mountains ngu hanh son asia park dragon bridge cau rong cho con con market hai van pass phong nam han river bridge song han travel guide du lich da nang",
+  },
+  {
     id: "ninh-binh",
     title: "Ultimate Ninh Binh Travel Guide | Trang An, Tam Coc & Hoa Lu",
     titleVi: "Cẩm Nang Du Lịch Ninh Bình | Tràng An, Tam Cốc & Cố Đô Hoa Lư",
