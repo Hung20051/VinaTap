@@ -2973,6 +2973,17 @@
   transform: scale(1.012);
 }
 
+/* ── Reading Progress Bar ── */
+.vnn-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00c2cb, #008779);
+  z-index: 99999;
+  transition: width 0.1s ease-out;
+}
+
 /* ─── 2. EDITORIAL NAVBAR (IMAGE 2) ─── */
 .vnn-navbar {
   position: sticky !important;
@@ -5464,4 +5475,3 @@
     gap: 20px;
   }
 }
-
