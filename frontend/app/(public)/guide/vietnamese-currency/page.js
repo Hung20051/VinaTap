@@ -324,27 +324,27 @@ const BANKNOTES = [
 // ─── RELATED ARTICLES (MATCHING SCREENSHOT) ───
 const RELATED_ARTICLES = [
   {
-    id: "railway-network",
-    title: "Vietnam’s Railway Network",
-    titleVi: "Mạng Lưới Đường Sắt Việt Nam",
-    img: "/guide/currency/vietnam-railway-network.png",
-    link: "/guide/the-complete-guide-to-vietnam",
-    isMap: true,
-  },
-  {
-    id: "airports-in-vietnam",
-    title: "Airports in Vietnam",
-    titleVi: "Hệ Thống Sân Bay Việt Nam",
-    img: "/guide/currency/airports-in-vietnam.png",
-    link: "/guide/the-complete-guide-to-vietnam",
-    isMap: true,
-  },
-  {
     id: "climate-of-vietnam",
     title: "Climate of Vietnam",
     titleVi: "Khí Hậu & Thời Tiết Việt Nam",
-    img: "/guide/currency/climate-of-vietnam.jpg",
-    link: "/guide/climate-of-vietnam",
+    img: "/guide/climate/climate-of-vietnam.jpg",
+    link: "/guide/vietnam-climate",
+    isMap: false,
+  },
+  {
+    id: "vietnam-visa",
+    title: "Vietnam Visa Guide",
+    titleVi: "Thông Tin Visa Việt Nam",
+    img: "/guide/visa/vietnam-visa-hero.jpg",
+    link: "/guide/vietnam-visa",
+    isMap: false,
+  },
+  {
+    id: "the-complete-guide",
+    title: "The Complete Guide to Vietnam",
+    titleVi: "Cẩm Nang Toàn Diện Việt Nam",
+    img: "/guide/megamenu/inspired-3.jpg",
+    link: "/guide/the-complete-guide-to-vietnam",
     isMap: false,
   },
 ];
