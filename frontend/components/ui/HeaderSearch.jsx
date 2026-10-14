@@ -248,6 +248,16 @@ const SEARCH_POSTS = [
     link: "/guide/3-week-vietnam-itinerary",
     keywords: "3 week vietnam itinerary north south central route",
   },
+  {
+    id: "casa-blanca-dalat",
+    title: "Casa Blanca Da Lat Homestay",
+    titleVi: "Casa Blanca Đà Lạt Homestay (Nhà Gỗ Mộc Pasteur)",
+    date: "October 14, 2026",
+    dateVi: "14 Tháng 10, 2026",
+    img: "/stay/casa-blanca/toan_canh.jpg",
+    link: "/stay/casa-blanca-da-lat",
+    keywords: "casa blanca dalat homestay nha go moc pasteur xuan huong da lat phong hien nang mui go mui thong nep nha duoi tan hong gac bep ben tan thong thue nguyen can thue xe may doi tac vinatap",
+  },
 ];
 
 function removeVietnameseTones(str) {

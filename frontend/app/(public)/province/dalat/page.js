@@ -960,6 +960,41 @@ export default function DalatPage() {
           <div className="vnn-dalat-divider" />
 
           <div className="vnn-dalat-stay-grid">
+            <Link
+              href="/stay/casa-blanca-da-lat"
+              className="vnn-dalat-stay-card"
+              title={lang === "vi" ? "Xem chi tiết Casa Blanca Đà Lạt Homestay" : "View Casa Blanca Dalat Homestay"}
+              style={{ position: "relative", textDecoration: "none" }}
+            >
+              <img
+                src="/stay/casa-blanca/toan_canh.jpg"
+                alt="Casa Blanca Da Lat Homestay"
+                className="vnn-dalat-card-img"
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  top: "12px",
+                  left: "12px",
+                  background: "linear-gradient(135deg, #d97706 0%, #b45309 100%)",
+                  color: "#ffffff",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  padding: "4px 10px",
+                  borderRadius: "9999px",
+                  zIndex: 2,
+                  letterSpacing: "0.04em",
+                }}
+              >
+                {lang === "vi" ? "⭐ ĐỐI TÁC VINATAP" : "⭐ VINATAP PARTNER"}
+              </span>
+              <div className="vnn-dalat-card-overlay">
+                <h3 className="vnn-dalat-card-title">
+                  {lang === "vi" ? "Casa Blanca Homestay: Nhà Gỗ Mộc Pasteur" : "Casa Blanca Homestay: Rustic Wooden Cabin"}
+                </h3>
+              </div>
+            </Link>
+
             <div
               className="vnn-dalat-stay-card"
               onClick={() => setDetailModalItem(DALAT_DETAILS.stay)}
@@ -974,12 +1009,29 @@ export default function DalatPage() {
               />
               <div className="vnn-dalat-card-overlay">
                 <h3 className="vnn-dalat-card-title">
-                  {lang === "vi" ? "Nghỉ dưỡng tại Đà Lạt" : "Stay in Dalat"}
+                  {lang === "vi" ? "Cẩm nang nghỉ dưỡng tại Đà Lạt" : "Dalat Accommodation Guide"}
                 </h3>
               </div>
             </div>
-            <div className="vnn-dalat-stay-placeholder" />
-            <div className="vnn-dalat-stay-placeholder" />
+
+            <div
+              className="vnn-dalat-stay-card"
+              onClick={() => setDetailModalItem(DALAT_DETAILS.stay)}
+              role="button"
+              tabIndex={0}
+              title={lang === "vi" ? "Khách sạn & Homestay view đồi thông" : "Hotels & Stays with Pine View"}
+            >
+              <img
+                src="/stay/casa-blanca/phong_canh_dem.jpg"
+                alt="Dalat Pine Hill Homestay"
+                className="vnn-dalat-card-img"
+              />
+              <div className="vnn-dalat-card-overlay">
+                <h3 className="vnn-dalat-card-title">
+                  {lang === "vi" ? "Trải nghiệm đốt lửa trại & săn mây" : "Campfire & Cloud-Hunting Stays"}
+                </h3>
+              </div>
+            </div>
           </div>
         </section>
 
