@@ -71,7 +71,7 @@ const RELATED_ARTICLES = [
       "Discover Vietnam's top scenic landscapes, from UNESCO-listed Trang An to misty mountain peaks and golden coastal waters.",
     excerptVi:
       "Danh sách chọn lọc các danh thắng ngoạn mục nhất từ Quần thể Tràng An đến vùng cao Tây Bắc và biển đảo.",
-    img: "/guide/15-best-places.jpg",
+    img: "/guide/megamenu/inspired-1.jpg",
   },
   {
     slug: "3-week-vietnam-itinerary",
@@ -83,7 +83,7 @@ const RELATED_ARTICLES = [
       "Our recommended 3-week route connecting Saigon, Nha Trang, Da Nang, Hoi An, Hanoi, Ha Long Bay, and Ninh Binh.",
     excerptVi:
       "Lộ trình tối ưu xuyên Việt qua 7 điểm đến kinh điển: Sài Gòn → Nha Trang → Đà Nẵng → Hội An → Hà Nội → Hạ Long → Ninh Bình.",
-    img: "/guide/itinerary/hero-3-weeks.jpg",
+    img: "/guide/megamenu/itin-1-3week.jpg",
   },
   {
     slug: "hanoi-tourist-map",
