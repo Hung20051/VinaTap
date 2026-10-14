@@ -257,7 +257,7 @@ const REGIONAL_DESTINATIONS_DATA = [
           {
             title: "Ninh Binh - Trang An Scenic",
             titleVi: "Ninh Bình - Non nước Tràng An",
-            img: "/guide/hcmc/climate-of-vietnam.jpg",
+            img: "/guide/ninh-binh/trang-an.jpg",
             link: "/province/ninh-binh",
           },
         ],
@@ -269,7 +269,7 @@ const REGIONAL_DESTINATIONS_DATA = [
           desc: "Marvel at UNESCO World Heritage Trang An scenic complex, historic temples of Hoa Lu, and dramatic limestone peaks rising from emerald waters.",
           descVi:
             "Được mệnh danh 'Hạ Long trên cạn' với quần thể Tràng An di sản thế giới, Cố đô Hoa Lư lịch sử và Tam Cốc Bích Động sơn thủy hữu tình.",
-          img: "/guide/hcmc/climate-of-vietnam.jpg",
+          img: "/guide/ninh-binh/hero.jpg",
           link: "/province/ninh-binh",
         },
         minis: [
@@ -831,7 +831,7 @@ const POPULAR_POSTS_PAGES = [
     {
       title: "Ninh Binh Heritage & Trang An",
       titleVi: "Ninh Bình - Non nước hữu tình Tràng An",
-      img: "/guide/hcmc/climate-of-vietnam.jpg",
+      img: "/guide/ninh-binh/hero.jpg",
       link: "/province/ninh-binh",
     },
   ],

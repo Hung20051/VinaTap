@@ -1,0 +1,592 @@
+/* ================================================================
+   VINATAP EDITORIAL: ULTIMATE NINH BINH TRAVEL GUIDE
+   Phong cách Cẩm nang Du lịch Ninh Bình — Non Nước Tràng An Di Sản Kép
+   Tone màu: Emerald Jade (#099f8a), Cyan (#00c2cb), Limestone Warm Slate, White Paper
+   ================================================================ */
+
+.ninhbinh-page {
+  background-color: var(--guide-bg, #f8f5f4);
+  color: var(--guide-text-main, #142129);
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.nb-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(9, 159, 138, 0.12);
+  color: #099f8a;
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .nb-hero-badge {
+  background: rgba(9, 159, 138, 0.25);
+  color: #2dd4bf;
+}
+
+/* Quick Snapshot */
+.nb-snapshot-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 1.5rem 1.75rem;
+  margin: 2rem 0 2.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .nb-snapshot-box {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.nb-snapshot-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #099f8a;
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .nb-snapshot-title {
+  color: #2dd4bf;
+}
+
+.nb-snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.nb-snapshot-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #334155;
+}
+
+[data-theme="dark"] .nb-snapshot-item {
+  color: #94a3b8;
+}
+
+.nb-snapshot-icon {
+  color: #099f8a;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Article Sections */
+.nb-section {
+  margin-bottom: 3.5rem;
+}
+
+.nb-section-title {
+  font-size: clamp(1.45rem, 2.8vw, 1.85rem);
+  font-weight: 800;
+  color: #0d1f2d;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+[data-theme="dark"] .nb-section-title {
+  color: #f1f5f9;
+  border-bottom-color: #1e3345;
+}
+
+.nb-section-desc {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #334155;
+  margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .nb-section-desc {
+  color: #cbd5e1;
+}
+
+/* Image Presentation with Caption */
+.nb-figure {
+  margin: 2rem 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+  background: #000;
+}
+
+.nb-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.nb-figure:hover img {
+  transform: scale(1.015);
+}
+
+.nb-figure figcaption {
+  background: #ffffff;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.9rem;
+  color: #64748b;
+  text-align: center;
+  font-style: italic;
+  border-top: 1px solid #f1f5f9;
+}
+
+[data-theme="dark"] .nb-figure figcaption {
+  background: #11202d;
+  color: #94a3b8;
+  border-top-color: #1e3345;
+}
+
+/* Attraction Cards (Top 10 Attractions) */
+.nb-attractions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+  margin: 2rem 0;
+}
+
+.nb-attraction-card {
+  background: #ffffff;
+  border: 1px solid #e8ecf0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(13, 31, 45, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+[data-theme="dark"] .nb-attraction-card {
+  background: #11202d;
+  border-color: #1e3345;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+.nb-attraction-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 26px rgba(9, 159, 138, 0.15);
+}
+
+.nb-attraction-card__header {
+  padding: 1.25rem 1.75rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+[data-theme="dark"] .nb-attraction-card__header {
+  background: #162a3b;
+  border-bottom-color: #1e3345;
+}
+
+.nb-attraction-card__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nb-attraction-card__num {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #099f8a, #00c2cb);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nb-attraction-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin: 0;
+}
+
+[data-theme="dark"] .nb-attraction-card__title {
+  color: #ffffff;
+}
+
+.nb-attraction-card__badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #e6f9fa;
+  color: #009aa2;
+}
+
+[data-theme="dark"] .nb-attraction-card__badge {
+  background: rgba(0, 194, 203, 0.15);
+  color: #00c2cb;
+}
+
+.nb-attraction-card__media {
+  width: 100%;
+  max-height: 420px;
+  overflow: hidden;
+  background: #000;
+}
+
+.nb-attraction-card__media img {
+  width: 100%;
+  height: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.nb-attraction-card__body {
+  padding: 1.5rem 1.75rem;
+}
+
+.nb-attraction-card__desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #475569;
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .nb-attraction-card__desc {
+  color: #cbd5e1;
+}
+
+.nb-attraction-card__meta-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.nb-attraction-card__meta-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+[data-theme="dark"] .nb-attraction-card__meta-item {
+  color: #94a3b8;
+}
+
+.nb-attraction-card__meta-icon {
+  color: #099f8a;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Season Cards Grid */
+.nb-season-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.nb-season-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.35rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .nb-season-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.nb-season-card__top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.nb-season-card__icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #f0fdfa;
+  color: #099f8a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .nb-season-card__icon-wrap {
+  background: #162e3d;
+  color: #2dd4bf;
+}
+
+.nb-season-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin: 0;
+}
+
+[data-theme="dark"] .nb-season-card__title {
+  color: #f1f5f9;
+}
+
+.nb-season-card__text {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #475569;
+  margin: 0;
+}
+
+[data-theme="dark"] .nb-season-card__text {
+  color: #94a3b8;
+}
+
+/* Dishes Grid (Top 5 Specialties) */
+.nb-dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
+  margin: 2rem 0;
+}
+
+.nb-dish-card {
+  background: #ffffff;
+  border: 1px solid #e8ecf0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+[data-theme="dark"] .nb-dish-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.nb-dish-card__media {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #000;
+}
+
+.nb-dish-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.nb-dish-card:hover .nb-dish-card__media img {
+  transform: scale(1.04);
+}
+
+.nb-dish-card__body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.nb-dish-card__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin: 0 0 0.5rem 0;
+}
+
+[data-theme="dark"] .nb-dish-card__title {
+  color: #ffffff;
+}
+
+.nb-dish-card__desc {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+[data-theme="dark"] .nb-dish-card__desc {
+  color: #94a3b8;
+}
+
+.nb-dish-card__spots {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.86rem;
+  color: #334155;
+  border-left: 3px solid #099f8a;
+}
+
+[data-theme="dark"] .nb-dish-card__spots {
+  background: #162b3d;
+  color: #cbd5e1;
+}
+
+.nb-dish-card__spots strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #099f8a;
+}
+
+[data-theme="dark"] .nb-dish-card__spots strong {
+  color: #2dd4bf;
+}
+
+/* Festivals List */
+.nb-festival-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.nb-festival-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .nb-festival-item {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.nb-festival-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.nb-festival-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0d1f2d;
+}
+
+[data-theme="dark"] .nb-festival-name {
+  color: #f1f5f9;
+}
+
+.nb-festival-date {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ff5757;
+  background: #fff0f0;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+[data-theme="dark"] .nb-festival-date {
+  background: rgba(255, 87, 87, 0.15);
+}
+
+.nb-festival-desc {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0;
+}
+
+[data-theme="dark"] .nb-festival-desc {
+  color: #94a3b8;
+}
+
+/* Golden Combo Tip Box */
+.nb-combo-box {
+  background: linear-gradient(135deg, #f0fdfa 0%, #e6f9fa 100%);
+  border: 1px solid #99f6e4;
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin: 2.5rem 0;
+}
+
+[data-theme="dark"] .nb-combo-box {
+  background: #0d262d;
+  border-color: #1a4d55;
+}
+
+.nb-combo-box__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f766e;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+[data-theme="dark"] .nb-combo-box__title {
+  color: #2dd4bf;
+}
+
+.nb-combo-box__text {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: #115e59;
+  margin: 0 0 1rem 0;
+}
+
+[data-theme="dark"] .nb-combo-box__text {
+  color: #cbd5e1;
+}
+
+.nb-combo-routes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.nb-combo-route-item {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #ccfbf1;
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #134e4a;
+}
+
+[data-theme="dark"] .nb-combo-route-item {
+  background: #14353d;
+  border-color: #1e505c;
+  color: #cbd5e1;
+}
