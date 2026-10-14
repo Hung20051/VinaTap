@@ -2454,9 +2454,6 @@ export default function HomePage() {
               >
                 <ChevronRight size={16} />
               </button>
-              <span className="vnn-carousel-page-indicator">
-                {topDestPage + 1} / {totalDestPages}
-              </span>
             </div>
           </div>
         </section>
