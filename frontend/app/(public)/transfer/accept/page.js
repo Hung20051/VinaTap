@@ -123,7 +123,7 @@ function AcceptTransferContent() {
                 }}
                 onClick={handleAccept}
               >
-                ✅ Xác Nhận Nhận Thẻ Ngay
+                ✅ Xác Nhận Nhận Hành Trình Ngay
               </button>
               <Link
                 href="/"

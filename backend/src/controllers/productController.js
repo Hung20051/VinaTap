@@ -169,14 +169,14 @@ const syncStandardPrices = async (req, res) => {
     if (c3.length === 0) {
       await db.execute(
         `INSERT INTO products (name, category, price, original_price, image, tag, description, is_active)
-         VALUES ('Combo 3 Thẻ NFC Du Lịch Tự Chọn', 'combo', 139000.00, 147000.00, 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&auto=format&fit=crop&q=60', 'Hot', 'Combo 3 thẻ NFC du lịch tự chọn tỉnh thành bất kỳ theo sở thích của bạn.', 1)`
+         VALUES ('Combo 3 Cẩm Nang & Bản Đồ Số Tự Chọn', 'combo', 139000.00, 147000.00, 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&auto=format&fit=crop&q=60', 'Hot', 'Combo 3 cẩm nang du lịch & bản đồ số tự chọn tỉnh thành bất kỳ theo sở thích của bạn.', 1)`
       );
     }
 
     const [rows] = await db.execute("SELECT id FROM products");
     res.json({
       message:
-        "Đã đồng bộ toàn bộ bảng giá chuẩn (1 thẻ: 49k, Combo 3: 139k, Combo 5: 239k, Bộ 34 thẻ: 1.400k) thành công!",
+        "Đã đồng bộ toàn bộ bảng giá chuẩn (1 cẩm nang: 49k, Combo 3: 139k, Combo 5: 239k, Bộ 34 cẩm nang: 1.400k) thành công!",
       count: rows.length,
     });
   } catch (err) {

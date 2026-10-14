@@ -17,12 +17,12 @@ export default function GiftNotificationBanner({ gifts = [], onGiftProcessed }) 
     setSuccessMsg("");
     try {
       const res = await nfcAPI.acceptTransfer({ transfer_id: gift.id });
-      setSuccessMsg(res.message || `🎉 Bạn đã nhận thành công thẻ ${gift.province_name}!`);
+      setSuccessMsg(res.message || `🎉 Bạn đã nhận thành công hành trình ${gift.province_name}!`);
       setTimeout(() => {
         if (onGiftProcessed) onGiftProcessed(gift.id);
       }, 1200);
     } catch (err) {
-      setErrorMsg(err.message || "Không thể tiếp nhận thẻ vào lúc này");
+      setErrorMsg(err.message || "Không thể tiếp nhận hành trình vào lúc này");
     } finally {
       setProcessingId(null);
     }
@@ -36,7 +36,7 @@ export default function GiftNotificationBanner({ gifts = [], onGiftProcessed }) 
       await nfcAPI.rejectTransfer(gift.id);
       if (onGiftProcessed) onGiftProcessed(gift.id);
     } catch (err) {
-      setErrorMsg(err.message || "Lỗi khi từ chối thẻ");
+      setErrorMsg(err.message || "Lỗi khi từ chối hành trình");
     } finally {
       setProcessingId(null);
     }
@@ -134,7 +134,7 @@ export default function GiftNotificationBanner({ gifts = [], onGiftProcessed }) 
                     color: "#7c2d12",
                   }}
                 >
-                  <strong style={{ color: "#ea580c" }}>{gift.sender_name}</strong> vừa gửi tặng bạn thẻ{" "}
+                  <strong style={{ color: "#ea580c" }}>{gift.sender_name}</strong> vừa gửi tặng bạn hành trình{" "}
                   <span style={{ color: "#047857", textDecoration: "underline" }}>📍 {gift.province_name}</span>!
                 </h3>
               </div>

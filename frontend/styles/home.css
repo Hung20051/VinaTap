@@ -627,8 +627,7 @@
   color: #8a92a0;
 }
 
-/* Minh họa điện thoại chạm mảnh NFC — signature element của trang */
-/* Minh họa điện thoại chạm thẻ NFC — Signature Hero Visual (khớp phong cách Hình 2) */
+/* Minh họa nền tảng du lịch số VinaTap */
 .home-hero__illustration {
   position: relative;
   height: 520px;
@@ -3607,56 +3606,7 @@
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* ─── 5. VINATAP NFC SMART HUB STRIP ─── */
-.vnn-nfc-hub {
-  background: linear-gradient(135deg, #0d1f2d 0%, #152c3f 100%);
-  color: #ffffff;
-  padding: 24px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-.vnn-nfc-hub__inner {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.vnn-nfc-hub__title-wrap {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.vnn-nfc-hub__badge {
-  background: #00c2cb;
-  color: #0d1f2d;
-  font-weight: 800;
-  font-size: 0.72rem;
-  padding: 4px 10px;
-  border-radius: 999px;
-  text-transform: uppercase;
-}
-.vnn-nfc-hub__heading {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0;
-}
-.vnn-nfc-hub__sub {
-  font-size: 0.85rem;
-  color: #94a3b8;
-  margin: 2px 0 0;
-}
-.vnn-nfc-hub__actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
+
 
 /* ─── 6. FLOATING AI TRAVEL COMPANION (IMAGE 1) ─── */
 .vnn-floating-widget {

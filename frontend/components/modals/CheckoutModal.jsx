@@ -908,9 +908,9 @@ export default function CheckoutModal({
                 <Truck size={48} className="text-blue" />
                 <h4>Đơn hàng COD đang được xử lý</h4>
                 <p>
-                  Bộ phận kho VinaTap sẽ gọi điện xác nhận tới SĐT{" "}
-                  <strong>{createdOrder.recipient_phone}</strong> và giao thẻ
-                  NFC tới bạn trong 1-3 ngày tới.
+                  Bộ phận chăm sóc khách hàng VinaTap sẽ liên hệ xác nhận tới SĐT{" "}
+                  <strong>{createdOrder.recipient_phone}</strong> và kích hoạt
+                  gói cẩm nang du lịch tới bạn trong thời gian sớm nhất.
                 </p>
 
                 <button className="btn-cod-done" onClick={handleCloseModal}>

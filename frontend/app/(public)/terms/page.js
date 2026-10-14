@@ -62,8 +62,8 @@ export default function TermsPage() {
           </h1>
           <p className="legal-hero-desc">
             {isVi
-              ? "Quy định quyền, trách nhiệm và nghĩa vụ pháp lý giữa người dùng và nền tảng bản đồ du lịch di sản VinaTap."
-              : "Defines rights, responsibilities, and legal obligations between users and the VinaTap heritage travel platform."}
+              ? "Quy định quyền, trách nhiệm và nghĩa vụ pháp lý giữa người dùng và nền tảng du lịch số VinaTap."
+              : "Defines rights, responsibilities, and legal obligations between users and the VinaTap digital travel platform."}
           </p>
           <div className="legal-hero-meta">
             <Clock size={14} />
@@ -191,16 +191,16 @@ export default function TermsPage() {
             </p>
             <ul className="legal-list">
               <li>
-                <strong>{isVi ? "1 thẻ lẻ tỉnh thành:" : "Single province tile:"}</strong> 49.000đ / {isVi ? "thẻ" : "card"}.
+                <strong>{isVi ? "Gói cẩm nang 1 tỉnh thành:" : "Single province digital guide:"}</strong> 49.000đ / {isVi ? "gói" : "pass"}.
               </li>
               <li>
-                <strong>{isVi ? "Combo 3 thẻ tự chọn:" : "Combo 3 custom tiles:"}</strong> 139.000đ / {isVi ? "combo" : "pack"}.
+                <strong>{isVi ? "Combo cẩm nang 3 tỉnh tự chọn:" : "Combo 3 custom guides:"}</strong> 139.000đ / {isVi ? "combo" : "pack"}.
               </li>
               <li>
-                <strong>{isVi ? "Combo 5 thẻ (bộ 5 tỉnh):" : "Combo 5 tiles (regional set):"}</strong> 239.000đ / {isVi ? "combo" : "pack"}.
+                <strong>{isVi ? "Combo cẩm nang 5 tỉnh (theo miền):" : "Combo 5 regional guides:"}</strong> 239.000đ / {isVi ? "combo" : "pack"}.
               </li>
               <li>
-                <strong>{isVi ? "Trọn bộ 34 thẻ toàn quốc:" : "Complete 34-province set:"}</strong> 1.400.000đ / {isVi ? "bộ kèm hộp quà" : "set with gift box"}.
+                <strong>{isVi ? "Trọn bộ cẩm nang 34 tỉnh toàn quốc:" : "Complete 34-province guide pass:"}</strong> 1.400.000đ / {isVi ? "trọn bộ thành viên" : "full access pass"}.
               </li>
               <li>
                 <strong>{isVi ? "Phí vận chuyển:" : "Shipping Fee:"}</strong>{" "}
@@ -250,7 +250,7 @@ export default function TermsPage() {
               </li>
               <li>
                 {isVi
-                  ? "VinaTap có quyền xóa bỏ nội dung vi phạm hoặc khóa quyền truy cập thẻ nếu phát hiện hành vi cố tình vi phạm."
+                  ? "VinaTap có quyền xóa bỏ nội dung vi phạm hoặc khóa quyền truy cập tài khoản nếu phát hiện hành vi cố tình vi phạm."
                   : "VinaTap reserves the authority to take down offending content or suspend accounts upon deliberate violations."}
               </li>
             </ul>
@@ -283,7 +283,7 @@ export default function TermsPage() {
                 <CheckCircle size={18} />
                 <div>
                   <div className="legal-contact-label">{isVi ? "Dự án" : "Project"}</div>
-                  <div className="legal-contact-val">VinaTap — Thẻ Du Lịch Di Sản NFC</div>
+                  <div className="legal-contact-val">VinaTap — Nền Tảng Du Lịch Số Việt Nam</div>
                 </div>
               </div>
             </div>

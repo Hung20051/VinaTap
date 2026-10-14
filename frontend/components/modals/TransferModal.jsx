@@ -85,7 +85,7 @@ export default function TransferModal({ cardId, cardName, onClose, onSuccess }) 
               }}
             >
               <h2 style={{ fontWeight: 800, fontSize: "1.15rem", color: "#0f172a", margin: 0 }}>
-                🎁 Chuyển nhượng thẻ {cardName}
+                🎁 Chuyển nhượng hành trình {cardName}
               </h2>
               <button
                 type="button"
@@ -114,7 +114,7 @@ export default function TransferModal({ cardId, cardName, onClose, onSuccess }) 
               }}
             >
               Nhập email người bạn muốn tặng. Họ sẽ nhận được link xác nhận qua
-              email trong vòng <b>7 ngày</b>. Sau khi họ xác nhận, thẻ và album
+              email trong vòng <b>7 ngày</b>. Sau khi họ xác nhận, hành trình và album
               sẽ chuyển sang tài khoản của họ.
             </p>
 
@@ -209,7 +209,7 @@ export default function TransferModal({ cardId, cardName, onClose, onSuccess }) 
                 lineHeight: 1.5,
               }}
             >
-              ⚠️ Sau khi người nhận xác nhận, bạn sẽ mất quyền sở hữu thẻ
+              ⚠️ Sau khi người nhận xác nhận, bạn sẽ mất quyền sở hữu hành trình
               và album này.
             </p>
           </>
@@ -217,7 +217,7 @@ export default function TransferModal({ cardId, cardName, onClose, onSuccess }) 
           <div style={{ textAlign: "center", padding: "1rem 0" }}>
             <div style={{ fontSize: "3.5rem", marginBottom: "0.75rem" }}>📨</div>
             <h2 style={{ fontWeight: 800, fontSize: "1.3rem", color: "#0f172a", marginBottom: ".5rem" }}>
-              Đã gửi lời mời tặng thẻ!
+              Đã gửi lời mời tặng hành trình!
             </h2>
             <p
               style={{

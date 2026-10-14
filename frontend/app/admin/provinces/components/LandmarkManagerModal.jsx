@@ -248,7 +248,7 @@ export default function LandmarkManagerModal({ province, onClose, showToast }) {
           <div>
             <h3>📍 Quản Lý Địa Danh: {province.name}</h3>
             <p className="admin-prov-modal__sub">
-              Các điểm du lịch nổi tiếng hiển thị cho khách khi quét NFC
+              Các điểm du lịch nổi tiếng hiển thị trong cẩm nang du lịch số
             </p>
           </div>
           <button
@@ -475,7 +475,7 @@ export default function LandmarkManagerModal({ province, onClose, showToast }) {
               <h5>Chưa có điểm du lịch nào</h5>
               <p>
                 Thêm các danh lam thắng cảnh, di tích lịch sử hoặc ẩm thực đặc
-                sắc để khách khám phá khi quét chip NFC.
+                sắc để khách khám phá trên nền tảng du lịch số.
               </p>
               {!showAddLandmarkForm && (
                 <button

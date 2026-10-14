@@ -352,7 +352,7 @@ export default function TapPage() {
                       <span className="tap-card-mini-logo">VinaTap</span>
                       <div className="tap-card-mini-chip">
                         <Radio size={12} className="tap-mini-nfc-pulse" />
-                        <span>NFC 3D</span>
+                        <span>PASS 3D</span>
                       </div>
                     </div>
                     <div className="tap-card-mini-center">
@@ -363,7 +363,7 @@ export default function TapPage() {
                     </div>
                     <div className="tap-card-mini-bottom">
                       <span className="tap-card-mini-serial">
-                        #{card?.serial_code || "VN-2026-NFC"}
+                        #{card?.serial_code || "VN-2026-PASS"}
                       </span>
                       <span className="tap-card-mini-verified">
                         <ShieldCheck size={12} />

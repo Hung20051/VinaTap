@@ -426,11 +426,11 @@ export default function AdminNfcCards() {
         <div className="admin-nfc-header">
           <div className="admin-nfc-header-title-wrap">
             <h1 className="admin-dash-title">
-              <span className="title-desktop">🎫 Quản Lý Thẻ NFC & Nạp Chip VinaTap</span>
-              <span className="title-mobile">🎫 Thẻ NFC</span>
+              <span className="title-desktop">🎫 Quản Lý Mã Khám Phá & Hành Trình Số</span>
+              <span className="title-mobile">🎫 Mã Khám Phá</span>
             </h1>
             <p className="admin-dash-subtitle">
-              Theo dõi lượt truy cập thời gian thực, quản lý Serial chip NTAG và phân phối khách hàng
+              Theo dõi lượt truy cập thời gian thực, quản lý mã hành trình số và cấp quyền mở khóa cho khách hàng
             </p>
           </div>
           <div className="admin-nfc-header__actions">
@@ -438,7 +438,7 @@ export default function AdminNfcCards() {
               type="button"
               className="btn btn-outline btn-export-csv"
               onClick={exportCSV}
-              title="Tải file CSV danh sách mã để gửi xưởng in & nạp chip"
+              title="Tải file CSV danh sách mã hành trình số"
             >
               <Download size={15} /> <span className="btn-text-desktop">Xuất File CSV</span>
             </button>
@@ -449,9 +449,9 @@ export default function AdminNfcCards() {
                 setShowAssignModal(true);
                 setShowUserDropdown(false);
               }}
-              title="Gán thẻ cho khách hàng"
+              title="Cấp quyền hành trình cho khách hàng"
             >
-              <UserPlus size={15} /> <span className="btn-text-desktop">Gán Thẻ Khách</span>
+              <UserPlus size={15} /> <span className="btn-text-desktop">Cấp Quyền Khách</span>
             </button>
             <button
               type="button"
@@ -469,7 +469,7 @@ export default function AdminNfcCards() {
         <div className="admin-nfc-kpis-carousel">
           <div className="admin-nfc-kpis">
             <div className="admin-nfc-kpi-card">
-              <span className="admin-nfc-kpi-label">Tổng Serial NFC</span>
+              <span className="admin-nfc-kpi-label">Tổng Mã Hành Trình</span>
               <span className="admin-nfc-kpi-value">{stats.total}</span>
               <span className="admin-nfc-kpi-sub">Đã tạo trong hệ thống</span>
             </div>
@@ -479,9 +479,9 @@ export default function AdminNfcCards() {
               <span className="admin-nfc-kpi-sub">Đang hoạt động & gắn album</span>
             </div>
             <div className="admin-nfc-kpi-card admin-nfc-kpi-card--pending">
-              <span className="admin-nfc-kpi-label">Chờ Phát Hành</span>
+              <span className="admin-nfc-kpi-label">Chờ Kích Hoạt</span>
               <span className="admin-nfc-kpi-value text-orange">{stats.pending}</span>
-              <span className="admin-nfc-kpi-sub">Thẻ tồn kho chưa gán chủ</span>
+              <span className="admin-nfc-kpi-sub">Mã dự trữ chưa cấp cho khách</span>
             </div>
             <div className="admin-nfc-kpi-card admin-nfc-kpi-card--disabled">
               <span className="admin-nfc-kpi-label">Đã Khóa / Tạm Dừng</span>
@@ -491,7 +491,7 @@ export default function AdminNfcCards() {
             <div className="admin-nfc-kpi-card admin-nfc-kpi-card--taps">
               <span className="admin-nfc-kpi-label">Tổng Lượt Truy Cập</span>
               <span className="admin-nfc-kpi-value text-blue">{stats.total_taps}</span>
-              <span className="admin-nfc-kpi-sub">Quét chip & xem album</span>
+              <span className="admin-nfc-kpi-sub">Truy cập hành trình & xem album</span>
             </div>
           </div>
         </div>
@@ -502,7 +502,7 @@ export default function AdminNfcCards() {
             <Search size={15} />
             <input
               type="text"
-              placeholder="Tra cứu Mã Serial, Token, Email, Tên chủ thẻ, Tỉnh..."
+              placeholder="Tra cứu Mã Kích Hoạt, Token, Email, Tên du khách, Tỉnh..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -987,7 +987,7 @@ export default function AdminNfcCards() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="admin-nfc-modal__header">
-              <h3>➕ Tạo Lô Thẻ NFC Mới (Batch Generator)</h3>
+              <h3>➕ Tạo Lô Mã Hành Trình Mới (Batch Generator)</h3>
               <button
                 type="button"
                 className="admin-nfc-modal__close"
@@ -998,7 +998,7 @@ export default function AdminNfcCards() {
             </div>
             <form onSubmit={handleCreateBatch}>
               <label className="admin-nfc-field">
-                <span>Sản Phẩm Thẻ NFC Cần Khởi Tạo *</span>
+                <span>Sản Phẩm Hành Trình Cần Khởi Tạo *</span>
                 <select
                   value={batchProductId}
                   onChange={(e) => {
@@ -1111,7 +1111,7 @@ export default function AdminNfcCards() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="admin-nfc-modal__header">
-              <h3>👤 Gán Thẻ NFC Cho Khách Hàng</h3>
+              <h3>👤 Cấp Quyền Hành Trình Cho Khách Hàng</h3>
               <button
                 type="button"
                 className="admin-nfc-modal__close"
@@ -1125,7 +1125,7 @@ export default function AdminNfcCards() {
             </div>
             <form onSubmit={handleAssignCard}>
               <label className="admin-nfc-field">
-                <span>Mã Serial NFC *</span>
+                <span>Mã Kích Hoạt Hành Trình *</span>
                 <input
                   type="text"
                   value={assignSerial}
@@ -1331,10 +1331,10 @@ export default function AdminNfcCards() {
           >
             <div className="admin-nfc-modal__header">
               <div>
-                <h3>📊 Nhật Ký Người Truy Cập & Quét Thẻ NFC</h3>
+                <h3>📊 Nhật Ký Người Truy Cập & Mở Khóa Hành Trình</h3>
                 <p className="admin-nfc-modal-sub">
-                  Mã Serial: <strong>{accessLogsCard.serial_code}</strong> | Tỉnh:{" "}
-                  <strong>{accessLogsCard.province_name}</strong> | Tổng lượt chạm:{" "}
+                  Mã Hành Trình: <strong>{accessLogsCard.serial_code}</strong> | Tỉnh:{" "}
+                  <strong>{accessLogsCard.province_name}</strong> | Tổng lượt truy cập:{" "}
                   <strong>{accessLogsCard.tap_count || 0} lượt</strong>
                 </p>
               </div>

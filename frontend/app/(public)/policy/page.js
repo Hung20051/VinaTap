@@ -63,8 +63,8 @@ export default function PolicyPage() {
           </h1>
           <p className="legal-hero-desc">
             {isVi
-              ? "Cam kết bảo vệ quyền lợi, bảo mật thông tin và chính sách bảo hành chính hãng dành cho khách hàng VinaTap."
-              : "Commitments to customer rights, data protection, shipping, and official hardware warranty."}
+              ? "Cam kết bảo vệ quyền lợi, bảo mật thông tin và chính sách hỗ trợ dịch vụ số chính hãng dành cho khách hàng VinaTap."
+              : "Commitments to customer rights, data protection, and official digital travel service guarantees."}
           </p>
           <div className="legal-hero-meta">
             <Clock size={14} />
@@ -132,8 +132,8 @@ export default function PolicyPage() {
               <li>
                 <strong>{isVi ? "Chủ động kiểm soát quyền xem:" : "Granular Privacy Control:"}</strong>{" "}
                 {isVi
-                  ? "Mặc định bạn có quyền chọn chế độ 'Riêng tư' (chỉ tài khoản của bạn xem) hoặc 'Công khai' (cho phép bạn bè chạm thẻ cùng chiêm ngưỡng)."
-                  : "You can toggle between 'Private' (only you can view) or 'Public' (anyone tapping the card can see your travel stories)."}
+                  ? "Mặc định bạn có quyền chọn chế độ 'Riêng tư' (chỉ tài khoản của bạn xem) hoặc 'Công khai' (cho phép bạn bè cùng chiêm ngưỡng qua liên kết chia sẻ)."
+                  : "You can toggle between 'Private' (only you can view) or 'Public' (anyone with your shared link can see your travel stories)."}
               </li>
               <li>
                 <strong>{isVi ? "Mã hóa và Lưu trữ an toàn:" : "Encrypted Cloud Storage:"}</strong>{" "}
