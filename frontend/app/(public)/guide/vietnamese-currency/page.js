@@ -344,7 +344,7 @@ const RELATED_ARTICLES = [
     title: "Climate of Vietnam",
     titleVi: "Khí Hậu & Thời Tiết Việt Nam",
     img: "/guide/currency/climate-of-vietnam.jpg",
-    link: "/guide/the-complete-guide-to-vietnam",
+    link: "/guide/climate-of-vietnam",
     isMap: false,
   },
 ];

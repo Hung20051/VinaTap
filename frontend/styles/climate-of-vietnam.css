@@ -1,0 +1,340 @@
+/* Climate of Vietnam Page Styles */
+
+.climate-page-wrap {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #2d3748;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── PROMO TOP BANNER ─── */
+.climate-promo-banner {
+  width: 100%;
+  background-color: #111827;
+  overflow: hidden;
+  display: block;
+}
+
+.climate-promo-banner__content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.climate-promo-banner__img {
+  width: 100%;
+  max-height: 90px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── HERO SECTION (MATCHING SCREENSHOT 1) ─── */
+.climate-hero {
+  position: relative;
+  width: 100%;
+  min-height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-align: center;
+  padding: 85px 20px 75px;
+}
+
+.climate-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 25, 47, 0.45) 0%,
+    rgba(10, 25, 47, 0.76) 100%
+  );
+  z-index: 1;
+}
+
+.climate-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.climate-badges-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.climate-badge {
+  display: inline-block;
+  padding: 5px 18px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.climate-hero__title {
+  font-size: 52px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 16px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+}
+
+.climate-hero__meta {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* ─── FLOATING CTA BUTTON ─── */
+.climate-cta-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: -24px;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 45px;
+}
+
+.climate-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 34px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+  border-radius: 9999px;
+  box-shadow: 0 8px 24px rgba(0, 180, 216, 0.45);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+}
+
+.climate-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 180, 216, 0.6);
+  background: linear-gradient(135deg, #00c4ec 0%, #0088cc 100%);
+  color: #ffffff;
+}
+
+/* ─── MAIN CONTENT BODY ─── */
+.climate-body {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+.climate-intro-text {
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: #4a5568;
+  margin-bottom: 32px;
+  text-align: justify;
+}
+
+.climate-intro-highlight {
+  color: #00a2aa;
+  font-weight: 600;
+}
+
+/* ─── REGIONS SECTION ─── */
+.climate-regions {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 48px;
+}
+
+.climate-region-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.climate-region-title {
+  font-size: 17.5px;
+  font-weight: 700;
+  color: #00a2aa;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.climate-region-desc {
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: #4a5568;
+  margin: 0;
+  text-align: justify;
+}
+
+/* ─── TAGS SECTION (MATCHING SCREENSHOT 2) ─── */
+.climate-tags-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 50px 0 65px;
+  flex-wrap: wrap;
+}
+
+.climate-tag-label {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #00c2cb;
+}
+
+.climate-tag-btn {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.climate-tag-btn:hover {
+  background-color: #f3f4f6;
+  border-color: #00c2cb;
+  color: #00a2aa;
+}
+
+/* ─── RELATED ARTICLES (MATCHING SCREENSHOT 2 & 3) ─── */
+.climate-related-section {
+  padding-top: 50px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.climate-related-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 44px;
+  letter-spacing: -0.4px;
+}
+
+.climate-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.climate-related-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: #ffffff;
+  border-radius: 6px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.climate-related-card:hover {
+  transform: translateY(-4px);
+}
+
+.climate-related-thumb {
+  width: 100%;
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.climate-related-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+  transition: transform 0.35s ease;
+}
+
+.climate-related-card:hover .climate-related-thumb img {
+  transform: scale(1.04);
+}
+
+.climate-related-card-title {
+  font-size: 17.5px;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 15px;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.climate-related-card:hover .climate-related-card-title {
+  color: #008080;
+}
+
+/* ─── RESPONSIVE ADJUSTMENTS ─── */
+@media (max-width: 768px) {
+  .climate-hero {
+    min-height: 380px;
+    padding: 60px 16px 50px;
+  }
+
+  .climate-hero__title {
+    font-size: 36px;
+  }
+
+  .climate-hero__meta {
+    font-size: 13px;
+  }
+
+  .climate-cta-btn {
+    padding: 11px 24px;
+    font-size: 14px;
+  }
+
+  .climate-related-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .climate-related-thumb {
+    height: 250px;
+  }
+
+  .climate-intro-text,
+  .climate-region-desc {
+    font-size: 14.5px;
+  }
+}

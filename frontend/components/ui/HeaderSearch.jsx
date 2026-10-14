@@ -19,6 +19,16 @@ const SEARCH_POSTS = [
     keywords: "vietnam visa thong tin visa viet nam mien thi thuc evisa e-visa 90 ngay 45 ngay phu quoc travel guide",
   },
   {
+    id: "climate-of-vietnam",
+    title: "Climate of Vietnam | Regional Weather & Geography",
+    titleVi: "Khí Hậu Việt Nam | Thời Tiết & Địa Lý 3 Miền",
+    date: "July 27, 2024",
+    dateVi: "27 Tháng 7, 2024",
+    img: "/guide/climate/climate-of-vietnam-hero.jpg",
+    link: "/guide/climate-of-vietnam",
+    keywords: "climate of vietnam khi hau thoi tiet weather nhiet do mua kho mua mua 3 mien bac trung nam travel guide",
+  },
+  {
     id: "vietnamese-currency",
     title: "Vietnamese Currency | Exchange Rates & Notes",
     titleVi: "Tiền Tệ Việt Nam | Mệnh Giá & Đổi Ngoại Tệ",
