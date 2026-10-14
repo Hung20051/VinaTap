@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import HeaderSearch from "@/components/ui/HeaderSearch";
@@ -172,35 +172,268 @@ const BE_INSPIRED_COMPACT = [
   },
 ];
 
-// ─── TOP DESTINATIONS (SCREENSHOT 2) ───
+// ─── TOP DESTINATIONS (SCREENSHOT 2 & ALL PROVINCES) ───
 const TOP_DESTINATIONS_DATA = [
+  // Trang 1: 4 điểm đến trọng điểm quốc tế
   {
-    id: "hcmc",
+    id: "ho-chi-minh",
     name: "Ho Chi Minh City",
     nameVi: "TP. Hồ Chí Minh",
     img: "/guide/hcmc/top-dest-hcmc.jpg",
     link: "/province/ho-chi-minh",
   },
   {
-    id: "danang",
+    id: "da-nang",
     name: "Da Nang",
     nameVi: "Đà Nẵng",
     img: "/guide/hcmc/top-dest-danang.jpg",
     link: "/province/da-nang",
   },
   {
-    id: "hanoi",
+    id: "ha-noi",
     name: "Hanoi",
     nameVi: "Hà Nội",
     img: "/guide/hcmc/top-dest-hanoi.jpg",
     link: "/province/ha-noi",
   },
   {
-    id: "hoian",
+    id: "hoi-an",
     name: "Hoi An",
     nameVi: "Hội An",
     img: "/guide/hcmc/top-dest-hoian.jpg",
     link: "/province/hoi-an",
+  },
+  // Trang 2: Di sản & Biển đảo nổi tiếng
+  {
+    id: "ninh-binh",
+    name: "Ninh Binh",
+    nameVi: "Ninh Bình",
+    img: "/guide/vietnam/dest-7-ninhbinh.jpg",
+    link: "/province/ninh-binh",
+  },
+  {
+    id: "quang-ninh",
+    name: "Quang Ninh (Ha Long)",
+    nameVi: "Quảng Ninh (Hạ Long)",
+    img: "/guide/vietnam/dest-6-halong.jpg",
+    link: "/province/quang-ninh",
+  },
+  {
+    id: "nha-trang",
+    name: "Nha Trang (Khanh Hoa)",
+    nameVi: "Nha Trang (Khánh Hòa)",
+    img: "/guide/vietnam/dest-3-nhatrang.jpg",
+    link: "/province/nha-trang",
+  },
+  {
+    id: "dalat",
+    name: "Da Lat (Lam Dong)",
+    nameVi: "Đà Lạt (Lâm Đồng)",
+    img: "/guide/vietnam/dest-2-dalat.jpg",
+    link: "/province/dalat",
+  },
+  // Trang 3: Cố đô & Vùng cao Tây Bắc - Đông Bắc
+  {
+    id: "hue",
+    name: "Hue Imperial City",
+    nameVi: "Thừa Thiên Huế",
+    img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80",
+    link: "/province/hue",
+  },
+  {
+    id: "lao-cai",
+    name: "Lao Cai (Sa Pa)",
+    nameVi: "Lào Cai (Sa Pa)",
+    img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&auto=format&fit=crop&q=80",
+    link: "/province/lao-cai",
+  },
+  {
+    id: "hai-phong",
+    name: "Hai Phong (Cat Ba)",
+    nameVi: "Hải Phòng (Cát Bà)",
+    img: "/provinces/hai-phong.jpg",
+    link: "/province/hai-phong",
+  },
+  {
+    id: "ha-giang",
+    name: "Ha Giang",
+    nameVi: "Hà Giang",
+    img: "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&auto=format&fit=crop&q=80",
+    link: "/province/ha-giang",
+  },
+  // Trang 4: Miền Tây sông nước & Đất Mũi
+  {
+    id: "can-tho",
+    name: "Can Tho (Floating Market)",
+    nameVi: "Cần Thơ (Chợ Nổi)",
+    img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&auto=format&fit=crop&q=80",
+    link: "/province/can-tho",
+  },
+  {
+    id: "an-giang",
+    name: "An Giang (Tra Su Forest)",
+    nameVi: "An Giang (Trà Sư)",
+    img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&auto=format&fit=crop&q=60",
+    link: "/province/an-giang",
+  },
+  {
+    id: "ca-mau",
+    name: "Ca Mau (Cape)",
+    nameVi: "Cà Mau (Đất Mũi)",
+    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
+    link: "/province/ca-mau",
+  },
+  {
+    id: "phu-tho",
+    name: "Phu Tho (Hung King Temple)",
+    nameVi: "Phú Thọ (Đền Hùng)",
+    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
+    link: "/province/phu-tho",
+  },
+  // Trang 5: Hùng vĩ Tây Bắc - Đông Bắc
+  {
+    id: "cao-bang",
+    name: "Cao Bang (Ban Gioc Waterfall)",
+    nameVi: "Cao Bằng (Bản Giốc)",
+    img: "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&auto=format&fit=crop&q=80",
+    link: "/province/cao-bang",
+  },
+  {
+    id: "dien-bien",
+    name: "Dien Bien",
+    nameVi: "Điện Biên",
+    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&auto=format&fit=crop&q=80",
+    link: "/province/dien-bien",
+  },
+  {
+    id: "lai-chau",
+    name: "Lai Chau (O Quy Ho Pass)",
+    nameVi: "Lai Châu (Ô Quy Hồ)",
+    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
+    link: "/province/lai-chau",
+  },
+  {
+    id: "son-la",
+    name: "Son La (Moc Chau)",
+    nameVi: "Sơn La (Mộc Châu)",
+    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
+    link: "/province/son-la",
+  },
+  // Trang 6: Đại ngàn Tây Nguyên & Đông Nam Bộ
+  {
+    id: "dak-lak",
+    name: "Dak Lak (Buon Ma Thuot)",
+    nameVi: "Đắk Lắk (Buôn Ma Thuột)",
+    img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800&auto=format&fit=crop&q=80",
+    link: "/province/dak-lak",
+  },
+  {
+    id: "gia-lai",
+    name: "Gia Lai (Pleiku)",
+    nameVi: "Gia Lai (Biển Hồ)",
+    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
+    link: "/province/gia-lai",
+  },
+  {
+    id: "tay-ninh",
+    name: "Tay Ninh (Ba Den Mountain)",
+    nameVi: "Tây Ninh (Núi Bà Đen)",
+    img: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop&q=80",
+    link: "/province/tay-ninh",
+  },
+  {
+    id: "dong-nai",
+    name: "Dong Nai (Cat Tien)",
+    nameVi: "Đồng Nai (Nam Cát Tiên)",
+    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
+    link: "/province/dong-nai",
+  },
+  // Trang 7: Duyên hải Miền Trung hào khí
+  {
+    id: "nghe-an",
+    name: "Nghe An (Cua Lo)",
+    nameVi: "Nghệ An (Cửa Lò)",
+    img: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=800&auto=format&fit=crop&q=80",
+    link: "/province/nghe-an",
+  },
+  {
+    id: "ha-tinh",
+    name: "Ha Tinh",
+    nameVi: "Hà Tĩnh",
+    img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800&auto=format&fit=crop&q=80",
+    link: "/province/ha-tinh",
+  },
+  {
+    id: "quang-tri",
+    name: "Quang Tri",
+    nameVi: "Quảng Trị",
+    img: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop&q=80",
+    link: "/province/quang-tri",
+  },
+  {
+    id: "quang-ngai",
+    name: "Quang Ngai (Ly Son)",
+    nameVi: "Quảng Ngãi (Lý Sơn)",
+    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
+    link: "/province/quang-ngai",
+  },
+  // Trang 8: Vùng đồng bằng & văn hóa Bắc Bộ
+  {
+    id: "thanh-hoa",
+    name: "Thanh Hoa (Pu Luong)",
+    nameVi: "Thanh Hóa (Pù Luông)",
+    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
+    link: "/province/thanh-hoa",
+  },
+  {
+    id: "bac-ninh",
+    name: "Bac Ninh (Quan Ho)",
+    nameVi: "Bắc Ninh (Quan Họ)",
+    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop&q=80",
+    link: "/province/bac-ninh",
+  },
+  {
+    id: "hung-yen",
+    name: "Hung Yen (Pho Hien)",
+    nameVi: "Hưng Yên (Phố Hiến)",
+    img: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop&q=80",
+    link: "/province/hung-yen",
+  },
+  {
+    id: "thai-nguyen",
+    name: "Thai Nguyen (Tea Hills)",
+    nameVi: "Thái Nguyên (Đồi Chè)",
+    img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800&auto=format&fit=crop&q=80",
+    link: "/province/thai-nguyen",
+  },
+  // Trang 9: Miền biên cương & Đồng bằng Nam Bộ
+  {
+    id: "lang-son",
+    name: "Lang Son (Mau Son)",
+    nameVi: "Lạng Sơn (Mẫu Sơn)",
+    img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?w=800&auto=format&fit=crop&q=80",
+    link: "/province/lang-son",
+  },
+  {
+    id: "tuyen-quang",
+    name: "Tuyen Quang (Na Hang Lake)",
+    nameVi: "Tuyên Quang (Na Hang)",
+    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
+    link: "/province/tuyen-quang",
+  },
+  {
+    id: "dong-thap",
+    name: "Dong Thap (Sa Dec Flower)",
+    nameVi: "Đồng Tháp (Sa Đéc)",
+    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
+    link: "/province/dong-thap",
+  },
+  {
+    id: "vinh-long",
+    name: "Vinh Long (Orchards)",
+    nameVi: "Vĩnh Long (Miệt Vườn)",
+    img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&auto=format&fit=crop&q=80",
+    link: "/province/vinh-long",
   },
 ];
 
@@ -257,7 +490,7 @@ const REGIONAL_DESTINATIONS_DATA = [
           {
             title: "Ninh Binh - Trang An Scenic",
             titleVi: "Ninh Bình - Non nước Tràng An",
-            img: "/guide/hcmc/climate-of-vietnam.jpg",
+            img: "/guide/ninh-binh/trang-an.jpg",
             link: "/province/ninh-binh",
           },
         ],
@@ -269,7 +502,7 @@ const REGIONAL_DESTINATIONS_DATA = [
           desc: "Marvel at UNESCO World Heritage Trang An scenic complex, historic temples of Hoa Lu, and dramatic limestone peaks rising from emerald waters.",
           descVi:
             "Được mệnh danh 'Hạ Long trên cạn' với quần thể Tràng An di sản thế giới, Cố đô Hoa Lư lịch sử và Tam Cốc Bích Động sơn thủy hữu tình.",
-          img: "/guide/hcmc/climate-of-vietnam.jpg",
+          img: "/guide/ninh-binh/hero.jpg",
           link: "/province/ninh-binh",
         },
         minis: [
@@ -309,8 +542,8 @@ const REGIONAL_DESTINATIONS_DATA = [
           {
             title: "The 10 best attractions in Da Nang",
             titleVi: "10 điểm tham quan đẹp nhất Đà Nẵng",
-            img: "/guide/hcmc/region-central-10things.jpg",
-            link: "/province/da-nang",
+            img: "/guide/danang/danang-10-best-attractions-hd.jpg",
+            link: "/guide/the-10-best-attractions-in-da-nang",
           },
           {
             title: "Nha Trang",
@@ -519,8 +752,8 @@ const THINGS_TO_DO_PAGES = [
       desc: "Da Nang is the most famous coastal city in Vietnam as it is endowed with stunning natural assets and has invested in modern infrastructures. Here are the 10 best attractions in Da Nang.",
       descVi:
         "Khám phá thành phố biển đáng sống nhất Việt Nam: Cầu Rồng, Ngũ Hành Sơn, Bà Nà Hills và bãi biển Mỹ Khê tuyệt đẹp.",
-      img: "/guide/hcmc/region-central-10things.jpg",
-      link: "/province/da-nang",
+      img: "/guide/danang/danang-10-best-attractions-hd.jpg",
+      link: "/guide/the-10-best-attractions-in-da-nang",
     },
     {
       title: "20 Best Things to Do in Vietnam",
@@ -831,7 +1064,7 @@ const POPULAR_POSTS_PAGES = [
     {
       title: "Ninh Binh Heritage & Trang An",
       titleVi: "Ninh Bình - Non nước hữu tình Tràng An",
-      img: "/guide/hcmc/climate-of-vietnam.jpg",
+      img: "/guide/ninh-binh/hero.jpg",
       link: "/province/ninh-binh",
     },
   ],
@@ -1248,7 +1481,8 @@ export default function HomePage() {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [searchModalText, setSearchModalText] = useState("");
   const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
-  const topDestTrackRef = useRef(null);
+  const [topDestPage, setTopDestPage] = useState(0);
+  const destTouchStartX = useRef(0);
 
   // Carousel & Pagination states for landing page sections
   const [regionPageMap, setRegionPageMap] = useState({
@@ -1279,9 +1513,64 @@ export default function HomePage() {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
   };
 
-  const scrollDestTrack = (dir) => {
-    if (topDestTrackRef.current) {
-      topDestTrackRef.current.scrollBy({ left: dir * 300, behavior: "smooth" });
+  // Kết hợp toàn bộ tỉnh thành có trong hệ thống (API backend + danh sách chuẩn)
+  const allTopDestinations = useMemo(() => {
+    if (!provinces || provinces.length === 0) return TOP_DESTINATIONS_DATA;
+    const seen = {};
+    const result = [];
+    // Ưu tiên danh sách chuẩn với ảnh đẹp & tên chuẩn hóa
+    TOP_DESTINATIONS_DATA.forEach((d) => {
+      const key = d.id || d.slug;
+      if (!seen[key]) {
+        seen[key] = true;
+        result.push(d);
+      }
+    });
+    // Bổ sung thêm bất kỳ tỉnh thành nào từ backend nếu chưa có
+    provinces.forEach((p) => {
+      const slug = p.slug;
+      if (!seen[slug]) {
+        seen[slug] = true;
+        result.push({
+          id: slug,
+          name: getProvinceName(p, "en") || p.name,
+          nameVi: p.name,
+          img: getProvinceCover(p) || p.thumbnail_url || "/guide/hcmc/top-dest-hcmc.jpg",
+          link: `/province/${slug}`,
+        });
+      }
+    });
+    return result;
+  }, [provinces]);
+
+  const DEST_PAGE_SIZE = 4;
+  const totalDestPages = Math.max(1, Math.ceil(allTopDestinations.length / DEST_PAGE_SIZE));
+  const currentTopDests = allTopDestinations.slice(
+    topDestPage * DEST_PAGE_SIZE,
+    (topDestPage + 1) * DEST_PAGE_SIZE
+  );
+
+  const handlePrevDest = () => {
+    setTopDestPage((prev) => (prev === 0 ? totalDestPages - 1 : prev - 1));
+  };
+
+  const handleNextDest = () => {
+    setTopDestPage((prev) => (prev + 1) % totalDestPages);
+  };
+
+  const handleDestTouchStart = (e) => {
+    if (e.touches && e.touches[0]) {
+      destTouchStartX.current = e.touches[0].clientX;
+    }
+  };
+
+  const handleDestTouchEnd = (e) => {
+    if (e.changedTouches && e.changedTouches[0]) {
+      const diff = destTouchStartX.current - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0) handleNextDest();
+        else handlePrevDest();
+      }
     }
   };
 
@@ -1301,7 +1590,6 @@ export default function HomePage() {
       .then((d) => {
         const rawList = d?.provinces || [];
         const list = rawList
-          .filter((p) => ALLOWED_PROVINCE_SLUGS.includes(p.slug))
           .map((p) => ({
             ...p,
             thumbnail_url: getProvinceCover(p) || p.thumbnail_url,
@@ -1322,7 +1610,6 @@ export default function HomePage() {
           const cached = sessionStorage.getItem("vinatap_cached_provinces");
           if (cached) {
             const list = JSON.parse(cached)
-              .filter((p) => ALLOWED_PROVINCE_SLUGS.includes(p.slug))
               .map((p) => ({
                 ...p,
                 thumbnail_url: getProvinceCover(p) || p.thumbnail_url,
@@ -2126,9 +2413,14 @@ export default function HomePage() {
               <span className="vnn-section-head__bar vnn-section-head__bar--cyan" />
             </div>
 
-            <div className="vnn-destinations-grid" ref={topDestTrackRef}>
-              {TOP_DESTINATIONS_DATA.map((dest) => (
-                <Link key={dest.id} href={dest.link} className="vnn-dest-card">
+            <div
+              key={`dest-page-${topDestPage}`}
+              className="vnn-destinations-grid vnn-fade-in"
+              onTouchStart={handleDestTouchStart}
+              onTouchEnd={handleDestTouchEnd}
+            >
+              {currentTopDests.map((dest) => (
+                <Link key={dest.id || dest.slug} href={dest.link} className="vnn-dest-card">
                   <img
                     src={dest.img}
                     alt={dest.name}
@@ -2147,16 +2439,18 @@ export default function HomePage() {
               <button
                 type="button"
                 className="vnn-carousel-ctrl-btn"
-                onClick={() => scrollDestTrack(-1)}
+                onClick={handlePrevDest}
                 aria-label="Previous destination"
+                title={lang === "vi" ? "Trang trước" : "Previous page"}
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 type="button"
                 className="vnn-carousel-ctrl-btn"
-                onClick={() => scrollDestTrack(1)}
+                onClick={handleNextDest}
                 aria-label="Next destination"
+                title={lang === "vi" ? "Trang kế tiếp" : "Next page"}
               >
                 <ChevronRight size={16} />
               </button>
