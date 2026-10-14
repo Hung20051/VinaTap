@@ -537,6 +537,10 @@ export const PROVINCE_IMAGE_OVERRIDES = {
   "hải phòng": "/provinces/hai-phong.jpg",
   "ha-noi": "/provinces/ha-noi.jpg",
   "hà nội": "/provinces/ha-noi.jpg",
+  "thua-thien-hue": "/guide/hue/hue-hero-official.jpg",
+  "thừa thiên huế": "/guide/hue/hue-hero-official.jpg",
+  "hue": "/guide/hue/hue-hero-official.jpg",
+  "huế": "/guide/hue/hue-hero-official.jpg",
 };
 
 export function getProvinceCover(province, fallback = "") {
@@ -590,6 +594,17 @@ export const LANDMARK_IMAGE_OVERRIDES = {
   "hoàng thành": "/landmarks/hoang-thanh-thang-long.jpg",
   "nhà thờ lớn hà nội": "/landmarks/nha-tho-lon-ha-noi.jpg",
   "nhà thờ lớn": "/landmarks/nha-tho-lon-ha-noi.jpg",
+  "đại nội huế": "/guide/hue/hue-citadel-relics.jpg",
+  "đại nội": "/guide/hue/hue-citadel-relics.jpg",
+  "hoàng thành huế": "/guide/hue/hue-citadel-relics.jpg",
+  "ngọ môn": "/guide/hue/hue-ngo-mon-gate.jpg",
+  "chùa thiên mụ": "/guide/hue/hue-thien-mu-pagoda.jpg",
+  "lăng khải định": "/guide/hue/hue-khai-dinh-tomb.jpg",
+  "cầu tràng tiền": "/guide/hue/hue-trang-tien-bridge.jpg",
+  "chợ đông ba": "/guide/hue/hue-dong-ba-market.jpg",
+  "vịnh lăng cô": "/guide/hue/hue-lang-co-beach.jpg",
+  "biển lăng cô": "/guide/hue/hue-lang-co-beach.jpg",
+  "phá tam giang": "/guide/hue/hue-tam-giang-lagoon.jpg",
 };
 
 export function getLandmarkThumbnail(landmark, defaultFallback = "") {
@@ -604,6 +619,15 @@ export function getLandmarkThumbnail(landmark, defaultFallback = "") {
 export const FOOD_IMAGE_OVERRIDES = {
   "phở thìn lò đúc": "/foods/pho-thin-lo-duc.jpg",
   "phở thìn": "/foods/pho-thin-lo-duc.jpg",
+  "bún bò huế": "/guide/hue/hue-food-bun-bo.jpg",
+  "bún bò": "/guide/hue/hue-food-bun-bo.jpg",
+  "cơm hến": "/guide/hue/hue-food-com-hen.jpg",
+  "bún hến": "/guide/hue/hue-food-com-hen.jpg",
+  "bánh bèo": "/guide/hue/hue-food-banh-hue.jpg",
+  "bánh nậm": "/guide/hue/hue-food-banh-hue.jpg",
+  "bánh bột lọc": "/guide/hue/hue-food-banh-hue.jpg",
+  "bánh canh nam phổ": "/guide/hue/hue-food-banh-canh.jpg",
+  "chè huế": "/guide/hue/hue-food-che-hue.jpg",
 };
 
 export function getFoodImage(

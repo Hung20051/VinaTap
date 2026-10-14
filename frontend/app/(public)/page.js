@@ -237,7 +237,7 @@ const TOP_DESTINATIONS_DATA = [
     id: "hue",
     name: "Hue Imperial City",
     nameVi: "Thừa Thiên Huế",
-    img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80",
+    img: "/guide/hue/hue-hero-official.jpg",
     link: "/province/hue",
   },
   {
@@ -600,6 +600,31 @@ const REGIONAL_DESTINATIONS_DATA = [
             titleVi: "5 món đặc sản phải nếm ở Nha Trang",
             img: "/guide/nha-trang/5-must-try-food-in-Nha-Trang-Vietnamnomad.jpg",
             link: "/guide/5-must-try-nha-trang-dishes",
+          },
+        ],
+      },
+      {
+        featured: {
+          title: "Hue Imperial City",
+          titleVi: "Cố Đô Huế",
+          desc: "Vietnam's ancient royal capital, home to UNESCO World Heritage monuments, magnificent royal tombs, the poetic Perfume River, and sophisticated royal gastronomy.",
+          descVi:
+            "Kinh đô triều Nguyễn cổ kính bên dòng sông Hương thơ mộng. Nơi hội tụ Quần thể Di tích Cố đô Huế được UNESCO vinh danh, các lăng tẩm hoàng gia uy nghiêm và nền ẩm thực cung đình tinh túy.",
+          img: "/guide/hue/hue-hero-official.jpg",
+          link: "/province/hue",
+        },
+        minis: [
+          {
+            title: "Imperial Citadel of Hue",
+            titleVi: "Đại Nội Huế & Cổng Ngọ Môn",
+            img: "/guide/hue/hue-ngo-mon-gate.jpg",
+            link: "/province/hue",
+          },
+          {
+            title: "Must-Try Hue Dishes",
+            titleVi: "Ẩm thực cố đô: Bún bò & Cơm hến",
+            img: "/guide/hue/hue-food-bun-bo.jpg",
+            link: "/province/hue",
           },
         ],
       },

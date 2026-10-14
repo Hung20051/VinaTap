@@ -1,0 +1,846 @@
+/* ================================================================
+   VINATAP EDITORIAL: HUE TRAVEL GUIDE (CỐ ĐÔ HUẾ)
+   Phong cách Cẩm nang Du lịch Cố Đô Huế — Kinh Đô Triều Nguyễn & Di Sản Thế Giới
+   Tone màu: Tím Hoàng Gia (#7e22ce, #9333ea), Vàng Son Cung Đình (#b45309, #d97706), Sông Hương Cyan (#00c2cb), White Paper
+   ================================================================ */
+
+.hue-page {
+  background-color: var(--guide-bg, #fbf9f8);
+  color: var(--guide-text-main, #142129);
+  min-height: 100vh;
+}
+
+/* Hero Badge */
+.hue-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(126, 34, 206, 0.1);
+  color: #7e22ce;
+  border: 1px solid rgba(126, 34, 206, 0.2);
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .hue-hero-badge {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+/* Quick Snapshot */
+.hue-snapshot-box {
+  background: #ffffff;
+  border: 1px solid #e9e5e3;
+  border-left: 5px solid #7e22ce;
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  margin: 2rem 0 2.5rem;
+  box-shadow: 0 8px 30px rgba(126, 34, 206, 0.06);
+}
+
+[data-theme="dark"] .hue-snapshot-box {
+  background: #151624;
+  border-color: #262742;
+  border-left-color: #a855f7;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.hue-snapshot-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #7e22ce;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+}
+
+[data-theme="dark"] .hue-snapshot-title {
+  color: #c084fc;
+}
+
+.hue-snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.hue-snapshot-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #374151;
+}
+
+[data-theme="dark"] .hue-snapshot-item {
+  color: #cbd5e1;
+}
+
+.hue-snapshot-icon {
+  color: #b45309;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+[data-theme="dark"] .hue-snapshot-icon {
+  color: #fbbf24;
+}
+
+/* Table of Contents */
+.hue-toc-box {
+  background: linear-gradient(135deg, rgba(126, 34, 206, 0.04) 0%, rgba(217, 119, 6, 0.04) 100%);
+  border: 1px solid rgba(126, 34, 206, 0.15);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
+  margin: 2.25rem 0;
+}
+
+[data-theme="dark"] .hue-toc-box {
+  background: #171828;
+  border-color: #2e3052;
+}
+
+.hue-toc-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #6b21a8;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+[data-theme="dark"] .hue-toc-title {
+  color: #c084fc;
+}
+
+.hue-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.65rem 1.5rem;
+}
+
+.hue-toc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  color: #4b5563;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  padding: 4px 0;
+}
+
+.hue-toc-link:hover {
+  color: #7e22ce;
+  transform: translateX(4px);
+}
+
+[data-theme="dark"] .hue-toc-link {
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .hue-toc-link:hover {
+  color: #e9d5ff;
+}
+
+/* Sections */
+.hue-section {
+  margin-bottom: 3.5rem;
+  scroll-margin-top: 80px;
+}
+
+.hue-section-title {
+  font-size: clamp(1.45rem, 2.8vw, 1.95rem);
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f3e8ff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+}
+
+[data-theme="dark"] .hue-section-title {
+  color: #f3f4f6;
+  border-bottom-color: #3b2a54;
+}
+
+.hue-sub-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #6b21a8;
+  margin: 2rem 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+[data-theme="dark"] .hue-sub-title {
+  color: #d8b4fe;
+}
+
+/* Content Typography */
+.hue-prose {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #374151;
+}
+
+[data-theme="dark"] .hue-prose {
+  color: #d1d5db;
+}
+
+.hue-prose p {
+  margin-bottom: 1.25rem;
+}
+
+/* Highlight Quote */
+.hue-quote-box {
+  background: #faf5ff;
+  border-left: 4px solid #9333ea;
+  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 0;
+  border-radius: 0 14px 14px 0;
+  font-style: italic;
+  color: #4c1d95;
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+[data-theme="dark"] .hue-quote-box {
+  background: rgba(147, 51, 234, 0.12);
+  border-left-color: #c084fc;
+  color: #e9d5ff;
+}
+
+/* Cards & Grid for Attractions */
+.hue-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 1.75rem 0;
+}
+
+.hue-card {
+  background: #ffffff;
+  border: 1px solid #f3e8ff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.hue-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(126, 34, 206, 0.12);
+  border-color: #d8b4fe;
+}
+
+[data-theme="dark"] .hue-card {
+  background: #171828;
+  border-color: #2b2640;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .hue-card:hover {
+  border-color: #9333ea;
+  box-shadow: 0 12px 30px rgba(147, 51, 234, 0.25);
+}
+
+.hue-card-thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.hue-card-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.hue-card:hover .hue-card-thumb {
+  transform: scale(1.05);
+}
+
+.hue-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(17, 24, 39, 0.82);
+  backdrop-filter: blur(6px);
+  color: #fbbf24;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.hue-card-body {
+  padding: 1.35rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.hue-card-title {
+  font-size: 1.15rem;
+  font-weight: 750;
+  color: #111827;
+  margin-bottom: 0.65rem;
+  line-height: 1.4;
+}
+
+[data-theme="dark"] .hue-card-title {
+  color: #f3f4f6;
+}
+
+.hue-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #4b5563;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+[data-theme="dark"] .hue-card-desc {
+  color: #9ca3af;
+}
+
+.hue-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.85rem;
+  border-top: 1px dashed #e5e7eb;
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+[data-theme="dark"] .hue-card-meta {
+  border-top-color: #2b2640;
+  color: #9ca3af;
+}
+
+.hue-card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #7e22ce;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .hue-card-tag {
+  color: #c084fc;
+}
+
+/* Feature Showcase Banner (Đại Nội, Lăng Khải Định) */
+.hue-feature-banner {
+  background: #ffffff;
+  border: 1px solid #f3e8ff;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 2.25rem 0;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 860px) {
+  .hue-feature-banner {
+    grid-template-columns: 1fr;
+  }
+}
+
+[data-theme="dark"] .hue-feature-banner {
+  background: #171828;
+  border-color: #2b2640;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.hue-feature-img-wrap {
+  position: relative;
+  min-height: 320px;
+  background-color: #f3f4f6;
+}
+
+.hue-feature-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hue-feature-content {
+  padding: 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hue-feature-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #b45309;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+[data-theme="dark"] .hue-feature-tag {
+  color: #fbbf24;
+}
+
+.hue-feature-heading {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 1rem;
+  line-height: 1.35;
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+}
+
+[data-theme="dark"] .hue-feature-heading {
+  color: #f3f4f6;
+}
+
+.hue-feature-text {
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: #4b5563;
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .hue-feature-text {
+  color: #9ca3af;
+}
+
+.hue-feature-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+[data-theme="dark"] .hue-feature-points {
+  color: #cbd5e1;
+}
+
+.hue-feature-points li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hue-feature-points li svg {
+  color: #059669;
+  flex-shrink: 0;
+}
+
+/* Food Guide Section */
+.hue-food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin: 1.75rem 0;
+}
+
+.hue-food-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #f3e8ff;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hue-food-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(217, 119, 6, 0.12);
+  border-color: #fde68a;
+}
+
+[data-theme="dark"] .hue-food-card {
+  background: #171828;
+  border-color: #2b2640;
+}
+
+[data-theme="dark"] .hue-food-card:hover {
+  border-color: #d97706;
+}
+
+.hue-food-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  position: relative;
+  overflow: hidden;
+}
+
+.hue-food-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.hue-food-card:hover .hue-food-img {
+  transform: scale(1.06);
+}
+
+.hue-food-body {
+  padding: 1.25rem 1.4rem;
+}
+
+.hue-food-name {
+  font-size: 1.12rem;
+  font-weight: 750;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+[data-theme="dark"] .hue-food-name {
+  color: #f3f4f6;
+}
+
+.hue-food-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #4b5563;
+  margin-bottom: 0.85rem;
+}
+
+[data-theme="dark"] .hue-food-desc {
+  color: #9ca3af;
+}
+
+.hue-food-spot {
+  font-size: 0.82rem;
+  color: #b45309;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+[data-theme="dark"] .hue-food-spot {
+  color: #fbbf24;
+}
+
+/* Weather & Seasonality Grid */
+.hue-weather-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 1.75rem 0;
+}
+
+.hue-weather-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  border: 1px solid #e9e5e3;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .hue-weather-card {
+  background: #171828;
+  border-color: #2b2640;
+}
+
+.hue-weather-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.85rem;
+}
+
+.hue-weather-title {
+  font-size: 1.05rem;
+  font-weight: 750;
+  color: #111827;
+}
+
+[data-theme="dark"] .hue-weather-title {
+  color: #f3f4f6;
+}
+
+.hue-weather-card.recommended {
+  border: 2px solid #9333ea;
+  background: linear-gradient(180deg, rgba(147, 51, 234, 0.03) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+[data-theme="dark"] .hue-weather-card.recommended {
+  background: linear-gradient(180deg, rgba(147, 51, 234, 0.1) 0%, #171828 100%);
+  border-color: #a855f7;
+}
+
+/* Transportation Box */
+.hue-trans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.hue-trans-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+[data-theme="dark"] .hue-trans-card {
+  background: #171828;
+  border-color: #2b2640;
+}
+
+.hue-trans-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  color: #6b21a8;
+}
+
+[data-theme="dark"] .hue-trans-header {
+  color: #c084fc;
+}
+
+/* Itinerary Tabs & Timeline */
+.hue-itin-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  border: 1px solid #f3e8ff;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .hue-itin-card {
+  background: #171828;
+  border-color: #2b2640;
+}
+
+.hue-itin-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #7e22ce;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.85rem;
+}
+
+.hue-itin-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .hue-itin-title {
+  color: #f3f4f6;
+}
+
+.hue-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  padding-left: 2rem;
+  border-left: 2px dashed #d8b4fe;
+}
+
+[data-theme="dark"] .hue-timeline {
+  border-left-color: #4c1d95;
+}
+
+.hue-timeline-step {
+  position: relative;
+}
+
+.hue-timeline-dot {
+  position: absolute;
+  left: -2.45rem;
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #7e22ce;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 2px #d8b4fe;
+}
+
+[data-theme="dark"] .hue-timeline-dot {
+  border-color: #171828;
+  box-shadow: 0 0 0 2px #7e22ce;
+}
+
+.hue-timeline-time {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #b45309;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+[data-theme="dark"] .hue-timeline-time {
+  color: #fbbf24;
+}
+
+.hue-timeline-content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #374151;
+}
+
+[data-theme="dark"] .hue-timeline-content {
+  color: #cbd5e1;
+}
+
+/* FAQ Accordion */
+.hue-faq-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+  background: #ffffff;
+  transition: border-color 0.2s ease;
+}
+
+[data-theme="dark"] .hue-faq-item {
+  background: #171828;
+  border-color: #2b2640;
+}
+
+.hue-faq-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.15rem 1.4rem;
+  background: transparent;
+  border: none;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #111827;
+  text-align: left;
+  cursor: pointer;
+  gap: 1rem;
+}
+
+[data-theme="dark"] .hue-faq-btn {
+  color: #f3f4f6;
+}
+
+.hue-faq-content {
+  padding: 0 1.4rem 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+[data-theme="dark"] .hue-faq-content {
+  color: #9ca3af;
+}
+
+/* Tourist Map Display */
+.hue-map-container {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #f3e8ff;
+  overflow: hidden;
+  margin: 1.75rem 0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .hue-map-container {
+  background: #171828;
+  border-color: #2b2640;
+}
+
+.hue-map-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hue-map-caption {
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  color: #6b7280;
+  text-align: center;
+  font-style: italic;
+  border-top: 1px solid #f3e8ff;
+}
+
+[data-theme="dark"] .hue-map-caption {
+  color: #9ca3af;
+  border-top-color: #2b2640;
+}
+
+/* Toast Message */
+.hue-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #111827;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  animation: hueSlideUp 0.3s ease;
+}
+
+@keyframes hueSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
