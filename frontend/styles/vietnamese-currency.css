@@ -252,6 +252,82 @@
   line-height: 1.5;
 }
 
+/* ─── RELATED ARTICLES SECTION (MATCHING SCREENSHOT) ─── */
+.currency-related-section {
+  margin-top: 75px;
+  padding-top: 55px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.currency-related-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 44px;
+  letter-spacing: -0.4px;
+}
+
+.currency-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.currency-related-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: #ffffff;
+  border-radius: 6px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.currency-related-card:hover {
+  transform: translateY(-4px);
+}
+
+.currency-related-thumb {
+  width: 100%;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.currency-related-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.currency-related-thumb.is-map img {
+  object-fit: contain;
+  padding: 10px;
+}
+
+.currency-related-card:hover .currency-related-thumb img {
+  transform: scale(1.03);
+}
+
+.currency-related-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 15px;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.currency-related-card:hover .currency-related-card-title {
+  color: #008080;
+}
+
 /* ─── RESPONSIVE ADJUSTMENTS ─── */
 @media (max-width: 768px) {
   .currency-hero {
@@ -285,4 +361,14 @@
   .currency-bullet-item {
     font-size: 14.5px;
   }
+
+  .currency-related-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .currency-related-thumb {
+    height: 240px;
+  }
 }
+

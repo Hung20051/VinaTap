@@ -321,6 +321,34 @@ const BANKNOTES = [
   },
 ];
 
+// ─── RELATED ARTICLES (MATCHING SCREENSHOT) ───
+const RELATED_ARTICLES = [
+  {
+    id: "railway-network",
+    title: "Vietnam’s Railway Network",
+    titleVi: "Mạng Lưới Đường Sắt Việt Nam",
+    img: "/guide/currency/vietnam-railway-network.png",
+    link: "/guide/the-complete-guide-to-vietnam",
+    isMap: true,
+  },
+  {
+    id: "airports-in-vietnam",
+    title: "Airports in Vietnam",
+    titleVi: "Hệ Thống Sân Bay Việt Nam",
+    img: "/guide/currency/airports-in-vietnam.png",
+    link: "/guide/the-complete-guide-to-vietnam",
+    isMap: true,
+  },
+  {
+    id: "climate-of-vietnam",
+    title: "Climate of Vietnam",
+    titleVi: "Khí Hậu & Thời Tiết Việt Nam",
+    img: "/guide/currency/climate-of-vietnam.jpg",
+    link: "/guide/the-complete-guide-to-vietnam",
+    isMap: false,
+  },
+];
+
 export default function VietnameseCurrencyPage() {
   const [lang, setLang] = useState("en");
   const isVi = lang === "vi";
@@ -599,6 +627,37 @@ export default function VietnameseCurrencyPage() {
             </li>
           </ul>
         </div>
+
+        {/* SECTION 3: RELATED ARTICLES (MATCHING SCREENSHOT) */}
+        <section className="currency-related-section">
+          <h2 className="currency-related-title">
+            {isVi ? "Bài Viết Liên Quan" : "Related Articles"}
+          </h2>
+          <div className="currency-related-grid">
+            {RELATED_ARTICLES.map((article) => (
+              <Link
+                key={article.id}
+                href={article.link}
+                className="currency-related-card group"
+              >
+                <div
+                  className={`currency-related-thumb ${
+                    article.isMap ? "is-map" : ""
+                  }`}
+                >
+                  <img
+                    src={article.img}
+                    alt={isVi ? article.titleVi : article.title}
+                    loading="lazy"
+                  />
+                </div>
+                <h3 className="currency-related-card-title">
+                  {isVi ? article.titleVi : article.title}
+                </h3>
+              </Link>
+            ))}
+          </div>
+        </section>
       </main>
 
       {/* ─── AI CHATBOT & FOOTER ─── */}
