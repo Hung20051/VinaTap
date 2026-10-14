@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/components/layout/Logo";
+import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
@@ -209,50 +210,8 @@ export default function AccommodationInVietnamPage() {
         </div>
       )}
 
-      {/* Main Header Navbar */}
-      <header className="header">
-        <div className="header__container">
-          <Link href="/" className="header__logo">
-            <Logo size="normal" showText={false} noLink href={null} as="span" />
-          </Link>
-          <nav className="header__nav">
-            <Link
-              href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
-              className="header__nav-item"
-            >
-              {isVi ? "Cảm hứng" : "Be Inspired"}
-            </Link>
-            <Link href="/province/da-nang" className="header__nav-item">
-              {isVi ? "Điểm đến" : "Destinations"}
-            </Link>
-            <Link
-              href="/guide/20-best-things-to-do-in-vietnam"
-              className="header__nav-item"
-            >
-              {isVi ? "Trải nghiệm" : "Things to Do"}
-            </Link>
-            <Link
-              href="/guide/8-must-try-foods-in-hanoi"
-              className="header__nav-item"
-            >
-              {isVi ? "Ẩm thực" : "Eat & Drink"}
-            </Link>
-            <Link
-              href="/guide/3-week-vietnam-itinerary"
-              className="header__nav-item"
-            >
-              {isVi ? "Lịch trình" : "Itineraries"}
-            </Link>
-          </nav>
-          <div className="header__actions">
-            <HeaderSearch />
-            <LanguageSwitch />
-            <Link href="/login" className="header__login-btn">
-              {isVi ? "Đăng nhập" : "Sign In"}
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Main Standard PublicHeader */}
+      <PublicHeader />
 
       {/* Sticky Secondary Breadcrumbs Bar */}
       <div className="guide-nav">
