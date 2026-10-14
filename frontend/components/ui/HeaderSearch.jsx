@@ -9,6 +9,16 @@ import { getLang } from "@/lib/prefs";
 // ─── COMPREHENSIVE SEARCH INDEX MATCHING SCREENSHOT ───
 const SEARCH_POSTS = [
   {
+    id: "accommodation-in-vietnam",
+    title: "Accommodation in Vietnam: A Guide for International Travelers",
+    titleVi: "Lưu Trú Tại Việt Nam | Khách Sạn, Homestay, Resort & Mẹo Đặt Phòng",
+    date: "October 14, 2026",
+    dateVi: "14 Tháng 10, 2026",
+    img: "/guide/accommodation/hero.jpg",
+    link: "/guide/accommodation-in-vietnam",
+    keywords: "accommodation in vietnam luu tru khach san hotel homestay hostel resort gia phong tips dat phong travel guide where to stay",
+  },
+  {
     id: "vietnam-visa",
     title: "Vietnam Visa | All Information You Need to Know",
     titleVi: "Thông Tin Visa Việt Nam | Miễn Thị Thực & e-Visa 90 Ngày",

@@ -646,7 +646,7 @@ const LATEST_ARTICLES_PAGES = [
       meta: "VinaTap - October 11, 2026",
       metaVi: "VinaTap • 12 Tháng 10, 2026",
       img: "/guide/hcmc/accommodation-in-vietnam.jpg",
-      link: "/province/da-nang",
+      link: "/guide/accommodation-in-vietnam",
     },
     {
       badge: "HO CHI MINH CITY",
