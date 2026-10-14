@@ -231,7 +231,7 @@ const REGIONAL_DESTINATIONS_DATA = [
         title: "Ha Giang",
         titleVi: "Hà Giang - Cao nguyên đá",
         img: "/guide/hcmc/region-north-hagiang.jpg",
-        link: "/province/ha-noi",
+        link: "/province/ha-giang",
       },
     ],
   },

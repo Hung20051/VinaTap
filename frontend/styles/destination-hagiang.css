@@ -1,0 +1,551 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   HA GIANG DESTINATION & GUIDE EDITORIAL STYLES
+   Inspired by Vietnamnomad's Ultimate Ha Giang Travel Guide
+   Theme Accent: #00c2cb (Cyan) & #ff5757 (Accent Red)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.vnn-hagiang-page {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", Helvetica, Arial, sans-serif;
+  color: #111827;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: clip;
+}
+
+/* ─── HERO BANNER ─── */
+.vnn-hagiang-hero {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  background-size: cover;
+  background-position: center 40%;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.vnn-hagiang-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(15, 23, 42, 0.35) 0%,
+    rgba(15, 23, 42, 0.65) 100%
+  );
+  z-index: 1;
+}
+
+.vnn-hagiang-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.vnn-hagiang-hero__badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.vnn-hagiang-hero__badge {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.vnn-hagiang-hero__badge:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.vnn-hagiang-hero__title {
+  font-size: clamp(48px, 7vw, 76px);
+  line-height: 1.15;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.7);
+  letter-spacing: -0.5px;
+}
+
+.vnn-hagiang-hero__meta {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* ─── MAIN LAYOUT WRAPPER ─── */
+.vnn-hagiang-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 20px 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 40px;
+  align-items: start;
+}
+
+/* ─── ARTICLE COLUMN ─── */
+.vnn-hagiang-article {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+}
+
+.vnn-hagiang-pill-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #00c2cb 0%, #00aab2 100%);
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 194, 203, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 32px;
+}
+
+.vnn-hagiang-pill-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 194, 203, 0.45);
+}
+
+/* Lead intro paragraph */
+.vnn-hagiang-lead {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 24px;
+}
+
+.vnn-hagiang-lead strong {
+  color: #0f172a;
+}
+
+/* Section Title */
+.vnn-hagiang-sec-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 48px 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vnn-hagiang-sec-title::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background-color: #00c2cb;
+}
+
+.vnn-hagiang-sub-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 36px 0 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vnn-hagiang-text {
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 18px;
+}
+
+/* Image Containers */
+.vnn-hagiang-img-box {
+  margin: 24px 0 28px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background-color: #f1f5f9;
+}
+
+.vnn-hagiang-img-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.vnn-hagiang-img-box:hover img {
+  transform: scale(1.015);
+}
+
+.vnn-hagiang-img-caption {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #64748b;
+  font-style: italic;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+/* Information Box (Highlight / Tips) */
+.vnn-hagiang-infobox {
+  background-color: #f0fdfa;
+  border-left: 4px solid #00c2cb;
+  border-radius: 0 10px 10px 0;
+  padding: 18px 22px;
+  margin: 24px 0;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #0f766e;
+}
+
+.vnn-hagiang-infobox strong {
+  color: #115e59;
+}
+
+/* Weather Season Grid */
+.vnn-hagiang-season-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 24px 0 32px;
+}
+
+.vnn-hagiang-season-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 20px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.vnn-hagiang-season-card:hover {
+  transform: translateY(-2px);
+  border-color: #00c2cb;
+}
+
+.vnn-hagiang-season-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.vnn-hagiang-season-card__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.vnn-hagiang-season-card__badge {
+  font-size: 11px;
+  font-weight: 600;
+  background-color: #e0f2fe;
+  color: #0369a1;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.vnn-hagiang-season-card__desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0;
+}
+
+/* Transport options */
+.vnn-hagiang-transport-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 20px 0 28px;
+}
+
+.vnn-hagiang-transport-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.vnn-hagiang-transport-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #e6fcfd;
+  color: #00aab2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.vnn-hagiang-transport-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.vnn-hagiang-transport-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Attraction & Dish Detail Card */
+.vnn-hagiang-item-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+}
+
+.vnn-hagiang-item-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 14px 0;
+}
+
+.vnn-hagiang-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.vnn-hagiang-item-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ─── SIDEBAR COLUMN ─── */
+.vnn-hagiang-sidebar {
+  position: sticky;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.vnn-hagiang-widget {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.vnn-hagiang-widget__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 16px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* TOC Links */
+.vnn-hagiang-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.vnn-hagiang-toc-link {
+  display: block;
+  font-size: 13.5px;
+  color: #475569;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  line-height: 1.4;
+}
+
+.vnn-hagiang-toc-link:hover {
+  background-color: #f1f5f9;
+  color: #00aab2;
+  padding-left: 14px;
+}
+
+.vnn-hagiang-toc-link.active {
+  background-color: #e6fcfd;
+  color: #008f96;
+  font-weight: 600;
+}
+
+/* Quick Facts List */
+.vnn-hagiang-facts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vnn-hagiang-fact-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.vnn-hagiang-fact-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.vnn-hagiang-fact-label {
+  color: #64748b;
+}
+
+.vnn-hagiang-fact-value {
+  font-weight: 600;
+  color: #0f172a;
+  text-align: right;
+}
+
+/* Related articles */
+.vnn-hagiang-related-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vnn-hagiang-related-item {
+  display: flex;
+  gap: 12px;
+  text-decoration: none;
+  align-items: center;
+}
+
+.vnn-hagiang-related-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.vnn-hagiang-related-title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #1e293b;
+  transition: color 0.2s ease;
+}
+
+.vnn-hagiang-related-item:hover .vnn-hagiang-related-title {
+  color: #00c2cb;
+}
+
+/* ─── RESPONSIVE BREAKPOINTS ─── */
+@media (max-width: 1024px) {
+  .vnn-hagiang-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .vnn-hagiang-sidebar {
+    position: static;
+  }
+
+  .vnn-hagiang-hero__title {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 768px) {
+  .vnn-hagiang-hero {
+    min-height: 420px;
+    padding: 60px 16px 40px;
+  }
+
+  .vnn-hagiang-hero__badges {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .vnn-hagiang-hero__badge {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+
+  .vnn-hagiang-hero__title {
+    font-size: 38px;
+  }
+
+  .vnn-hagiang-article {
+    padding: 24px 18px;
+  }
+
+  .vnn-hagiang-season-grid,
+  .vnn-hagiang-transport-grid {
+    grid-template-columns: 1fr;
+  }
+}
