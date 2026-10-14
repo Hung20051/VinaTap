@@ -88,7 +88,7 @@ function getPageFriendlyName(path) {
 
 export default function AdminAnalytics() {
   const [activeTab, setActiveTab] = useState("audience"); // 'audience' | 'content' | 'sources' | 'affiliate'
-  const [timeframe, setTimeframe] = useState("7days");
+  const [timeframe, setTimeframe] = useState("all");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);

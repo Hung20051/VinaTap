@@ -18,6 +18,8 @@ const AdminStats = {
       [[avgDuration]],
       [topPages],
       [trafficTimeline],
+      [deviceStats],
+      [channelStats],
       [[ordersData]],
       [[affiliateData]],
     ] = await Promise.all([
@@ -54,23 +56,41 @@ const AdminStats = {
       db.execute(
         `SELECT ROUND(AVG(NULLIF(duration_seconds, 0))) AS avg_dur FROM page_views`,
       ).catch(() => [[{ avg_dur: 0 }]]),
-      // Các trang và link được du khách xem nhiều nhất
+      // Các trang và link được du khách xem nhiều nhất (ưu tiên bài viết & điểm đến du lịch, ẩn link nfc /t/)
       db.execute(
         `SELECT page_path, COUNT(*) AS view_count, COUNT(DISTINCT ip_address) AS unique_visitors
          FROM page_views
+         WHERE page_path NOT LIKE '/t/%'
          GROUP BY page_path
          ORDER BY view_count DESC
          LIMIT 10`,
       ).catch(() => [[]]),
-      // Dữ liệu lưu lượng truy cập 30 ngày cho biểu đồ
+      // Dữ liệu lưu lượng truy cập cho biểu đồ
       db.execute(
         `SELECT DATE_FORMAT(created_at, '%d/%m') AS time_label,
                 COUNT(*) AS views,
                 COUNT(DISTINCT ip_address) AS visitors
          FROM page_views
-         WHERE created_at >= '2026-10-10 00:00:00'
          GROUP BY DATE(created_at), DATE_FORMAT(created_at, '%d/%m')
          ORDER BY DATE(created_at) ASC`,
+      ).catch(() => [[]]),
+      // Thống kê thiết bị thực tế
+      db.execute(
+        `SELECT device_type, COUNT(*) AS count FROM page_views GROUP BY device_type`,
+      ).catch(() => [[]]),
+      // Thống kê kênh nguồn thực tế
+      db.execute(
+        `SELECT 
+           CASE 
+             WHEN referrer LIKE '%google.%' OR referrer LIKE '%bing.%' OR referrer LIKE '%yahoo.%' THEN 'Google Tìm Kiếm (SEO)'
+             WHEN referrer LIKE '%facebook.%' OR referrer LIKE '%fb.me%' OR referrer LIKE '%instagram.%' OR referrer LIKE '%tiktok.%' OR referrer LIKE '%youtube.%' OR referrer LIKE '%zalo.%' THEN 'Mạng Xã Hội'
+             WHEN referrer IS NULL OR referrer = '' THEN 'Truy Cập Trực Tiếp (Direct)'
+             ELSE 'Website Đối Tác (Referral)'
+           END AS channel_name,
+           COUNT(*) AS count
+         FROM page_views
+         GROUP BY channel_name
+         ORDER BY count DESC`,
       ).catch(() => [[]]),
       // Doanh thu đơn hàng
       db.execute(
@@ -82,9 +102,8 @@ const AdminStats = {
       ).catch(() => [[{ click_count: 0, unique_clicks: 0 }]]),
     ]);
 
-    const rawAvg = Number(avgDuration?.[0]?.avg_dur || 0);
-    // Nếu mới cài đặt chưa có đủ log heartbeat, để fallback thực tế là 225s (3p 45s)
-    const effectiveAvgSeconds = rawAvg > 10 ? rawAvg : 225;
+    const rawAvg = Number(avgDuration?.avg_dur || 0);
+    const effectiveAvgSeconds = rawAvg > 0 ? rawAvg : 60;
 
     const realOrders = Number(ordersData?.order_count || 0);
     const realRevenue = Number(ordersData?.total_revenue || 0);
@@ -95,6 +114,8 @@ const AdminStats = {
       avg_duration_seconds: effectiveAvgSeconds,
       top_pages: topPages || [],
       traffic_timeline: trafficTimeline || [],
+      device_stats: deviceStats || [],
+      channel_stats: channelStats || [],
       provinces_total: provincesTotal?.count || 0,
       articles_total: articlesTotal?.count || 0,
       articles_published: articlesPublished?.count || 0,

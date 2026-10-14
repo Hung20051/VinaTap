@@ -356,7 +356,7 @@ const PageView = {
       const [res] = await db.execute(
         `SELECT pv.page_path, COUNT(*) AS view_count, COUNT(DISTINCT pv.ip_address) AS unique_visitors
          FROM page_views pv
-         ${whereClause}
+         ${whereClause ? `${whereClause} AND` : "WHERE"} (pv.page_path NOT LIKE '/t/%')
          GROUP BY pv.page_path
          ORDER BY view_count DESC
          LIMIT 50`,

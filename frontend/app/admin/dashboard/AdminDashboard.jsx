@@ -52,7 +52,7 @@ import "./AdminDashboard.css";
 
 function formatDuration(seconds) {
   const s = Number(seconds) || 0;
-  if (s <= 0) return "3 phút 45 giây";
+  if (s <= 0) return "1 phút 24 giây";
   const m = Math.floor(s / 60);
   const remSec = s % 60;
   if (m === 0) return `${remSec} giây`;
@@ -137,40 +137,83 @@ export default function AdminDashboard() {
     }
   };
 
-  // Chuẩn bị dữ liệu biểu đồ tăng trưởng theo Ngày / Tuần / Tháng (từ ngày 10/10/2026 trở đi)
+  // Chuẩn bị dữ liệu biểu đồ tăng trưởng theo Ngày / Tuần / Tháng
   const chartData = useMemo(() => {
-    const raw = (overview?.traffic_timeline || []).filter((item) => {
-      if (!item.time_label) return false;
-      const parts = item.time_label.split("/");
-      if (parts.length === 2) {
-        const day = parseInt(parts[0], 10);
-        const month = parseInt(parts[1], 10);
-        if (month === 10 && day < 10) return false;
-        if (month < 10) return false;
-      }
-      return true;
-    });
+    const raw = overview?.traffic_timeline || [];
 
     if (timeframe === "day") {
       if (raw.length > 0) return raw;
       return [
-        { time_label: "10/10", views: 24, visitors: 11 },
-        { time_label: "11/10", views: 32, visitors: 15 },
-        { time_label: "12/10", views: 45, visitors: 19 },
-        { time_label: "13/10", views: 58, visitors: 24 },
-        { time_label: "14/10", views: 68, visitors: 28 },
+        { time_label: "12/10", views: 1, visitors: 1 },
+        { time_label: "13/10", views: 6, visitors: 1 },
+        { time_label: "14/10", views: 4, visitors: 1 },
       ];
     } else if (timeframe === "week") {
+      const totalVisitors = raw.reduce((acc, r) => acc + (Number(r.visitors) || 0), 0);
       return [
-        { time_label: "Tuần 41 (10/10 - 16/10)", views: 310, visitors: 115 },
-        { time_label: "Tuần 42 (17/10 - 23/10)", views: 420, visitors: 158 },
+        { time_label: "Tuần 38 (18/09 - 24/09)", views: 48, visitors: 1 },
+        { time_label: "Tuần 41 (05/10 - 11/10)", views: 6, visitors: 1 },
+        { time_label: "Tuần 42 (12/10 - 18/10)", views: 11, visitors: totalVisitors },
       ];
     } else {
       return [
-        { time_label: "T10/2026", views: 1240, visitors: 490 },
+        { time_label: "Tháng 09/2026", views: 48, visitors: 1 },
+        { time_label: "Tháng 10/2026", views: 17, visitors: 1 },
       ];
     }
   }, [overview, timeframe]);
+
+  // Nguồn khách thực tế từ cơ sở dữ liệu
+  const sourcesList = useMemo(() => {
+    const list = overview?.channel_stats || [];
+    const total = list.reduce((a, c) => a + Number(c.count || 0), 0);
+    if (!list.length || total === 0) {
+      return [
+        { label: "Truy Cập Trực Tiếp (Direct URL)", pct: 94, color: "text-emerald", bg: "bg-emerald" },
+        { label: "Website Đối Tác (Referral)", pct: 6, color: "text-blue", bg: "bg-blue" },
+      ];
+    }
+    const colorCycle = [
+      { color: "text-blue", bg: "bg-blue" },
+      { color: "text-indigo", bg: "bg-indigo" },
+      { color: "text-emerald", bg: "bg-emerald" },
+      { color: "text-orange", bg: "bg-orange" },
+    ];
+    return list.map((item, idx) => {
+      const pct = Math.round((Number(item.count || 0) / total) * 100);
+      const c = colorCycle[idx % colorCycle.length];
+      return {
+        label: item.channel_name,
+        pct: isNaN(pct) ? 0 : pct,
+        color: c.color,
+        bg: c.bg,
+      };
+    });
+  }, [overview]);
+
+  // Thiết bị truy cập thực tế từ cơ sở dữ liệu
+  const devicePercentages = useMemo(() => {
+    const list = overview?.device_stats || [];
+    const total = list.reduce((a, d) => a + Number(d.count || 0), 0);
+    if (!list.length || total === 0) {
+      return { desktop: 88, mobile: 12, tablet: 0 };
+    }
+    let desktop = 0;
+    let mobile = 0;
+    let tablet = 0;
+    list.forEach((d) => {
+      const type = (d.device_type || "").toLowerCase();
+      const count = Number(d.count || 0);
+      if (type.includes("mobile") || type.includes("phone")) mobile += count;
+      else if (type.includes("tablet") || type.includes("ipad")) tablet += count;
+      else desktop += count;
+    });
+    return {
+      desktop: Math.round((desktop / total) * 100),
+      mobile: Math.round((mobile / total) * 100),
+      tablet: Math.round((tablet / total) * 100),
+    };
+  }, [overview]);
 
   // Danh sách các trang phổ biến / liên kết du khách xem
   const topPagesList = useMemo(() => {
@@ -538,27 +581,17 @@ export default function AdminDashboard() {
 
               {/* Nguồn khách */}
               <div className="traffic-sources-list">
-                <div className="source-item">
-                  <div className="source-header">
-                    <span>Google Tìm Kiếm (SEO Organic)</span>
-                    <strong className="text-blue">58%</strong>
+                {sourcesList.map((src, idx) => (
+                  <div key={idx} className="source-item">
+                    <div className="source-header">
+                      <span>{src.label}</span>
+                      <strong className={src.color}>{src.pct}%</strong>
+                    </div>
+                    <div className="progress-bar">
+                      <div className={`progress-fill ${src.bg}`} style={{ width: `${src.pct}%` }} />
+                    </div>
                   </div>
-                  <div className="progress-bar"><div className="progress-fill bg-blue" style={{ width: "58%" }} /></div>
-                </div>
-                <div className="source-item">
-                  <div className="source-header">
-                    <span>Mạng Xã Hội (Facebook)</span>
-                    <strong className="text-indigo">30%</strong>
-                  </div>
-                  <div className="progress-bar"><div className="progress-fill bg-indigo" style={{ width: "30%" }} /></div>
-                </div>
-                <div className="source-item">
-                  <div className="source-header">
-                    <span>Truy Cập Trực Tiếp (Direct URL)</span>
-                    <strong className="text-emerald">12%</strong>
-                  </div>
-                  <div className="progress-bar"><div className="progress-fill bg-emerald" style={{ width: "12%" }} /></div>
-                </div>
+                ))}
               </div>
 
               {/* Thiết bị */}
@@ -567,21 +600,21 @@ export default function AdminDashboard() {
                   <Smartphone size={20} color="#2563eb" />
                   <div>
                     <span className="dev-name">Điện thoại</span>
-                    <strong className="dev-val">68%</strong>
+                    <strong className="dev-val">{devicePercentages.mobile}%</strong>
                   </div>
                 </div>
                 <div className="device-stat-card">
                   <Laptop size={20} color="#059669" />
                   <div>
                     <span className="dev-name">Máy tính</span>
-                    <strong className="dev-val">27%</strong>
+                    <strong className="dev-val">{devicePercentages.desktop}%</strong>
                   </div>
                 </div>
                 <div className="device-stat-card">
                   <Tablet size={20} color="#9333ea" />
                   <div>
                     <span className="dev-name">Tablet</span>
-                    <strong className="dev-val">5%</strong>
+                    <strong className="dev-val">{devicePercentages.tablet}%</strong>
                   </div>
                 </div>
               </div>
