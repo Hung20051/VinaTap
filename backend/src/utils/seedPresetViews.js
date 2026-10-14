@@ -79,6 +79,20 @@ async function standardizeIpsAndDuration() {
     SET ip_address = ELT((id % ${UNIQUE_IP_POOL.length}) + 1, ${ipListSql}),
         duration_seconds = FLOOR(150 + (RAND() * 60))
   `);
+
+  // Điều chỉnh lượt xem hôm nay về khoảng 50 lượt (chuyển phần dôi dư sang ngày hôm qua)
+  const [[todayRow]] = await pool.query("SELECT COUNT(*) AS c FROM page_views WHERE DATE(created_at) = CURDATE()");
+  const todayCount = Number(todayRow?.c || 0);
+  const diff = todayCount - 50;
+  if (diff > 0) {
+    await pool.query(`
+      UPDATE page_views 
+      SET created_at = DATE_SUB(created_at, INTERVAL 1 DAY)
+      WHERE DATE(created_at) = CURDATE()
+      ORDER BY id ASC
+      LIMIT ${diff}
+    `);
+  }
 }
 
 async function applyPresetViews(forceReset = false) {
@@ -91,12 +105,14 @@ async function applyPresetViews(forceReset = false) {
     await standardizeIpsAndDuration();
     const [[avgRow]] = await pool.query("SELECT ROUND(AVG(NULLIF(duration_seconds, 0))) AS avg_dur FROM page_views");
     const [[uniqRow]] = await pool.query("SELECT COUNT(DISTINCT ip_address) AS uniq FROM page_views");
+    const [[todayRow]] = await pool.query("SELECT COUNT(*) AS today_c FROM page_views WHERE DATE(created_at) = CURDATE()");
     return {
       success: true,
       total: currentTotal,
+      today_views: Number(todayRow?.today_c || 50),
       unique_visitors: Number(uniqRow?.uniq || 62),
       avg_duration_seconds: Number(avgRow?.avg_dur || 180),
-      message: "Đã chuẩn hóa Khách truy cập về 62 người và thời lượng 3 phút",
+      message: "Đã chuẩn hóa Khách truy cập về 62 người, lượt xem hôm nay khoảng 50 và thời lượng 3 phút",
     };
   }
 
@@ -115,13 +131,13 @@ async function applyPresetViews(forceReset = false) {
     }
   }
 
-  // Phân bổ ngày theo mốc thời gian tăng dần tự nhiên (10/10 -> 14/10)
+  // Phân bổ ngày theo mốc thời gian tăng dần tự nhiên (10/10 -> 14/10 với hôm nay là 50 lượt)
   const dateDistribution = [
-    { day: "2026-10-10", count: 28 },
-    { day: "2026-10-11", count: 42 },
-    { day: "2026-10-12", count: 65 },
-    { day: "2026-10-13", count: 82 },
-    { day: "2026-10-14", count: 90 },
+    { day: "2026-10-10", count: 35 },
+    { day: "2026-10-11", count: 52 },
+    { day: "2026-10-12", count: 75 },
+    { day: "2026-10-13", count: 91 },
+    { day: "2026-10-14", count: 50 },
   ];
 
   const datePool = [];
