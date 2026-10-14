@@ -468,7 +468,7 @@ export default function ProvinceChatbot({
             <input
               type="text"
               className="prov-ai-input-field"
-              placeholder={`Hỏi bất kỳ điều gì về ${pName}...`}
+              placeholder={`Hỏi về du lịch, lịch trình, ẩm thực ${pName}...`}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={loading}
