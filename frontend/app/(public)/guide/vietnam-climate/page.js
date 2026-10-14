@@ -8,7 +8,7 @@ import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import NavbarAuthButton from "@/components/ui/NavbarAuthButton";
 import HeaderSearch from "@/components/ui/HeaderSearch";
-import { getLang, setLang } from "@/lib/prefs";
+import { getLang } from "@/lib/prefs";
 import {
   ChevronDown,
   CloudSun,
@@ -21,7 +21,6 @@ import {
   Calendar,
   HelpCircle,
   Sparkles,
-  Globe,
   Info,
   CheckCircle2,
   Luggage,
@@ -507,11 +506,6 @@ export default function VietnamClimatePage() {
     };
   }, []);
 
-  const handleToggleLang = (newLang) => {
-    setLang(newLang);
-    setLangState(newLang);
-  };
-
   // State FAQ
   const [openFaq, setOpenFaq] = useState(0);
 
@@ -682,36 +676,6 @@ export default function VietnamClimatePage() {
           </div>
         )}
       </header>
-
-      {/* ─── PROMINENT LANGUAGE QUICK BAR ─── */}
-      <div className="climate-lang-bar">
-        <div className="climate-lang-bar__inner">
-          <div className="climate-lang-bar__label">
-            <Globe size={16} className="text-teal-600" />
-            <span>
-              {isVi
-                ? "Ngôn ngữ bài viết / Guide Language:"
-                : "Guide Language / Ngôn ngữ bài viết:"}
-            </span>
-          </div>
-          <div className="climate-lang-bar__buttons">
-            <button
-              type="button"
-              onClick={() => handleToggleLang("vi")}
-              className={`climate-lang-btn ${isVi ? "is-active" : ""}`}
-            >
-              🇻🇳 Tiếng Việt
-            </button>
-            <button
-              type="button"
-              onClick={() => handleToggleLang("en")}
-              className={`climate-lang-btn ${!isVi ? "is-active" : ""}`}
-            >
-              🇬🇧 English
-            </button>
-          </div>
-        </div>
-      </div>
 
       {/* ─── HERO SECTION ─── */}
       <section
