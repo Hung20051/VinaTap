@@ -235,7 +235,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "13 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-5-nhatrang.jpg",
-        link: "/province/khanh-hoa",
+        link: "/guide/5-must-try-nha-trang-dishes",
       },
     ],
   },
@@ -1190,7 +1190,7 @@ export default function HoiAnPage() {
 
             {/* Card 2: Nha Trang */}
             <Link
-              href="/province/khanh-hoa"
+              href="/province/nha-trang"
               className="vnn-hoian-related-card"
             >
               <div className="vnn-hoian-related-img-wrap">

@@ -223,7 +223,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "13 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/eat-5-nhatrang.jpg",
-        link: "/province/da-nang",
+        link: "/guide/5-must-try-nha-trang-dishes",
       },
     ],
   },

@@ -36,6 +36,7 @@ import HoiAnPage from "../hoi-an/page";
 import DaNangPage from "../da-nang/page";
 import HanoiPage from "../ha-noi/page";
 import HaGiangPage from "../ha-giang/page";
+import NhaTrangPage from "../nha-trang/page";
 
 export default function ProvincePage() {
   const { slug } = useParams();
@@ -58,6 +59,9 @@ export default function ProvincePage() {
   }
   if (slug === "ha-giang" || slug === "hagiang") {
     return <HaGiangPage />;
+  }
+  if (slug === "nha-trang" || slug === "nhatrang" || slug === "khanh-hoa") {
+    return <NhaTrangPage />;
   }
 
   const [province, setProvince] = useState(null);

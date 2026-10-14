@@ -351,7 +351,7 @@ export default function NhaTrangFoodGuidePage() {
           {isVi ? (
             <>
               Năm món ăn kể trên sẽ mang đến cho du khách hương vị chân thực và sống động nhất về{" "}
-              <Link href="/province/khanh-hoa" style={{ color: "#00c2cb", textDecoration: "underline" }}>
+              <Link href="/province/nha-trang" style={{ color: "#00c2cb", textDecoration: "underline" }}>
                 Nha Trang
               </Link>
               , dù bạn đang tìm kiếm một tô bún nóng hổi đậm đà, những món cuốn chấm hay các món ăn vặt đường phố. Nếu có dịp ghé thăm thành phố biển này, nhất định đừng bỏ lỡ những hương vị biểu tượng ấy.
@@ -359,7 +359,7 @@ export default function NhaTrangFoodGuidePage() {
           ) : (
             <>
               The five dishes listed above will offer visitors a dynamic and genuine taste of{" "}
-              <Link href="/province/khanh-hoa" style={{ color: "#00c2cb", textDecoration: "underline" }}>
+              <Link href="/province/nha-trang" style={{ color: "#00c2cb", textDecoration: "underline" }}>
                 Nha Trang
               </Link>
               , whether you&apos;re in the mood for a hearty bowl of soup, a wrap-and-roll treat, or takeout snacks. If you find yourself in the city, make sure to try these iconic flavors.
@@ -391,7 +391,7 @@ export default function NhaTrangFoodGuidePage() {
             TAGS
           </span>
           <Link
-            href="/province/khanh-hoa"
+            href="/province/nha-trang"
             style={{
               border: "1px solid #e2e8f0",
               borderRadius: "9999px",
@@ -504,8 +504,8 @@ export default function NhaTrangFoodGuidePage() {
         isOpen={aiCompanionOpen}
         onToggleOpen={setAiCompanionOpen}
         province={{
-          name: isVi ? "Khánh Hòa" : "Khanh Hoa",
-          slug: "khanh-hoa",
+          name: isVi ? "Nha Trang" : "Nha Trang",
+          slug: "nha-trang",
         }}
       />
     </div>

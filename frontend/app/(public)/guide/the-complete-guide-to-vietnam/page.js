@@ -251,7 +251,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "13 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/eat-5-nhatrang.jpg",
-        link: "/province/khanh-hoa",
+        link: "/guide/5-must-try-nha-trang-dishes",
       },
     ],
   },
@@ -1042,7 +1042,7 @@ export default function CompleteGuideToVietnamPage() {
             </Link>
 
             {/* Card 4 (Bottom-left right): Nha Trang */}
-            <Link href="/province/khanh-hoa" className="vnn-biggrid-item">
+            <Link href="/province/nha-trang" className="vnn-biggrid-item">
               <img
                 src="/guide/hcmc/region-central-nhatrang.jpg"
                 alt={lang === "vi" ? "Nha Trang" : "Nha Trang"}

@@ -59,6 +59,16 @@ const SEARCH_POSTS = [
     keywords: "5 must try nha trang dishes 5 mon an phai nem khi den nha trang bun ca bun sua banh can xoi ca nem nuong am thuc nha trang",
   },
   {
+    id: "dest-nhatrang",
+    title: "Nha Trang",
+    titleVi: "Nha Trang - Vịnh biển ngọc",
+    date: "October 14, 2026",
+    dateVi: "14 Tháng 10, 2026",
+    img: "/guide/nha-trang/nhatrang-hero-hd.jpg",
+    link: "/province/nha-trang",
+    keywords: "nha trang vinh bien ngoc khanh hoa destination travel guide thap ba ponagar vinwonders bien dao",
+  },
+  {
     id: "dest-dalat",
     title: "Dalat",
     titleVi: "Đà Lạt",

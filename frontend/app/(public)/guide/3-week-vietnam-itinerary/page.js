@@ -246,7 +246,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "2111 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-5-nhatrang.jpg",
-        link: "/province/khanh-hoa",
+        link: "/guide/5-must-try-nha-trang-dishes",
       },
     ],
   },
@@ -346,7 +346,7 @@ const ITINERARY_DESTINATIONS = [
     fareVi: "400.000₫ – 1.350.000₫ ($16 – $55)",
     travelTime: "9h30m",
     travelTimeVi: "9 giờ 30 phút",
-    link: "/province/khanh-hoa",
+    link: "/province/nha-trang",
   },
   {
     id: "dest-danang",

@@ -1660,7 +1660,7 @@ export default function DaNangPage() {
 
             {/* Card 2: Nha Trang */}
             <Link
-              href="/province/khanh-hoa"
+              href="/province/nha-trang"
               style={{
                 textDecoration: "none",
                 color: "inherit",

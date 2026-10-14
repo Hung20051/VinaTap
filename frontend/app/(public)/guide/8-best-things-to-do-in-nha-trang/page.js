@@ -161,22 +161,22 @@ function renderInlineContent(text, isVi) {
 
   const links = isVi
     ? [
-        { key: "Hòn Mun", href: "/province/khanh-hoa" },
-        { key: "Vịnh Vân Phong", href: "/province/khanh-hoa" },
-        { key: "Bãi Dài", href: "/province/khanh-hoa" },
-        { key: "Tháp Bà Ponagar", href: "/province/khanh-hoa" },
-        { key: "VinWonders", href: "/province/khanh-hoa" },
-        { key: "Núi Cô Tiên", href: "/province/khanh-hoa" },
+        { key: "Hòn Mun", href: "/province/nha-trang" },
+        { key: "Vịnh Vân Phong", href: "/province/nha-trang" },
+        { key: "Bãi Dài", href: "/province/nha-trang" },
+        { key: "Tháp Bà Ponagar", href: "/province/nha-trang" },
+        { key: "VinWonders", href: "/province/nha-trang" },
+        { key: "Núi Cô Tiên", href: "/province/nha-trang" },
       ]
     : [
-        { key: "Hon Mun", href: "/province/khanh-hoa" },
-        { key: "Van Phong Bay", href: "/province/khanh-hoa" },
-        { key: "Bai Dai Beach", href: "/province/khanh-hoa" },
-        { key: "Po Nagar Cham Towers", href: "/province/khanh-hoa" },
-        { key: "VinWonders", href: "/province/khanh-hoa" },
-        { key: "Mount Co Tien", href: "/province/khanh-hoa" },
-        { key: "Nha Trang cuisine", href: "/province/khanh-hoa" },
-        { key: "Nha Trang", href: "/province/khanh-hoa" },
+        { key: "Hon Mun", href: "/province/nha-trang" },
+        { key: "Van Phong Bay", href: "/province/nha-trang" },
+        { key: "Bai Dai Beach", href: "/province/nha-trang" },
+        { key: "Po Nagar Cham Towers", href: "/province/nha-trang" },
+        { key: "VinWonders", href: "/province/nha-trang" },
+        { key: "Mount Co Tien", href: "/province/nha-trang" },
+        { key: "Nha Trang cuisine", href: "/province/nha-trang" },
+        { key: "Nha Trang", href: "/province/nha-trang" },
       ];
 
   for (const item of links) {
@@ -397,7 +397,7 @@ export default function EightBestThingsNhaTrangPage() {
             {isVi ? (
               <>
                 Nha Trang mang đến nhiều trải nghiệm hơn là chỉ nằm dài thư giãn trên bãi biển hay đi thuyền thăm đảo. Sự hòa quyện giữa vẻ đẹp thiên nhiên ngoạn mục và chiều sâu văn hóa chắc chắn sẽ để lại trong bạn những kỷ niệm khó phai. Chúng tôi hy vọng 8 gợi ý trên sẽ giúp bạn có thêm nhiều lựa chọn vui chơi thú vị. Lần tới khi đến{" "}
-                <Link href="/province/khanh-hoa" className="hcmc-inline-link">
+                <Link href="/province/nha-trang" className="hcmc-inline-link">
                   Nha Trang
                 </Link>
                 , hãy thử bước chân khỏi bờ cát quen thuộc để tận hưởng những trải nghiệm tuyệt vời này nhé!
@@ -405,7 +405,7 @@ export default function EightBestThingsNhaTrangPage() {
             ) : (
               <>
                 Nha Trang offers so much more than just lounging on the beach or island hopping. The city’s mix of natural beauty and cultural richness will leave you with vivid memories. We hope these 8 activities give you more options for recreation. So, next time you’re in{" "}
-                <Link href="/province/khanh-hoa" className="hcmc-inline-link">
+                <Link href="/province/nha-trang" className="hcmc-inline-link">
                   Nha Trang
                 </Link>
                 , step off the beach and dive into these amazing experiences!
@@ -428,10 +428,10 @@ export default function EightBestThingsNhaTrangPage() {
         {/* ─── TAGS ROW (Screenshot 2) ─── */}
         <div className="hcmc-tags-wrap">
           <span className="hcmc-tag-badge">TAGS</span>
-          <Link href="/province/khanh-hoa" className="hcmc-tag-pill">
+          <Link href="/province/nha-trang" className="hcmc-tag-pill">
             {isVi ? "Nha Trang" : "Nha Trang"}
           </Link>
-          <Link href="/province/khanh-hoa" className="hcmc-tag-pill">
+          <Link href="/province/nha-trang" className="hcmc-tag-pill">
             {isVi ? "Điểm tham quan Nha Trang" : "Nha Trang attractions"}
           </Link>
         </div>
@@ -509,7 +509,10 @@ export default function EightBestThingsNhaTrangPage() {
       <PublicFooter lang={lang} />
 
       {/* ─── FLOATING AI COMPANION ─── */}
-      <ProvinceChatbot provinceName="Khánh Hòa" />
+      <ProvinceChatbot
+        provinceName="Nha Trang"
+        province={{ name: "Nha Trang", slug: "nha-trang" }}
+      />
     </div>
   );
 }
