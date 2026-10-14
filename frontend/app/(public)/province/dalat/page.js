@@ -184,7 +184,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "11 Tháng 10, 2026",
         badge: "Articles",
         img: "/guide/megamenu/todo-5-dalat.jpg",
-        link: "/province/dalat",
+        link: "/guide/the-15-best-attractions-in-dalat",
       },
     ],
   },
@@ -888,7 +888,7 @@ export default function DalatPage() {
 
             {/* Card 2: The 15 best attractions in Dalat (Middle Top) */}
             <Link
-              href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
+              href="/guide/the-15-best-attractions-in-dalat"
               className="vnn-dalat-attraction-card"
             >
               <img

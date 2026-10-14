@@ -184,7 +184,7 @@ const MEGA_MENUS_DATA = {
         dateVi: "111 Tháng 10, 2026",
         badge: "Things to do",
         img: "/guide/megamenu/todo-5-dalat.jpg",
-        link: "/province/dalat",
+        link: "/guide/the-15-best-attractions-in-dalat",
       },
     ],
   },

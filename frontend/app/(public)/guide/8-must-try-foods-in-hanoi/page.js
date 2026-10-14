@@ -146,6 +146,16 @@ const MEGA_MENUS_DATA = {
         img: "/guide/megamenu/todo-4-aodai.jpg",
         link: "/guide/ao-dai-vietnamese-traditional-dress",
       },
+      {
+        id: "todo-5",
+        title: "The 15 best attractions in Dalat",
+        titleVi: "15 điểm tham quan đẹp nhất Đà Lạt",
+        date: "October 14, 2026",
+        dateVi: "14 Tháng 10, 2026",
+        badge: "Articles",
+        img: "/guide/megamenu/todo-5-dalat.jpg",
+        link: "/guide/the-15-best-attractions-in-dalat",
+      },
     ],
   },
   eatDrink: {
@@ -484,12 +494,12 @@ const HANOI_8_DISHES = [
     whereToEatTitle: "Where to drink:",
     whereToEatTitleVi: "Địa chỉ gợi ý:",
     whereToEat: [
-      "Cafe Giang (39 Nguyen Huu Huan): 35,000 VND",
-      "Cafe Dinh (13 Dinh Tien Hoang, 2nd floor): 30,000 VND",
+      "Cafe Giang (39 Nguyen Huu Huan): 40,000 VND",
+      "Cafe Dinh (13 Dinh Tien Hoang): 30,000 VND",
     ],
     whereToEatVi: [
-      "Cà Phê Giảng (39 Nguyễn Hữu Huân): 35.000 VNĐ",
-      "Cà Phê Đinh (13 Đinh Tiên Hoàng, tầng 2): 30.000 VNĐ",
+      "Cà Phê Giảng (39 Nguyễn Hữu Huân): 40.000 VNĐ",
+      "Cà Phê Đinh (13 Đinh Tiên Hoàng): 30.000 VNĐ",
     ],
   },
 ];
@@ -818,11 +828,11 @@ export default function HanoiFoodGuidePage() {
         <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#334155", margin: "36px 0 24px" }}>
           {isVi ? (
             <>
-              Nền ẩm thực Hà Nội là minh chứng sống động cho sự kiên nhẫn, di sản và tính cân bằng tinh tế. Từ những nồi nước phở bốc khói nghi ngút trong sương sớm cho đến tiếng xèo xèo của chảo chả cá trong những ngôi nhà cổ, 8 món ăn kể trên mở ra hành trình khám phá chân thực nhất về linh hồn của thủ đô ngàn năm văn hiến.
+              Danh sách trên đây chỉ là một phần nhỏ trong bản đồ ẩm thực của Hà Nội. Dẫu vậy, đây là những món ăn đặc sắc nhất thể hiện sự sáng tạo và tài hoa của các đầu bếp địa phương. Đừng rời Hà Nội mà chưa thử một (hoặc tất cả) những món ăn này.
             </>
           ) : (
             <>
-              Hanoi&apos;s culinary scene is a living testament to patience, heritage, and balance. From steaming pho cauldrons in the dawn mist to the sizzle of cha ca in historic shophouses, these 8 dishes offer an authentic journey into the soul of Vietnam&apos;s capital.
+              The list above is just a small part of Hanoi&apos;s food map. Still, these are some of the most special dishes that show the creativity and skill of local chefs. Don&apos;t leave Hanoi without trying one (or all) of them.
             </>
           )}
         </p>
@@ -834,7 +844,7 @@ export default function HanoiFoodGuidePage() {
             : "Note: Restaurant recommendations are based on the authors' experiences; prices may vary."}
         </p>
 
-        {/* ── Tags ── */}
+        {/* ── Tags (Matching Screenshot 1) ── */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "24px 0 40px", flexWrap: "wrap" }}>
           <span
             style={{
@@ -849,38 +859,34 @@ export default function HanoiFoodGuidePage() {
           >
             TAGS
           </span>
-          <Link
-            href="/province/ha-noi"
+          <span
             style={{
               border: "1px solid #e2e8f0",
               borderRadius: "9999px",
               padding: "5px 14px",
               fontSize: "13px",
               color: "#334155",
-              textDecoration: "none",
             }}
           >
-            Hanoi
-          </Link>
-          <Link
-            href="/guide/8-must-try-foods-in-hanoi"
+            {isVi ? "Ẩm thực Hà Nội" : "Hanoi food"}
+          </span>
+          <span
             style={{
               border: "1px solid #e2e8f0",
               borderRadius: "9999px",
               padding: "5px 14px",
               fontSize: "13px",
               color: "#334155",
-              textDecoration: "none",
             }}
           >
-            Hanoi Food
-          </Link>
+            {isVi ? "Ẩm thực Việt Nam" : "Vietnamese food"}
+          </span>
         </div>
 
         {/* ── Divider ── */}
         <hr style={{ border: 0, height: "1px", background: "#e2e8f0", margin: "40px 0" }} />
 
-        {/* ── Related Articles ── */}
+        {/* ── Related Articles (Matching Screenshot 2) ── */}
         <section style={{ margin: "40px 0 60px" }}>
           <h2
             style={{
@@ -901,13 +907,14 @@ export default function HanoiFoodGuidePage() {
               gap: "24px",
             }}
           >
+            {/* Card 1: 3-week Vietnam Itinerary */}
             <Link
               href="/guide/3-week-vietnam-itinerary"
               style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
             >
               <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
                 <img
-                  src="/guide/hcmc/3-week-vietnam-itinerary.jpg"
+                  src="/guide/megamenu/todo-1-3week.jpg"
                   alt="3-week Vietnam Itinerary"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   loading="lazy"
@@ -918,30 +925,14 @@ export default function HanoiFoodGuidePage() {
               </h3>
             </Link>
 
-            <Link
-              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
-              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
-            >
-              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
-                <img
-                  src="/guide/megamenu/eat-2-hcmc.jpg"
-                  alt="12 must-try foods in Ho Chi Minh City"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  loading="lazy"
-                />
-              </div>
-              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
-                {isVi ? "12 món ăn nhất định phải thử tại TP. Hồ Chí Minh" : "12 must-try foods in Ho Chi Minh City"}
-              </h3>
-            </Link>
-
+            {/* Card 2: 10 best things to do in Ho Chi Minh City */}
             <Link
               href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
               style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
             >
               <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
                 <img
-                  src="/guide/hcmc/hcmc-10-things-bitexco.jpg"
+                  src="/guide/megamenu/todo-2-hcmc.jpg"
                   alt="10 best things to do in Ho Chi Minh City"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   loading="lazy"
@@ -949,6 +940,24 @@ export default function HanoiFoodGuidePage() {
               </div>
               <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
                 {isVi ? "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh" : "10 best things to do in Ho Chi Minh City"}
+              </h3>
+            </Link>
+
+            {/* Card 3: 12 must-try foods in Ho Chi Minh City */}
+            <Link
+              href="/guide/12-must-try-foods-in-ho-chi-minh-city"
+              style={{ textDecoration: "none", color: "inherit", display: "flex", flexDirection: "column" }}
+            >
+              <div style={{ width: "100%", aspectRatio: "16/10", overflow: "hidden", borderRadius: "8px", background: "#f1f5f9" }}>
+                <img
+                  src="/guide/hcmc/hcmc-12-foods-hd.jpg"
+                  alt="12 must-try foods in Ho Chi Minh City"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  loading="lazy"
+                />
+              </div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#0f172a", marginTop: "12px", lineHeight: 1.4 }}>
+                {isVi ? "12 món ăn nhất định phải thử tại TP. Hồ Chí Minh" : "12 must-try foods in Ho Chi Minh City"}
               </h3>
             </Link>
           </div>
