@@ -9,6 +9,16 @@ import { getLang } from "@/lib/prefs";
 // ─── COMPREHENSIVE SEARCH INDEX MATCHING SCREENSHOT ───
 const SEARCH_POSTS = [
   {
+    id: "vietnamese-currency",
+    title: "Vietnamese Currency | Exchange Rates & Notes",
+    titleVi: "Tiền Tệ Việt Nam | Mệnh Giá & Đổi Ngoại Tệ",
+    date: "April 30, 2026",
+    dateVi: "30 Tháng 4, 2026",
+    img: "/guide/currency/vietnam-currency-hero.jpg",
+    link: "/guide/vietnamese-currency",
+    keywords: "vietnamese currency tien te dong vnd money exchange denominations banknotes polymer tieng viet travel guide",
+  },
+  {
     id: "eat-hanoi",
     title: "8 must-try foods in Hanoi",
     titleVi: "8 món ăn phải thử tại Hà Nội",

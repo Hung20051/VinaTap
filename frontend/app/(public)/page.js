@@ -599,8 +599,8 @@ const TRAVEL_PILLARS = [
   {
     title: "Vietnamese Currency",
     titleVi: "Tiền Tệ & Đổi Tiền",
-    img: "/guide/hcmc/da-nang-dragon-bridge.jpg",
-    link: "/shop",
+    img: "/guide/currency/vietnam-currency-hero.jpg",
+    link: "/guide/vietnamese-currency",
   },
 ];
 
