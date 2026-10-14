@@ -5,8 +5,9 @@ import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import Logo from "@/components/layout/Logo";
-import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import { getLang } from "@/lib/prefs";
 import { articleAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
 import {
@@ -641,6 +642,19 @@ function GuideDetailContent() {
 
   const [activeTab, setActiveTab] = useState(initialTab);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [lang, setLang] = useState("vi");
+  const isVi = lang === "vi";
+
+  useEffect(() => {
+    setLang(getLang());
+    const handleLang = (e) => setLang(e?.detail || getLang());
+    window.addEventListener("vinatap:lang-updated", handleLang);
+    window.addEventListener("storage", handleLang);
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLang);
+      window.removeEventListener("storage", handleLang);
+    };
+  }, []);
 
   useEffect(() => {
     if (params?.slug?.includes("15-best-places")) {
@@ -774,12 +788,19 @@ function GuideDetailContent() {
             <div className="guide-nav__left">
               <Logo size={28} />
               <div className="guide-breadcrumb">
-                <Link href="/">Trang chủ</Link>
+                <Link href="/">{isVi ? "Trang chủ" : "Home"}</Link>
                 <ChevronRight size={13} />
-                <Link href="/#be-inspired">Cẩm nang</Link>
+                <Link href="/#be-inspired">{isVi ? "Cẩm nang" : "Guides"}</Link>
                 <ChevronRight size={13} />
-                <span className="guide-breadcrumb__curr">{dbArticle.title_vi || dbArticle.title_en}</span>
+                <span className="guide-breadcrumb__curr">
+                  {isVi
+                    ? dbArticle.title_vi || dbArticle.title_en
+                    : dbArticle.title_en || dbArticle.title_vi}
+                </span>
               </div>
+            </div>
+            <div className="guide-nav__right">
+              <LanguageSwitch variant="navbar" />
             </div>
           </div>
         </nav>
@@ -788,21 +809,40 @@ function GuideDetailContent() {
           <header className="guide-header">
             <div className="guide-badge-pill">
               <Compass size={14} />
-              <span>CẨM NANG DU LỊCH • VINATAP EDITORIAL</span>
+              <span>
+                {isVi
+                  ? "CẨM NANG DU LỊCH • VINATAP EDITORIAL"
+                  : "TRAVEL GUIDE • VINATAP EDITORIAL"}
+              </span>
             </div>
-            <h1 className="guide-title">{dbArticle.title_vi || dbArticle.title_en}</h1>
+            <h1 className="guide-title">
+              {isVi
+                ? dbArticle.title_vi || dbArticle.title_en
+                : dbArticle.title_en || dbArticle.title_vi}
+            </h1>
             {(dbArticle.intro_vi || dbArticle.intro_en) && (
-              <p className="guide-subtitle">{dbArticle.intro_vi || dbArticle.intro_en}</p>
+              <p className="guide-subtitle">
+                {isVi
+                  ? dbArticle.intro_vi || dbArticle.intro_en
+                  : dbArticle.intro_en || dbArticle.intro_vi}
+              </p>
             )}
             <div className="guide-meta-bar">
               <div className="guide-author-box">
                 <div className="guide-author-avatar">VT</div>
                 <div>
                   <div className="guide-author-name">
-                    <span>{dbArticle.author_name || "Ban Biên Tập VinaTap"}</span>
+                    <span>
+                      {dbArticle.author_name ||
+                        (isVi ? "Ban Biên Tập VinaTap" : "VinaTap Editorial")}
+                    </span>
                     <Sparkles size={14} className="guide-verified-badge" />
                   </div>
-                  <div className="guide-author-role">Chuyên trang Cẩm Nang Du Lịch Bản Địa Việt Nam</div>
+                  <div className="guide-author-role">
+                    {isVi
+                      ? "Chuyên trang Cẩm Nang Du Lịch Bản Địa Việt Nam"
+                      : "Vietnam Local Travel & Heritage Editorial"}
+                  </div>
                 </div>
               </div>
               <div className="guide-meta-stats">
@@ -812,11 +852,17 @@ function GuideDetailContent() {
                 </span>
                 <span className="guide-meta-item">
                   <Clock size={14} />
-                  <span>{Math.max(5, (dbArticle.items?.length || 1) * 2)} phút đọc</span>
+                  <span>
+                    {Math.max(5, (dbArticle.items?.length || 1) * 2)}{" "}
+                    {isVi ? "phút đọc" : "min read"}
+                  </span>
                 </span>
                 <span className="guide-meta-item">
                   <Eye size={14} />
-                  <span>{(dbArticle.views_count || 1280).toLocaleString("vi-VN")} lượt xem</span>
+                  <span>
+                    {(dbArticle.views_count || 1280).toLocaleString("vi-VN")}{" "}
+                    {isVi ? "lượt xem" : "views"}
+                  </span>
                 </span>
               </div>
             </div>
@@ -899,19 +945,29 @@ function GuideDetailContent() {
           <div className="guide-nav__left">
             <Logo size={28} />
             <div className="guide-breadcrumb">
-              <Link href="/">Trang chủ</Link>
+              <Link href="/">{isVi ? "Trang chủ" : "Home"}</Link>
               <ChevronRight size={13} />
-              <Link href="/#destinations">Điểm đến</Link>
+              <Link href="/#destinations">{isVi ? "Điểm đến" : "Destinations"}</Link>
               <ChevronRight size={13} />
-              <Link href="/province/ho-chi-minh">TP. Hồ Chí Minh</Link>
+              <Link href="/province/ho-chi-minh">
+                {isVi ? "TP. Hồ Chí Minh" : "Ho Chi Minh City"}
+              </Link>
               <ChevronRight size={13} />
               <span className="guide-breadcrumb__curr">
-                {isFoodsTab ? "12 món ăn phải thử" : "10 điều nên làm"}
+                {isFoodsTab
+                  ? isVi
+                    ? "12 món ăn phải thử"
+                    : "12 must-try foods"
+                  : isVi
+                  ? "10 điều nên làm"
+                  : "10 best things to do"}
               </span>
             </div>
           </div>
 
-          <div className="guide-nav__right" />
+          <div className="guide-nav__right">
+            <LanguageSwitch variant="navbar" />
+          </div>
         </div>
       </nav>
 

@@ -27,6 +27,7 @@ import {
   Gift,
 } from "lucide-react";
 import Logo from "@/components/layout/Logo";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import CheckoutModal from "@/components/modals/CheckoutModal";
 import CartModal from "@/components/modals/CartModal";
 import { getUser, clearAuth, isAdmin } from "@/lib/auth";
@@ -60,6 +61,10 @@ export default function ShopPage() {
     setUser(getUser());
     setUserAdmin(isAdmin());
     setLang(getLang());
+
+    const handleLang = (e) => setLang(e?.detail || getLang());
+    window.addEventListener("vinatap:lang-updated", handleLang);
+    window.addEventListener("storage", handleLang);
 
     // Nạp mã voucher từ searchParams hoặc localStorage
     const urlVoucher = (searchParams?.get("voucher") || "").trim().toUpperCase();
@@ -143,9 +148,13 @@ export default function ShopPage() {
       window.removeEventListener("vinatap:user-updated", handleUserUpdated);
       window.removeEventListener("vinatap:apply-voucher", handleApplyVoucher);
       window.removeEventListener("vinatap:voucher-shop-focused", handleShopFocused);
+      window.removeEventListener("vinatap:lang-updated", handleLang);
+      window.removeEventListener("storage", handleLang);
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [searchParams]);
+
+  const isVi = lang === "vi";
 
   const getStandardPrice = (p) => {
     const priceNum = Number(p.price || 0);
@@ -315,30 +324,32 @@ export default function ShopPage() {
           {/* Center Nav Links */}
           <nav className="shop-navbar-links">
             <Link href="/" className="shop-nav-link">
-              Trang chủ
+              {isVi ? "Trang chủ" : "Home"}
             </Link>
             <Link href="/#about" className="shop-nav-link">
-              Giới thiệu
+              {isVi ? "Giới thiệu" : "About"}
             </Link>
             <Link href="/shop" className="shop-nav-link shop-nav-link--active">
-              Sản phẩm
+              {isVi ? "Sản phẩm" : "Products"}
             </Link>
-            <Link href="/#provinces" className="shop-nav-link">
-              Cẩm nang
+            <Link href="/guide" className="shop-nav-link">
+              {isVi ? "Cẩm nang" : "Guides"}
             </Link>
             <Link href="/#faq" className="shop-nav-link">
-              Hỏi đáp
+              {isVi ? "Hỏi đáp" : "FAQ"}
             </Link>
           </nav>
 
           {/* Right Actions */}
           <div className="shop-navbar-actions">
+            <LanguageSwitch variant="navbar" />
+
             {/* Quick Cart Button */}
             <button
               type="button"
               className="shop-nav-cart-btn"
               onClick={handleOpenCart}
-              title="Xem giỏ hàng"
+              title={isVi ? "Xem giỏ hàng" : "View Cart"}
             >
               <ShoppingCart size={19} />
               {totalCartCount > 0 && (
@@ -422,7 +433,7 @@ export default function ShopPage() {
               </div>
             ) : (
               <Link href="/auth" className="shop-nav-login-btn">
-                Đăng Nhập
+                {isVi ? "Đăng Nhập" : "Sign In"}
               </Link>
             )}
           </div>
@@ -470,14 +481,27 @@ export default function ShopPage() {
           <div className="shop-title-area">
             <div className="shop-brand-chip">
               <Sparkles size={13} />
-              <span>CẨM NANG & BẢN ĐỒ DU LỊCH CHÍNH HÃNG</span>
+              <span>
+                {isVi
+                  ? "CẨM NANG & BẢN ĐỒ DU LỊCH CHÍNH HÃNG"
+                  : "OFFICIAL TRAVEL GUIDES & DIGITAL MAPS"}
+              </span>
             </div>
             <h1 className="shop-main-title">
-              Khám Phá Cẩm Nang <span>63 Tỉnh Thành</span>
+              {isVi ? (
+                <>
+                  Khám Phá Cẩm Nang <span>63 Tỉnh Thành</span>
+                </>
+              ) : (
+                <>
+                  Discover Travel Guides of <span>63 Provinces</span>
+                </>
+              )}
             </h1>
             <p className="shop-main-desc">
-              Sở hữu bản đồ du lịch số và cẩm nang chi tiết để mở khóa album ảnh kỷ niệm và lưu giữ trọn vẹn từng
-              khoảnh khắc của bạn.
+              {isVi
+                ? "Sở hữu bản đồ du lịch số và cẩm nang chi tiết để mở khóa album ảnh kỷ niệm và lưu giữ trọn vẹn từng khoảnh khắc của bạn."
+                : "Own digital interactive travel maps and detailed guides to unlock photo albums and preserve every moment of your adventure."}
             </p>
           </div>
 
@@ -486,7 +510,11 @@ export default function ShopPage() {
               <Search size={16} className="shop-search-icon" />
               <input
                 type="text"
-                placeholder="Tìm kiếm cẩm nang & bản đồ tỉnh thành..."
+                placeholder={
+                  isVi
+                    ? "Tìm kiếm cẩm nang & bản đồ tỉnh thành..."
+                    : "Search travel guides & province maps..."
+                }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="shop-search-input"
@@ -501,7 +529,7 @@ export default function ShopPage() {
               >
                 <ShoppingCart size={17} />
                 <span>
-                  Giỏ hàng: <strong>{totalCartCount}</strong> (
+                  {isVi ? "Giỏ hàng: " : "Cart: "}<strong>{totalCartCount}</strong> (
                   {formatMoney(cartSubtotal)})
                 </span>
               </button>
@@ -570,9 +598,11 @@ export default function ShopPage() {
         {filteredProducts.length === 0 ? (
           <div className="shop-empty-products">
             <ShoppingBag size={44} className="empty-icon" />
-            <h3>Không tìm thấy sản phẩm nào</h3>
+            <h3>{isVi ? "Không tìm thấy sản phẩm nào" : "No products found"}</h3>
             <p>
-              Thử tìm kiếm với từ khóa khác hoặc quay lại xem tất cả sản phẩm.
+              {isVi
+                ? "Thử tìm kiếm với từ khóa khác hoặc quay lại xem tất cả sản phẩm."
+                : "Try searching with different keywords or reset to view all items."}
             </p>
             {searchQuery && (
               <button
@@ -580,7 +610,7 @@ export default function ShopPage() {
                 className="btn-reset-shop-search"
                 onClick={() => setSearchQuery("")}
               >
-                Xem tất cả sản phẩm
+                {isVi ? "Xem tất cả sản phẩm" : "View all products"}
               </button>
             )}
           </div>
@@ -622,10 +652,10 @@ export default function ShopPage() {
                       onClick={() => handleAddToCart(p)}
                       title={
                         userAdmin
-                          ? "Admin không thể mua hàng (Dành cho Customer)"
+                          ? (isVi ? "Admin không thể mua hàng (Dành cho Customer)" : "Admin cannot purchase (Customer only)")
                           : !user
-                          ? "Đăng nhập để thêm vào giỏ"
-                          : "Thêm vào giỏ"
+                          ? (isVi ? "Đăng nhập để thêm vào giỏ" : "Sign in to add to cart")
+                          : (isVi ? "Thêm vào giỏ" : "Add to cart")
                       }
                     >
                       <ShoppingCart size={17} />
@@ -636,13 +666,17 @@ export default function ShopPage() {
                       onClick={() => handleBuyNow(p)}
                       title={
                         userAdmin
-                          ? "Admin không thể mua hàng (Dành cho Customer)"
+                          ? (isVi ? "Admin không thể mua hàng (Dành cho Customer)" : "Admin cannot purchase (Customer only)")
                           : !user
-                          ? "Đăng nhập để mua"
-                          : "Mua Ngay"
+                          ? (isVi ? "Đăng nhập để mua" : "Sign in to buy")
+                          : (isVi ? "Mua Ngay" : "Buy Now")
                       }
                     >
-                      <span>{userAdmin ? "Dành cho Customer" : "Mua Ngay"}</span>
+                      <span>
+                        {userAdmin
+                          ? (isVi ? "Dành cho Customer" : "Customer Only")
+                          : (isVi ? "Mua Ngay" : "Buy Now")}
+                      </span>
                       {userAdmin ? <ShieldAlert size={14} /> : <Zap size={14} />}
                     </button>
                   </div>

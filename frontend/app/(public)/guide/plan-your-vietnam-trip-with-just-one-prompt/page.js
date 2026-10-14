@@ -513,11 +513,17 @@ export default function PlanYourVietnamTripPage() {
             <span className="plan-trip-hero__badge">FEATURED ARTICLES</span>
           </div>
           <h1 className="plan-trip-hero__title">
-            Plan Your Vietnam Trip with Just One Prompt
+            {lang === "vi"
+              ? "Lên Kế Hoạch Du Lịch Việt Nam Chỉ Với Một Prompt"
+              : "Plan Your Vietnam Trip with Just One Prompt"}
           </h1>
           <div className="plan-trip-hero__meta">
-            <span className="plan-trip-hero__author">By VinaTap</span>
-            <span className="plan-trip-hero__date">October 11, 2026</span>
+            <span className="plan-trip-hero__author">
+              {lang === "vi" ? "Bởi VinaTap" : "By VinaTap"}
+            </span>
+            <span className="plan-trip-hero__date">
+              {lang === "vi" ? "11 Tháng 10, 2026" : "October 11, 2026"}
+            </span>
           </div>
         </div>
       </section>
@@ -532,182 +538,412 @@ export default function PlanYourVietnamTripPage() {
             onClick={() => setAiCompanionOpen(true)}
           >
             <Sparkles size={16} />
-            <span>Create your Vietnam trip in seconds</span>
+            <span>
+              {lang === "vi"
+                ? "Tạo chuyến đi Việt Nam chỉ trong vài giây"
+                : "Create your Vietnam trip in seconds"}
+            </span>
           </button>
         </div>
 
         <div className="plan-trip-body">
-          <p>
-            Planning a trip to Vietnam can take hours, researching destinations,
-            routes, transport options, and costs.
-          </p>
-          <p>What if you could do it all… in seconds?</p>
-          <p>
-            My Journey is a smart travel planning feature inside{" "}
-            <a
-              href="#ai-companion"
-              onClick={(e) => {
-                e.preventDefault();
-                setAiCompanionOpen(true);
-              }}
-              style={{ color: "#00aab2", fontWeight: 600, textDecoration: "underline" }}
-            >
-              Tripion AI
-            </a>
-            , designed specifically for Vietnam. It helps you create, optimize,
-            and manage your entire itinerary with just one prompt.
-          </p>
+          {lang === "vi" ? (
+            <>
+              <p>
+                Lên kế hoạch cho chuyến du lịch Việt Nam có thể mất hàng giờ đồng
+                hồ để tra cứu điểm đến, tuyến đường, phương tiện di chuyển và chi
+                phí.
+              </p>
+              <p>Sẽ ra sao nếu bạn có thể làm tất cả điều đó… chỉ trong vài giây?</p>
+              <p>
+                <strong>Hành Trình Của Tôi</strong> (My Journey) là tính năng lập kế
+                hoạch du lịch thông minh bên trong{" "}
+                <a
+                  href="#ai-companion"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setAiCompanionOpen(true);
+                  }}
+                  style={{
+                    color: "#00aab2",
+                    fontWeight: 600,
+                    textDecoration: "underline",
+                  }}
+                >
+                  Tripion AI
+                </a>
+                , được thiết kế chuyên biệt cho du lịch Việt Nam. Tính năng này giúp
+                bạn tạo lập, tối ưu hóa và quản lý toàn bộ lịch trình chuyến đi chỉ
+                với duy nhất một câu lệnh (prompt).
+              </p>
 
+              {/* ─── SECTION 1: CREATE YOUR ITINERARY INSTANTLY ─── */}
+              <h2>Tạo Lịch Trình Của Bạn Tức Thì</h2>
+              <p>Đơn giản chỉ cần nhập yêu cầu của bạn, ví dụ:</p>
 
-          {/* ─── SECTION 1: CREATE YOUR ITINERARY INSTANTLY (SCREENSHOT 3) ─── */}
-          <h2>Create Your Itinerary Instantly</h2>
-          <p>Simply type your request, for example:</p>
+              <div className="plan-trip-prompt-quote">
+                “Tôi muốn du lịch Việt Nam trong 3 tuần bắt đầu từ ngày 11/12, ưu tiên
+                các thành phố ven biển và ẩm thực địa phương.”
+              </div>
 
-          <div className="plan-trip-prompt-quote">
-            “I want to spend 3 weeks in Vietnam starting December 11, focusing on
-            coastal cities.”
-          </div>
+              <p>
+                Hệ thống AI sẽ tự động phân tích dữ liệu và khởi tạo một lịch trình
+                được cá nhân hóa hoàn toàn phù hợp với sở thích của bạn.
+              </p>
 
-          <p>
-            The system automatically analyzes your input and generates a
-            personalized itinerary tailored to your preferences.
-          </p>
+              <div style={{ margin: "24px 0 36px 0" }}>
+                <button
+                  type="button"
+                  className="plan-trip-cta-btn plan-trip-cta-btn--secondary"
+                  onClick={() => setAiCompanionOpen(true)}
+                >
+                  Tạo Lịch Trình Ngay
+                </button>
+              </div>
 
-          <div style={{ margin: "24px 0 36px 0" }}>
-            <button
-              type="button"
-              className="plan-trip-cta-btn plan-trip-cta-btn--secondary"
-              onClick={() => setAiCompanionOpen(true)}
-            >
-              Create Your Itinerary
-            </button>
-          </div>
+              {/* ─── SECTION 2: VISUALIZE YOUR JOURNEY ON THE MAP ─── */}
+              <h2>Trực Quan Hóa Chuyến Đi Trên Bản Đồ</h2>
+              <p>
+                Lịch trình của bạn được thể hiện sống động trên bản đồ tương tác với
+                các tuyến hành trình vẽ trực tiếp giữa các điểm đến.
+              </p>
+              <p>Phương tiện di chuyển được mã hóa màu sắc rõ ràng:</p>
 
-          {/* ─── SECTION 2: VISUALIZE YOUR JOURNEY ON THE MAP (SCREENSHOT 3 & 4) ─── */}
-          <h2>Visualize Your Journey on the Map</h2>
-          <p>
-            Your itinerary is displayed on an interactive map with routes drawn
-            directly between destinations.
-          </p>
-          <p>Transportation is clearly color-coded for easy understanding:</p>
+              <ul className="plan-trip-list">
+                <li>
+                  <strong>Màu xanh dương</strong> cho chuyến bay
+                </li>
+                <li>
+                  <strong>Màu xanh lá</strong> cho tàu hỏa
+                </li>
+                <li>
+                  <strong>Màu cam</strong> cho đường bộ / xe khách
+                </li>
+                <li>
+                  <strong>Màu xanh lơ</strong> cho đường thủy / tàu thuyền
+                </li>
+              </ul>
 
-          <ul className="plan-trip-list">
-            <li><strong>Blue</strong> for flights</li>
-            <li><strong>Green</strong> for trains</li>
-            <li><strong>Orange</strong> for roads</li>
-            <li><strong>Cyan</strong> for waterways</li>
-          </ul>
+              <p>Bên cạnh bản đồ, bạn sẽ thấy:</p>
 
-          <p>Alongside the map, you’ll see:</p>
+              <ul className="plan-trip-list">
+                <li>Danh sách điểm đến có cấu trúc thứ tự rõ ràng</li>
+                <li>Số đêm lưu trú gợi ý tại mỗi địa phương</li>
+              </ul>
 
-          <ul className="plan-trip-list">
-            <li>A structured list of destinations in order</li>
-            <li>Suggested number of nights at each location</li>
-          </ul>
+              <p>Bạn cũng có thể linh hoạt:</p>
 
-          <p>You can also:</p>
+              <ul className="plan-trip-list">
+                <li>Thêm các điểm đến lân cận hoặc trên trục đường di chuyển</li>
+                <li>Gỡ bỏ những điểm đến bạn không muốn ghé thăm</li>
+              </ul>
 
-          <ul className="plan-trip-list">
-            <li>Add nearby destinations or places along your route</li>
-            <li>Remove destinations you don’t want</li>
-          </ul>
+              {/* UI SCREENSHOT CARD */}
+              <div className="plan-trip-ui-card">
+                <div className="plan-trip-ui-img-wrap">
+                  <img
+                    src="/guide/plan-trip/tripion-ai-ui.jpg"
+                    alt="Tripion AI Platform for Multi-City Travel in Asia"
+                    className="plan-trip-ui-img"
+                  />
+                </div>
+                <p className="plan-trip-ui-caption">
+                  Tripion — Nền tảng AI hỗ trợ du lịch đa điểm đến tại Châu Á
+                </p>
+              </div>
 
-          {/* UI SCREENSHOT CARD (SCREENSHOT 4) */}
-          <div className="plan-trip-ui-card">
-            <div className="plan-trip-ui-img-wrap">
-              <img
-                src="/guide/plan-trip/tripion-ai-ui.jpg"
-                alt="Triplon AI Platform for Multi-City Travel in Asia - Interactive Route Map and Itinerary"
-                className="plan-trip-ui-img"
-              />
-            </div>
-            <p className="plan-trip-ui-caption">
-              Triplon — The AI Platform for Multi-City Travel in Asia
-            </p>
-          </div>
+              {/* ─── SECTION 3: DETAILED TRANSPORT INFORMATION ─── */}
+              <h2>Thông Tin Phương Tiện Chi Tiết</h2>
+              <p>Trong thẻ Phương tiện, mỗi chặng hành trình đều được phân tích cụ thể:</p>
 
-          {/* ─── SECTION 3: DETAILED TRANSPORT INFORMATION (SCREENSHOT 4 & 5) ─── */}
-          <h2>Detailed Transport Information</h2>
-          <p>In the Transport tab, each route is broken down with:</p>
+              <ul className="plan-trip-list">
+                <li>Khoảng cách địa lý</li>
+                <li>Loại hình phương tiện</li>
+                <li>Nhà vận chuyển (hãng hàng không, xe buýt, đường sắt...)</li>
+                <li>Thời gian di chuyển ước tính</li>
+                <li>Tần suất chuyến trong ngày</li>
+                <li>Mức giá tham khảo</li>
+              </ul>
 
-          <ul className="plan-trip-list">
-            <li>Distance</li>
-            <li>Transport type</li>
-            <li>Carrier (airlines, buses, trains, etc.)</li>
-            <li>Travel duration</li>
-            <li>Frequency</li>
-            <li>Estimated price</li>
-          </ul>
+              <p>
+                Nhờ đó, bạn có thể nắm bắt và kiểm soát toàn bộ chuyến đi một cách
+                minh bạch, không lo bị phát sinh chi phí.
+              </p>
 
-          <p>
-            This allows you to understand and plan every part of your journey with
-            clarity.
-          </p>
+              {/* ─── SECTION 4: OVERVIEW OF YOUR ENTIRE TRIP ─── */}
+              <h2>Tổng Quan Toàn Bộ Chuyến Đi</h2>
+              <p>
+                Hành Trình Của Tôi cung cấp bảng tóm tắt nhanh gọn về chuyến đi:
+              </p>
 
-          {/* ─── SECTION 4: OVERVIEW OF YOUR ENTIRE TRIP (SCREENSHOT 5) ─── */}
-          <h2>Overview of Your Entire Trip</h2>
-          <p>My Journey provides a quick summary of your itinerary, including:</p>
+              <ul className="plan-trip-list">
+                <li>Tổng số điểm đến ghé thăm</li>
+                <li>Tổng số đêm lưu trú</li>
+                <li>Tổng thời gian di chuyển giữa các chặng</li>
+                <li>Ước tính tổng chi phí phương tiện</li>
+              </ul>
 
-          <ul className="plan-trip-list">
-            <li>Total number of destinations</li>
-            <li>Total number of nights</li>
-            <li>Total travel time</li>
-            <li>Estimated transport cost</li>
-          </ul>
+              <p>Mọi thông tin cốt lõi — gói trọn trong tầm mắt.</p>
 
-          <p>Everything you need — at a glance.</p>
+              {/* ─── SECTION 5: FLEXIBLE EDITING AND SMART OPTIMIZATION ─── */}
+              <h2>Chỉnh Sửa Linh Hoạt & Tối Ưu Hóa Thông Minh</h2>
+              <p>Bạn luôn nắm toàn quyền quyết định lịch trình của mình:</p>
 
-          {/* ─── SECTION 5: FLEXIBLE EDITING AND SMART OPTIMIZATION (SCREENSHOT 5) ─── */}
-          <h2>Flexible Editing and Smart Optimization</h2>
-          <p>You are always in control of your itinerary.</p>
+              <ul className="plan-trip-list">
+                <li>Kéo và thả để thay đổi thứ tự điểm đến</li>
+                <li>Cập nhật tức thì tuyến đường và phương tiện di chuyển</li>
+              </ul>
 
-          <ul className="plan-trip-list">
-            <li>Drag and drop destinations to reorder your trip</li>
-            <li>Instantly update routes and transport options</li>
-          </ul>
+              <p>Sử dụng tính năng Tối Ưu Hóa để hoàn thiện chuyến đi:</p>
 
-          <p>Use the Optimize feature to refine your journey:</p>
+              <ul className="plan-trip-list">
+                <li>Tìm kiếm các lộ trình tiết kiệm chi phí nhất</li>
+                <li>Lựa chọn các kết nối di chuyển nhanh nhất</li>
+                <li>
+                  Áp dụng Tuyến Đường Thông Minh để hệ thống tự động sắp xếp khoa học nhất
+                </li>
+              </ul>
 
-          <ul className="plan-trip-list">
-            <li>Find the cheapest routes</li>
-            <li>Choose the fastest connections</li>
-            <li>Use Smart Routes to automatically generate the most efficient plan</li>
-          </ul>
+              <p>
+                Bạn có thể thử nghiệm tối ưu nhiều lần để chọn phương án ưng ý nhất.
+              </p>
 
-          <p>You can optimize multiple times to find what works best for you.</p>
+              {/* ─── SECTION 6: PLAN WHAT TO DO IN EACH DESTINATION ─── */}
+              <h2>Lên Kế Hoạch Trải Nghiệm Từng Điểm Đến</h2>
+              <p>Không chỉ dừng lại ở các thành phố lớn.</p>
+              <p>
+                Tại mỗi điểm dừng chân, bạn có thể chọn danh lam thắng cảnh, quán ăn
+                ngon và hoạt động giải trí để xây dựng một bản kế hoạch khám phá chi
+                tiết từng ngày.
+              </p>
 
-          {/* ─── SECTION 6: PLAN WHAT TO DO IN EACH DESTINATION ─── */}
-          <h2>Plan What to Do in Each Destination</h2>
-          <p>Go beyond just destinations.</p>
-          <p>
-            For each location, you can select places to visit and build a detailed
-            exploration plan for every city.
-          </p>
+              {/* ─── SECTION 7: DOWNLOAD AND SHARE YOUR PLAN ─── */}
+              <h2>Tải Về & Chia Sẻ Kế Hoạch Của Bạn</h2>
+              <p>Khi lịch trình hoàn thiện, bạn có thể xuất ra nhiều định dạng:</p>
 
-          {/* ─── SECTION 7: DOWNLOAD AND SHARE YOUR PLAN ─── */}
-          <h2>Download and Share Your Plan</h2>
-          <p>Once your itinerary is ready, you can download it in multiple formats:</p>
+              <ul className="plan-trip-list">
+                <li>Tóm tắt nhanh (dưới dạng hình ảnh)</li>
+                <li>Lịch trình toàn diện (gồm tuyến đường, phương tiện và chi phí)</li>
+                <li>Bản đồ du lịch đánh dấu các điểm đã chọn</li>
+              </ul>
 
-          <ul className="plan-trip-list">
-            <li>Quick overview (image)</li>
-            <li>Full itinerary (including routes, transport, and pricing)</li>
-            <li>Travel maps with your selected places</li>
-          </ul>
+              <p>
+                Bạn cũng có thể chia sẻ lịch trình với bạn bè hoặc gia đình, giúp mọi
+                người dễ dàng phối hợp và cùng trải nghiệm.
+              </p>
 
-          <p>
-            You can also share your itinerary with friends, making it easy to plan
-            together and stay aligned.
-          </p>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#6b7280",
+                  fontStyle: "italic",
+                  marginTop: "24px",
+                }}
+              >
+                Lưu ý: Lịch trình mang tính tham khảo. Quý khách vui lòng kiểm tra lại
+                giờ giấc thực tế trước khi khởi hành.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                Planning a trip to Vietnam can take hours, researching destinations,
+                routes, transport options, and costs.
+              </p>
+              <p>What if you could do it all… in seconds?</p>
+              <p>
+                My Journey is a smart travel planning feature inside{" "}
+                <a
+                  href="#ai-companion"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setAiCompanionOpen(true);
+                  }}
+                  style={{
+                    color: "#00aab2",
+                    fontWeight: 600,
+                    textDecoration: "underline",
+                  }}
+                >
+                  Tripion AI
+                </a>
+                , designed specifically for Vietnam. It helps you create, optimize,
+                and manage your entire itinerary with just one prompt.
+              </p>
 
-          <p style={{ fontSize: "14px", color: "#6b7280", fontStyle: "italic", marginTop: "24px" }}>
-            Note: Plans are for reference. Please verify details before traveling.
-          </p>
+              {/* ─── SECTION 1: CREATE YOUR ITINERARY INSTANTLY ─── */}
+              <h2>Create Your Itinerary Instantly</h2>
+              <p>Simply type your request, for example:</p>
+
+              <div className="plan-trip-prompt-quote">
+                “I want to spend 3 weeks in Vietnam starting December 11, focusing on
+                coastal cities.”
+              </div>
+
+              <p>
+                The system automatically analyzes your input and generates a
+                personalized itinerary tailored to your preferences.
+              </p>
+
+              <div style={{ margin: "24px 0 36px 0" }}>
+                <button
+                  type="button"
+                  className="plan-trip-cta-btn plan-trip-cta-btn--secondary"
+                  onClick={() => setAiCompanionOpen(true)}
+                >
+                  Create Your Itinerary
+                </button>
+              </div>
+
+              {/* ─── SECTION 2: VISUALIZE YOUR JOURNEY ON THE MAP ─── */}
+              <h2>Visualize Your Journey on the Map</h2>
+              <p>
+                Your itinerary is displayed on an interactive map with routes drawn
+                directly between destinations.
+              </p>
+              <p>Transportation is clearly color-coded for easy understanding:</p>
+
+              <ul className="plan-trip-list">
+                <li>
+                  <strong>Blue</strong> for flights
+                </li>
+                <li>
+                  <strong>Green</strong> for trains
+                </li>
+                <li>
+                  <strong>Orange</strong> for roads
+                </li>
+                <li>
+                  <strong>Cyan</strong> for waterways
+                </li>
+              </ul>
+
+              <p>Alongside the map, you’ll see:</p>
+
+              <ul className="plan-trip-list">
+                <li>A structured list of destinations in order</li>
+                <li>Suggested number of nights at each location</li>
+              </ul>
+
+              <p>You can also:</p>
+
+              <ul className="plan-trip-list">
+                <li>Add nearby destinations or places along your route</li>
+                <li>Remove destinations you don’t want</li>
+              </ul>
+
+              {/* UI SCREENSHOT CARD */}
+              <div className="plan-trip-ui-card">
+                <div className="plan-trip-ui-img-wrap">
+                  <img
+                    src="/guide/plan-trip/tripion-ai-ui.jpg"
+                    alt="Triplon AI Platform for Multi-City Travel in Asia - Interactive Route Map and Itinerary"
+                    className="plan-trip-ui-img"
+                  />
+                </div>
+                <p className="plan-trip-ui-caption">
+                  Triplon — The AI Platform for Multi-City Travel in Asia
+                </p>
+              </div>
+
+              {/* ─── SECTION 3: DETAILED TRANSPORT INFORMATION ─── */}
+              <h2>Detailed Transport Information</h2>
+              <p>In the Transport tab, each route is broken down with:</p>
+
+              <ul className="plan-trip-list">
+                <li>Distance</li>
+                <li>Transport type</li>
+                <li>Carrier (airlines, buses, trains, etc.)</li>
+                <li>Travel duration</li>
+                <li>Frequency</li>
+                <li>Estimated price</li>
+              </ul>
+
+              <p>
+                This allows you to understand and plan every part of your journey with
+                clarity.
+              </p>
+
+              {/* ─── SECTION 4: OVERVIEW OF YOUR ENTIRE TRIP ─── */}
+              <h2>Overview of Your Entire Trip</h2>
+              <p>My Journey provides a quick summary of your itinerary, including:</p>
+
+              <ul className="plan-trip-list">
+                <li>Total number of destinations</li>
+                <li>Total number of nights</li>
+                <li>Total travel time</li>
+                <li>Estimated transport cost</li>
+              </ul>
+
+              <p>Everything you need — at a glance.</p>
+
+              {/* ─── SECTION 5: FLEXIBLE EDITING AND SMART OPTIMIZATION ─── */}
+              <h2>Flexible Editing and Smart Optimization</h2>
+              <p>You are always in control of your itinerary.</p>
+
+              <ul className="plan-trip-list">
+                <li>Drag and drop destinations to reorder your trip</li>
+                <li>Instantly update routes and transport options</li>
+              </ul>
+
+              <p>Use the Optimize feature to refine your journey:</p>
+
+              <ul className="plan-trip-list">
+                <li>Find the cheapest routes</li>
+                <li>Choose the fastest connections</li>
+                <li>
+                  Use Smart Routes to automatically generate the most efficient plan
+                </li>
+              </ul>
+
+              <p>You can optimize multiple times to find what works best for you.</p>
+
+              {/* ─── SECTION 6: PLAN WHAT TO DO IN EACH DESTINATION ─── */}
+              <h2>Plan What to Do in Each Destination</h2>
+              <p>Go beyond just destinations.</p>
+              <p>
+                For each location, you can select places to visit and build a detailed
+                exploration plan for every city.
+              </p>
+
+              {/* ─── SECTION 7: DOWNLOAD AND SHARE YOUR PLAN ─── */}
+              <h2>Download and Share Your Plan</h2>
+              <p>
+                Once your itinerary is ready, you can download it in multiple formats:
+              </p>
+
+              <ul className="plan-trip-list">
+                <li>Quick overview (image)</li>
+                <li>Full itinerary (including routes, transport, and pricing)</li>
+                <li>Travel maps with your selected places</li>
+              </ul>
+
+              <p>
+                You can also share your itinerary with friends, making it easy to plan
+                together and stay aligned.
+              </p>
+
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#6b7280",
+                  fontStyle: "italic",
+                  marginTop: "24px",
+                }}
+              >
+                Note: Plans are for reference. Please verify details before
+                traveling.
+              </p>
+            </>
+          )}
 
           <hr className="plan-trip-divider" />
 
-          {/* ─── RELATED ARTICLES (Hình 2) ─── */}
+          {/* ─── RELATED ARTICLES ─── */}
           <section className="plan-trip-related">
-            <h2 className="plan-trip-related__title">Related Articles</h2>
+            <h2 className="plan-trip-related__title">
+              {lang === "vi" ? "Bài Viết Liên Quan" : "Related Articles"}
+            </h2>
             <div className="plan-trip-related__grid">
               <Link
                 href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
@@ -716,12 +952,18 @@ export default function PlanYourVietnamTripPage() {
                 <div className="plan-trip-related__img-wrap">
                   <img
                     src="/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg"
-                    alt="15 best places to visit in Vietnam in 2026"
+                    alt={
+                      lang === "vi"
+                        ? "15 địa điểm đẹp nhất Việt Nam năm 2026"
+                        : "15 best places to visit in Vietnam in 2026"
+                    }
                     className="plan-trip-related__img"
                   />
                 </div>
                 <h3 className="plan-trip-related__card-title">
-                  15 best places to visit in Vietnam in 2026
+                  {lang === "vi"
+                    ? "15 địa điểm đẹp nhất Việt Nam năm 2026"
+                    : "15 best places to visit in Vietnam in 2026"}
                 </h3>
               </Link>
 
@@ -732,12 +974,18 @@ export default function PlanYourVietnamTripPage() {
                 <div className="plan-trip-related__img-wrap">
                   <img
                     src="/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg"
-                    alt="The Complete Guide to Vietnam"
+                    alt={
+                      lang === "vi"
+                        ? "Cẩm nang du lịch toàn diện Việt Nam"
+                        : "The Complete Guide to Vietnam"
+                    }
                     className="plan-trip-related__img"
                   />
                 </div>
                 <h3 className="plan-trip-related__card-title">
-                  The Complete Guide to Vietnam
+                  {lang === "vi"
+                    ? "Cẩm nang du lịch toàn diện Việt Nam"
+                    : "The Complete Guide to Vietnam"}
                 </h3>
               </Link>
 
@@ -748,12 +996,18 @@ export default function PlanYourVietnamTripPage() {
                 <div className="plan-trip-related__img-wrap">
                   <img
                     src="/guide/hcmc/20-Best-Things-to-Do-in-Vietnam.jpg"
-                    alt="20 Best Things to Do in Vietnam"
+                    alt={
+                      lang === "vi"
+                        ? "20 trải nghiệm tuyệt nhất tại Việt Nam"
+                        : "20 Best Things to Do in Vietnam"
+                    }
                     className="plan-trip-related__img"
                   />
                 </div>
                 <h3 className="plan-trip-related__card-title">
-                  20 Best Things to Do in Vietnam
+                  {lang === "vi"
+                    ? "20 trải nghiệm tuyệt nhất tại Việt Nam"
+                    : "20 Best Things to Do in Vietnam"}
                 </h3>
               </Link>
             </div>

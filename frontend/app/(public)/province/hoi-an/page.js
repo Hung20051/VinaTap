@@ -5,6 +5,7 @@ import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import { getLang } from "@/lib/prefs";
 import HeaderSearch from "@/components/ui/HeaderSearch";
+import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import {
   ChevronDown,
@@ -606,6 +607,7 @@ export default function HoiAnPage() {
 
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <HeaderSearch />
+            <LanguageSwitch />
           </div>
         </div>
 
