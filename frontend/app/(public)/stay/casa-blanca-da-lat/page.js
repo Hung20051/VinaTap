@@ -5,6 +5,7 @@ import Link from "next/link";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import { getLang } from "@/lib/prefs";
+import { analyticsAPI } from "@/lib/api";
 import {
   MapPin,
   Phone,
@@ -27,6 +28,7 @@ import {
   Clock,
   Heart,
   MessageCircle,
+  Eye,
 } from "lucide-react";
 import "@/styles/casa-blanca.css";
 
@@ -273,12 +275,33 @@ export default function CasaBlancaShowcasePage() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImg, setLightboxImg] = useState("");
   const [lightboxCaption, setLightboxCaption] = useState("");
+  const [pageViews, setPageViews] = useState(0);
 
   useEffect(() => {
     setLang(getLang());
     const handleStorage = () => setLang(getLang());
     window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+
+    // Lấy số lượt xem đã lưu từ database
+    analyticsAPI
+      .getPageViews("/stay/casa-blanca-da-lat")
+      .then((res) => {
+        if (res?.view_count) setPageViews(res.view_count);
+      })
+      .catch(() => {});
+
+    // Lắng nghe sự kiện ghi nhận lượt xem mới (+1 view)
+    const handleTracked = (e) => {
+      if (e.detail?.path?.includes("casa-blanca") && e.detail?.view_count) {
+        setPageViews(e.detail.view_count);
+      }
+    };
+    window.addEventListener("vinatap:page-view-tracked", handleTracked);
+
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("vinatap:page-view-tracked", handleTracked);
+    };
   }, []);
 
   const isVi = lang === "vi";
@@ -367,6 +390,14 @@ export default function CasaBlancaShowcasePage() {
             <div className="cb-hero-meta-item">
               <Phone size={16} color="#d97706" />
               <a href={`tel:${hotlineNum}`}>{hotline}</a>
+            </div>
+            <div className="cb-hero-meta-item">
+              <Eye size={16} color="#00c2cb" />
+              <span>
+                {pageViews > 0
+                  ? `${pageViews.toLocaleString("vi-VN")} ${isVi ? "lượt xem" : "views"}`
+                  : (isVi ? "1 lượt xem" : "1 view")}
+              </span>
             </div>
             <div className="cb-hero-meta-item">
               <Heart size={16} color="#ef4444" fill="#ef4444" />
@@ -1100,6 +1131,57 @@ export default function CasaBlancaShowcasePage() {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.351221568285!2d108.4283838!3d11.9427382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3171131c5188f343%3A0x6b63f59048a609d5!2sCasa%20Blanca%20DaLat%20Homestay!5e0!3m2!1svi!2s!4v1728900000000!5m2!1svi!2s"
               loading="lazy"
             />
+          </div>
+        </section>
+
+        {/* ── Thống kê lượt xem lưu vào hệ thống ở dưới ── */}
+        <section className="cb-page-views-section" style={{ maxWidth: "1200px", margin: "1.5rem auto 2.5rem", padding: "0 1.5rem" }}>
+          <div
+            style={{
+              background: "#ffffff",
+              border: "1px solid #e2e8f0",
+              borderRadius: "16px",
+              padding: "16px 24px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "12px",
+              boxShadow: "0 4px 15px rgba(0,0,0,0.03)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <div
+                style={{
+                  width: "42px",
+                  height: "42px",
+                  borderRadius: "12px",
+                  background: "#e0f2fe",
+                  color: "#0284c7",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Eye size={22} />
+              </div>
+              <div>
+                <div style={{ fontSize: "0.85rem", color: "#64748b", fontWeight: 500 }}>
+                  {isVi ? "Thống kê lượt xem trang" : "Page View Analytics"}
+                </div>
+                <div style={{ fontSize: "1.05rem", fontWeight: 700, color: "#1e293b" }}>
+                  {isVi ? "Trang homestay này đã ghi nhận" : "This homestay page has reached"}{" "}
+                  <span style={{ color: "#0284c7" }}>
+                    {(pageViews || 1).toLocaleString("vi-VN")}
+                  </span>{" "}
+                  {isVi ? "lượt xem thực tế từ du khách" : "real traveler views"}
+                </div>
+              </div>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.8rem", color: "#10b981", background: "#ecfdf5", padding: "6px 14px", borderRadius: "20px", fontWeight: 600 }}>
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981" }} />
+              {isVi ? "+1 lượt xem mỗi lần truy cập • Đã lưu vào hệ thống" : "+1 view per visit • Saved to DB"}
+            </div>
           </div>
         </section>
       </main>

@@ -65,6 +65,10 @@ function getPageFriendlyName(path) {
   if (path === "/") return "Trang Chủ VinaTap";
   if (path === "/shop") return "Cửa Hàng Cẩm Nang & Bản Đồ";
   if (path === "/auth") return "Cổng Đăng Nhập / Đăng Ký";
+  if (path.startsWith("/stay/") || path.startsWith("/homestay/")) {
+    const slug = path.split("/")[2] || "";
+    return `Lưu Trú / Homestay: ${slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}`;
+  }
   if (path.startsWith("/guide/3-week-vietnam-itinerary")) return "Lịch Trình 3 Tuần Việt Nam (Backpacking)";
   if (path.startsWith("/guide/15-best-places-to-visit")) return "15 Điểm Đến Đẹp Nhất Việt Nam 2026";
   if (path.startsWith("/guide/plan-your-vietnam-trip")) return "Lên Kế Hoạch Bằng AI Prompt";
@@ -501,7 +505,7 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {topPagesList.slice(0, 5).map((p, idx) => (
+                    {topPagesList.slice(0, 10).map((p, idx) => (
                       <tr key={idx}>
                         <td>
                           <div className="page-link-flex">

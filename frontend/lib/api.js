@@ -541,6 +541,8 @@ export const analyticsAPI = {
     request(`/analytics/stats?timeframe=${timeframe}`),
   getAffiliateStats: (timeframe = "7days") =>
     request(`/analytics/affiliate-stats?timeframe=${timeframe}`),
+  getPageViews: (path) =>
+    request(`/analytics/page-views?path=${encodeURIComponent(path)}`),
 };
 
 // ─── CMS ARTICLES (Cẩm nang du lịch & bài viết) ───────────────

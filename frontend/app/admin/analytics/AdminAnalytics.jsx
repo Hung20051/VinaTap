@@ -48,6 +48,33 @@ const TIMEFRAME_OPTIONS = [
   { value: "all", label: "Tất cả" },
 ];
 
+function getPageFriendlyName(path) {
+  if (!path) return "Trang web";
+  if (path === "/") return "Trang Chủ VinaTap";
+  if (path === "/shop") return "Cửa Hàng Cẩm Nang & Bản Đồ";
+  if (path === "/auth") return "Cổng Đăng Nhập / Đăng Ký";
+  if (path.startsWith("/stay/") || path.startsWith("/homestay/")) {
+    const slug = path.split("/")[2] || "";
+    return `Lưu Trú / Homestay: ${slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}`;
+  }
+  if (path.startsWith("/guide/3-week-vietnam-itinerary")) return "Lịch Trình 3 Tuần Việt Nam (Backpacking)";
+  if (path.startsWith("/guide/15-best-places-to-visit")) return "15 Điểm Đến Đẹp Nhất Việt Nam 2026";
+  if (path.startsWith("/guide/plan-your-vietnam-trip")) return "Lên Kế Hoạch Bằng AI Prompt";
+  if (path.startsWith("/guide/the-complete-guide")) return "Cẩm Nang Toàn Diện Du Lịch Việt Nam";
+  if (path.startsWith("/guide/")) {
+    const slug = path.replace("/guide/", "");
+    return "Cẩm nang: " + slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  }
+  if (path.startsWith("/province/") || path.startsWith("/destination/") || path.startsWith("/destinations/")) {
+    const slug = path.split("/")[2] || "";
+    return `Điểm Đến: ${slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}`;
+  }
+  if (path.startsWith("/album/")) return "Album Kỷ Niệm Du Khách";
+  if (path.startsWith("/t/")) return "Mã Khám Phá & Hành Trình Số";
+  if (path.startsWith("/customer/")) return "Bảng Điều Khiển Du Khách";
+  return path;
+}
+
 export default function AdminAnalytics() {
   const [activeTab, setActiveTab] = useState("audience"); // 'audience' | 'content' | 'sources' | 'affiliate'
   const [timeframe, setTimeframe] = useState("7days");
@@ -85,6 +112,7 @@ export default function AdminAnalytics() {
 
   const [provFilterQuery, setProvFilterQuery] = useState("");
   const [provRegionTab, setProvRegionTab] = useState("all");
+  const [pageFilterQuery, setPageFilterQuery] = useState("");
 
   const displayedProvinces = useMemo(() => {
     const list = stats.top_provinces || [];
@@ -98,6 +126,17 @@ export default function AdminAnalytics() {
       return matchQ && matchReg;
     });
   }, [stats.top_provinces, provFilterQuery, provRegionTab]);
+
+  const displayedPages = useMemo(() => {
+    const list = stats.top_pages || [];
+    if (!pageFilterQuery.trim()) return list;
+    const q = pageFilterQuery.trim().toLowerCase();
+    return list.filter(
+      (p) =>
+        p.page_path?.toLowerCase().includes(q) ||
+        getPageFriendlyName(p.page_path)?.toLowerCase().includes(q),
+    );
+  }, [stats.top_pages, pageFilterQuery]);
 
   useEffect(() => {
     loadStats();
@@ -122,7 +161,20 @@ export default function AdminAnalytics() {
       ]);
 
       if (resStats?.stats) {
-        setStats(resStats.stats);
+        const s = { ...resStats.stats };
+        // Fallback an toàn nếu total_views bằng 0 nhưng top_pages hoặc timeline đã có dữ liệu
+        if (!s.total_views || s.total_views === 0) {
+          const sumPages = (s.top_pages || []).reduce(
+            (acc, p) => acc + (Number(p.view_count) || 0),
+            0,
+          );
+          const sumTimeline = (s.timeline || []).reduce(
+            (acc, t) => acc + (Number(t.views) || 0),
+            0,
+          );
+          s.total_views = Math.max(sumPages, sumTimeline, s.unique_visitors || 0);
+        }
+        setStats(s);
       }
       if (resAffiliate?.stats) {
         setAffiliateStats(resAffiliate.stats);
@@ -413,6 +465,78 @@ export default function AdminAnalytics() {
                   </div>
                 </div>
               </div>
+
+              {/* Bảng danh sách các trang du lịch & đích xem nhiều nhất ngay ở tab 1 */}
+              <div className="analytics-panel-card" style={{ marginTop: "1.25rem" }}>
+                <div className="panel-card-header-flex">
+                  <div>
+                    <h3 className="panel-card-title">Trang Phổ Biến &amp; Điểm Đến Du Khách Xem Nhiều Nhất</h3>
+                    <p style={{ fontSize: "0.78rem", color: "#64748b", margin: "2px 0 0" }}>
+                      Lưu trữ và cập nhật số lượt xem thực tế của từng trang trên hệ thống VinaTap
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="panel-link-action"
+                    style={{ background: "none", border: "none", cursor: "pointer" }}
+                    onClick={() => setActiveTab("content")}
+                  >
+                    Xem toàn bộ {stats.top_pages?.length || 0} trang ➔
+                  </button>
+                </div>
+
+                <div className="analytics-table-wrap">
+                  <table className="analytics-table">
+                    <thead>
+                      <tr>
+                        <th>Trang / Liên kết cẩm nang</th>
+                        <th style={{ textAlign: "right" }}>Lượt xem</th>
+                        <th style={{ textAlign: "right" }}>Khách độc nhất</th>
+                        <th style={{ textAlign: "right" }}>Xem trang</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {stats.top_pages && stats.top_pages.length > 0 ? (
+                        stats.top_pages.slice(0, 10).map((p, idx) => (
+                          <tr key={idx}>
+                            <td>
+                              <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                                <strong style={{ fontSize: "0.85rem", color: "#1e293b" }}>
+                                  {getPageFriendlyName(p.page_path)}
+                                </strong>
+                                <code style={{ fontSize: "0.75rem", color: "#64748b" }}>{p.page_path}</code>
+                              </div>
+                            </td>
+                            <td style={{ textAlign: "right", fontWeight: "700", color: "#0284c7" }}>
+                              {Number(p.view_count || 1).toLocaleString("vi-VN")}
+                            </td>
+                            <td style={{ textAlign: "right", color: "#059669", fontWeight: "600" }}>
+                              {Number(p.unique_visitors || 1).toLocaleString("vi-VN")}
+                            </td>
+                            <td style={{ textAlign: "right" }}>
+                              <a
+                                href={p.page_path}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="page-path-link-btn"
+                                title="Xem trang thực tế"
+                              >
+                                <ExternalLink size={12} />
+                              </a>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan={4} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
+                            Chưa có dữ liệu trang xem trong khoảng thời gian này
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           )}
 
@@ -424,11 +548,27 @@ export default function AdminAnalytics() {
               <div className="analytics-two-col-grid">
                 {/* Top Trang / Bài Viết */}
                 <div className="analytics-panel-card">
-                  <div className="panel-card-header-flex">
-                    <h3 className="panel-card-title">Top Bài Viết & Trang Xem Nhiều Nhất</h3>
-                    <Link href="/admin/articles" className="panel-link-action">
-                      Quản lý bài viết ➔
-                    </Link>
+                  <div className="panel-card-header-flex" style={{ flexWrap: "wrap", gap: "10px" }}>
+                    <div>
+                      <h3 className="panel-card-title">Top Bài Viết &amp; Trang Xem Nhiều Nhất</h3>
+                      <p style={{ fontSize: "0.78rem", color: "#64748b", margin: "2px 0 0" }}>
+                        Tổng số {displayedPages.length} trang được ghi nhận lượt xem
+                      </p>
+                    </div>
+                    <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                      <div className="prov-search-box" style={{ width: "200px" }}>
+                        <Search size={14} className="prov-search-icon" />
+                        <input
+                          type="text"
+                          placeholder="Lọc trang..."
+                          value={pageFilterQuery}
+                          onChange={(e) => setPageFilterQuery(e.target.value)}
+                        />
+                      </div>
+                      <Link href="/admin/articles" className="panel-link-action">
+                        Quản lý bài viết ➔
+                      </Link>
+                    </div>
                   </div>
                   <div className="analytics-table-wrap">
                     <table className="analytics-table">
@@ -440,25 +580,32 @@ export default function AdminAnalytics() {
                         </tr>
                       </thead>
                       <tbody>
-                        {stats.top_pages && stats.top_pages.length > 0 ? (
-                          stats.top_pages.map((p, idx) => (
+                        {displayedPages && displayedPages.length > 0 ? (
+                          displayedPages.map((p, idx) => (
                             <tr key={idx}>
                               <td>
-                                <div className="page-path-cell">
-                                  <span className="page-path-text">{p.page_path}</span>
-                                  <a href={p.page_path} target="_blank" rel="noopener noreferrer" className="page-path-link-btn" title="Xem trang">
-                                    <ExternalLink size={12} />
-                                  </a>
+                                <div className="page-path-cell" style={{ display: "flex", flexDirection: "column", gap: "2px", alignItems: "flex-start" }}>
+                                  <strong style={{ fontSize: "0.85rem", color: "#1e293b" }}>
+                                    {getPageFriendlyName(p.page_path)}
+                                  </strong>
+                                  <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                                    <span className="page-path-text">{p.page_path}</span>
+                                    <a href={p.page_path} target="_blank" rel="noopener noreferrer" className="page-path-link-btn" title="Xem trang">
+                                      <ExternalLink size={12} />
+                                    </a>
+                                  </div>
                                 </div>
                               </td>
-                              <td style={{ textAlign: "right", fontWeight: "600" }}>{p.view_count}</td>
+                              <td style={{ textAlign: "right", fontWeight: "700", color: "#0284c7" }}>
+                                {Number(p.view_count || 1).toLocaleString("vi-VN")}
+                              </td>
                               <td style={{ textAlign: "right", color: "#64748b" }}>{p.unique_visitors || "-"}</td>
                             </tr>
                           ))
                         ) : (
                           <tr>
                             <td colSpan={3} style={{ textAlign: "center", color: "#94a3b8", padding: "20px" }}>
-                              Chưa có dữ liệu trang xem trong khoảng thời gian này
+                              {pageFilterQuery ? "Không tìm thấy trang phù hợp" : "Chưa có dữ liệu trang xem trong khoảng thời gian này"}
                             </td>
                           </tr>
                         )}

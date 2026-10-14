@@ -121,5 +121,11 @@ const Order = require("./models/Order");
 Order.autoCancelExpiredOrders(); // chạy 1 lần ngay khi start
 setInterval(() => Order.autoCancelExpiredOrders(), 10 * 60 * 1000);
 
+// Auto-run migration for analytics & CMS tables / columns on startup
+const runMigration = require("./utils/migrateAnalyticsAndCMS");
+runMigration().catch((err) => {
+  console.warn("⚠️ Analytics auto-migration notice:", err.message);
+});
+
 server.listen(PORT, "0.0.0.0", () => console.log(`🚀 Server running on port ${PORT}`));
 

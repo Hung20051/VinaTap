@@ -27,12 +27,6 @@ export default function TrafficTracker() {
       return;
     }
 
-    // 2. Bỏ qua tài khoản Admin (tránh làm sai lệch số liệu thực của khách)
-    const user = getUser();
-    if (user?.role === "admin") {
-      return;
-    }
-
     // Tránh gửi lặp lại trong cùng 1 lần render
     if (lastTrackedPath.current === pathname) return;
     lastTrackedPath.current = pathname;
@@ -40,7 +34,7 @@ export default function TrafficTracker() {
 
     if (typeof window === "undefined") return;
 
-    // Trích xuất province_slug nếu path dạng /province/:slug hoặc /provinces/:slug
+    // Trích xuất province_slug nếu path dạng /province/:slug, /destination/:slug hoặc /stay/casa-blanca
     let provinceSlug = null;
     if (pathname.startsWith("/province/")) {
       provinceSlug = pathname
@@ -54,6 +48,20 @@ export default function TrafficTracker() {
         .split("?")[0]
         .split("#")[0]
         .replace(/\/$/, "");
+    } else if (pathname.startsWith("/destination/")) {
+      provinceSlug = pathname
+        .replace("/destination/", "")
+        .split("?")[0]
+        .split("#")[0]
+        .replace(/\/$/, "");
+    } else if (pathname.startsWith("/destinations/")) {
+      provinceSlug = pathname
+        .replace("/destinations/", "")
+        .split("?")[0]
+        .split("#")[0]
+        .replace(/\/$/, "");
+    } else if (pathname.includes("casa-blanca")) {
+      provinceSlug = "dalat";
     }
 
     // Trích xuất UTM params
@@ -74,7 +82,21 @@ export default function TrafficTracker() {
         utm_campaign: utmCampaign,
         session_id: sessionId,
       })
+      .then((res) => {
+        if (typeof window !== "undefined" && res) {
+          window.dispatchEvent(
+            new CustomEvent("vinatap:page-view-tracked", {
+              detail: {
+                path: pathname,
+                view_count: res.view_count,
+                unique_visitors: res.unique_visitors,
+              },
+            }),
+          );
+        }
+      })
       .catch(() => {});
+
 
     // Gửi heartbeat cập nhật thời gian lưu lại trang (duration_seconds) mỗi 15 giây
     const heartbeatTimer = setInterval(() => {
