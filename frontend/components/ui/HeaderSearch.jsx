@@ -39,6 +39,16 @@ const SEARCH_POSTS = [
     keywords: "vietnamese currency tien te dong vnd money exchange denominations banknotes polymer tieng viet travel guide",
   },
   {
+    id: "vietnam-climate",
+    title: "Vietnam's Climate | Weather Guide for 3 Regions",
+    titleVi: "Khí Hậu & Thời Tiết Việt Nam | Cẩm Nang 3 Miền & Bản Đồ Mùa Mưa",
+    date: "October 14, 2026",
+    dateVi: "14 Tháng 10, 2026",
+    img: "/guide/climate/climate-of-vietnam.jpg",
+    link: "/guide/vietnam-climate",
+    keywords: "vietnam climate weather khi hau thoi tiet viet nam mua mua mua kho mua bao 3 mien bac trung nam nhiet do du bao luong mua rainy season temperature",
+  },
+  {
     id: "eat-hanoi",
     title: "8 must-try foods in Hanoi",
     titleVi: "8 món ăn phải thử tại Hà Nội",

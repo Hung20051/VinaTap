@@ -565,9 +565,7 @@ export default function VietnameseCurrencyPage() {
 
         {/* SECTION 1: DENOMINATIONS IN CIRCULATION */}
         <h2 className="currency-section-title">
-          {isVi
-            ? "CÁC MỆNH GIÁ ĐANG LƯU HÀNH"
-            : "DENOMINATIONS IN CIRCULATION"}
+          {isVi ? "CÁC MỆNH GIÁ ĐANG LƯU HÀNH" : "DENOMINATIONS IN CIRCULATION"}
         </h2>
         <p className="currency-section-desc">
           {isVi
@@ -596,9 +594,7 @@ export default function VietnameseCurrencyPage() {
 
         {/* SECTION 2: NOTES (SCREENSHOT 5) */}
         <div className="currency-notes-section">
-          <h2 className="currency-section-title">
-            {isVi ? "LƯU Ý" : "NOTES"}
-          </h2>
+          <h2 className="currency-section-title">{isVi ? "LƯU Ý" : "NOTES"}</h2>
           <ul className="currency-bullets-list">
             <li className="currency-bullet-item">
               {isVi

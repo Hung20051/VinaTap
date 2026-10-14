@@ -593,8 +593,8 @@ const TRAVEL_PILLARS = [
   {
     title: "Climate of Vietnam",
     titleVi: "Khí Hậu & Thời Tiết",
-    img: "/guide/climate/climate-of-vietnam-hero.jpg",
-    link: "/guide/climate-of-vietnam",
+    img: "/guide/climate/climate-of-vietnam.jpg",
+    link: "/guide/vietnam-climate",
   },
   {
     title: "Vietnamese Currency",
