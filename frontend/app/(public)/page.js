@@ -587,8 +587,8 @@ const TRAVEL_PILLARS = [
   {
     title: "Vietnam Visa",
     titleVi: "Thông Tin Visa Việt Nam",
-    img: "/guide/hcmc/3-week-vietnam-itinerary.jpg",
-    link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+    img: "/guide/visa/vietnam-visa-hero.jpg",
+    link: "/guide/vietnam-visa",
   },
   {
     title: "Climate of Vietnam",

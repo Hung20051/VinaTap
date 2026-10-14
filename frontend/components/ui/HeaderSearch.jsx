@@ -9,6 +9,16 @@ import { getLang } from "@/lib/prefs";
 // ─── COMPREHENSIVE SEARCH INDEX MATCHING SCREENSHOT ───
 const SEARCH_POSTS = [
   {
+    id: "vietnam-visa",
+    title: "Vietnam Visa | All Information You Need to Know",
+    titleVi: "Thông Tin Visa Việt Nam | Miễn Thị Thực & e-Visa 90 Ngày",
+    date: "October 14, 2026",
+    dateVi: "14 Tháng 10, 2026",
+    img: "/guide/visa/vietnam-visa-hero.jpg",
+    link: "/guide/vietnam-visa",
+    keywords: "vietnam visa thong tin visa viet nam mien thi thuc evisa e-visa 90 ngay 45 ngay phu quoc travel guide",
+  },
+  {
     id: "vietnamese-currency",
     title: "Vietnamese Currency | Exchange Rates & Notes",
     titleVi: "Tiền Tệ Việt Nam | Mệnh Giá & Đổi Ngoại Tệ",
