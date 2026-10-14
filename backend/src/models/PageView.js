@@ -334,7 +334,7 @@ const PageView = {
       const [res] = await db.execute(
         `SELECT 
            CASE 
-             WHEN pv.page_path LIKE '/t/%' OR pv.utm_source = 'nfc' THEN 'Mã QR & Link Du Lịch'
+             WHEN pv.page_path LIKE '/t/%' OR pv.utm_source = 'nfc' THEN 'Cẩm Nang & Link Trực Tiếp'
              WHEN pv.referrer LIKE '%google.%' OR pv.referrer LIKE '%bing.%' OR pv.referrer LIKE '%yahoo.%' THEN 'Google / SEO'
              WHEN pv.referrer LIKE '%facebook.%' OR pv.referrer LIKE '%fb.me%' OR pv.referrer LIKE '%instagram.%' OR pv.referrer LIKE '%tiktok.%' OR pv.referrer LIKE '%youtube.%' OR pv.referrer LIKE '%zalo.%' THEN 'Mạng xã hội'
              WHEN pv.referrer IS NULL OR pv.referrer = '' THEN 'Trực tiếp / Direct'

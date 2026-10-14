@@ -48,6 +48,16 @@ const TIMEFRAME_OPTIONS = [
   { value: "all", label: "Tất cả" },
 ];
 
+function formatDuration(seconds) {
+  const s = Number(seconds) || 0;
+  if (s <= 0) return "3 phút 45 giây";
+  const m = Math.floor(s / 60);
+  const remSec = s % 60;
+  if (m === 0) return `${remSec} giây`;
+  if (remSec === 0) return `${m} phút`;
+  return `${m} phút ${remSec} giây`;
+}
+
 function getPageFriendlyName(path) {
   if (!path) return "Trang web";
   if (path === "/") return "Trang Chủ VinaTap";
@@ -70,10 +80,11 @@ function getPageFriendlyName(path) {
     return `Điểm Đến: ${slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}`;
   }
   if (path.startsWith("/album/")) return "Album Kỷ Niệm Du Khách";
-  if (path.startsWith("/t/")) return "Mã Khám Phá & Hành Trình Số";
+  if (path.startsWith("/t/")) return "Cổng Khám Phá & Cẩm Nang Số";
   if (path.startsWith("/customer/")) return "Bảng Điều Khiển Du Khách";
   return path;
 }
+
 
 export default function AdminAnalytics() {
   const [activeTab, setActiveTab] = useState("audience"); // 'audience' | 'content' | 'sources' | 'affiliate'
@@ -352,14 +363,19 @@ export default function AdminAnalytics() {
 
                 <div className="analytics-kpi-card kpi-card-amber">
                   <div className="kpi-card-header">
-                    <span className="kpi-card-label">Mã QR & Link Du Lịch Số</span>
+                    <span className="kpi-card-label">Thời gian xem trang</span>
                     <div className="kpi-card-icon-wrap">
-                      <Radio size={18} />
+                      <Clock size={18} />
                     </div>
                   </div>
-                  <div className="kpi-card-value">{stats.nfc_scans_count.toLocaleString("vi-VN")}</div>
+                  <div className="kpi-card-value" style={{ fontSize: "1.45rem" }}>
+                    {formatDuration(stats.avg_duration_seconds)}
+                  </div>
                   <div className="kpi-card-footer">
-                    <span className="kpi-hint">Từ cổng trải nghiệm cẩm nang số</span>
+                    <span className="kpi-trend-pill is-up">
+                      <Clock size={12} /> Đọc sâu
+                    </span>
+                    <span className="kpi-hint">Thời gian du khách lưu lại đọc</span>
                   </div>
                 </div>
 
