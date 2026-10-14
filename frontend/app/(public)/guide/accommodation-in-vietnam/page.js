@@ -213,7 +213,7 @@ export default function AccommodationInVietnamPage() {
       <header className="header">
         <div className="header__container">
           <Link href="/" className="header__logo">
-            <Logo size="normal" />
+            <Logo size="normal" showText={false} noLink href={null} as="span" />
           </Link>
           <nav className="header__nav">
             <Link
