@@ -4192,6 +4192,27 @@
   border-color: #00c2cb;
   color: #ffffff;
 }
+.vnn-carousel-page-indicator {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #64748b;
+  padding: 0 4px;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+.vnn-fade-in {
+  animation: vnnFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes vnnFadeIn {
+  from {
+    opacity: 0.45;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* ─── 10. REGIONAL BREAKDOWN 3 COLUMNS (SCREENSHOT 4) ─── */
 .vnn-regions-section {

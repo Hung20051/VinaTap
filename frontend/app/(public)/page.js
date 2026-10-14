@@ -211,27 +211,81 @@ const REGIONAL_DESTINATIONS_DATA = [
     regionName: "NORTHERN VIETNAM",
     regionNameVi: "MIỀN BẮC VIỆT NAM",
     barColorClass: "vnn-section-head__bar--purple",
-    featured: {
-      title: "Hanoi",
-      titleVi: "Hà Nội",
-      desc: "Follow this guide and you will understand why Hanoi is a perfect coming together of the timeless cultural value of the old and the dynamic and colorful vibes of the new.",
-      descVi:
-        "Theo chân cẩm nang này bạn sẽ hiểu vì sao Hà Nội là sự hòa quyện hoàn hảo giữa nét văn hóa cổ kính ngàn năm và nhịp sống trẻ trung, hiện đại.",
-      img: "/guide/hcmc/region-north-hanoi.jpg",
-      link: "/province/ha-noi",
-    },
-    minis: [
+    pages: [
       {
-        title: "Hanoi Tourist Map",
-        titleVi: "Bản đồ du lịch Hà Nội",
-        img: "/guide/hcmc/region-north-map.jpg",
-        link: "/guide/hanoi-tourist-map",
+        featured: {
+          title: "Hanoi",
+          titleVi: "Hà Nội",
+          desc: "Follow this guide and you will understand why Hanoi is a perfect coming together of the timeless cultural value of the old and the dynamic and colorful vibes of the new.",
+          descVi:
+            "Theo chân cẩm nang này bạn sẽ hiểu vì sao Hà Nội là sự hòa quyện hoàn hảo giữa nét văn hóa cổ kính ngàn năm và nhịp sống trẻ trung, hiện đại.",
+          img: "/guide/hcmc/region-north-hanoi.jpg",
+          link: "/province/ha-noi",
+        },
+        minis: [
+          {
+            title: "Hanoi Tourist Map",
+            titleVi: "Bản đồ du lịch Hà Nội",
+            img: "/guide/hcmc/region-north-map.jpg",
+            link: "/guide/hanoi-tourist-map",
+          },
+          {
+            title: "Ha Giang",
+            titleVi: "Hà Giang - Cao nguyên đá",
+            img: "/guide/hcmc/region-north-hagiang.jpg",
+            link: "/province/ha-giang",
+          },
+        ],
       },
       {
-        title: "Ha Giang",
-        titleVi: "Hà Giang - Cao nguyên đá",
-        img: "/guide/hcmc/region-north-hagiang.jpg",
-        link: "/province/ha-giang",
+        featured: {
+          title: "Ha Giang",
+          titleVi: "Hà Giang",
+          desc: "Dong Van Karst Plateau Geopark, Ma Pi Leng Pass, and peaceful ethnic villages offer breathtaking mountain scenery in northernmost Vietnam.",
+          descVi:
+            "Vùng đất địa đầu Tổ quốc nổi bật với Cao nguyên đá Đồng Văn hùng vĩ, hẻm vực Tu Sản sâu nhất Đông Nam Á và những bản làng bình yên.",
+          img: "/guide/hagiang/hagiang-hero.jpg",
+          link: "/province/ha-giang",
+        },
+        minis: [
+          {
+            title: "Ma Pi Leng Pass & Tu San Canyon",
+            titleVi: "Đèo Mã Pí Lèng & Hẻm Tu Sản",
+            img: "/guide/hagiang/hagiang-ma-pi-leng-pass.jpg",
+            link: "/province/ha-giang",
+          },
+          {
+            title: "Ninh Binh - Trang An Scenic",
+            titleVi: "Ninh Bình - Non nước Tràng An",
+            img: "/guide/hcmc/climate-of-vietnam.jpg",
+            link: "/province/ninh-binh",
+          },
+        ],
+      },
+      {
+        featured: {
+          title: "Ninh Binh",
+          titleVi: "Ninh Bình",
+          desc: "Marvel at UNESCO World Heritage Trang An scenic complex, historic temples of Hoa Lu, and dramatic limestone peaks rising from emerald waters.",
+          descVi:
+            "Được mệnh danh 'Hạ Long trên cạn' với quần thể Tràng An di sản thế giới, Cố đô Hoa Lư lịch sử và Tam Cốc Bích Động sơn thủy hữu tình.",
+          img: "/guide/hcmc/climate-of-vietnam.jpg",
+          link: "/province/ninh-binh",
+        },
+        minis: [
+          {
+            title: "Hai Phong Harbor City",
+            titleVi: "Hải Phòng - Thành phố Hoa phượng đỏ",
+            img: "/guide/hcmc/top-dest-danang.jpg",
+            link: "/province/hai-phong",
+          },
+          {
+            title: "8 Must-Try Foods in Hanoi",
+            titleVi: "8 món ngon nhất định phải thử tại Hà Nội",
+            img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
+            link: "/guide/8-must-try-foods-in-hanoi",
+          },
+        ],
       },
     ],
   },
@@ -240,27 +294,81 @@ const REGIONAL_DESTINATIONS_DATA = [
     regionName: "CENTRAL VIETNAM",
     regionNameVi: "MIỀN TRUNG VIỆT NAM",
     barColorClass: "vnn-section-head__bar--orange",
-    featured: {
-      title: "Da Nang",
-      titleVi: "Đà Nẵng",
-      desc: "This is an all-in-one Da Nang travel guide. Learn about the most necessary information about Da Nang tourism such as attractions, dishes, hotels, restaurants, and more.",
-      descVi:
-        "Cẩm nang toàn diện về du lịch Đà Nẵng: đầy đủ thông tin điểm đến, món ngon đặc sản, khách sạn và các trải nghiệm khó quên.",
-      img: "/guide/hcmc/region-central-danang.jpg",
-      link: "/province/da-nang",
-    },
-    minis: [
+    pages: [
       {
-        title: "The 10 best attractions in Da Nang",
-        titleVi: "10 điểm tham quan đẹp nhất Đà Nẵng",
-        img: "/guide/hcmc/region-central-10things.jpg",
-        link: "/province/da-nang",
+        featured: {
+          title: "Da Nang",
+          titleVi: "Đà Nẵng",
+          desc: "This is an all-in-one Da Nang travel guide. Learn about the most necessary information about Da Nang tourism such as attractions, dishes, hotels, restaurants, and more.",
+          descVi:
+            "Cẩm nang toàn diện về du lịch Đà Nẵng: đầy đủ thông tin điểm đến, món ngon đặc sản, khách sạn và các trải nghiệm khó quên.",
+          img: "/guide/hcmc/region-central-danang.jpg",
+          link: "/province/da-nang",
+        },
+        minis: [
+          {
+            title: "The 10 best attractions in Da Nang",
+            titleVi: "10 điểm tham quan đẹp nhất Đà Nẵng",
+            img: "/guide/hcmc/region-central-10things.jpg",
+            link: "/province/da-nang",
+          },
+          {
+            title: "Nha Trang",
+            titleVi: "Nha Trang - Vịnh biển ngọc",
+            img: "/guide/hcmc/region-central-nhatrang.jpg",
+            link: "/province/nha-trang",
+          },
+        ],
       },
       {
-        title: "Nha Trang",
-        titleVi: "Nha Trang - Vịnh biển ngọc",
-        img: "/guide/hcmc/region-central-nhatrang.jpg",
-        link: "/province/nha-trang",
+        featured: {
+          title: "Dalat",
+          titleVi: "Đà Lạt",
+          desc: "Nestled in the Central Highlands, Dalat charms with crisp mountain air, pine forests, French villas, blooming flowers, and tranquil lakes.",
+          descVi:
+            "Xứ sở sương mù và ngàn hoa khoe sắc trên cao nguyên Lâm Viên. Nổi tiếng với khí hậu mát lạnh, hồ Tuyền Lâm và những quán cà phê view đồi thông cực chill.",
+          img: "/guide/dalat/dalat-hero-hd.jpg",
+          link: "/province/dalat",
+        },
+        minis: [
+          {
+            title: "15 Best Attractions in Dalat",
+            titleVi: "15 điểm tham quan đẹp nhất Đà Lạt",
+            img: "/guide/dalat/dalat-15-attractions-hd.jpg",
+            link: "/guide/15-best-attractions-in-dalat",
+          },
+          {
+            title: "Casa Blanca Homestay Dalat",
+            titleVi: "Casa Blanca Homestay Đà Lạt",
+            img: "/stay/casa-blanca/toan_canh.jpg",
+            link: "/stay/casa-blanca-da-lat",
+          },
+        ],
+      },
+      {
+        featured: {
+          title: "Hoi An",
+          titleVi: "Hội An",
+          desc: "Step into an evocative UNESCO-listed trading port adorned with yellow timber houses, lantern-filled riverfronts, and celebrated regional food.",
+          descVi:
+            "Đô thị cổ bên dòng sông Hoài thơ mộng, nổi bật với kiến trúc truyền thống mái ngói rêu phong, ánh đèn lồng rực rỡ và nền ẩm thực cao lầu trứ danh.",
+          img: "/guide/hoian/hoian-hero-hd.jpg",
+          link: "/province/hoi-an",
+        },
+        minis: [
+          {
+            title: "Nha Trang Coastal Bay",
+            titleVi: "Nha Trang - Vịnh biển ngọc",
+            img: "/guide/hcmc/region-central-nhatrang.jpg",
+            link: "/province/nha-trang",
+          },
+          {
+            title: "5 Must-Try Nha Trang Dishes",
+            titleVi: "5 món đặc sản phải nếm ở Nha Trang",
+            img: "/guide/nha-trang/5-must-try-food-in-Nha-Trang-Vietnamnomad.jpg",
+            link: "/guide/5-must-try-nha-trang-dishes",
+          },
+        ],
       },
     ],
   },
@@ -269,27 +377,81 @@ const REGIONAL_DESTINATIONS_DATA = [
     regionName: "SOUTHERN VIETNAM",
     regionNameVi: "MIỀN NAM VIỆT NAM",
     barColorClass: "vnn-section-head__bar--cyan",
-    featured: {
-      title: "Ho Chi Minh City",
-      titleVi: "TP. Hồ Chí Minh",
-      desc: "Ho Chi Minh City, or as it is often called intimately by the locals as Saigon, is one of the sought-after destinations while travelling in Vietnam. Saigon of the modern times attracts people not for the spectacular natural landscapes but for its dynamic lifestyle – where endless options of activities are going to tie your heart.",
-      descVi:
-        "TP. Hồ Chí Minh (Sài Gòn) luôn là điểm đến hấp dẫn du khách bởi lối sống năng động, ẩm thực phong phú và nhịp sống phồn hoa cả ngày lẫn đêm.",
-      img: "/guide/hcmc/region-south-hcmc.jpg",
-      link: "/province/ho-chi-minh",
-    },
-    minis: [
+    pages: [
       {
-        title: "Ho Chi Minh City Tourist Map",
-        titleVi: "Bản đồ du lịch TP.HCM",
-        img: "/guide/hcmc/region-south-map.jpg",
-        link: "/province/ho-chi-minh",
+        featured: {
+          title: "Ho Chi Minh City",
+          titleVi: "TP. Hồ Chí Minh",
+          desc: "Ho Chi Minh City, or as it is often called intimately by the locals as Saigon, is one of the sought-after destinations while travelling in Vietnam. Saigon of the modern times attracts people not for the spectacular natural landscapes but for its dynamic lifestyle – where endless options of activities are going to tie your heart.",
+          descVi:
+            "TP. Hồ Chí Minh (Sài Gòn) luôn là điểm đến hấp dẫn du khách bởi lối sống năng động, ẩm thực phong phú và nhịp sống phồn hoa cả ngày lẫn đêm.",
+          img: "/guide/hcmc/region-south-hcmc.jpg",
+          link: "/province/ho-chi-minh",
+        },
+        minis: [
+          {
+            title: "Ho Chi Minh City Tourist Map",
+            titleVi: "Bản đồ du lịch TP.HCM",
+            img: "/guide/hcmc/region-south-map.jpg",
+            link: "/province/ho-chi-minh",
+          },
+          {
+            title: "12 best attractions in Ho Chi Minh City",
+            titleVi: "12 điểm tham quan ở Sài Gòn",
+            img: "/guide/hcmc/region-south-12attractions.jpg",
+            link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+          },
+        ],
       },
       {
-        title: "12 best attractions in Ho Chi Minh City",
-        titleVi: "12 điểm tham quan ở Sài Gòn",
-        img: "/guide/hcmc/region-south-12attractions.jpg",
-        link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+        featured: {
+          title: "Vung Tau",
+          titleVi: "Vũng Tàu",
+          desc: "A picturesque coastal city embraced by ocean waves, scenic coastal mountain trails, the iconic Jesus Statue, and freshest seafood markets.",
+          descVi:
+            "Thành phố biển xinh đẹp với bãi biển Thùy Vân lộng gió, đường bờ biển Bãi Trước uốn lượn, tượng Chúa Kito Vua và các chợ hải sản nhộn nhịp.",
+          img: "/guide/vung-tau/hero-vung-tau-beaches.jpg",
+          link: "/guide/5-best-vung-tau-beaches",
+        },
+        minis: [
+          {
+            title: "5 Best Vung Tau Beaches",
+            titleVi: "5 bãi biển đẹp nhất Vũng Tàu",
+            img: "/guide/vung-tau/beach-1-bai-truoc.jpg",
+            link: "/guide/5-best-vung-tau-beaches",
+          },
+          {
+            title: "7 Must-Try Foods in Vung Tau",
+            titleVi: "7 món ăn nhất định phải thử ở Vũng Tàu",
+            img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
+            link: "/guide/7-must-try-foods-in-vung-tau",
+          },
+        ],
+      },
+      {
+        featured: {
+          title: "Saigon Stay & Lifestyle",
+          titleVi: "Sài Gòn - Nơi ở & Trải nghiệm",
+          desc: "Explore top hotel accommodations across vibrant districts, rooftop cocktail lounges, historic coffee alleys, and hidden riverside gems.",
+          descVi:
+            "Cẩm nang chọn khách sạn và khu vực lưu trú lý tưởng tại Sài Gòn, kết hợp trải nghiệm ẩm thực hẻm đêm và nhịp sống về đêm sôi động.",
+          img: "/guide/hcmc/where-to-stay-in-hcmc-hd.jpg",
+          link: "/guide/where-to-stay-in-ho-chi-minh-city",
+        },
+        minis: [
+          {
+            title: "Where to Stay in Ho Chi Minh City",
+            titleVi: "Khách sạn & Nơi lưu trú tại Sài Gòn",
+            img: "/guide/hcmc/where-to-stay-in-hcmc-hd.jpg",
+            link: "/guide/where-to-stay-in-ho-chi-minh-city",
+          },
+          {
+            title: "10 Best Things to Do in HCMC",
+            titleVi: "10 trải nghiệm tuyệt nhất tại TP.HCM",
+            img: "/guide/hcmc/hcmc-10-things-bitexco.jpg",
+            link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+          },
+        ],
       },
     ],
   },
@@ -348,25 +510,70 @@ const FOODS_TO_TRY_ITEMS = [
 ];
 
 // ─── THINGS TO DO (SCREENSHOT 2 OF PART 2) ───
-const THINGS_TO_DO_ITEMS = [
-  {
-    title: "The 10 best attractions in Da Nang",
-    titleVi: "10 điểm đến đẹp nhất Đà Nẵng",
-    desc: "Da Nang is the most famous coastal city in Vietnam as it is endowed with stunning natural assets and has invested in modern infrastructures. Here are the 10 best attractions in Da Nang.",
-    descVi:
-      "Khám phá thành phố biển đáng sống nhất Việt Nam: Cầu Rồng, Ngũ Hành Sơn, Bà Nà Hills và bãi biển Mỹ Khê tuyệt đẹp.",
-    img: "/guide/hcmc/region-central-10things.jpg",
-    link: "/province/da-nang",
-  },
-  {
-    title: "20 Best Things to Do in Vietnam",
-    titleVi: "20 trải nghiệm nhất định phải thử ở Việt Nam",
-    desc: "Here are 20 things to do in Vietnam to make the most out of your time and still guarantee the best experience about the landscapes, people and cuisine.",
-    descVi:
-      "20 trải nghiệm tuyệt vời nhất giúp bạn tận hưởng trọn vẹn cảnh sắc thiên nhiên, văn hóa và con người Việt Nam.",
-    img: "/guide/hcmc/20-Best-Things-to-Do-in-Vietnam.jpg",
-    link: "/guide/20-best-things-to-do-in-vietnam",
-  },
+const THINGS_TO_DO_PAGES = [
+  // Page 1: Đà Nẵng & 20 Best Things To Do
+  [
+    {
+      title: "The 10 best attractions in Da Nang",
+      titleVi: "10 điểm đến đẹp nhất Đà Nẵng",
+      desc: "Da Nang is the most famous coastal city in Vietnam as it is endowed with stunning natural assets and has invested in modern infrastructures. Here are the 10 best attractions in Da Nang.",
+      descVi:
+        "Khám phá thành phố biển đáng sống nhất Việt Nam: Cầu Rồng, Ngũ Hành Sơn, Bà Nà Hills và bãi biển Mỹ Khê tuyệt đẹp.",
+      img: "/guide/hcmc/region-central-10things.jpg",
+      link: "/province/da-nang",
+    },
+    {
+      title: "20 Best Things to Do in Vietnam",
+      titleVi: "20 trải nghiệm nhất định phải thử ở Việt Nam",
+      desc: "Here are 20 things to do in Vietnam to make the most out of your time and still guarantee the best experience about the landscapes, people and cuisine.",
+      descVi:
+        "20 trải nghiệm tuyệt vời nhất giúp bạn tận hưởng trọn vẹn cảnh sắc thiên nhiên, văn hóa và con người Việt Nam.",
+      img: "/guide/hcmc/20-Best-Things-to-Do-in-Vietnam.jpg",
+      link: "/guide/20-best-things-to-do-in-vietnam",
+    },
+  ],
+  // Page 2: Đà Lạt & Nha Trang
+  [
+    {
+      title: "15 Best Attractions in Dalat",
+      titleVi: "15 điểm tham quan hấp dẫn nhất Đà Lạt",
+      desc: "Immerse yourself in Dalat's romantic spots: Valley of Love, Datanla Falls, historic French train station, and flower gardens.",
+      descVi:
+        "Chinh phục đồi thông xanh mát, Thác Datanla, ga xe lửa cổ kính và các vườn hoa rực rỡ sắc màu giữa xứ sở sương mù.",
+      img: "/guide/dalat/dalat-15-attractions-hd.jpg",
+      link: "/guide/15-best-attractions-in-dalat",
+    },
+    {
+      title: "8 Best Things to Do in Nha Trang",
+      titleVi: "8 trải nghiệm tuyệt nhất tại Nha Trang",
+      desc: "From snorkeling crystal-clear island bays to rejuvenating mud baths and vibrant night markets, Nha Trang offers non-stop coastal excitement.",
+      descVi:
+        "Lặn biển ngắm san hô tại vịnh ngọc, trải nghiệm tắm bùn khoáng Tháp Bà, cáp treo VinWonders và thưởng thức ẩm thực miền biển.",
+      img: "/guide/hcmc/region-central-nhatrang.jpg",
+      link: "/guide/8-best-things-to-do-in-nha-trang",
+    },
+  ],
+  // Page 3: Sài Gòn & Hà Giang
+  [
+    {
+      title: "10 Best Things to Do in Ho Chi Minh City",
+      titleVi: "10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh",
+      desc: "Discover Saigon's pulse from iconic colonial landmarks and panoramic skydecks to bustling nighttime street food alleys.",
+      descVi:
+        "Khám phá Nhà hát Thành phố, Dinh Độc Lập, ngắm toàn cảnh Sài Gòn hoa lệ từ trên cao và lạc bước vào những con hẻm ẩm thực đêm bất tận.",
+      img: "/guide/hcmc/hcmc-10-things-bitexco.jpg",
+      link: "/guide/10-best-things-to-do-in-ho-chi-minh-city",
+    },
+    {
+      title: "Conquer Ha Giang Karst Plateau & Ma Pi Leng",
+      titleVi: "Chinh phục Cao nguyên đá Hà Giang & Mã Pí Lèng",
+      desc: "Embark on an epic road trip through winding mountain passes, emerald Nho Que River canyons, and vibrant highland markets.",
+      descVi:
+        "Hành trình phượt đỉnh cao qua những cung đèo ngoạn mục, xuôi thuyền trên dòng Nho Quế xanh biếc và khám phá phiên chợ vùng cao sắc màu.",
+      img: "/guide/hagiang/hagiang-ma-pi-leng-pass.jpg",
+      link: "/province/ha-giang",
+    },
+  ],
 ];
 
 // ─── 4 TRAVEL PILLARS (SCREENSHOT 3 OF PART 2) ───
@@ -398,101 +605,236 @@ const TRAVEL_PILLARS = [
 ];
 
 // ─── LATEST ARTICLES (SCREENSHOT 4 OF PART 2) ───
-const LATEST_ARTICLES_ITEMS = [
-  {
-    badge: "#TRENDING",
-    badgeVi: "#XU HƯỚNG",
-    title: "15 best places to visit in Vietnam in 2026",
-    titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
-    meta: "VinaTap - October 11, 2026",
-    metaVi: "VinaTap • 11 Tháng 10, 2026",
-    img: "/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg",
-    link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
-  },
-  {
-    badge: "#TRENDING",
-    badgeVi: "#XU HƯỚNG",
-    title: "Plan Your Vietnam Trip with Just One Prompt",
-    titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một câu lệnh AI",
-    meta: "VinaTap - October 11, 2026",
-    metaVi: "VinaTap • 11 Tháng 10, 2026",
-    img: "/guide/hcmc/Plan-Your-Vietnam-Trip-with-Just-One-Prompt.jpg",
-    link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
-  },
-  {
-    badge: "#TRENDING",
-    badgeVi: "#XU HƯỚNG",
-    title: "The Complete Guide to Vietnam",
-    titleVi: "Cẩm nang toàn diện 34 Tỉnh Thành Việt Nam",
-    meta: "VinaTap - October 12, 2026",
-    metaVi: "VinaTap • 12 Tháng 10, 2026",
-    img: "/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg",
-    link: "/guide/the-complete-guide-to-vietnam",
-  },
-  {
-    badge: "MEMBERSHIP",
-    badgeVi: "LƯU TRÚ",
-    title: "Accommodation in Vietnam",
-    titleVi: "Khách sạn & Nơi lưu trú tại Việt Nam",
-    meta: "VinaTap - October 11, 2026",
-    metaVi: "VinaTap • 12 Tháng 10, 2026",
-    img: "/guide/hcmc/accommodation-in-vietnam.jpg",
-    link: "/province/da-nang",
-  },
-  {
-    badge: "HO CHI MINH CITY",
-    badgeVi: "TP. HỒ CHÍ MINH",
-    title: "Where to Stay in Ho Chi Minh City",
-    titleVi: "Khách sạn & Khu vực nên ở tại TP. Hồ Chí Minh",
-    meta: "VinaTap - October 12, 2026",
-    metaVi: "VinaTap • 12 Tháng 10, 2026",
-    img: "/guide/hcmc/where-to-stay-in-hcmc-hd.jpg",
-    link: "/guide/where-to-stay-in-ho-chi-minh-city",
-  },
-  {
-    badge: "WEATHER",
-    badgeVi: "THỜI TIẾT",
-    title: "Vietnam Weather Map for September",
-    titleVi: "Bản đồ dự báo thời tiết du lịch Việt Nam",
-    meta: "VinaTap - October 13, 2026",
-    metaVi: "VinaTap • 13 Tháng 10, 2026",
-    img: "/guide/hcmc/vietnam-weather-map.jpg",
-    link: "/province/ha-noi",
-  },
+const LATEST_ARTICLES_PAGES = [
+  // Page 1
+  [
+    {
+      badge: "#TRENDING",
+      badgeVi: "#XU HƯỚNG",
+      title: "15 best places to visit in Vietnam in 2026",
+      titleVi: "15 điểm đến tuyệt nhất Việt Nam năm 2026",
+      meta: "VinaTap - October 11, 2026",
+      metaVi: "VinaTap • 11 Tháng 10, 2026",
+      img: "/guide/hcmc/15-best-places-to-visit-in-Vietnam-in-2026.jpg",
+      link: "/guide/15-best-places-to-visit-in-vietnam-in-2026",
+    },
+    {
+      badge: "#TRENDING",
+      badgeVi: "#XU HƯỚNG",
+      title: "Plan Your Vietnam Trip with Just One Prompt",
+      titleVi: "Lên kế hoạch du lịch Việt Nam chỉ với một câu lệnh AI",
+      meta: "VinaTap - October 11, 2026",
+      metaVi: "VinaTap • 11 Tháng 10, 2026",
+      img: "/guide/hcmc/Plan-Your-Vietnam-Trip-with-Just-One-Prompt.jpg",
+      link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
+    },
+    {
+      badge: "#TRENDING",
+      badgeVi: "#XU HƯỚNG",
+      title: "The Complete Guide to Vietnam",
+      titleVi: "Cẩm nang toàn diện 34 Tỉnh Thành Việt Nam",
+      meta: "VinaTap - October 12, 2026",
+      metaVi: "VinaTap • 12 Tháng 10, 2026",
+      img: "/guide/hcmc/The-Complete-Guide-to-Vietnam.jpg",
+      link: "/guide/the-complete-guide-to-vietnam",
+    },
+    {
+      badge: "MEMBERSHIP",
+      badgeVi: "LƯU TRÚ",
+      title: "Accommodation in Vietnam",
+      titleVi: "Khách sạn & Nơi lưu trú tại Việt Nam",
+      meta: "VinaTap - October 11, 2026",
+      metaVi: "VinaTap • 12 Tháng 10, 2026",
+      img: "/guide/hcmc/accommodation-in-vietnam.jpg",
+      link: "/province/da-nang",
+    },
+    {
+      badge: "HO CHI MINH CITY",
+      badgeVi: "TP. HỒ CHÍ MINH",
+      title: "Where to Stay in Ho Chi Minh City",
+      titleVi: "Khách sạn & Khu vực nên ở tại TP. Hồ Chí Minh",
+      meta: "VinaTap - October 12, 2026",
+      metaVi: "VinaTap • 12 Tháng 10, 2026",
+      img: "/guide/hcmc/where-to-stay-in-hcmc-hd.jpg",
+      link: "/guide/where-to-stay-in-ho-chi-minh-city",
+    },
+    {
+      badge: "WEATHER",
+      badgeVi: "THỜI TIẾT",
+      title: "Vietnam Weather Map for September",
+      titleVi: "Bản đồ dự báo thời tiết du lịch Việt Nam",
+      meta: "VinaTap - October 13, 2026",
+      metaVi: "VinaTap • 13 Tháng 10, 2026",
+      img: "/guide/hcmc/vietnam-weather-map.jpg",
+      link: "/province/ha-noi",
+    },
+  ],
+  // Page 2
+  [
+    {
+      badge: "ITINERARY",
+      badgeVi: "LỊCH TRÌNH",
+      title: "10 Days in Vietnam: The Essential Route",
+      titleVi: "Lịch trình 10 ngày khám phá tinh hoa Việt Nam",
+      meta: "VinaTap - October 13, 2026",
+      metaVi: "VinaTap • 13 Tháng 10, 2026",
+      img: "/guide/megamenu/itin-2-10days.jpg",
+      link: "/guide/10-days-in-vietnam",
+    },
+    {
+      badge: "ITINERARY",
+      badgeVi: "LỊCH TRÌNH",
+      title: "2 Weeks in Vietnam: North to South",
+      titleVi: "Lịch trình 2 tuần xuyên Việt trọn vẹn",
+      meta: "VinaTap - October 13, 2026",
+      metaVi: "VinaTap • 13 Tháng 10, 2026",
+      img: "/guide/megamenu/itin-3-2weeks.jpg",
+      link: "/guide/2-weeks-in-vietnam",
+    },
+    {
+      badge: "DALAT",
+      badgeVi: "ĐÀ LẠT",
+      title: "15 Best Attractions in Dalat City",
+      titleVi: "15 điểm tham quan đẹp nhất Đà Lạt",
+      meta: "VinaTap - October 13, 2026",
+      metaVi: "VinaTap • 13 Tháng 10, 2026",
+      img: "/guide/dalat/dalat-15-attractions-hd.jpg",
+      link: "/guide/15-best-attractions-in-dalat",
+    },
+    {
+      badge: "NHA TRANG",
+      badgeVi: "NHA TRANG",
+      title: "8 Best Things to Do in Nha Trang Bay",
+      titleVi: "8 trải nghiệm tuyệt nhất tại Nha Trang",
+      meta: "VinaTap - October 10, 2026",
+      metaVi: "VinaTap • 10 Tháng 10, 2026",
+      img: "/guide/megamenu/todo-3-nhatrang.jpg",
+      link: "/guide/8-best-things-to-do-in-nha-trang",
+    },
+    {
+      badge: "FOOD & DRINK",
+      badgeVi: "ẨM THỰC",
+      title: "7 Must-Try Foods in Vung Tau Coast",
+      titleVi: "7 món ăn nhất định phải thử ở Vũng Tàu",
+      meta: "VinaTap - October 12, 2026",
+      metaVi: "VinaTap • 12 Tháng 10, 2026",
+      img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
+      link: "/guide/7-must-try-foods-in-vung-tau",
+    },
+    {
+      badge: "CULTURE",
+      badgeVi: "VĂN HÓA",
+      title: "Ao Dai – Vietnamese Traditional Dress",
+      titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
+      meta: "VinaTap - October 13, 2026",
+      metaVi: "VinaTap • 13 Tháng 10, 2026",
+      img: "/guide/megamenu/inspired-5.jpg",
+      link: "/guide/ao-dai-vietnamese-traditional-dress",
+    },
+  ],
 ];
 
 // ─── POPULAR POSTS (SCREENSHOT 4 OF PART 2) ───
-const POPULAR_POSTS_ITEMS = [
-  {
-    title: "Ho Chi Minh City",
-    titleVi: "TP. Hồ Chí Minh",
-    img: "/guide/hcmc/region-south-hcmc.jpg",
-    link: "/province/ho-chi-minh",
-  },
-  {
-    title: "Da Nang",
-    titleVi: "Đà Nẵng",
-    img: "/guide/hcmc/da-nang-dragon-bridge.jpg",
-    link: "/province/da-nang",
-  },
-  {
-    title: "Hanoi",
-    titleVi: "Hà Nội",
-    img: "/guide/hcmc/region-north-hanoi.jpg",
-    link: "/province/ha-noi",
-  },
-  {
-    title: "Vietnam Travel Maps",
-    titleVi: "Bản đồ du lịch Việt Nam",
-    img: "/guide/hcmc/vietnam-travel-maps-3d.jpg",
-    link: "/province/ha-noi",
-  },
-  {
-    title: "8 Must-Try Foods in Hanoi",
-    titleVi: "8 món ngon nhất định phải thử tại Hà Nội",
-    img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
-    link: "/guide/8-must-try-foods-in-hanoi",
-  },
+const POPULAR_POSTS_PAGES = [
+  // Page 1
+  [
+    {
+      title: "Ho Chi Minh City",
+      titleVi: "TP. Hồ Chí Minh",
+      img: "/guide/hcmc/region-south-hcmc.jpg",
+      link: "/province/ho-chi-minh",
+    },
+    {
+      title: "Da Nang",
+      titleVi: "Đà Nẵng",
+      img: "/guide/hcmc/da-nang-dragon-bridge.jpg",
+      link: "/province/da-nang",
+    },
+    {
+      title: "Hanoi",
+      titleVi: "Hà Nội",
+      img: "/guide/hcmc/region-north-hanoi.jpg",
+      link: "/province/ha-noi",
+    },
+    {
+      title: "Vietnam Travel Maps",
+      titleVi: "Bản đồ du lịch Việt Nam",
+      img: "/guide/hcmc/vietnam-travel-maps-3d.jpg",
+      link: "/guide/the-complete-guide-to-vietnam",
+    },
+    {
+      title: "8 Must-Try Foods in Hanoi",
+      titleVi: "8 món ngon nhất định phải thử tại Hà Nội",
+      img: "/guide/hcmc/Top-Hanoi-foods-Bun-Cha-Vietnamnomad.jpg",
+      link: "/guide/8-must-try-foods-in-hanoi",
+    },
+  ],
+  // Page 2: Đà Lạt, Nha Trang, Hội An, Hà Giang, Vũng Tàu
+  [
+    {
+      title: "Dalat - City of Eternal Spring",
+      titleVi: "Đà Lạt - Xứ sở sương mù",
+      img: "/guide/dalat/dalat-hero-hd.jpg",
+      link: "/province/dalat",
+    },
+    {
+      title: "Nha Trang Coastal Bay",
+      titleVi: "Nha Trang - Vịnh biển ngọc",
+      img: "/guide/hcmc/region-central-nhatrang.jpg",
+      link: "/province/nha-trang",
+    },
+    {
+      title: "Hoi An Ancient Town",
+      titleVi: "Phố cổ Hội An",
+      img: "/guide/hoian/hoian-hero-hd.jpg",
+      link: "/province/hoi-an",
+    },
+    {
+      title: "Ha Giang - Lung Cu Flagpole",
+      titleVi: "Hà Giang - Cột cờ Lũng Cú",
+      img: "/guide/hagiang/hagiang-lung-cu-flagpole.jpg",
+      link: "/province/ha-giang",
+    },
+    {
+      title: "5 Best Vung Tau Beaches",
+      titleVi: "5 bãi biển đẹp nhất Vũng Tàu",
+      img: "/guide/hcmc/vung-tau-beaches-peninsula.jpg",
+      link: "/guide/5-best-vung-tau-beaches",
+    },
+  ],
+  // Page 3: Lịch trình 3 tuần, Áo dài, Món ngon Sài Gòn, AI Trip Planner, Ninh Bình
+  [
+    {
+      title: "3-Week Vietnam Itinerary",
+      titleVi: "Lịch trình 3 tuần xuyên Việt",
+      img: "/guide/hcmc/3-week-vietnam-itinerary.jpg",
+      link: "/guide/3-week-vietnam-itinerary",
+    },
+    {
+      title: "Ao Dai - Traditional Vietnamese Dress",
+      titleVi: "Áo Dài – Quốc phục truyền thống Việt Nam",
+      img: "/guide/megamenu/inspired-5.jpg",
+      link: "/guide/ao-dai-vietnamese-traditional-dress",
+    },
+    {
+      title: "12 Street Foods in Ho Chi Minh City",
+      titleVi: "12 món ăn phải thử tại TP. Hồ Chí Minh",
+      img: "/guide/hcmc/12-must-try-foods-in-Ho-Chi-Minh-City-Goi-Cuon.jpg",
+      link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
+    },
+    {
+      title: "Plan Vietnam Trip with Just One Prompt",
+      titleVi: "Lên kế hoạch du lịch bằng Trợ lý AI",
+      img: "/guide/hcmc/Plan-Your-Vietnam-Trip-with-Just-One-Prompt.jpg",
+      link: "/guide/plan-your-vietnam-trip-with-just-one-prompt",
+    },
+    {
+      title: "Ninh Binh Heritage & Trang An",
+      titleVi: "Ninh Bình - Non nước hữu tình Tràng An",
+      img: "/guide/hcmc/climate-of-vietnam.jpg",
+      link: "/province/ninh-binh",
+    },
+  ],
 ];
 
 const MEGA_MENUS_DATA = {
@@ -907,6 +1249,16 @@ export default function HomePage() {
   const [searchModalText, setSearchModalText] = useState("");
   const [aiCompanionOpen, setAiCompanionOpen] = useState(false);
   const topDestTrackRef = useRef(null);
+
+  // Carousel & Pagination states for landing page sections
+  const [regionPageMap, setRegionPageMap] = useState({
+    north: 0,
+    central: 0,
+    south: 0,
+  });
+  const [thingsPage, setThingsPage] = useState(0);
+  const [popularPage, setPopularPage] = useState(0);
+  const [latestPage, setLatestPage] = useState(0);
 
   // VietnamNomad Magazine Megamenu states
   const [activeMegaMenu, setActiveMegaMenu] = useState(null);
@@ -1414,14 +1766,28 @@ export default function HomePage() {
                     <button
                       type="button"
                       className="vnn-megamenu__nav-btn"
-                      aria-label="Previous"
+                      aria-label="Previous menu"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const keys = ["inspired", "destinations", "things", "eat", "itineraries"];
+                        const curIdx = keys.indexOf(activeMegaMenu);
+                        const prevIdx = curIdx <= 0 ? keys.length - 1 : curIdx - 1;
+                        setActiveMegaMenu(keys[prevIdx]);
+                      }}
                     >
                       <ChevronLeft size={13} />
                     </button>
                     <button
                       type="button"
                       className="vnn-megamenu__nav-btn"
-                      aria-label="Next"
+                      aria-label="Next menu"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const keys = ["inspired", "destinations", "things", "eat", "itineraries"];
+                        const curIdx = keys.indexOf(activeMegaMenu);
+                        const nextIdx = (curIdx + 1) % keys.length;
+                        setActiveMegaMenu(keys[nextIdx]);
+                      }}
                     >
                       <ChevronRight size={13} />
                     </button>
@@ -1801,74 +2167,99 @@ export default function HomePage() {
         {/* ─── 7. REGIONAL DESTINATIONS 3 COLUMNS (SCREENSHOT 4) ─── */}
         <section id="regions" className="vnn-regions-section">
           <div className="vnn-regions-container">
-            {REGIONAL_DESTINATIONS_DATA.map((reg) => (
-              <div key={reg.regionId} className="vnn-region-col">
-                <div className="vnn-section-head">
-                  <h3 className="vnn-section-head__title">
-                    {lang === "vi" ? reg.regionNameVi : reg.regionName}
-                  </h3>
-                  <span
-                    className={`vnn-section-head__bar ${reg.barColorClass}`}
-                  />
-                </div>
+            {REGIONAL_DESTINATIONS_DATA.map((reg) => {
+              const pages = reg.pages || [];
+              const curPageIdx = regionPageMap[reg.regionId] || 0;
+              const curPage = pages[curPageIdx] || pages[0];
+              const totalPages = pages.length;
 
-                <Link href={reg.featured.link} className="vnn-region-main">
-                  <div className="vnn-region-main__img-wrap">
-                    <img
-                      src={reg.featured.img}
-                      alt={reg.featured.title}
-                      className="vnn-region-main__img"
-                      loading="lazy"
+              const handlePrev = () => {
+                setRegionPageMap((prev) => ({
+                  ...prev,
+                  [reg.regionId]: curPageIdx === 0 ? totalPages - 1 : curPageIdx - 1,
+                }));
+              };
+
+              const handleNext = () => {
+                setRegionPageMap((prev) => ({
+                  ...prev,
+                  [reg.regionId]: (curPageIdx + 1) % totalPages,
+                }));
+              };
+
+              return (
+                <div key={reg.regionId} className="vnn-region-col">
+                  <div className="vnn-section-head">
+                    <h3 className="vnn-section-head__title">
+                      {lang === "vi" ? reg.regionNameVi : reg.regionName}
+                    </h3>
+                    <span
+                      className={`vnn-section-head__bar ${reg.barColorClass}`}
                     />
                   </div>
-                  <h4
-                    className={`vnn-region-main__title vnn-region-main__title--${reg.regionId}`}
-                  >
-                    {lang === "vi" ? reg.featured.titleVi : reg.featured.title}
-                  </h4>
-                  <p className="vnn-region-main__desc">
-                    {lang === "vi" ? reg.featured.descVi : reg.featured.desc}
-                  </p>
-                </Link>
 
-                <div className="vnn-region-minis">
-                  {reg.minis.map((mini) => (
-                    <Link
-                      key={mini.title}
-                      href={mini.link}
-                      className="vnn-region-mini-item"
-                    >
-                      <img
-                        src={mini.img}
-                        alt={mini.title}
-                        className="vnn-region-mini-item__thumb"
-                        loading="lazy"
-                      />
-                      <span className="vnn-region-mini-item__title">
-                        {lang === "vi" ? mini.titleVi : mini.title}
-                      </span>
+                  <div key={`${reg.regionId}-${curPageIdx}`} className="vnn-fade-in">
+                    <Link href={curPage.featured.link} className="vnn-region-main">
+                      <div className="vnn-region-main__img-wrap">
+                        <img
+                          src={curPage.featured.img}
+                          alt={curPage.featured.title}
+                          className="vnn-region-main__img"
+                          loading="lazy"
+                        />
+                      </div>
+                      <h4
+                        className={`vnn-region-main__title vnn-region-main__title--${reg.regionId}`}
+                      >
+                        {lang === "vi" ? curPage.featured.titleVi : curPage.featured.title}
+                      </h4>
+                      <p className="vnn-region-main__desc">
+                        {lang === "vi" ? curPage.featured.descVi : curPage.featured.desc}
+                      </p>
                     </Link>
-                  ))}
-                </div>
 
-                <div className="vnn-carousel-ctrls">
-                  <button
-                    type="button"
-                    className="vnn-carousel-ctrl-btn"
-                    aria-label="Previous"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  <button
-                    type="button"
-                    className="vnn-carousel-ctrl-btn"
-                    aria-label="Next"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
+                    <div className="vnn-region-minis">
+                      {curPage.minis.map((mini) => (
+                        <Link
+                          key={mini.title}
+                          href={mini.link}
+                          className="vnn-region-mini-item"
+                        >
+                          <img
+                            src={mini.img}
+                            alt={mini.title}
+                            className="vnn-region-mini-item__thumb"
+                            loading="lazy"
+                          />
+                          <span className="vnn-region-mini-item__title">
+                            {lang === "vi" ? mini.titleVi : mini.title}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="vnn-carousel-ctrls">
+                    <button
+                      type="button"
+                      className="vnn-carousel-ctrl-btn"
+                      onClick={handlePrev}
+                      aria-label="Previous destination page"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      className="vnn-carousel-ctrl-btn"
+                      onClick={handleNext}
+                      aria-label="Next destination page"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -1921,8 +2312,8 @@ export default function HomePage() {
                 <span className="vnn-section-head__bar vnn-section-head__bar--pink" />
               </div>
 
-              <div className="vnn-things-list">
-                {THINGS_TO_DO_ITEMS.map((item) => (
+              <div key={`things-${thingsPage}`} className="vnn-things-list vnn-fade-in">
+                {THINGS_TO_DO_PAGES[thingsPage].map((item) => (
                   <Link
                     key={item.title}
                     href={item.link}
@@ -1950,14 +2341,22 @@ export default function HomePage() {
                 <button
                   type="button"
                   className="vnn-carousel-ctrl-btn"
-                  aria-label="Previous"
+                  onClick={() =>
+                    setThingsPage((prev) =>
+                      prev === 0 ? THINGS_TO_DO_PAGES.length - 1 : prev - 1,
+                    )
+                  }
+                  aria-label="Previous experiences"
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <button
                   type="button"
                   className="vnn-carousel-ctrl-btn"
-                  aria-label="Next"
+                  onClick={() =>
+                    setThingsPage((prev) => (prev + 1) % THINGS_TO_DO_PAGES.length)
+                  }
+                  aria-label="Next experiences"
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -1998,8 +2397,8 @@ export default function HomePage() {
                 <span className="vnn-section-head__bar vnn-section-head__bar--cyan" />
               </div>
 
-              <div className="vnn-latest-grid">
-                {LATEST_ARTICLES_ITEMS.map((item) => (
+              <div key={`latest-${latestPage}`} className="vnn-latest-grid vnn-fade-in">
+                {LATEST_ARTICLES_PAGES[latestPage].map((item) => (
                   <Link
                     key={item.title}
                     href={item.link}
@@ -2030,14 +2429,22 @@ export default function HomePage() {
                 <button
                   type="button"
                   className="vnn-carousel-ctrl-btn"
-                  aria-label="Previous"
+                  onClick={() =>
+                    setLatestPage((prev) =>
+                      prev === 0 ? LATEST_ARTICLES_PAGES.length - 1 : prev - 1
+                    )
+                  }
+                  aria-label="Previous articles"
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <button
                   type="button"
                   className="vnn-carousel-ctrl-btn"
-                  aria-label="Next"
+                  onClick={() =>
+                    setLatestPage((prev) => (prev + 1) % LATEST_ARTICLES_PAGES.length)
+                  }
+                  aria-label="Next articles"
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -2053,8 +2460,8 @@ export default function HomePage() {
                 <span className="vnn-section-head__bar vnn-section-head__bar--blue" />
               </div>
 
-              <div className="vnn-popular-list">
-                {POPULAR_POSTS_ITEMS.map((item) => (
+              <div key={`popular-${popularPage}`} className="vnn-popular-list vnn-fade-in">
+                {POPULAR_POSTS_PAGES[popularPage].map((item) => (
                   <Link
                     key={item.title}
                     href={item.link}
@@ -2077,14 +2484,22 @@ export default function HomePage() {
                 <button
                   type="button"
                   className="vnn-carousel-ctrl-btn"
-                  aria-label="Previous"
+                  onClick={() =>
+                    setPopularPage((prev) =>
+                      prev === 0 ? POPULAR_POSTS_PAGES.length - 1 : prev - 1
+                    )
+                  }
+                  aria-label="Previous popular posts"
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <button
                   type="button"
                   className="vnn-carousel-ctrl-btn"
-                  aria-label="Next"
+                  onClick={() =>
+                    setPopularPage((prev) => (prev + 1) % POPULAR_POSTS_PAGES.length)
+                  }
+                  aria-label="Next popular posts"
                 >
                   <ChevronRight size={16} />
                 </button>

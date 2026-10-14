@@ -47,8 +47,14 @@ const ROOMS_DATA = [
     currentPrice: "650.000đ",
     priceNum: 650000,
     desc: "Căn phòng VIP sở hữu sân hiên riêng biệt ngập tràn ánh nắng sớm mai. Không gian trang trí mộc mạc với rèm ren cổ điển, đèn ngủ ấm cúng và cửa kính mở rộng ôm trọn khuôn viên hoa lá.",
-    descEn: "A VIP double suite featuring a private sun-drenched terrace. Styled with vintage lace curtains, warm wooden textures, and glass doors looking onto lush gardens.",
-    amenities: ["Sân hiên riêng", "WC khép kín", "Nước nóng 24/7", "Bàn trà vintage"],
+    descEn:
+      "A VIP double suite featuring a private sun-drenched terrace. Styled with vintage lace curtains, warm wooden textures, and glass doors looking onto lush gardens.",
+    amenities: [
+      "Sân hiên riêng",
+      "WC khép kín",
+      "Nước nóng 24/7",
+      "Bàn trà vintage",
+    ],
     images: [
       "/stay/casa-blanca/hiennang/hn1.jpg",
       "/stay/casa-blanca/hiennang/hn2.jpg",
@@ -77,8 +83,14 @@ const ROOMS_DATA = [
     currentPrice: "500.000đ",
     priceNum: 500000,
     desc: "Không gian ốp gỗ thông tự nhiên tỏa hương thơm nhẹ nhàng. Căn phòng tĩnh lặng, ánh đèn vàng dịu mắt mang đến giấc ngủ sâu trọn vẹn trong khí trời se lạnh của Đà Lạt.",
-    descEn: "Paneled in natural pine with a subtle wood fragrance. Warm amber lighting and peaceful garden views provide deep restful nights in Dalat's cool climate.",
-    amenities: ["Nội thất gỗ mộc", "WC khép kín", "Nước nóng 24/7", "Cửa sổ thoáng"],
+    descEn:
+      "Paneled in natural pine with a subtle wood fragrance. Warm amber lighting and peaceful garden views provide deep restful nights in Dalat's cool climate.",
+    amenities: [
+      "Nội thất gỗ mộc",
+      "WC khép kín",
+      "Nước nóng 24/7",
+      "Cửa sổ thoáng",
+    ],
     images: [
       "/stay/casa-blanca/muigo/1.jpg",
       "/stay/casa-blanca/muigo/2.jpg",
@@ -103,8 +115,14 @@ const ROOMS_DATA = [
     currentPrice: "500.000đ",
     priceNum: 500000,
     desc: "Căn phòng đón gió cao nguyên trong lành và tiếng reo của những rặng thông già. Thiết kế gọn gàng, mộc mạc và tiện nghi khép kín đem lại sự riêng tư tuyệt đối.",
-    descEn: "Invigorating highlands breeze and gentle pine tree murmurs. Minimalist, clean wooden decor with ensuite bathroom for total privacy.",
-    amenities: ["Gió thông tự nhiên", "WC khép kín", "Nước nóng 24/7", "Tủ nứa vintage"],
+    descEn:
+      "Invigorating highlands breeze and gentle pine tree murmurs. Minimalist, clean wooden decor with ensuite bathroom for total privacy.",
+    amenities: [
+      "Gió thông tự nhiên",
+      "WC khép kín",
+      "Nước nóng 24/7",
+      "Tủ nứa vintage",
+    ],
     images: [
       "/stay/casa-blanca/muithong/1.jpg",
       "/stay/casa-blanca/muithong/2.jpg",
@@ -130,8 +148,14 @@ const ROOMS_DATA = [
     currentPrice: "750.000đ",
     priceNum: 750000,
     desc: "Mang trọn hương vị ấm áp của gia đình với 2 giường nệm rộng rãi. Không gian lý tưởng để nhóm bạn thân hoặc cả gia đình quây quần bên nhau trò chuyện thâu đêm.",
-    descEn: "Rich with the heartwarming comfort of home, equipped with 2 large double beds. Perfect for small families or close friends traveling together.",
-    amenities: ["2 giường đôi lớn", "WC khép kín", "Nước nóng 24/7", "Khuôn viên rộng"],
+    descEn:
+      "Rich with the heartwarming comfort of home, equipped with 2 large double beds. Perfect for small families or close friends traveling together.",
+    amenities: [
+      "2 giường đôi lớn",
+      "WC khép kín",
+      "Nước nóng 24/7",
+      "Khuôn viên rộng",
+    ],
     images: [
       "/stay/casa-blanca/nepnha/1.jpg",
       "/stay/casa-blanca/nepnha/2.jpg",
@@ -156,8 +180,14 @@ const ROOMS_DATA = [
     currentPrice: "750.000đ",
     priceNum: 750000,
     desc: "Nằm dưới gác mái ấm cúng với trần gỗ xiên và một kệ sách phong phú. Nơi bạn có thể cuộn mình trong chăn ấm đọc cuốn sách yêu thích và lắng nghe tiếng mưa rơi trên mái tôn cũ.",
-    descEn: "A cozy attic sanctuary under sloped wooden eaves with a well-stocked bookshelf. Curl up with a good book and listen to the rain drumming peacefully overhead.",
-    amenities: ["Gác mái trần gỗ", "Kệ sách phong phú", "WC khép kín", "2 giường đôi"],
+    descEn:
+      "A cozy attic sanctuary under sloped wooden eaves with a well-stocked bookshelf. Curl up with a good book and listen to the rain drumming peacefully overhead.",
+    amenities: [
+      "Gác mái trần gỗ",
+      "Kệ sách phong phú",
+      "WC khép kín",
+      "2 giường đôi",
+    ],
     images: [
       "/stay/casa-blanca/duoitanhong/1.jpg",
       "/stay/casa-blanca/duoitanhong/2.jpg",
@@ -183,8 +213,14 @@ const ROOMS_DATA = [
     currentPrice: "750.000đ",
     priceNum: 750000,
     desc: "Điểm nhấn đắt giá là bồn tắm ngâm mình phong cách vintage giữa không gian gạch bông và cây trầu bà lá xẻ. Thư thả ngâm bồn nước ấm ngắm đèn vàng sau ngày dài khám phá đồi dốc Đà Lạt.",
-    descEn: "Highlights a stunning freestanding clawfoot-style bathtub surrounded by patterned tiles and lush monstera leaves. Soak in hot water under soft pendant lights.",
-    amenities: ["Bồn tắm độc lập cực nghệ", "Gác mái ấm", "WC khép kín", "2 giường đôi"],
+    descEn:
+      "Highlights a stunning freestanding clawfoot-style bathtub surrounded by patterned tiles and lush monstera leaves. Soak in hot water under soft pendant lights.",
+    amenities: [
+      "Bồn tắm độc lập cực nghệ",
+      "Gác mái ấm",
+      "WC khép kín",
+      "2 giường đôi",
+    ],
     images: [
       "/stay/casa-blanca/gacbep/1.jpg",
       "/stay/casa-blanca/gacbep/2.jpg",
@@ -210,8 +246,14 @@ const ROOMS_DATA = [
     currentPrice: "850.000đ",
     priceNum: 850000,
     desc: "Căn phòng gác mái cao cấp nhất sở hữu ban công hiên riêng nhìn thẳng ra đồi thông ngút ngàn. Buổi sáng thức giấc ngắm sương mù giăng mắc và nhâm nhi tách cà phê thơm ngào ngạt.",
-    descEn: "The premier attic suite with a private outdoor balcony facing lush pine hills. Wake up to misty morning skies and sip hot coffee above the trees.",
-    amenities: ["Ban công hiên ngắm thông", "Gác mái cao cấp", "WC khép kín", "2 giường đôi"],
+    descEn:
+      "The premier attic suite with a private outdoor balcony facing lush pine hills. Wake up to misty morning skies and sip hot coffee above the trees.",
+    amenities: [
+      "Ban công hiên ngắm thông",
+      "Gác mái cao cấp",
+      "WC khép kín",
+      "2 giường đôi",
+    ],
     images: [
       "/stay/casa-blanca/bentanthong/1.jpg",
       "/stay/casa-blanca/bentanthong/2.jpg",
@@ -274,7 +316,9 @@ export default function CasaBlancaShowcasePage() {
           <span className="cb-breadcrumb-sep">/</span>
           <Link href="/province/dalat">{isVi ? "Đà Lạt" : "Dalat"}</Link>
           <span className="cb-breadcrumb-sep">/</span>
-          <span className="cb-breadcrumb-current">Casa Blanca Đà Lạt Homestay</span>
+          <span className="cb-breadcrumb-current">
+            Casa Blanca Đà Lạt Homestay
+          </span>
         </div>
       </div>
 
@@ -326,7 +370,11 @@ export default function CasaBlancaShowcasePage() {
             </div>
             <div className="cb-hero-meta-item">
               <Heart size={16} color="#ef4444" fill="#ef4444" />
-              <span>{isVi ? "7 phòng ngủ khép kín hoặc thuê nguyên căn" : "7 ensuite rooms or whole villa rental"}</span>
+              <span>
+                {isVi
+                  ? "7 phòng ngủ khép kín hoặc thuê nguyên căn"
+                  : "7 ensuite rooms or whole villa rental"}
+              </span>
             </div>
           </div>
 
@@ -335,11 +383,22 @@ export default function CasaBlancaShowcasePage() {
               <Bed size={16} />
               {isVi ? "Xem 7 Căn Phòng & Giá" : "View 7 Rooms & Rates"}
             </a>
-            <a href="#whole-house" className="cb-btn-primary" style={{ background: "linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%)" }}>
+            <a
+              href="#whole-house"
+              className="cb-btn-primary"
+              style={{
+                background: "linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%)",
+              }}
+            >
               <Users size={16} />
               {isVi ? "Thuê Nguyên Căn" : "Rent Entire House"}
             </a>
-            <a href={zaloLink} target="_blank" rel="noopener noreferrer" className="cb-btn-zalo">
+            <a
+              href={zaloLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cb-btn-zalo"
+            >
               <MessageCircle size={16} />
               {isVi ? "Nhắn Zalo Tư Vấn" : "Chat on Zalo"}
             </a>
@@ -383,7 +442,9 @@ export default function CasaBlancaShowcasePage() {
               <Trees size={22} />
             </div>
             <div>
-              <h3 className="cb-highlight-title">{isVi ? "Vườn Xanh Giữa Phố" : "Lush City Garden"}</h3>
+              <h3 className="cb-highlight-title">
+                {isVi ? "Vườn Xanh Giữa Phố" : "Lush City Garden"}
+              </h3>
               <p className="cb-highlight-desc">
                 {isVi
                   ? "Sân vườn rộng trồng rau xanh, hoa cỏ và lối đi lát đá tĩnh lặng."
@@ -397,7 +458,9 @@ export default function CasaBlancaShowcasePage() {
               <Bed size={22} />
             </div>
             <div>
-              <h3 className="cb-highlight-title">{isVi ? "7 Căn Biệt Lập Khép Kín" : "7 Private Ensuite Rooms"}</h3>
+              <h3 className="cb-highlight-title">
+                {isVi ? "7 Căn Biệt Lập Khép Kín" : "7 Private Ensuite Rooms"}
+              </h3>
               <p className="cb-highlight-desc">
                 {isVi
                   ? "100% phòng có nhà vệ sinh riêng, bảo đảm sự riêng tư và tiện nghi."
@@ -411,7 +474,9 @@ export default function CasaBlancaShowcasePage() {
               <Flame size={22} />
             </div>
             <div>
-              <h3 className="cb-highlight-title">{isVi ? "Tiệc Nướng BBQ & Bếp" : "BBQ Campfire & Kitchen"}</h3>
+              <h3 className="cb-highlight-title">
+                {isVi ? "Tiệc Nướng BBQ & Bếp" : "BBQ Campfire & Kitchen"}
+              </h3>
               <p className="cb-highlight-desc">
                 {isVi
                   ? "Căn bếp ấm cúng tự do sinh hoạt và khoảng sân nướng khoai, tiệc tối."
@@ -425,7 +490,9 @@ export default function CasaBlancaShowcasePage() {
               <Bike size={22} />
             </div>
             <div>
-              <h3 className="cb-highlight-title">{isVi ? "Thuê Xe Máy & Sống Ảo" : "Motorbike & Photo Gear"}</h3>
+              <h3 className="cb-highlight-title">
+                {isVi ? "Thuê Xe Máy & Sống Ảo" : "Motorbike & Photo Gear"}
+              </h3>
               <p className="cb-highlight-desc">
                 {isVi
                   ? "Dàn xe cực ngầu (Honda CB223S, Yamaha PG-1) và cho thuê máy ảnh."
@@ -438,9 +505,13 @@ export default function CasaBlancaShowcasePage() {
         {/* ── Photo Gallery Section ── */}
         <section style={{ marginBottom: "60px" }}>
           <div className="cb-section-header">
-            <span className="cb-section-pill">{isVi ? "KHÔNG GIAN NGHỈ DƯỠNG" : "ATMOSPHERE"}</span>
+            <span className="cb-section-pill">
+              {isVi ? "KHÔNG GIAN NGHỈ DƯỠNG" : "ATMOSPHERE"}
+            </span>
             <h2 className="cb-section-title">
-              {isVi ? "Khoảnh Khắc Thơ Mộng Tại Casa Blanca" : "Moments of Peace at Casa Blanca"}
+              {isVi
+                ? "Khoảnh Khắc Thơ Mộng Tại Casa Blanca"
+                : "Moments of Peace at Casa Blanca"}
             </h2>
             <p className="cb-section-subtitle">
               {isVi
@@ -452,7 +523,12 @@ export default function CasaBlancaShowcasePage() {
           <div className="cb-gallery-grid">
             <div
               className="cb-gallery-item span-2-row"
-              onClick={() => openPhotoModal("/stay/casa-blanca/toan_canh.jpg", "Toàn cảnh nhà gỗ và sân hoa rực rỡ dưới nắng")}
+              onClick={() =>
+                openPhotoModal(
+                  "/stay/casa-blanca/toan_canh.jpg",
+                  "Toàn cảnh nhà gỗ và sân hoa rực rỡ dưới nắng",
+                )
+              }
             >
               <img
                 src="/stay/casa-blanca/toan_canh.jpg"
@@ -460,13 +536,22 @@ export default function CasaBlancaShowcasePage() {
                 className="cb-gallery-img"
               />
               <div className="cb-gallery-overlay">
-                <span>{isVi ? "Toàn cảnh nhà gỗ và vườn hoa ban ngày" : "Panoramic daytime view"}</span>
+                <span>
+                  {isVi
+                    ? "Toàn cảnh nhà gỗ và vườn hoa ban ngày"
+                    : "Panoramic daytime view"}
+                </span>
               </div>
             </div>
 
             <div
               className="cb-gallery-item"
-              onClick={() => openPhotoModal("/stay/casa-blanca/phong_canh_dem.jpg", "Không gian sân vườn lên đèn lãng mạn ban đêm")}
+              onClick={() =>
+                openPhotoModal(
+                  "/stay/casa-blanca/phong_canh_dem.jpg",
+                  "Không gian sân vườn lên đèn lãng mạn ban đêm",
+                )
+              }
             >
               <img
                 src="/stay/casa-blanca/phong_canh_dem.jpg"
@@ -474,13 +559,22 @@ export default function CasaBlancaShowcasePage() {
                 className="cb-gallery-img"
               />
               <div className="cb-gallery-overlay">
-                <span>{isVi ? "Sân vườn lên đèn lãng mạn ban đêm" : "Cozy garden with fairy lights"}</span>
+                <span>
+                  {isVi
+                    ? "Sân vườn lên đèn lãng mạn ban đêm"
+                    : "Cozy garden with fairy lights"}
+                </span>
               </div>
             </div>
 
             <div
               className="cb-gallery-item"
-              onClick={() => openPhotoModal("/stay/casa-blanca/xe_may.jpg", "Dàn xe máy phượt cổ điển tại sân homestay")}
+              onClick={() =>
+                openPhotoModal(
+                  "/stay/casa-blanca/xe_may.jpg",
+                  "Dàn xe máy phượt cổ điển tại sân homestay",
+                )
+              }
             >
               <img
                 src="/stay/casa-blanca/xe_may.jpg"
@@ -488,13 +582,22 @@ export default function CasaBlancaShowcasePage() {
                 className="cb-gallery-img"
               />
               <div className="cb-gallery-overlay">
-                <span>{isVi ? "Dàn xe máy phượt cổ điển (Honda CB223S, PG-1)" : "Vintage motorbikes available for rent"}</span>
+                <span>
+                  {isVi
+                    ? "Dàn xe máy phượt cổ điển (Honda CB223S, PG-1)"
+                    : "Vintage motorbikes available for rent"}
+                </span>
               </div>
             </div>
 
             <div
               className="cb-gallery-item"
-              onClick={() => openPhotoModal("/stay/casa-blanca/phong_canh1.jpg", "Hiên gỗ và luống hoa cúc rực rỡ")}
+              onClick={() =>
+                openPhotoModal(
+                  "/stay/casa-blanca/phong_canh1.jpg",
+                  "Hiên gỗ và luống hoa cúc rực rỡ",
+                )
+              }
             >
               <img
                 src="/stay/casa-blanca/phong_canh1.jpg"
@@ -502,13 +605,22 @@ export default function CasaBlancaShowcasePage() {
                 className="cb-gallery-img"
               />
               <div className="cb-gallery-overlay">
-                <span>{isVi ? "Hiên gỗ và giàn hoa trước phòng" : "Wooden porch & blooming flowers"}</span>
+                <span>
+                  {isVi
+                    ? "Hiên gỗ và giàn hoa trước phòng"
+                    : "Wooden porch & blooming flowers"}
+                </span>
               </div>
             </div>
 
             <div
               className="cb-gallery-item"
-              onClick={() => openPhotoModal("/stay/casa-blanca/rau.jpg", "Mảnh sân vườn rau xanh mướt được chủ nhà chăm chút")}
+              onClick={() =>
+                openPhotoModal(
+                  "/stay/casa-blanca/rau.jpg",
+                  "Mảnh sân vườn rau xanh mướt được chủ nhà chăm chút",
+                )
+              }
             >
               <img
                 src="/stay/casa-blanca/rau.jpg"
@@ -516,7 +628,11 @@ export default function CasaBlancaShowcasePage() {
                 className="cb-gallery-img"
               />
               <div className="cb-gallery-overlay">
-                <span>{isVi ? "Mảnh vườn rau xanh mướt tự nhiên" : "Organic green vegetable garden"}</span>
+                <span>
+                  {isVi
+                    ? "Mảnh vườn rau xanh mướt tự nhiên"
+                    : "Organic green vegetable garden"}
+                </span>
               </div>
             </div>
           </div>
@@ -525,9 +641,13 @@ export default function CasaBlancaShowcasePage() {
         {/* ── 7 Signature Rooms Section ── */}
         <section id="rooms-section" style={{ marginBottom: "60px" }}>
           <div className="cb-section-header">
-            <span className="cb-section-pill">{isVi ? "BẢNG GIÁ & HẠNG PHÒNG" : "ROOM COLLECTION"}</span>
+            <span className="cb-section-pill">
+              {isVi ? "BẢNG GIÁ & HẠNG PHÒNG" : "ROOM COLLECTION"}
+            </span>
             <h2 className="cb-section-title">
-              {isVi ? "7 Căn Phòng Biệt Lập Độc Bản" : "7 Handcrafted Wooden Rooms"}
+              {isVi
+                ? "7 Căn Phòng Biệt Lập Độc Bản"
+                : "7 Handcrafted Wooden Rooms"}
             </h2>
             <p className="cb-section-subtitle">
               {isVi
@@ -557,7 +677,9 @@ export default function CasaBlancaShowcasePage() {
               className={`cb-filter-btn ${activeFilter === "group" ? "active" : ""}`}
               onClick={() => setActiveFilter("group")}
             >
-              {isVi ? "Phòng 4 Khách & Gác Mái (4 Căn)" : "4-Guest & Attic Rooms (4)"}
+              {isVi
+                ? "Phòng 4 Khách & Gác Mái (4 Căn)"
+                : "4-Guest & Attic Rooms (4)"}
             </button>
           </div>
 
@@ -572,21 +694,34 @@ export default function CasaBlancaShowcasePage() {
                     className="cb-room-img"
                     loading="lazy"
                   />
-                  <span className={`cb-room-badge ${room.id === "hien-nang" || room.id === "ben-tan-thong" ? "badge-vip" : ""}`}>
+                  <span
+                    className={`cb-room-badge ${room.id === "hien-nang" || room.id === "ben-tan-thong" ? "badge-vip" : ""}`}
+                  >
                     {isVi ? room.badge : room.badgeEn}
                   </span>
                   <div
                     className="cb-room-photos-count"
-                    onClick={() => openPhotoModal(room.images[0], `${room.title} - ${isVi ? room.subtitle : room.subtitleEn}`)}
+                    onClick={() =>
+                      openPhotoModal(
+                        room.images[0],
+                        `${room.title} - ${isVi ? room.subtitle : room.subtitleEn}`,
+                      )
+                    }
                   >
                     <Camera size={13} />
-                    <span>{room.images.length} {isVi ? "ảnh" : "photos"}</span>
+                    <span>
+                      {room.images.length} {isVi ? "ảnh" : "photos"}
+                    </span>
                   </div>
                 </div>
 
                 <div className="cb-room-body">
-                  <h3 className="cb-room-title">{isVi ? room.title : room.titleEn}</h3>
-                  <div className="cb-room-subtitle">{isVi ? room.subtitle : room.subtitleEn}</div>
+                  <h3 className="cb-room-title">
+                    {isVi ? room.title : room.titleEn}
+                  </h3>
+                  <div className="cb-room-subtitle">
+                    {isVi ? room.subtitle : room.subtitleEn}
+                  </div>
 
                   <div className="cb-room-specs">
                     <span className="cb-room-spec-item">
@@ -599,7 +734,14 @@ export default function CasaBlancaShowcasePage() {
                     {isVi ? room.desc : room.descEn}
                   </p>
 
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "18px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "6px",
+                      marginBottom: "18px",
+                    }}
+                  >
                     {room.amenities.map((item, idx) => (
                       <span
                         key={idx}
@@ -622,7 +764,9 @@ export default function CasaBlancaShowcasePage() {
                       <div className="cb-price-old">{room.oldPrice}</div>
                       <div className="cb-price-now">
                         {room.currentPrice}
-                        <span className="cb-price-unit">/{isVi ? "đêm" : "night"}</span>
+                        <span className="cb-price-unit">
+                          /{isVi ? "đêm" : "night"}
+                        </span>
                       </div>
                     </div>
                     <a
@@ -645,10 +789,20 @@ export default function CasaBlancaShowcasePage() {
         <section id="whole-house" className="cb-wholehouse-box">
           <div className="cb-wholehouse-inner">
             <div className="cb-wholehouse-info">
-              <span className="cb-section-pill" style={{ background: "rgba(255, 255, 255, 0.15)", color: "#fef3c7" }}>
+              <span
+                className="cb-section-pill"
+                style={{
+                  background: "rgba(255, 255, 255, 0.15)",
+                  color: "#fef3c7",
+                }}
+              >
                 {isVi ? "ĐỘC QUYỀN KHUÔN VIÊN" : "EXCLUSIVE BUYOUT"}
               </span>
-              <h3>{isVi ? "Thuê Nguyên Căn Trọn Vẹn 7 Phòng Ngủ" : "Rent Entire 7-Bedroom Villa"}</h3>
+              <h3>
+                {isVi
+                  ? "Thuê Nguyên Căn Trọn Vẹn 7 Phòng Ngủ"
+                  : "Rent Entire 7-Bedroom Villa"}
+              </h3>
               <p>
                 {isVi
                   ? "Bao trọn khuôn viên sân vườn xanh mát và toàn bộ 7 phòng ngủ biệt lập khép kín dành cho đoàn gia đình, hội nhóm bạn bè từ 14 đến 20 khách. Tận hưởng sự riêng tư tuyệt đối, không gian yên bình và tự do sinh hoạt."
@@ -658,39 +812,67 @@ export default function CasaBlancaShowcasePage() {
               <ul className="cb-wholehouse-benefits">
                 <li className="cb-wholehouse-benefit-item">
                   <CheckCircle2 size={16} color="#d97706" />
-                  <span>{isVi ? "7 phòng ngủ khép kín với đầy đủ tiện nghi" : "7 fully private ensuite bedrooms"}</span>
+                  <span>
+                    {isVi
+                      ? "7 phòng ngủ khép kín với đầy đủ tiện nghi"
+                      : "7 fully private ensuite bedrooms"}
+                  </span>
                 </li>
                 <li className="cb-wholehouse-benefit-item">
                   <CheckCircle2 size={16} color="#d97706" />
-                  <span>{isVi ? "Tự do sử dụng căn bếp xinh xắn nấu nướng chung" : "Full access to cozy cooking kitchen"}</span>
+                  <span>
+                    {isVi
+                      ? "Tự do sử dụng căn bếp xinh xắn nấu nướng chung"
+                      : "Full access to cozy cooking kitchen"}
+                  </span>
                 </li>
                 <li className="cb-wholehouse-benefit-item">
                   <CheckCircle2 size={16} color="#d97706" />
-                  <span>{isVi ? "Khoảng sân vườn rộng rãi tổ chức tiệc BBQ ngoài trời" : "Spacious garden patio for outdoor BBQ gatherings"}</span>
+                  <span>
+                    {isVi
+                      ? "Khoảng sân vườn rộng rãi tổ chức tiệc BBQ ngoài trời"
+                      : "Spacious garden patio for outdoor BBQ gatherings"}
+                  </span>
                 </li>
                 <li className="cb-wholehouse-benefit-item">
                   <CheckCircle2 size={16} color="#d97706" />
-                  <span>{isVi ? "Hỗ trợ chuẩn bị lò than nướng BBQ và dụng cụ tiệc" : "Complimentary BBQ grill setup and party utensils"}</span>
+                  <span>
+                    {isVi
+                      ? "Hỗ trợ chuẩn bị lò than nướng BBQ và dụng cụ tiệc"
+                      : "Complimentary BBQ grill setup and party utensils"}
+                  </span>
                 </li>
               </ul>
             </div>
 
             <div className="cb-wholehouse-rates">
               <div className="cb-rate-row">
-                <div className="cb-rate-label">{isVi ? "Thứ 2 – Thứ 6 (Ngày thường)" : "Monday – Friday (Weekdays)"}</div>
+                <div className="cb-rate-label">
+                  {isVi
+                    ? "Thứ 2 – Thứ 6 (Ngày thường)"
+                    : "Monday – Friday (Weekdays)"}
+                </div>
                 <div>
                   <span className="cb-rate-old">6.150.000đ</span>
                   <span className="cb-rate-val">4.250.000đ</span>
-                  <span style={{ fontSize: "12px", color: "#d1c5b8" }}>/{isVi ? "đêm" : "night"}</span>
+                  <span style={{ fontSize: "12px", color: "#d1c5b8" }}>
+                    /{isVi ? "đêm" : "night"}
+                  </span>
                 </div>
               </div>
 
               <div className="cb-rate-row">
-                <div className="cb-rate-label">{isVi ? "Thứ 7 & Chủ Nhật (Cuối tuần)" : "Saturday & Sunday (Weekend)"}</div>
+                <div className="cb-rate-label">
+                  {isVi
+                    ? "Thứ 7 & Chủ Nhật (Cuối tuần)"
+                    : "Saturday & Sunday (Weekend)"}
+                </div>
                 <div>
                   <span className="cb-rate-old">6.850.000đ</span>
                   <span className="cb-rate-val">4.950.000đ</span>
-                  <span style={{ fontSize: "12px", color: "#d1c5b8" }}>/{isVi ? "đêm" : "night"}</span>
+                  <span style={{ fontSize: "12px", color: "#d1c5b8" }}>
+                    /{isVi ? "đêm" : "night"}
+                  </span>
                 </div>
               </div>
 
@@ -721,11 +903,29 @@ export default function CasaBlancaShowcasePage() {
               />
             </div>
             <div>
-              <span className="cb-section-pill">{isVi ? "TIỆN ÍCH ĐẶC BIỆT" : "ON-SITE MOBILITY"}</span>
-              <h3 style={{ fontSize: "26px", fontWeight: 800, color: "var(--cb-wood-dark)", margin: "0 0 12px 0" }}>
-                {isVi ? "Dịch Vụ Thuê Xe Máy & Sống Ảo" : "Motorbike & Camera Rental"}
+              <span className="cb-section-pill">
+                {isVi ? "TIỆN ÍCH ĐẶC BIỆT" : "ON-SITE MOBILITY"}
+              </span>
+              <h3
+                style={{
+                  fontSize: "26px",
+                  fontWeight: 800,
+                  color: "var(--cb-wood-dark)",
+                  margin: "0 0 12px 0",
+                }}
+              >
+                {isVi
+                  ? "Dịch Vụ Thuê Xe Máy & Sống Ảo"
+                  : "Motorbike & Camera Rental"}
               </h3>
-              <p style={{ fontSize: "14.5px", color: "var(--cb-text-muted)", lineHeight: 1.6, margin: "0 0 16px 0" }}>
+              <p
+                style={{
+                  fontSize: "14.5px",
+                  color: "var(--cb-text-muted)",
+                  lineHeight: 1.6,
+                  margin: "0 0 16px 0",
+                }}
+              >
                 {isVi
                   ? "Casa Blanca hỗ trợ liên kết các dòng xe máy đời mới, chất lượng cao ngay tại chỗ để du khách thuận tiện vi vu khắp các con đồi, dốc đứng và săn mây Đà Lạt."
                   : "Convenient on-site motorbike rentals to explore Dalat's scenic slopes, pine forests, and cloud-hunting spots."}
@@ -733,25 +933,51 @@ export default function CasaBlancaShowcasePage() {
 
               <div className="cb-bikes-list">
                 <div className="cb-bike-item">
-                  <span className="cb-bike-name">🏍️ Mô tô cổ điển Honda CB223S</span>
-                  <span className="cb-bike-price">200.000đ/{isVi ? "ngày" : "day"}</span>
+                  <span className="cb-bike-name">
+                    🏍️ Mô tô cổ điển Honda CB223S
+                  </span>
+                  <span className="cb-bike-price">
+                    200.000đ/{isVi ? "ngày" : "day"}
+                  </span>
                 </div>
                 <div className="cb-bike-item">
-                  <span className="cb-bike-name">🛵 Xe số Yamaha PG-1 đen cá tính</span>
-                  <span className="cb-bike-price">140.000đ/{isVi ? "ngày" : "day"}</span>
+                  <span className="cb-bike-name">
+                    🛵 Xe số Yamaha PG-1 đen cá tính
+                  </span>
+                  <span className="cb-bike-price">
+                    140.000đ/{isVi ? "ngày" : "day"}
+                  </span>
                 </div>
                 <div className="cb-bike-item">
-                  <span className="cb-bike-name">🛵 Xe tay ga Air Blade đời mới</span>
-                  <span className="cb-bike-price">140.000đ/{isVi ? "ngày" : "day"}</span>
+                  <span className="cb-bike-name">
+                    🛵 Xe tay ga Air Blade đời mới
+                  </span>
+                  <span className="cb-bike-price">
+                    140.000đ/{isVi ? "ngày" : "day"}
+                  </span>
                 </div>
                 <div className="cb-bike-item">
-                  <span className="cb-bike-name">🛵 Xe tay ga Honda Vision êm ái</span>
-                  <span className="cb-bike-price">120.000đ/{isVi ? "ngày" : "day"}</span>
+                  <span className="cb-bike-name">
+                    🛵 Xe tay ga Honda Vision êm ái
+                  </span>
+                  <span className="cb-bike-price">
+                    120.000đ/{isVi ? "ngày" : "day"}
+                  </span>
                 </div>
               </div>
 
-              <p style={{ fontSize: "13px", color: "#8c7e70", marginTop: "12px", fontStyle: "italic" }}>
-                * {isVi ? "Nếu cần thuê xe máy hoặc máy ảnh, bạn vui lòng báo trước để home chuẩn bị chu đáo nhé!" : "Please notify the host in advance if you wish to reserve motorbikes or camera equipment."}
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: "#8c7e70",
+                  marginTop: "12px",
+                  fontStyle: "italic",
+                }}
+              >
+                *{" "}
+                {isVi
+                  ? "Nếu cần thuê xe máy hoặc máy ảnh, bạn vui lòng báo trước để home chuẩn bị chu đáo nhé!"
+                  : "Please notify the host in advance if you wish to reserve motorbikes or camera equipment."}
               </p>
             </div>
           </div>
@@ -766,16 +992,30 @@ export default function CasaBlancaShowcasePage() {
             </h4>
             <ul>
               <li>
-                <strong>Check-in:</strong> 14:00 | <strong>Check-out:</strong> 12:00.
+                <strong>Check-in:</strong> 14:00 | <strong>Check-out:</strong>{" "}
+                12:00.
               </li>
               <li>
-                <strong>{isVi ? "Phụ thu cuối tuần:" : "Weekend surcharge:"}</strong> {isVi ? "Thứ 6 & Thứ 7 phụ thu 100.000đ/phòng/đêm." : "Fri & Sat +100,000 VND/room/night."}
+                <strong>
+                  {isVi ? "Phụ thu cuối tuần:" : "Weekend surcharge:"}
+                </strong>{" "}
+                {isVi
+                  ? "Thứ 6 & Thứ 7 phụ thu 100.000đ/phòng/đêm."
+                  : "Fri & Sat +100,000 VND/room/night."}
               </li>
               <li>
-                <strong>{isVi ? "Booking cuối tuần:" : "Weekend booking:"}</strong> {isVi ? "Tối thiểu 2 đêm liên tiếp (T6–T7 hoặc T7–CN)." : "Minimum 2 consecutive nights (Fri-Sat or Sat-Sun)."}
+                <strong>
+                  {isVi ? "Booking cuối tuần:" : "Weekend booking:"}
+                </strong>{" "}
+                {isVi
+                  ? "Tối thiểu 2 đêm liên tiếp (T6–T7 hoặc T7–CN)."
+                  : "Minimum 2 consecutive nights (Fri-Sat or Sat-Sun)."}
               </li>
               <li>
-                <strong>{isVi ? "Trẻ em:" : "Children:"}</strong> {isVi ? "Bé dưới 6 tuổi ở cùng bố mẹ hoàn toàn miễn phí." : "Children under 6 stay free with parents."}
+                <strong>{isVi ? "Trẻ em:" : "Children:"}</strong>{" "}
+                {isVi
+                  ? "Bé dưới 6 tuổi ở cùng bố mẹ hoàn toàn miễn phí."
+                  : "Children under 6 stay free with parents."}
               </li>
             </ul>
           </div>
@@ -808,11 +1048,27 @@ export default function CasaBlancaShowcasePage() {
         {/* ── Location & Map Box ── */}
         <section className="cb-location-box">
           <div>
-            <span className="cb-section-pill">{isVi ? "VỊ TRÍ ĐẮC ĐỊA" : "LOCATION"}</span>
-            <h3 style={{ fontSize: "24px", fontWeight: 800, color: "var(--cb-wood-dark)", margin: "0 0 10px 0" }}>
+            <span className="cb-section-pill">
+              {isVi ? "VỊ TRÍ ĐẮC ĐỊA" : "LOCATION"}
+            </span>
+            <h3
+              style={{
+                fontSize: "24px",
+                fontWeight: 800,
+                color: "var(--cb-wood-dark)",
+                margin: "0 0 10px 0",
+              }}
+            >
               70/5 Pasteur, Phường Xuân Hương, TP. Đà Lạt
             </h3>
-            <p style={{ fontSize: "14.5px", color: "var(--cb-text-muted)", lineHeight: 1.6, margin: "0 0 18px 0" }}>
+            <p
+              style={{
+                fontSize: "14.5px",
+                color: "var(--cb-text-muted)",
+                lineHeight: 1.6,
+                margin: "0 0 18px 0",
+              }}
+            >
               {isVi
                 ? "Tọa lạc tại con dốc Pasteur yên tĩnh rợp bóng cây, cách trung tâm chợ Đà Lạt và Hồ Xuân Hương chỉ khoảng 5-7 phút đi xe. Nơi đây đủ gần để bạn khám phá mọi điểm vui chơi, nhưng đủ tách biệt để tận hưởng sự yên ả tuyệt đối."
                 : "Nestled on peaceful Pasteur slope, only 5-7 minutes drive from Dalat Market and Xuan Huong Lake. Close to the city's pulse yet secluded in peaceful nature."}
@@ -886,8 +1142,14 @@ export default function CasaBlancaShowcasePage() {
 
       {/* ── Photo Lightbox Modal ── */}
       {lightboxOpen && (
-        <div className="cb-lightbox-backdrop" onClick={() => setLightboxOpen(false)}>
-          <div className="cb-lightbox-content" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="cb-lightbox-backdrop"
+          onClick={() => setLightboxOpen(false)}
+        >
+          <div
+            className="cb-lightbox-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               type="button"
               className="cb-lightbox-close"
@@ -895,8 +1157,14 @@ export default function CasaBlancaShowcasePage() {
             >
               <X size={26} />
             </button>
-            <img src={lightboxImg} alt="Casa Blanca Preview" className="cb-lightbox-img" />
-            {lightboxCaption && <div className="cb-lightbox-caption">{lightboxCaption}</div>}
+            <img
+              src={lightboxImg}
+              alt="Casa Blanca Preview"
+              className="cb-lightbox-img"
+            />
+            {lightboxCaption && (
+              <div className="cb-lightbox-caption">{lightboxCaption}</div>
+            )}
           </div>
         </div>
       )}
