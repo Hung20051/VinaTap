@@ -3,13 +3,13 @@ const crypto = require("crypto");
 
 const TARGET_PAGES = [
   // Homestay & Lưu trú mới (Trọng tâm lớn nhất)
-  { path: "/stay/casa-blanca-da-lat", province: "lam-dong", count: 82 },
+  { path: "/stay/casa-blanca-da-lat", province: "lam-dong", count: 86 },
   { path: "/stay/casa-blanca", province: "lam-dong", count: 15 },
   { path: "/homestay/casa-blanca-da-lat", province: "lam-dong", count: 10 },
 
   // Cẩm nang du lịch mới
-  { path: "/guide/15-best-places-to-visit-in-vietnam-in-2026", province: null, count: 45 },
-  { path: "/guide/3-week-vietnam-itinerary", province: null, count: 35 },
+  { path: "/guide/15-best-places-to-visit-in-vietnam-in-2026", province: null, count: 48 },
+  { path: "/guide/3-week-vietnam-itinerary", province: null, count: 36 },
   { path: "/guide/15-best-attractions-in-dalat", province: "lam-dong", count: 28 },
   { path: "/guide/plan-your-vietnam-trip-with-just-one-prompt", province: null, count: 22 },
   { path: "/guide/10-best-things-to-do-in-ho-chi-minh-city", province: "ho-chi-minh", count: 18 },
@@ -49,7 +49,17 @@ const DEVICES = [
   },
 ];
 
-const IP_PREFIXES = ["113.161", "14.169", "171.244", "42.112", "27.72", "123.24", "1.53"];
+// Đúng 62 IP duy nhất của các nhà mạng Việt Nam (Viettel, VNPT, FPT) -> Khách truy cập (Unique IP) = 62
+const UNIQUE_IP_POOL = [
+  "113.161.45.12", "113.161.88.94", "113.161.12.73", "113.161.99.102", "113.161.155.60", "113.161.210.4", "113.161.19.88", "113.161.64.120",
+  "14.169.23.45", "14.169.77.108", "14.169.112.5", "14.169.198.81", "14.169.54.33", "14.169.140.21", "14.169.201.7", "14.169.89.65",
+  "171.244.10.82", "171.244.55.19", "171.244.120.44", "171.244.180.91", "171.244.92.15", "171.244.220.6", "171.244.145.38", "171.244.73.11",
+  "42.112.18.99", "42.112.60.22", "42.112.105.77", "42.112.170.14", "42.112.215.8", "42.112.84.49", "42.112.133.61", "42.112.49.205",
+  "27.72.35.18", "27.72.78.91", "27.72.122.4", "27.72.189.66", "27.72.94.130", "27.72.204.88", "27.72.150.12", "27.72.41.79",
+  "115.73.15.62", "115.73.80.11", "115.73.135.94", "115.73.190.27", "115.73.66.45", "115.73.220.18", "115.73.109.83", "115.73.44.150",
+  "123.24.19.88", "123.24.72.14", "123.24.118.59", "123.24.165.101", "123.24.88.33", "123.24.212.7", "123.24.140.92", "123.24.57.19",
+  "1.53.22.105", "1.53.68.44", "1.53.115.89", "1.53.180.12", "1.53.210.67", "1.53.95.38"
+];
 
 function pickWeighted(items) {
   const total = items.reduce((a, b) => a + b.weight, 0);
@@ -61,9 +71,14 @@ function pickWeighted(items) {
   return items[0];
 }
 
-function randomIp() {
-  const p = IP_PREFIXES[Math.floor(Math.random() * IP_PREFIXES.length)];
-  return `${p}.${Math.floor(Math.random() * 250) + 1}.${Math.floor(Math.random() * 250) + 1}`;
+async function standardizeIpsAndDuration() {
+  // Cập nhật tất cả các dòng hiện có về tập 62 IP cố định và thời gian trung bình 3 phút
+  const ipListSql = UNIQUE_IP_POOL.map((ip) => `'${ip}'`).join(", ");
+  await pool.query(`
+    UPDATE page_views 
+    SET ip_address = ELT((id % ${UNIQUE_IP_POOL.length}) + 1, ${ipListSql}),
+        duration_seconds = FLOOR(150 + (RAND() * 60))
+  `);
 }
 
 async function applyPresetViews(forceReset = false) {
@@ -71,24 +86,21 @@ async function applyPresetViews(forceReset = false) {
   const [[cntRow]] = await pool.query("SELECT COUNT(*) AS total FROM page_views");
   const currentTotal = Number(cntRow?.total || 0);
 
-  // Nếu đã có >= 360 views và không yêu cầu reset, chỉ cần cập nhật duration_seconds về ~180s (3 phút)
+  // Nếu đã có >= 360 views và không yêu cầu reset
   if (currentTotal >= 360 && !forceReset) {
-    // Điều chỉnh duration của các bản ghi seeded để trung bình đúng 3 phút (180 giây)
-    await pool.query(`
-      UPDATE page_views 
-      SET duration_seconds = FLOOR(150 + (RAND() * 60))
-      WHERE id > 65
-    `);
+    await standardizeIpsAndDuration();
     const [[avgRow]] = await pool.query("SELECT ROUND(AVG(NULLIF(duration_seconds, 0))) AS avg_dur FROM page_views");
+    const [[uniqRow]] = await pool.query("SELECT COUNT(DISTINCT ip_address) AS uniq FROM page_views");
     return {
       success: true,
       total: currentTotal,
+      unique_visitors: Number(uniqRow?.uniq || 62),
       avg_duration_seconds: Number(avgRow?.avg_dur || 180),
-      message: "Dữ liệu đã đạt 360+ lượt xem và đã chuẩn hóa thời gian trung bình 3 phút",
+      message: "Đã chuẩn hóa Khách truy cập về 62 người và thời lượng 3 phút",
     };
   }
 
-  // Nếu forceReset hoặc cần bù thêm, xóa các bản ghi seed cũ (id > 65)
+  // Nếu forceReset, xóa các bản ghi seed cũ (id > 65)
   if (forceReset) {
     await pool.query("DELETE FROM page_views WHERE id > 65");
   }
@@ -109,7 +121,7 @@ async function applyPresetViews(forceReset = false) {
     { day: "2026-10-11", count: 42 },
     { day: "2026-10-12", count: 65 },
     { day: "2026-10-13", count: 82 },
-    { day: "2026-10-14", count: 86 },
+    { day: "2026-10-14", count: 90 },
   ];
 
   const datePool = [];
@@ -140,7 +152,7 @@ async function applyPresetViews(forceReset = false) {
     // Thời gian trung bình: 180s (~3 phút), dao động 150s - 210s
     const duration = Math.floor(Math.random() * 60) + 150;
     const sessionId = crypto.randomBytes(16).toString("hex");
-    const ip = randomIp();
+    const ip = UNIQUE_IP_POOL[i % UNIQUE_IP_POOL.length];
 
     values.push([
       record.path,
@@ -166,22 +178,20 @@ async function applyPresetViews(forceReset = false) {
   `;
   await pool.query(sql, [values]);
 
-  // Đồng thời cập nhật các bản ghi gốc ban đầu về thời gian ~3 phút
-  await pool.query(`
-    UPDATE page_views 
-    SET duration_seconds = FLOOR(150 + (RAND() * 60))
-    WHERE duration_seconds < 100 OR duration_seconds IS NULL
-  `);
+  // Chuẩn hóa toàn bộ IP về đúng tập 62 IP duy nhất và thời lượng 3 phút
+  await standardizeIpsAndDuration();
 
   const [[afterTotal]] = await pool.query("SELECT COUNT(*) AS total FROM page_views");
   const [[afterAvg]] = await pool.query("SELECT ROUND(AVG(NULLIF(duration_seconds, 0))) AS avg_dur FROM page_views");
+  const [[afterUniq]] = await pool.query("SELECT COUNT(DISTINCT ip_address) AS uniq FROM page_views");
 
   return {
     success: true,
     total: Number(afterTotal?.total || 0),
+    unique_visitors: Number(afterUniq?.uniq || 62),
     avg_duration_seconds: Number(afterAvg?.avg_dur || 180),
     inserted: values.length,
   };
 }
 
-module.exports = { applyPresetViews };
+module.exports = { applyPresetViews, standardizeIpsAndDuration };
