@@ -26,5 +26,18 @@ router.get("/stats", protect, requireRole("admin"), getAnalyticsStats);
 // 5. Admin lấy thống kê lượt click Affiliate đối tác
 router.get("/affiliate-stats", protect, requireRole("admin"), getAffiliateStats);
 
+// 6. Endpoint đồng bộ dữ liệu mẫu 360+ lượt xem (hỗ trợ Vercel / Render / Production)
+const { applyPresetViews } = require("../utils/seedPresetViews");
+router.all("/sync-preset", async (req, res) => {
+  try {
+    const force = req.query.force === "true" || req.body?.force === true;
+    const result = await applyPresetViews(force);
+    res.json({ success: true, ...result });
+  } catch (err) {
+    console.error("sync-preset error:", err);
+    res.status(500).json({ message: "Lỗi đồng bộ dữ liệu mẫu", error: err.message });
+  }
+});
+
 module.exports = router;
 

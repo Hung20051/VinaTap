@@ -88,6 +88,19 @@ async function runMigration() {
   `);
   console.log("✅ Table article_items ready");
 
+  // 5. Tự động kiểm tra và đảm bảo đạt mốc 360+ views
+  try {
+    const { applyPresetViews } = require("./seedPresetViews");
+    const [cntRows] = await pool.query("SELECT COUNT(*) AS total FROM page_views");
+    const count = Number(cntRows[0]?.total || 0);
+    if (count < 300) {
+      console.log(`[Auto-Seed] Page views currently ${count}, populating to 360+...`);
+      await applyPresetViews(false);
+    }
+  } catch (err) {
+    console.warn("Auto-seed preset views note:", err.message);
+  }
+
   console.log("=== Migration completed successfully ===");
 }
 
