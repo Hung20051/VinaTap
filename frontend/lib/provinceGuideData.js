@@ -541,6 +541,17 @@ export const PROVINCE_IMAGE_OVERRIDES = {
   "thừa thiên huế": "/guide/hue/hue-hero-official.jpg",
   "hue": "/guide/hue/hue-hero-official.jpg",
   "huế": "/guide/hue/hue-hero-official.jpg",
+  "ninh-binh": "/guide/ninh-binh/hero.jpg",
+  "ninh bình": "/guide/ninh-binh/hero.jpg",
+  "quang-ninh": "/guide/15-best-places/place-6-ha-long.jpg",
+  "quảng ninh": "/guide/15-best-places/place-6-ha-long.jpg",
+  "nha-trang": "/guide/nha-trang/nhatrang-hero-hd.jpg",
+  "khanh-hoa": "/guide/nha-trang/nhatrang-hero-hd.jpg",
+  "khánh hòa": "/guide/nha-trang/nhatrang-hero-hd.jpg",
+  "dalat": "/guide/dalat/dalat-hero-hd.jpg",
+  "đà lạt": "/guide/dalat/dalat-hero-hd.jpg",
+  "lam-dong": "/guide/dalat/dalat-hero-hd.jpg",
+  "lâm đồng": "/guide/dalat/dalat-hero-hd.jpg",
 };
 
 export function getProvinceCover(province, fallback = "") {
