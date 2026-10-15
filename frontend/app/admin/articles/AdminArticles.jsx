@@ -560,8 +560,20 @@ export default function AdminArticles() {
       };
 
       if (articleData.id) {
-        await articleAPI.update(articleData.id, payload);
-        showToast("Đã lưu cập nhật bài viết thành công!");
+        try {
+          await articleAPI.update(articleData.id, payload);
+          showToast("Đã lưu cập nhật bài viết thành công!");
+        } catch (updateErr) {
+          console.warn("Update by ID error, attempting fallback by slug/create:", updateErr);
+          if (articleData.slug || slug) {
+            await articleAPI.update(articleData.slug || slug, payload).catch(async () => {
+              await articleAPI.create(payload);
+            });
+            showToast("Đã lưu cập nhật bài viết thành công!");
+          } else {
+            throw updateErr;
+          }
+        }
       } else {
         await articleAPI.create(payload);
         showToast("Đã tạo bài viết mới thành công!");

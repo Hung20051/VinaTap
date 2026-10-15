@@ -48,12 +48,19 @@ const Article = {
     };
   },
 
-  // Lấy chi tiết 1 bài viết theo slug
+  // Lấy chi tiết 1 bài viết theo slug hoặc id
   async findBySlug(slug) {
-    const [rows] = await db.execute(
+    if (!slug) return null;
+    let [rows] = await db.execute(
       `SELECT * FROM articles WHERE slug = ? LIMIT 1`,
-      [slug],
+      [String(slug)],
     );
+    if (!rows[0] && !isNaN(Number(slug))) {
+      const [r] = await db.execute(`SELECT * FROM articles WHERE id = ? LIMIT 1`, [
+        Number(slug),
+      ]);
+      rows = r;
+    }
     if (!rows[0]) return null;
 
     const article = rows[0];
@@ -84,12 +91,23 @@ const Article = {
     };
   },
 
-  // Lấy chi tiết 1 bài viết theo id
+  // Lấy chi tiết 1 bài viết theo id hoặc slug
   async findById(id) {
-    const [rows] = await db.execute(`SELECT * FROM articles WHERE id = ? LIMIT 1`, [
-      id,
-    ]);
-    if (!rows[0]) return null;
+    if (!id) return null;
+    let rows;
+    if (!isNaN(Number(id))) {
+      const [r] = await db.execute(`SELECT * FROM articles WHERE id = ? LIMIT 1`, [
+        Number(id),
+      ]);
+      rows = r;
+    }
+    if (!rows || !rows[0]) {
+      const [r] = await db.execute(`SELECT * FROM articles WHERE slug = ? LIMIT 1`, [
+        String(id),
+      ]);
+      rows = r;
+    }
+    if (!rows || !rows[0]) return null;
 
     const article = rows[0];
     const [items] = await db.execute(
@@ -288,10 +306,18 @@ const Article = {
   },
 
 
-  // Xóa bài viết
+  // Xóa bài viết theo id hoặc slug
   async delete(id) {
-    const [res] = await db.execute(`DELETE FROM articles WHERE id = ?`, [id]);
-    return res.affectedRows > 0;
+    if (!id) return false;
+    let res;
+    if (!isNaN(Number(id))) {
+      const [r] = await db.execute(`DELETE FROM articles WHERE id = ?`, [Number(id)]);
+      res = r;
+    } else {
+      const [r] = await db.execute(`DELETE FROM articles WHERE slug = ?`, [String(id)]);
+      res = r;
+    }
+    return res?.affectedRows > 0;
   },
 
   // Tăng lượt xem

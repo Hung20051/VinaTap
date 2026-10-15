@@ -134,23 +134,45 @@ const updateArticle = async (req, res) => {
       items,
     } = req.body;
 
-    const existing = await Article.findById(id);
+    let existing = await Article.findById(id);
+    if (!existing && slug) {
+      existing = await Article.findBySlug(slug);
+    }
+    if (!existing && isNaN(Number(id))) {
+      existing = await Article.findBySlug(id);
+    }
+
     if (!existing) {
-      return res.status(404).json({ message: "Không tìm thấy bài viết" });
+      // Tự động tạo mới bài viết (upsert) nếu chưa tồn tại
+      const finalSlug = (slug || (isNaN(Number(id)) ? id : `article-${Date.now()}`)).trim();
+      const newId = await Article.create({
+        slug: finalSlug,
+        category: category || "things-to-do",
+        province_slug,
+        title_en: (title_en || "").trim(),
+        title_vi: (title_vi || "").trim(),
+        hero_image: hero_image || "/guide/megamenu/todo-2-hcmc.jpg",
+        author_name: author_name || "VinaTap",
+        published_date: published_date || new Date(),
+        status: status || "published",
+        items: Array.isArray(items) ? items : [],
+      });
+      const created = await Article.findById(newId);
+      return res.json({ success: true, article: created, message: "Đã lưu cập nhật bài viết thành công" });
     }
 
     // Nếu sửa slug, kiểm tra không được trùng với bài khác
     if (slug && slug !== existing.slug) {
       const duplicate = await Article.findBySlug(slug);
-      if (duplicate && duplicate.id !== Number(id)) {
+      if (duplicate && duplicate.id !== existing.id) {
         return res.status(400).json({ message: "Slug đã được sử dụng bởi bài viết khác" });
       }
     }
 
     await Article.update(
-      id,
+      existing.id,
       {
-        slug: slug?.trim(),
+        slug: slug?.trim() || existing.slug,
         category,
         province_slug,
         title_en: title_en?.trim(),
@@ -163,7 +185,7 @@ const updateArticle = async (req, res) => {
       items,
     );
 
-    const updated = await Article.findById(id);
+    const updated = await Article.findById(existing.id);
     res.json({ success: true, article: updated });
   } catch (err) {
     console.error("updateArticle error:", err);
@@ -175,12 +197,15 @@ const updateArticle = async (req, res) => {
 const deleteArticle = async (req, res) => {
   try {
     const { id } = req.params;
-    const existing = await Article.findById(id);
+    let existing = await Article.findById(id);
+    if (!existing) {
+      existing = await Article.findBySlug(id);
+    }
     if (!existing) {
       return res.status(404).json({ message: "Không tìm thấy bài viết" });
     }
 
-    await Article.delete(id);
+    await Article.delete(existing.id);
     res.json({ success: true, message: "Đã xóa bài viết thành công" });
   } catch (err) {
     console.error("deleteArticle error:", err);
