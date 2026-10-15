@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -584,9 +585,18 @@ export default function MustTryFoodsInHCMCPage() {
               ? "12 món ăn nhất định phải thử tại TP. Hồ Chí Minh"
               : "12 must-try foods in Ho Chi Minh City"}
           </h1>
-          <p className="vnn-fullbleed-hero__byline">
-            By Welcome to Vietnam &nbsp;&nbsp;&nbsp; April 25, 2025
-          </p>
+          <div className="vnn-fullbleed-hero__byline">
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>{isVi ? "15 Tháng 10, 2026" : "October 15, 2026"}</span>
+          </div>
         </div>
       </section>
 

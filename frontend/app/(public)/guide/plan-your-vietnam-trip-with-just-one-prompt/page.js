@@ -517,10 +517,16 @@ export default function PlanYourVietnamTripPage() {
               ? "Lên Kế Hoạch Du Lịch Việt Nam Chỉ Với Một Prompt"
               : "Plan Your Vietnam Trip with Just One Prompt"}
           </h1>
-          <div className="plan-trip-hero__meta">
-            <span className="plan-trip-hero__author">
-              {lang === "vi" ? "Bởi VinaTap" : "By VinaTap"}
-            </span>
+          <div className="plan-trip-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
             <span className="plan-trip-hero__date">
               {lang === "vi" ? "11 Tháng 10, 2026" : "October 11, 2026"}
             </span>

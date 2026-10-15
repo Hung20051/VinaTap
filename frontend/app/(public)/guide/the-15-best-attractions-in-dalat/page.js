@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -605,9 +606,18 @@ export default function Dalat15AttractionsPage() {
             {isVi ? "15 điểm tham quan đẹp nhất Đà Lạt" : "The 15 best attractions in Dalat"}
           </h1>
 
-          <p className="hcmc-hero__meta" style={{ fontSize: "14px", opacity: 0.9 }}>
-            By Welcome to Vietnam &nbsp;·&nbsp; July 21, 2024
-          </p>
+          <div className="hcmc-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "14px", opacity: 0.95 }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>{isVi ? "13 Tháng 10, 2026" : "October 13, 2026"}</span>
+          </div>
         </div>
       </section>
 

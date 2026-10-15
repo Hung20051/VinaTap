@@ -116,9 +116,31 @@
 .vnn-fullbleed-hero__byline {
   font-size: 13.5px;
   color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.02em;
-  margin-top: 4px;
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vnn-hero-author-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vnn-hero-author-logo img {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.vnn-hero-author-logo span {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13.5px;
 }
 
 @media (max-width: 768px) {

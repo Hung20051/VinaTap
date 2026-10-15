@@ -1295,7 +1295,7 @@ const MEGA_MENUS_DATA = {
         title: "7 must-try foods in Vung Tau",
         titleVi: "7 món ăn nhất định phải thử ở Vũng Tàu",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/vung-tau/7-must-try-foods-vung-tau.jpg",
         link: "/guide/7-must-try-foods-in-vung-tau",

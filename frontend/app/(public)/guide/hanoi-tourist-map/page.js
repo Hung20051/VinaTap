@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -384,15 +385,18 @@ export default function HanoiTouristMapPage() {
             {isVi ? "Bản đồ du lịch Hà Nội" : "Hanoi Tourist Map"}
           </h1>
 
-          <div className="vnn-fullbleed-hero__meta">
-            <span className="vnn-fullbleed-hero__author">
-              {isVi ? "Bởi VinaTap" : "By VinaTap"}
-            </span>
+          <div className="vnn-fullbleed-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
             <span className="vnn-fullbleed-hero__dot">•</span>
             <span>
-              {isVi
-                ? "111 Tháng 10, 2026"
-                : "October 14, 2026"}
+              {isVi ? "12 Tháng 10, 2026" : "October 12, 2026"}
             </span>
           </div>
         </div>

@@ -494,11 +494,22 @@ export default function AoDaiArticlePage() {
                 ? "Áo Dài – Quốc phục & Nét đẹp truyền thống Việt Nam"
                 : "Ao Dai – Vietnamese Traditional Dress"}
             </h1>
-            <p className="ad-hero__meta">
-              {isVi
-                ? "Bởi VinaTap • 13 Tháng 10, 2026"
-                : "By VinaTap • October 13, 2026"}
-            </p>
+            <div className="ad-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+              <Logo
+                size={20}
+                showText={true}
+                noLink
+                href={null}
+                as="span"
+                className="vnn-hero-author-logo"
+              />
+              <span>•</span>
+              <span>
+                {isVi
+                  ? "13 Tháng 10, 2026"
+                  : "October 13, 2026"}
+              </span>
+            </div>
           </div>
         </section>
 

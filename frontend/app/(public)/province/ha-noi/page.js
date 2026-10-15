@@ -282,7 +282,7 @@ const MEGA_MENUS_DATA = {
         title: "1 Month in Vietnam",
         titleVi: "1 tháng trọn vẹn tại Việt Nam",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Itinerary",
         img: "/guide/megamenu/itin-4-1month.jpg",
         link: "/guide/1-month-in-vietnam",

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -322,11 +323,18 @@ export default function EightBestThingsNhaTrangPage() {
               : "8 best things to do in Nha Trang"}
           </h1>
 
-          <p className="hcmc-hero__meta">
-            {isVi
-              ? "Bởi VinaTap • 10 Tháng 10, 2026"
-              : "By VinaTap • October 10, 2026"}
-          </p>
+          <div className="hcmc-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>{isVi ? "10 Tháng 10, 2026" : "October 10, 2026"}</span>
+          </div>
         </div>
       </section>
 

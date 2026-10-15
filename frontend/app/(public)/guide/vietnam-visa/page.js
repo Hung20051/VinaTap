@@ -581,22 +581,24 @@ export default function VietnamVisaPage() {
               ? "Cẩm nang toàn diện về chính sách miễn thị thực 45 ngày, cấp e-Visa 90 ngày cho mọi quốc tịch, thủ tục trực tuyến đơn giản và các cửa khẩu nhập cảnh."
               : "Complete guide on 45-day visa exemptions, 90-day e-Visas for all nationalities, easy online application steps, and approved international entry ports."}
           </p>
-          <div className="visa-hero__meta">
+          <div className="visa-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px", flexWrap: "wrap", justifyContent: "center" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
             <span className="visa-hero__meta-item">
-              <ShieldCheck size={16} />
-              {lang === "vi" ? "Ban Biên Tập VinaTap" : "VinaTap Editorial Team"}
+              <Calendar size={15} />
+              {lang === "vi" ? "14 Tháng 10, 2026" : "October 14, 2026"}
             </span>
             <span>•</span>
             <span className="visa-hero__meta-item">
-              <Clock size={16} />
+              <Clock size={15} />
               {lang === "vi" ? "Thời gian đọc: 5 phút" : "5 min read"}
-            </span>
-            <span>•</span>
-            <span className="visa-hero__meta-item" style={{ color: "#7dd3fc" }}>
-              <Info size={16} />
-              {lang === "vi"
-                ? "Quy định hiện hành mới nhất"
-                : "Latest Official Regulations"}
             </span>
           </div>
         </div>

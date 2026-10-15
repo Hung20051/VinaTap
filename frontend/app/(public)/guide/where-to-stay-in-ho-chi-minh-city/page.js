@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Logo from "@/components/layout/Logo";
 import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
@@ -389,7 +390,20 @@ export default function WhereToStayInHCMCPage() {
 
           <div className="guide-meta-bar">
             <div className="guide-author-box">
-              <div className="guide-author-avatar">VT</div>
+              <div className="guide-author-avatar">
+                <Image
+                  src="/logo.png"
+                  alt="VinaTap"
+                  width={32}
+                  height={24}
+                  style={{
+                    width: "auto",
+                    height: "22px",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                />
+              </div>
               <div>
                 <div className="guide-author-name">
                   <span>Ban Biên Tập VinaTap</span>

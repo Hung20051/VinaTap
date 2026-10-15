@@ -541,10 +541,16 @@ export default function BestPlaces2026Page() {
               ? "15 địa điểm đẹp nhất Việt Nam năm 2026"
               : "15 best places to visit in Vietnam in 2026"}
           </h1>
-          <div className="places-hero__meta">
-            <span className="places-hero__author">
-              {lang === "vi" ? "Bởi VinaTap" : "By VinaTap"}
-            </span>
+          <div className="places-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
             <span className="places-hero__date">
               {lang === "vi" ? "11 Tháng 10, 2026" : "October 11, 2026"}
             </span>

@@ -281,7 +281,20 @@ export default function AccommodationInVietnamPage() {
 
           <div className="guide-meta-bar">
             <div className="guide-author-box">
-              <div className="guide-author-avatar">VT</div>
+              <div className="guide-author-avatar">
+                <Image
+                  src="/logo.png"
+                  alt="VinaTap"
+                  width={32}
+                  height={24}
+                  style={{
+                    width: "auto",
+                    height: "22px",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                />
+              </div>
               <div>
                 <div className="guide-author-name">
                   VinaTap Travel Team
@@ -301,7 +314,7 @@ export default function AccommodationInVietnamPage() {
               <div className="guide-meta-item">
                 <Calendar size={14} />
                 <span>
-                  {isVi ? "Cập nhật: Mới nhất 2026" : "Updated: Latest 2026"}
+                  {isVi ? "Cập nhật: 14 Tháng 10, 2026" : "Updated: October 14, 2026"}
                 </span>
               </div>
               <div className="guide-meta-item">

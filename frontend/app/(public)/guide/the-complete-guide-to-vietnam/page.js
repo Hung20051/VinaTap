@@ -552,12 +552,18 @@ export default function CompleteGuideToVietnamPage() {
               ? "Cẩm nang toàn diện 34 Tỉnh Thành Việt Nam 2026"
               : "The Complete Guide to Vietnam 2026"}
           </h1>
-          <div className="complete-guide-hero__meta">
-            <span className="complete-guide-hero__author">
-              {lang === "vi" ? "Ban Biên Tập VinaTap" : "By VinaTap"}
-            </span>
+          <div className="complete-guide-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
             <span className="complete-guide-hero__date">
-              {lang === "vi" ? "111 Tháng 10, 2026" : "October 14, 2026"}
+              {lang === "vi" ? "11 Tháng 10, 2026" : "October 11, 2026"}
             </span>
           </div>
         </div>

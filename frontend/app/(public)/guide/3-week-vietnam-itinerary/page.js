@@ -135,7 +135,7 @@ const MEGA_MENUS_DATA = {
         title: "Hanoi",
         titleVi: "Hà Nội",
         date: "October 12, 2026",
-        dateVi: "213 Tháng 10, 2026",
+        dateVi: "12 Tháng 10, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-5-hanoi.jpg",
         link: "/province/ha-noi",
@@ -203,7 +203,7 @@ const MEGA_MENUS_DATA = {
         title: "8 must-try foods in Hanoi",
         titleVi: "8 món ngon nhất định phải thử ở Hà Nội",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
         link: "/guide/8-must-try-foods-in-hanoi",
@@ -213,7 +213,7 @@ const MEGA_MENUS_DATA = {
         title: "Saigon Culinary Highlights",
         titleVi: "Tinh hoa ẩm thực Sài Gòn",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-2-hcmc.jpg",
         link: "/province/ho-chi-minh",
@@ -223,7 +223,7 @@ const MEGA_MENUS_DATA = {
         title: "Top 10 Vietnamese Pho Varieties",
         titleVi: "Top 10 món phở ngon nhất Việt Nam",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-3-pho.jpg",
         link: "/guide/pho-the-complete-guide",
@@ -233,7 +233,7 @@ const MEGA_MENUS_DATA = {
         title: "Seafood Feast in Vung Tau",
         titleVi: "Hải sản tươi ngon Vũng Tàu",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-4-vungtau.jpg",
         link: "/province/ba-ria-vung-tau",
@@ -243,7 +243,7 @@ const MEGA_MENUS_DATA = {
         title: "Nha Trang Coastal Delicacies",
         titleVi: "Ẩm thực biển đảo Nha Trang",
         date: "October 14, 2026",
-        dateVi: "2111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-5-nhatrang.jpg",
         link: "/guide/5-must-try-nha-trang-dishes",
@@ -709,10 +709,21 @@ export default function ThreeWeekVietnamItineraryPage() {
               : "3-week Vietnam Itinerary"}
           </h1>
 
-          <div className="itin-hero__meta">
-            {lang === "vi"
-              ? "Bởi VinaTap • 12 Tháng 10, 2026"
-              : "By VinaTap • October 11, 2026"}
+          <div className="itin-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>
+              {lang === "vi"
+                ? "12 Tháng 10, 2026"
+                : "October 12, 2026"}
+            </span>
           </div>
         </div>
       </section>

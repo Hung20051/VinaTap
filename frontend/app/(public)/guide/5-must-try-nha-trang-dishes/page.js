@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -259,11 +260,18 @@ export default function NhaTrangFoodGuidePage() {
             {isVi ? "5 món ngon Nha Trang nhất định phải thử" : "5 must-try Nha Trang dishes"}
           </h1>
 
-          <p className="vnn-fullbleed-hero__byline">
-            {isVi
-              ? "Bởi Welcome to Vietnam   17 Tháng 2, 2025"
-              : "By Welcome to Vietnam   February 17, 2025"}
-          </p>
+          <div className="vnn-fullbleed-hero__byline">
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>{isVi ? "15 Tháng 10, 2026" : "October 15, 2026"}</span>
+          </div>
         </div>
       </section>
 

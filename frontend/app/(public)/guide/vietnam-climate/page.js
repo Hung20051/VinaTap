@@ -697,10 +697,17 @@ export default function VietnamClimatePage() {
               ? "Khí Hậu & Thời Tiết Việt Nam: Tổng Quan Theo Từng Vùng Miền"
               : "Vietnam's Climate: An Overview of the Climate in Each Region"}
           </h1>
-          <div className="climate-hero__meta">
-            {isVi
-              ? "Bởi Ban Biên Tập VinaTap  •  Cập nhật năm 2026"
-              : "By VinaTap Editorial Team  •  Updated for 2026"}
+          <div className="climate-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>{isVi ? "14 Tháng 10, 2026" : "October 14, 2026"}</span>
           </div>
         </div>
       </section>

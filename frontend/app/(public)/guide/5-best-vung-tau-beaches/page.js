@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -213,13 +214,17 @@ export default function BestVungTauBeachesPage() {
           </h1>
           <div className="vnn-post-meta">
             <div className="vnn-author-wrap">
-              <span className="vnn-author-avatar">VT</span>
-              <span className="vnn-author-name">
-                {lang === "vi" ? "VinaTap" : "VinaTap"}
-              </span>
+              <Logo
+                size={22}
+                showText={true}
+                noLink
+                href={null}
+                as="span"
+                className="vnn-author-brand-logo"
+              />
             </div>
             <span className="vnn-meta-dot">•</span>
-            <span>{lang === "vi" ? "9 Tháng 4, 2026" : "April 9, 2026"}</span>
+            <span>{lang === "vi" ? "13 Tháng 10, 2026" : "October 13, 2026"}</span>
             <span className="vnn-meta-dot">•</span>
             <span>{lang === "vi" ? "5 phút đọc" : "5 min read"}</span>
 

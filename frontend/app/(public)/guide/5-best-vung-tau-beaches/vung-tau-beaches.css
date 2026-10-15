@@ -61,22 +61,24 @@
   gap: 8px;
 }
 
-.vnn-author-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #00c2cb;
-  color: #ffffff;
-  display: flex;
+.vnn-author-brand-logo {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
+  gap: 7px;
+  text-decoration: none;
 }
 
-.vnn-author-name {
-  color: #222222;
-  font-weight: 600;
+.vnn-author-brand-logo img {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.vnn-author-brand-logo span {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0f172a;
 }
 
 .vnn-meta-dot {

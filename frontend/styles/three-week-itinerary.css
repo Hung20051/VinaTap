@@ -11,23 +11,37 @@
 /* ─── 1. TOP BANNER ─── */
 .vnn-top-banner {
   width: 100%;
-  background: #0284c7;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
   cursor: pointer;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 16px;
 }
 
 .vnn-top-banner__inner {
-  max-width: 1320px;
-  margin: 0 auto;
+  max-width: 1240px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   line-height: 0;
 }
 
 .vnn-top-banner__img {
   width: 100%;
+  max-width: 1080px;
   height: auto;
-  max-height: 105px;
-  object-fit: cover;
+  max-height: 100px;
+  object-fit: contain;
   display: block;
+  transition: transform 0.25s ease;
+}
+
+.vnn-top-banner:hover .vnn-top-banner__img {
+  transform: scale(1.012);
 }
 
 /* ─── 2. HERO SECTION (SCREENSHOT 1) ─── */

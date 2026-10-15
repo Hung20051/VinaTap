@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -283,10 +284,22 @@ export default function NinhBinhDestinationPage() {
               <div
                 className="guide-author-avatar"
                 style={{
-                  background: "linear-gradient(135deg, #099f8a, #00c2cb)",
+                  background: "#ffffff",
+                  border: "1.5px solid #e2e8f0",
                 }}
               >
-                NB
+                <Image
+                  src="/logo.png"
+                  alt="VinaTap"
+                  width={32}
+                  height={24}
+                  style={{
+                    width: "auto",
+                    height: "22px",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                />
               </div>
               <div>
                 <div className="guide-author-name">
@@ -307,7 +320,7 @@ export default function NinhBinhDestinationPage() {
               <div className="guide-meta-item">
                 <Calendar size={14} />
                 <span>
-                  {isVi ? "Cập nhật: Mới nhất 2026" : "Updated: Latest 2026"}
+                  {isVi ? "Cập nhật: 10 Tháng 10, 2026" : "Updated: October 10, 2026"}
                 </span>
               </div>
               <div className="guide-meta-item">

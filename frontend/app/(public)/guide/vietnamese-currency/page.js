@@ -106,7 +106,7 @@ const MEGA_MENUS_DATA = {
         title: "Da Nang",
         titleVi: "Đà Nẵng",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-4-danang.jpg",
         link: "/province/da-nang",
@@ -116,7 +116,7 @@ const MEGA_MENUS_DATA = {
         title: "Hanoi",
         titleVi: "Hà Nội",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Destinations",
         img: "/guide/megamenu/dest-5-hanoi.jpg",
         link: "/province/ha-noi",
@@ -140,7 +140,7 @@ const MEGA_MENUS_DATA = {
         title: "8 best things to do in Nha Trang",
         titleVi: "8 trải nghiệm tuyệt nhất tại Nha Trang",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Things to do",
         img: "/guide/megamenu/todo-3-nhatrang.jpg",
         link: "/guide/8-best-things-to-do-in-nha-trang",
@@ -150,7 +150,7 @@ const MEGA_MENUS_DATA = {
         title: "20 Best Things to Do in Vietnam",
         titleVi: "20 trải nghiệm tuyệt nhất tại Việt Nam",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Things to do",
         img: "/guide/megamenu/todo-4-20things.jpg",
         link: "/guide/20-best-things-to-do-in-vietnam",
@@ -160,7 +160,7 @@ const MEGA_MENUS_DATA = {
         title: "The 15 best attractions in Dalat",
         titleVi: "15 điểm tham quan tuyệt nhất tại Đà Lạt",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Things to do",
         img: "/guide/megamenu/todo-5-dalat.jpg",
         link: "/guide/the-15-best-attractions-in-dalat",
@@ -174,7 +174,7 @@ const MEGA_MENUS_DATA = {
         title: "8 must-try foods in Hanoi",
         titleVi: "8 món ngon nhất định phải thử tại Hà Nội",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-1-hanoi.jpg",
         link: "/guide/8-must-try-foods-in-hanoi",
@@ -184,7 +184,7 @@ const MEGA_MENUS_DATA = {
         title: "12 must-try foods in Ho Chi Minh City",
         titleVi: "12 món ngon không thể bỏ lỡ tại TP. Hồ Chí Minh",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-2-hcmc.jpg",
         link: "/guide/12-must-try-foods-in-ho-chi-minh-city",
@@ -194,7 +194,7 @@ const MEGA_MENUS_DATA = {
         title: "Pho – The Soul of Vietnamese Cuisine",
         titleVi: "Phở – Linh hồn ẩm thực Việt Nam",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-3-pho.jpg",
         link: "/province/ha-noi",
@@ -204,7 +204,7 @@ const MEGA_MENUS_DATA = {
         title: "7 must-try foods in Vung Tau",
         titleVi: "7 món ngon độc đáo tại Vũng Tàu",
         date: "October 14, 2026",
-        dateVi: "111 Tháng 10, 2026",
+        dateVi: "14 Tháng 10, 2026",
         badge: "Eat & Drink",
         img: "/guide/megamenu/eat-4-vungtau.jpg",
         link: "/guide/7-must-try-foods-in-vung-tau",
@@ -534,10 +534,17 @@ export default function VietnameseCurrencyPage() {
           <h1 className="currency-hero__title">
             {isVi ? "Tiền Tệ Việt Nam" : "Vietnamese Currency"}
           </h1>
-          <div className="currency-hero__meta">
-            {isVi
-              ? "Bởi Welcome to Vietnam  |  30 Tháng 4, 2026"
-              : "By Welcome to Vietnam    April 30, 2026"}
+          <div className="currency-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>{isVi ? "14 Tháng 10, 2026" : "October 14, 2026"}</span>
           </div>
         </div>
       </section>

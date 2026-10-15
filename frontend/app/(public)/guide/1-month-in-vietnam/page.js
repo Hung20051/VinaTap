@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -428,10 +429,17 @@ export default function OneMonthInVietnamPage() {
               : "1 Month in Vietnam"}
           </h1>
 
-          <div className="omi-hero__byline">
-            {isVi
-              ? "Biên tập bởi VinaTap Editorial • 14 Tháng 10, 2026"
-              : "By Welcome to Vietnam • May 18, 2024"}
+          <div className="omi-hero__byline" style={{ display: "inline-flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>{isVi ? "16 Tháng 10, 2026" : "October 16, 2026"}</span>
           </div>
         </div>
       </section>

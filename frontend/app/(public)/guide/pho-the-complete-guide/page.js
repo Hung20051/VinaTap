@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -243,10 +244,17 @@ export default function PhoGuidePage() {
               ? "Phở – Quốc Hồn Quốc Túy: Cẩm Nang Trọn Vẹn Về Món Nước Huyền Thoại"
               : "Pho: The Complete Guide to the Vietnamese Noodle Soup"}
           </h1>
-          <div className="ad-hero__meta">
-            {isVi
-              ? "Bởi VinaTap • 112 Tháng 10, 2026"
-              : "By VinaTap • October 15, 2026"}
+          <div className="ad-hero__meta" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <Logo
+              size={20}
+              showText={true}
+              noLink
+              href={null}
+              as="span"
+              className="vnn-hero-author-logo"
+            />
+            <span>•</span>
+            <span>{isVi ? "16 Tháng 10, 2026" : "October 16, 2026"}</span>
           </div>
         </div>
       </section>
