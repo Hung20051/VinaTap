@@ -305,6 +305,7 @@ const PageView = {
            ORDER BY time_label ASC`,
         );
         timelineStats = res || [];
+      } else {
         const dateFilter = whereClause
           ? `${whereClause} AND pv.created_at >= '2026-10-10 00:00:00'`
           : `WHERE pv.created_at >= '2026-10-10 00:00:00'`;
