@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
@@ -11,31 +10,22 @@ import {
   Compass,
   Calendar,
   Clock,
-  Bookmark,
-  Share2,
   ChevronRight,
   MapPin,
   Sparkles,
-  CheckCircle2,
   HelpCircle,
-  ArrowRight,
-  Info,
   Waves,
   Sun,
   Bus,
   Plane,
-  Bed,
   Utensils,
   ChevronDown,
   ChevronUp,
-  Camera,
   Check,
   Shield,
-  Eye,
   Anchor,
   Ship,
   Mountain,
-  AlertTriangle,
 } from "lucide-react";
 import "@/styles/home.css";
 import "@/styles/guide-editorial.css";
@@ -174,7 +164,7 @@ export default function HaLongPage() {
 
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl mb-6">
             {isVi
-              ? "Được vinh danh 2 lần là Di sản Thiên nhiên Thế giới của nhân loại, Vịnh Hạ Long làm say đắm hàng triệu du khách với gần 2.000 hòn đảo đá vôi kỳ vĩ nhô lên từ làn nước xanh ngọc bích, những hang động lung linh hàng triệu năm tuổi và hải sản trứ danh."
+              ? "Được vinh danh 2 lần là Di sản Thiên nhiên Thế giới của nhân loại, Vịnh Hạ Long làm say đắm hàng triệu du khách với gần 2.000 hòn đảo đá vôi kỳ vĩ nhô lên từ làn nước xanh ngọc bích, những hang động lung linh hàng triệu năm tuổi và ẩm thực biển nức tiếng."
               : "Ha Long Bay is best known for its magnificent natural limestone formations rising out of emerald waters. Home to an extensive network of prehistoric caves, untouched islets, floating fishing communities, and world-class luxury cruises."}
           </p>
 
@@ -205,17 +195,15 @@ export default function HaLongPage() {
         </header>
 
         {/* Hero Featured Image */}
-        <div className="relative rounded-3xl overflow-hidden shadow-2xl mb-10 border border-slate-200 dark:border-slate-800 aspect-[16/9] md:aspect-[21/9]">
-          <Image
+        <div className="hl-hero-img-wrap">
+          <img
             src="/guide/ha-long/hero-halong.jpg"
             alt={isVi ? "Toàn cảnh Vịnh Hạ Long nhìn từ đảo Ti Tốp" : "Panoramic view of Ha Long Bay from Ti Top Island"}
-            fill
-            priority
-            className="object-cover"
-            sizes="(max-width: 1200px) 100vw, 1200px"
+            className="hl-hero-img"
+            loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 text-white">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
+          <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 text-white pointer-events-none">
             <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-xs font-bold tracking-wider uppercase mb-2">
               {isVi ? "Góc Nhìn Biểu Tượng" : "Iconic Vantage Point"}
             </span>
@@ -426,12 +414,11 @@ export default function HaLongPage() {
             {/* Sung Sot Cave */}
             <div className="hl-card">
               <div className="hl-card-img-wrap">
-                <Image
+                <img
                   src="/guide/ha-long/sung-sot-cave.jpg"
                   alt={isVi ? "Hang Sửng Sốt Vịnh Hạ Long" : "Sung Sot Surprise Cave Ha Long Bay"}
-                  fill
                   className="hl-card-img"
-                  sizes="(max-width: 768px) 100vw, 380px"
+                  loading="lazy"
                 />
                 <span className="hl-card-tag">{isVi ? "Hang Lớn Nhất" : "Largest Cave"}</span>
               </div>
@@ -452,12 +439,11 @@ export default function HaLongPage() {
             {/* Ti Top Island */}
             <div className="hl-card">
               <div className="hl-card-img-wrap">
-                <Image
+                <img
                   src="/guide/ha-long/ti-top-island.jpg"
                   alt={isVi ? "Đảo Ti Tốp Vịnh Hạ Long" : "Ti Top Island Ha Long Bay"}
-                  fill
                   className="hl-card-img"
-                  sizes="(max-width: 768px) 100vw, 380px"
+                  loading="lazy"
                 />
                 <span className="hl-card-tag">{isVi ? "Góc Nhìn 360°" : "Panoramic View"}</span>
               </div>
@@ -478,12 +464,11 @@ export default function HaLongPage() {
             {/* Luon Cave Kayaking */}
             <div className="hl-card">
               <div className="hl-card-img-wrap">
-                <Image
+                <img
                   src="/guide/ha-long/kayak-luon-cave.jpg"
                   alt={isVi ? "Chèo thuyền Kayak Hang Luồn" : "Luon Cave Kayaking Ha Long Bay"}
-                  fill
                   className="hl-card-img"
-                  sizes="(max-width: 768px) 100vw, 380px"
+                  loading="lazy"
                 />
                 <span className="hl-card-tag">{isVi ? "Chèo Kayak" : "Kayaking Hub"}</span>
               </div>
@@ -504,12 +489,11 @@ export default function HaLongPage() {
             {/* Thien Cung Cave */}
             <div className="hl-card">
               <div className="hl-card-img-wrap">
-                <Image
+                <img
                   src="/guide/ha-long/limestone-karsts.jpg"
                   alt={isVi ? "Động Thiên Cung Hạ Long" : "Thien Cung Heavenly Palace Cave"}
-                  fill
                   className="hl-card-img"
-                  sizes="(max-width: 768px) 100vw, 380px"
+                  loading="lazy"
                 />
                 <span className="hl-card-tag">{isVi ? "Cung Điện Nhà Trời" : "Heavenly Palace"}</span>
               </div>
@@ -530,12 +514,11 @@ export default function HaLongPage() {
             {/* Dau Go Cave */}
             <div className="hl-card">
               <div className="hl-card-img-wrap">
-                <Image
+                <img
                   src="/guide/ha-long/cruise-bay.jpg"
                   alt={isVi ? "Hang Đầu Gỗ Lịch Sử" : "Dau Go Cave of Wonders"}
-                  fill
                   className="hl-card-img"
-                  sizes="(max-width: 768px) 100vw, 380px"
+                  loading="lazy"
                 />
                 <span className="hl-card-tag">{isVi ? "Di Tích Lịch Sử" : "Historic Cave"}</span>
               </div>
@@ -556,12 +539,11 @@ export default function HaLongPage() {
             {/* Hon Trong Mai */}
             <div className="hl-card">
               <div className="hl-card-img-wrap">
-                <Image
+                <img
                   src="/guide/vietnam/dest-6-halong.jpg"
                   alt={isVi ? "Hòn Trống Mái Hòn Gà Chọi" : "Fighting Cocks Islet Trong Mai"}
-                  fill
                   className="hl-card-img"
-                  sizes="(max-width: 768px) 100vw, 380px"
+                  loading="lazy"
                 />
                 <span className="hl-card-tag">{isVi ? "Biểu Tượng Du Lịch" : "National Symbol"}</span>
               </div>
@@ -734,13 +716,12 @@ export default function HaLongPage() {
           <div className="hl-food-grid">
             {/* Food 1 */}
             <div className="hl-food-card">
-              <div className="relative w-full aspect-video">
-                <Image
+              <div className="hl-food-img-wrap">
+                <img
                   src="/guide/ha-long/cha-muc-halong.jpg"
                   alt={isVi ? "Chả mực giã tay Hạ Long" : "Ha Long Hand-Pounded Squid Cakes"}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 360px"
+                  className="hl-food-img"
+                  loading="lazy"
                 />
               </div>
               <div className="hl-food-body">
@@ -756,13 +737,12 @@ export default function HaLongPage() {
 
             {/* Food 2 */}
             <div className="hl-food-card">
-              <div className="relative w-full aspect-video bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                <Image
+              <div className="hl-food-img-wrap">
+                <img
                   src="/guide/ha-long/hero-halong.jpg"
                   alt={isVi ? "Bún Bề Bề Hạ Long" : "Mantis Shrimp Noodle Soup"}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 360px"
+                  className="hl-food-img"
+                  loading="lazy"
                 />
               </div>
               <div className="hl-food-body">
@@ -778,13 +758,12 @@ export default function HaLongPage() {
 
             {/* Food 3 */}
             <div className="hl-food-card">
-              <div className="relative w-full aspect-video bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                <Image
+              <div className="hl-food-img-wrap">
+                <img
                   src="/guide/ha-long/cruise-bay.jpg"
                   alt={isVi ? "Sá Sùng Quan Lạn" : "Sa Sung Peanut Worms"}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 360px"
+                  className="hl-food-img"
+                  loading="lazy"
                 />
               </div>
               <div className="hl-food-body">
@@ -1104,12 +1083,11 @@ export default function HaLongPage() {
                 className="hl-related-card"
               >
                 <div className="hl-related-img-wrap">
-                  <Image
+                  <img
                     src={art.img}
                     alt={isVi ? art.titleVi : art.title}
-                    fill
                     className="hl-related-img"
-                    sizes="(max-width: 768px) 100vw, 360px"
+                    loading="lazy"
                   />
                 </div>
                 <div className="hl-related-body">
