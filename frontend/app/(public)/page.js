@@ -2349,6 +2349,10 @@ export default function HomePage() {
                         alt={story.title}
                         className="vnn-compact-item__thumb"
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = "/guide/hcmc/top-dest-hcmc.jpg";
+                        }}
                       />
                       <div className="vnn-compact-item__body">
                         <h5 className="vnn-compact-item__title">
@@ -2908,7 +2912,7 @@ export default function HomePage() {
                     {lang === "vi" ? "Trải nghiệm nên thử" : "Things to do"}
                   </Link>
                   <Link
-                    href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+                    href="/guide/vietnam-visa"
                     className="vnn-clean-footer__link"
                   >
                     {lang === "vi" ? "Visa du lịch Việt Nam" : "Vietnam visa"}
@@ -2922,25 +2926,25 @@ export default function HomePage() {
                 </div>
                 <div className="vnn-clean-footer__col-links">
                   <Link
-                    href="/province/ha-noi"
+                    href="/guide/the-complete-guide-to-vietnam"
                     className="vnn-clean-footer__link"
                   >
                     {lang === "vi" ? "Bản đồ Việt Nam" : "Map of Vietnam"}
                   </Link>
                   <Link
-                    href="/province/da-nang"
+                    href="/guide/accommodation-in-vietnam"
                     className="vnn-clean-footer__link"
                   >
                     {lang === "vi" ? "Khách sạn lưu trú" : "Accommodation"}
                   </Link>
                   <Link
-                    href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+                    href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
                     className="vnn-clean-footer__link"
                   >
                     {lang === "vi" ? "Kinh nghiệm du lịch" : "Travel Tips"}
                   </Link>
                   <Link
-                    href="/guide/10-best-things-to-do-in-ho-chi-minh-city"
+                    href="/guide/15-best-places-to-visit-in-vietnam-in-2026"
                     className="vnn-clean-footer__link"
                   >
                     {lang === "vi" ? "Sách cẩm nang điện tử" : "eBook"}
