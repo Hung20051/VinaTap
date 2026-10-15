@@ -12,7 +12,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap",
     published_date: "2026-10-10",
     status: "published",
-    views_count: 52,
+    views_count: 38,
     items: [
       {
         item_number: 1,
@@ -46,7 +46,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap",
     published_date: "2026-10-10",
     status: "published",
-    views_count: 40,
+    views_count: 34,
     items: [
       {
         item_number: 1,
@@ -80,7 +80,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Editorial",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 65,
+    views_count: 37,
     items: [
       {
         item_number: 1,
@@ -114,7 +114,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Travel",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 55,
+    views_count: 35,
     items: [
       {
         item_number: 1,
@@ -138,7 +138,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Expert",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 60,
+    views_count: 39,
     items: [
       {
         item_number: 1,
@@ -162,7 +162,7 @@ const ALL_24_ARTICLES = [
     author_name: "Foodie VinaTap",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 36,
+    views_count: 33,
     items: [
       {
         item_number: 1,
@@ -186,7 +186,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Culinary",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 44,
+    views_count: 36,
     items: [
       {
         item_number: 1,
@@ -210,7 +210,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Team",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 27,
+    views_count: 35,
     items: [
       {
         item_number: 1,
@@ -234,7 +234,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Team",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 25,
+    views_count: 37,
     items: [
       {
         item_number: 1,
@@ -258,7 +258,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Beach Guide",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 30,
+    views_count: 34,
     items: [
       {
         item_number: 1,
@@ -282,7 +282,7 @@ const ALL_24_ARTICLES = [
     author_name: "Culinary Heritage",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 47,
+    views_count: 38,
     items: [
       {
         item_number: 1,
@@ -306,7 +306,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Culture",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 19,
+    views_count: 33,
     items: [
       {
         item_number: 1,
@@ -330,7 +330,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Stay Guide",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 55,
+    views_count: 36,
     items: [
       {
         item_number: 1,
@@ -354,7 +354,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Navigator",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 25,
+    views_count: 35,
     items: [
       {
         item_number: 1,
@@ -378,7 +378,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap AI Lab",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 33,
+    views_count: 37,
     items: [
       {
         item_number: 1,
@@ -402,7 +402,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Chief Editor",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 42,
+    views_count: 34,
     items: [
       {
         item_number: 1,
@@ -426,7 +426,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Hospitality",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 28,
+    views_count: 36,
     items: [
       {
         item_number: 1,
@@ -460,7 +460,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Climate Guide",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 22,
+    views_count: 35,
     items: [
       {
         item_number: 1,
@@ -484,7 +484,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Travel Tips",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 24,
+    views_count: 38,
     items: [
       {
         item_number: 1,
@@ -508,7 +508,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Legal",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 36,
+    views_count: 33,
     items: [
       {
         item_number: 1,
@@ -532,7 +532,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Highland",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 34,
+    views_count: 37,
     items: [
       {
         item_number: 1,
@@ -556,7 +556,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 21,
+    views_count: 34,
     items: [
       {
         item_number: 1,
@@ -580,7 +580,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 18,
+    views_count: 36,
     items: [
       {
         item_number: 1,
@@ -604,7 +604,7 @@ const ALL_24_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 18,
+    views_count: 36,
     items: [
       {
         item_number: 1,

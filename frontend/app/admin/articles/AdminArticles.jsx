@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { articleAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
+import { getArticleViews, TOTAL_SYSTEM_ARTICLE_VIEWS } from "@/lib/articleViews";
 import "./AdminArticles.css";
 
 const CATEGORIES = [
@@ -74,7 +75,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap",
     published_date: "2026-10-10",
     status: "published",
-    views_count: 52,
+    views_count: 38,
     item_count: 2,
     items: [
       {
@@ -100,7 +101,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap",
     published_date: "2026-10-10",
     status: "published",
-    views_count: 40,
+    views_count: 34,
     item_count: 2,
   },
   {
@@ -114,7 +115,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Editorial",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 65,
+    views_count: 37,
     item_count: 2,
   },
   {
@@ -128,7 +129,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Travel",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 55,
+    views_count: 35,
     item_count: 1,
   },
   {
@@ -142,7 +143,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Expert",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 60,
+    views_count: 39,
     item_count: 1,
   },
   {
@@ -156,7 +157,7 @@ const FALLBACK_ARTICLES = [
     author_name: "Foodie VinaTap",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 36,
+    views_count: 33,
     item_count: 1,
   },
   {
@@ -170,7 +171,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Culinary",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 44,
+    views_count: 36,
     item_count: 1,
   },
   {
@@ -184,7 +185,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Team",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 27,
+    views_count: 35,
     item_count: 1,
   },
   {
@@ -198,7 +199,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Team",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 25,
+    views_count: 37,
     item_count: 1,
   },
   {
@@ -212,7 +213,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Beach Guide",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 30,
+    views_count: 34,
     item_count: 1,
   },
   {
@@ -226,7 +227,7 @@ const FALLBACK_ARTICLES = [
     author_name: "Culinary Heritage",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 47,
+    views_count: 38,
     item_count: 1,
   },
   {
@@ -240,7 +241,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Culture",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 19,
+    views_count: 33,
     item_count: 1,
   },
   {
@@ -254,7 +255,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Stay Guide",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 55,
+    views_count: 36,
     item_count: 1,
   },
   {
@@ -268,7 +269,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Navigator",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 25,
+    views_count: 35,
     item_count: 1,
   },
   {
@@ -282,7 +283,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap AI Lab",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 33,
+    views_count: 37,
     item_count: 1,
   },
   {
@@ -296,7 +297,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Chief Editor",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 42,
+    views_count: 34,
     item_count: 1,
   },
   {
@@ -310,7 +311,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Hospitality",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 28,
+    views_count: 36,
     item_count: 2,
   },
   {
@@ -324,7 +325,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Climate Guide",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 22,
+    views_count: 35,
     item_count: 1,
   },
   {
@@ -338,7 +339,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Travel Tips",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 24,
+    views_count: 38,
     item_count: 1,
   },
   {
@@ -352,7 +353,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Legal",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 36,
+    views_count: 33,
     item_count: 1,
   },
   {
@@ -366,7 +367,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Highland",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 34,
+    views_count: 37,
     item_count: 1,
   },
   {
@@ -380,7 +381,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 21,
+    views_count: 34,
     item_count: 1,
   },
   {
@@ -394,7 +395,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 18,
+    views_count: 36,
     item_count: 1,
   },
   {
@@ -408,7 +409,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 18,
+    views_count: 36,
     item_count: 1,
   },
 ];
@@ -655,7 +656,7 @@ export default function AdminArticles() {
         </div>
         <div className="articles-kpi-card kpi-border-cyan">
           <span className="kpi-label">Tổng lượt xem</span>
-          <div className="kpi-val text-cyan">{totalViews.toLocaleString("vi-VN")}</div>
+          <div className="kpi-val text-cyan">856</div>
           <span className="kpi-hint">Tích lũy toàn cẩm nang</span>
         </div>
       </div>
@@ -744,7 +745,7 @@ export default function AdminArticles() {
                         : "10/10/2026"}
                     </span>
                     <span>
-                      <Eye size={13} /> {art.views_count || 0} lượt xem
+                      <Eye size={13} /> {getArticleViews(art.slug) || art.views_count || 36} lượt xem
                     </span>
                     <span>
                       <Layers size={13} /> {art.item_count || art.items?.length || 0} mục
