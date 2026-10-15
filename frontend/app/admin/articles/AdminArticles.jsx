@@ -74,7 +74,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap",
     published_date: "2026-10-10",
     status: "published",
-    views_count: 34,
+    views_count: 52,
     item_count: 2,
     items: [
       {
@@ -100,7 +100,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap",
     published_date: "2026-10-10",
     status: "published",
-    views_count: 34,
+    views_count: 40,
     item_count: 2,
   },
   {
@@ -114,7 +114,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Editorial",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 34,
+    views_count: 65,
     item_count: 2,
   },
   {
@@ -128,7 +128,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Travel",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 34,
+    views_count: 55,
     item_count: 1,
   },
   {
@@ -142,7 +142,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Expert",
     published_date: "2026-10-11",
     status: "published",
-    views_count: 34,
+    views_count: 60,
     item_count: 1,
   },
   {
@@ -156,7 +156,7 @@ const FALLBACK_ARTICLES = [
     author_name: "Foodie VinaTap",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 34,
+    views_count: 36,
     item_count: 1,
   },
   {
@@ -170,7 +170,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Culinary",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 34,
+    views_count: 44,
     item_count: 1,
   },
   {
@@ -184,7 +184,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Team",
     published_date: "2026-10-12",
     status: "published",
-    views_count: 34,
+    views_count: 27,
     item_count: 1,
   },
   {
@@ -198,7 +198,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Team",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 33,
+    views_count: 25,
     item_count: 1,
   },
   {
@@ -212,7 +212,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Beach Guide",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 33,
+    views_count: 30,
     item_count: 1,
   },
   {
@@ -226,7 +226,7 @@ const FALLBACK_ARTICLES = [
     author_name: "Culinary Heritage",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 33,
+    views_count: 47,
     item_count: 1,
   },
   {
@@ -240,7 +240,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Culture",
     published_date: "2026-10-13",
     status: "published",
-    views_count: 33,
+    views_count: 19,
     item_count: 1,
   },
   {
@@ -254,7 +254,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Stay Guide",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 33,
+    views_count: 55,
     item_count: 1,
   },
   {
@@ -268,7 +268,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Navigator",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 33,
+    views_count: 25,
     item_count: 1,
   },
   {
@@ -296,7 +296,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Chief Editor",
     published_date: "2026-10-14",
     status: "published",
-    views_count: 33,
+    views_count: 42,
     item_count: 1,
   },
   {
@@ -310,7 +310,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Hospitality",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 33,
+    views_count: 28,
     item_count: 2,
   },
   {
@@ -324,7 +324,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Climate Guide",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 33,
+    views_count: 22,
     item_count: 1,
   },
   {
@@ -338,7 +338,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Travel Tips",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 33,
+    views_count: 24,
     item_count: 1,
   },
   {
@@ -352,7 +352,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Legal",
     published_date: "2026-10-15",
     status: "published",
-    views_count: 33,
+    views_count: 36,
     item_count: 1,
   },
   {
@@ -366,7 +366,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Highland",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 33,
+    views_count: 34,
     item_count: 1,
   },
   {
@@ -380,7 +380,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 33,
+    views_count: 21,
     item_count: 1,
   },
   {
@@ -394,7 +394,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 33,
+    views_count: 18,
     item_count: 1,
   },
   {
@@ -408,7 +408,7 @@ const FALLBACK_ARTICLES = [
     author_name: "VinaTap Itinerary",
     published_date: "2026-10-16",
     status: "published",
-    views_count: 33,
+    views_count: 18,
     item_count: 1,
   },
 ];

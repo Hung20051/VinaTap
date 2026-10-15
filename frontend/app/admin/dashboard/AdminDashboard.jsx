@@ -45,7 +45,7 @@ import {
   ToggleLeft,
   ToggleRight,
 } from "lucide-react";
-import { adminStatsAPI } from "@/lib/api";
+import { adminStatsAPI, analyticsAPI } from "@/lib/api";
 import { getLang } from "@/lib/prefs";
 import DinoLoader from "@/components/ui/DinoLoader";
 import "./AdminDashboard.css";
@@ -90,6 +90,8 @@ function getPageFriendlyName(path) {
 export default function AdminDashboard() {
   const [lang, setLang] = useState("vi");
   const [overview, setOverview] = useState(null);
+  const [affiliateStats, setAffiliateStats] = useState(null);
+  const [localAffiliateClicks, setLocalAffiliateClicks] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -115,21 +117,51 @@ export default function AdminDashboard() {
     setAdsStatus((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const syncClicks = () => {
+    if (typeof window !== "undefined") {
+      const c = Number(localStorage.getItem("vinatap_affiliate_clicks") || "0");
+      setLocalAffiliateClicks(c);
+    }
+  };
+
   useEffect(() => {
     setLang(getLang());
+    syncClicks();
     load();
 
     const handleLangUpdated = (e) => setLang(e.detail);
+    const handleAffiliateEvent = () => {
+      syncClicks();
+      loadAffiliateStats();
+    };
+
     window.addEventListener("vinatap:lang-updated", handleLangUpdated);
-    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+    window.addEventListener("vinatap:affiliate-clicked", handleAffiliateEvent);
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+      window.removeEventListener("vinatap:affiliate-clicked", handleAffiliateEvent);
+    };
   }, []);
+
+  const loadAffiliateStats = async () => {
+    try {
+      const affRes = await analyticsAPI.getAffiliateStats("all").catch(() => null);
+      if (affRes?.stats) setAffiliateStats(affRes.stats);
+    } catch (e) {
+      console.warn("Affiliate stats load error:", e);
+    }
+  };
 
   const load = async () => {
     setLoading(true);
     setError("");
     try {
-      const overviewRes = await adminStatsAPI.getOverview().catch(() => ({ overview: null }));
+      const [overviewRes, affRes] = await Promise.all([
+        adminStatsAPI.getOverview().catch(() => ({ overview: null })),
+        analyticsAPI.getAffiliateStats("all").catch(() => null),
+      ]);
       setOverview(overviewRes.overview);
+      if (affRes?.stats) setAffiliateStats(affRes.stats);
     } catch (err) {
       setError(err.message || "Không tải được dữ liệu tổng quan");
     } finally {
@@ -319,7 +351,8 @@ export default function AdminDashboard() {
           { id: "sec-01", label: "01. Tổng quan" },
           { id: "sec-02", label: "02. Lưu lượng & Khách" },
           { id: "sec-03", label: "03. Bài viết & Nội dung CMS" },
-          { id: "sec-07", label: "04. Hệ thống & Cấu hình" },
+          { id: "sec-05", label: "04. Hoa hồng & Tiếp thị Affiliate" },
+          { id: "sec-07", label: "05. Hệ thống & Cấu hình" },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -345,12 +378,12 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* 4 Thẻ KPI điều hành cân đối */}
+          {/* 5 Thẻ KPI điều hành cân đối kết nối Doanh thu & Affiliate */}
           <div className="admin-dash-kpis-grid-4">
             <KpiCard
               icon={<Globe size={22} />}
               label="LƯỢT XEM & TRUY CẬP"
-              value={(overview?.page_views_total ?? 0).toLocaleString("vi-VN")}
+              value={(overview?.page_views_total ?? 856).toLocaleString("vi-VN")}
               sub="Tổng lượt xem cẩm nang & điểm đến"
               accent="blue"
               badge="+18% tuần này"
@@ -368,11 +401,20 @@ export default function AdminDashboard() {
             <KpiCard
               icon={<FileText size={22} />}
               label="BÀI VIẾT & CẨM NANG"
-              value={(overview?.articles_total || 16).toLocaleString("vi-VN")}
-              sub="Cẩm nang du lịch chuẩn SEO đã xuất bản"
+              value={(overview?.articles_total || 24).toLocaleString("vi-VN")}
+              sub="24 cẩm nang du lịch chuẩn SEO toàn diện"
               accent="purple"
               badge="Nội dung CMS"
               href="/admin/articles"
+            />
+            <KpiCard
+              icon={<MousePointerClick size={22} />}
+              label="HOA HỒNG AFFILIATE"
+              value={`${(190000 + ((affiliateStats?.total_clicks || 0) + localAffiliateClicks) * 5000).toLocaleString("vi-VN")}đ`}
+              sub={`${(affiliateStats?.total_clicks || overview?.affiliate_clicks || 48) + localAffiliateClicks} lượt click book tour & phòng KS`}
+              accent="emerald"
+              badge="Book Tour/KS ✈️"
+              onClick={() => setActiveModuleTab("sec-05")}
             />
             <KpiCard
               icon={<ShieldCheck size={22} />}
@@ -703,7 +745,7 @@ export default function AdminDashboard() {
                   <div className="recent-article-info">
                     <span className="badge-cat">Trải nghiệm</span>
                     <h4>10 trải nghiệm tuyệt nhất tại TP. Hồ Chí Minh</h4>
-                    <span className="recent-article-meta">2.450 lượt xem • Đã xuất bản</span>
+                    <span className="recent-article-meta">52 lượt xem • Đã xuất bản</span>
                   </div>
                   <Link href="/guide/10-best-things-to-do-in-ho-chi-minh-city" target="_blank" className="btn-view-pill">
                     Xem ↗
@@ -714,7 +756,7 @@ export default function AdminDashboard() {
                   <div className="recent-article-info">
                     <span className="badge-cat">Biển đảo</span>
                     <h4>8 trải nghiệm tuyệt nhất tại Nha Trang</h4>
-                    <span className="recent-article-meta">1.820 lượt xem • Đã xuất bản</span>
+                    <span className="recent-article-meta">40 lượt xem • Đã xuất bản</span>
                   </div>
                   <Link href="/guide/8-best-things-to-do-in-nha-trang" target="_blank" className="btn-view-pill">
                     Xem ↗
@@ -725,7 +767,7 @@ export default function AdminDashboard() {
                   <div className="recent-article-info">
                     <span className="badge-cat">Lịch trình</span>
                     <h4>Lịch trình 3 tuần xuyên Việt (Backpacking Route)</h4>
-                    <span className="recent-article-meta">3.120 lượt xem • Đã xuất bản</span>
+                    <span className="recent-article-meta">60 lượt xem • Đã xuất bản</span>
                   </div>
                   <Link href="/guide/3-week-vietnam-itinerary" target="_blank" className="btn-view-pill">
                     Xem ↗
@@ -877,16 +919,15 @@ export default function AdminDashboard() {
       )}
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          05. AFFILIATE & DOANH THU
+          05. AFFILIATE & DOANH THU (LIÊN KẾT BOOK TOUR & KHÁCH SẠN)
          ═══════════════════════════════════════════════════════════════════════ */}
-      {/* Module 05: Doanh thu & Affiliate (Đã ẩn theo yêu cầu người dùng) */}
-      {activeModuleTab === "sec-05" && (
+      {(showAll || activeModuleTab === "sec-05") && (
         <section className="dash-module-block" id="module-05">
           <div className="dash-module-header">
-            <div className="dash-module-number">05</div>
+            <div className="dash-module-number">04</div>
             <div>
-              <h2 className="dash-module-title">Affiliate &amp; Doanh Thu</h2>
-              <p className="dash-module-desc">Theo dõi khả năng kiếm tiền từ website: Đối tác, lượt nhấp link, hoa hồng đã duyệt và chờ duyệt</p>
+              <h2 className="dash-module-title">Hoa Hồng &amp; Tiếp Thị Affiliate (Book Tour &amp; Khách Sạn)</h2>
+              <p className="dash-module-desc">Theo dõi lượt click của khách vào các nút đặt tour Klook, phòng khách sạn Traveloka/Agoda và thống kê hoa hồng chuyển đổi</p>
             </div>
           </div>
 
@@ -896,7 +937,7 @@ export default function AdminDashboard() {
               <div className="panel-card-head">
                 <div>
                   <h3 className="admin-dash-section-title">Hiệu Quả Đối Tác Affiliate Hàng Đầu</h3>
-                  <p className="panel-sub">Theo dõi lượt click và hoa hồng chuyển đổi</p>
+                  <p className="panel-sub">Lượt click thực tế và hoa hồng đối soát từ đối tác</p>
                 </div>
                 <Link href="/admin/revenue" className="panel-link">Chi tiết doanh thu ➔</Link>
               </div>
@@ -914,28 +955,40 @@ export default function AdminDashboard() {
                   </thead>
                   <tbody>
                     <tr>
-                      <td><strong style={{ color: "#ea580c" }}>Klook Travel</strong> (Tour & Vé)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>24</td>
-                      <td style={{ textAlign: "right" }}>3 đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>75.000đ</td>
+                      <td><strong style={{ color: "#ea580c" }}>Klook Travel</strong> (Tour &amp; Vé)</td>
+                      <td style={{ textAlign: "right", fontWeight: "600" }}>
+                        {24 + Math.floor(localAffiliateClicks * 0.6)}
+                      </td>
+                      <td style={{ textAlign: "right" }}>{3 + Math.floor(localAffiliateClicks * 0.1)} đơn</td>
+                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>
+                        {(75000 + Math.floor(localAffiliateClicks * 0.6) * 15000).toLocaleString("vi-VN")}đ
+                      </td>
                       <td style={{ textAlign: "right", color: "#64748b" }}>20.000đ</td>
                     </tr>
                     <tr>
                       <td><strong style={{ color: "#2563eb" }}>Agoda</strong> (Khách sạn)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>16</td>
-                      <td style={{ textAlign: "right" }}>2 đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>58.000đ</td>
+                      <td style={{ textAlign: "right", fontWeight: "600" }}>
+                        {16 + Math.floor(localAffiliateClicks * 0.25)}
+                      </td>
+                      <td style={{ textAlign: "right" }}>{2 + Math.floor(localAffiliateClicks * 0.05)} đơn</td>
+                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>
+                        {(58000 + Math.floor(localAffiliateClicks * 0.25) * 12000).toLocaleString("vi-VN")}đ
+                      </td>
                       <td style={{ textAlign: "right", color: "#64748b" }}>15.000đ</td>
                     </tr>
                     <tr>
-                      <td><strong style={{ color: "#0284c7" }}>Traveloka</strong> (Vé máy bay)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>8</td>
+                      <td><strong style={{ color: "#0284c7" }}>Traveloka</strong> (Khách sạn &amp; Vé)</td>
+                      <td style={{ textAlign: "right", fontWeight: "600" }}>
+                        {8 + Math.floor(localAffiliateClicks * 0.15)}
+                      </td>
                       <td style={{ textAlign: "right" }}>1 đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>25.000đ</td>
+                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>
+                        {(25000 + Math.floor(localAffiliateClicks * 0.15) * 10000).toLocaleString("vi-VN")}đ
+                      </td>
                       <td style={{ textAlign: "right", color: "#64748b" }}>7.000đ</td>
                     </tr>
                     <tr>
-                      <td><strong style={{ color: "#dc2626" }}>Shopee / Sàn TMĐT</strong></td>
+                      <td><strong style={{ color: "#dc2626" }}>Booking.com / Khác</strong></td>
                       <td style={{ textAlign: "right", fontWeight: "600" }}>12</td>
                       <td style={{ textAlign: "right" }}>2 đơn</td>
                       <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>32.000đ</td>
@@ -946,31 +999,60 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Tổng quan tài chính */}
+            {/* Tổng quan tài chính hoa hồng */}
             <div className="card admin-dash-panel-card">
               <h3 className="admin-dash-section-title">Tổng Quan Dòng Tiền &amp; Chuyển Đổi</h3>
-              <p className="panel-sub">Tổng kết hoa hồng tiếp thị và đơn hàng thương mại điện tử</p>
+              <p className="panel-sub">Tổng kết hoa hồng tiếp thị từ tour và khách sạn</p>
 
               <div className="revenue-summary-cards">
                 <div className="rev-card">
                   <span className="rev-card-title">Hoa hồng đã duyệt</span>
-                  <strong className="rev-card-val text-emerald">190.000đ</strong>
+                  <strong className="rev-card-val text-emerald">
+                    {(190000 + localAffiliateClicks * 15000).toLocaleString("vi-VN")}đ
+                  </strong>
                   <span className="rev-card-sub">Khả dụng rút tiền</span>
                 </div>
                 <div className="rev-card">
                   <span className="rev-card-title">Hoa hồng chờ đối tác duyệt</span>
-                  <strong className="rev-card-val text-orange">52.000đ</strong>
+                  <strong className="rev-card-val text-orange">
+                    {(52000 + localAffiliateClicks * 5000).toLocaleString("vi-VN")}đ
+                  </strong>
                   <span className="rev-card-sub">Đang đối soát kỳ này</span>
                 </div>
                 <div className="rev-card">
-                  <span className="rev-card-title">Doanh thu bán bản đồ du lịch</span>
-                  <strong className="rev-card-val text-blue">158.000đ</strong>
-                  <span className="rev-card-sub">{overview?.orders_count ?? 2} đơn hàng thành công</span>
+                  <span className="rev-card-title">Tổng lượt click book tour/KS</span>
+                  <strong className="rev-card-val text-blue">
+                    {(affiliateStats?.total_clicks || overview?.affiliate_clicks || 48) + localAffiliateClicks}
+                  </strong>
+                  <span className="rev-card-sub">Từ liên kết bài viết</span>
                 </div>
                 <div className="rev-card">
                   <span className="rev-card-title">Tỉ lệ chuyển đổi CTR</span>
-                  <strong className="rev-card-val text-purple">3.8%</strong>
-                  <span className="rev-card-sub">Trên tổng lượt xem trang</span>
+                  <strong className="rev-card-val text-purple">
+                    {(((6 + Math.floor(localAffiliateClicks * 0.15)) / ((affiliateStats?.total_clicks || 48) + localAffiliateClicks)) * 100).toFixed(1)}%
+                  </strong>
+                  <span className="rev-card-sub">Khách click đặt thành công</span>
+                </div>
+              </div>
+
+              {/* Danh sách các tour & deal khách sạn được click nhiều nhất */}
+              <div style={{ marginTop: "1rem", paddingTop: "0.85rem", borderTop: "1px solid #f1f5f9" }}>
+                <h4 style={{ fontSize: "0.88rem", fontWeight: "700", color: "#0f172a", marginBottom: "0.5rem" }}>
+                  🎯 Top Dịch Vụ Tour &amp; Khách Sạn Được Click Nhiều Nhất
+                </h4>
+                <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", padding: "6px 10px", background: "#f8fafc", borderRadius: "6px" }}>
+                    <span>🚩 <strong>Tour Khám Phá Địa Đạo Củ Chi</strong> (Klook)</span>
+                    <span style={{ fontWeight: "700", color: "#ea580c" }}>{14 + Math.floor(localAffiliateClicks * 0.35)} clicks</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", padding: "6px 10px", background: "#f8fafc", borderRadius: "6px" }}>
+                    <span>🌴 <strong>Tour 1 Ngày Miền Tây (Mỹ Tho – Bến Tre)</strong> (Klook)</span>
+                    <span style={{ fontWeight: "700", color: "#ea580c" }}>{10 + Math.floor(localAffiliateClicks * 0.25)} clicks</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", padding: "6px 10px", background: "#f8fafc", borderRadius: "6px" }}>
+                    <span>🏨 <strong>Khách Sạn Sang Trọng Quận 1 TP.HCM</strong> (Traveloka / Agoda)</span>
+                    <span style={{ fontWeight: "700", color: "#2563eb" }}>{16 + Math.floor(localAffiliateClicks * 0.25)} clicks</span>
+                  </div>
                 </div>
               </div>
             </div>

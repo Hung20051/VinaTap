@@ -9,6 +9,8 @@ import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import { getLang } from "@/lib/prefs";
+import { analyticsAPI } from "@/lib/api";
+import { getArticleViews } from "@/lib/articleViews";
 import {
   Compass,
   Calendar,
@@ -187,6 +189,25 @@ function DealBox({ deal, lang }) {
   const isKlook = deal.partnerType === "klook";
   const partnerBorderColor = isKlook ? "#ff5722" : "#0194f3";
 
+  const handleDealClick = () => {
+    try {
+      analyticsAPI.trackAffiliate({
+        page_path: typeof window !== "undefined" ? window.location.pathname : "/guide/where-to-stay-in-ho-chi-minh-city",
+        partner_name: deal.partnerType || deal.partner || "klook",
+        destination_url: deal.url,
+        link_title: lang === "vi" ? deal.title : deal.titleEn,
+      }).catch(() => {});
+
+      const current = Number(localStorage.getItem("vinatap_affiliate_clicks") || "0");
+      localStorage.setItem("vinatap_affiliate_clicks", String(current + 1));
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new CustomEvent("vinatap:affiliate-clicked", { detail: deal }));
+      }
+    } catch (e) {
+      console.warn("Affiliate click track error:", e);
+    }
+  };
+
   return (
     <div
       className="guide-affiliate-deal"
@@ -224,6 +245,7 @@ function DealBox({ deal, lang }) {
           href={deal.url}
           target="_blank"
           rel="noopener noreferrer sponsored"
+          onClick={handleDealClick}
           className="guide-affiliate-deal__cta"
           style={{
             background: isKlook
@@ -428,7 +450,10 @@ export default function WhereToStayInHCMCPage() {
               </span>
               <span className="guide-meta-item">
                 <Eye size={14} />
-                <span>94.820 {lang === "vi" ? "lượt xem" : "views"}</span>
+                <span>
+                  {getArticleViews("where-to-stay-in-ho-chi-minh-city")}{" "}
+                  {lang === "vi" ? "lượt xem" : "views"}
+                </span>
               </span>
             </div>
 

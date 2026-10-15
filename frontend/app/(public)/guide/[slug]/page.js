@@ -10,6 +10,7 @@ import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import { getLang } from "@/lib/prefs";
 import { articleAPI } from "@/lib/api";
+import { getArticleViews } from "@/lib/articleViews";
 import DinoLoader from "@/components/ui/DinoLoader";
 import {
   Compass,
@@ -874,7 +875,7 @@ function GuideDetailContent() {
                 <span className="guide-meta-item">
                   <Eye size={14} />
                   <span>
-                    {(dbArticle.views_count || 1280).toLocaleString("vi-VN")}{" "}
+                    {(dbArticle.views_count || getArticleViews(resolvedSlug)).toLocaleString("vi-VN")}{" "}
                     {isVi ? "lượt xem" : "views"}
                   </span>
                 </span>
@@ -1044,7 +1045,10 @@ function GuideDetailContent() {
               </span>
               <span className="guide-meta-item">
                 <Eye size={14} />
-                <span>{isFoodsTab ? "142.800" : "128.450"} lượt xem</span>
+                <span>
+                  {getArticleViews(resolvedSlug || "10-best-things-to-do-in-ho-chi-minh-city")}{" "}
+                  {isVi ? "lượt xem" : "views"}
+                </span>
               </span>
             </div>
 

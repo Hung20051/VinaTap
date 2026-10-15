@@ -182,10 +182,10 @@
   margin: 2px 0 0;
 }
 
-/* ─── 4-CARD BALANCED KPI GRID ────────────────────────────────── */
+/* ─── BALANCED KPI GRID ───────────────────────────────────────── */
 .admin-dash-kpis-grid-4 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
   margin-bottom: 1.25rem;
 }
