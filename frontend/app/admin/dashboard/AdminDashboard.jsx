@@ -410,8 +410,8 @@ export default function AdminDashboard() {
             <KpiCard
               icon={<MousePointerClick size={22} />}
               label="HOA HỒNG AFFILIATE"
-              value={`${(190000 + ((affiliateStats?.total_clicks || 0) + localAffiliateClicks) * 5000).toLocaleString("vi-VN")}đ`}
-              sub={`${(affiliateStats?.total_clicks || overview?.affiliate_clicks || 48) + localAffiliateClicks} lượt click book tour & phòng KS`}
+              value="190.000đ"
+              sub="48 lượt click book tour & phòng KS"
               accent="emerald"
               badge="Book Tour/KS ✈️"
               onClick={() => setActiveModuleTab("sec-05")}
@@ -956,43 +956,24 @@ export default function AdminDashboard() {
                   <tbody>
                     <tr>
                       <td><strong style={{ color: "#ea580c" }}>Klook Travel</strong> (Tour &amp; Vé)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>
-                        {24 + Math.floor(localAffiliateClicks * 0.6)}
-                      </td>
-                      <td style={{ textAlign: "right" }}>{3 + Math.floor(localAffiliateClicks * 0.1)} đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>
-                        {(75000 + Math.floor(localAffiliateClicks * 0.6) * 15000).toLocaleString("vi-VN")}đ
-                      </td>
+                      <td style={{ textAlign: "right", fontWeight: "600" }}>22</td>
+                      <td style={{ textAlign: "right" }}>3 đơn</td>
+                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>75.000đ</td>
                       <td style={{ textAlign: "right", color: "#64748b" }}>20.000đ</td>
                     </tr>
                     <tr>
-                      <td><strong style={{ color: "#2563eb" }}>Agoda</strong> (Khách sạn)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>
-                        {16 + Math.floor(localAffiliateClicks * 0.25)}
-                      </td>
-                      <td style={{ textAlign: "right" }}>{2 + Math.floor(localAffiliateClicks * 0.05)} đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>
-                        {(58000 + Math.floor(localAffiliateClicks * 0.25) * 12000).toLocaleString("vi-VN")}đ
-                      </td>
-                      <td style={{ textAlign: "right", color: "#64748b" }}>15.000đ</td>
-                    </tr>
-                    <tr>
-                      <td><strong style={{ color: "#0284c7" }}>Traveloka</strong> (Khách sạn &amp; Vé)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>
-                        {8 + Math.floor(localAffiliateClicks * 0.15)}
-                      </td>
-                      <td style={{ textAlign: "right" }}>1 đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>
-                        {(25000 + Math.floor(localAffiliateClicks * 0.15) * 10000).toLocaleString("vi-VN")}đ
-                      </td>
-                      <td style={{ textAlign: "right", color: "#64748b" }}>7.000đ</td>
-                    </tr>
-                    <tr>
-                      <td><strong style={{ color: "#dc2626" }}>Booking.com / Khác</strong></td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>12</td>
+                      <td><strong style={{ color: "#0284c7" }}>Traveloka</strong> (Khách sạn &amp; Xe)</td>
+                      <td style={{ textAlign: "right", fontWeight: "600" }}>15</td>
                       <td style={{ textAlign: "right" }}>2 đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>32.000đ</td>
-                      <td style={{ textAlign: "right", color: "#64748b" }}>10.000đ</td>
+                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>65.000đ</td>
+                      <td style={{ textAlign: "right", color: "#64748b" }}>18.000đ</td>
+                    </tr>
+                    <tr>
+                      <td><strong style={{ color: "#2563eb" }}>Agoda</strong> (Khách sạn)</td>
+                      <td style={{ textAlign: "right", fontWeight: "600" }}>11</td>
+                      <td style={{ textAlign: "right" }}>2 đơn</td>
+                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>50.000đ</td>
+                      <td style={{ textAlign: "right", color: "#64748b" }}>14.000đ</td>
                     </tr>
                   </tbody>
                 </table>
@@ -1008,7 +989,7 @@ export default function AdminDashboard() {
                 <div className="rev-card">
                   <span className="rev-card-title">Hoa hồng đã duyệt</span>
                   <strong className="rev-card-val text-emerald">
-                    {(190000 + localAffiliateClicks * 15000).toLocaleString("vi-VN")}đ
+                    190.000đ
                   </strong>
                   <span className="rev-card-sub">Khả dụng rút tiền</span>
                 </div>

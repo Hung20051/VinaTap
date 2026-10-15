@@ -40,7 +40,7 @@ export default function AdminSidebar({
         {
           href: "/admin/analytics",
           icon: TrendingUp,
-          label: lang === "vi" ? "Lượt truy cập & Nguồn khách" : "Traffic & Acquisition",
+          label: lang === "vi" ? "Lượt truy cập & Nguồn" : "Traffic & Sources",
         },
         {
           href: "/admin/articles",

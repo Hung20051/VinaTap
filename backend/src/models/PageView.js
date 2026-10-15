@@ -305,11 +305,13 @@ const PageView = {
            ORDER BY time_label ASC`,
         );
         timelineStats = res || [];
-      } else {
+        const dateFilter = whereClause
+          ? `${whereClause} AND pv.created_at >= '2026-10-10 00:00:00'`
+          : `WHERE pv.created_at >= '2026-10-10 00:00:00'`;
         const [res] = await db.execute(
           `SELECT DATE_FORMAT(pv.created_at, '%d/%m') AS time_label, COUNT(*) AS views, COUNT(DISTINCT pv.ip_address) AS visitors
            FROM page_views pv
-           ${whereClause}
+           ${dateFilter}
            GROUP BY DATE_FORMAT(pv.created_at, '%Y-%m-%d'), DATE_FORMAT(pv.created_at, '%d/%m')
            ORDER BY DATE_FORMAT(pv.created_at, '%Y-%m-%d') ASC`,
         );
