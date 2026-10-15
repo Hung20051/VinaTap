@@ -37,11 +37,15 @@ import DaNangPage from "../da-nang/page";
 import HanoiPage from "../ha-noi/page";
 import HaGiangPage from "../ha-giang/page";
 import NhaTrangPage from "../nha-trang/page";
+import HaLongPage from "../ha-long/page";
 
 export default function ProvincePage() {
   const { slug } = useParams();
   const searchParams = useSearchParams();
 
+  if (slug === "ha-long" || slug === "halong" || slug === "quang-ninh" || slug === "vinh-ha-long") {
+    return <HaLongPage />;
+  }
   if (slug === "ho-chi-minh") {
     return <HoChiMinhCityPage />;
   }

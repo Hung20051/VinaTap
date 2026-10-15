@@ -1,0 +1,948 @@
+/* ================================================================
+   VINATAP EDITORIAL: HA LONG BAY TRAVEL GUIDE (VỊNH HẠ LONG)
+   Phong cách Cẩm nang Du lịch Vịnh Hạ Long — Kỳ Quan Thiên Nhiên Thế Giới UNESCO
+   Tone màu: Ngọc bích vịnh biển (#00c2cb, #099F8A), Biển sâu (#0d1f2d, #052c54), Cát vàng (#fdd79a, #ff9334), Trắng mây
+   ================================================================ */
+
+.halong-page {
+  background-color: var(--guide-bg, #f8fbfb);
+  color: var(--guide-text-main, #142129);
+  min-height: 100vh;
+  font-family: var(--font-body, "Open Sans", -apple-system, BlinkMacSystemFont, sans-serif);
+}
+
+/* Hero Badge */
+.hl-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(0, 194, 203, 0.12);
+  color: #009aa2;
+  border: 1px solid rgba(0, 194, 203, 0.25);
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .hl-hero-badge {
+  background: rgba(0, 194, 203, 0.2);
+  color: #00d6e0;
+  border-color: rgba(0, 194, 203, 0.35);
+}
+
+/* Quick Snapshot */
+.hl-snapshot-box {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-left: 6px solid #00c2cb;
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  margin: 2.25rem 0 2.75rem;
+  box-shadow: 0 8px 30px rgba(0, 194, 203, 0.08);
+}
+
+[data-theme="dark"] .hl-snapshot-box {
+  background: #0d1a24;
+  border-color: #1a3344;
+  border-left-color: #00c2cb;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.hl-snapshot-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #008891;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-heading, "Roboto", sans-serif);
+}
+
+[data-theme="dark"] .hl-snapshot-title {
+  color: #00d6e0;
+}
+
+.hl-snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.hl-snapshot-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+[data-theme="dark"] .hl-snapshot-item {
+  color: #94a3b8;
+}
+
+.hl-snapshot-icon {
+  color: #00c2cb;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Quick Navigation Pills */
+.hl-nav-pills-wrap {
+  position: sticky;
+  top: 72px;
+  z-index: 40;
+  background: rgba(248, 251, 251, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 194, 203, 0.15);
+  padding: 10px 0;
+  margin: 1.5rem 0 2.5rem;
+}
+
+[data-theme="dark"] .hl-nav-pills-wrap {
+  background: rgba(13, 26, 36, 0.92);
+  border-bottom-color: rgba(0, 194, 203, 0.2);
+}
+
+.hl-nav-pills {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 4px 2px;
+}
+
+.hl-nav-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.hl-nav-pill {
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #dff1f1;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hl-nav-pill:hover,
+.hl-nav-pill.active {
+  color: #ffffff;
+  background: #00c2cb;
+  border-color: #00c2cb;
+  box-shadow: 0 4px 12px rgba(0, 194, 203, 0.35);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .hl-nav-pill {
+  background: #122230;
+  color: #94a3b8;
+  border-color: #1e384d;
+}
+
+[data-theme="dark"] .hl-nav-pill:hover,
+[data-theme="dark"] .hl-nav-pill.active {
+  color: #ffffff;
+  background: #00c2cb;
+  border-color: #00c2cb;
+}
+
+/* Main Sections */
+.hl-section {
+  margin-bottom: 4rem;
+  scroll-margin-top: 130px;
+}
+
+.hl-section-title {
+  font-size: clamp(1.5rem, 3vw, 1.95rem);
+  font-weight: 800;
+  color: #0d1f2d;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2f0f0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading, "Roboto", sans-serif);
+}
+
+[data-theme="dark"] .hl-section-title {
+  color: #f1f5f9;
+  border-bottom-color: #1a3344;
+}
+
+.hl-section-desc {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 1.75rem;
+}
+
+[data-theme="dark"] .hl-section-desc {
+  color: #cbd5e1;
+}
+
+/* Callout Note / Eco Tip */
+.hl-callout {
+  background: linear-gradient(135deg, rgba(0, 194, 203, 0.08) 0%, rgba(9, 159, 138, 0.08) 100%);
+  border: 1px solid rgba(0, 194, 203, 0.2);
+  border-left: 5px solid #00c2cb;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 0;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #1e293b;
+}
+
+[data-theme="dark"] .hl-callout {
+  background: rgba(0, 194, 203, 0.06);
+  border-color: rgba(0, 194, 203, 0.25);
+  color: #e2e8f0;
+}
+
+.hl-callout-icon {
+  color: #00c2cb;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* 3 Bays Comparison Cards */
+.hl-bays-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.hl-bay-card {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hl-bay-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 194, 203, 0.12);
+}
+
+[data-theme="dark"] .hl-bay-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.hl-bay-header {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #0d1f2d 0%, #153952 100%);
+  color: #ffffff;
+}
+
+.hl-bay-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #00c2cb;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.hl-bay-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+}
+
+.hl-bay-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 12px;
+}
+
+.hl-bay-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+[data-theme="dark"] .hl-bay-desc {
+  color: #94a3b8;
+}
+
+.hl-bay-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hl-bay-highlights li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: #1e293b;
+}
+
+[data-theme="dark"] .hl-bay-highlights li {
+  color: #cbd5e1;
+}
+
+/* Landmark / Cave / Island Cards */
+.hl-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
+  margin: 2rem 0;
+}
+
+.hl-card {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.hl-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 35px rgba(0, 194, 203, 0.15);
+  border-color: rgba(0, 194, 203, 0.4);
+}
+
+[data-theme="dark"] .hl-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.hl-card-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #0d1f2d;
+}
+
+.hl-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.hl-card:hover .hl-card-img {
+  transform: scale(1.05);
+}
+
+.hl-card-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(13, 31, 45, 0.85);
+  backdrop-filter: blur(8px);
+  color: #00c2cb;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(0, 194, 203, 0.3);
+}
+
+.hl-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.hl-card-title {
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin-bottom: 0.65rem;
+  font-family: var(--font-heading, "Roboto", sans-serif);
+}
+
+[data-theme="dark"] .hl-card-title {
+  color: #f1f5f9;
+}
+
+.hl-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: #475569;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+[data-theme="dark"] .hl-card-desc {
+  color: #94a3b8;
+}
+
+.hl-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 0.85rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+[data-theme="dark"] .hl-card-meta {
+  border-top-color: #1e3345;
+  color: #94a3b8;
+}
+
+/* Cruise Routes Comparison Table / Cards */
+.hl-routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.hl-route-card {
+  background: #ffffff;
+  border: 2px solid #e2f0f0;
+  border-radius: 18px;
+  padding: 1.75rem;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.hl-route-card.popular {
+  border-color: #00c2cb;
+  box-shadow: 0 8px 28px rgba(0, 194, 203, 0.15);
+}
+
+[data-theme="dark"] .hl-route-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+[data-theme="dark"] .hl-route-card.popular {
+  border-color: #00c2cb;
+}
+
+.hl-route-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #00c2cb;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.hl-route-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0d1f2d;
+  margin-bottom: 8px;
+}
+
+[data-theme="dark"] .hl-route-title {
+  color: #f1f5f9;
+}
+
+.hl-route-time {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hl-route-stops {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hl-route-stops li {
+  font-size: 0.9rem;
+  color: #334155;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+[data-theme="dark"] .hl-route-stops li {
+  color: #cbd5e1;
+}
+
+/* Food Grid */
+.hl-food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.hl-food-card {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+[data-theme="dark"] .hl-food-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.hl-food-body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hl-food-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin: 0;
+}
+
+[data-theme="dark"] .hl-food-title {
+  color: #f1f5f9;
+}
+
+.hl-food-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+[data-theme="dark"] .hl-food-desc {
+  color: #94a3b8;
+}
+
+.hl-food-spots {
+  font-size: 0.82rem;
+  color: #009aa2;
+  font-weight: 600;
+  background: rgba(0, 194, 203, 0.08);
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+[data-theme="dark"] .hl-food-spots {
+  color: #00d6e0;
+  background: rgba(0, 194, 203, 0.15);
+}
+
+/* Season / Weather Grid */
+.hl-season-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.hl-season-card {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.hl-season-card.best {
+  border-color: #00c2cb;
+  background: linear-gradient(180deg, rgba(0, 194, 203, 0.04) 0%, #ffffff 100%);
+}
+
+[data-theme="dark"] .hl-season-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+[data-theme="dark"] .hl-season-card.best {
+  border-color: #00c2cb;
+  background: linear-gradient(180deg, rgba(0, 194, 203, 0.1) 0%, #11202d 100%);
+}
+
+.hl-season-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #00c2cb;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.hl-season-months {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin-bottom: 8px;
+}
+
+[data-theme="dark"] .hl-season-months {
+  color: #f1f5f9;
+}
+
+.hl-season-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+[data-theme="dark"] .hl-season-desc {
+  color: #94a3b8;
+}
+
+/* Transport Grid */
+.hl-transport-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.hl-transport-card {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .hl-transport-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.hl-transport-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0, 194, 203, 0.12);
+  color: #00aab2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .hl-transport-icon {
+  background: rgba(0, 194, 203, 0.2);
+  color: #00d6e0;
+}
+
+.hl-transport-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin-bottom: 6px;
+}
+
+[data-theme="dark"] .hl-transport-title {
+  color: #f1f5f9;
+}
+
+.hl-transport-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+[data-theme="dark"] .hl-transport-desc {
+  color: #94a3b8;
+}
+
+/* Timeline / Itinerary */
+.hl-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  position: relative;
+  padding-left: 28px;
+}
+
+.hl-timeline:before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 9px;
+  width: 2px;
+  background: #00c2cb;
+  opacity: 0.35;
+}
+
+.hl-timeline-item {
+  position: relative;
+}
+
+.hl-timeline-dot {
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 4px solid #00c2cb;
+}
+
+[data-theme="dark"] .hl-timeline-dot {
+  background: #0d1f2d;
+}
+
+.hl-timeline-box {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .hl-timeline-box {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.hl-timeline-time {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #009aa2;
+  margin-bottom: 4px;
+}
+
+[data-theme="dark"] .hl-timeline-time {
+  color: #00d6e0;
+}
+
+.hl-timeline-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin-bottom: 6px;
+}
+
+[data-theme="dark"] .hl-timeline-heading {
+  color: #f1f5f9;
+}
+
+.hl-timeline-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0;
+}
+
+[data-theme="dark"] .hl-timeline-text {
+  color: #94a3b8;
+}
+
+/* FAQ Accordion */
+.hl-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.hl-faq-item {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .hl-faq-item {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.hl-faq-trigger {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0d1f2d;
+}
+
+[data-theme="dark"] .hl-faq-trigger {
+  color: #f1f5f9;
+}
+
+.hl-faq-answer {
+  padding: 0 1.5rem 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #475569;
+}
+
+[data-theme="dark"] .hl-faq-answer {
+  color: #94a3b8;
+}
+
+/* Related articles on VinaTap */
+.hl-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.hl-related-card {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hl-related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 194, 203, 0.12);
+}
+
+[data-theme="dark"] .hl-related-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.hl-related-img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #0d1f2d;
+}
+
+.hl-related-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.hl-related-card:hover .hl-related-img {
+  transform: scale(1.05);
+}
+
+.hl-related-body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.hl-related-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #00c2cb;
+  margin-bottom: 6px;
+}
+
+.hl-related-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+[data-theme="dark"] .hl-related-title {
+  color: #f1f5f9;
+}
+
+.hl-related-excerpt {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #64748b;
+  margin: 0;
+}
+
+[data-theme="dark"] .hl-related-excerpt {
+  color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+  .hl-snapshot-box {
+    padding: 1.25rem;
+  }
+  .hl-snapshot-grid {
+    grid-template-columns: 1fr;
+  }
+  .hl-cards-grid,
+  .hl-bays-grid,
+  .hl-routes-grid,
+  .hl-food-grid,
+  .hl-season-grid,
+  .hl-transport-grid {
+    grid-template-columns: 1fr;
+  }
+  .hl-nav-pills-wrap {
+    top: 60px;
+  }
+}

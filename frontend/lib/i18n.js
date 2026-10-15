@@ -745,6 +745,11 @@ export const PROVINCES_EN = {
     description:
       "UNESCO World Natural Wonder Ha Long Bay, the sacred mountain sanctuaries of Yen Tu, and an extraordinary maritime island heritage.",
   },
+  "ha-long": {
+    name: "Ha Long Bay",
+    description:
+      "UNESCO World Natural Wonder Ha Long Bay, featuring 1,600+ dramatic limestone karsts, magnificent caves, secluded emerald lagoons, and world-class luxury cruises.",
+  },
   "lam-dong": {
     name: "Lam Dong",
     description:
@@ -902,6 +907,9 @@ export const PROVINCE_BY_NAME_EN = {
   "TP. Hồ Chí Minh": PROVINCES_EN["ho-chi-minh"],
   "Đà Nẵng": PROVINCES_EN["da-nang"],
   "Quảng Ninh": PROVINCES_EN["quang-ninh"],
+  "Vịnh Hạ Long": PROVINCES_EN["ha-long"],
+  "Hạ Long": PROVINCES_EN["ha-long"],
+  "Ha Long Bay": PROVINCES_EN["ha-long"],
   "Lâm Đồng": PROVINCES_EN["lam-dong"],
   "Hải Phòng": PROVINCES_EN["hai-phong"],
   Huế: PROVINCES_EN["hue"],

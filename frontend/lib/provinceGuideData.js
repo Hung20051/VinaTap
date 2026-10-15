@@ -543,8 +543,14 @@ export const PROVINCE_IMAGE_OVERRIDES = {
   "huế": "/guide/hue/hue-hero-official.jpg",
   "ninh-binh": "/guide/ninh-binh/hero.jpg",
   "ninh bình": "/guide/ninh-binh/hero.jpg",
-  "quang-ninh": "/guide/15-best-places/place-6-ha-long.jpg",
-  "quảng ninh": "/guide/15-best-places/place-6-ha-long.jpg",
+  "quang-ninh": "/guide/ha-long/hero-halong.jpg",
+  "quảng ninh": "/guide/ha-long/hero-halong.jpg",
+  "ha-long": "/guide/ha-long/hero-halong.jpg",
+  "ha long": "/guide/ha-long/hero-halong.jpg",
+  "vịnh hạ long": "/guide/ha-long/hero-halong.jpg",
+  "vinh-ha-long": "/guide/ha-long/hero-halong.jpg",
+  "ha long bay": "/guide/ha-long/hero-halong.jpg",
+  "halong": "/guide/ha-long/hero-halong.jpg",
   "nha-trang": "/guide/nha-trang/nhatrang-hero-hd.jpg",
   "khanh-hoa": "/guide/nha-trang/nhatrang-hero-hd.jpg",
   "khánh hòa": "/guide/nha-trang/nhatrang-hero-hd.jpg",
@@ -616,6 +622,15 @@ export const LANDMARK_IMAGE_OVERRIDES = {
   "vịnh lăng cô": "/guide/hue/hue-lang-co-beach.jpg",
   "biển lăng cô": "/guide/hue/hue-lang-co-beach.jpg",
   "phá tam giang": "/guide/hue/hue-tam-giang-lagoon.jpg",
+  "vịnh hạ long": "/guide/ha-long/hero-halong.jpg",
+  "hang sửng sốt": "/guide/ha-long/sung-sot-cave.jpg",
+  "đảo ti tốp": "/guide/ha-long/ti-top-island.jpg",
+  "ti tốp": "/guide/ha-long/ti-top-island.jpg",
+  "hang luồn": "/guide/ha-long/kayak-luon-cave.jpg",
+  "động thiên cung": "/guide/ha-long/limestone-karsts.jpg",
+  "hang đầu gỗ": "/guide/ha-long/cruise-bay.jpg",
+  "hòn trống mái": "/guide/vietnam/dest-6-halong.jpg",
+  "hòn gà chọi": "/guide/vietnam/dest-6-halong.jpg",
 };
 
 export function getLandmarkThumbnail(landmark, defaultFallback = "") {
@@ -639,6 +654,11 @@ export const FOOD_IMAGE_OVERRIDES = {
   "bánh bột lọc": "/guide/hue/hue-food-banh-hue.jpg",
   "bánh canh nam phổ": "/guide/hue/hue-food-banh-canh.jpg",
   "chè huế": "/guide/hue/hue-food-che-hue.jpg",
+  "chả mực": "/guide/ha-long/cha-muc-halong.jpg",
+  "chả mực giã tay": "/guide/ha-long/cha-muc-halong.jpg",
+  "chả mực hạ long": "/guide/ha-long/cha-muc-halong.jpg",
+  "bún bề bề": "/guide/ha-long/hero-halong.jpg",
+  "sá sùng": "/guide/ha-long/cruise-bay.jpg",
 };
 
 export function getFoodImage(

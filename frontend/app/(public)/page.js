@@ -212,11 +212,11 @@ const TOP_DESTINATIONS_DATA = [
     link: "/province/ninh-binh",
   },
   {
-    id: "quang-ninh",
-    name: "Quang Ninh (Ha Long)",
-    nameVi: "Quảng Ninh (Hạ Long)",
-    img: "/guide/15-best-places/place-6-ha-long.jpg",
-    link: "/province/quang-ninh",
+    id: "ha-long",
+    name: "Ha Long Bay",
+    nameVi: "Vịnh Hạ Long",
+    img: "/guide/ha-long/hero-halong.jpg",
+    link: "/province/ha-long",
   },
   {
     id: "nha-trang",
