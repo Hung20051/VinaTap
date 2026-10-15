@@ -440,10 +440,16 @@ export default function AdminArticles() {
     setLoading(true);
     try {
       const res = await articleAPI.getAll();
-      if (res?.articles && res.articles.length > 0) {
-        setArticles(res.articles);
-      } else {
+      const dbArticles = Array.isArray(res?.articles) ? res.articles : [];
+      if (dbArticles.length === 0) {
         setArticles(FALLBACK_ARTICLES);
+      } else {
+        // Hợp nhất: Ưu tiên bài viết từ Database (đã cập nhật) và bổ sung các bài trong FALLBACK_ARTICLES nếu DB chưa có
+        const dbSlugs = new Set(dbArticles.map((a) => a.slug));
+        const missingFromDb = FALLBACK_ARTICLES.filter(
+          (fa) => !dbSlugs.has(fa.slug),
+        );
+        setArticles([...dbArticles, ...missingFromDb]);
       }
     } catch (err) {
       console.warn("loadArticles error, using initial fallback:", err);
@@ -564,11 +570,9 @@ export default function AdminArticles() {
           await articleAPI.update(articleData.id, payload);
           showToast("Đã lưu cập nhật bài viết thành công!");
         } catch (updateErr) {
-          console.warn("Update by ID error, attempting fallback by slug/create:", updateErr);
+          console.warn("Update by ID error, attempting fallback by slug:", updateErr);
           if (articleData.slug || slug) {
-            await articleAPI.update(articleData.slug || slug, payload).catch(async () => {
-              await articleAPI.create(payload);
-            });
+            await articleAPI.update(articleData.slug || slug, payload);
             showToast("Đã lưu cập nhật bài viết thành công!");
           } else {
             throw updateErr;

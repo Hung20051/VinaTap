@@ -705,11 +705,67 @@ async function applySeedAndResetViews() {
   console.log(`\n🎉 HOÀN TẤT THÀNH CÔNG!`);
   console.log(`👉 Tổng số bài viết hiện tại: ${verify[0].count}`);
   console.log(`👉 Tổng lượt xem toàn hệ thống: ${verify[0].total_views}`);
-
-  process.exit(0);
 }
 
-applySeedAndResetViews().catch(err => {
-  console.error("Lỗi cập nhật:", err);
-  process.exit(1);
-});
+async function ensureAllArticles() {
+  for (let i = 0; i < ALL_24_ARTICLES.length; i++) {
+    const art = ALL_24_ARTICLES[i];
+    const [existing] = await pool.query("SELECT id FROM articles WHERE slug = ? LIMIT 1", [art.slug]);
+    if (existing && existing.length > 0) {
+      continue; // Đã tồn tại bài viết (không ghi đè bài người dùng đã sửa)
+    }
+
+    const [res] = await pool.query(
+      `INSERT INTO articles 
+       (slug, category, province_slug, title_en, title_vi, hero_image, author_name, published_date, status, views_count)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        art.slug,
+        art.category,
+        art.province_slug,
+        art.title_en,
+        art.title_vi,
+        art.hero_image,
+        art.author_name,
+        art.published_date,
+        art.status,
+        art.views_count
+      ]
+    );
+    const articleId = res.insertId;
+
+    if (art.items && art.items.length > 0) {
+      for (let j = 0; j < art.items.length; j++) {
+        const it = art.items[j];
+        await pool.query(
+          `INSERT INTO article_items 
+           (article_id, sort_order, item_number, title_en, title_vi, image_url, caption_en, caption_vi, paragraphs_en, paragraphs_vi)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            articleId,
+            j,
+            it.item_number || j + 1,
+            it.title_en || "",
+            it.title_vi || "",
+            it.image_url || art.hero_image,
+            it.caption_en || null,
+            it.caption_vi || null,
+            JSON.stringify(it.paragraphs_en || []),
+            JSON.stringify(it.paragraphs_vi || [])
+          ]
+        );
+      }
+    }
+  }
+}
+
+if (require.main === module) {
+  applySeedAndResetViews()
+    .then(() => process.exit(0))
+    .catch((err) => {
+      console.error("Lỗi cập nhật:", err);
+      process.exit(1);
+    });
+}
+
+module.exports = { ALL_24_ARTICLES, ensureAllArticles, applySeedAndResetViews };

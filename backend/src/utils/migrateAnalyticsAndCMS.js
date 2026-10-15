@@ -148,6 +148,20 @@ async function runMigration() {
     console.warn("Auto-seed preset views note:", err.message);
   }
 
+  // 6. Đảm bảo toàn bộ 24 bài viết cẩm nang luôn có sẵn trên database (tự động bổ sung nếu thiếu)
+  try {
+    const [cntArts] = await pool.query("SELECT COUNT(*) AS total FROM articles");
+    const artCount = Number(cntArts[0]?.total || 0);
+    if (artCount < 24) {
+      console.log(`[Auto-Seed Articles] Currently ${artCount}/24 articles in DB, populating missing articles...`);
+      const { ensureAllArticles } = require("../scripts/seedAllArticles");
+      await ensureAllArticles();
+      console.log("✅ All 24 articles ensured in database.");
+    }
+  } catch (err) {
+    console.warn("Auto-seed articles note:", err.message);
+  }
+
   console.log("=== Migration completed successfully ===");
 }
 
