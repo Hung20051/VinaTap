@@ -1,6 +1,7 @@
 /* ================================================================
    VINATAP EDITORIAL: HA LONG BAY TRAVEL GUIDE (VỊNH HẠ LONG)
    Phong cách Cẩm nang Du lịch Vịnh Hạ Long — Kỳ Quan Thiên Nhiên Thế Giới UNESCO
+   100% Pure Vanilla CSS — Tương thích tuyệt đối trên mọi môi trường
    Tone màu: Ngọc bích vịnh biển (#00c2cb, #099F8A), Biển sâu (#0d1f2d, #052c54), Cát vàng (#fdd79a, #ff9334), Trắng mây
    ================================================================ */
 
@@ -8,7 +9,52 @@
   background-color: var(--guide-bg, #f8fbfb);
   color: var(--guide-text-main, #142129);
   min-height: 100vh;
-  font-family: var(--font-body, "Open Sans", -apple-system, BlinkMacSystemFont, sans-serif);
+  font-family: var(--font-body, "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif);
+}
+
+/* Page Container */
+.hl-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Breadcrumbs */
+.hl-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+.hl-breadcrumb-link {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.hl-breadcrumb-link:hover {
+  color: #00c2cb;
+}
+
+.hl-breadcrumb-sep {
+  color: #94a3b8;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hl-breadcrumb-current {
+  color: #0d1f2d;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .hl-breadcrumb-current {
+  color: #f1f5f9;
 }
 
 /* Hero Badge */
@@ -19,7 +65,7 @@
   font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   padding: 6px 16px;
   border-radius: 999px;
   background: rgba(0, 194, 203, 0.12);
@@ -34,11 +80,101 @@
   border-color: rgba(0, 194, 203, 0.35);
 }
 
+/* Hero Header */
+.hl-hero-header {
+  margin-bottom: 2rem;
+}
+
+.hl-hero-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #0d1f2d;
+  line-height: 1.25;
+  margin: 0 0 1rem;
+  font-family: var(--font-heading, "Playfair Display", "Roboto", Georgia, serif);
+}
+
+[data-theme="dark"] .hl-hero-title {
+  color: #f1f5f9;
+}
+
+.hl-hero-desc {
+  font-size: 1.12rem;
+  line-height: 1.75;
+  color: #475569;
+  max-width: 920px;
+  margin: 0 0 1.5rem;
+}
+
+[data-theme="dark"] .hl-hero-desc {
+  color: #cbd5e1;
+}
+
+/* Meta Bar */
+.hl-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid #e2f0f0;
+  border-bottom: 1px solid #e2f0f0;
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .hl-meta-bar {
+  border-top-color: #1a3344;
+  border-bottom-color: #1a3344;
+  color: #94a3b8;
+}
+
+.hl-meta-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.hl-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+}
+
+.hl-meta-item strong {
+  color: #1e293b;
+}
+
+[data-theme="dark"] .hl-meta-item strong {
+  color: #e2e8f0;
+}
+
+.hl-meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(0, 194, 203, 0.1);
+  color: #009aa2;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .hl-meta-tag {
+  background: rgba(0, 194, 203, 0.2);
+  color: #00d6e0;
+}
+
 /* Hero Image Wrapper */
 .hl-hero-img-wrap {
   position: relative;
   width: 100%;
-  height: 460px;
+  height: 480px;
   max-height: 60vh;
   min-height: 280px;
   border-radius: 24px;
@@ -56,11 +192,55 @@
   display: block;
 }
 
+.hl-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.hl-hero-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.hl-hero-caption-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(0, 194, 203, 0.85);
+  backdrop-filter: blur(8px);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.hl-hero-caption-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  max-width: 650px;
+  margin: 0;
+  line-height: 1.5;
+}
+
 @media (max-width: 768px) {
   .hl-hero-img-wrap {
     height: 280px;
     border-radius: 16px;
     margin-bottom: 1.5rem;
+  }
+  .hl-hero-caption {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
   }
 }
 
@@ -90,7 +270,7 @@
   font-weight: 800;
   color: #008891;
   margin-bottom: 1.25rem;
-  font-family: var(--font-heading, "Roboto", sans-serif);
+  font-family: var(--font-heading, "Playfair Display", "Roboto", Georgia, serif);
 }
 
 [data-theme="dark"] .hl-snapshot-title {
@@ -100,7 +280,7 @@
 .hl-snapshot-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .hl-snapshot-item {
@@ -116,10 +296,14 @@
   color: #94a3b8;
 }
 
+.hl-snapshot-item p {
+  margin: 3px 0 0;
+}
+
 .hl-snapshot-icon {
   color: #00c2cb;
   flex-shrink: 0;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 /* Quick Navigation Pills */
@@ -207,7 +391,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: var(--font-heading, "Roboto", sans-serif);
+  font-family: var(--font-heading, "Playfair Display", "Roboto", Georgia, serif);
 }
 
 [data-theme="dark"] .hl-section-title {
@@ -224,6 +408,10 @@
 
 [data-theme="dark"] .hl-section-desc {
   color: #cbd5e1;
+}
+
+.hl-section-desc p {
+  margin-bottom: 1rem;
 }
 
 /* Callout Note / Eco Tip */
@@ -426,7 +614,7 @@
   font-weight: 700;
   color: #0d1f2d;
   margin-bottom: 0.65rem;
-  font-family: var(--font-heading, "Roboto", sans-serif);
+  font-family: var(--font-heading, "Playfair Display", "Roboto", Georgia, serif);
 }
 
 [data-theme="dark"] .hl-card-title {
@@ -457,6 +645,75 @@
 
 [data-theme="dark"] .hl-card-meta {
   border-top-color: #1e3345;
+  color: #94a3b8;
+}
+
+/* Top Experiences Grid */
+.hl-exp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin: 1.75rem 0;
+}
+
+.hl-exp-card {
+  background: #ffffff;
+  border: 1px solid #e2f0f0;
+  border-radius: 18px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hl-exp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 194, 203, 0.12);
+}
+
+[data-theme="dark"] .hl-exp-card {
+  background: #11202d;
+  border-color: #1e3345;
+}
+
+.hl-exp-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(0, 194, 203, 0.12);
+  color: #00aab2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .hl-exp-icon {
+  background: rgba(0, 194, 203, 0.2);
+  color: #00d6e0;
+}
+
+.hl-exp-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0d1f2d;
+  margin: 0 0 6px;
+}
+
+[data-theme="dark"] .hl-exp-title {
+  color: #f1f5f9;
+}
+
+.hl-exp-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0;
+}
+
+[data-theme="dark"] .hl-exp-desc {
   color: #94a3b8;
 }
 
@@ -593,6 +850,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  flex-grow: 1;
 }
 
 .hl-food-title {
@@ -610,6 +868,7 @@
   font-size: 0.9rem;
   line-height: 1.6;
   color: #475569;
+  margin: 0;
 }
 
 [data-theme="dark"] .hl-food-desc {
@@ -624,6 +883,7 @@
   padding: 6px 12px;
   border-radius: 8px;
   margin-top: 6px;
+  display: inline-block;
 }
 
 [data-theme="dark"] .hl-food-spots {
@@ -690,6 +950,7 @@
   font-size: 0.9rem;
   line-height: 1.6;
   color: #475569;
+  margin: 0;
 }
 
 [data-theme="dark"] .hl-season-desc {
@@ -749,6 +1010,7 @@
   font-size: 0.9rem;
   line-height: 1.6;
   color: #475569;
+  margin: 0;
 }
 
 [data-theme="dark"] .hl-transport-desc {
@@ -877,6 +1139,7 @@
   font-size: 1.05rem;
   font-weight: 700;
   color: #0d1f2d;
+  box-sizing: border-box;
 }
 
 [data-theme="dark"] .hl-faq-trigger {
@@ -897,7 +1160,7 @@
 /* Related articles on VinaTap */
 .hl-related-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
 }
@@ -983,6 +1246,17 @@
 }
 
 @media (max-width: 768px) {
+  .hl-container {
+    padding: 1rem 1rem 3rem;
+  }
+  .hl-meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .hl-meta-left {
+    gap: 0.75rem;
+  }
   .hl-snapshot-box {
     padding: 1.25rem;
   }
@@ -994,7 +1268,9 @@
   .hl-routes-grid,
   .hl-food-grid,
   .hl-season-grid,
-  .hl-transport-grid {
+  .hl-transport-grid,
+  .hl-exp-grid,
+  .hl-related-grid {
     grid-template-columns: 1fr;
   }
   .hl-nav-pills-wrap {

@@ -120,35 +120,33 @@ export default function HaLongPage() {
   ];
 
   return (
-    <div className="halong-page min-h-screen">
+    <div className="halong-page">
       <PublicHeader />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <main className="hl-container">
         {/* Breadcrumb */}
-        <nav
-          aria-label="Breadcrumb"
-          className="flex items-center gap-2 text-xs md:text-sm text-slate-500 mb-6 flex-wrap"
-        >
-          <Link href="/" className="hover:text-cyan-600 transition-colors">
+        <nav aria-label="Breadcrumb" className="hl-breadcrumbs">
+          <Link href="/" className="hl-breadcrumb-link">
             {isVi ? "Trang chủ" : "Home"}
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <Link
-            href="/destinations"
-            className="hover:text-cyan-600 transition-colors"
-          >
+          <span className="hl-breadcrumb-sep">
+            <ChevronRight size={14} />
+          </span>
+          <Link href="/destinations" className="hl-breadcrumb-link">
             {isVi ? "Điểm đến" : "Destinations"}
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-slate-800 dark:text-slate-200 font-semibold">
+          <span className="hl-breadcrumb-sep">
+            <ChevronRight size={14} />
+          </span>
+          <span className="hl-breadcrumb-current">
             {isVi ? "Vịnh Hạ Long" : "Ha Long Bay"}
           </span>
         </nav>
 
         {/* Hero Header */}
-        <header className="mb-8 md:mb-12">
+        <header className="hl-hero-header">
           <div className="hl-hero-badge">
-            <Sparkles className="w-4 h-4 text-cyan-600" />
+            <Sparkles size={14} />
             <span>
               {isVi
                 ? "Di sản Thiên nhiên Thế giới UNESCO • Cẩm nang bản địa 2026"
@@ -156,39 +154,39 @@ export default function HaLongPage() {
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-4 font-serif">
+          <h1 className="hl-hero-title">
             {isVi
               ? "Cẩm Nang Du Lịch Vịnh Hạ Long: Kỳ Quan Đá Vôi Giữa Biển Ngọc"
               : "A Local's Guide to Ha Long Bay, Vietnam: The Emerald Karst Wonder"}
           </h1>
 
-          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-4xl mb-6">
+          <p className="hl-hero-desc">
             {isVi
               ? "Được vinh danh 2 lần là Di sản Thiên nhiên Thế giới của nhân loại, Vịnh Hạ Long làm say đắm hàng triệu du khách với gần 2.000 hòn đảo đá vôi kỳ vĩ nhô lên từ làn nước xanh ngọc bích, những hang động lung linh hàng triệu năm tuổi và ẩm thực biển nức tiếng."
               : "Ha Long Bay is best known for its magnificent natural limestone formations rising out of emerald waters. Home to an extensive network of prehistoric caves, untouched islets, floating fishing communities, and world-class luxury cruises."}
           </p>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-slate-200 dark:border-slate-800 text-xs md:text-sm text-slate-500">
-            <div className="flex items-center gap-4 flex-wrap">
-              <span className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300">
-                <Compass className="w-4 h-4 text-cyan-600" />
-                VinaTap Travel Editorial
+          <div className="hl-meta-bar">
+            <div className="hl-meta-left">
+              <span className="hl-meta-item">
+                <Compass size={16} color="#00c2cb" />
+                <strong>VinaTap Travel Editorial</strong>
               </span>
               <span>•</span>
-              <span className="flex items-center gap-1.5">
-                <Calendar className="w-4 h-4 text-slate-400" />
-                {isVi ? "Cập nhật Mùa Du Lịch 2026" : "Updated for 2026 Season"}
+              <span className="hl-meta-item">
+                <Calendar size={15} color="#64748b" />
+                <span>{isVi ? "Cập nhật: Mùa Du Lịch 2026" : "Updated: 2026 Season"}</span>
               </span>
               <span>•</span>
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-slate-400" />
-                {isVi ? "10 phút đọc chi tiết" : "10 min in-depth read"}
+              <span className="hl-meta-item">
+                <Clock size={15} color="#64748b" />
+                <span>{isVi ? "10 phút đọc chi tiết" : "10 min read"}</span>
               </span>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-cyan-50 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300 text-xs font-semibold">
-                <Anchor className="w-3.5 h-3.5" />
-                {isVi ? "1.969 Hòn Đảo & Vịnh" : "1,969 Islands & Karsts"}
+            <div>
+              <span className="hl-meta-tag">
+                <Anchor size={14} />
+                <span>{isVi ? "1.969 Hòn Đảo & Vịnh" : "1,969 Islands & Karsts"}</span>
               </span>
             </div>
           </div>
@@ -202,12 +200,12 @@ export default function HaLongPage() {
             className="hl-hero-img"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
-          <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 text-white pointer-events-none">
-            <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/80 backdrop-blur-md text-xs font-bold tracking-wider uppercase mb-2">
+          <div className="hl-hero-overlay" />
+          <div className="hl-hero-caption">
+            <span className="hl-hero-caption-badge">
               {isVi ? "Góc Nhìn Biểu Tượng" : "Iconic Vantage Point"}
             </span>
-            <p className="text-sm md:text-base text-slate-200 font-medium max-w-2xl">
+            <p className="hl-hero-caption-text">
               {isVi
                 ? "Toàn cảnh Vịnh Hạ Long ngập tràn sắc ngọc bích với hàng trăm đảo đá và du thuyền buồm lướt êm đềm."
                 : "The emerald panorama of Ha Long Bay with karst towers and traditional wooden junks gliding peacefully."}
@@ -218,14 +216,14 @@ export default function HaLongPage() {
         {/* Quick Snapshot Box */}
         <div className="hl-snapshot-box">
           <div className="hl-snapshot-title">
-            <Anchor className="w-5 h-5 text-cyan-600" />
+            <Anchor size={20} color="#00c2cb" />
             <span>
               {isVi ? "Thông Tin Cốt Lõi Vịnh Hạ Long" : "Ha Long Bay At A Glance"}
             </span>
           </div>
           <div className="hl-snapshot-grid">
             <div className="hl-snapshot-item">
-              <MapPin className="hl-snapshot-icon w-5 h-5" />
+              <MapPin size={20} className="hl-snapshot-icon" />
               <div>
                 <strong>{isVi ? "Vị trí địa lý:" : "Geographic Location:"}</strong>
                 <p>
@@ -236,7 +234,7 @@ export default function HaLongPage() {
               </div>
             </div>
             <div className="hl-snapshot-item">
-              <Mountain className="hl-snapshot-icon w-5 h-5" />
+              <Mountain size={20} className="hl-snapshot-icon" />
               <div>
                 <strong>{isVi ? "Quy mô kỳ quan:" : "Natural Scale:"}</strong>
                 <p>
@@ -247,7 +245,7 @@ export default function HaLongPage() {
               </div>
             </div>
             <div className="hl-snapshot-item">
-              <Sun className="hl-snapshot-icon w-5 h-5" />
+              <Sun size={20} className="hl-snapshot-icon" />
               <div>
                 <strong>{isVi ? "Thời điểm vàng:" : "Best Seasons:"}</strong>
                 <p>
@@ -258,7 +256,7 @@ export default function HaLongPage() {
               </div>
             </div>
             <div className="hl-snapshot-item">
-              <Ship className="hl-snapshot-icon w-5 h-5" />
+              <Ship size={20} className="hl-snapshot-icon" />
               <div>
                 <strong>{isVi ? "Cách trải nghiệm chuẩn:" : "Best Way to Explore:"}</strong>
                 <p>
@@ -290,16 +288,16 @@ export default function HaLongPage() {
         {/* SECTION 1: OVERVIEW & GEOGRAPHY */}
         <section id="overview" className="hl-section">
           <h2 className="hl-section-title">
-            <Compass className="w-6 h-6 text-cyan-600" />
-            {isVi ? "1. Tổng Quan & Nguồn Gốc Tên Gọi Hạ Long" : "1. Overview & The Legend of the Descending Dragon"}
+            <Compass size={24} color="#00c2cb" />
+            <span>{isVi ? "1. Tổng Quan & Nguồn Gốc Tên Gọi Hạ Long" : "1. Overview & The Legend of the Descending Dragon"}</span>
           </h2>
           <div className="hl-section-desc">
-            <p className="mb-4">
+            <p>
               {isVi
                 ? "Theo truyền thuyết dân gian nghìn đời, tên gọi 'Hạ Long' mang ý nghĩa thiêng liêng là 'Nơi Rồng đáp xuống'. Khi đất nước mới dựng xây bị giặc ngoại xâm phương Bắc đe dọa, Ngọc Hoàng đã phái Rồng Mẹ mang theo đàn Rồng Con giáng trần cứu giúp. Rồng đã phun ra vô số viên ngọc châu báu, khi chạm mặt biển liền hóa thành ngàn vạn hòn đảo đá xanh sừng sững như bức tường thành vững chãi đánh tan thuyền giặc, giữ yên bờ cõi non sông."
                 : "In Vietnamese folklore, 'Ha Long' translates poetically to 'Where the Dragon Descends into the Sea.' Legend tells that when the ancient Vietnamese kingdom was invaded from the north, the Jade Emperor sent a mother dragon and her divine children to assist. They spat out jewels and jade that transformed into thousands of limestone towers, forming an impenetrable maritime fortress against enemy naval fleets."}
             </p>
-            <p className="mb-4">
+            <p>
               {isVi
                 ? "Về mặt địa chất học, Vịnh Hạ Long là kết quả của hơn 500 triệu năm kiến tạo địa chất và tiến hóa Karst nhiệt đới. Nơi đây trải qua các chu kỳ biển tiến thoái liên tiếp tạo nên cảnh quan Karst đá vôi kỳ vĩ nhất thế giới, được UNESCO công nhận là Di sản Thiên nhiên Thế giới năm 1994 về giá trị thẩm mỹ và năm 2000 về giá trị địa chất địa mạo. Đến năm 2023, ranh giới di sản được mở rộng bao gồm cả Quần đảo Cát Bà (Hải Phòng), tạo nên quần thể di sản thiên nhiên liên tỉnh đầu tiên tại Việt Nam."
                 : "Geologically, Ha Long Bay represents over 500 million years of plate tectonic shifts and tropical karst landscape evolution. Repeated marine transgressions and regressions sculpted this magnificent karst towers seascape—recognized by UNESCO in 1994 for outstanding aesthetic beauty and in 2000 for geomorphology. In 2023, UNESCO officially expanded the heritage site to encompass the adjoining Cat Ba Archipelago, cementing its status as Vietnam's premier natural wonder."}
@@ -307,10 +305,10 @@ export default function HaLongPage() {
           </div>
 
           <div className="hl-callout">
-            <Shield className="hl-callout-icon w-6 h-6" />
+            <Shield size={24} className="hl-callout-icon" />
             <div>
               <strong>{isVi ? "Chính sách du lịch bền vững tại Vịnh Hạ Long:" : "Eco-Tourism Policy & Single-Use Plastic Ban:"}</strong>
-              <p className="mt-1">
+              <p style={{ margin: "4px 0 0" }}>
                 {isVi
                   ? "Từ năm 2019, Ban Quản lý Vịnh Hạ Long đã áp dụng nghiêm ngặt lệnh cấm du khách mang rác thải nhựa dùng một lần (như túi ni lông, chai nước nhựa dùng 1 lần) xuống tàu du lịch. Du khách vui lòng chuẩn bị bình nước cá nhân để cùng chung tay bảo vệ môi trường biển ngọc nguyên sơ."
                   : "Since 2019, the Ha Long Bay Management Board has strictly enforced a zero single-use plastic policy for all tour and cruise vessels. Single-use plastic bottles, straws, and plastic bags are banned onboard. Travelers are encouraged to bring reusable water tumblers."}
@@ -322,8 +320,8 @@ export default function HaLongPage() {
         {/* SECTION 2: THE 3 BAYS */}
         <section id="bays" className="hl-section">
           <h2 className="hl-section-title">
-            <Waves className="w-6 h-6 text-cyan-600" />
-            {isVi ? "2. Ba Vịnh Biển Kỳ Vĩ: Hạ Long, Bái Tử Long & Lan Hạ" : "2. The Three Bays: Ha Long, Bai Tu Long & Lan Ha"}
+            <Waves size={24} color="#00c2cb" />
+            <span>{isVi ? "2. Ba Vịnh Biển Kỳ Vĩ: Hạ Long, Bái Tử Long & Lan Hạ" : "2. The Three Bays: Ha Long, Bai Tu Long & Lan Ha"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -347,9 +345,9 @@ export default function HaLongPage() {
                     : "The world-famous heartland featuring the biggest limestone caverns and legendary landmarks such as Sung Sot Cave, Ti Top Island, and the iconic Fighting Cocks Islet."}
                 </p>
                 <ul className="hl-bay-highlights">
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "Mật độ đảo đá vôi dày đặc nhất" : "Highest density of karst pillars"}</li>
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "Phù hợp cả tour trong ngày lẫn qua đêm" : "Ideal for both day cruises & overnight trips"}</li>
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "Nhiều dịch vụ tiện ích, tàu du thuyền đa dạng" : "Vast selection of 3-star to 5-star vessels"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "Mật độ đảo đá vôi dày đặc nhất" : "Highest density of karst pillars"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "Phù hợp cả tour trong ngày lẫn qua đêm" : "Ideal for both day cruises & overnight trips"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "Nhiều dịch vụ tiện ích, tàu du thuyền đa dạng" : "Vast selection of 3-star to 5-star vessels"}</li>
                 </ul>
               </div>
             </div>
@@ -367,9 +365,9 @@ export default function HaLongPage() {
                     : "Located to the northeast of Ha Long, Bai Tu Long is secluded and noticeably less crowded, preserving unspoiled limestone islands and authentic floating hamlets."}
                 </p>
                 <ul className="hl-bay-highlights">
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "Làng chài nổi Vung Viêng cổ kính" : "Ancient Vung Vieng floating village"}</li>
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "Hang Thiên Cảnh Sơn hoang sơ" : "Pristine Thien Canh Son Cave"}</li>
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "Không gian yên tĩnh tuyệt đối về đêm" : "Complete tranquility under star-lit skies"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "Làng chài nổi Vung Viêng cổ kính" : "Ancient Vung Vieng floating village"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "Hang Thiên Cảnh Sơn hoang sơ" : "Pristine Thien Canh Son Cave"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "Không gian yên tĩnh tuyệt đối về đêm" : "Complete tranquility under star-lit skies"}</li>
                 </ul>
               </div>
             </div>
@@ -387,9 +385,9 @@ export default function HaLongPage() {
                     : "Situated south of Ha Long bordering Cat Ba Island, Lan Ha boasts 139 secluded white sandy beaches at the foot of karst cliffs, making it the supreme kayaking zone."}
                 </p>
                 <ul className="hl-bay-highlights">
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "Hang Sáng Tối (Dark & Bright Cave)" : "Dark & Bright Cave kayak lagoon"}</li>
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "Làng Việt Hải & Vườn quốc gia Cát Bà" : "Viet Hai village & Cat Ba National Park"}</li>
-                  <li><Check className="w-4 h-4 text-cyan-600" /> {isVi ? "139 bãi tắm nhỏ hoang sơ tự nhiên" : "Over 130 natural cove beaches"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "Hang Sáng Tối (Dark & Bright Cave)" : "Dark & Bright Cave kayak lagoon"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "Làng Việt Hải & Vườn quốc gia Cát Bà" : "Viet Hai village & Cat Ba National Park"}</li>
+                  <li><Check size={16} color="#00c2cb" /> {isVi ? "139 bãi tắm nhỏ hoang sơ tự nhiên" : "Over 130 natural cove beaches"}</li>
                 </ul>
               </div>
             </div>
@@ -399,8 +397,8 @@ export default function HaLongPage() {
         {/* SECTION 3: CAVES & ISLANDS */}
         <section id="caves-islands" className="hl-section">
           <h2 className="hl-section-title">
-            <Mountain className="w-6 h-6 text-cyan-600" />
-            {isVi ? "3. Những Hang Động & Hòn Đảo Biểu Tượng" : "3. Iconic Caves, Grottoes & Scenic Islands"}
+            <Mountain size={24} color="#00c2cb" />
+            <span>{isVi ? "3. Những Hang Động & Hòn Đảo Biểu Tượng" : "3. Iconic Caves, Grottoes & Scenic Islands"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -566,8 +564,8 @@ export default function HaLongPage() {
         {/* SECTION 4: TOP EXPERIENCES */}
         <section id="experiences" className="hl-section">
           <h2 className="hl-section-title">
-            <Sparkles className="w-6 h-6 text-cyan-600" />
-            {isVi ? "4. Những Trải Nghiệm Đỉnh Cao Không Thể Bỏ Lỡ" : "4. Unforgettable Experiences on the Bay"}
+            <Sparkles size={24} color="#00c2cb" />
+            <span>{isVi ? "4. Những Trải Nghiệm Đỉnh Cao Không Thể Bỏ Lỡ" : "4. Unforgettable Experiences on the Bay"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -577,16 +575,16 @@ export default function HaLongPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex gap-4">
-              <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-950/60 text-cyan-600 flex items-center justify-center flex-shrink-0">
-                <Ship className="w-6 h-6" />
+          <div className="hl-exp-grid">
+            <div className="hl-exp-card">
+              <div className="hl-exp-icon">
+                <Ship size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                <h3 className="hl-exp-title">
                   {isVi ? "Du Thuyền Nghỉ Đêm 5 Sao (Overnight Cruise)" : "5-Star Luxury Overnight Cruising"}
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="hl-exp-desc">
                   {isVi
                     ? "Trải nghiệm được du khách quốc tế đánh giá cao nhất. Thưởng thức bữa tối hải sản dưới ánh nến, ngắm hoàng hôn dát vàng trên vịnh, ngủ đêm giữa làn nước phẳng lặng và thức dậy đón sương sớm trên sundeck."
                     : "Ranked as the quintessential Vietnam experience. Savor gourmet dining, watch flaming sunsets over limestone silhouettes, sleep anchored in serene bays, and wake up to misty mornings."}
@@ -594,15 +592,15 @@ export default function HaLongPage() {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex gap-4">
-              <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-950/60 text-cyan-600 flex items-center justify-center flex-shrink-0">
-                <Waves className="w-6 h-6" />
+            <div className="hl-exp-card">
+              <div className="hl-exp-icon">
+                <Waves size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                <h3 className="hl-exp-title">
                   {isVi ? "Tự Tay Chèo Thuyền Kayak Giữa Khe Núi" : "Self-Guided Kayaking into Hidden Lagoons"}
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="hl-exp-desc">
                   {isVi
                     ? "Chỉ có chiếc kayak nhỏ bé mới giúp bạn luồn lách qua các vòm hang hàm ếch thấp, chạm tay vào vách đá phủ rêu phong hàng triệu năm và tiến vào những vịnh kín không một bóng tàu lớn."
                     : "Only a small kayak can navigate underneath low limestone grottoes to access hidden lagoons untouched by larger motor vessels, letting you touch millenia-old karst stone walls."}
@@ -610,15 +608,15 @@ export default function HaLongPage() {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex gap-4">
-              <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-950/60 text-cyan-600 flex items-center justify-center flex-shrink-0">
-                <Plane className="w-6 h-6" />
+            <div className="hl-exp-card">
+              <div className="hl-exp-icon">
+                <Plane size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                <h3 className="hl-exp-title">
                   {isVi ? "Bay Thủy Phi Cơ Hải Âu Ngắm Vịnh Từ Trên Cao" : "Scenic Seaplane Flights (Hai Au Aviation)"}
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="hl-exp-desc">
                   {isVi
                     ? "Chuyến bay ngắm cảnh 25 phút cất cánh và hạ cánh ngay trên mặt nước tại cảng Tuần Châu, mang lại góc nhìn ngoạn mục như tranh thủy mặc từ độ cao 300 mét."
                     : "A thrilling 25-minute scenic flight taking off and landing directly on water at Tuan Chau Marina, offering cinematic bird's-eye views of 2,000 karst peaks from 300 meters above."}
@@ -626,15 +624,15 @@ export default function HaLongPage() {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex gap-4">
-              <div className="w-12 h-12 rounded-xl bg-cyan-100 dark:bg-cyan-950/60 text-cyan-600 flex items-center justify-center flex-shrink-0">
-                <Sun className="w-6 h-6" />
+            <div className="hl-exp-card">
+              <div className="hl-exp-icon">
+                <Sun size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                <h3 className="hl-exp-title">
                   {isVi ? "Tập Thái Cực Quyền & Câu Mực Đêm" : "Morning Tai Chi & Night Squid Fishing"}
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p className="hl-exp-desc">
                   {isVi
                     ? "Bắt đầu ngày mới bằng bài tập Thái Cực Quyền (Tai Chi) thanh tịnh khi mặt trời vừa ló rạng trên boong tàu; buổi tối trải nghiệm buông cần câu mực lấp lánh dưới ánh đèn đêm."
                     : "Begin the morning with peaceful Tai Chi exercises on the sundeck as the dawn mist clears, and test your luck at night jigging for live cuttlefish under deck floodlights."}
@@ -647,8 +645,8 @@ export default function HaLongPage() {
         {/* SECTION 5: CRUISE ROUTES & PORTS */}
         <section id="routes" className="hl-section">
           <h2 className="hl-section-title">
-            <Anchor className="w-6 h-6 text-cyan-600" />
-            {isVi ? "5. Các Tuyến Tàu Tham Quan & Cảng Quốc Tế" : "5. Sightseeing Routes & Departure Ports"}
+            <Anchor size={24} color="#00c2cb" />
+            <span>{isVi ? "5. Các Tuyến Tàu Tham Quan & Cảng Quốc Tế" : "5. Sightseeing Routes & Departure Ports"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -664,16 +662,16 @@ export default function HaLongPage() {
               <span className="hl-route-badge">{isVi ? "Tuyến 4 Tiếng Trong Ngày" : "4-Hour Day Trip"}</span>
               <h3 className="hl-route-title">{isVi ? "Tuyến 1: Thiên Cung – Đầu Gỗ – Trống Mái" : "Route 1: Thien Cung – Dau Go – Fighting Cocks"}</h3>
               <div className="hl-route-time">
-                <Clock className="w-4 h-4 text-cyan-600" />
+                <Clock size={16} color="#00c2cb" />
                 <span>{isVi ? "Thời gian: 3.5 – 4 giờ • Khởi hành sáng/chiều" : "Duration: 3.5 – 4 hours • Morning/Afternoon"}</span>
               </div>
               <ul className="hl-route-stops">
-                <li><Check className="w-4 h-4 text-cyan-600 mt-1 flex-shrink-0" /> {isVi ? "Khám phá Động Thiên Cung lung linh" : "Tour Thien Cung (Heavenly Palace) Cave"}</li>
-                <li><Check className="w-4 h-4 text-cyan-600 mt-1 flex-shrink-0" /> {isVi ? "Tham quan Hang Đầu Gỗ lịch sử thế kỷ XIII" : "Visit historical Dau Go Cave"}</li>
-                <li><Check className="w-4 h-4 text-cyan-600 mt-1 flex-shrink-0" /> {isVi ? "Chiêm ngưỡng Hòn Chó Đá, Hòn Đỉnh Hương (in trên tờ tiền 200.000đ)" : "Admire Stone Dog & Dinh Huong Islet (on the 200k VND note)"}</li>
-                <li><Check className="w-4 h-4 text-cyan-600 mt-1 flex-shrink-0" /> {isVi ? "Check-in Hòn Trống Mái biểu tượng" : "Photo stop at iconic Fighting Cocks Islet"}</li>
+                <li><Check size={16} color="#00c2cb" style={{ marginTop: 2, flexShrink: 0 }} /> {isVi ? "Khám phá Động Thiên Cung lung linh" : "Tour Thien Cung (Heavenly Palace) Cave"}</li>
+                <li><Check size={16} color="#00c2cb" style={{ marginTop: 2, flexShrink: 0 }} /> {isVi ? "Tham quan Hang Đầu Gỗ lịch sử thế kỷ XIII" : "Visit historical Dau Go Cave"}</li>
+                <li><Check size={16} color="#00c2cb" style={{ marginTop: 2, flexShrink: 0 }} /> {isVi ? "Chiêm ngưỡng Hòn Chó Đá, Hòn Đỉnh Hương (in trên tờ tiền 200.000đ)" : "Admire Stone Dog & Dinh Huong Islet (on the 200k VND note)"}</li>
+                <li><Check size={16} color="#00c2cb" style={{ marginTop: 2, flexShrink: 0 }} /> {isVi ? "Check-in Hòn Trống Mái biểu tượng" : "Photo stop at iconic Fighting Cocks Islet"}</li>
               </ul>
-              <div className="text-xs text-slate-500 border-t border-slate-100 dark:border-slate-800 pt-3">
+              <div style={{ fontSize: "0.82rem", color: "#64748b", borderTop: "1px solid #f1f5f9", paddingTop: "0.75rem" }}>
                 {isVi ? "💡 Phù hợp du khách ít thời gian hoặc đi cùng người cao tuổi, trẻ nhỏ." : "💡 Ideal for travelers with tight schedules or families with toddlers."}
               </div>
             </div>
@@ -683,16 +681,16 @@ export default function HaLongPage() {
               <span className="hl-route-badge">{isVi ? "Tuyến Kinh Điển 6H & Qua Đêm" : "Popular 6-Hour & Overnight"}</span>
               <h3 className="hl-route-title">{isVi ? "Tuyến 2: Sửng Sốt – Ti Tốp – Hang Luồn" : "Route 2: Sung Sot – Ti Top – Luon Cave"}</h3>
               <div className="hl-route-time">
-                <Clock className="w-4 h-4 text-cyan-600" />
+                <Clock size={16} color="#00c2cb" />
                 <span>{isVi ? "Thời gian: 6 giờ (trong ngày) hoặc 2N1Đ / 3N2Đ" : "Duration: 6 hours (day) or 2D1N / 3D2N Cruise"}</span>
               </div>
               <ul className="hl-route-stops">
-                <li><Check className="w-4 h-4 text-cyan-600 mt-1 flex-shrink-0" /> {isVi ? "Thám hiểm Hang Sửng Sốt – hang lớn nhất vịnh" : "Trek through magnificent Sung Sot (Surprise) Cave"}</li>
-                <li><Check className="w-4 h-4 text-cyan-600 mt-1 flex-shrink-0" /> {isVi ? "Leo đỉnh Ti Tốp ngắm toàn cảnh 360 độ và tắm biển" : "Hike Ti Top peak for 360° panoramic view & swim at beach"}</li>
-                <li><Check className="w-4 h-4 text-cyan-600 mt-1 flex-shrink-0" /> {isVi ? "Chèo thuyền Kayak hoặc thuyền nan vào Hang Luồn" : "Kayak or row bamboo boat into serene Luon Cave lagoon"}</li>
-                <li><Check className="w-4 h-4 text-cyan-600 mt-1 flex-shrink-0" /> {isVi ? "Ngắm Hang Bồ Nâu và vùng lõi di sản sâu" : "Sail past Bo Nau Cave and deep karst valleys"}</li>
+                <li><Check size={16} color="#00c2cb" style={{ marginTop: 2, flexShrink: 0 }} /> {isVi ? "Thám hiểm Hang Sửng Sốt – hang lớn nhất vịnh" : "Trek through magnificent Sung Sot (Surprise) Cave"}</li>
+                <li><Check size={16} color="#00c2cb" style={{ marginTop: 2, flexShrink: 0 }} /> {isVi ? "Leo đỉnh Ti Tốp ngắm toàn cảnh 360 độ và tắm biển" : "Hike Ti Top peak for 360° panoramic view & swim at beach"}</li>
+                <li><Check size={16} color="#00c2cb" style={{ marginTop: 2, flexShrink: 0 }} /> {isVi ? "Chèo thuyền Kayak hoặc thuyền nan vào Hang Luồn" : "Kayak or row bamboo boat into serene Luon Cave lagoon"}</li>
+                <li><Check size={16} color="#00c2cb" style={{ marginTop: 2, flexShrink: 0 }} /> {isVi ? "Ngắm Hang Bồ Nâu và vùng lõi di sản sâu" : "Sail past Bo Nau Cave and deep karst valleys"}</li>
               </ul>
-              <div className="text-xs text-cyan-700 dark:text-cyan-300 font-medium border-t border-cyan-100 dark:border-cyan-900 pt-3">
+              <div style={{ fontSize: "0.82rem", color: "#009aa2", fontWeight: 600, borderTop: "1px solid rgba(0, 194, 203, 0.15)", paddingTop: "0.75rem" }}>
                 {isVi ? "⭐ Tuyến tham quan đẹp nhất và được 90% du khách lựa chọn." : "⭐ The most complete route chosen by 90% of international visitors."}
               </div>
             </div>
@@ -702,8 +700,8 @@ export default function HaLongPage() {
         {/* SECTION 6: LOCAL FOOD */}
         <section id="food" className="hl-section">
           <h2 className="hl-section-title">
-            <Utensils className="w-6 h-6 text-cyan-600" />
-            {isVi ? "6. Ẩm Thực Biển Hạ Long Phải Thử" : "6. Ha Long Culinary Delights: Fresh From The Sea"}
+            <Utensils size={24} color="#00c2cb" />
+            <span>{isVi ? "6. Ẩm Thực Biển Hạ Long Phải Thử" : "6. Ha Long Culinary Delights: Fresh From The Sea"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -782,8 +780,8 @@ export default function HaLongPage() {
         {/* SECTION 7: WEATHER & BEST TIME */}
         <section id="weather" className="hl-section">
           <h2 className="hl-section-title">
-            <Sun className="w-6 h-6 text-cyan-600" />
-            {isVi ? "7. Thời Điểm Du Lịch Đẹp Nhất Trong Năm" : "7. Best Time to Visit Ha Long Bay"}
+            <Sun size={24} color="#00c2cb" />
+            <span>{isVi ? "7. Thời Điểm Du Lịch Đẹp Nhất Trong Năm" : "7. Best Time to Visit Ha Long Bay"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -839,8 +837,8 @@ export default function HaLongPage() {
         {/* SECTION 8: HOW TO GET THERE */}
         <section id="transport" className="hl-section">
           <h2 className="hl-section-title">
-            <Bus className="w-6 h-6 text-cyan-600" />
-            {isVi ? "8. Hướng Dẫn Di Chuyển Đến Hạ Long" : "8. Getting to Ha Long Bay from Hanoi & Airports"}
+            <Bus size={24} color="#00c2cb" />
+            <span>{isVi ? "8. Hướng Dẫn Di Chuyển Đến Hạ Long" : "8. Getting to Ha Long Bay from Hanoi & Airports"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -853,7 +851,7 @@ export default function HaLongPage() {
           <div className="hl-transport-grid">
             <div className="hl-transport-card">
               <div className="hl-transport-icon">
-                <Bus className="w-6 h-6" />
+                <Bus size={22} />
               </div>
               <h3 className="hl-transport-title">{isVi ? "Xe Limousine VIP Đưa Đón Tận Nơi" : "Luxury Limousine D-Car"}</h3>
               <p className="hl-transport-desc">
@@ -865,7 +863,7 @@ export default function HaLongPage() {
 
             <div className="hl-transport-card">
               <div className="hl-transport-icon">
-                <Ship className="w-6 h-6" />
+                <Ship size={22} />
               </div>
               <h3 className="hl-transport-title">{isVi ? "Xe Đưa Đón Theo Tàu Du Thuyền" : "Cruise Operator Shuttle"}</h3>
               <p className="hl-transport-desc">
@@ -877,7 +875,7 @@ export default function HaLongPage() {
 
             <div className="hl-transport-card">
               <div className="hl-transport-icon">
-                <Plane className="w-6 h-6" />
+                <Plane size={22} />
               </div>
               <h3 className="hl-transport-title">{isVi ? "Sân Bay Vân Đồn (VDO) & Cát Bi (HPH)" : "Van Don & Cat Bi Airports"}</h3>
               <p className="hl-transport-desc">
@@ -892,8 +890,8 @@ export default function HaLongPage() {
         {/* SECTION 9: ITINERARIES */}
         <section id="itinerary" className="hl-section">
           <h2 className="hl-section-title">
-            <Clock className="w-6 h-6 text-cyan-600" />
-            {isVi ? "9. Lịch Trình Gợi Ý Chuẩn Bản Địa" : "9. Recommended Itineraries: Day Trip vs Overnight"}
+            <Clock size={24} color="#00c2cb" />
+            <span>{isVi ? "9. Lịch Trình Gợi Ý Chuẩn Bản Địa" : "9. Recommended Itineraries: Day Trip vs Overnight"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -963,8 +961,8 @@ export default function HaLongPage() {
         {/* SECTION 10: FAQS & EXPERT TIPS */}
         <section id="faq" className="hl-section">
           <h2 className="hl-section-title">
-            <HelpCircle className="w-6 h-6 text-cyan-600" />
-            {isVi ? "10. Câu Hỏi Thường Gặp & Mẹo Du Lịch Hữu Ích" : "10. Frequently Asked Questions & Expert Travel Tips"}
+            <HelpCircle size={24} color="#00c2cb" />
+            <span>{isVi ? "10. Câu Hỏi Thường Gặp & Mẹo Du Lịch Hữu Ích" : "10. Frequently Asked Questions & Expert Travel Tips"}</span>
           </h2>
           <div className="hl-section-desc">
             <p>
@@ -984,9 +982,9 @@ export default function HaLongPage() {
               >
                 <span>{isVi ? "Nên chọn đi tour Hạ Long trong ngày hay ngủ đêm trên du thuyền?" : "Should I take a 1-day trip or an overnight cruise?"}</span>
                 {activeFaq === 1 ? (
-                  <ChevronUp className="w-5 h-5 text-cyan-600 flex-shrink-0" />
+                  <ChevronUp size={20} color="#00c2cb" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                  <ChevronDown size={20} color="#94a3b8" />
                 )}
               </button>
               {activeFaq === 1 && (
@@ -1007,9 +1005,9 @@ export default function HaLongPage() {
               >
                 <span>{isVi ? "Đi thuyền trên Vịnh Hạ Long có bị say sóng không?" : "Is seasickness an issue on Ha Long Bay cruises?"}</span>
                 {activeFaq === 2 ? (
-                  <ChevronUp className="w-5 h-5 text-cyan-600 flex-shrink-0" />
+                  <ChevronUp size={20} color="#00c2cb" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                  <ChevronDown size={20} color="#94a3b8" />
                 )}
               </button>
               {activeFaq === 2 && (
@@ -1030,9 +1028,9 @@ export default function HaLongPage() {
               >
                 <span>{isVi ? "Cần chuẩn bị trang phục gì khi đi tham quan các hang động?" : "What should I pack for cave excursions and Ti Top hiking?"}</span>
                 {activeFaq === 3 ? (
-                  <ChevronUp className="w-5 h-5 text-cyan-600 flex-shrink-0" />
+                  <ChevronUp size={20} color="#00c2cb" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                  <ChevronDown size={20} color="#94a3b8" />
                 )}
               </button>
               {activeFaq === 3 && (
@@ -1053,9 +1051,9 @@ export default function HaLongPage() {
               >
                 <span>{isVi ? "Nếu gặp thời tiết xấu hoặc bão thì quy trình xử lý thế nào?" : "What happens if a tropical storm or severe weather occurs?"}</span>
                 {activeFaq === 4 ? (
-                  <ChevronUp className="w-5 h-5 text-cyan-600 flex-shrink-0" />
+                  <ChevronUp size={20} color="#00c2cb" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                  <ChevronDown size={20} color="#94a3b8" />
                 )}
               </button>
               {activeFaq === 4 && (
@@ -1072,8 +1070,8 @@ export default function HaLongPage() {
         {/* RELATED ARTICLES */}
         <section className="hl-section">
           <h2 className="hl-section-title">
-            <Sparkles className="w-6 h-6 text-cyan-600" />
-            {isVi ? "Cẩm Nang Du Lịch Liên Quan Trên VinaTap" : "Explore More Guides on VinaTap"}
+            <Sparkles size={24} color="#00c2cb" />
+            <span>{isVi ? "Cẩm Nang Du Lịch Liên Quan Trên VinaTap" : "Explore More Guides on VinaTap"}</span>
           </h2>
           <div className="hl-related-grid">
             {RELATED_ARTICLES.map((art) => (
