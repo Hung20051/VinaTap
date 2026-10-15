@@ -123,9 +123,50 @@ export default function HaLongPage() {
     <div className="halong-page">
       <PublicHeader />
 
+      {/* Fullwidth Hero Banner (VietnamNomad Style) */}
+      <div className="hl-fullwidth-hero">
+        <img
+          src="/guide/ha-long/hero-halong.jpg"
+          alt={isVi ? "Vịnh Hạ Long" : "Ha Long Bay"}
+          className="hl-fullwidth-hero-bg"
+          loading="eager"
+        />
+        <div className="hl-fullwidth-hero-overlay" />
+        <div className="hl-fullwidth-hero-content">
+          <div className="hl-hero-pills">
+            <span className="hl-hero-pill-item">{isVi ? "ĐIỂM ĐẾN" : "DESTINATIONS"}</span>
+            <span className="hl-hero-pill-item">{isVi ? "MIỀN BẮC VIỆT NAM" : "NORTHERN VIETNAM"}</span>
+            <span className="hl-hero-pill-item">{isVi ? "HẠ LONG" : "HA LONG"}</span>
+          </div>
+          <h1 className="hl-fullwidth-hero-title">
+            {isVi ? "Vịnh Hạ Long" : "Ha Long Bay"}
+          </h1>
+          <div className="hl-hero-byline">
+            <span>{isVi ? "Bởi VinaTap Travel" : "By VinaTap Travel"}</span>
+          </div>
+        </div>
+      </div>
+
       <main className="hl-container">
+        {/* Centered CTA Button */}
+        <div className="hl-cta-wrap">
+          <Link
+            href="/guide/plan-your-vietnam-trip-with-just-one-prompt"
+            className="hl-cta-btn"
+          >
+            <span>{isVi ? "Lên kế hoạch du lịch Việt Nam chỉ trong vài giây" : "Create your Vietnam trip in seconds"}</span>
+          </Link>
+        </div>
+
+        {/* Intro Text */}
+        <p className="hl-intro-text">
+          {isVi
+            ? "Vịnh Hạ Long chắc chắn là điểm đến được săn đón và biểu tượng bậc nhất của du lịch Việt Nam. Nơi đây nổi tiếng toàn cầu bởi hàng nghìn hòn đảo đá vôi kỳ vĩ nhô lên giữa làn nước xanh ngọc bích. Tuy nhiên, vẻ đẹp thực sự của vịnh Hạ Long lại ẩn chứa sâu bên trong và bên dưới những phiến đá khổng lồ này: hệ thống hang động cổ tích, các đầm nước kín thanh bình và những làng chài nổi huyền thoại."
+            : "Ha Long Bay is undoubtedly the most sought-after destination in Vietnam. It is best known for its magnificent natural limestone formations rising out of emerald waters. However, the true beauty of Ha Long Bay is hidden within and beneath these giant rocks: an extensive collection of prehistoric caves, untouched islets, and floating villages."}
+        </p>
+
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="hl-breadcrumbs">
+        <nav aria-label="Breadcrumb" className="hl-breadcrumbs" style={{ justifyContent: "center", marginBottom: "2rem" }}>
           <Link href="/" className="hl-breadcrumb-link">
             {isVi ? "Trang chủ" : "Home"}
           </Link>
@@ -142,76 +183,6 @@ export default function HaLongPage() {
             {isVi ? "Vịnh Hạ Long" : "Ha Long Bay"}
           </span>
         </nav>
-
-        {/* Hero Header */}
-        <header className="hl-hero-header">
-          <div className="hl-hero-badge">
-            <Sparkles size={14} />
-            <span>
-              {isVi
-                ? "Di sản Thiên nhiên Thế giới UNESCO • Cẩm nang bản địa 2026"
-                : "UNESCO World Natural Heritage • Local Guide 2026"}
-            </span>
-          </div>
-
-          <h1 className="hl-hero-title">
-            {isVi
-              ? "Cẩm Nang Du Lịch Vịnh Hạ Long: Kỳ Quan Đá Vôi Giữa Biển Ngọc"
-              : "A Local's Guide to Ha Long Bay, Vietnam: The Emerald Karst Wonder"}
-          </h1>
-
-          <p className="hl-hero-desc">
-            {isVi
-              ? "Được vinh danh 2 lần là Di sản Thiên nhiên Thế giới của nhân loại, Vịnh Hạ Long làm say đắm hàng triệu du khách với gần 2.000 hòn đảo đá vôi kỳ vĩ nhô lên từ làn nước xanh ngọc bích, những hang động lung linh hàng triệu năm tuổi và ẩm thực biển nức tiếng."
-              : "Ha Long Bay is best known for its magnificent natural limestone formations rising out of emerald waters. Home to an extensive network of prehistoric caves, untouched islets, floating fishing communities, and world-class luxury cruises."}
-          </p>
-
-          <div className="hl-meta-bar">
-            <div className="hl-meta-left">
-              <span className="hl-meta-item">
-                <Compass size={16} color="#00c2cb" />
-                <strong>VinaTap Travel Editorial</strong>
-              </span>
-              <span>•</span>
-              <span className="hl-meta-item">
-                <Calendar size={15} color="#64748b" />
-                <span>{isVi ? "Cập nhật: Mùa Du Lịch 2026" : "Updated: 2026 Season"}</span>
-              </span>
-              <span>•</span>
-              <span className="hl-meta-item">
-                <Clock size={15} color="#64748b" />
-                <span>{isVi ? "10 phút đọc chi tiết" : "10 min read"}</span>
-              </span>
-            </div>
-            <div>
-              <span className="hl-meta-tag">
-                <Anchor size={14} />
-                <span>{isVi ? "1.969 Hòn Đảo & Vịnh" : "1,969 Islands & Karsts"}</span>
-              </span>
-            </div>
-          </div>
-        </header>
-
-        {/* Hero Featured Image */}
-        <div className="hl-hero-img-wrap">
-          <img
-            src="/guide/ha-long/hero-halong.jpg"
-            alt={isVi ? "Toàn cảnh Vịnh Hạ Long nhìn từ đảo Ti Tốp" : "Panoramic view of Ha Long Bay from Ti Top Island"}
-            className="hl-hero-img"
-            loading="eager"
-          />
-          <div className="hl-hero-overlay" />
-          <div className="hl-hero-caption">
-            <span className="hl-hero-caption-badge">
-              {isVi ? "Góc Nhìn Biểu Tượng" : "Iconic Vantage Point"}
-            </span>
-            <p className="hl-hero-caption-text">
-              {isVi
-                ? "Toàn cảnh Vịnh Hạ Long ngập tràn sắc ngọc bích với hàng trăm đảo đá và du thuyền buồm lướt êm đềm."
-                : "The emerald panorama of Ha Long Bay with karst towers and traditional wooden junks gliding peacefully."}
-            </p>
-          </div>
-        </div>
 
         {/* Quick Snapshot Box */}
         <div className="hl-snapshot-box">
