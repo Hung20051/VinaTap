@@ -704,6 +704,10 @@
 }
 
 .editor-modal-footer {
+  position: sticky;
+  bottom: 0;
+  background: #ffffff;
+  z-index: 10;
   padding: 1.25rem 1.5rem;
   border-top: 1px solid #e2e8f0;
   display: flex;

@@ -39,6 +39,7 @@ import {
 } from "recharts";
 import { analyticsAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
+import { getLang } from "@/lib/prefs";
 import "./AdminAnalytics.css";
 
 const TIMEFRAME_OPTIONS = [
@@ -143,11 +144,19 @@ const FALLBACK_AFFILIATE_STATS = {
 };
 
 export default function AdminAnalytics() {
+  const [lang, setLang] = useState("vi");
   const [activeTab, setActiveTab] = useState("audience"); // 'audience' | 'content' | 'sources' | 'affiliate'
   const [timeframe, setTimeframe] = useState("all");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
+
+  useEffect(() => {
+    setLang(getLang());
+    const handleLangUpdated = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+  }, []);
 
   // Dữ liệu lượt truy cập
   const [stats, setStats] = useState({
@@ -315,17 +324,24 @@ export default function AdminAnalytics() {
             <span>LIVE TRAFFIC & PERFORMANCE</span>
           </div>
           <h1 className="admin-analytics-title">
-            Thống Kê Số Liệu & Báo Cáo Toàn Diện
+            {lang === "vi" ? "Thống Kê Số Liệu & Báo Cáo Toàn Diện" : "Analytics & Traffic Performance"}
           </h1>
           <p className="admin-analytics-subtitle">
-            Theo dõi người xem thực tế, hiệu suất bài viết, kênh giới thiệu và chuyển đổi Affiliate của VinaTap.
+            {lang === "vi"
+              ? "Theo dõi người xem thực tế, hiệu suất bài viết, kênh giới thiệu và chuyển đổi Affiliate của VinaTap."
+              : "Monitor live visitors, guide performance, traffic sources, and Affiliate conversions for VinaTap."}
           </p>
         </div>
 
         <div className="admin-analytics-actions">
           {/* Timeframe Pill Filter */}
           <div className="timeframe-pill-group">
-            {TIMEFRAME_OPTIONS.map((opt) => (
+            {[
+              { value: "today", label: lang === "vi" ? "Hôm nay" : "Today" },
+              { value: "7days", label: lang === "vi" ? "7 ngày qua" : "Last 7 days" },
+              { value: "30days", label: lang === "vi" ? "30 ngày qua" : "Last 30 days" },
+              { value: "all", label: lang === "vi" ? "Tất cả" : "All Time" },
+            ].map((opt) => (
               <button
                 key={opt.value}
                 type="button"
@@ -342,10 +358,10 @@ export default function AdminAnalytics() {
             type="button"
             className={`admin-analytics-refresh-btn ${refreshing ? "is-spin" : ""}`}
             onClick={() => loadStats()}
-            title="Làm mới số liệu"
+            title={lang === "vi" ? "Làm mới số liệu" : "Refresh stats"}
           >
             <RefreshCw size={16} />
-            <span>{refreshing ? "Đang cập nhật..." : "Làm mới"}</span>
+            <span>{refreshing ? (lang === "vi" ? "Đang cập nhật..." : "Refreshing...") : (lang === "vi" ? "Làm mới" : "Refresh")}</span>
           </button>
         </div>
       </div>
@@ -358,7 +374,7 @@ export default function AdminAnalytics() {
           onClick={() => setActiveTab("audience")}
         >
           <Users size={16} />
-          <span>Thống Kê Người Xem</span>
+          <span>{lang === "vi" ? "Thống Kê Người Xem" : "Audience & Traffic"}</span>
         </button>
 
         <button
@@ -367,7 +383,7 @@ export default function AdminAnalytics() {
           onClick={() => setActiveTab("content")}
         >
           <FileText size={16} />
-          <span>Thống Kê Nội Dung</span>
+          <span>{lang === "vi" ? "Thống Kê Nội Dung" : "Content & Pages"}</span>
         </button>
 
         <button
@@ -376,7 +392,7 @@ export default function AdminAnalytics() {
           onClick={() => setActiveTab("sources")}
         >
           <Share2 size={16} />
-          <span>Nguồn Truy Cập & UTM</span>
+          <span>{lang === "vi" ? "Nguồn Truy Cập & UTM" : "Traffic Sources & UTM"}</span>
         </button>
 
         <button
@@ -385,13 +401,13 @@ export default function AdminAnalytics() {
           onClick={() => setActiveTab("affiliate")}
         >
           <MousePointerClick size={16} />
-          <span>Thống Kê Affiliate</span>
+          <span>{lang === "vi" ? "Thống Kê Affiliate" : "Affiliate & Earnings"}</span>
         </button>
       </div>
 
       {loading ? (
         <div style={{ minHeight: "45vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <DinoLoader fullScreen={false} size={200} text="Đang phân tích số liệu..." subtext="Đang tổng hợp dữ liệu lượt xem và kênh nguồn" />
+          <DinoLoader fullScreen={false} size={200} text={lang === "vi" ? "Đang phân tích số liệu..." : "Analyzing traffic..."} subtext={lang === "vi" ? "Đang tổng hợp dữ liệu lượt xem và kênh nguồn" : "Aggregating page views and traffic channels"} />
         </div>
       ) : (
         <>
@@ -404,7 +420,7 @@ export default function AdminAnalytics() {
               <div className="analytics-kpi-grid">
                 <div className="analytics-kpi-card kpi-card-cyan">
                   <div className="kpi-card-header">
-                    <span className="kpi-card-label">Tổng lượt xem trang</span>
+                    <span className="kpi-card-label">{lang === "vi" ? "Tổng lượt xem trang" : "Total Page Views"}</span>
                     <div className="kpi-card-icon-wrap">
                       <Eye size={18} />
                     </div>
@@ -412,28 +428,28 @@ export default function AdminAnalytics() {
                   <div className="kpi-card-value">{stats.total_views.toLocaleString("vi-VN")}</div>
                   <div className="kpi-card-footer">
                     <span className="kpi-trend-pill is-up">
-                      <TrendingUp size={12} /> Lượt xem thực
+                      <TrendingUp size={12} /> {lang === "vi" ? "Lượt xem thực" : "Real views"}
                     </span>
-                    <span className="kpi-hint">Đã loại trừ bot ngầm</span>
+                    <span className="kpi-hint">{lang === "vi" ? "Đã loại trừ bot ngầm" : "Bot filtered"}</span>
                   </div>
                 </div>
 
                 <div className="analytics-kpi-card kpi-card-blue">
                   <div className="kpi-card-header">
-                    <span className="kpi-card-label">Khách truy cập (Unique IP)</span>
+                    <span className="kpi-card-label">{lang === "vi" ? "Khách truy cập (Unique IP)" : "Unique Visitors"}</span>
                     <div className="kpi-card-icon-wrap">
                       <Users size={18} />
                     </div>
                   </div>
                   <div className="kpi-card-value">{stats.unique_visitors.toLocaleString("vi-VN")}</div>
                   <div className="kpi-card-footer">
-                    <span className="kpi-hint">Người dùng riêng biệt</span>
+                    <span className="kpi-hint">{lang === "vi" ? "Người dùng riêng biệt" : "Unique real users"}</span>
                   </div>
                 </div>
 
                 <div className="analytics-kpi-card kpi-card-amber">
                   <div className="kpi-card-header">
-                    <span className="kpi-card-label">Thời gian xem trang</span>
+                    <span className="kpi-card-label">{lang === "vi" ? "Thời gian xem trang" : "Avg. Time on Page"}</span>
                     <div className="kpi-card-icon-wrap">
                       <Clock size={18} />
                     </div>
@@ -443,22 +459,22 @@ export default function AdminAnalytics() {
                   </div>
                   <div className="kpi-card-footer">
                     <span className="kpi-trend-pill is-up">
-                      <Clock size={12} /> Đọc sâu
+                      <Clock size={12} /> {lang === "vi" ? "Đọc sâu" : "Deep read"}
                     </span>
-                    <span className="kpi-hint">Thời gian du khách lưu lại đọc</span>
+                    <span className="kpi-hint">{lang === "vi" ? "Thời gian du khách lưu lại đọc" : "Avg. session read duration"}</span>
                   </div>
                 </div>
 
                 <div className="analytics-kpi-card kpi-card-emerald">
                   <div className="kpi-card-header">
-                    <span className="kpi-card-label">Xem trong ngày hôm nay</span>
+                    <span className="kpi-card-label">{lang === "vi" ? "Xem trong ngày hôm nay" : "Today's Views"}</span>
                     <div className="kpi-card-icon-wrap">
                       <Calendar size={18} />
                     </div>
                   </div>
                   <div className="kpi-card-value">{stats.today_views.toLocaleString("vi-VN")}</div>
                   <div className="kpi-card-footer">
-                    <span className="kpi-hint">Cập nhật thời gian thực</span>
+                    <span className="kpi-hint">{lang === "vi" ? "Cập nhật thời gian thực" : "Realtime sync"}</span>
                   </div>
                 </div>
               </div>

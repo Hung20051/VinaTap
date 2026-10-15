@@ -30,6 +30,7 @@ import {
 import { articleAPI } from "@/lib/api";
 import DinoLoader from "@/components/ui/DinoLoader";
 import { getArticleViews, TOTAL_SYSTEM_ARTICLE_VIEWS } from "@/lib/articleViews";
+import { getLang } from "@/lib/prefs";
 import "./AdminArticles.css";
 
 const CATEGORIES = [
@@ -421,11 +422,19 @@ export default function AdminArticles() {
   const [selectedCat, setSelectedCat] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [toast, setToast] = useState(null);
+  const [lang, setLang] = useState("vi");
 
   // Modal editor
   const [isEditing, setIsEditing] = useState(false);
   const [currentArticle, setCurrentArticle] = useState(null);
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setLang(getLang());
+    const handleLangUpdated = (e) => setLang(e.detail);
+    window.addEventListener("vinatap:lang-updated", handleLangUpdated);
+    return () => window.removeEventListener("vinatap:lang-updated", handleLangUpdated);
+  }, []);
 
   useEffect(() => {
     loadArticles();
@@ -647,9 +656,13 @@ export default function AdminArticles() {
             <Sparkles size={13} />
             <span>EDITORIAL CMS</span>
           </div>
-          <h1 className="admin-articles-title">Quản Lý Bài Viết Cẩm Nang</h1>
+          <h1 className="admin-articles-title">
+            {lang === "vi" ? "Quản Lý Bài Viết Cẩm Nang" : "Travel Articles & Guides CMS"}
+          </h1>
           <p className="admin-articles-subtitle">
-            Biên tập nội dung song ngữ, cập nhật hình ảnh và quản lý xuất bản các cẩm nang du lịch VinaTap.
+            {lang === "vi"
+              ? "Biên tập nội dung song ngữ, cập nhật hình ảnh và quản lý xuất bản các cẩm nang du lịch VinaTap."
+              : "Bilingual content editing, HD media uploads, and publishing control for VinaTap guides."}
           </p>
         </div>
 
@@ -658,10 +671,10 @@ export default function AdminArticles() {
             type="button"
             className="admin-btn-secondary"
             onClick={loadArticles}
-            title="Làm mới danh sách"
+            title={lang === "vi" ? "Làm mới danh sách" : "Refresh list"}
           >
             <RefreshCw size={15} />
-            <span>Làm mới</span>
+            <span>{lang === "vi" ? "Làm mới" : "Refresh"}</span>
           </button>
           <button
             type="button"
@@ -669,7 +682,7 @@ export default function AdminArticles() {
             onClick={handleOpenCreate}
           >
             <Plus size={16} />
-            <span>Viết bài mới</span>
+            <span>{lang === "vi" ? "Viết bài mới" : "New Article"}</span>
           </button>
         </div>
       </div>
@@ -677,24 +690,24 @@ export default function AdminArticles() {
       {/* ─── KPI OVERVIEW ────────────────────────────────────────────── */}
       <div className="articles-kpi-grid">
         <div className="articles-kpi-card">
-          <span className="kpi-label">Tổng bài viết</span>
+          <span className="kpi-label">{lang === "vi" ? "Tổng bài viết" : "Total Articles"}</span>
           <div className="kpi-val">{articles.length}</div>
-          <span className="kpi-hint">Trên hệ thống</span>
+          <span className="kpi-hint">{lang === "vi" ? "Trên hệ thống" : "In system"}</span>
         </div>
         <div className="articles-kpi-card kpi-border-emerald">
-          <span className="kpi-label">Đã xuất bản</span>
+          <span className="kpi-label">{lang === "vi" ? "Đã xuất bản" : "Published"}</span>
           <div className="kpi-val text-emerald">{publishedCount}</div>
-          <span className="kpi-hint">Đang hiển thị ngoài web</span>
+          <span className="kpi-hint">{lang === "vi" ? "Đang hiển thị ngoài web" : "Live on website"}</span>
         </div>
         <div className="articles-kpi-card kpi-border-amber">
-          <span className="kpi-label">Bản nháp</span>
+          <span className="kpi-label">{lang === "vi" ? "Bản nháp" : "Drafts"}</span>
           <div className="kpi-val text-amber">{draftCount}</div>
-          <span className="kpi-hint">Đang biên tập</span>
+          <span className="kpi-hint">{lang === "vi" ? "Đang biên tập" : "In review / draft"}</span>
         </div>
         <div className="articles-kpi-card kpi-border-cyan">
-          <span className="kpi-label">Tổng lượt xem</span>
+          <span className="kpi-label">{lang === "vi" ? "Tổng lượt xem" : "Total Views"}</span>
           <div className="kpi-val text-cyan">856</div>
-          <span className="kpi-hint">Tích lũy toàn cẩm nang</span>
+          <span className="kpi-hint">{lang === "vi" ? "Tích lũy toàn cẩm nang" : "Cumulative page views"}</span>
         </div>
       </div>
 
@@ -704,7 +717,7 @@ export default function AdminArticles() {
           <Search size={16} className="search-icon" />
           <input
             type="text"
-            placeholder="Tìm theo tiêu đề hoặc đường dẫn slug..."
+            placeholder={lang === "vi" ? "Tìm theo tiêu đề hoặc đường dẫn slug..." : "Search by title or slug..."}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -715,20 +728,20 @@ export default function AdminArticles() {
             value={selectedCat}
             onChange={(e) => setSelectedCat(e.target.value)}
           >
-            {CATEGORIES.map((c) => (
-              <option key={c.value} value={c.value}>
-                {c.label}
-              </option>
-            ))}
+            <option value="all">{lang === "vi" ? "Tất cả chuyên mục" : "All Categories"}</option>
+            <option value="things-to-do">{lang === "vi" ? "Trải nghiệm (Things to do)" : "Things to do"}</option>
+            <option value="eat-drink">{lang === "vi" ? "Ẩm thực (Eat & Drink)" : "Eat & Drink"}</option>
+            <option value="itineraries">{lang === "vi" ? "Lịch trình (Itineraries)" : "Itineraries"}</option>
+            <option value="inspired">{lang === "vi" ? "Cảm hứng (Be Inspired)" : "Be Inspired"}</option>
           </select>
 
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
           >
-            <option value="all">Tất cả trạng thái</option>
-            <option value="published">Đã xuất bản</option>
-            <option value="draft">Bản nháp</option>
+            <option value="all">{lang === "vi" ? "Tất cả trạng thái" : "All Statuses"}</option>
+            <option value="published">{lang === "vi" ? "Đã xuất bản" : "Published"}</option>
+            <option value="draft">{lang === "vi" ? "Bản nháp" : "Draft"}</option>
           </select>
         </div>
       </div>
@@ -736,13 +749,13 @@ export default function AdminArticles() {
       {/* ─── ARTICLES LIST ───────────────────────────────────────────── */}
       {loading ? (
         <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <DinoLoader fullScreen={false} size={200} text="Đang tải danh sách bài viết..." subtext="Đang kết nối cơ sở dữ liệu cẩm nang" />
+          <DinoLoader fullScreen={false} size={200} text={lang === "vi" ? "Đang tải danh sách bài viết..." : "Loading articles..."} subtext={lang === "vi" ? "Đang kết nối cơ sở dữ liệu cẩm nang" : "Connecting to guides database"} />
         </div>
       ) : filtered.length === 0 ? (
         <div className="articles-empty-state">
           <FileText size={48} color="#94a3b8" />
-          <h3>Không tìm thấy bài viết nào</h3>
-          <p>Thử tìm kiếm với từ khóa khác hoặc bấm nút &quot;Viết bài mới&quot; để tạo bài viết cẩm nang.</p>
+          <h3>{lang === "vi" ? "Không tìm thấy bài viết nào" : "No articles found"}</h3>
+          <p>{lang === "vi" ? "Thử tìm kiếm với từ khóa khác hoặc bấm nút \"Viết bài mới\" để tạo bài viết cẩm nang." : "Try searching with a different keyword or click \"New Article\" to create one."}</p>
         </div>
       ) : (
         <div className="articles-grid">
@@ -759,17 +772,19 @@ export default function AdminArticles() {
                   }}
                 />
                 <span className={`article-status-badge ${art.status === "published" ? "is-published" : "is-draft"}`}>
-                  {art.status === "published" ? "Đã xuất bản" : "Bản nháp"}
+                  {art.status === "published"
+                    ? (lang === "vi" ? "Đã xuất bản" : "Published")
+                    : (lang === "vi" ? "Bản nháp" : "Draft")}
                 </span>
                 <span className="article-category-badge">{art.category}</span>
               </div>
 
               <div className="article-card-body">
-                <h3 className="article-card-title-vi" title={art.title_vi}>
-                  {art.title_vi}
+                <h3 className="article-card-title-vi" title={lang === "vi" ? art.title_vi : (art.title_en || art.title_vi)}>
+                  {lang === "vi" ? art.title_vi : (art.title_en || art.title_vi)}
                 </h3>
-                <p className="article-card-title-en" title={art.title_en}>
-                  {art.title_en}
+                <p className="article-card-title-en" title={lang === "vi" ? art.title_en : art.title_vi}>
+                  {lang === "vi" ? art.title_en : art.title_vi}
                 </p>
 
                 <div className="article-card-meta">
@@ -778,14 +793,14 @@ export default function AdminArticles() {
                     <span>
                       <Calendar size={13} />{" "}
                       {art.published_date
-                        ? new Date(art.published_date).toLocaleDateString("vi-VN")
+                        ? new Date(art.published_date).toLocaleDateString(lang === "vi" ? "vi-VN" : "en-US")
                         : "10/10/2026"}
                     </span>
                     <span>
-                      <Eye size={13} /> {getArticleViews(art.slug) || art.views_count || 36} lượt xem
+                      <Eye size={13} /> {getArticleViews(art.slug) || art.views_count || 36} {lang === "vi" ? "lượt xem" : "views"}
                     </span>
                     <span>
-                      <Layers size={13} /> {art.item_count || art.items?.length || 0} mục
+                      <Layers size={13} /> {art.item_count || art.items?.length || 0} {lang === "vi" ? "mục" : "sections"}
                     </span>
                   </div>
                 </div>
@@ -797,7 +812,7 @@ export default function AdminArticles() {
                     onClick={() => handleOpenEdit(art)}
                   >
                     <Edit3 size={14} />
-                    <span>Sửa nội dung</span>
+                    <span>{lang === "vi" ? "Sửa nội dung" : "Edit Article"}</span>
                   </button>
 
                   <a
@@ -805,7 +820,7 @@ export default function AdminArticles() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="action-btn-preview"
-                    title="Xem trước ngoài website"
+                    title={lang === "vi" ? "Xem trước ngoài website" : "Preview on live website"}
                   >
                     <ExternalLink size={14} />
                   </a>
@@ -814,7 +829,7 @@ export default function AdminArticles() {
                     type="button"
                     className="action-btn-delete"
                     onClick={() => handleDelete(art.id, art.title_vi)}
-                    title="Xóa bài viết"
+                    title={lang === "vi" ? "Xóa bài viết" : "Delete article"}
                   >
                     <Trash2 size={14} />
                   </button>
@@ -833,6 +848,7 @@ export default function AdminArticles() {
           onSave={handleSaveArticle}
           saving={saving}
           showToast={showToast}
+          lang={lang}
         />
       )}
     </div>
@@ -840,7 +856,7 @@ export default function AdminArticles() {
 }
 
 // ─── SUBCOMPONENT: ARTICLE EDITOR MODAL ─────────────────────────
-function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
+function ArticleEditorModal({ article, onClose, onSave, saving, showToast, lang = "vi" }) {
   const [formData, setFormData] = useState({ ...article });
   const [uploadingHero, setUploadingHero] = useState(false);
   const [uploadingItemIdx, setUploadingItemIdx] = useState(null);
@@ -975,10 +991,14 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
         <div className="editor-modal-header">
           <div>
             <h2 className="editor-modal-title">
-              {formData.id ? "Chỉnh Sửa Bài Viết Cẩm Nang" : "Tạo Mới Bài Viết Cẩm Nang"}
+              {formData.id
+                ? (lang === "vi" ? "Chỉnh Sửa Bài Viết Cẩm Nang" : "Edit Travel Article")
+                : (lang === "vi" ? "Tạo Mới Bài Viết Cẩm Nang" : "Create New Travel Article")}
             </h2>
             <p className="editor-modal-subtitle">
-              Sửa trực tiếp tiêu đề, tải ảnh HD, chọn ảnh mẫu có sẵn và quản lý các mục nội dung
+              {lang === "vi"
+                ? "Sửa trực tiếp tiêu đề, tải ảnh HD, chọn ảnh mẫu có sẵn và quản lý các mục nội dung"
+                : "Edit bilingual titles, upload HD photos, choose presets, and manage content sections"}
             </p>
           </div>
           <button type="button" className="editor-close-btn" onClick={onClose}>
@@ -989,32 +1009,40 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
         <form onSubmit={handleSubmit} className="editor-modal-body">
           {/* Thông tin cơ bản */}
           <div className="editor-section-card">
-            <h3 className="section-card-title">1. Thông tin chung bài viết</h3>
+            <h3 className="section-card-title">
+              {lang === "vi" ? "1. Thông tin chung bài viết" : "1. General Article Information"}
+            </h3>
             <div className="form-grid-2">
               <div className="form-group">
-                <label>Tiêu đề Tiếng Việt (Bắt buộc)</label>
+                <label>
+                  {lang === "vi" ? "Tiêu đề Tiếng Việt (Bắt buộc)" : "Vietnamese Title (Required)"}
+                </label>
                 <input
                   type="text"
                   required
                   value={formData.title_vi || ""}
                   onChange={(e) => handleFieldChange("title_vi", e.target.value)}
-                  placeholder="Vd: 8 trải nghiệm tuyệt nhất tại Nha Trang"
+                  placeholder={lang === "vi" ? "Vd: 8 trải nghiệm tuyệt nhất tại Nha Trang" : "Ex: 8 best things to do in Nha Trang"}
                 />
               </div>
 
               <div className="form-group">
-                <label>Tiêu đề Tiếng Anh (Bắt buộc)</label>
+                <label>
+                  {lang === "vi" ? "Tiêu đề Tiếng Anh (Bắt buộc)" : "English Title (Required)"}
+                </label>
                 <input
                   type="text"
                   required
                   value={formData.title_en || ""}
                   onChange={(e) => handleFieldChange("title_en", e.target.value)}
-                  placeholder="Vd: 8 best things to do in Nha Trang"
+                  placeholder={lang === "vi" ? "Vd: 8 best things to do in Nha Trang" : "Ex: 8 best things to do in Nha Trang"}
                 />
               </div>
 
               <div className="form-group">
-                <label>Đường dẫn Slug (URL tự sinh nếu để trống)</label>
+                <label>
+                  {lang === "vi" ? "Đường dẫn Slug (URL tự sinh nếu để trống)" : "Article Slug (Auto-generated if empty)"}
+                </label>
                 <input
                   type="text"
                   value={formData.slug || ""}
@@ -1024,20 +1052,20 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
               </div>
 
               <div className="form-group">
-                <label>Chuyên mục</label>
+                <label>{lang === "vi" ? "Chuyên mục" : "Category"}</label>
                 <select
                   value={formData.category || "things-to-do"}
                   onChange={(e) => handleFieldChange("category", e.target.value)}
                 >
-                  <option value="things-to-do">Trải nghiệm (Things to do)</option>
-                  <option value="eat-drink">Ẩm thực (Eat & Drink)</option>
-                  <option value="itineraries">Lịch trình (Itineraries)</option>
-                  <option value="inspired">Cảm hứng (Be Inspired)</option>
+                  <option value="things-to-do">{lang === "vi" ? "Trải nghiệm (Things to do)" : "Things to do"}</option>
+                  <option value="eat-drink">{lang === "vi" ? "Ẩm thực (Eat & Drink)" : "Eat & Drink"}</option>
+                  <option value="itineraries">{lang === "vi" ? "Lịch trình (Itineraries)" : "Itineraries"}</option>
+                  <option value="inspired">{lang === "vi" ? "Cảm hứng (Be Inspired)" : "Be Inspired"}</option>
                 </select>
               </div>
 
               <div className="form-group">
-                <label>Tỉnh / Thành phố liên quan</label>
+                <label>{lang === "vi" ? "Tỉnh / Thành phố liên quan" : "Related Province / City"}</label>
                 <input
                   type="text"
                   value={formData.province_slug || ""}
@@ -1047,18 +1075,22 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
               </div>
 
               <div className="form-group">
-                <label>Trạng thái</label>
+                <label>{lang === "vi" ? "Trạng thái" : "Status"}</label>
                 <select
                   value={formData.status || "published"}
                   onChange={(e) => handleFieldChange("status", e.target.value)}
                 >
-                  <option value="published">Đã xuất bản (Công khai ngoài website)</option>
-                  <option value="draft">Bản nháp (Tạm ẩn)</option>
+                  <option value="published">
+                    {lang === "vi" ? "Đã xuất bản (Công khai ngoài website)" : "Published (Live on website)"}
+                  </option>
+                  <option value="draft">
+                    {lang === "vi" ? "Bản nháp (Tạm ẩn)" : "Draft (Hidden)"}
+                  </option>
                 </select>
               </div>
 
               <div className="form-group">
-                <label>Ngày xuất bản (Từ 10/10/2026)</label>
+                <label>{lang === "vi" ? "Ngày xuất bản (Từ 10/10/2026)" : "Published Date (From 10/10/2026)"}</label>
                 <input
                   type="date"
                   value={formData.published_date ? String(formData.published_date).substring(0, 10) : "2026-10-10"}
@@ -1069,7 +1101,11 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
 
             {/* Quản lý Ảnh Hero */}
             <div className="form-group" style={{ marginTop: "1rem" }}>
-              <label>Ảnh bìa chính (Hero Image) — Thêm / Đổi / Tải lên từ máy</label>
+              <label>
+                {lang === "vi"
+                  ? "Ảnh bìa chính (Hero Image) — Thêm / Đổi / Tải lên từ máy"
+                  : "Hero Cover Image — Add / Change / Upload from device"}
+              </label>
               <div className="upload-input-combo">
                 <input
                   type="text"
@@ -1079,7 +1115,11 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                 />
                 <label className="upload-file-btn">
                   <Upload size={14} />
-                  <span>{uploadingHero ? "Đang tải..." : "Tải ảnh từ máy"}</span>
+                  <span>
+                    {uploadingHero
+                      ? (lang === "vi" ? "Đang tải..." : "Uploading...")
+                      : (lang === "vi" ? "Tải ảnh từ máy" : "Upload photo")}
+                  </span>
                   <input
                     type="file"
                     accept="image/*"
@@ -1092,7 +1132,9 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
 
               {/* Gợi ý ảnh nhanh */}
               <div className="quick-photo-presets">
-                <span className="quick-preset-label">Gợi ý ảnh đẹp:</span>
+                <span className="quick-preset-label">
+                  {lang === "vi" ? "Gợi ý ảnh đẹp:" : "Photo presets:"}
+                </span>
                 {HERO_PHOTO_PRESETS.map((p) => (
                   <button
                     key={p.name}
@@ -1119,10 +1161,10 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                       type="button"
                       className="preview-remove-btn"
                       onClick={() => handleFieldChange("hero_image", "")}
-                      title="Xóa ảnh này"
+                      title={lang === "vi" ? "Xóa ảnh này" : "Remove photo"}
                     >
                       <Trash2 size={12} />
-                      <span>Xóa ảnh</span>
+                      <span>{lang === "vi" ? "Xóa ảnh" : "Remove photo"}</span>
                     </button>
                   </div>
                 </div>
@@ -1134,8 +1176,14 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
           <div className="editor-section-card">
             <div className="section-card-header-flex">
               <div>
-                <h3 className="section-card-title">2. Danh sách các mục trải nghiệm / món ăn</h3>
-                <p className="section-card-desc">Thêm ảnh HD, tiêu đề và đoạn văn mô tả song ngữ cho từng mục</p>
+                <h3 className="section-card-title">
+                  {lang === "vi" ? "2. Danh sách các mục trải nghiệm / món ăn" : "2. Article Sights & Sections"}
+                </h3>
+                <p className="section-card-desc">
+                  {lang === "vi"
+                    ? "Thêm ảnh HD, tiêu đề và đoạn văn mô tả song ngữ cho từng mục"
+                    : "Add HD images, titles, and bilingual descriptions for each section"}
+                </p>
               </div>
               <button
                 type="button"
@@ -1143,7 +1191,7 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                 onClick={handleAddItem}
               >
                 <Plus size={14} />
-                <span>Thêm mục</span>
+                <span>{lang === "vi" ? "Thêm mục" : "Add Section"}</span>
               </button>
             </div>
 
@@ -1152,14 +1200,16 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                 <div key={idx} className="item-editor-row">
                   <div className="item-editor-header">
                     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <span className="item-badge-num">Mục #{idx + 1}</span>
+                      <span className="item-badge-num">
+                        {lang === "vi" ? `Mục #${idx + 1}` : `Section #${idx + 1}`}
+                      </span>
                       <div className="item-reorder-group">
                         <button
                           type="button"
                           className="item-reorder-btn"
                           disabled={idx === 0}
                           onClick={() => handleMoveItem(idx, "up")}
-                          title="Di chuyển lên trên"
+                          title={lang === "vi" ? "Di chuyển lên trên" : "Move up"}
                         >
                           <ArrowUp size={13} />
                         </button>
@@ -1168,7 +1218,7 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                           className="item-reorder-btn"
                           disabled={idx === (formData.items?.length || 1) - 1}
                           onClick={() => handleMoveItem(idx, "down")}
-                          title="Di chuyển xuống dưới"
+                          title={lang === "vi" ? "Di chuyển xuống dưới" : "Move down"}
                         >
                           <ArrowDown size={13} />
                         </button>
@@ -1179,7 +1229,7 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                       type="button"
                       className="item-delete-btn"
                       onClick={() => handleRemoveItem(idx)}
-                      title="Xóa mục này"
+                      title={lang === "vi" ? "Xóa mục này" : "Delete this section"}
                     >
                       <Trash2 size={15} />
                     </button>
@@ -1187,7 +1237,7 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
 
                   <div className="form-grid-2">
                     <div className="form-group">
-                      <label>Tiêu đề mục (Tiếng Việt)</label>
+                      <label>{lang === "vi" ? "Tiêu đề mục (Tiếng Việt)" : "Section Title (Vietnamese)"}</label>
                       <input
                         type="text"
                         value={item.title_vi || ""}
@@ -1196,19 +1246,19 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                       />
                     </div>
                     <div className="form-group">
-                      <label>Tiêu đề mục (Tiếng Anh)</label>
+                      <label>{lang === "vi" ? "Tiêu đề mục (Tiếng Anh)" : "Section Title (English)"}</label>
                       <input
                         type="text"
                         value={item.title_en || ""}
                         onChange={(e) => handleItemChange(idx, "title_en", e.target.value)}
-                        placeholder={`Vd: ${idx + 1}. Dive into the islands...`}
+                        placeholder={`Ex: ${idx + 1}. Dive into the islands...`}
                       />
                     </div>
                   </div>
 
                   {/* Ảnh mục */}
                   <div className="form-group" style={{ marginTop: "0.75rem" }}>
-                    <label>Hình ảnh mục #{idx + 1}</label>
+                    <label>{lang === "vi" ? `Hình ảnh mục #${idx + 1}` : `Section #${idx + 1} Image`}</label>
                     <div className="upload-input-combo">
                       <input
                         type="text"
@@ -1218,7 +1268,11 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                       />
                       <label className="upload-file-btn">
                         <Upload size={14} />
-                        <span>{uploadingItemIdx === idx ? "Đang tải..." : "Tải ảnh từ máy"}</span>
+                        <span>
+                          {uploadingItemIdx === idx
+                            ? (lang === "vi" ? "Đang tải..." : "Uploading...")
+                            : (lang === "vi" ? "Tải ảnh từ máy" : "Upload photo")}
+                        </span>
                         <input
                           type="file"
                           accept="image/*"
@@ -1243,10 +1297,10 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                             type="button"
                             className="preview-remove-btn"
                             onClick={() => handleItemChange(idx, "image_url", "")}
-                            title="Xóa ảnh mục này"
+                            title={lang === "vi" ? "Xóa ảnh mục này" : "Remove photo"}
                           >
                             <Trash2 size={11} />
-                            <span>Xóa</span>
+                            <span>{lang === "vi" ? "Xóa" : "Remove"}</span>
                           </button>
                         </div>
                       </div>
@@ -1255,7 +1309,7 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
 
                   <div className="form-grid-2" style={{ marginTop: "0.75rem" }}>
                     <div className="form-group">
-                      <label>Chú thích ảnh (Tiếng Việt)</label>
+                      <label>{lang === "vi" ? "Chú thích ảnh (Tiếng Việt)" : "Image Caption (Vietnamese)"}</label>
                       <input
                         type="text"
                         value={item.caption_vi || ""}
@@ -1264,12 +1318,12 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                       />
                     </div>
                     <div className="form-group">
-                      <label>Chú thích ảnh (Tiếng Anh)</label>
+                      <label>{lang === "vi" ? "Chú thích ảnh (Tiếng Anh)" : "Image Caption (English)"}</label>
                       <input
                         type="text"
                         value={item.caption_en || ""}
                         onChange={(e) => handleItemChange(idx, "caption_en", e.target.value)}
-                        placeholder="Vd: Hon Mun Island..."
+                        placeholder="Ex: Hon Mun Island..."
                       />
                     </div>
                   </div>
@@ -1277,16 +1331,16 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
                   {/* Đoạn văn */}
                   <div className="form-grid-2" style={{ marginTop: "0.75rem" }}>
                     <div className="form-group">
-                      <label>Nội dung đoạn văn (Tiếng Việt)</label>
+                      <label>{lang === "vi" ? "Nội dung đoạn văn (Tiếng Việt)" : "Content Paragraphs (Vietnamese)"}</label>
                       <textarea
                         rows={3}
                         value={Array.isArray(item.content_vi) ? item.content_vi.join("\n\n") : item.content_vi || ""}
                         onChange={(e) => handleItemChange(idx, "content_vi", e.target.value.split("\n\n"))}
-                        placeholder="Nội dung mô tả tiếng Việt..."
+                        placeholder={lang === "vi" ? "Nội dung mô tả tiếng Việt..." : "Vietnamese description content..."}
                       />
                     </div>
                     <div className="form-group">
-                      <label>Nội dung đoạn văn (Tiếng Anh)</label>
+                      <label>{lang === "vi" ? "Nội dung đoạn văn (Tiếng Anh)" : "Content Paragraphs (English)"}</label>
                       <textarea
                         rows={3}
                         value={Array.isArray(item.content_en) ? item.content_en.join("\n\n") : item.content_en || ""}
@@ -1308,7 +1362,7 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
               onClick={onClose}
               disabled={saving}
             >
-              Hủy bỏ
+              {lang === "vi" ? "Hủy bỏ" : "Cancel"}
             </button>
             <button
               type="submit"
@@ -1316,7 +1370,11 @@ function ArticleEditorModal({ article, onClose, onSave, saving, showToast }) {
               disabled={saving}
             >
               <Save size={16} />
-              <span>{saving ? "Đang lưu..." : "Lưu thay đổi bài viết"}</span>
+              <span>
+                {saving
+                  ? (lang === "vi" ? "Đang lưu..." : "Saving...")
+                  : (lang === "vi" ? "Lưu thay đổi bài viết" : "Save Changes")}
+              </span>
             </button>
           </div>
         </form>
