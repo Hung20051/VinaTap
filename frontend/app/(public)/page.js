@@ -1551,23 +1551,40 @@ export default function HomePage() {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
   };
 
-  // Kết hợp toàn bộ tỉnh thành có trong hệ thống (API backend + danh sách chuẩn)
+  // Kết hợp toàn bộ tỉnh thành có trong hệ thống (API backend + danh sách chuẩn), loại trừ Hoàng Sa & Trường Sa khỏi mục Điểm đến
   const allTopDestinations = useMemo(() => {
-    if (!provinces || provinces.length === 0) return TOP_DESTINATIONS_DATA;
+    const isExcluded = (item) => {
+      if (!item) return false;
+      const slug = (item.slug || item.id || "").toLowerCase().trim();
+      const name = (item.name || "").toLowerCase().trim();
+      const nameVi = (item.nameVi || "").toLowerCase().trim();
+      return (
+        slug.includes("hoang-sa") ||
+        slug.includes("truong-sa") ||
+        name.includes("hoang sa") ||
+        name.includes("truong sa") ||
+        nameVi.includes("hoàng sa") ||
+        nameVi.includes("trường sa")
+      );
+    };
+
+    const cleanBaseData = TOP_DESTINATIONS_DATA.filter((d) => !isExcluded(d));
+    if (!provinces || provinces.length === 0) return cleanBaseData;
+
     const seen = {};
     const result = [];
     // Ưu tiên danh sách chuẩn với ảnh đẹp & tên chuẩn hóa
-    TOP_DESTINATIONS_DATA.forEach((d) => {
+    cleanBaseData.forEach((d) => {
       const key = d.id || d.slug;
       if (!seen[key]) {
         seen[key] = true;
         result.push(d);
       }
     });
-    // Bổ sung thêm bất kỳ tỉnh thành nào từ backend nếu chưa có
+    // Bổ sung thêm bất kỳ tỉnh thành nào từ backend nếu chưa có (loại trừ Hoàng Sa, Trường Sa)
     provinces.forEach((p) => {
       const slug = p.slug;
-      if (!seen[slug]) {
+      if (!isExcluded(p) && !seen[slug]) {
         seen[slug] = true;
         result.push({
           id: slug,
