@@ -104,6 +104,30 @@ function buildArticleItemInsert(availCols, articleId, it, index) {
   };
 }
 
+function formatPublishedDate(rawDate) {
+  if (!rawDate) return "2026-10-10";
+  if (rawDate instanceof Date && !isNaN(rawDate.getTime())) {
+    return rawDate.toISOString().split("T")[0];
+  }
+  const s = String(rawDate).trim();
+  if (!s) return "2026-10-10";
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+    return s.split("T")[0];
+  }
+  if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) {
+    const parts = s.split("/");
+    const d = parts[0].padStart(2, "0");
+    const m = parts[1].padStart(2, "0");
+    const y = parts[2];
+    return `${y}-${m}-${d}`;
+  }
+  const parsed = new Date(s);
+  if (!isNaN(parsed.getTime())) {
+    return parsed.toISOString().split("T")[0];
+  }
+  return "2026-10-10";
+}
+
 const Article = {
   // Lấy danh sách bài viết (guest chỉ thấy 'published', admin thấy cả 'draft')
   async findAll({ category, status, search, limit = 50, offset = 0 } = {}) {
@@ -147,7 +171,10 @@ const Article = {
     );
 
     return {
-      articles: rows,
+      articles: rows.map((a) => ({
+        ...a,
+        published_date: formatPublishedDate(a.published_date),
+      })),
       total: countResult[0]?.total || 0,
     };
   },
@@ -175,6 +202,7 @@ const Article = {
 
     return {
       ...article,
+      published_date: formatPublishedDate(article.published_date),
       items: items.map((it) => {
         const rawEn = it.paragraphs_en ?? it.content_en ?? [];
         const rawVi = it.paragraphs_vi ?? it.content_vi ?? [];
@@ -223,6 +251,7 @@ const Article = {
 
     return {
       ...article,
+      published_date: formatPublishedDate(article.published_date),
       items: items.map((it) => {
         const rawEn = it.paragraphs_en ?? it.content_en ?? [];
         const rawVi = it.paragraphs_vi ?? it.content_vi ?? [];
@@ -262,14 +291,7 @@ const Article = {
     try {
       await conn.beginTransaction();
 
-      const formattedDate =
-        typeof published_date === "string" && published_date.trim()
-          ? published_date.trim()
-          : new Date().toLocaleDateString("en-US", {
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            });
+      const formattedDate = formatPublishedDate(published_date);
 
       const [res] = await conn.execute(
         `INSERT INTO articles 
@@ -332,7 +354,11 @@ const Article = {
       for (const key of allowedFields) {
         if (fields[key] !== undefined) {
           sets.push(`${key} = ?`);
-          values.push(fields[key] === undefined ? null : fields[key]);
+          let val = fields[key] === undefined ? null : fields[key];
+          if (key === "published_date" && val) {
+            val = formatPublishedDate(val);
+          }
+          values.push(val);
         }
       }
 

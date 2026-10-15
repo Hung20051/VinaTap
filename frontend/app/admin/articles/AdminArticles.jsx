@@ -556,11 +556,32 @@ export default function AdminArticles() {
           : [String(it.content_en || "")],
       }));
 
+      let formattedPublishedDate = "2026-10-10";
+      if (articleData.published_date) {
+        const pd = String(articleData.published_date).trim();
+        if (/^\d{4}-\d{2}-\d{2}/.test(pd)) {
+          formattedPublishedDate = pd.split("T")[0];
+        } else if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(pd)) {
+          const parts = pd.split("/");
+          formattedPublishedDate = `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}`;
+        } else {
+          try {
+            const parsed = new Date(pd);
+            formattedPublishedDate = !isNaN(parsed.getTime())
+              ? parsed.toISOString().split("T")[0]
+              : "2026-10-10";
+          } catch {
+            formattedPublishedDate = "2026-10-10";
+          }
+        }
+      }
+
       const payload = {
         ...articleData,
         slug,
         title_vi: articleData.title_vi.trim(),
         title_en: articleData.title_en.trim(),
+        published_date: formattedPublishedDate,
         hero_image: (articleData.hero_image || "/guide/megamenu/todo-2-hcmc.jpg").trim(),
         items: preparedItems,
       };
