@@ -1422,8 +1422,14 @@ export default function ThreeWeekVietnamItineraryPage() {
             </p>
           </div>
 
-          {/* Extended Vector Map */}
-          <VietnamExtendedItineraryMap lang={lang} />
+          {/* Extended Route Map Image */}
+          <div className="itin-map-card" style={{ textAlign: "center", padding: "16px", background: "#ffffff", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.06)", overflow: "hidden" }}>
+            <img
+              src="/guide/vietnam/ban_do_lich_trinh_mo_rong.jpg"
+              alt={lang === "vi" ? "Lịch trình 3 tuần xuyên Việt: Mở rộng khám phá" : "3-Week Vietnam itinerary: Extended exploration"}
+              style={{ width: "100%", maxHeight: "780px", objectFit: "contain", borderRadius: "12px", display: "block", margin: "0 auto" }}
+            />
+          </div>
 
           <div className="itin-top-banner-bar" style={{ marginTop: 24 }}>
             {lang === "vi"
