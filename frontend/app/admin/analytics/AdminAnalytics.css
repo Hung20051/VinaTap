@@ -1290,3 +1290,170 @@
   color: #16a34a;
 }
 
+/* ─── TAB 2 & CONTENT PANELS (TOP PAGES & TOP PROVINCES) ────── */
+.analytics-two-col-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .analytics-two-col-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.analytics-panel-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.panel-card-header-flex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.panel-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.panel-card-subtitle {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 3px 0 0;
+}
+
+.panel-link-action {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #0284c7;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #f0f9ff;
+  border: 1px solid #e0f2fe;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.panel-link-action:hover {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* Thanh bộ lọc / Toolbar */
+.panel-filter-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.25rem;
+}
+
+.panel-search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 180px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0 0.65rem;
+  height: 36px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.panel-search-input-wrap:focus-within {
+  border-color: #0284c7;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+}
+
+.panel-search-icon {
+  color: #94a3b8;
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.panel-search-input {
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-size: 0.82rem;
+  color: #0f172a;
+  width: 100%;
+  font-family: inherit;
+  padding: 0;
+}
+
+.panel-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.panel-search-clear {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.panel-search-clear:hover {
+  color: #475569;
+}
+
+.panel-region-segmented {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+  align-items: center;
+}
+
+.panel-region-btn {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.74rem;
+  padding: 4px 9px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.panel-region-btn.is-active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.panel-region-btn:hover:not(.is-active) {
+  color: #1e293b;
+}
+

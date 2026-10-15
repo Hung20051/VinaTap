@@ -634,26 +634,39 @@ export default function AdminAnalytics() {
               <div className="analytics-two-col-grid">
                 {/* Top Trang / Bài Viết */}
                 <div className="analytics-panel-card">
-                  <div className="panel-card-header-flex" style={{ flexWrap: "wrap", gap: "10px" }}>
+                  <div className="panel-card-header-flex">
                     <div>
                       <h3 className="panel-card-title">Top Bài Viết &amp; Trang Xem Nhiều Nhất</h3>
-                      <p style={{ fontSize: "0.78rem", color: "#64748b", margin: "2px 0 0" }}>
+                      <p className="panel-card-subtitle">
                         Tổng số {displayedPages.length} trang được ghi nhận lượt xem
                       </p>
                     </div>
-                    <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                      <div className="prov-search-box" style={{ width: "200px" }}>
-                        <Search size={14} className="prov-search-icon" />
-                        <input
-                          type="text"
-                          placeholder="Lọc trang..."
-                          value={pageFilterQuery}
-                          onChange={(e) => setPageFilterQuery(e.target.value)}
-                        />
-                      </div>
-                      <Link href="/admin/articles" className="panel-link-action">
-                        Quản lý bài viết ➔
-                      </Link>
+                    <Link href="/admin/articles" className="panel-link-action">
+                      Quản lý bài viết ➔
+                    </Link>
+                  </div>
+
+                  {/* Thanh tìm kiếm bài viết / trang */}
+                  <div className="panel-filter-toolbar">
+                    <div className="panel-search-input-wrap">
+                      <Search size={14} className="panel-search-icon" />
+                      <input
+                        type="text"
+                        placeholder="Tìm kiếm theo URL hoặc tiêu đề bài viết..."
+                        value={pageFilterQuery}
+                        onChange={(e) => setPageFilterQuery(e.target.value)}
+                        className="panel-search-input"
+                      />
+                      {pageFilterQuery && (
+                        <button
+                          type="button"
+                          className="panel-search-clear"
+                          onClick={() => setPageFilterQuery("")}
+                          title="Xóa tìm kiếm"
+                        >
+                          ✕
+                        </button>
+                      )}
                     </div>
                   </div>
                   <div className="analytics-table-wrap">
@@ -702,56 +715,57 @@ export default function AdminAnalytics() {
 
                 {/* Top Tỉnh Thành */}
                 <div className="analytics-panel-card">
-                  <div className="panel-card-header-flex" style={{ flexWrap: "wrap", gap: "10px" }}>
+                  <div className="panel-card-header-flex">
                     <div>
                       <h3 className="panel-card-title">Top Tỉnh Thành Thu Hút ({displayedProvinces.length} Tỉnh Thành)</h3>
-                      <p style={{ fontSize: "0.78rem", color: "#64748b", margin: "2px 0 0" }}>
+                      <p className="panel-card-subtitle">
                         Danh sách các điểm đến du lịch trên hệ thống VinaTap
                       </p>
                     </div>
+                    <Link href="/admin/provinces" className="panel-link-action">
+                      Quản lý tỉnh thành ➔
+                    </Link>
+                  </div>
 
-                    <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "4px", background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: "6px", padding: "2px 8px" }}>
-                        <Search size={13} color="#64748b" />
-                        <input
-                          type="text"
-                          placeholder="Lọc tỉnh thành..."
-                          value={provFilterQuery}
-                          onChange={(e) => setProvFilterQuery(e.target.value)}
-                          style={{ border: "none", background: "none", outline: "none", fontSize: "0.76rem", width: "100px" }}
-                        />
-                      </div>
+                  {/* Thanh tìm kiếm & lọc vùng miền */}
+                  <div className="panel-filter-toolbar">
+                    <div className="panel-search-input-wrap" style={{ flex: "1 1 140px" }}>
+                      <Search size={14} className="panel-search-icon" />
+                      <input
+                        type="text"
+                        placeholder="Lọc tỉnh thành..."
+                        value={provFilterQuery}
+                        onChange={(e) => setProvFilterQuery(e.target.value)}
+                        className="panel-search-input"
+                      />
+                      {provFilterQuery && (
+                        <button
+                          type="button"
+                          className="panel-search-clear"
+                          onClick={() => setProvFilterQuery("")}
+                          title="Xóa tìm kiếm"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
 
-                      <div style={{ display: "flex", background: "#f1f5f9", borderRadius: "6px", padding: "2px" }}>
-                        {[
-                          { id: "all", label: "Tất cả" },
-                          { id: "north", label: "Bắc" },
-                          { id: "central", label: "Trung" },
-                          { id: "south", label: "Nam" },
-                        ].map((rg) => (
-                          <button
-                            key={rg.id}
-                            type="button"
-                            onClick={() => setProvRegionTab(rg.id)}
-                            style={{
-                              border: "none",
-                              background: provRegionTab === rg.id ? "#ffffff" : "transparent",
-                              color: provRegionTab === rg.id ? "#0f172a" : "#64748b",
-                              fontWeight: 600,
-                              fontSize: "0.72rem",
-                              padding: "2px 6px",
-                              borderRadius: "4px",
-                              cursor: "pointer",
-                            }}
-                          >
-                            {rg.label}
-                          </button>
-                        ))}
-                      </div>
-
-                      <Link href="/admin/provinces" className="panel-link-action" style={{ fontSize: "0.76rem" }}>
-                        Quản lý ➔
-                      </Link>
+                    <div className="panel-region-segmented">
+                      {[
+                        { id: "all", label: "Tất cả" },
+                        { id: "north", label: "Bắc" },
+                        { id: "central", label: "Trung" },
+                        { id: "south", label: "Nam" },
+                      ].map((rg) => (
+                        <button
+                          key={rg.id}
+                          type="button"
+                          onClick={() => setProvRegionTab(rg.id)}
+                          className={`panel-region-btn ${provRegionTab === rg.id ? "is-active" : ""}`}
+                        >
+                          {rg.label}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
