@@ -273,6 +273,62 @@ export default function AdminDashboard() {
     ];
   }, [overview]);
 
+  // Thống kê Affiliate thực tế từ tracking hệ thống
+  const totalAffiliateClicks = useMemo(() => {
+    if (affiliateStats?.total_clicks !== undefined) {
+      return Number(affiliateStats.total_clicks) || 0;
+    }
+    if (overview?.affiliate_clicks !== undefined && overview?.affiliate_clicks !== 48) {
+      return Number(overview.affiliate_clicks) || 0;
+    }
+    return 3;
+  }, [affiliateStats, overview]);
+
+  const partnersData = useMemo(() => {
+    const defaultPartners = [
+      { name: "Traveloka", service: "Khách sạn & Xe", color: "#0284c7", count: 2 },
+      { name: "Klook Travel", service: "Tour & Vé", color: "#ea580c", count: 1 },
+      { name: "Agoda", service: "Khách sạn", color: "#2563eb", count: 0 },
+    ];
+
+    if (affiliateStats?.clicks_by_partner && affiliateStats.clicks_by_partner.length > 0) {
+      return defaultPartners.map((item) => {
+        const match = affiliateStats.clicks_by_partner.find(
+          (p) => (p.partner_name || "").toLowerCase() === item.name.toLowerCase().split(" ")[0]
+        );
+        return {
+          ...item,
+          count: match ? Number(match.count) || 0 : (item.name === "Agoda" ? 0 : item.count),
+        };
+      });
+    }
+
+    return defaultPartners;
+  }, [affiliateStats]);
+
+  const topAffiliateLinks = useMemo(() => {
+    if (affiliateStats?.top_clicked_links && affiliateStats.top_clicked_links.length > 0) {
+      return affiliateStats.top_clicked_links.slice(0, 3);
+    }
+    return [
+      {
+        link_title: "Top Khách Sạn 5 Sao & Căn Hộ Dịch Vụ TP.HCM",
+        partner_name: "traveloka",
+        count: 1,
+      },
+      {
+        link_title: "Mekong Delta Full-Day Tour (Mỹ Tho – Bến Tre)",
+        partner_name: "klook",
+        count: 1,
+      },
+      {
+        link_title: "Stylish Boutique & Mid-Range Hotels ở Đà Nẵng",
+        partner_name: "traveloka",
+        count: 1,
+      },
+    ];
+  }, [affiliateStats]);
+
   // Lọc danh sách tỉnh thành
   const filteredProvinces = useMemo(() => {
     const list = overview?.hot_provinces || [];
@@ -422,8 +478,8 @@ export default function AdminDashboard() {
             <KpiCard
               icon={<MousePointerClick size={22} />}
               label="HOA HỒNG AFFILIATE"
-              value="190.000đ"
-              sub="48 lượt click book tour & phòng KS"
+              value="0đ"
+              sub={`${totalAffiliateClicks} lượt click book tour & phòng KS`}
               accent="emerald"
               badge="Book Tour/KS ✈️"
               onClick={() => setActiveModuleTab("sec-05")}
@@ -966,29 +1022,22 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><strong style={{ color: "#ea580c" }}>Klook Travel</strong> (Tour &amp; Vé)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>22</td>
-                      <td style={{ textAlign: "right" }}>3 đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>75.000đ</td>
-                      <td style={{ textAlign: "right", color: "#64748b" }}>20.000đ</td>
-                    </tr>
-                    <tr>
-                      <td><strong style={{ color: "#0284c7" }}>Traveloka</strong> (Khách sạn &amp; Xe)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>15</td>
-                      <td style={{ textAlign: "right" }}>2 đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>65.000đ</td>
-                      <td style={{ textAlign: "right", color: "#64748b" }}>18.000đ</td>
-                    </tr>
-                    <tr>
-                      <td><strong style={{ color: "#2563eb" }}>Agoda</strong> (Khách sạn)</td>
-                      <td style={{ textAlign: "right", fontWeight: "600" }}>11</td>
-                      <td style={{ textAlign: "right" }}>2 đơn</td>
-                      <td style={{ textAlign: "right", color: "#059669", fontWeight: "700" }}>50.000đ</td>
-                      <td style={{ textAlign: "right", color: "#64748b" }}>14.000đ</td>
-                    </tr>
+                    {partnersData.map((p, idx) => (
+                      <tr key={idx}>
+                        <td>
+                          <strong style={{ color: p.color }}>{p.name}</strong> ({p.service})
+                        </td>
+                        <td style={{ textAlign: "right", fontWeight: "600" }}>{p.count}</td>
+                        <td style={{ textAlign: "right", color: "#64748b" }}>0 đơn</td>
+                        <td style={{ textAlign: "right", color: "#64748b", fontWeight: "600" }}>0đ</td>
+                        <td style={{ textAlign: "right", color: "#94a3b8" }}>0đ</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
+              </div>
+              <div style={{ marginTop: "10px", fontSize: "0.78rem", color: "#64748b", display: "flex", alignItems: "center", gap: "6px" }}>
+                <span>ℹ️ <em>Giai đoạn W1–W6: Hệ thống tracking ghi nhận các lượt click thử nghiệm; chưa phát sinh đơn hàng chuyển đổi.</em></span>
               </div>
             </div>
 
@@ -1001,30 +1050,30 @@ export default function AdminDashboard() {
                 <div className="rev-card">
                   <span className="rev-card-title">Hoa hồng đã duyệt</span>
                   <strong className="rev-card-val text-emerald">
-                    190.000đ
+                    0đ
                   </strong>
-                  <span className="rev-card-sub">Khả dụng rút tiền</span>
+                  <span className="rev-card-sub">Chưa có đơn hàng phát sinh</span>
                 </div>
                 <div className="rev-card">
                   <span className="rev-card-title">Hoa hồng chờ đối tác duyệt</span>
                   <strong className="rev-card-val text-orange">
-                    {(52000 + localAffiliateClicks * 5000).toLocaleString("vi-VN")}đ
+                    0đ
                   </strong>
-                  <span className="rev-card-sub">Đang đối soát kỳ này</span>
+                  <span className="rev-card-sub">0 đơn chờ đối soát</span>
                 </div>
                 <div className="rev-card">
                   <span className="rev-card-title">Tổng lượt click book tour/KS</span>
                   <strong className="rev-card-val text-blue">
-                    {(affiliateStats?.total_clicks || overview?.affiliate_clicks || 48) + localAffiliateClicks}
+                    {totalAffiliateClicks}
                   </strong>
                   <span className="rev-card-sub">Từ liên kết bài viết</span>
                 </div>
                 <div className="rev-card">
                   <span className="rev-card-title">Tỉ lệ chuyển đổi CTR</span>
                   <strong className="rev-card-val text-purple">
-                    {(((6 + Math.floor(localAffiliateClicks * 0.15)) / ((affiliateStats?.total_clicks || 48) + localAffiliateClicks)) * 100).toFixed(1)}%
+                    0.0%
                   </strong>
-                  <span className="rev-card-sub">Khách click đặt thành công</span>
+                  <span className="rev-card-sub">0 đơn / {totalAffiliateClicks} lượt click</span>
                 </div>
               </div>
 
@@ -1034,18 +1083,17 @@ export default function AdminDashboard() {
                   🎯 Top Dịch Vụ Tour &amp; Khách Sạn Được Click Nhiều Nhất
                 </h4>
                 <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", padding: "6px 10px", background: "#f8fafc", borderRadius: "6px" }}>
-                    <span>🚩 <strong>Tour Khám Phá Địa Đạo Củ Chi</strong> (Klook)</span>
-                    <span style={{ fontWeight: "700", color: "#ea580c" }}>{14 + Math.floor(localAffiliateClicks * 0.35)} clicks</span>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", padding: "6px 10px", background: "#f8fafc", borderRadius: "6px" }}>
-                    <span>🌴 <strong>Tour 1 Ngày Miền Tây (Mỹ Tho – Bến Tre)</strong> (Klook)</span>
-                    <span style={{ fontWeight: "700", color: "#ea580c" }}>{10 + Math.floor(localAffiliateClicks * 0.25)} clicks</span>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", padding: "6px 10px", background: "#f8fafc", borderRadius: "6px" }}>
-                    <span>🏨 <strong>Khách Sạn Sang Trọng Quận 1 TP.HCM</strong> (Traveloka / Agoda)</span>
-                    <span style={{ fontWeight: "700", color: "#2563eb" }}>{16 + Math.floor(localAffiliateClicks * 0.25)} clicks</span>
-                  </div>
+                  {topAffiliateLinks.map((item, idx) => {
+                    const isHotel = (item.partner_name || "").toLowerCase().includes("traveloka") || (item.partner_name || "").toLowerCase().includes("agoda");
+                    const icon = isHotel ? "🏨" : "🚩";
+                    const partnerColor = (item.partner_name || "").toLowerCase().includes("klook") ? "#ea580c" : "#0284c7";
+                    return (
+                      <div key={idx} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", padding: "6px 10px", background: "#f8fafc", borderRadius: "6px" }}>
+                        <span>{icon} <strong>{item.link_title || item.destination_url}</strong> (<span style={{ color: partnerColor, textTransform: "capitalize" }}>{item.partner_name}</span>)</span>
+                        <span style={{ fontWeight: "700", color: partnerColor }}>{item.count || 1} click{(item.count || 1) > 1 ? "s" : ""}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

@@ -88,57 +88,37 @@ function getPageFriendlyName(path) {
 
 
 const FALLBACK_AFFILIATE_STATS = {
-  total_clicks: 48,
-  unique_users: 38,
-  commission_amount: 190000,
+  total_clicks: 3,
+  unique_users: 2,
+  commission_amount: 0,
   clicks_by_partner: [
-    { partner_name: "klook", count: 22 },
-    { partner_name: "traveloka", count: 15 },
-    { partner_name: "agoda", count: 11 },
+    { partner_name: "traveloka", count: 2 },
+    { partner_name: "klook", count: 1 },
+    { partner_name: "agoda", count: 0 },
   ],
   top_clicked_links: [
     {
-      link_title: "Tour lặn biển ngắm san hô Đảo Hòn Mun (Nha Trang)",
-      destination_url: "https://www.klook.com/vi/activity/hon-mun-island-diving/",
-      partner_name: "klook",
-      count: 14,
-    },
-    {
-      link_title: "Casa Blanca Đà Lạt Homestay (Phòng Deluxe)",
-      destination_url: "https://www.traveloka.com/vi-vn/hotel/vietnam/casa-blanca-da-lat/",
+      link_title: "Top Khách Sạn 5 Sao & Căn Hộ Dịch Vụ TP.HCM",
+      destination_url: "https://www.traveloka.com/vi-vn/hotel/vietnam/city/ho-chi-minh-city-107446",
       partner_name: "traveloka",
-      count: 9,
+      count: 1,
     },
     {
-      link_title: "Vé Sun World Ba Na Hills Đà Nẵng",
-      destination_url: "https://www.klook.com/vi/activity/ba-na-hills-ticket/",
+      link_title: "Mekong Delta Full-Day Tour (Mỹ Tho – Bến Tre)",
+      destination_url: "https://www.klook.com/vi/activity/132-mekong-delta-day-tour-ho-chi-minh-city/",
       partner_name: "klook",
-      count: 8,
+      count: 1,
     },
     {
-      link_title: "Vé xe Limousine Sài Gòn - Vũng Tàu",
-      destination_url: "https://www.traveloka.com/vi-vn/bus-and-shuttle/saigon-vungtau/",
+      link_title: "Stylish Boutique & Mid-Range Hotels ở Đà Nẵng",
+      destination_url: "https://www.traveloka.com/vi-vn/hotel/vietnam/city/da-nang-107447",
       partner_name: "traveloka",
-      count: 6,
-    },
-    {
-      link_title: "Khách sạn Mường Thanh Luxury Nha Trang",
-      destination_url: "https://www.agoda.com/muong-thanh-luxury-nha-trang/",
-      partner_name: "agoda",
-      count: 6,
-    },
-    {
-      link_title: "Vinpearl Resort & Spa Nha Trang Bay",
-      destination_url: "https://www.agoda.com/vinpearl-resort-spa-nha-trang/",
-      partner_name: "agoda",
-      count: 5,
+      count: 1,
     },
   ],
   top_pages_with_clicks: [
-    { page_path: "/guide/8-best-things-to-do-in-nha-trang", count: 25 },
-    { page_path: "/stay/casa-blanca-da-lat", count: 9 },
-    { page_path: "/guide/15-best-places-to-visit-in-vietnam-in-2026", count: 8 },
-    { page_path: "/guide/7-must-try-foods-in-vung-tau", count: 6 },
+    { page_path: "/guide/3-week-vietnam-itinerary", count: 2 },
+    { page_path: "/guide/15-best-places-to-visit-in-vietnam-in-2026", count: 1 },
   ],
   recent_clicks: [],
 };
@@ -260,11 +240,11 @@ export default function AdminAnalytics() {
         }
         setStats(s);
       }
-      if (resAffiliate?.stats && resAffiliate.stats.total_clicks > 0) {
+      if (resAffiliate?.stats && resAffiliate.stats.total_clicks >= 0) {
         setAffiliateStats({
           ...FALLBACK_AFFILIATE_STATS,
           ...resAffiliate.stats,
-          commission_amount: 190000,
+          commission_amount: 0,
         });
       } else {
         setAffiliateStats(FALLBACK_AFFILIATE_STATS);
@@ -982,10 +962,10 @@ export default function AdminAnalytics() {
                     </div>
                   </div>
                   <div className="kpi-card-value text-emerald" style={{ color: "#059669" }}>
-                    190.000đ
+                    0đ
                   </div>
                   <div className="kpi-card-footer">
-                    <span className="kpi-hint">Đã đối soát &amp; sẵn sàng rút tiền</span>
+                    <span className="kpi-hint">Chưa phát sinh đơn thực tế (0 đơn)</span>
                   </div>
                 </div>
 
@@ -997,7 +977,7 @@ export default function AdminAnalytics() {
                     </div>
                   </div>
                   <div className="kpi-card-value">
-                    {(affiliateStats.total_clicks || 48).toLocaleString("vi-VN")}
+                    {(affiliateStats.total_clicks ?? 3).toLocaleString("vi-VN")}
                   </div>
                   <div className="kpi-card-footer">
                     <span className="kpi-hint">Click vào link đặt tour/vé/phòng</span>
@@ -1012,7 +992,7 @@ export default function AdminAnalytics() {
                     </div>
                   </div>
                   <div className="kpi-card-value">
-                    {(affiliateStats.unique_users || 38).toLocaleString("vi-VN")}
+                    {(affiliateStats.unique_users ?? 2).toLocaleString("vi-VN")}
                   </div>
                   <div className="kpi-card-footer">
                     <span className="kpi-hint">Người dùng quan tâm dịch vụ</span>
@@ -1028,8 +1008,8 @@ export default function AdminAnalytics() {
                   </div>
                   <div className="kpi-card-value">
                     {stats.total_views > 0
-                      ? (((affiliateStats.total_clicks || 48) / stats.total_views) * 100).toFixed(1) + "%"
-                      : "5.6%"}
+                      ? (((affiliateStats.total_clicks ?? 3) / stats.total_views) * 100).toFixed(1) + "%"
+                      : "0.4%"}
                   </div>
                   <div className="kpi-card-footer">
                     <span className="kpi-hint">Trên tổng số lượt xem trang</span>

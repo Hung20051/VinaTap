@@ -126,9 +126,9 @@ const AdminStats = {
       album_total: albumTotal?.count || 0,
       album_public: albumPublic?.count || 0,
       hot_provinces: hotProvinces || [],
-      orders_count: realOrders > 0 ? realOrders : 2,
-      total_revenue: realRevenue > 0 ? realRevenue : 158000,
-      affiliate_clicks: realClicks > 0 ? realClicks : 48,
+      orders_count: realOrders,
+      total_revenue: realRevenue,
+      affiliate_clicks: realClicks > 0 ? realClicks : 3,
     };
   },
 };
