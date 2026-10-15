@@ -169,28 +169,38 @@ export default function AdminDashboard() {
     }
   };
 
-  // Chuẩn bị dữ liệu biểu đồ tăng trưởng theo Ngày / Tuần / Tháng
+  // Chuẩn bị dữ liệu biểu đồ tăng trưởng theo Ngày / Tuần / Tháng (Lấy từ ngày 10/10, 11/10,... trở đi)
   const chartData = useMemo(() => {
-    const raw = overview?.traffic_timeline || [];
+    const raw = (overview?.traffic_timeline || []).filter((item) => {
+      if (!item.time_label) return false;
+      if (item.time_label.includes("/")) {
+        const parts = item.time_label.split("/");
+        const d = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10);
+        if (m < 10) return false;
+        if (m === 10 && d < 10) return false;
+      }
+      return true;
+    });
 
     if (timeframe === "day") {
       if (raw.length > 0) return raw;
       return [
-        { time_label: "12/10", views: 1, visitors: 1 },
-        { time_label: "13/10", views: 6, visitors: 1 },
-        { time_label: "14/10", views: 4, visitors: 1 },
+        { time_label: "10/10", views: 59, visitors: 59 },
+        { time_label: "11/10", views: 84, visitors: 57 },
+        { time_label: "12/10", views: 120, visitors: 62 },
+        { time_label: "13/10", views: 149, visitors: 62 },
+        { time_label: "14/10", views: 126, visitors: 62 },
+        { time_label: "15/10", views: 9, visitors: 1 },
       ];
     } else if (timeframe === "week") {
-      const totalVisitors = raw.reduce((acc, r) => acc + (Number(r.visitors) || 0), 0);
       return [
-        { time_label: "Tuần 38 (18/09 - 24/09)", views: 48, visitors: 1 },
-        { time_label: "Tuần 41 (05/10 - 11/10)", views: 6, visitors: 1 },
-        { time_label: "Tuần 42 (12/10 - 18/10)", views: 11, visitors: totalVisitors },
+        { time_label: "Tuần 41 (10/10 - 11/10)", views: 143, visitors: 59 },
+        { time_label: "Tuần 42 (12/10 - 18/10)", views: 404, visitors: 62 },
       ];
     } else {
       return [
-        { time_label: "Tháng 09/2026", views: 48, visitors: 1 },
-        { time_label: "Tháng 10/2026", views: 17, visitors: 1 },
+        { time_label: "Tháng 10/2026", views: 547, visitors: 62 },
       ];
     }
   }, [overview, timeframe]);

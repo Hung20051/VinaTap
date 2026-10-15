@@ -65,12 +65,13 @@ const AdminStats = {
          ORDER BY view_count DESC
          LIMIT 10`,
       ).catch(() => [[]]),
-      // Dữ liệu lưu lượng truy cập cho biểu đồ
+      // Dữ liệu lưu lượng truy cập cho biểu đồ (lấy từ ngày 10/10 trở đi)
       db.execute(
         `SELECT DATE_FORMAT(created_at, '%d/%m') AS time_label,
                 COUNT(*) AS views,
                 COUNT(DISTINCT ip_address) AS visitors
          FROM page_views
+         WHERE created_at >= '2026-10-10 00:00:00'
          GROUP BY DATE(created_at), DATE_FORMAT(created_at, '%d/%m')
          ORDER BY DATE(created_at) ASC`,
       ).catch(() => [[]]),
