@@ -760,11 +760,13 @@ export default function ThreeWeekVietnamItineraryPage() {
             </p>
           </div>
 
-          <VietnamItineraryMap
-            onSelectDestination={handleSelectDestination}
-            activeId={activeTargetId}
-            lang={lang}
-          />
+          <div className="itin-map-card" style={{ textAlign: "center", padding: "16px", background: "#ffffff", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.06)", overflow: "hidden" }}>
+            <img
+              src="/guide/vietnam/3-week-vietnam-itinerary-map.jpg"
+              alt={lang === "vi" ? "Bản đồ lịch trình 3 tuần xuyên Việt" : "3-week Vietnam itinerary map"}
+              style={{ width: "100%", maxHeight: "780px", objectFit: "contain", borderRadius: "12px", display: "block", margin: "0 auto" }}
+            />
+          </div>
         </section>
 
         {/* ─── 5. TOP DESTINATIONS CALLOUT & AI ASSISTANT BOX ─── */}
