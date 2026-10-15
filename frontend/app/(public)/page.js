@@ -1487,8 +1487,19 @@ export default function HomePage() {
       .catch((err) => console.warn("Lỗi tải bài viết động trang chủ:", err));
   }, []);
 
+  // Danh sách bài cần ẩn khỏi danh sách nhỏ vì đã có bài lớn nổi bật bên cạnh hoặc đã có trên landing page
+  const EXCLUDED_INSPIRED_SLUGS = [
+    "3-week-vietnam-itinerary",
+    "20-best-things-to-do-in-vietnam",
+    "15-best-places-to-visit-in-vietnam-in-2026",
+  ];
+
+  const filteredDynamicArticles = dynamicArticles.filter(
+    (art) => !EXCLUDED_INSPIRED_SLUGS.includes(art.slug),
+  );
+
   const inspiredCompactList = [
-    ...dynamicArticles.map((art) => ({
+    ...filteredDynamicArticles.map((art) => ({
       title: art.title_en,
       titleVi: art.title_vi,
       date: art.published_date || "2026",
@@ -1497,9 +1508,11 @@ export default function HomePage() {
       link: `/guide/${art.slug}`,
     })),
     ...BE_INSPIRED_COMPACT.filter(
-      (s) => !dynamicArticles.some((d) => `/guide/${d.slug}` === s.link),
+      (s) =>
+        !EXCLUDED_INSPIRED_SLUGS.some((slug) => s.link.includes(slug)) &&
+        !filteredDynamicArticles.some((d) => `/guide/${d.slug}` === s.link),
     ),
-  ].slice(0, 8);
+  ].slice(0, 5);
 
   // VietnamNomad Magazine Hero states
   const [trendingIndex, setTrendingIndex] = useState(0);

@@ -3905,41 +3905,47 @@
 .vnn-compact-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 .vnn-compact-item {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
-  align-items: flex-start;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #f3f4f6;
-  transition: transform 0.2s ease;
+  align-items: center;
+  padding: 8px 6px;
+  border-radius: 8px;
+  border-bottom: 1px solid #f1f5f9;
+  transition: all 0.2s ease;
 }
 .vnn-compact-item:last-child {
   border-bottom: none;
-  padding-bottom: 0;
 }
 .vnn-compact-item:hover {
-  transform: translateX(3px);
+  background-color: #f8fafc;
+  transform: translateX(4px);
 }
 .vnn-compact-item__thumb {
-  width: 96px;
-  height: 64px;
-  border-radius: 3px;
+  width: 90px;
+  height: 60px;
+  border-radius: 6px;
   object-fit: cover;
   flex-shrink: 0;
   background: #f1f5f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease;
+}
+.vnn-compact-item:hover .vnn-compact-item__thumb {
+  transform: scale(1.04);
 }
 .vnn-compact-item__body {
   flex: 1;
   min-width: 0;
 }
 .vnn-compact-item__title {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.35;
-  color: #111827;
+  color: #1e293b;
   margin: 0 0 4px 0;
   transition: color 0.2s ease;
   display: -webkit-box;
@@ -3952,8 +3958,11 @@
 }
 .vnn-compact-item__date {
   font-size: 0.76rem;
-  color: #9ca3af;
+  color: #94a3b8;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* Connect With Us Column */
