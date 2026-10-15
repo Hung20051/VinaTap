@@ -79,14 +79,61 @@ async function runMigration() {
       image_url VARCHAR(500) NOT NULL,
       caption_en VARCHAR(255) NULL,
       caption_vi VARCHAR(255) NULL,
-      content_en JSON NOT NULL,
-      content_vi JSON NOT NULL,
+      content_en JSON NULL,
+      content_vi JSON NULL,
+      paragraphs_en JSON NULL,
+      paragraphs_vi JSON NULL,
+      tip_en TEXT NULL,
+      tip_vi TEXT NULL,
+      affiliate_url VARCHAR(500) NULL,
+      affiliate_partner VARCHAR(100) NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE,
       INDEX idx_article (article_id, sort_order)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   `);
   console.log("✅ Table article_items ready");
+
+  // 4b. Ensure all article_items columns exist if table was created in an earlier version
+  try {
+    const [itemCols] = await pool.query("DESCRIBE article_items");
+    const itemColNames = itemCols.map((c) => c.Field);
+    const itemColsToAdd = [
+      { name: "paragraphs_en", type: "JSON NULL" },
+      { name: "paragraphs_vi", type: "JSON NULL" },
+      { name: "content_en", type: "JSON NULL" },
+      { name: "content_vi", type: "JSON NULL" },
+      { name: "tip_en", type: "TEXT NULL" },
+      { name: "tip_vi", type: "TEXT NULL" },
+      { name: "affiliate_url", type: "VARCHAR(500) NULL" },
+      { name: "affiliate_partner", type: "VARCHAR(100) NULL" },
+    ];
+
+    for (const item of itemColsToAdd) {
+      if (!itemColNames.includes(item.name)) {
+        console.log(`Adding column to article_items: ${item.name}`);
+        await pool.query(
+          `ALTER TABLE article_items ADD COLUMN ${item.name} ${item.type}`,
+        );
+      }
+    }
+
+    // Đồng bộ dữ liệu 2 chiều giữa paragraphs_* và content_* nếu 1 bên rỗng
+    await pool.query(
+      `UPDATE article_items SET paragraphs_en = content_en WHERE paragraphs_en IS NULL AND content_en IS NOT NULL`,
+    ).catch(() => {});
+    await pool.query(
+      `UPDATE article_items SET paragraphs_vi = content_vi WHERE paragraphs_vi IS NULL AND content_vi IS NOT NULL`,
+    ).catch(() => {});
+    await pool.query(
+      `UPDATE article_items SET content_en = paragraphs_en WHERE content_en IS NULL AND paragraphs_en IS NOT NULL`,
+    ).catch(() => {});
+    await pool.query(
+      `UPDATE article_items SET content_vi = paragraphs_vi WHERE content_vi IS NULL AND paragraphs_vi IS NOT NULL`,
+    ).catch(() => {});
+  } catch (err) {
+    console.warn("article_items columns migration note:", err.message);
+  }
 
   // 5. Tự động kiểm tra và đảm bảo đạt mốc 360+ views
   try {
