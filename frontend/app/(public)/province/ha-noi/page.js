@@ -7,6 +7,7 @@ import { getLang } from "@/lib/prefs";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import PublicFooter from "@/components/layout/PublicFooter";
 import {
   ChevronDown,
   ChevronLeft,
@@ -2624,30 +2625,7 @@ export default function HanoiPage() {
       </main>
 
       {/* ─── FOOTER ─── */}
-      <footer className="home-footer" style={{ marginTop: "40px" }}>
-        <div className="home-footer__inner">
-          <div className="home-footer__brand">
-            <span className="home-footer__name">VinaTap</span>
-            <span className="home-footer__copy">
-              © {new Date().getFullYear()} VinaTap.
-            </span>
-          </div>
-
-          <div className="home-footer__socials">
-            <a href="https://www.facebook.com/profile.php?id=61594864803399&locale=vi_VN" target="_blank" rel="noopener noreferrer" className="home-footer__social-link">
-              Facebook
-            </a>
-            <span>•</span>
-            <Link href="/terms" className="home-footer__social-link">
-              {lang === "vi" ? "Điều khoản dịch vụ" : "Terms"}
-            </Link>
-            <span>•</span>
-            <Link href="/policy" className="home-footer__social-link">
-              {lang === "vi" ? "Chính sách bảo mật" : "Privacy Policy"}
-            </Link>
-          </div>
-        </div>
-      </footer>
+      <PublicFooter lang={lang} />
 
       {/* ─── FLOATING TABLE OF CONTENTS QUICK BUTTON (SCREENSHOT 4 & 5) ─── */}
       <div
