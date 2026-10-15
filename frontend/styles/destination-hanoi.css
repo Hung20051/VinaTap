@@ -14,30 +14,36 @@
 /* ─── 1. TOP PROMO BANNER (SCREENSHOT 2) ─── */
 .vnn-hanoi-top-banner {
   width: 100%;
-  background-color: #0b1a2d;
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #f1f5f9;
+  padding: 6px 16px;
 }
 
 .vnn-hanoi-top-banner a {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   text-align: center;
 }
 
 .vnn-hanoi-top-banner img {
   width: 100%;
-  max-width: 1920px;
+  max-width: 1080px;
   height: auto;
-  max-height: 110px;
-  object-fit: cover;
+  max-height: 100px;
+  object-fit: contain;
   display: block;
   margin: 0 auto;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+  transition: transform 0.25s ease;
+}
+
+.vnn-hanoi-top-banner:hover img {
+  transform: scale(1.012);
 }
 
 /* ─── 2. EDITORIAL NAVBAR (SCREENSHOT 2) ─── */

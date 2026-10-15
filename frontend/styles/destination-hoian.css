@@ -13,21 +13,36 @@
 /* ─── 1. TOP BANNER ─── */
 .vnn-hoian-top-banner {
   width: 100%;
-  background-color: #0b1a2d;
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #f1f5f9;
+  padding: 6px 16px;
+}
+
+.vnn-hoian-top-banner a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
 }
 
 .vnn-hoian-top-banner img {
   width: 100%;
-  max-width: 1920px;
+  max-width: 1080px;
   height: auto;
-  max-height: 120px;
-  object-fit: cover;
+  max-height: 100px;
+  object-fit: contain;
   display: block;
+  margin: 0 auto;
+  transition: transform 0.25s ease;
+}
+
+.vnn-hoian-top-banner:hover img {
+  transform: scale(1.012);
 }
 
 /* ─── 2. EDITORIAL NAVBAR ─── */

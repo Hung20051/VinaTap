@@ -342,7 +342,7 @@ export default function VungTauFoodGuidePage() {
                 <Link href="/province/ho-chi-minh" style={{ color: "#00c2cb", textDecoration: "underline" }}>
                   TP. Hồ Chí Minh
                 </Link>
-                ) mà còn bởi nền ẩm thực vô cùng phong phú và độc đáo. Hãy cùng Welcome to Vietnam khám phá 7 món ăn địa phương nhất định phải thử khi bạn ghé thăm Vũng Tàu.
+                ) mà còn bởi nền ẩm thực vô cùng phong phú và độc đáo. Hãy cùng VinaTap khám phá 7 món ăn địa phương nhất định phải thử khi bạn ghé thăm Vũng Tàu.
               </>
             ) : (
               <>
@@ -350,7 +350,7 @@ export default function VungTauFoodGuidePage() {
                 <Link href="/province/ho-chi-minh" style={{ color: "#00c2cb", textDecoration: "underline" }}>
                   Ho Chi Minh City
                 </Link>{" "}
-                center) but also due to its incredibly diverse and unique cuisine. Join Welcome to Vietnam as we explore 7 must-try local foods when you visit Vung Tau.
+                center) but also due to its incredibly diverse and unique cuisine. Join VinaTap as we explore 7 must-try local foods when you visit Vung Tau.
               </>
             )}
           </p>
