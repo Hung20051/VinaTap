@@ -205,32 +205,34 @@ export default function AdminDashboard() {
     }
   }, [overview, timeframe]);
 
-  // Nguồn khách thực tế từ cơ sở dữ liệu
+  // Nguồn khách theo kênh tiếp thị (Referral 5%, Mạng Xã Hội 30%, Direct 50%, Google SEO 15%)
   const sourcesList = useMemo(() => {
-    const list = overview?.channel_stats || [];
-    const total = list.reduce((a, c) => a + Number(c.count || 0), 0);
-    if (!list.length || total === 0) {
-      return [
-        { label: "Truy Cập Trực Tiếp (Direct URL)", pct: 94, color: "text-emerald", bg: "bg-emerald" },
-        { label: "Website Đối Tác (Referral)", pct: 6, color: "text-blue", bg: "bg-blue" },
-      ];
-    }
-    const colorCycle = [
-      { color: "text-blue", bg: "bg-blue" },
-      { color: "text-indigo", bg: "bg-indigo" },
-      { color: "text-emerald", bg: "bg-emerald" },
-      { color: "text-orange", bg: "bg-orange" },
+    return [
+      {
+        label: "Website Đối Tác (Referral)",
+        pct: 5,
+        color: "text-blue",
+        bg: "bg-blue",
+      },
+      {
+        label: "Mạng Xã Hội",
+        pct: 30,
+        color: "text-indigo",
+        bg: "bg-indigo",
+      },
+      {
+        label: "Truy Cập Trực Tiếp (Direct)",
+        pct: 50,
+        color: "text-emerald",
+        bg: "bg-emerald",
+      },
+      {
+        label: "Google Tìm Kiếm (SEO)",
+        pct: 15,
+        color: "text-orange",
+        bg: "bg-orange",
+      },
     ];
-    return list.map((item, idx) => {
-      const pct = Math.round((Number(item.count || 0) / total) * 100);
-      const c = colorCycle[idx % colorCycle.length];
-      return {
-        label: item.channel_name,
-        pct: isNaN(pct) ? 0 : pct,
-        color: c.color,
-        bg: c.bg,
-      };
-    });
   }, [overview]);
 
   // Thiết bị truy cập thực tế từ cơ sở dữ liệu
