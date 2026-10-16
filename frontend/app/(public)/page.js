@@ -242,8 +242,8 @@ const TOP_DESTINATIONS_DATA = [
   },
   {
     id: "sapa",
-    name: "Sa Pa (Lao Cai)",
-    nameVi: "Sa Pa (Lào Cai)",
+    name: "Sapa",
+    nameVi: "Sa Pa",
     img: "/guide/sapa/hero-sapa.jpg",
     link: "/province/sapa",
   },

@@ -122,26 +122,6 @@ export default function SapaPage() {
 
       {/* Main Content Container */}
       <div className="sp-container">
-        {/* Breadcrumbs */}
-        <nav className="sp-breadcrumbs" aria-label="Breadcrumb">
-          <Link href="/" className="sp-breadcrumb-link">
-            {isVi ? "Trang chủ" : "Home"}
-          </Link>
-          <span className="sp-breadcrumb-sep">
-            <ChevronRight size={14} />
-          </span>
-          <Link href="/" className="sp-breadcrumb-link">
-            {isVi ? "Điểm đến" : "Destinations"}
-          </Link>
-          <span className="sp-breadcrumb-sep">
-            <ChevronRight size={14} />
-          </span>
-          <span className="sp-breadcrumb-link">{isVi ? "Miền Bắc" : "Northern Vietnam"}</span>
-          <span className="sp-breadcrumb-sep">
-            <ChevronRight size={14} />
-          </span>
-          <span className="sp-breadcrumb-current">{isVi ? "Sa Pa" : "Sapa"}</span>
-        </nav>
 
         {/* Lead Paragraph */}
         <div className="sp-lead-box" id="overview">
