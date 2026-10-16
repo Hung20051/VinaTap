@@ -379,153 +379,270 @@ export default function HaLongPage() {
             </p>
           </div>
 
-          <div className="hl-cards-grid">
-            {/* Sung Sot Cave */}
-            <div className="hl-card">
-              <div className="hl-card-img-wrap">
-                <img
-                  src="/guide/ha-long/sung-sot-cave.jpg"
-                  alt={isVi ? "Hang Sửng Sốt Vịnh Hạ Long" : "Sung Sot Surprise Cave Ha Long Bay"}
-                  className="hl-card-img"
-                  loading="lazy"
-                />
-                <span className="hl-card-tag">{isVi ? "Hang Lớn Nhất" : "Largest Cave"}</span>
-              </div>
-              <div className="hl-card-body">
-                <h3 className="hl-card-title">{isVi ? "Hang Sửng Sốt (Surprise Cave)" : "Sung Sot Cave (Surprise Cave)"}</h3>
-                <p className="hl-card-desc">
+          {/* Horizontal Editorial List (VietnamNomad Style) */}
+          <div className="hl-editorial-list">
+            {/* 1. Trong Mai Islet */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">1</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Hòn Trống Mái (Trong Mai Islet / Hòn Gà Chọi)" : "Trong Mai Islet (Fighting Cocks Islet)"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Biểu tượng du lịch" : "Iconic Landmark"}</span>
+                </div>
+                <p className="hl-editorial-desc">
                   {isVi
-                    ? "Tọa lạc trên đảo Bồ Hòn, đây là hang động rộng lớn và lộng lẫy bậc nhất Vịnh Hạ Long. Lối vào dốc quanh co dưới vòm cây rừng rậm rạp dẫn tới 2 gian phòng rộng thênh thang hàng nghìn mét vuông với vô số măng đá nhũ đá sống động khiến người Pháp thời xưa phải thốt lên 'Grotte des Surprises'."
-                    : "Located on Bo Hon Island, this is the grandest and most spectacular cavern in Ha Long Bay. Visitors climb stone steps shaded by jungle canopy into two immense chambers illuminated by soft ambient lighting, showcasing towering stalagmite pillars."}
+                    ? "Hai phiến đá khổng lồ mang hình thù như đôi gà chọi đang chụm đầu âu yếm giữa sóng nước mênh mông đã trở thành biểu tượng trường tồn của Vịnh Hạ Long. Hòn đảo nhỏ này khơi nguồn cảm hứng bất tận cho vô số nghệ sĩ bởi nét lãng mạn hòa quyện cùng kỳ quan thiên nhiên kỳ vĩ. Hãy chú ý chiêm ngưỡng biểu tượng kinh điển này khi tàu lướt qua."
+                    : "Two giant rocks resembling cuddling or kissing chickens have become the enduring symbol of Ha Long Bay. This islet, set amid the expansive waters of the bay, has inspired countless artists with its romantic essence against the backdrop of the natural landscape. Keep an eye out for this iconic sight as you travel past it."}
                 </p>
-                <div className="hl-card-meta">
-                  <span>📍 {isVi ? "Đảo Bồ Hòn" : "Bo Hon Island"}</span>
-                  <span>⭐ {isVi ? "Tuyến tàu số 2" : "Route 2 Cruise"}</span>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">📷 {isVi ? "Điểm check-in kinh điển" : "Classic Photo Stop"}</span>
+                  <span className="hl-editorial-chip">⭐ {isVi ? "Cả Tuyến tàu 1 & 2" : "Routes 1 & 2"}</span>
                 </div>
               </div>
             </div>
 
-            {/* Ti Top Island */}
-            <div className="hl-card">
-              <div className="hl-card-img-wrap">
-                <img
-                  src="/guide/ha-long/ti-top-island.jpg"
-                  alt={isVi ? "Đảo Ti Tốp Vịnh Hạ Long" : "Ti Top Island Ha Long Bay"}
-                  className="hl-card-img"
-                  loading="lazy"
-                />
-                <span className="hl-card-tag">{isVi ? "Góc Nhìn 360°" : "Panoramic View"}</span>
-              </div>
-              <div className="hl-card-body">
-                <h3 className="hl-card-title">{isVi ? "Đảo Ti Tốp (Ti Top Island & Beach)" : "Ti Top Island & Crescent Beach"}</h3>
-                <p className="hl-card-desc">
+            {/* 2. Cua Van Fishing Village */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">2</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Làng Chài Cửa Vạn (Cua Van Floating Village)" : "Cua Van Floating Village"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Top 10 thế giới" : "World Heritage"}</span>
+                </div>
+                <p className="hl-editorial-desc">
                   {isVi
-                    ? "Được Bác Hồ và nhà du hành vũ trụ Liên Xô Gherman Titov ghé thăm năm 1962. Hòn đảo nổi tiếng với bãi tắm cát trắng mịn hình vầng trăng khuyết và đài quan sát trên đỉnh núi (leo hơn 400 bậc thang đá) cho góc nhìn 360 độ toàn cảnh vịnh Hạ Long hùng vĩ."
-                    : "Named in 1962 to honor Soviet astronaut Gherman Titov during his visit with President Ho Chi Minh. It features a crescent-shaped white sand beach and a 400-step stone stairway leading to a summit gazebo with the most famous 360-degree vista of the bay."}
+                    ? "Từng được chuyên trang du lịch quốc tế bình chọn vào top 10 ngôi làng đẹp nhất thế giới, làng chài Cửa Vạn nép mình bình yên giữa làn nước xanh phẳng lặng và các vách núi đá vôi che chở. Cách trọn vẹn nhất để khám phá là chèo thuyền nan hoặc kayak, tận mắt nhìn ngắm những ngôi nhà bè mộc mạc và cuộc sống hòa mình cùng đại dương của ngư dân địa phương."
+                    : "Selected as one of the top 10 most beautiful villages on Earth by international travel journals, Cua Van Fishing Village is a quaint settlement nestled amidst serene waters and shielded by towering limestone formations. To preserve tranquility, the best way to approach is by rowing boats or kayaks, offering authentic insight into locals' lives in humble floating houses."}
                 </p>
-                <div className="hl-card-meta">
-                  <span>🏖️ {isVi ? "Tắm biển & Leo núi" : "Beach & Hiking"}</span>
-                  <span>⭐ {isVi ? "Tuyến tàu số 2" : "Route 2 Cruise"}</span>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">🛶 {isVi ? "Thuyền nan & Kayak" : "Sampan & Kayaking"}</span>
+                  <span className="hl-editorial-chip">🐟 {isVi ? "Nuôi trồng hải sản truyền thống" : "Traditional Aquaculture"}</span>
                 </div>
               </div>
             </div>
 
-            {/* Luon Cave Kayaking */}
-            <div className="hl-card">
-              <div className="hl-card-img-wrap">
-                <img
-                  src="/guide/ha-long/kayak-luon-cave.jpg"
-                  alt={isVi ? "Chèo thuyền Kayak Hang Luồn" : "Luon Cave Kayaking Ha Long Bay"}
-                  className="hl-card-img"
-                  loading="lazy"
-                />
-                <span className="hl-card-tag">{isVi ? "Chèo Kayak" : "Kayaking Hub"}</span>
-              </div>
-              <div className="hl-card-body">
-                <h3 className="hl-card-title">{isVi ? "Hang Luồn (Luon Cave Lagoon)" : "Luon Cave & Emerald Lagoon"}</h3>
-                <p className="hl-card-desc">
+            {/* 3. Luon Cave / Luon Grotto */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">3</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Hang Luồn (Luon Grotto Lagoon)" : "Luon Grotto (Luon Cave Lagoon)"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Thiên đường kayak" : "Kayaking Hub"}</span>
+                </div>
+                <p className="hl-editorial-desc">
                   {isVi
-                    ? "Hang Luồn là một vòm hang đá vôi sát mép nước dài khoảng 60m. Đi qua vòm hang bằng thuyền nan hoặc kayak, bạn sẽ bước vào một hồ nước tròn tĩnh lặng phẳng như gương, bao bọc bởi vách đá dựng đứng nơi đàn khỉ vàng tự nhiên sinh sống trên cành cây."
-                    : "A water-level limestone archway 60m long leading into a completely enclosed circular lagoon surrounded by steep cliffs. Accessible only by kayak or traditional bamboo sampan rowed by local fishermen, where wild monkeys swing from cliffside branches."}
+                    ? "Được tạo tác sát mép nước hướng về phía Hòn Rùa, Hang Luồn tựa như cánh cổng dẫn vào một thế giới bí ẩn. Đi qua vòm hang thấp bằng thuyền nan hoặc kayak, mở ra trước mắt bạn là một đầm nước ngọc bích tròn tĩnh lặng như gương, bao bọc bởi vách đá dựng đứng rợp bóng cây nơi bầy khỉ vàng tự nhiên sinh sống."
+                    : "Carved into a massive rock wall facing Turtle Island, Luon Grotto resembles a gateway to a hidden realm. Once you row through the entrance, you're greeted by a peaceful emerald lagoon. This location offers a prime opportunity to immerse yourself in nature — lush vegetation adorning ancient limestone formations where wild monkeys swing."}
                 </p>
-                <div className="hl-card-meta">
-                  <span>🛶 {isVi ? "Kayak / Thuyền nan" : "Kayak / Sampan"}</span>
-                  <span>🐒 {isVi ? "Khỉ vàng hoang dã" : "Wild Monkeys"}</span>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">🛶 {isVi ? "Chèo Kayak / Thuyền nan" : "Kayak / Sampan"}</span>
+                  <span className="hl-editorial-chip">🐒 {isVi ? "Bầy khỉ vàng hoang dã" : "Wild Monkeys"}</span>
+                  <span className="hl-editorial-chip">⭐ {isVi ? "Tuyến tàu số 2" : "Route 2 Cruise"}</span>
                 </div>
               </div>
             </div>
 
-            {/* Thien Cung Cave */}
-            <div className="hl-card">
-              <div className="hl-card-img-wrap">
-                <img
-                  src="/guide/ha-long/limestone-karsts.jpg"
-                  alt={isVi ? "Động Thiên Cung Hạ Long" : "Thien Cung Heavenly Palace Cave"}
-                  className="hl-card-img"
-                  loading="lazy"
-                />
-                <span className="hl-card-tag">{isVi ? "Cung Điện Nhà Trời" : "Heavenly Palace"}</span>
+            {/* Feature Photo 1: Luon Cave Kayaking (High-res, Crisp) */}
+            <div className="hl-feature-photo-wrap">
+              <img
+                src="/guide/ha-long/kayak-luon-cave.jpg"
+                alt={isVi ? "Chèo thuyền Kayak Hang Luồn Vịnh Hạ Long" : "Kayaking at Luon Cave Ha Long Bay"}
+                className="hl-feature-photo"
+                loading="lazy"
+              />
+              <div className="hl-photo-caption">
+                {isVi
+                  ? "Chèo thuyền kayak luồn qua vòm hang đá vôi tiến vào đầm nước phẳng lặng phẳng như gương tại Hang Luồn"
+                  : "Rowing a kayak through the limestone arch into the mirror-like emerald lagoon of Luon Cave"}
               </div>
-              <div className="hl-card-body">
-                <h3 className="hl-card-title">{isVi ? "Động Thiên Cung (Heavenly Palace Cave)" : "Thien Cung Cave (Heavenly Palace)"}</h3>
-                <p className="hl-card-desc">
+            </div>
+
+            {/* 4. Sung Sot Cave */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">4</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Hang Sửng Sốt (Sung Sot Cave / Surprise Cave)" : "Sung Sot Cave (Cave of Surprises)"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Hang lớn nhất" : "Largest Cave"}</span>
+                </div>
+                <p className="hl-editorial-desc">
                   {isVi
-                    ? "Nằm trên đảo Đầu Gỗ, động Thiên Cung được ví như cung điện lộng lẫy dưới lòng đất với truyền thuyết đám cưới của Vua Rồng. Các dải thạch nhũ buông rủ tạo thành những bức rèm đá, cột chống trời khổng lồ và hình tượng linh vật sống động."
-                    : "Located on Dau Go Island, Thien Cung cave is celebrated for its ethereal curtain-like stalactite formations and the legend of the Dragon King's wedding. Excellent walking paths and multi-colored lighting illuminate mystical geological sculptures."}
+                    ? "Đúng như tên gọi người Pháp từng thốt lên 'Grotte des Surprises', hang động rộng lớn bậc nhất vùng lõi vịnh đưa du khách từ ngạc nhiên này đến ngạc nhiên khác. Lối đi uốn lượn dưới tán rừng rậm rạp dẫn vào hai gian phòng khổng lồ: Nhà hát tráng lệ và Khu vườn thực vật cổ tích với muôn vàn cột thạch nhũ sống động."
+                    : "Translating to 'Cave of Surprises', Sung Sot Cave lives up to its name, leaving a remarkable impression as visitors step inside. Situated at the heart of the bay, it stands as one of the grandest caves, featuring two immense chambers: the Opera House and the Botanical Garden, showcasing breathtaking stalagmite columns."}
                 </p>
-                <div className="hl-card-meta">
-                  <span>📍 {isVi ? "Đảo Đầu Gỗ" : "Dau Go Island"}</span>
-                  <span>⭐ {isVi ? "Tuyến tàu số 1" : "Route 1 Cruise"}</span>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">📍 {isVi ? "Đảo Bồ Hòn" : "Bo Hon Island"}</span>
+                  <span className="hl-editorial-chip">⭐ {isVi ? "Tuyến tàu số 2" : "Route 2 Cruise"}</span>
                 </div>
               </div>
             </div>
 
-            {/* Dau Go Cave */}
-            <div className="hl-card">
-              <div className="hl-card-img-wrap">
-                <img
-                  src="/guide/ha-long/cruise-bay.jpg"
-                  alt={isVi ? "Hang Đầu Gỗ Lịch Sử" : "Dau Go Cave of Wonders"}
-                  className="hl-card-img"
-                  loading="lazy"
-                />
-                <span className="hl-card-tag">{isVi ? "Di Tích Lịch Sử" : "Historic Cave"}</span>
+            {/* Feature Photo 2: Sung Sot Cave Interior (High-res, Crisp) */}
+            <div className="hl-feature-photo-wrap">
+              <img
+                src="/guide/ha-long/sung-sot-cave.jpg"
+                alt={isVi ? "Kiệt tác thạch nhũ Hang Sửng Sốt" : "Stunning stalactites inside Sung Sot Cave"}
+                className="hl-feature-photo"
+                loading="lazy"
+              />
+              <div className="hl-photo-caption">
+                {isVi
+                  ? "Hang Sửng Sốt — kiệt tác vòm hang và măng đá triệu năm tuổi bên trong lòng đảo Bồ Hòn"
+                  : "Sung Sot Cave — geological masterpiece with million-year-old stalactites inside Bo Hon Island"}
               </div>
-              <div className="hl-card-body">
-                <h3 className="hl-card-title">{isVi ? "Hang Đầu Gỗ (Cave of Wonders)" : "Dau Go Cave (Cave of Wooden Stakes)"}</h3>
-                <p className="hl-card-desc">
+            </div>
+
+            {/* 5. Thien Cung Cave */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">5</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Động Thiên Cung (Thien Cung Heavenly Palace Cave)" : "Thien Cung Cave (Heavenly Palace)"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Cung điện nhà trời" : "Heavenly Palace"}</span>
+                </div>
+                <p className="hl-editorial-desc">
                   {isVi
-                    ? "Gắn liền với chiến tích đánh tan giặc Nguyên Mông trên sông Bạch Đằng năm 1288 của Quốc công Tiết chế Trần Hưng Đạo. Nơi đây từng là nơi cất giấu những cây cọc gỗ lim bịt sắt trước khi cắm xuống lòng sông lập nên chiến thắng hiển hách."
-                    : "Steeped in 13th-century military history, this cave is associated with National Hero Tran Hung Dao, who concealed iron-tipped wooden stakes here before deploying them into the Bach Dang River to crush the invading Mongol naval fleet in 1288."}
+                    ? "Nằm trên đảo Đầu Gỗ, động Thiên Cung được ví như cung điện lộng lẫy dưới lòng đất với truyền thuyết đám cưới Vua Rồng. Các dải thạch nhũ buông rủ tạo thành những bức rèm đá lung linh, cột chống trời khổng lồ và hệ thống lối đi bậc thang lát gỗ an toàn, thuận tiện chiêm ngưỡng."
+                    : "Known as the 'Cave of Heaven', Thien Cung is celebrated for its expansive chamber, ethereal curtain-like stalactites, and vibrant mineral formations associated with the folklore of the Dragon King's wedding, equipped with modern safe boardwalks."}
                 </p>
-                <div className="hl-card-meta">
-                  <span>⚔️ {isVi ? "Thế kỷ XIII" : "13th Century"}</span>
-                  <span>⭐ {isVi ? "Tuyến tàu số 1" : "Route 1 Cruise"}</span>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">📍 {isVi ? "Đảo Đầu Gỗ" : "Dau Go Island"}</span>
+                  <span className="hl-editorial-chip">⭐ {isVi ? "Tuyến tàu số 1" : "Route 1 Cruise"}</span>
                 </div>
               </div>
             </div>
 
-            {/* Hon Trong Mai */}
-            <div className="hl-card">
-              <div className="hl-card-img-wrap">
-                <img
-                  src="/guide/vietnam/dest-6-halong.jpg"
-                  alt={isVi ? "Hòn Trống Mái Hòn Gà Chọi" : "Fighting Cocks Islet Trong Mai"}
-                  className="hl-card-img"
-                  loading="lazy"
-                />
-                <span className="hl-card-tag">{isVi ? "Biểu Tượng Du Lịch" : "National Symbol"}</span>
-              </div>
-              <div className="hl-card-body">
-                <h3 className="hl-card-title">{isVi ? "Hòn Trống Mái (Hòn Gà Chọi)" : "Fighting Cocks Islet (Hon Trong Mai)"}</h3>
-                <p className="hl-card-desc">
+            {/* 6. Ti Top Island */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">6</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Đảo Ti Tốp (Ti Top Island & Crescent Beach)" : "Ti Top Island & Crescent Beach"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Góc nhìn 360°" : "360° Panorama"}</span>
+                </div>
+                <p className="hl-editorial-desc">
                   {isVi
-                    ? "Biểu tượng bất hủ của du lịch Vịnh Hạ Long và Việt Nam. Hai phiến đá cao chừng 12 mét có hình thù như đôi gà chọi đang đứng đối mặt chụm mỏ giữa biển khơi bao la, đứng vững trước bao sóng gió ngàn năm."
-                    : "The quintessential trademark silhouette of Ha Long Bay and Vietnam tourism. Two limestone pinnacles rising 12 meters above sea level resembling a rooster and a hen facing each other with affectionate defiance against open waves."}
+                    ? "Hòn đảo nổi tiếng với bãi cát trắng mịn hình vầng trăng khuyết ôm lấy chân núi và đài quan sát trên đỉnh cao (hơn 400 bậc đá) cho góc nhìn toàn cảnh 360 độ đẹp nhất Vịnh Hạ Long. Năm 1962, Chủ tịch Hồ Chí Minh cùng nhà du hành vũ trụ Liên Xô Gherman Titov đã đến thăm hòn đảo này và Bác đã đặt tên đảo theo tên ông."
+                    : "Renowned for its crescent-shaped white sand beach and a 400-step stone stairway leading to a summit lookout with the quintessential 360-degree panorama of Ha Long Bay. Named in 1962 by President Ho Chi Minh to honor Soviet cosmonaut Gherman Titov during their historic friendship visit."}
                 </p>
-                <div className="hl-card-meta">
-                  <span>📷 {isVi ? "Điểm check-in kinh điển" : "Classic Photo Stop"}</span>
-                  <span>⭐ {isVi ? "Cả Tuyến 1 & 2" : "Routes 1 & 2"}</span>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">🏖️ {isVi ? "Tắm biển & Bãi cát vầng trăng" : "Crescent Beach & Swimming"}</span>
+                  <span className="hl-editorial-chip">⭐ {isVi ? "Tuyến tàu số 2" : "Route 2 Cruise"}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Photo 3: Ti Top Island Panorama (High-res, Crisp) */}
+            <div className="hl-feature-photo-wrap">
+              <img
+                src="/guide/ha-long/ti-top-island.jpg"
+                alt={isVi ? "Góc nhìn 360 độ từ đỉnh đảo Ti Tốp" : "360 panorama view from Ti Top Island"}
+                className="hl-feature-photo"
+                loading="lazy"
+              />
+              <div className="hl-photo-caption">
+                {isVi
+                  ? "Toàn cảnh Vịnh Hạ Long hùng vĩ nhìn từ đài quan sát trên đỉnh núi đảo Ti Tốp"
+                  : "Panoramic vista of Ha Long Bay's karst towers from the summit lookout of Ti Top Island"}
+              </div>
+            </div>
+
+            {/* 7. Dau Go Cave */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">7</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Hang Đầu Gỗ (Dau Go Cave of Wonders)" : "Dau Go Cave (Cave of Wonders)"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Di tích lịch sử" : "Historic Cave"}</span>
+                </div>
+                <p className="hl-editorial-desc">
+                  {isVi
+                    ? "Gắn liền với chiến tích đánh tan giặc Nguyên Mông trên sông Bạch Đằng năm 1288 của anh hùng dân tộc Trần Hưng Đạo. Vòm hang cao 25 mét mở ra không gian cổ kính với vô số măng đá kỳ vĩ, từng được cẩm nang du lịch Pháp vinh danh là 'Grotte des Merveilles' (Động Kỳ Quan)."
+                    : "Steeped in 13th-century military history, this cave is associated with National Hero Tran Hung Dao, who concealed iron-tipped wooden stakes here before defeating the Mongol naval fleet in 1288. Its 25-meter-high ceiling houses monumental stalagmites once celebrated as the 'Cave of Wonders'."}
+                </p>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">⚔️ {isVi ? "Chiến tích thế kỷ XIII" : "13th Century History"}</span>
+                  <span className="hl-editorial-chip">⭐ {isVi ? "Tuyến tàu số 1" : "Route 1 Cruise"}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 8. Ho Dong Tien Cave */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">8</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Hang Hồ Động Tiên (Ho Dong Tien Cave & Fairy Tarn)" : "Ho Dong Tien Cave (Fairy Lake Cave)"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Đầm nước kín" : "Hidden Tarn"}</span>
+                </div>
+                <p className="hl-editorial-desc">
+                  {isVi
+                    ? "Ẩn sâu trong lòng các khối đá vôi với thảm thực vật nguyên sinh tươi tốt, Hồ Động Tiên là một hồ nước mặn kín thông với hang động. Tương truyền cảnh sắc bồng lai nơi đây từng thu hút các nàng tiên giáng trần tắm mát, bảo tồn hệ sinh thái hang động biệt lập và các loài bò sát quý hiếm đặc hữu."
+                    : "Nestled within limestone formations and adorned with lush vegetation, Ho Dong Tien is a hidden mountain lake connected to a cavern. Legend has it that fairies couldn't resist the heavenly landscape, descending to bathe in its crystal-clear water, creating a tranquil geological wonder."}
+                </p>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">🧚 {isVi ? "Huyền thoại Động Tiên" : "Fairy Cave Legend"}</span>
+                  <span className="hl-editorial-chip">🌿 {isVi ? "Bảo tồn sinh thái" : "Eco-sanctuary"}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 9. Soi Sim Island */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">9</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Đảo Soi Sim (Soi Sim Island)" : "Soi Sim Island"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Hòn đảo hoang sơ" : "Eco-island"}</span>
+                </div>
+                <p className="hl-editorial-desc">
+                  {isVi
+                    ? "Hòn đảo được đặt tên theo loài cây sim mọc bạt ngàn trổ hoa tím biếc mỗi độ hè về. Sở hữu bãi biển cát trắng tinh khôi hoang sơ, làn nước xanh ngọc trong vắt và đỉnh núi đón hoàng hôn tuyệt đẹp trên vịnh, đây là điểm dừng chân yên bình tránh xa mọi ồn ào."
+                    : "Named after native sim myrtle plants that bloom with vibrant purple flowers across the island. Soi Sim features a secluded white sand beach, emerald waters, and a scenic summit path to watch magical sunsets over the karst horizon."}
+                </p>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">🌸 {isVi ? "Rừng cây sim tím" : "Purple Myrtle Blossoms"}</span>
+                  <span className="hl-editorial-chip">🌅 {isVi ? "Điểm ngắm hoàng hôn" : "Sunset Vantage"}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 10. Me Cung Cave */}
+            <div className="hl-editorial-item">
+              <span className="hl-editorial-num">10</span>
+              <div className="hl-editorial-content">
+                <div className="hl-editorial-header">
+                  <h3 className="hl-editorial-title">
+                    {isVi ? "Hang Mê Cung (Me Cung Cave / Maze Cave)" : "Me Cung Cave (Maze Cave)"}
+                  </h3>
+                  <span className="hl-editorial-tag">{isVi ? "Khảo cổ tiền sử" : "Archaeological Site"}</span>
+                </div>
+                <p className="hl-editorial-desc">
+                  {isVi
+                    ? "Tọa lạc ở độ cao 25 mét trên đảo Lôm Bò, hang Mê Cung sở hữu cấu trúc nhiều ngăn quanh co bí ẩn và là di chỉ khảo cổ học quý giá của nền Văn hóa Hạ Long tiền sử (cách đây 7.000 – 10.000 năm) với các tầng trầm tích vỏ ốc suối hóa thạch."
+                    : "Perched 25 meters above sea level on Lom Bo Island, Me Cung Cave holds deep mysteries with labyrinthine chambers and precious archaeological evidence of prehistoric human habitation dating back 7,000 to 10,000 years, opening onto a serene lake."}
+                </p>
+                <div className="hl-editorial-meta">
+                  <span className="hl-editorial-chip">🏛️ {isVi ? "Văn hóa Hạ Long 10.000 năm" : "Prehistoric Heritage"}</span>
+                  <span className="hl-editorial-chip">📍 {isVi ? "Đảo Lôm Bò" : "Lom Bo Island"}</span>
                 </div>
               </div>
             </div>
