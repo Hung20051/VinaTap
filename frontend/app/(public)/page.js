@@ -241,11 +241,11 @@ const TOP_DESTINATIONS_DATA = [
     link: "/province/hue",
   },
   {
-    id: "lao-cai",
-    name: "Lao Cai (Sa Pa)",
-    nameVi: "Lào Cai (Sa Pa)",
-    img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&auto=format&fit=crop&q=80",
-    link: "/province/lao-cai",
+    id: "sapa",
+    name: "Sa Pa (Lao Cai)",
+    nameVi: "Sa Pa (Lào Cai)",
+    img: "/guide/sapa/hero-sapa.jpg",
+    link: "/province/sapa",
   },
   {
     id: "hai-phong",

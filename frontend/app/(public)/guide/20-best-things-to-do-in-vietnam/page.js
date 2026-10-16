@@ -496,7 +496,7 @@ const THINGS_ITEMS = [
     "img": "/guide/20-best-things/13-sapa.jpg",
     "webp": "/guide/20-best-things/13-sapa.webp",
     "alt": "Sapa terraced rice fields and mountain landscape",
-    "provinceLink": "/province/lao-cai",
+    "provinceLink": "/province/sapa",
     "paragraphsEn": [
       "Sapa is a city that holds a special place in the hearts of many Vietnamese people, and is often a must-see destination for travelers. It's no surprise, given the city's breathtaking landscapes and unique cultural influences. While the center of Sapa has modern amenities to accommodate tourists, the surrounding villages have maintained their traditional beauty and customs. Sapa is a popular destination for couples, thanks to its chilly and misty weather (with occasional snow in the winter) and an abundance of seasonal flowers, creating a romantic atmosphere. It is also home to the highest peak in Indochina, nicknamed \"the roof of Indochina\" – Fansipan Peak. Sapa offers a unique and different experience compared to other highland cities you may have visited."
     ],
@@ -649,7 +649,7 @@ function renderParagraphContent(text, isVi) {
         { key: "Phú Quốc", href: "/province/kien-giang" },
         { key: "Vườn quốc gia Phong Nha – Kẻ Bàng", href: "/province/quang-binh" },
         { key: "Quảng Bình", href: "/province/quang-binh" },
-        { key: "Sa Pa", href: "/province/lao-cai" },
+        { key: "Sa Pa", href: "/province/sapa" },
         { key: "Đảo Cát Bà", href: "/province/hai-phong" },
         { key: "Cát Bà", href: "/province/hai-phong" },
         { key: "Quy Nhơn", href: "/province/binh-dinh" },
@@ -672,7 +672,7 @@ function renderParagraphContent(text, isVi) {
         { key: "Phu Quoc", href: "/province/kien-giang" },
         { key: "Phong Nha-Ke Bang National Park", href: "/province/quang-binh" },
         { key: "Quang Binh", href: "/province/quang-binh" },
-        { key: "Sapa", href: "/province/lao-cai" },
+        { key: "Sapa", href: "/province/sapa" },
         { key: "Cat Ba Island", href: "/province/hai-phong" },
         { key: "Quy Nhon", href: "/province/binh-dinh" },
         { key: "Mu Cang Chai", href: "/province/yen-bai" },

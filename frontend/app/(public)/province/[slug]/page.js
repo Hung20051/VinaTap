@@ -38,11 +38,15 @@ import HanoiPage from "../ha-noi/page";
 import HaGiangPage from "../ha-giang/page";
 import NhaTrangPage from "../nha-trang/page";
 import HaLongPage from "../ha-long/page";
+import SapaPage from "../sapa/page";
 
 export default function ProvincePage() {
   const { slug } = useParams();
   const searchParams = useSearchParams();
 
+  if (slug === "sapa" || slug === "sa-pa" || slug === "lao-cai" || slug === "laocai") {
+    return <SapaPage />;
+  }
   if (slug === "ha-long" || slug === "halong" || slug === "quang-ninh" || slug === "vinh-ha-long") {
     return <HaLongPage />;
   }

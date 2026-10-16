@@ -100,14 +100,14 @@ export const PLACES_ARTICLE_DATA = [
     title: "Sapa",
     titleVi: "Sa Pa",
     slug: "sapa",
-    provinceSlug: "lao-cai",
+    provinceSlug: "sapa",
     image: "/guide/15-best-places/place-7-sapa.jpg",
     paragraphs: [
-      "Nestled in the northwest region, [Sapa](/province/lao-cai) is known for its breathtaking mountain scenery, diverse ethnic minority cultures, dreamlike rice terraces, and scenic hiking trails. This picturesque town is the ultimate destination for a misty mountain retreat with stylish and elegant boutique resorts. It’s a place where you can trek through indigenous villages, sample exotic food, and drink warm herbal tea while shrouded in a blanket of mist and clouds. Sapa is also home to Fansipan, the highest peak on the Indochinese peninsula, also known as the Roof of Indochina.",
+      "Nestled in the northwest region, [Sapa](/province/sapa) is known for its breathtaking mountain scenery, diverse ethnic minority cultures, dreamlike rice terraces, and scenic hiking trails. This picturesque town is the ultimate destination for a misty mountain retreat with stylish and elegant boutique resorts. It’s a place where you can trek through indigenous villages, sample exotic food, and drink warm herbal tea while shrouded in a blanket of mist and clouds. Sapa is also home to Fansipan, the highest peak on the Indochinese peninsula, also known as the Roof of Indochina.",
       "If you have a deep love for trail running, the Vietnam Mountain Marathon, one of the first trail races in Vietnam and also one of the most prestigious in Asia, takes place in Sapa and will add to the list of reasons to visit this mountainous town."
     ],
     paragraphsVi: [
-      "Ẩn mình giữa núi rừng Tây Bắc đại ngàn, [Sa Pa](/province/lao-cai) làm say lòng người bởi cảnh sắc ruộng bậc thang kỳ vĩ, bản sắc văn hóa đa dạng của đồng bào các dân tộc thiểu số và những cung đường trekking tuyệt mỹ. Thị xã sương mù này là điểm đến nghỉ dưỡng trên núi lý tưởng với các resort boutique sang trọng. Nơi đây bạn có thể dạo bước qua các bản làng nguyên sơ, thưởng thức đặc sản nướng vùng cao, nhâm nhi tách trà thảo mộc thơm nồng và chinh phục đỉnh Fansipan – 'Nóc nhà Đông Dương' hùng vĩ.",
+      "Ẩn mình giữa núi rừng Tây Bắc đại ngàn, [Sa Pa](/province/sapa) làm say lòng người bởi cảnh sắc ruộng bậc thang kỳ vĩ, bản sắc văn hóa đa dạng của đồng bào các dân tộc thiểu số và những cung đường trekking tuyệt mỹ. Thị xã sương mù này là điểm đến nghỉ dưỡng trên núi lý tưởng với các resort boutique sang trọng. Nơi đây bạn có thể dạo bước qua các bản làng nguyên sơ, thưởng thức đặc sản nướng vùng cao, nhâm nhi tách trà thảo mộc thơm nồng và chinh phục đỉnh Fansipan – 'Nóc nhà Đông Dương' hùng vĩ.",
       "Nếu bạn đam mê chạy địa hình, giải chạy danh giá Vietnam Mountain Marathon diễn ra thường niên tại Sa Pa sẽ là lý do tuyệt vời để bạn ghé thăm vùng đất mờ sương này."
     ]
   },

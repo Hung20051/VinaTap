@@ -391,8 +391,8 @@ export default function HoChiMinhCityPage() {
     {
       name: "Sapa",
       nameVi: "Sa Pa (Lào Cai)",
-      img: "/lao-cai-cover.jpg",
-      link: "/province/lao-cai",
+      img: "/guide/sapa/hero-sapa.jpg",
+      link: "/province/sapa",
     },
     {
       name: "Hai Phong",

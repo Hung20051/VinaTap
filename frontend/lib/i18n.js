@@ -920,6 +920,8 @@ export const PROVINCE_BY_NAME_EN = {
   "Phú Thọ": PROVINCES_EN["phu-tho"],
   "Thái Nguyên": PROVINCES_EN["thai-nguyen"],
   "Lào Cai": PROVINCES_EN["lao-cai"],
+  "sapa": PROVINCES_EN["lao-cai"],
+  "Sa Pa": PROVINCES_EN["lao-cai"],
   "Tuyên Quang": PROVINCES_EN["tuyen-quang"],
   "Cao Bằng": PROVINCES_EN["cao-bang"],
   "Lạng Sơn": PROVINCES_EN["lang-son"],
