@@ -31,7 +31,7 @@ import "@/styles/home.css";
 import "@/styles/guide-editorial.css";
 import "@/styles/ha-long-guide.css";
 
-// ─── RELATED ARTICLES ON VINATAP ───
+// ─── RELATED ARTICLES ON VINATAP (TOP 3) ───
 const RELATED_ARTICLES = [
   {
     slug: "the-complete-guide-to-vietnam",
@@ -69,24 +69,11 @@ const RELATED_ARTICLES = [
       "Từ du thuyền qua đêm trên vịnh Hạ Long đến ẩm thực đường phố, tổng hợp những trải nghiệm tinh hoa nhất.",
     img: "/guide/20-best-things/3-ha-long-bay.jpg",
   },
-  {
-    slug: "ninh-binh",
-    title: "Ninh Binh Travel Guide: Ha Long Bay on Land",
-    titleVi: "Cẩm Nang Du Lịch Ninh Bình: Hạ Long Trên Cạn",
-    badge: "NEARBY GEM",
-    badgeVi: "KỲ QUAN LIÊN KẾT",
-    excerpt:
-      "Just 3 hours from Ha Long, explore Trang An and Tam Coc karst towers rising above emerald rice fields.",
-    excerptVi:
-      "Chỉ cách Hạ Long 3 giờ xe, khám phá quần thể di sản Tràng An và Tam Cốc non nước hữu tình.",
-    img: "/guide/ninh-binh/hero.jpg",
-  },
 ];
 
 export default function HaLongPage() {
   const [lang, setLang] = useState("vi");
   const [activeFaq, setActiveFaq] = useState(null);
-  const [activeSection, setActiveSection] = useState("overview");
 
   useEffect(() => {
     const currentLang = getLang();
@@ -105,19 +92,6 @@ export default function HaLongPage() {
   const toggleFaq = (index) => {
     setActiveFaq(activeFaq === index ? null : index);
   };
-
-  const navPills = [
-    { id: "overview", label: isVi ? "Tổng quan" : "Overview" },
-    { id: "bays", label: isVi ? "3 Vịnh biển" : "The 3 Bays" },
-    { id: "caves-islands", label: isVi ? "Hang động & Đảo" : "Caves & Islands" },
-    { id: "experiences", label: isVi ? "Trải nghiệm đỉnh cao" : "Top Experiences" },
-    { id: "routes", label: isVi ? "Tuyến tàu tham quan" : "Cruise Routes" },
-    { id: "food", label: isVi ? "Ẩm thực hải sản" : "Local Delicacies" },
-    { id: "weather", label: isVi ? "Thời điểm lý tưởng" : "Best Time" },
-    { id: "transport", label: isVi ? "Di chuyển" : "How to Get There" },
-    { id: "itinerary", label: isVi ? "Lịch trình gợi ý" : "Itineraries" },
-    { id: "faq", label: isVi ? "Hỏi đáp & Lưu ý" : "Tips & FAQs" },
-  ];
 
   return (
     <div className="halong-page">
@@ -237,22 +211,6 @@ export default function HaLongPage() {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Sticky Nav Pills */}
-        <div className="hl-nav-pills-wrap">
-          <div className="hl-nav-pills">
-            {navPills.map((pill) => (
-              <a
-                key={pill.id}
-                href={`#${pill.id}`}
-                className={`hl-nav-pill ${activeSection === pill.id ? "active" : ""}`}
-                onClick={() => setActiveSection(pill.id)}
-              >
-                {pill.label}
-              </a>
-            ))}
           </div>
         </div>
 

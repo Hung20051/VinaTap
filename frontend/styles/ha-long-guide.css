@@ -391,7 +391,7 @@
 /* Main Sections */
 .hl-section {
   margin-bottom: 3.5rem;
-  scroll-margin-top: 145px;
+  scroll-margin-top: 85px;
 }
 
 .hl-section-title {
@@ -405,7 +405,7 @@
   align-items: center;
   gap: 12px;
   font-family: var(--font-body, "Plus Jakarta Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
-  scroll-margin-top: 145px;
+  scroll-margin-top: 85px;
 }
 
 [data-theme="dark"] .hl-section-title {
@@ -1276,12 +1276,18 @@
   color: #94a3b8;
 }
 
-/* Related articles on VinaTap */
+/* Related articles on VinaTap (Exactly 3 articles in 1 row) */
 .hl-related-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin: 2rem 0;
+}
+
+@media (max-width: 900px) {
+  .hl-related-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
 }
 
 .hl-related-card {
