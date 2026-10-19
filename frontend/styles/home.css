@@ -4633,6 +4633,45 @@
 .vnn-food-item:hover {
   transform: translateX(4px);
 }
+.vnn-food-item--featured {
+  background: linear-gradient(135deg, rgba(254, 243, 199, 0.4) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border: 1.5px solid #fcd34d;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.08);
+  position: relative;
+  transition: all 0.25s ease;
+}
+.vnn-food-item--featured:hover {
+  transform: translateX(4px);
+  border-color: #f59e0b;
+  box-shadow: 0 8px 24px rgba(217, 119, 6, 0.15);
+}
+.vnn-food-item--featured .vnn-food-item__thumb {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.vnn-food-badge-partner {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.vnn-food-item__address {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #b45309;
+}
 .vnn-food-item__thumb {
   width: 140px;
   height: 98px;

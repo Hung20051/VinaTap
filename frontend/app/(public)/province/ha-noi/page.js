@@ -1984,6 +1984,106 @@ export default function HanoiPage() {
             </Link>
           </div>
 
+          {/* ── PARTNER SPOTLIGHT: BANH MI LONG HOI (7 HANG QUAT) ── */}
+          <div
+            style={{
+              marginBottom: "44px",
+              padding: "24px 28px",
+              borderRadius: "16px",
+              background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 45%, #ffffff 100%)",
+              border: "2px solid #fde68a",
+              boxShadow: "0 8px 24px rgba(217, 119, 6, 0.08)",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "24px",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src="/guide/banh-mi-long-hoi/banh-mi-truyen-thong.png"
+              alt="Bánh Mì Long Hội 7 Hàng Quạt"
+              style={{
+                width: "160px",
+                height: "115px",
+                objectFit: "cover",
+                borderRadius: "12px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                flexShrink: 0,
+              }}
+            />
+            <div style={{ flex: "1 1 320px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px", flexWrap: "wrap" }}>
+                <span
+                  style={{
+                    background: "linear-gradient(135deg, #d97706, #b45309)",
+                    color: "#ffffff",
+                    fontSize: "11px",
+                    fontWeight: 800,
+                    padding: "3px 10px",
+                    borderRadius: "9999px",
+                    letterSpacing: "0.05em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {lang === "vi" ? "★ ĐỐI TÁC ẨM THỰC ĐỀ XUẤT" : "★ FEATURED CULINARY PARTNER"}
+                </span>
+                <span style={{ fontSize: "12px", color: "#b45309", fontWeight: 700 }}>
+                  📍 {lang === "vi" ? "Số 7 Hàng Quạt, Hoàn Kiếm (Cách Bờ Hồ 200m)" : "No. 7 Hang Quat, Hoan Kiem (Near Lake)"}
+                </span>
+              </div>
+              <h4 style={{ fontSize: "19px", fontWeight: 800, color: "#1e293b", margin: "0 0 6px" }}>
+                {lang === "vi"
+                  ? "Bánh Mì Long Hội – Tinh hoa bánh mì Hội An giữa lòng Phố Cổ"
+                  : "Long Hoi Banh Mi – Authentic Taste of Hoi An in Hanoi Old Quarter"}
+              </h4>
+              <p style={{ fontSize: "13.5px", color: "#475569", lineHeight: 1.6, margin: "0 0 14px" }}>
+                {lang === "vi"
+                  ? "Tiệm bánh mì phố cổ nức tiếng với vỏ bánh giòn xốp không vụn nát, pate gia truyền béo ngậy và sốt bơ nức mũi. Đầy đủ lựa chọn từ Bánh mì Tình Yêu thượng hạng (90k) đến Bánh mì An Lạc thuần chay (50k) rất được du khách quốc tế ưa chuộng."
+                  : "Famous Old Quarter spot renowned for its flaky crust, homemade rich pate, and savory fillings. Offers both premium signature loaves (90k) and plant-based vegan options (50k) loved by travelers."}
+              </p>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                <Link
+                  href="/guide/banh-mi-long-hoi"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    background: "#d97706",
+                    color: "#ffffff",
+                    padding: "7px 16px",
+                    borderRadius: "9999px",
+                    fontSize: "12.5px",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                  }}
+                >
+                  <span>{lang === "vi" ? "Khám phá câu chuyện & thực đơn" : "Explore Menu & Story"}</span>
+                  <ArrowRight size={13} />
+                </Link>
+                <a
+                  href="https://maps.google.com/?q=B%C3%A1nh+m%C3%AC+Long+H%E1%BB%99i,+7+H%C3%A0ng+Qu%E1%BA%A1t,+H%C3%A0+N%E1%BB%99i"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    background: "#ffffff",
+                    border: "1px solid #cbd5e1",
+                    color: "#1e293b",
+                    padding: "7px 14px",
+                    borderRadius: "9999px",
+                    fontSize: "12.5px",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                  }}
+                >
+                  📍 {lang === "vi" ? "Chỉ đường đến quán" : "Directions"}
+                </a>
+              </div>
+            </div>
+          </div>
+
           {/* DISH 1: PHO (SCREENSHOT 3 & 4) */}
           <div style={{ marginBottom: "44px" }}>
             <h3 className="vnn-hanoi-attraction-title">

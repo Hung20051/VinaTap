@@ -574,6 +574,118 @@ export default function HanoiFoodGuidePage() {
           ))}
         </div>
 
+        {/* ── SPECIAL SPOTLIGHT: BANH MI LONG HOI (7 HANG QUAT) ── */}
+        <section
+          style={{
+            margin: "44px 0",
+            padding: "28px",
+            borderRadius: "16px",
+            background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 40%, #ffffff 100%)",
+            border: "2px solid #fde68a",
+            boxShadow: "0 10px 25px rgba(217, 119, 6, 0.08)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "14px",
+              flexWrap: "wrap",
+            }}
+          >
+            <span
+              style={{
+                background: "linear-gradient(135deg, #d97706, #b45309)",
+                color: "#ffffff",
+                fontSize: "11px",
+                fontWeight: "800",
+                padding: "4px 12px",
+                borderRadius: "9999px",
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+              }}
+            >
+              {isVi ? "★ ĐỐI TÁC ẨM THỰC ĐỒNG HÀNH" : "★ FEATURED CULINARY PARTNER"}
+            </span>
+            <span style={{ fontSize: "12.5px", color: "#b45309", fontWeight: "700" }}>
+              📍 {isVi ? "Số 7 Hàng Quạt, Hoàn Kiếm, Hà Nội (Cách Bờ Hồ 200m)" : "No. 7 Hang Quat, Hoan Kiem, Hanoi (Near Lake)"}
+            </span>
+          </div>
+
+          <div className="vnn-dish-layout" style={{ marginTop: "16px" }}>
+            <div className="vnn-dish-img-col">
+              <img
+                src="/guide/banh-mi-long-hoi/banh-mi-truyen-thong.png"
+                alt="Bánh Mì Long Hội 7 Hàng Quạt"
+                className="vnn-dish-img"
+                style={{ borderRadius: "12px", boxShadow: "0 4px 14px rgba(0,0,0,0.08)" }}
+              />
+            </div>
+            <div className="vnn-dish-content-col">
+              <h3
+                style={{
+                  fontSize: "21px",
+                  fontWeight: "800",
+                  color: "#1e293b",
+                  margin: "0 0 10px 0",
+                  lineHeight: "1.35",
+                }}
+              >
+                {isVi
+                  ? "Trải nghiệm đặc biệt: Bánh Mì Long Hội – Tinh hoa xứ Hội giữa lòng Phố Cổ"
+                  : "Special Recommendation: Long Hoi Banh Mi – Taste of Hoi An in Hanoi"}
+              </h3>
+              <p className="vnn-dish-text">
+                {isVi
+                  ? "Bên cạnh các món bún phở truyền thống, dạo phố cổ Hà Nội mà không thưởng thức một ổ bánh mì giòn tan sẽ là điều vô cùng thiếu sót. Nằm tại số 7 Hàng Quạt (ngay gần đền Ngọc Sơn & Hồ Hoàn Kiếm), Bánh Mì Long Hội gây ấn tượng mạnh với lớp vỏ bánh giòn xốp không vụn nát, pate gan ngậy béo gia truyền, thịt xíu mềm mọng và rau ngò Trà Quế thơm cay dịu. Tiệm có đầy đủ các lựa chọn từ Bánh mì Tình Yêu (90k signature) đến Bánh mì An Lạc (50k thuần chay rất được du khách quốc tế ưa chuộng)."
+                  : "Strolling through Hanoi Old Quarter without savoring a crusty banh mi is an incomplete journey. Located at 7 Hang Quat Street (a short stroll from Hoan Kiem Lake), Long Hoi Banh Mi stands out for bringing authentic Hoi An flavors to Hanoi. Packed with rich homemade pate, tender char siu pork, and fresh Tra Que herbs inside a golden crispy baguette. Options range from the signature Love Banh Mi (90k) to the popular An Lac vegetarian banh mi (50k)."}
+              </p>
+
+              <div style={{ marginTop: "18px", display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                <Link
+                  href="/guide/banh-mi-long-hoi"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    background: "#d97706",
+                    color: "#ffffff",
+                    padding: "8px 18px",
+                    borderRadius: "9999px",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    textDecoration: "none",
+                    boxShadow: "0 2px 8px rgba(217, 119, 6, 0.3)",
+                  }}
+                >
+                  {isVi ? "Xem thực đơn & câu chuyện Long Hội →" : "View Long Hoi Menu & Story →"}
+                </Link>
+                <a
+                  href="https://maps.google.com/?q=B%C3%A1nh+m%C3%AC+Long+H%E1%BB%99i,+7+H%C3%A0ng+Qu%E1%BA%A1t,+H%C3%A0+N%E1%BB%99i"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    background: "#ffffff",
+                    color: "#1e293b",
+                    border: "1px solid #cbd5e1",
+                    padding: "8px 16px",
+                    borderRadius: "9999px",
+                    fontSize: "13px",
+                    fontWeight: "700",
+                    textDecoration: "none",
+                  }}
+                >
+                  📍 {isVi ? "Chỉ đường 7 Hàng Quạt" : "Directions to 7 Hang Quat"}
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ── Closing Paragraph ── */}
         <p
           style={{

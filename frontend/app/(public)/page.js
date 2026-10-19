@@ -755,6 +755,11 @@ const FOODS_TO_TRY_ITEMS = [
       "Thương hiệu bánh mì Hội An trứ danh tại số 7 Hàng Quạt với vỏ giòn rụm, pate béo ngậy và hương vị gia truyền đượm đà giữa lòng phố cổ.",
     img: "/guide/banh-mi-long-hoi/banh-mi-truyen-thong.png",
     link: "/guide/banh-mi-long-hoi",
+    isFeatured: true,
+    badgeVi: "★ ĐỐI TÁC ẨM THỰC",
+    badgeEn: "★ CULINARY PARTNER",
+    locationVi: "Số 7 Hàng Quạt, Hoàn Kiếm",
+    locationEn: "7 Hang Quat, Hoan Kiem",
   },
   {
     title: "5 must-try Nha Trang dishes",
@@ -2635,15 +2640,55 @@ export default function HomePage() {
                   <Link
                     key={item.title}
                     href={item.link}
-                    className="vnn-food-item"
+                    className={`vnn-food-item ${item.isFeatured ? "vnn-food-item--featured" : ""}`}
                   >
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="vnn-food-item__thumb"
-                      loading="lazy"
-                    />
+                    <div style={{ position: "relative" }}>
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="vnn-food-item__thumb"
+                        loading="lazy"
+                      />
+                      {item.isFeatured && (
+                        <span
+                          style={{
+                            position: "absolute",
+                            top: "6px",
+                            left: "6px",
+                            background: "linear-gradient(135deg, #d97706, #b45309)",
+                            color: "#ffffff",
+                            fontSize: "9px",
+                            fontWeight: 800,
+                            padding: "2px 6px",
+                            borderRadius: "4px",
+                            boxShadow: "0 2px 4px rgba(0,0,0,0.25)",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.03em",
+                          }}
+                        >
+                          {lang === "vi" ? "ĐỐI TÁC" : "PARTNER"}
+                        </span>
+                      )}
+                    </div>
                     <div className="vnn-food-item__body">
+                      {item.isFeatured && (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                            marginBottom: "5px",
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          <span className="vnn-food-badge-partner">
+                            {lang === "vi" ? item.badgeVi : item.badgeEn}
+                          </span>
+                          <span className="vnn-food-item__address">
+                            📍 {lang === "vi" ? item.locationVi : item.locationEn}
+                          </span>
+                        </div>
+                      )}
                       <h4 className="vnn-food-item__title">
                         {lang === "vi" ? item.titleVi : item.title}
                       </h4>
