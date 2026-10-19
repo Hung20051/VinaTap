@@ -144,13 +144,17 @@ export default function BanhMiLongHoiPage() {
       if (l) setLang(l);
     };
 
+    window.addEventListener("vinatap:lang-updated", handleLang);
     window.addEventListener("languageChange", handleLang);
     window.addEventListener("langchange", handleLang);
+    window.addEventListener("vina_language_change", handleLang);
     window.addEventListener("storage", handleStorage);
 
     return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLang);
       window.removeEventListener("languageChange", handleLang);
       window.removeEventListener("langchange", handleLang);
+      window.removeEventListener("vina_language_change", handleLang);
       window.removeEventListener("storage", handleStorage);
     };
   }, []);

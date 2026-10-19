@@ -436,9 +436,28 @@ export default function HanoiFoodGuidePage() {
 
   useEffect(() => {
     setLang(getLang());
+    const handleLang = (e) => {
+      const newLang =
+        typeof e?.detail === "string"
+          ? e.detail
+          : e?.detail?.lang || getLang();
+      if (newLang) setLang(newLang);
+    };
     const handleStorage = () => setLang(getLang());
+
+    window.addEventListener("vinatap:lang-updated", handleLang);
+    window.addEventListener("languageChange", handleLang);
+    window.addEventListener("langchange", handleLang);
+    window.addEventListener("vina_language_change", handleLang);
     window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+
+    return () => {
+      window.removeEventListener("vinatap:lang-updated", handleLang);
+      window.removeEventListener("languageChange", handleLang);
+      window.removeEventListener("langchange", handleLang);
+      window.removeEventListener("vina_language_change", handleLang);
+      window.removeEventListener("storage", handleStorage);
+    };
   }, []);
 
   const isVi = lang === "vi";

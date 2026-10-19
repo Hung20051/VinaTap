@@ -44,6 +44,16 @@ export const setLang = (lang) => {
     window.dispatchEvent(
       new CustomEvent("vinatap:lang-updated", { detail: lang }),
     );
+    window.dispatchEvent(
+      new CustomEvent("languageChange", { detail: lang }),
+    );
+    window.dispatchEvent(
+      new CustomEvent("langchange", { detail: lang }),
+    );
+    window.dispatchEvent(
+      new CustomEvent("vina_language_change", { detail: lang }),
+    );
+    window.dispatchEvent(new Event("storage"));
   }
 };
 

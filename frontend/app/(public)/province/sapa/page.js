@@ -81,7 +81,11 @@ export default function SapaPage() {
     };
 
     window.addEventListener("languageChange", handleLangChange);
-    return () => window.removeEventListener("languageChange", handleLangChange);
+    window.addEventListener("vinatap:lang-updated", handleLangChange);
+    return () => {
+      window.removeEventListener("languageChange", handleLangChange);
+      window.removeEventListener("vinatap:lang-updated", handleLangChange);
+    };
   }, []);
 
   const isVi = lang === "vi";
