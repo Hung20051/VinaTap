@@ -262,8 +262,20 @@
 
 .longhoi-menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+
+@media (max-width: 960px) {
+  .longhoi-menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .longhoi-menu-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .longhoi-product-card {
@@ -362,8 +374,20 @@
 
 .longhoi-drinks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+
+@media (max-width: 960px) {
+  .longhoi-drinks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .longhoi-drinks-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .longhoi-drink-card {
@@ -493,8 +517,14 @@
 
 .longhoi-related-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+
+@media (max-width: 860px) {
+  .longhoi-related-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .longhoi-related-card {

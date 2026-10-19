@@ -13,15 +13,12 @@ import {
   ExternalLink,
   Navigation,
   Sparkles,
-  Utensils,
-  Coffee,
   CheckCircle,
-  Share2,
 } from "lucide-react";
 import "@/styles/home.css";
 import "./banh-mi-long-hoi.css";
 
-// ─── MENU ITEMS DATA ───
+// ─── 6 SIGNATURE BANH MI ITEMS (PERFECT 3x2 GRID) ───
 const LONG_HOI_MENU = [
   {
     id: "bm-tinh-yeu",
@@ -60,6 +57,18 @@ const LONG_HOI_MENU = [
       "A beloved plant-based specialty favored by international travelers, packed with savory seasoned mushrooms, vegan proteins, fresh herbs, and light homemade sauce.",
   },
   {
+    id: "bm-thanh-cong",
+    name: "Bánh mì Thành Công",
+    nameEn: "Success Banh Mi (Special Pork)",
+    price: "80,000₫",
+    img: "/guide/banh-mi-long-hoi/banh-mi-thanh-cong.png",
+    tag: "Đậm đà đặc biệt",
+    tagEn: "Chef's Choice",
+    desc: "Sự kết hợp tinh tế giữa thịt xíu xắt dày mềm thơm, pate gan ngậy béo gia truyền, chả mộc truyền thống và chút cay the nồng đượm từ sốt ớt Hội An đặc chế.",
+    descEn:
+      "A hearty gourmet creation with thick-cut savory pork, homemade liver pate, seasoned pork ham, and a kick of authentic mild Hoi An chili paste.",
+  },
+  {
     id: "bm-nu-cuoi",
     name: "Bánh mì Nụ Cười",
     nameEn: "Smile Banh Mi (Sunny Egg)",
@@ -85,6 +94,7 @@ const LONG_HOI_MENU = [
   },
 ];
 
+// ─── 3 DRINKS (PERFECT 3x1 GRID) ───
 const LONG_HOI_DRINKS = [
   {
     name: "Trà quất mật ong",
@@ -96,11 +106,19 @@ const LONG_HOI_DRINKS = [
   },
   {
     name: "Sâm bí đao hạt chia",
-    nameEn: "Winter Melon Herbal Tea with Chia Seeds",
+    nameEn: "Winter Melon Herbal Tea",
     price: "20,000₫",
     img: "/guide/banh-mi-long-hoi/sam-bi-dao.png",
     desc: "Nấu từ cốt bí đao thanh mát kết hợp hạt chia bổ dưỡng, ngọt thanh dễ chịu.",
     descEn: "Cooling herbal brew made from roasted winter melon and nutritious chia seeds.",
+  },
+  {
+    name: "Bia Hà Nội ướp lạnh",
+    nameEn: "Chilled Hanoi Beer",
+    price: "30,000₫",
+    img: "/guide/banh-mi-long-hoi/hanoi-beer.jpg",
+    desc: "Thức bia thủ đô kinh điển ướp lạnh, sự kết hợp hoàn hảo cùng ổ bánh mì giòn tan khi dạo phố cổ.",
+    descEn: "Chilled classic Hanoi beer, the quintessential companion to a hot crispy banh mi in the Old Quarter.",
   },
 ];
 
@@ -108,8 +126,33 @@ export default function BanhMiLongHoiPage() {
   const [lang, setLang] = useState("vi");
 
   useEffect(() => {
-    const saved = getLang();
-    if (saved) setLang(saved);
+    // Initial sync
+    const current = getLang();
+    if (current) setLang(current);
+
+    // Dynamic listeners for language toggle in PublicHeader
+    const handleLang = (e) => {
+      const newLang =
+        typeof e?.detail === "string"
+          ? e.detail
+          : e?.detail?.lang || getLang();
+      if (newLang) setLang(newLang);
+    };
+
+    const handleStorage = () => {
+      const l = getLang();
+      if (l) setLang(l);
+    };
+
+    window.addEventListener("languageChange", handleLang);
+    window.addEventListener("langchange", handleLang);
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      window.removeEventListener("languageChange", handleLang);
+      window.removeEventListener("langchange", handleLang);
+      window.removeEventListener("storage", handleStorage);
+    };
   }, []);
 
   return (
@@ -140,9 +183,13 @@ export default function BanhMiLongHoiPage() {
           </p>
 
           <div className="longhoi-hero__meta">
-            <span>📍 Số 7 Hàng Quạt, Hoàn Kiếm, Hà Nội</span>
+            <span>
+              {lang === "vi"
+                ? "📍 Số 7 Hàng Quạt, Hoàn Kiếm, Hà Nội"
+                : "📍 7 Hang Quat, Hoan Kiem, Hanoi"}
+            </span>
             <span>•</span>
-            <span>⏰ 10:00 – 22:30</span>
+            <span>{lang === "vi" ? "⏰ 10:00 – 22:30 hàng ngày" : "⏰ 10:00 – 22:30 Daily"}</span>
             <span>•</span>
             <span>📞 083 511 68 66</span>
           </div>
@@ -155,7 +202,7 @@ export default function BanhMiLongHoiPage() {
               className="longhoi-btn longhoi-btn--primary"
             >
               <Navigation size={16} />
-              <span>{lang === "vi" ? "Chỉ đường Google Maps" : "Get Directions"}</span>
+              <span>{lang === "vi" ? "Chỉ đường Google Maps" : "Google Maps Directions"}</span>
             </a>
             <a href="tel:0835116866" className="longhoi-btn longhoi-btn--secondary">
               <Phone size={16} />
@@ -168,7 +215,7 @@ export default function BanhMiLongHoiPage() {
               className="longhoi-btn longhoi-btn--outline"
             >
               <ExternalLink size={16} />
-              <span>{lang === "vi" ? "Website chính thức" : "Visit Website"}</span>
+              <span>{lang === "vi" ? "Website chính thức" : "Official Website"}</span>
             </a>
           </div>
         </div>
@@ -226,26 +273,42 @@ export default function BanhMiLongHoiPage() {
               <div className="longhoi-highlights">
                 <div className="longhoi-highlight-item">
                   <CheckCircle size={18} className="longhoi-check-icon" />
-                  <span>{lang === "vi" ? "Vỏ bánh mỏng giòn xốp, không vụn nát" : "Thin crispy crust that stays flaky"}</span>
+                  <span>
+                    {lang === "vi"
+                      ? "Vỏ bánh mỏng giòn xốp, không vụn nát"
+                      : "Thin crispy crust that stays flaky and never crumbles"}
+                  </span>
                 </div>
                 <div className="longhoi-highlight-item">
                   <CheckCircle size={18} className="longhoi-check-icon" />
-                  <span>{lang === "vi" ? "Pate gan gia truyền béo bùi, sốt bơ trứng vàng sóng sánh" : "Rich homemade liver pate & egg-butter glaze"}</span>
+                  <span>
+                    {lang === "vi"
+                      ? "Pate gan gia truyền béo bùi, sốt bơ trứng vàng sóng sánh"
+                      : "Rich homemade liver pate & signature egg-butter glaze"}
+                  </span>
                 </div>
                 <div className="longhoi-highlight-item">
                   <CheckCircle size={18} className="longhoi-check-icon" />
-                  <span>{lang === "vi" ? "Đầy đủ lựa chọn thuần chay (Bánh mì An Lạc)" : "Vegetarian-friendly options available"}</span>
+                  <span>
+                    {lang === "vi"
+                      ? "Đầy đủ lựa chọn thuần chay (Bánh mì An Lạc)"
+                      : "Vegetarian-friendly options available (An Lac Banh Mi)"}
+                  </span>
                 </div>
                 <div className="longhoi-highlight-item">
                   <CheckCircle size={18} className="longhoi-check-icon" />
-                  <span>{lang === "vi" ? "Vị trí đắc địa: cách Hồ Hoàn Kiếm chỉ 2 phút đi bộ" : "Prime location: 2 minutes walk from Hoan Kiem Lake"}</span>
+                  <span>
+                    {lang === "vi"
+                      ? "Vị trí đắc địa: cách Hồ Hoàn Kiếm chỉ 2 phút đi bộ"
+                      : "Prime location: 2 minutes walk from Hoan Kiem Lake"}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── SIGNATURE MENU SECTION ── */}
+        {/* ── 6 SIGNATURE MENU ITEMS (3x2 BALANCED GRID) ── */}
         <section className="longhoi-menu-section">
           <div className="longhoi-section-header">
             <span className="longhoi-subheading">
@@ -288,15 +351,22 @@ export default function BanhMiLongHoiPage() {
           </div>
         </section>
 
-        {/* ── DRINKS SECTION ── */}
+        {/* ── 3 DRINKS SECTION (3x1 BALANCED GRID) ── */}
         <section className="longhoi-drinks-section">
           <div className="longhoi-section-header">
             <span className="longhoi-subheading">
               {lang === "vi" ? "THỨC UỐNG THANH MÁT" : "REFRESHING BEVERAGES"}
             </span>
             <h2>
-              {lang === "vi" ? "Bộ đôi thức uống kết hợp hoàn hảo" : "The Perfect Pairings"}
+              {lang === "vi"
+                ? "Bộ ba thức uống kết hợp hoàn hảo"
+                : "The Perfect Drink Pairings"}
             </h2>
+            <p>
+              {lang === "vi"
+                ? "Thanh mát giải nhiệt, nâng tầm trọn vẹn hương vị bánh mì phố cổ."
+                : "Cooling and refreshing beverages to elevate your banh mi experience."}
+            </p>
           </div>
 
           <div className="longhoi-drinks-grid">
@@ -322,27 +392,39 @@ export default function BanhMiLongHoiPage() {
               <span className="longhoi-subheading">
                 {lang === "vi" ? "THÔNG TIN ĐỊA ĐIỂM & ĐẶT MÓN" : "LOCATION & CONTACT"}
               </span>
-              <h2>Bánh Mì Long Hội – Cơ Sở 7 Hàng Quạt</h2>
+              <h2>
+                {lang === "vi"
+                  ? "Bánh Mì Long Hội – Cơ Sở 7 Hàng Quạt"
+                  : "Long Hoi Banh Mi – Flagship Store"}
+              </h2>
 
               <ul className="longhoi-info-list">
                 <li>
                   <MapPin className="longhoi-info-icon" />
                   <div>
                     <strong>{lang === "vi" ? "Địa chỉ:" : "Address:"}</strong>
-                    <span>Số 7 Hàng Quạt, P. Hàng Gai, Q. Hoàn Kiếm, Hà Nội</span>
+                    <span>
+                      {lang === "vi"
+                        ? "Số 7 Hàng Quạt, P. Hàng Gai, Q. Hoàn Kiếm, Hà Nội"
+                        : "No. 7 Hang Quat Street, Hoan Kiem District, Hanoi"}
+                    </span>
                   </div>
                 </li>
                 <li>
                   <Clock className="longhoi-info-icon" />
                   <div>
                     <strong>{lang === "vi" ? "Giờ mở cửa:" : "Hours:"}</strong>
-                    <span>10:00 – 22:30 (Mở cửa tất cả các ngày trong tuần)</span>
+                    <span>
+                      {lang === "vi"
+                        ? "10:00 – 22:30 (Mở cửa tất cả các ngày trong tuần)"
+                        : "10:00 AM – 10:30 PM (Open everyday)"}
+                    </span>
                   </div>
                 </li>
                 <li>
                   <Phone className="longhoi-info-icon" />
                   <div>
-                    <strong>Hotline / Đặt hàng:</strong>
+                    <strong>{lang === "vi" ? "Hotline / Đặt hàng:" : "Hotline / Orders:"}</strong>
                     <a href="tel:0835116866" style={{ color: "#d97706", fontWeight: "700" }}>
                       083 511 68 66
                     </a>
@@ -362,7 +444,7 @@ export default function BanhMiLongHoiPage() {
                 </a>
                 <a href="tel:0835116866" className="longhoi-btn longhoi-btn--secondary">
                   <Phone size={16} />
-                  <span>{lang === "vi" ? "Gọi 083 511 68 66" : "Call Now"}</span>
+                  <span>{lang === "vi" ? "Gọi 083 511 68 66" : "Call 083 511 68 66"}</span>
                 </a>
               </div>
             </div>
@@ -382,9 +464,13 @@ export default function BanhMiLongHoiPage() {
           </div>
         </section>
 
-        {/* ── RELATED TRAVEL GUIDES ── */}
+        {/* ── RELATED TRAVEL GUIDES (FIXED WORKING IMAGES) ── */}
         <section className="longhoi-related">
-          <h3>{lang === "vi" ? "Cẩm nang ẩm thực liên quan" : "Related Culinary Guides"}</h3>
+          <h3>
+            {lang === "vi"
+              ? "Cẩm nang ẩm thực & du lịch liên quan"
+              : "Related Culinary & Travel Guides"}
+          </h3>
           <div className="longhoi-related-grid">
             <Link href="/guide/8-must-try-foods-in-hanoi" className="longhoi-related-card">
               <img
@@ -392,7 +478,9 @@ export default function BanhMiLongHoiPage() {
                 alt="8 món ăn phải thử tại Hà Nội"
               />
               <div className="longhoi-related-content">
-                <span className="longhoi-related-tag">Hà Nội</span>
+                <span className="longhoi-related-tag">
+                  {lang === "vi" ? "Ẩm thực Hà Nội" : "Hanoi Food"}
+                </span>
                 <h4>
                   {lang === "vi"
                     ? "8 món ăn nhất định phải thử tại Hà Nội"
@@ -402,9 +490,14 @@ export default function BanhMiLongHoiPage() {
             </Link>
 
             <Link href="/province/ha-noi" className="longhoi-related-card">
-              <img src="/guide/hanoi/hanoi-banner-hd.jpg" alt="Cẩm nang du lịch Hà Nội" />
+              <img
+                src="/guide/hanoi/hanoi-hero-hd.jpg"
+                alt="Cẩm nang du lịch Hà Nội"
+              />
               <div className="longhoi-related-content">
-                <span className="longhoi-related-tag">Điểm đến</span>
+                <span className="longhoi-related-tag">
+                  {lang === "vi" ? "Điểm đến" : "Destination"}
+                </span>
                 <h4>
                   {lang === "vi"
                     ? "Cẩm nang du lịch Hà Nội từ A – Z"
@@ -414,9 +507,14 @@ export default function BanhMiLongHoiPage() {
             </Link>
 
             <Link href="/province/hoi-an" className="longhoi-related-card">
-              <img src="/guide/hoi-an/hero-hoi-an-lanterns.jpg" alt="Khám phá phố cổ Hội An" />
+              <img
+                src="/guide/15-best-places/place-2-hoi-an.jpg"
+                alt="Khám phá phố cổ Hội An"
+              />
               <div className="longhoi-related-content">
-                <span className="longhoi-related-tag">Hội An</span>
+                <span className="longhoi-related-tag">
+                  {lang === "vi" ? "Phố Cổ Hội An" : "Hoi An Town"}
+                </span>
                 <h4>
                   {lang === "vi"
                     ? "Khám phá vẻ đẹp di sản Phố Cổ Hội An"
