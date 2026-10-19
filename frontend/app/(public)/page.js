@@ -220,15 +220,15 @@ const TOP_DESTINATIONS_DATA = [
   },
   {
     id: "nha-trang",
-    name: "Nha Trang (Khanh Hoa)",
-    nameVi: "Nha Trang (Khánh Hòa)",
+    name: "Nha Trang",
+    nameVi: "Nha Trang",
     img: "/guide/nha-trang/nhatrang-hero-hd.jpg",
     link: "/province/nha-trang",
   },
   {
     id: "dalat",
-    name: "Da Lat (Lam Dong)",
-    nameVi: "Đà Lạt (Lâm Đồng)",
+    name: "Da Lat",
+    nameVi: "Đà Lạt",
     img: "/guide/dalat/dalat-hero-hd.jpg",
     link: "/province/dalat",
   },
@@ -248,192 +248,11 @@ const TOP_DESTINATIONS_DATA = [
     link: "/province/sapa",
   },
   {
-    id: "hai-phong",
-    name: "Hai Phong (Cat Ba)",
-    nameVi: "Hải Phòng (Cát Bà)",
-    img: "/provinces/hai-phong.jpg",
-    link: "/province/hai-phong",
-  },
-  {
     id: "ha-giang",
     name: "Ha Giang",
     nameVi: "Hà Giang",
     img: "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&auto=format&fit=crop&q=80",
     link: "/province/ha-giang",
-  },
-  // Trang 4: Miền Tây sông nước & Đất Mũi
-  {
-    id: "can-tho",
-    name: "Can Tho (Floating Market)",
-    nameVi: "Cần Thơ (Chợ Nổi)",
-    img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&auto=format&fit=crop&q=80",
-    link: "/province/can-tho",
-  },
-  {
-    id: "an-giang",
-    name: "An Giang (Tra Su Forest)",
-    nameVi: "An Giang (Trà Sư)",
-    img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&auto=format&fit=crop&q=60",
-    link: "/province/an-giang",
-  },
-  {
-    id: "ca-mau",
-    name: "Ca Mau (Cape)",
-    nameVi: "Cà Mau (Đất Mũi)",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
-    link: "/province/ca-mau",
-  },
-  {
-    id: "phu-tho",
-    name: "Phu Tho (Hung King Temple)",
-    nameVi: "Phú Thọ (Đền Hùng)",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
-    link: "/province/phu-tho",
-  },
-  // Trang 5: Hùng vĩ Tây Bắc - Đông Bắc
-  {
-    id: "cao-bang",
-    name: "Cao Bang (Ban Gioc Waterfall)",
-    nameVi: "Cao Bằng (Bản Giốc)",
-    img: "https://images.unsplash.com/photo-1528127269322-539801943592?w=800&auto=format&fit=crop&q=80",
-    link: "/province/cao-bang",
-  },
-  {
-    id: "dien-bien",
-    name: "Dien Bien",
-    nameVi: "Điện Biên",
-    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&auto=format&fit=crop&q=80",
-    link: "/province/dien-bien",
-  },
-  {
-    id: "lai-chau",
-    name: "Lai Chau (O Quy Ho Pass)",
-    nameVi: "Lai Châu (Ô Quy Hồ)",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
-    link: "/province/lai-chau",
-  },
-  {
-    id: "son-la",
-    name: "Son La (Moc Chau)",
-    nameVi: "Sơn La (Mộc Châu)",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
-    link: "/province/son-la",
-  },
-  // Trang 6: Đại ngàn Tây Nguyên & Đông Nam Bộ
-  {
-    id: "dak-lak",
-    name: "Dak Lak (Buon Ma Thuot)",
-    nameVi: "Đắk Lắk (Buôn Ma Thuột)",
-    img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800&auto=format&fit=crop&q=80",
-    link: "/province/dak-lak",
-  },
-  {
-    id: "gia-lai",
-    name: "Gia Lai (Pleiku)",
-    nameVi: "Gia Lai (Biển Hồ)",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
-    link: "/province/gia-lai",
-  },
-  {
-    id: "tay-ninh",
-    name: "Tay Ninh (Ba Den Mountain)",
-    nameVi: "Tây Ninh (Núi Bà Đen)",
-    img: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop&q=80",
-    link: "/province/tay-ninh",
-  },
-  {
-    id: "dong-nai",
-    name: "Dong Nai (Cat Tien)",
-    nameVi: "Đồng Nai (Nam Cát Tiên)",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
-    link: "/province/dong-nai",
-  },
-  // Trang 7: Duyên hải Miền Trung hào khí
-  {
-    id: "nghe-an",
-    name: "Nghe An (Cua Lo)",
-    nameVi: "Nghệ An (Cửa Lò)",
-    img: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=800&auto=format&fit=crop&q=80",
-    link: "/province/nghe-an",
-  },
-  {
-    id: "ha-tinh",
-    name: "Ha Tinh",
-    nameVi: "Hà Tĩnh",
-    img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800&auto=format&fit=crop&q=80",
-    link: "/province/ha-tinh",
-  },
-  {
-    id: "quang-tri",
-    name: "Quang Tri",
-    nameVi: "Quảng Trị",
-    img: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop&q=80",
-    link: "/province/quang-tri",
-  },
-  {
-    id: "quang-ngai",
-    name: "Quang Ngai (Ly Son)",
-    nameVi: "Quảng Ngãi (Lý Sơn)",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
-    link: "/province/quang-ngai",
-  },
-  // Trang 8: Vùng đồng bằng & văn hóa Bắc Bộ
-  {
-    id: "thanh-hoa",
-    name: "Thanh Hoa (Pu Luong)",
-    nameVi: "Thanh Hóa (Pù Luông)",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80",
-    link: "/province/thanh-hoa",
-  },
-  {
-    id: "bac-ninh",
-    name: "Bac Ninh (Quan Ho)",
-    nameVi: "Bắc Ninh (Quan Họ)",
-    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&auto=format&fit=crop&q=80",
-    link: "/province/bac-ninh",
-  },
-  {
-    id: "hung-yen",
-    name: "Hung Yen (Pho Hien)",
-    nameVi: "Hưng Yên (Phố Hiến)",
-    img: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&auto=format&fit=crop&q=80",
-    link: "/province/hung-yen",
-  },
-  {
-    id: "thai-nguyen",
-    name: "Thai Nguyen (Tea Hills)",
-    nameVi: "Thái Nguyên (Đồi Chè)",
-    img: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=800&auto=format&fit=crop&q=80",
-    link: "/province/thai-nguyen",
-  },
-  // Trang 9: Miền biên cương & Đồng bằng Nam Bộ
-  {
-    id: "lang-son",
-    name: "Lang Son (Mau Son)",
-    nameVi: "Lạng Sơn (Mẫu Sơn)",
-    img: "https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?w=800&auto=format&fit=crop&q=80",
-    link: "/province/lang-son",
-  },
-  {
-    id: "tuyen-quang",
-    name: "Tuyen Quang (Na Hang Lake)",
-    nameVi: "Tuyên Quang (Na Hang)",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
-    link: "/province/tuyen-quang",
-  },
-  {
-    id: "dong-thap",
-    name: "Dong Thap (Sa Dec Flower)",
-    nameVi: "Đồng Tháp (Sa Đéc)",
-    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80",
-    link: "/province/dong-thap",
-  },
-  {
-    id: "vinh-long",
-    name: "Vinh Long (Orchards)",
-    nameVi: "Vĩnh Long (Miệt Vườn)",
-    img: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=800&auto=format&fit=crop&q=80",
-    link: "/province/vinh-long",
   },
 ];
 
@@ -1557,51 +1376,10 @@ export default function HomePage() {
   };
 
   // Kết hợp toàn bộ tỉnh thành có trong hệ thống (API backend + danh sách chuẩn), loại trừ Hoàng Sa & Trường Sa khỏi mục Điểm đến
+  // Danh sách các điểm đến hàng đầu (chỉ hiển thị 11 điểm đến trọng điểm có cẩm nang đầy đủ)
   const allTopDestinations = useMemo(() => {
-    const isExcluded = (item) => {
-      if (!item) return false;
-      const slug = (item.slug || item.id || "").toLowerCase().trim();
-      const name = (item.name || "").toLowerCase().trim();
-      const nameVi = (item.nameVi || "").toLowerCase().trim();
-      return (
-        slug.includes("hoang-sa") ||
-        slug.includes("truong-sa") ||
-        name.includes("hoang sa") ||
-        name.includes("truong sa") ||
-        nameVi.includes("hoàng sa") ||
-        nameVi.includes("trường sa")
-      );
-    };
-
-    const cleanBaseData = TOP_DESTINATIONS_DATA.filter((d) => !isExcluded(d));
-    if (!provinces || provinces.length === 0) return cleanBaseData;
-
-    const seen = {};
-    const result = [];
-    // Ưu tiên danh sách chuẩn với ảnh đẹp & tên chuẩn hóa
-    cleanBaseData.forEach((d) => {
-      const key = d.id || d.slug;
-      if (!seen[key]) {
-        seen[key] = true;
-        result.push(d);
-      }
-    });
-    // Bổ sung thêm bất kỳ tỉnh thành nào từ backend nếu chưa có (loại trừ Hoàng Sa, Trường Sa)
-    provinces.forEach((p) => {
-      const slug = p.slug;
-      if (!isExcluded(p) && !seen[slug]) {
-        seen[slug] = true;
-        result.push({
-          id: slug,
-          name: getProvinceName(p, "en") || p.name,
-          nameVi: p.name,
-          img: getProvinceCover(p) || p.thumbnail_url || "/guide/hcmc/top-dest-hcmc.jpg",
-          link: `/province/${slug}`,
-        });
-      }
-    });
-    return result;
-  }, [provinces]);
+    return TOP_DESTINATIONS_DATA;
+  }, []);
 
   const DEST_PAGE_SIZE = 4;
   const totalDestPages = Math.max(1, Math.ceil(allTopDestinations.length / DEST_PAGE_SIZE));
