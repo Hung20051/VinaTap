@@ -22,6 +22,14 @@ export const metadata = {
     "Da Nang Hoi An guide",
     "Ha Long Bay cruise",
   ],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/icon-192.png", sizes: "192x192", type: "image/png" }],
+  },
   alternates: {
     canonical: "https://www.vinatap.io.vn",
   },
@@ -47,7 +55,6 @@ export const metadata = {
     follow: true,
   },
 };
-
 
 export default function RootLayout({ children }) {
   return (
