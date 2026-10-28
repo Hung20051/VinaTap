@@ -5,6 +5,8 @@ import Link from "next/link";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NHATRANG_DALAT_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   MapPin,
@@ -649,6 +651,24 @@ export default function NhaTrangPage() {
                 </div>
               ))}
             </div>
+
+            <div style={{ marginTop: "24px", display: "grid", gap: "16px" }}>
+              <AffiliateDealBox
+                deal={NHATRANG_DALAT_AFFILIATE_DEALS.vinWondersNhaTrang}
+                lang={lang}
+                slug="province/nha-trang"
+              />
+              <AffiliateDealBox
+                deal={NHATRANG_DALAT_AFFILIATE_DEALS.nhaTrangIslandTour}
+                lang={lang}
+                slug="province/nha-trang"
+              />
+              <AffiliateDealBox
+                deal={NHATRANG_DALAT_AFFILIATE_DEALS.nhaTrangMudBath}
+                lang={lang}
+                slug="province/nha-trang"
+              />
+            </div>
           </section>
 
           {/* Section 6: Must-Try Dishes */}
@@ -733,6 +753,14 @@ export default function NhaTrangPage() {
                   : "Vibrant neighborhood filled with boutique hotels, cozy homestays, bars, cafes, and massage parlors, all within a 5-minute stroll to the beach."}
               </li>
             </ul>
+
+            <div style={{ marginTop: "20px" }}>
+              <AffiliateDealBox
+                deal={NHATRANG_DALAT_AFFILIATE_DEALS.nhaTrangBeachHotels}
+                lang={lang}
+                slug="province/nha-trang"
+              />
+            </div>
           </section>
 
           {/* ── Related Guides ── */}

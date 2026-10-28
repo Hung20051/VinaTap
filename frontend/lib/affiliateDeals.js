@@ -216,4 +216,105 @@ export const DANANG_HOIAN_AFFILIATE_DEALS = {
   },
 };
 
+export const NHATRANG_DALAT_AFFILIATE_DEALS = {
+  // Reused from Step 1: Khách sạn & Resort Đường Trần Phú Nha Trang (Traveloka)
+  nhaTrangBeachHotels: {
+    url: "https://shorten.asia/ZhYvD3zu",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Biển Trần Phú & Hòn Tre",
+    badgeEn: "Tran Phu Beachfront",
+    title: "Top Khách Sạn 5 Sao Mặt Biển Trần Phú & Khu Nghỉ Dưỡng Đảo Hòn Tre Nha Trang",
+    titleEn: "Top 5-Star Beachfront Hotels on Tran Phu Boulevard & Hon Tre Island Resorts",
+    note: "Tầm nhìn trực diện Vịnh Nha Trang đẹp nhất thế giới • Hồ bơi vô cực, bãi tắm riêng & gần chợ đêm",
+    noteEn: "Direct panoramic views of Nha Trang Bay • Rooftop infinity pools, private beaches & steps from the Night Market",
+    ctaText: "Xem khách sạn biển Nha Trang",
+    ctaTextEn: "Check Nha Trang Beach Hotels",
+  },
+  // Link 1 (Nha Trang - Dalat Batch): Khách sạn, Homestay & Resort Đà Lạt (Traveloka)
+  dalatHotels: {
+    url: "https://shorten.asia/Y1ySMZzn",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Đồi Thông & Hồ Tuyền Lâm",
+    badgeEn: "Pine Hill & Lakeside Stays",
+    title: "Tuyển Tập Khách Sạn Trung Tâm Chợ Đêm, Villa Đồi Thông & Resort Hồ Tuyền Lâm Đà Lạt",
+    titleEn: "Top Boutique Hotels Near Dalat Night Market, Pine-Forest Villas & Tuyen Lam Lake Resorts",
+    note: "Không gian lãng mạn giữa sương mù thông reo • Đi bộ ra Hồ Xuân Hương hoặc nghỉ dưỡng biệt lập chuẩn Châu Âu",
+    noteEn: "Romantic misty pine-forest views • Walkable to Xuan Huong Lake or tranquil European-style lakeside retreats",
+    ctaText: "Xem khách sạn & Villa Đà Lạt",
+    ctaTextEn: "Check Dalat Hotels & Villas",
+  },
+  // Link 2 (Nha Trang - Dalat Batch): Vé VinWonders Nha Trang - Hòn Tre (Klook)
+  vinWondersNhaTrang: {
+    url: "https://shorten.asia/U8k77AuF",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Vé Vào Cửa Trực Tiếp QR",
+    badgeEn: "#1 Nha Trang Theme Park",
+    title: "Vé Cáp Treo Vượt Biển & Công Viên Giải Trí VinWonders Nha Trang – Đảo Hòn Tre",
+    titleEn: "VinWonders Nha Trang Theme Park & Sea-Crossing Cable Car Ticket (Direct QR Entry)",
+    note: "Trọn gói cáp treo vượt biển, công viên nước vịnh phao nổi lớn nhất thế giới, Thủy cung, Bánh xe bầu trời & Tata Show",
+    noteEn: "Includes round-trip sea cable car, floating water park, aquarium, Sky Wheel & spectacular evening Tata Show",
+    ctaText: "Đặt vé VinWonders Nha Trang",
+    ctaTextEn: "Book VinWonders Tickets",
+  },
+  // Link 3 (Nha Trang - Dalat Batch): Tour 3 Đảo & Lặn Ngắm San Hô Nha Trang (Klook)
+  nhaTrangIslandTour: {
+    url: "https://shorten.asia/kX5YeMe7",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Tour Biển Đảo Bán Chạy",
+    badgeEn: "Island Hopping & Snorkeling",
+    title: "Tour Cano Khám Phá 3 Đảo Nha Trang: Hòn Mun – Làng Chài – Hòn Tằm & Lặn Ngắm San Hô",
+    titleEn: "Nha Trang 3-Island Speedboat Tour: Hon Mun Snorkeling, Fishing Village & Hon Tam",
+    note: "Xe đón tận khách sạn • Cano cao tốc lướt vịnh, lặn biển ngắm rạn san hô Hòn Mun, ăn trưa hải sản & tắm bùn đảo Hòn Tằm",
+    noteEn: "Hotel pickup included • Speedboat island hopping, coral reef snorkeling, fresh seafood lunch & Hon Tam mud bath",
+    ctaText: "Đặt Tour 3 Đảo Nha Trang",
+    ctaTextEn: "Book 3-Island Hopping Tour",
+  },
+  // Link 4 (Nha Trang - Dalat Batch): Vé Tắm Bùn Khoáng Nóng I-Resort / Tháp Bà Nha Trang (Klook)
+  nhaTrangMudBath: {
+    url: "https://shorten.asia/sQG1VSZt",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Đặc Sản Nghỉ Dưỡng Nha Trang",
+    badgeEn: "Mineral Mud Bath & Spa",
+    title: "Vé Tắm Bùn Khoáng Nóng I-Resort / Tháp Bà Nha Trang & Ngâm Thảo Dược Thư Giãn",
+    titleEn: "I-Resort / Thap Ba Hot Mineral Mud Bath & Herbal Hydrotherapy Ticket in Nha Trang",
+    note: "Trải nghiệm đặc trưng nhất Nha Trang ngay gần Tháp Bà Ponagar • Ngâm bùn khoáng thiên nhiên, ôn tuyền thủy liệu pháp & hồ bơi khoáng ấm",
+    noteEn: "Nha Trang's signature wellness experience near Po Nagar Towers • Natural hot mineral mud, waterfall massage & warm mineral pools",
+    ctaText: "Đặt vé Tắm bùn khoáng",
+    ctaTextEn: "Book Hot Mineral Mud Bath",
+  },
+  // Link 5 (Nha Trang - Dalat Batch): Vé Xe Trượt Thác Datanla / Cáp Treo Đà Lạt (Klook)
+  datanlaAlpineCoaster: {
+    url: "https://shorten.asia/skXnHvpY",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Trải Nghiệm Số 1 Đà Lạt",
+    badgeEn: "Longest Alpine Coaster in Asia",
+    title: "Vé Xe Trượt Thác Datanla Đà Lạt (New Alpine Coaster 2.400m) & Cáp Treo Đồi Robin",
+    titleEn: "Datanla Waterfall New Alpine Coaster (2,400m) & Robin Hill Cable Car Ticket in Dalat",
+    note: "Hệ thống máng trượt xuyên rừng thông dài nhất Đông Nam Á • Quét mã QR đổi vé nhanh không cần xếp hàng chờ đợi",
+    noteEn: "Ride Southeast Asia's longest 2,400m pine-forest roller coaster • Instant QR voucher redemption",
+    ctaText: "Đặt vé Xe trượt Datanla",
+    ctaTextEn: "Book Datanla Alpine Coaster",
+  },
+  // Link 6 (Nha Trang - Dalat Batch): Vé Khu Du Lịch Langbiang / Săn Mây Cầu Đất Đà Lạt (Klook)
+  langbiangAndCloudHunting: {
+    url: "https://shorten.asia/tEbC7g2D",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Nóc Nhà Cao Nguyên Lâm Viên",
+    badgeEn: "Highland Adventure & Cloud Hunting",
+    title: "Vé Tham Quan Núi Langbiang, Nông Trại Puppy Farm & Tour Săn Mây Đồi Chè Cầu Đất Đà Lạt",
+    titleEn: "Langbiang Mountain Jeep Tour, Puppy Farm & Cau Dat Sunrise Cloud-Hunting Experience",
+    note: "Chinh phục đỉnh الرادار bằng xe Jeep ngắm toàn cảnh Suối Vàng – Suối Bạc và đón bình minh biển mây bồng bềnh",
+    noteEn: "Conquer Radar Peak by Jeep for sweeping views of Golden Stream & catch breathtaking sunrise cloud seas at Cau Dat Tea Hill",
+    ctaText: "Đặt vé Langbiang & Tour Đà Lạt",
+    ctaTextEn: "Book Langbiang & Cloud Tour",
+  },
+};
+
 

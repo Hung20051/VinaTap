@@ -7,6 +7,8 @@ import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NHATRANG_DALAT_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   ChevronDown,
@@ -939,6 +941,19 @@ export default function DalatPage() {
               </div>
             </Link>
           </div>
+
+          <div style={{ marginTop: "24px", display: "grid", gap: "16px" }}>
+            <AffiliateDealBox
+              deal={NHATRANG_DALAT_AFFILIATE_DEALS.datanlaAlpineCoaster}
+              lang={lang}
+              slug="province/dalat"
+            />
+            <AffiliateDealBox
+              deal={NHATRANG_DALAT_AFFILIATE_DEALS.langbiangAndCloudHunting}
+              lang={lang}
+              slug="province/dalat"
+            />
+          </div>
         </section>
 
         {/* ─── 7. WHERE TO STAY IN DALAT (SCREENSHOT 1) ─── */}
@@ -1032,6 +1047,14 @@ export default function DalatPage() {
                 </h3>
               </div>
             </div>
+          </div>
+
+          <div style={{ marginTop: "24px" }}>
+            <AffiliateDealBox
+              deal={NHATRANG_DALAT_AFFILIATE_DEALS.dalatHotels}
+              lang={lang}
+              slug="province/dalat"
+            />
           </div>
         </section>
 

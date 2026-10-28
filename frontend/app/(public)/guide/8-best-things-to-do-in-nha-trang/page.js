@@ -6,6 +6,8 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NHATRANG_DALAT_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import NavbarAuthButton from "@/components/ui/NavbarAuthButton";
 import { getLang } from "@/lib/prefs";
 import {
@@ -392,6 +394,35 @@ export default function EightBestThingsNhaTrangPage() {
                     (p, pIdx) => (
                       <p key={pIdx}>{renderInlineContent(p, isVi)}</p>
                     )
+                  )}
+
+                  {item.id === "item-1" && (
+                    <AffiliateDealBox
+                      deal={NHATRANG_DALAT_AFFILIATE_DEALS.nhaTrangIslandTour}
+                      lang={lang}
+                      slug="8-best-things-to-do-in-nha-trang"
+                    />
+                  )}
+                  {item.id === "item-5" && (
+                    <AffiliateDealBox
+                      deal={NHATRANG_DALAT_AFFILIATE_DEALS.nhaTrangMudBath}
+                      lang={lang}
+                      slug="8-best-things-to-do-in-nha-trang"
+                    />
+                  )}
+                  {item.id === "item-7" && (
+                    <AffiliateDealBox
+                      deal={NHATRANG_DALAT_AFFILIATE_DEALS.vinWondersNhaTrang}
+                      lang={lang}
+                      slug="8-best-things-to-do-in-nha-trang"
+                    />
+                  )}
+                  {item.id === "item-8" && (
+                    <AffiliateDealBox
+                      deal={NHATRANG_DALAT_AFFILIATE_DEALS.nhaTrangBeachHotels}
+                      lang={lang}
+                      slug="8-best-things-to-do-in-nha-trang"
+                    />
                   )}
                 </div>
               </div>

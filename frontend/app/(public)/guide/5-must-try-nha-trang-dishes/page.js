@@ -6,6 +6,8 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NHATRANG_DALAT_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import { ChevronDown, Sparkles } from "lucide-react";
 import "@/styles/home.css";
@@ -382,6 +384,25 @@ export default function NhaTrangFoodGuidePage() {
             ? "Các đề xuất nhà hàng chỉ dựa trên trải nghiệm của tác giả; giá cả thực tế có thể thay đổi tùy thời điểm."
             : "Restaurant recommendations are only suggestions based on the authors' experiences; prices may vary."}
         </p>
+
+        {/* ── Nha Trang Affiliate Deals ── */}
+        <div style={{ margin: "28px 0 36px", display: "grid", gap: "16px" }}>
+          <AffiliateDealBox
+            deal={NHATRANG_DALAT_AFFILIATE_DEALS.nhaTrangBeachHotels}
+            lang={lang}
+            slug="5-must-try-nha-trang-dishes"
+          />
+          <AffiliateDealBox
+            deal={NHATRANG_DALAT_AFFILIATE_DEALS.nhaTrangIslandTour}
+            lang={lang}
+            slug="5-must-try-nha-trang-dishes"
+          />
+          <AffiliateDealBox
+            deal={NHATRANG_DALAT_AFFILIATE_DEALS.vinWondersNhaTrang}
+            lang={lang}
+            slug="5-must-try-nha-trang-dishes"
+          />
+        </div>
 
         {/* ── Tags (Image 2) ── */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "24px 0 40px", flexWrap: "wrap" }}>

@@ -6,6 +6,8 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NHATRANG_DALAT_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import { Sparkles, MapPin } from "lucide-react";
 import "@/styles/home.css";
@@ -756,6 +758,35 @@ export default function Dalat15AttractionsPage() {
                       </span>
                     </p>
                   )}
+
+                  {item.id === "dalat-night-market" && (
+                    <AffiliateDealBox
+                      deal={NHATRANG_DALAT_AFFILIATE_DEALS.dalatHotels}
+                      lang={lang}
+                      slug="the-15-best-attractions-in-dalat"
+                    />
+                  )}
+                  {item.id === "truc-lam-zen-monastery" && (
+                    <AffiliateDealBox
+                      deal={NHATRANG_DALAT_AFFILIATE_DEALS.datanlaAlpineCoaster}
+                      lang={lang}
+                      slug="the-15-best-attractions-in-dalat"
+                    />
+                  )}
+                  {item.id === "datanla-waterfall" && (
+                    <AffiliateDealBox
+                      deal={NHATRANG_DALAT_AFFILIATE_DEALS.datanlaAlpineCoaster}
+                      lang={lang}
+                      slug="the-15-best-attractions-in-dalat"
+                    />
+                  )}
+                  {item.id === "langbiang-mountain" && (
+                    <AffiliateDealBox
+                      deal={NHATRANG_DALAT_AFFILIATE_DEALS.langbiangAndCloudHunting}
+                      lang={lang}
+                      slug="the-15-best-attractions-in-dalat"
+                    />
+                  )}
                 </div>
               </div>
             </article>
@@ -781,6 +812,20 @@ export default function Dalat15AttractionsPage() {
             ? "Note: Giá vé và thông tin tham quan có thể thay đổi tùy theo mùa vụ và thời điểm thực tế."
             : "Note: Admission fees and operating hours may vary depending on the season and local regulations."}
         </p>
+
+        {/* ── Dalat Closing Affiliate Deals ── */}
+        <div style={{ margin: "28px 0 36px", display: "grid", gap: "16px" }}>
+          <AffiliateDealBox
+            deal={NHATRANG_DALAT_AFFILIATE_DEALS.dalatHotels}
+            lang={lang}
+            slug="the-15-best-attractions-in-dalat"
+          />
+          <AffiliateDealBox
+            deal={NHATRANG_DALAT_AFFILIATE_DEALS.langbiangAndCloudHunting}
+            lang={lang}
+            slug="the-15-best-attractions-in-dalat"
+          />
+        </div>
 
         {/* ── Tags ── */}
         <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "24px 0 40px", flexWrap: "wrap" }}>
