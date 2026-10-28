@@ -91,3 +91,4 @@ export default function sitemap() {
 
   return [homeEntry, ...guideEntries, ...provinceEntries];
 }
+

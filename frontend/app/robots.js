@@ -11,3 +11,4 @@ export default function robots() {
     host: "https://www.vinatap.io.vn",
   };
 }
+
