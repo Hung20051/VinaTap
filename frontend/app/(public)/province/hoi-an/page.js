@@ -7,6 +7,8 @@ import { getLang } from "@/lib/prefs";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { DANANG_HOIAN_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import {
   ChevronDown,
   ChevronRight,
@@ -893,6 +895,11 @@ export default function HoiAnPage() {
                       : "A scenic coastal road connects My Khe beach to An Bang beach and Hoi An."}
                   </li>
                 </ul>
+                <AffiliateDealBox
+                  deal={DANANG_HOIAN_AFFILIATE_DEALS.danangAirportTransfer}
+                  lang={lang}
+                  slug="province/hoi-an"
+                />
               </div>
 
               <div className="vnn-hoian-guide-subblock">
@@ -1011,6 +1018,19 @@ export default function HoiAnPage() {
             {/* Placeholder 2 (Right Bottom) */}
             <div className="vnn-hoian-placeholder-card" />
           </div>
+
+          <div style={{ marginTop: "24px", display: "grid", gap: "16px" }}>
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.coconutBasketBoat}
+              lang={lang}
+              slug="province/hoi-an"
+            />
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHillsTicket}
+              lang={lang}
+              slug="province/hoi-an"
+            />
+          </div>
         </section>
 
         {/* ─── 7. WHERE TO STAY IN HOI AN (SCREENSHOT 4) ─── */}
@@ -1052,6 +1072,14 @@ export default function HoiAnPage() {
             </div>
             <div className="vnn-hoian-stay-placeholder" />
             <div className="vnn-hoian-stay-placeholder" />
+          </div>
+
+          <div style={{ marginTop: "24px" }}>
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.hoianBoutiqueHotels}
+              lang={lang}
+              slug="province/hoi-an"
+            />
           </div>
         </section>
 
@@ -1153,6 +1181,14 @@ export default function HoiAnPage() {
                 </h3>
               </div>
             </div>
+          </div>
+
+          <div style={{ marginTop: "24px" }}>
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.culinaryAndMemoriesShow}
+              lang={lang}
+              slug="province/hoi-an"
+            />
           </div>
         </section>
 

@@ -5,6 +5,8 @@ import Link from "next/link";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { DANANG_HOIAN_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Compass,
@@ -490,6 +492,43 @@ export default function DaNangAttractionsPage() {
                     <strong>{isVi ? "Mẹo du lịch VinaTap: " : "Travel Tip: "}</strong>
                     <span>{isVi ? att.tipVi : att.tipEn}</span>
                   </div>
+
+                  {/* Contextual Affiliate Deal Box */}
+                  {att.id === "my-khe-beach" && (
+                    <AffiliateDealBox
+                      deal={DANANG_HOIAN_AFFILIATE_DEALS.danangBeachHotels}
+                      lang={lang}
+                      slug="the-10-best-attractions-in-da-nang"
+                    />
+                  )}
+                  {att.id === "ba-na-hills" && (
+                    <AffiliateDealBox
+                      deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHillsTicket}
+                      lang={lang}
+                      slug="the-10-best-attractions-in-da-nang"
+                    />
+                  )}
+                  {att.id === "son-tra-peninsula" && (
+                    <AffiliateDealBox
+                      deal={DANANG_HOIAN_AFFILIATE_DEALS.danangLuxury5Star}
+                      lang={lang}
+                      slug="the-10-best-attractions-in-da-nang"
+                    />
+                  )}
+                  {att.id === "dragon-bridge" && (
+                    <AffiliateDealBox
+                      deal={DANANG_HOIAN_AFFILIATE_DEALS.hanRiverCruise}
+                      lang={lang}
+                      slug="the-10-best-attractions-in-da-nang"
+                    />
+                  )}
+                  {att.id === "con-market" && (
+                    <AffiliateDealBox
+                      deal={DANANG_HOIAN_AFFILIATE_DEALS.culinaryAndMemoriesShow}
+                      lang={lang}
+                      slug="the-10-best-attractions-in-da-nang"
+                    />
+                  )}
                 </div>
               </div>
             </article>
@@ -521,6 +560,18 @@ export default function DaNangAttractionsPage() {
               ? "Với khoảng cách di chuyển thuận tiện giữa các điểm danh thắng, chuyến du lịch Đà Nẵng 3 ngày 2 đêm hoặc 4 ngày 3 đêm là lý tưởng nhất để bạn kết hợp: tắm biển Mỹ Khê vào sáng sớm, dành 1 ngày trọn vẹn tại Bà Nà Hills, buổi chiều khám phá Bán đảo Sơn Trà & Ngũ Hành Sơn, và dành các buổi tối dạo bờ sông Hàn xem Cầu Rồng phun lửa hay thưởng thức hải sản tại Chợ Cồn. Đừng quên kết hợp một buổi chiều tối ghé thăm Phố cổ Hội An (chỉ cách Đà Nẵng 30km) để ngắm đèn lồng lung linh."
               : "Thanks to compact travel distances, a 3-to-4-day itinerary is ideal for experiencing Da Nang's premier highlights: morning dips at My Khe Beach, a full day at Ba Na Hills and the Golden Bridge, an afternoon conquering Son Tra and Marble Mountains, followed by vibrant evenings sampling street food at Con Market and witnessing Dragon Bridge breathe fire. Consider combining your trip with an evening in neighboring Hoi An Ancient Town (just 30km south) for an unforgettable Central Vietnam holiday."}
           </p>
+          <div style={{ marginTop: "18px", display: "grid", gap: "14px" }}>
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.danangAirportTransfer}
+              lang={lang}
+              slug="the-10-best-attractions-in-da-nang"
+            />
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.coconutBasketBoat}
+              lang={lang}
+              slug="the-10-best-attractions-in-da-nang"
+            />
+          </div>
         </section>
 
         {/* Editorial Tags Row */}

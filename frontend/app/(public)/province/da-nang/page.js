@@ -7,6 +7,8 @@ import { getLang } from "@/lib/prefs";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { DANANG_HOIAN_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import {
   ChevronDown,
   ChevronLeft,
@@ -1181,6 +1183,11 @@ export default function DaNangPage() {
                       : "Renting a motorbike costs 100,000 - 200,000 VND/day, providing total freedom to cruise coastal boulevards and mountain passes."}
                   </li>
                 </ul>
+                <AffiliateDealBox
+                  deal={DANANG_HOIAN_AFFILIATE_DEALS.danangAirportTransfer}
+                  lang={lang}
+                  slug="province/da-nang"
+                />
               </div>
 
               {/* 4. Festivals */}
@@ -1359,6 +1366,19 @@ export default function DaNangPage() {
               </div>
             </div>
           </div>
+
+          <div style={{ marginTop: "24px", display: "grid", gap: "16px" }}>
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHillsTicket}
+              lang={lang}
+              slug="province/da-nang"
+            />
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.hanRiverCruise}
+              lang={lang}
+              slug="province/da-nang"
+            />
+          </div>
         </div>
       </section>
 
@@ -1457,6 +1477,19 @@ export default function DaNangPage() {
                 </h3>
               </div>
             </div>
+          </div>
+
+          <div style={{ marginTop: "24px", display: "grid", gap: "16px" }}>
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.danangBeachHotels}
+              lang={lang}
+              slug="province/da-nang"
+            />
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.danangLuxury5Star}
+              lang={lang}
+              slug="province/da-nang"
+            />
           </div>
         </div>
       </section>
@@ -1569,6 +1602,14 @@ export default function DaNangPage() {
                 </h3>
               </div>
             </div>
+          </div>
+
+          <div style={{ marginTop: "24px" }}>
+            <AffiliateDealBox
+              deal={DANANG_HOIAN_AFFILIATE_DEALS.culinaryAndMemoriesShow}
+              lang={lang}
+              slug="province/da-nang"
+            />
           </div>
         </div>
       </section>
