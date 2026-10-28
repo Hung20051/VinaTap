@@ -6,6 +6,8 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { HCMC_MEKONG_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import { Sparkles } from "lucide-react";
 import "@/styles/home.css";
@@ -689,10 +691,46 @@ export default function MustTryFoodsInHCMCPage() {
                       )}
                     </ul>
                   )}
+
+                  {dish.id === "banh-mi" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonStreetFoodTour}
+                      lang={lang}
+                      slug="12-must-try-foods-in-ho-chi-minh-city"
+                    />
+                  )}
+                  {dish.id === "banh-xeo" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonDinnerCruise}
+                      lang={lang}
+                      slug="12-must-try-foods-in-ho-chi-minh-city"
+                    />
+                  )}
+                  {dish.id === "ca-phe-sua-da" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.d1LuxuryHotels}
+                      lang={lang}
+                      slug="12-must-try-foods-in-ho-chi-minh-city"
+                    />
+                  )}
                 </div>
               </div>
             </article>
           ))}
+        </div>
+
+        {/* ── Saigon Culinary & Stay Deals ── */}
+        <div style={{ margin: "28px 0 32px", display: "grid", gap: "16px" }}>
+          <AffiliateDealBox
+            deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonStreetFoodTour}
+            lang={lang}
+            slug="12-must-try-foods-in-ho-chi-minh-city"
+          />
+          <AffiliateDealBox
+            deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonDinnerCruise}
+            lang={lang}
+            slug="12-must-try-foods-in-ho-chi-minh-city"
+          />
         </div>
 
         {/* ── Closing Paragraph (Screenshot 1 & 2) ── */}

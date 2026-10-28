@@ -7,6 +7,8 @@ import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { HCMC_MEKONG_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   ChevronDown,
@@ -736,6 +738,11 @@ export default function HoChiMinhCityPage() {
                       : "A scenic, budget-friendly ferry ride along the Saigon River from Bach Dang Wharf for just 15,000 VND."}
                   </li>
                 </ul>
+                <AffiliateDealBox
+                  deal={HCMC_MEKONG_AFFILIATE_DEALS.tanSonNhatTransfer}
+                  lang={lang}
+                  slug="province/ho-chi-minh"
+                />
               </div>
 
               <div className="vnn-hcmc-guide-subblock">
@@ -749,6 +756,11 @@ export default function HoChiMinhCityPage() {
                     ? "Quận 1 là lựa chọn hàng đầu cho khách du lịch lần đầu (khu Bến Thành, phố đi bộ Nguyễn Huệ, Đồng Khởi). Nếu yêu thích không gian xanh mát và ẩm thực phong phú, Quận 3 là điểm đến lý tưởng. Khu Thảo Điền (Quận 2 cũ) quy tụ cộng đồng quốc tế với các quán cafe boutique và nhà hàng sang trọng."
                     : "District 1 is the prime choice for first-time visitors seeking walking proximity to top landmarks. District 3 offers tranquil colonial tree-lined boulevards and authentic street eats, while Thao Dien (District 2) provides riverside villas, boutique cafes, and vibrant nightlife."}
                 </p>
+                <AffiliateDealBox
+                  deal={HCMC_MEKONG_AFFILIATE_DEALS.d1LuxuryHotels}
+                  lang={lang}
+                  slug="province/ho-chi-minh"
+                />
               </div>
             </div>
           )}
@@ -866,6 +878,24 @@ export default function HoChiMinhCityPage() {
               </div>
             </Link>
           </div>
+
+          <div style={{ marginTop: "24px", display: "grid", gap: "16px" }}>
+            <AffiliateDealBox
+              deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonHopOnSkydeck}
+              lang={lang}
+              slug="province/ho-chi-minh"
+            />
+            <AffiliateDealBox
+              deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonDinnerCruise}
+              lang={lang}
+              slug="province/ho-chi-minh"
+            />
+            <AffiliateDealBox
+              deal={HCMC_MEKONG_AFFILIATE_DEALS.cuChiMekongTour}
+              lang={lang}
+              slug="province/ho-chi-minh"
+            />
+          </div>
         </section>
 
         {/* ─── 7. MUST-TRY DISHES MOSAIC GRID (SCREENSHOT 4) ─── */}
@@ -956,6 +986,14 @@ export default function HoChiMinhCityPage() {
                 </h3>
               </div>
             </Link>
+          </div>
+
+          <div style={{ marginTop: "24px" }}>
+            <AffiliateDealBox
+              deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonStreetFoodTour}
+              lang={lang}
+              slug="province/ho-chi-minh"
+            />
           </div>
         </section>
 

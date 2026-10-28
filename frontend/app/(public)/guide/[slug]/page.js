@@ -8,6 +8,8 @@ import { useParams, useSearchParams } from "next/navigation";
 import Logo from "@/components/layout/Logo";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { HCMC_MEKONG_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import { articleAPI } from "@/lib/api";
 import { getArticleViews } from "@/lib/articleViews";
@@ -930,6 +932,24 @@ function GuideDetailContent() {
               </article>
             ))}
           </section>
+
+          <section style={{ marginTop: "32px", display: "grid", gap: "16px" }}>
+            <AffiliateDealBox
+              deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonStreetFoodTour}
+              lang={lang}
+              slug={params?.slug || "guide-article"}
+            />
+            <AffiliateDealBox
+              deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonDinnerCruise}
+              lang={lang}
+              slug={params?.slug || "guide-article"}
+            />
+            <AffiliateDealBox
+              deal={HCMC_MEKONG_AFFILIATE_DEALS.d1LuxuryHotels}
+              lang={lang}
+              slug={params?.slug || "guide-article"}
+            />
+          </section>
         </main>
       </div>
     );
@@ -1347,6 +1367,24 @@ function GuideDetailContent() {
               </article>
             );
           })}
+        </section>
+
+        <section style={{ marginTop: "32px", display: "grid", gap: "16px" }}>
+          <AffiliateDealBox
+            deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonStreetFoodTour}
+            lang={lang}
+            slug={params?.slug || "hcmc-guide"}
+          />
+          <AffiliateDealBox
+            deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonHopOnSkydeck}
+            lang={lang}
+            slug={params?.slug || "hcmc-guide"}
+          />
+          <AffiliateDealBox
+            deal={HCMC_MEKONG_AFFILIATE_DEALS.cuChiMekongTour}
+            lang={lang}
+            slug={params?.slug || "hcmc-guide"}
+          />
         </section>
 
         {/* ─── LIÊN KẾT BÀI VIẾT LIÊN QUAN & TỔNG KẾT ──────────────── */}

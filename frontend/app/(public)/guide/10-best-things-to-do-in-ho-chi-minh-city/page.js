@@ -6,6 +6,8 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { HCMC_MEKONG_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import NavbarAuthButton from "@/components/ui/NavbarAuthButton";
 import { getLang } from "@/lib/prefs";
 import {
@@ -491,6 +493,49 @@ export default function TenBestThingsHCMCPage() {
                     <strong>Tip: </strong>
                     {isVi ? item.tipVi : item.tipEn}
                   </p>
+
+                  {item.id === "item-2" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonHopOnSkydeck}
+                      lang={lang}
+                      slug="10-best-things-to-do-in-ho-chi-minh-city"
+                    />
+                  )}
+                  {item.id === "item-3" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonStreetFoodTour}
+                      lang={lang}
+                      slug="10-best-things-to-do-in-ho-chi-minh-city"
+                    />
+                  )}
+                  {item.id === "item-5" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.d1LuxuryHotels}
+                      lang={lang}
+                      slug="10-best-things-to-do-in-ho-chi-minh-city"
+                    />
+                  )}
+                  {item.id === "item-6" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.saigonDinnerCruise}
+                      lang={lang}
+                      slug="10-best-things-to-do-in-ho-chi-minh-city"
+                    />
+                  )}
+                  {item.id === "item-7" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.aoShowAndWaterPuppet}
+                      lang={lang}
+                      slug="10-best-things-to-do-in-ho-chi-minh-city"
+                    />
+                  )}
+                  {item.id === "item-10" && (
+                    <AffiliateDealBox
+                      deal={HCMC_MEKONG_AFFILIATE_DEALS.cuChiMekongTour}
+                      lang={lang}
+                      slug="10-best-things-to-do-in-ho-chi-minh-city"
+                    />
+                  )}
                 </div>
               </div>
             </article>

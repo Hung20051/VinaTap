@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Logo from "@/components/layout/Logo";
 import { useParams, useSearchParams } from "next/navigation";
-import { provinceAPI } from "@/lib/api";
+import { provinceAPI, analyticsAPI } from "@/lib/api";
 import { isLoggedIn, clearAuth, getUser } from "@/lib/auth";
 import Dino404 from "@/components/ui/Dino404";
 import DinoLoader from "@/components/ui/DinoLoader";
@@ -550,6 +550,14 @@ export default function ProvincePage() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mia-affiliate-btn"
+                        onClick={() => {
+                          analyticsAPI.trackAffiliate({
+                            slug: `province/${slug}`,
+                            partner: item.provider || "Klook",
+                            title: item.title,
+                            url: item.affiliateUrl,
+                          });
+                        }}
                       >
                         <span>{item.btnText || "Đặt vé ngay"}</span>
                         <ExternalLink size={15} />
