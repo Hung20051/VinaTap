@@ -10,6 +10,7 @@ import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import { getLang } from "@/lib/prefs";
+import { analyticsAPI } from "@/lib/api";
 import {
   Compass,
   Calendar,
@@ -42,6 +43,240 @@ import {
 import "@/styles/home.css";
 import "@/styles/guide-editorial.css";
 import "@/styles/accommodation-in-vietnam.css";
+
+// ─── AFFILIATE DEALS DATA (ACCOMMODATION IN VIETNAM) ───
+const AFFILIATE_DATA = {
+  // Link 1: Khách sạn Phố Cổ Hà Nội (Traveloka)
+  hanoiHotels: {
+    url: "https://shorten.asia/cAUanM3s",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Thủ Đô Hà Nội",
+    badgeEn: "Hanoi Old Quarter",
+    title: "Top Khách Sạn Boutique & Phố Cổ Hoàn Kiếm – Hồ Tây Hà Nội",
+    titleEn: "Top Boutique & Heritage Hotels in Hanoi Old Quarter & West Lake",
+    note: "Gần Hồ Gươm, phố ẩm thực Tạ Hiện & Nhà Thờ Lớn • Thiết kế Indochine tinh tế, đi bộ ra điểm tham quan",
+    noteEn: "Steps from Hoan Kiem Lake & Old Quarter food streets • Charming Indochine style & walkable location",
+    ctaText: "Xem phòng & Giá tại Hà Nội",
+    ctaTextEn: "Check Hanoi Hotel Rates",
+  },
+  // Link 2: Khách sạn & Resort Biển Đà Nẵng (Traveloka)
+  danangHotels: {
+    url: "https://shorten.asia/GK7FnK71",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Biển Mỹ Khê & Sông Hàn",
+    badgeEn: "Da Nang Beachfront",
+    title: "Khách Sạn 3–5 Sao & Resort Ven Biển Mỹ Khê – Trung Tâm Đà Nẵng",
+    titleEn: "3–5 Star Hotels & Beachfront Resorts in My Khe & Central Da Nang",
+    note: "Tầm nhìn trực diện biển Mỹ Khê hoặc Cầu Rồng • Hồ bơi vô cực tầng thượng, buffet sáng phong phú",
+    noteEn: "Direct ocean views at My Khe Beach or Dragon Bridge • Rooftop infinity pools & generous breakfast",
+    ctaText: "Xem khách sạn Đà Nẵng",
+    ctaTextEn: "Browse Da Nang Hotels",
+  },
+  // Link 3: Khách sạn Boutique & Villa Phố Cổ Hội An (Traveloka)
+  hoianHotels: {
+    url: "https://shorten.asia/BxK17CAK",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Di Sản Phố Cổ",
+    badgeEn: "Hoi An Heritage",
+    title: "Khách Sạn Boutique, Villa Ven Sông Hoài & Resort Biển An Bàng Hội An",
+    titleEn: "Boutique Hotels, Riverside Villas & An Bang Beach Resorts in Hoi An",
+    note: "Không gian đèn lồng cổ kính, hồ bơi giữa đồng lúa Cẩm Thanh • Có xe đạp miễn phí dạo phố cổ",
+    noteEn: "Lantern-lit heritage architecture, paddy-field pools & complimentary bicycles to explore Ancient Town",
+    ctaText: "Xem phòng tại Hội An",
+    ctaTextEn: "View Hoi An Stays",
+  },
+  // Link 4: Resort & Khách sạn Biển Đảo Phú Quốc (Traveloka)
+  phuquocResorts: {
+    url: "https://shorten.asia/AugKAVYH",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Thiên Đường Đảo Ngọc",
+    badgeEn: "Phu Quoc Island",
+    title: "Khu Nghỉ Dưỡng & Resort Ven Biển Đẳng Cấp Tại Đảo Ngọc Phú Quốc",
+    titleEn: "Luxury Beachfront Resorts & Private Villas on Phu Quoc Island",
+    note: "Bãi biển riêng cát trắng mịn tại Bãi Trường, Bãi Khem, Bắc Đảo • Lý tưởng cho gia đình & trăng mật",
+    noteEn: "Private white-sand beaches at Long Beach & Kem Beach • Perfect for family holidays & honeymoons",
+    ctaText: "Khám phá Resort Phú Quốc",
+    ctaTextEn: "Explore Phu Quoc Resorts",
+  },
+  // Link 5: Khách sạn & Resort Vịnh Biển Nha Trang (Traveloka)
+  nhatrangHotels: {
+    url: "https://shorten.asia/ZhYvD3zu",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Vịnh Biển Nha Trang",
+    badgeEn: "Nha Trang Bay",
+    title: "Khách Sạn Mặt Biển Đường Trần Phú & Resort Đảo Hòn Tre Nha Trang",
+    titleEn: "Tran Phu Oceanfront Hotels & Island Resorts in Nha Trang Bay",
+    note: "Bước qua đường là chạm biển Nha Trang • Gần chợ đêm, Tháp Trầm Hương & bến tàu đi đảo",
+    noteEn: "Right across from golden Nha Trang Beach • Close to Night Market, dining hubs & island piers",
+    ctaText: "Xem khách sạn Nha Trang",
+    ctaTextEn: "Check Nha Trang Hotels",
+  },
+  // Link 6: Homestay & Khách sạn View Núi Sa Pa (Traveloka)
+  sapaHomestays: {
+    url: "https://shorten.asia/pEk5WVff",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Săn Mây Tây Bắc",
+    badgeEn: "Sapa Mountain View",
+    title: "Homestay Bản Làng & Khách Sạn View Thung Lũng Mường Hoa – Sa Pa",
+    titleEn: "Mountain Homestays & Cloud-View Hotels in Sapa & Muong Hoa Valley",
+    note: "Thức giấc giữa biển mây và ruộng bậc thang Tả Van, Cát Cát • Không gian ấm cúng, đậm bản sắc vùng cao",
+    noteEn: "Wake up to rolling clouds and terraced rice fields in Ta Van & Cat Cat • Authentic highland hospitality",
+    ctaText: "Xem Homestay & Khách sạn Sa Pa",
+    ctaTextEn: "View Sapa Stays",
+  },
+  // Link 7: Du thuyền ngủ đêm Vịnh Hạ Long (Klook)
+  halongCruise: {
+    url: "https://shorten.asia/g2Gexbj8",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Nghỉ Dưỡng Di Sản",
+    badgeEn: "Luxury Overnight Cruise",
+    title: "Du Thuyền 5 Sao Ngủ Đêm Trên Vịnh Hạ Long & Vịnh Lan Hạ (Trọn Gói)",
+    titleEn: "Ha Long Bay & Lan Ha Bay 5-Star Overnight Cruise Package",
+    note: "Phòng nghỉ ban công riêng giữa kỳ quan thiên nhiên • Bao gồm các bữa ăn hải sản, chèo Kayak & thăm hang động",
+    noteEn: "Private balcony cabin amidst limestone karsts • Includes gourmet meals, kayaking & cave excursions",
+    ctaText: "Đặt Du thuyền Hạ Long",
+    ctaTextEn: "Book Ha Long Cruise",
+  },
+  // Link 8: SIM 4G / eSIM Du lịch Việt Nam (Klook)
+  vietnamSim: {
+    url: "https://shorten.asia/HrFmkCnJ",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Tiện Ích Thiết Yếu",
+    badgeEn: "Travel Essential",
+    title: "SIM 4G / eSIM Du Lịch Việt Nam Tốc Độ Cao (Nhận Ngay Tại Sân Bay)",
+    titleEn: "High-Speed Vietnam 4G SIM Card & eSIM (Airport Pick-up or Instant QR)",
+    note: "Kết nối Internet ngay khi hạ cánh để tra bản đồ, gọi Grab về khách sạn & liên lạc lễ tân 24/7",
+    noteEn: "Instant connectivity upon landing for Google Maps, Grab rides to your hotel & smooth check-in",
+    ctaText: "Đặt SIM / eSIM giá ưu đãi",
+    ctaTextEn: "Get Vietnam SIM / eSIM",
+  },
+  // Tái sử dụng từ trang HCMC: Khách sạn Trung tâm TP.HCM (Traveloka)
+  hcmcHotels: {
+    url: "https://shorten.asia/qjUErQNy",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Trung Tâm Sài Gòn",
+    badgeEn: "Central Saigon",
+    title: "Top Khách Sạn & Căn Hộ Dịch Vụ Trung Tâm Quận 1 & Quận 3 – TP.HCM",
+    titleEn: "Top Central Hotels & Serviced Suites in District 1 & District 3 (HCMC)",
+    note: "Gần Chợ Bến Thành, Phố đi bộ Nguyễn Huệ & Dinh Độc Lập • Thuận tiện di chuyển, ẩm thực & giải trí đêm",
+    noteEn: "Steps from Ben Thanh Market & Nguyen Hue Boulevard • Prime base for dining, shopping & sightseeing",
+    ctaText: "Xem khách sạn TP.HCM",
+    ctaTextEn: "Check HCMC Hotels",
+  },
+  // Tái sử dụng từ trang HCMC: Hostel & Tiết kiệm (Traveloka)
+  budgetHostels: {
+    url: "https://shorten.asia/H2W6WKCF",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Tiết Kiệm & Solo",
+    badgeEn: "Budget & Backpackers",
+    title: "Hệ Thống Hostel, Dormitory & Nhà Nghỉ Tiết Kiệm Hiện Đại",
+    titleEn: "Modern Backpacker Hostels, Capsule Dorms & Budget Guesthouses",
+    note: "Không gian sạch sẽ, an toàn, có tủ khóa cá nhân & khu sinh hoạt chung kết nối bạn bè quốc tế",
+    noteEn: "Clean, secure lockers, air-conditioned pods & vibrant social lounges for solo travelers",
+    ctaText: "Tìm Hostel giá tiết kiệm",
+    ctaTextEn: "Find Budget Hostels",
+  },
+};
+
+function DealBox({ deal, lang }) {
+  if (!deal) return null;
+  const isKlook = deal.partnerType === "klook";
+  const partnerBorderColor = isKlook ? "#ff5722" : "#0194f3";
+
+  const handleDealClick = () => {
+    try {
+      analyticsAPI
+        .trackAffiliate({
+          page_path:
+            typeof window !== "undefined"
+              ? window.location.pathname
+              : "/guide/accommodation-in-vietnam",
+          partner_name: deal.partnerType || deal.partner || "traveloka",
+          destination_url: deal.url,
+          link_title: lang === "vi" ? deal.title : deal.titleEn,
+        })
+        .catch(() => {});
+
+      const current = Number(
+        localStorage.getItem("vinatap_affiliate_clicks") || "0"
+      );
+      localStorage.setItem("vinatap_affiliate_clicks", String(current + 1));
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("vinatap:affiliate-clicked", { detail: deal })
+        );
+      }
+    } catch (e) {
+      console.warn("Affiliate click track error:", e);
+    }
+  };
+
+  return (
+    <div
+      className="guide-affiliate-deal"
+      style={{
+        borderLeftColor: partnerBorderColor,
+        marginTop: "1.25rem",
+      }}
+    >
+      <div className="guide-affiliate-deal__content">
+        <div className="guide-affiliate-deal__top">
+          <div
+            className="guide-affiliate-deal__badge"
+            style={{
+              backgroundColor: partnerBorderColor,
+            }}
+          >
+            <Sparkles size={12} />
+            <span>{lang === "vi" ? deal.badge : deal.badgeEn}</span>
+          </div>
+          <span className="guide-affiliate-deal__partner">
+            {lang === "vi" ? "Đối tác chính thức" : "Official Partner"}:{" "}
+            <strong style={{ color: partnerBorderColor }}>
+              {deal.partner}
+            </strong>
+          </span>
+        </div>
+        <h5 className="guide-affiliate-deal__title">
+          {lang === "vi" ? deal.title : deal.titleEn}
+        </h5>
+        <p className="guide-affiliate-deal__note">
+          {lang === "vi" ? deal.note : deal.noteEn}
+        </p>
+      </div>
+      <div className="guide-affiliate-deal__action">
+        <a
+          href={deal.url}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          onClick={handleDealClick}
+          className="guide-affiliate-deal__cta"
+          style={{
+            background: isKlook
+              ? "linear-gradient(135deg, #ff5722 0%, #ff7043 100%)"
+              : "linear-gradient(135deg, #0194f3 0%, #00b4d8 100%)",
+            boxShadow: isKlook
+              ? "0 4px 14px rgba(255, 87, 34, 0.32)"
+              : "0 4px 14px rgba(1, 148, 243, 0.32)",
+          }}
+        >
+          <span>{lang === "vi" ? deal.ctaText : deal.ctaTextEn}</span>
+          <ExternalLink size={14} />
+        </a>
+      </div>
+    </div>
+  );
+}
 
 // ─── VERIFIED EXISTING RELATED ARTICLES ON VINATAP ───
 const RELATED_ARTICLES = [
@@ -493,6 +728,7 @@ export default function AccommodationInVietnamPage() {
                     ? "💡 Điểm cộng lớn: Khách sạn tại Việt Nam nổi tiếng với tỷ lệ giá trị trên chi phí (value for money) vượt trội so với nhiều quốc gia khác trong khu vực, đặc biệt ở phân khúc 3–5 sao."
                     : "💡 Great value: Vietnam is well known for offering exceptional value compared to many other countries, especially in the mid-range and luxury segments."}
                 </div>
+                <DealBox deal={AFFILIATE_DATA.danangHotels} lang={lang} />
               </div>
             </article>
 
@@ -572,6 +808,7 @@ export default function AccommodationInVietnamPage() {
                     </span>
                   </li>
                 </ul>
+                <DealBox deal={AFFILIATE_DATA.hanoiHotels} lang={lang} />
               </div>
             </article>
 
@@ -640,6 +877,7 @@ export default function AccommodationInVietnamPage() {
                     ? "✨ Dù cơ sở vật chất ở một số bản vùng sâu còn mộc mạc, sự thân thiện, ấm áp và lòng hiếu khách chân tình của chủ nhà luôn để lại ấn tượng sâu đậm trong lòng du khách."
                     : "✨ Facilities are usually simpler in remote villages, but the hospitality is genuinely warm, welcoming, and authentic."}
                 </div>
+                <DealBox deal={AFFILIATE_DATA.sapaHomestays} lang={lang} />
               </div>
             </article>
 
@@ -721,6 +959,7 @@ export default function AccommodationInVietnamPage() {
                     </span>
                   </li>
                 </ul>
+                <DealBox deal={AFFILIATE_DATA.budgetHostels} lang={lang} />
               </div>
             </article>
 
@@ -784,6 +1023,8 @@ export default function AccommodationInVietnamPage() {
                     </span>
                   </li>
                 </ul>
+                <DealBox deal={AFFILIATE_DATA.phuquocResorts} lang={lang} />
+                <DealBox deal={AFFILIATE_DATA.halongCruise} lang={lang} />
               </div>
             </article>
 
@@ -1089,6 +1330,7 @@ export default function AccommodationInVietnamPage() {
                     : "Tranquil atmosphere, spacious lakeside boutique hotels, expat cafes, and serviced apartments."}
                 </li>
               </ul>
+              <DealBox deal={AFFILIATE_DATA.hanoiHotels} lang={lang} />
             </div>
 
             {/* Ho Chi Minh City */}
@@ -1113,6 +1355,7 @@ export default function AccommodationInVietnamPage() {
                     : "District 3 offers quiet leafy boulevards; Thao Dien delivers riverside expat dining and boutique villas."}
                 </li>
               </ul>
+              <DealBox deal={AFFILIATE_DATA.hcmcHotels} lang={lang} />
             </div>
 
             {/* Da Nang & Hoi An */}
@@ -1137,6 +1380,8 @@ export default function AccommodationInVietnamPage() {
                     : "Lantern-lit heritage villas in the ancient town or cozy homestays bordering emerald paddy fields."}
                 </li>
               </ul>
+              <DealBox deal={AFFILIATE_DATA.danangHotels} lang={lang} />
+              <DealBox deal={AFFILIATE_DATA.hoianHotels} lang={lang} />
             </div>
 
             {/* Mountain & Highlands */}
@@ -1161,6 +1406,7 @@ export default function AccommodationInVietnamPage() {
                     : "Colonial French villas or hillside glass cabin homestays perched over misty pine valleys."}
                 </li>
               </ul>
+              <DealBox deal={AFFILIATE_DATA.sapaHomestays} lang={lang} />
             </div>
 
             {/* Beach & Islands */}
@@ -1185,6 +1431,8 @@ export default function AccommodationInVietnamPage() {
                     : "Tran Phu avenue overlooking turquoise Nha Trang Bay and wind-swept boutique beach resorts in Mui Ne."}
                 </li>
               </ul>
+              <DealBox deal={AFFILIATE_DATA.phuquocResorts} lang={lang} />
+              <DealBox deal={AFFILIATE_DATA.nhatrangHotels} lang={lang} />
             </div>
           </div>
         </section>
@@ -1351,6 +1599,7 @@ export default function AccommodationInVietnamPage() {
               </li>
             </ul>
           </div>
+          <DealBox deal={AFFILIATE_DATA.vietnamSim} lang={lang} />
         </section>
 
         {/* Section 7: FAQs */}

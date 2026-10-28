@@ -6,6 +6,8 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { HANOI_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import { Sparkles } from "lucide-react";
 import "@/styles/home.css";
@@ -730,6 +732,11 @@ export default function HanoiFoodGuidePage() {
             </>
           )}
         </p>
+
+        {/* ── Affiliate Deals: Food Tour, Cooking Class & Old Quarter Hotels ── */}
+        <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.streetFoodTour} lang={lang} />
+        <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.cookingAndCoffeeClass} lang={lang} />
+        <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.oldQuarterHotels} lang={lang} />
 
         {/* ── Disclaimer Note ── */}
         <p

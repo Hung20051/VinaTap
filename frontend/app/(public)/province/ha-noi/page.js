@@ -8,6 +8,8 @@ import HeaderSearch from "@/components/ui/HeaderSearch";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import PublicFooter from "@/components/layout/PublicFooter";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { HANOI_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import {
   ChevronDown,
   ChevronLeft,
@@ -820,6 +822,8 @@ export default function HanoiPage() {
             </em>
           </p>
 
+          <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.noiBaiTransfer} lang={lang} />
+
           {/* MOTORBIKES (SCREENSHOT 1) */}
           <h3 className="vnn-hanoi-transport-h3">
             {lang === "vi" ? "Thuê xe máy (Motorbikes)" : "Motorbikes"}
@@ -999,11 +1003,14 @@ export default function HanoiPage() {
             </div>
           </div>
 
-          <p className="vnn-hanoi-editorial-caption" style={{ textAlign: "center", marginBottom: "40px" }}>
+          <p className="vnn-hanoi-editorial-caption" style={{ textAlign: "center", marginBottom: "24px" }}>
             {lang === "vi"
               ? "Gợi ý điểm lưu trú tại Hà Nội | Sách hướng dẫn du lịch Việt Nam"
               : "Recommend places to stay in Hanoi | Vietnam travel guide book"}
           </p>
+
+          <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.oldQuarterHotels} lang={lang} />
+          <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.luxuryWestLakeHotels} lang={lang} />
         </section>
 
         {/* ─── 10. 15 MUST-VISIT ATTRACTIONS IN HANOI (SCREENSHOT 5) ─── */}
@@ -1012,11 +1019,13 @@ export default function HanoiPage() {
             {lang === "vi" ? "15 điểm tham quan phải đến tại Hà Nội" : "15 must-visit attractions in Hanoi"}
           </h2>
 
-          <p style={{ fontStyle: "italic", fontSize: "15px", lineHeight: "1.8", color: "#555", textAlign: "justify", marginBottom: "28px" }}>
+          <p style={{ fontStyle: "italic", fontSize: "15px", lineHeight: "1.8", color: "#555", textAlign: "justify", marginBottom: "20px" }}>
             {lang === "vi"
               ? "Điều tuyệt vời nhất ở Hà Nội là phần lớn các điểm tham quan hấp dẫn đều tập trung ngay tại trung tâm thành phố và các điểm còn lại cũng không nằm quá xa. Khoảng cách hoàn toàn có thể đi bộ, đạp xe hoặc chạy xe máy. Dưới đây là top 15 điểm tham quan không thể bỏ qua được giới thiệu cho bạn."
               : "What is great about Hanoi is that most of the must-see attractions assemble in the city center and the rest does not stretch out too far away. The distances are totally walkable and accessible by bicycle or motorbike. Here are the top 15 must-visit attractions recommended to you."}
           </p>
+
+          <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.hopOnHopOffHanoi} lang={lang} />
 
           {/* ITEM 1: THE THREE LAKES (SCREENSHOT 5) */}
           <div style={{ marginBottom: "44px" }}>
@@ -1096,6 +1105,8 @@ export default function HanoiPage() {
                   <strong>{lang === "vi" ? "Địa chỉ: " : "Address: "}</strong>
                   {lang === "vi" ? "Đường Đinh Tiên Hoàng, Quận Hoàn Kiếm" : "Dinh Tien Hoang Street, Hoan Kiem District"}
                 </p>
+
+                <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.waterPuppetTicket} lang={lang} />
 
                 {/* WEST LAKE (SCREENSHOT 1) */}
                 <h4 className="vnn-hanoi-attraction-subh4">
@@ -2689,6 +2700,9 @@ export default function HanoiPage() {
                 </ul>
               </div>
             </div>
+
+            <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.streetFoodTour} lang={lang} />
+            <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.cookingAndCoffeeClass} lang={lang} />
           </div>
         </section>
 

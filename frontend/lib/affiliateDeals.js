@@ -1,0 +1,103 @@
+// ─── CENTRALIZED AFFILIATE DEALS REGISTRY ───
+
+export const HANOI_AFFILIATE_DEALS = {
+  // Link 1 (Step 1): Khách sạn Phố Cổ Hoàn Kiếm Hà Nội (Traveloka)
+  oldQuarterHotels: {
+    url: "https://shorten.asia/cAUanM3s",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Phố Cổ Hoàn Kiếm",
+    badgeEn: "Hanoi Old Quarter",
+    title: "Top Khách Sạn Boutique & Phố Cổ Hoàn Kiếm Hà Nội (Gần Hồ Gươm)",
+    titleEn: "Top Boutique & Heritage Hotels in Hanoi Old Quarter (Near Hoan Kiem Lake)",
+    note: "Vị trí trung tâm 36 phố phường, đi bộ ra Hồ Gươm, Nhà Thờ Lớn & phố ẩm thực Tạ Hiện • Giá ưu đãi tốt nhất",
+    noteEn: "Prime 36-street location, steps from Hoan Kiem Lake, St. Joseph Cathedral & street food alleys",
+    ctaText: "Xem phòng Phố Cổ Hà Nội",
+    ctaTextEn: "Check Old Quarter Hotels",
+  },
+  // Link 1 (Hanoi Batch): Khách sạn 5 Sao & Resort Ven Hồ Tây / Ba Đình (Traveloka)
+  luxuryWestLakeHotels: {
+    url: "https://shorten.asia/1NtgQkqq",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "5 Sao & Hồ Tây",
+    badgeEn: "5-Star & West Lake",
+    title: "Khách Sạn 5 Sao Hạng Sang & Khu Nghỉ Dưỡng Ven Hồ Tây – Ba Đình",
+    titleEn: "5-Star Luxury Hotels & Lakeside Suites in West Lake & Ba Dinh Hanoi",
+    note: "Không gian thoáng đãng, sang trọng bậc nhất Thủ đô • Hồ bơi vô cực, spa cao cấp & tầm nhìn toàn cảnh Hồ Tây",
+    noteEn: "Tranquil lakeside luxury in Hanoi • Rooftop pools, world-class spas & panoramic West Lake views",
+    ctaText: "Xem khách sạn 5 sao Hà Nội",
+    ctaTextEn: "View 5-Star Hanoi Hotels",
+  },
+  // Link 2 (Hanoi Batch): Xe đưa đón Sân bay Nội Bài (Klook)
+  noiBaiTransfer: {
+    url: "https://shorten.asia/w7NsRTjh",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Đưa Đón Sân Bay",
+    badgeEn: "Airport Transfer",
+    title: "Xe Đưa Đón Sân Bay Quốc Tế Nội Bài (HAN) Về Phố Cổ & Trung Tâm Hà Nội",
+    titleEn: "Noi Bai International Airport (HAN) Private Transfer to Central Hanoi",
+    note: "Tài xế cầm bảng tên đón tận sảnh đến • Xe riêng máy lạnh 4–16 chỗ • Giá trọn gói cố định 24/7",
+    noteEn: "Meet & greet at arrival hall • Private AC vehicle (4–16 seats) • Fixed all-inclusive rate 24/7",
+    ctaText: "Đặt xe đón Sân bay Nội Bài",
+    ctaTextEn: "Book Noi Bai Airport Transfer",
+  },
+  // Link 3 (Hanoi Batch): Vé Xem Múa Rối Nước Thăng Long (Klook)
+  waterPuppetTicket: {
+    url: "https://shorten.asia/tBKF42jN",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Vé Vào Cửa Nhanh",
+    badgeEn: "Skip-the-Line Ticket",
+    title: "Vé Xem Biểu Diễn Múa Rối Nước Thăng Long Hà Nội (Ngay Bờ Hồ Gươm)",
+    titleEn: "Thang Long Water Puppet Theatre Skip-the-Line Ticket in Hanoi",
+    note: "Nghệ thuật truyền thống ngàn năm độc đáo nhất miền Bắc • Quét mã QR vào thẳng không cần xếp hàng mua vé",
+    noteEn: "1,000-year-old Vietnamese cultural art right by Hoan Kiem Lake • Instant QR entry, skip the box-office queue",
+    ctaText: "Đặt vé Múa rối nước",
+    ctaTextEn: "Book Water Puppet Ticket",
+  },
+  // Link 4 (Hanoi Batch): Vé Xe Buýt 2 Tầng Hanoi Hop-on Hop-off (Klook)
+  hopOnHopOffHanoi: {
+    url: "https://shorten.asia/DPdzntp9",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Ngắm Cảnh Thủ Đô",
+    badgeEn: "City Sightseeing",
+    title: "Vé Xe Buýt 2 Tầng Mui Trần Hanoi City Tour (Hop-On Hop-Off)",
+    titleEn: "Hanoi Hop-On Hop-Off Open-Top Double-Decker Sightseeing Bus",
+    note: "Đi qua 15 danh thắng nổi tiếng nhất: Hồ Gươm, Lăng Bác, Văn Miếu, Hoàng Thành, Chùa Trấn Quốc • Có thuyết minh đa ngôn ngữ",
+    noteEn: "Stops at top 15 Hanoi landmarks: Hoan Kiem Lake, Mausoleum, Temple of Literature & West Lake • Audio guide included",
+    ctaText: "Đặt vé xe buýt 2 tầng",
+    ctaTextEn: "Book Hop-On Hop-Off Bus",
+  },
+  // Link 5 (Hanoi Batch): Tour Ẩm Thực Đường Phố Phố Cổ Hà Nội (Klook)
+  streetFoodTour: {
+    url: "https://shorten.asia/K5peY6sd",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Trải Nghiệm Ẩm Thực",
+    badgeEn: "Foodie Favorite",
+    title: "Tour Đi Bộ Khám Phá Ẩm Thực Đường Phố Phố Cổ Hà Nội & Quán Michelin",
+    titleEn: "Hanoi Old Quarter Guided Walking Street Food & Michelin Eats Tour",
+    note: "Cùng thổ địa bản xứ len lỏi ngõ nhỏ thưởng thức Phở, Bún Chả, Bánh Mì, Nem Rán & Cà Phê Trứng chuẩn vị",
+    noteEn: "Follow a local foodie guide through hidden alleys to taste authentic Pho, Bun Cha, Banh Mi & Egg Coffee",
+    ctaText: "Đặt Food Tour Phố Cổ",
+    ctaTextEn: "Book Hanoi Street Food Tour",
+  },
+  // Link 6 (Hanoi Batch): Lớp Học Nấu Ăn Món Việt & Pha Cà Phê Trứng (Klook)
+  cookingAndCoffeeClass: {
+    url: "https://shorten.asia/j5hFd8YP",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Văn Hóa & Ẩm Thực",
+    badgeEn: "Hands-On Experience",
+    title: "Lớp Học Nấu Món Truyền Thống Hà Nội, Đi Chợ Bản Địa & Pha Cà Phê Trứng",
+    titleEn: "Authentic Hanoi Cooking Class with Local Market Visit & Egg Coffee Workshop",
+    note: "Trải nghiệm đi chợ sáng cùng đầu bếp, tự tay nấu Phở / Bún Chả và học bí quyết đánh kem Cà Phê Trứng bông mịn",
+    noteEn: "Visit a bustling morning market with a local chef, cook signature Hanoi dishes & master frothy Egg Coffee",
+    ctaText: "Đăng ký lớp học nấu ăn",
+    ctaTextEn: "Book Cooking & Coffee Class",
+  },
+};
+
