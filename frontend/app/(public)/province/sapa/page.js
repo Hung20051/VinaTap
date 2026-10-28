@@ -5,6 +5,8 @@ import Link from "next/link";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NORTH_HUE_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Compass,
@@ -504,6 +506,7 @@ export default function SapaPage() {
                 : "Curated accommodation options in Sapa from VinaTap Travel Guide."}
             </figcaption>
           </figure>
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.sapaMountainResorts} isVi={isVi} />
         </section>
 
         {/* ─── 5. THE MOST ATTRACTIVE DESTINATIONS IN SAPA ─── */}
@@ -755,6 +758,8 @@ export default function SapaPage() {
                 : "Fansipan Peak at 3,143m – The Roof of Indochina soaring proudly amidst an ethereal ocean of clouds."}
             </figcaption>
           </figure>
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.fansipanCableCar} isVi={isVi} />
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.sapaMountainResorts} isVi={isVi} />
 
           <div className="sp-editorial-list">
             <div className="sp-editorial-item">

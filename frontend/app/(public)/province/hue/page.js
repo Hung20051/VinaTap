@@ -5,6 +5,8 @@ import Link from "next/link";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NORTH_HUE_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Compass,
@@ -873,6 +875,7 @@ export default function HueDestinationPage() {
                   </div>
                 </div>
               </div>
+              <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.hueImperialAndDragonBoat} isVi={isVi} />
             </div>
           </section>
 
@@ -1027,6 +1030,7 @@ export default function HueDestinationPage() {
                   </div>
                 </div>
               </div>
+              <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.hueImperialAndDragonBoat} isVi={isVi} />
             </div>
           </section>
 
@@ -1278,6 +1282,8 @@ export default function HueDestinationPage() {
                   </div>
                 </div>
               </div>
+              <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.hueHotelsAndHaGiang} isVi={isVi} />
+              <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.hueImperialAndDragonBoat} isVi={isVi} />
             </div>
           </section>
 

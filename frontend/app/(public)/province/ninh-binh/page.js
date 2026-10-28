@@ -6,6 +6,8 @@ import Image from "next/image";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NORTH_HUE_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Compass,
@@ -1091,6 +1093,8 @@ export default function NinhBinhDestinationPage() {
               </div>
             </article>
           </div>
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.ninhBinhDayTour} isVi={isVi} />
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.ninhBinhEcoResorts} isVi={isVi} />
         </section>
 
         {/* Section 6: Food & Specialties */}
@@ -1332,6 +1336,8 @@ export default function NinhBinhDestinationPage() {
                   : "Direct daily tourist bus connecting Tuan Chau Port and Tam Coc (3.5 hours, ~300k VND)."}
               </div>
             </div>
+            <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.ninhBinhDayTour} isVi={isVi} />
+            <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={isVi} />
           </div>
         </section>
 

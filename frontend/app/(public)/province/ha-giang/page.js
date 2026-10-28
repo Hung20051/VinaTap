@@ -5,6 +5,8 @@ import Link from "next/link";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NORTH_HUE_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   MapPin,
@@ -920,6 +922,8 @@ export default function HaGiangDestinationPage() {
                   : "Traditional eco-lodge architecture at Pa Vi Cultural Village, Meo Vac"}
               </div>
             </div>
+            <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.hueHotelsAndHaGiang} isVi={isVi} />
+            <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.sapaMountainResorts} isVi={isVi} />
           </section>
 
           {/* ── SECTION 6: TOP 9 ATTRACTIONS ── */}
@@ -973,6 +977,7 @@ export default function HaGiangDestinationPage() {
                 </div>
               </article>
             ))}
+            <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.hueHotelsAndHaGiang} isVi={isVi} />
           </section>
 
           {/* ── SECTION 7: TOP 7 DISHES ── */}

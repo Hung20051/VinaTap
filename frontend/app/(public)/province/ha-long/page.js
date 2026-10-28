@@ -5,6 +5,8 @@ import Link from "next/link";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { NORTH_HUE_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Compass,
@@ -686,6 +688,8 @@ export default function HaLongPage() {
               </div>
             </div>
           </div>
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={isVi} />
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.sunWorldAndHalongStay} isVi={isVi} />
         </section>
 
         {/* SECTION 5: CRUISE ROUTES & PORTS */}
@@ -1002,6 +1006,8 @@ export default function HaLongPage() {
               </div>
             </div>
           </div>
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={isVi} />
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.sunWorldAndHalongStay} isVi={isVi} />
         </section>
 
         {/* SECTION 10: FAQS & EXPERT TIPS */}
