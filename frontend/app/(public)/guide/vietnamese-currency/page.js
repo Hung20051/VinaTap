@@ -8,6 +8,8 @@ import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import NavbarAuthButton from "@/components/ui/NavbarAuthButton";
 import HeaderSearch from "@/components/ui/HeaderSearch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { VUNGTAU_VIETNAM_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import "@/styles/home.css";
@@ -629,6 +631,9 @@ export default function VietnameseCurrencyPage() {
                 : "The most common currency exchange for travelers in Vietnam is from USD to VND. While jewelry shops are rumored to offer the best rates, exchanging currency there is now considered illegal. For a reliable and legal option, exchange money at airports, local banks, or ATMs."}
             </li>
           </ul>
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamAirportTransferFastTrack} isVi={isVi} />
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamESim} isVi={isVi} />
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.allVietnamHotels} isVi={isVi} />
         </div>
 
         {/* SECTION 3: RELATED ARTICLES (MATCHING SCREENSHOT) */}

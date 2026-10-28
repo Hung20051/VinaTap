@@ -7,6 +7,8 @@ import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { VUNGTAU_VIETNAM_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Search,
@@ -1033,6 +1035,14 @@ export default function VietnamVisaPage() {
                 ))}
               </div>
             </div>
+            <AffiliateDealBox
+              deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamAirportTransferFastTrack}
+              isVi={lang === "vi"}
+            />
+            <AffiliateDealBox
+              deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamESim}
+              isVi={lang === "vi"}
+            />
           </section>
 
           {/* ─── SECTION 4: IMPORTANT TIPS ─── */}
@@ -1112,6 +1122,14 @@ export default function VietnamVisaPage() {
                 </div>
               </div>
             </div>
+            <AffiliateDealBox
+              deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamDomesticTransport}
+              isVi={lang === "vi"}
+            />
+            <AffiliateDealBox
+              deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.allVietnamHotels}
+              isVi={lang === "vi"}
+            />
           </section>
 
           {/* ─── SECTION 5: FREQUENTLY ASKED QUESTIONS ─── */}

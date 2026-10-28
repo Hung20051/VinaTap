@@ -1356,6 +1356,48 @@ export const AFFILIATE_EXPERIENCES = {
       btnText: "Đặt tour ngay qua Klook",
     },
   ],
+  "ba-ria-vung-tau": [
+    {
+      id: "vt-traveloka-resorts",
+      title: "Top Khách Sạn 5 Sao, Resort Biển Bãi Sau – Bãi Trước Vũng Tàu & Biệt Thự Hồ Tràm",
+      category: "Khách sạn & Nghỉ dưỡng",
+      provider: "Traveloka",
+      badge: "Sát Biển Vũng Tàu",
+      rating: "4.9",
+      reviewCount: "3.1k+ đánh giá",
+      price: "850.000đ",
+      originalPrice: "1.200.000đ",
+      discount: "-29%",
+      image: "/guide/vung-tau/hero-vung-tau-beaches.jpg",
+      features: [
+        "Vị trí đắc địa dọc cung đường biển Thùy Vân (Bãi Sau), Hạ Long (Bãi Trước) & Hồ Tràm",
+        "Hồ bơi vô cực hướng biển, bãi tắm riêng an toàn và buffet hải sản tươi sống",
+        "Đa dạng lựa chọn từ khách sạn 5 sao Pullman, Imperial đến resort nghỉ dưỡng gia đình",
+      ],
+      affiliateUrl: "https://shorten.asia/z6X2NVgf",
+      btnText: "Xem phòng ưu đãi Traveloka",
+    },
+    {
+      id: "vt-klook-homay",
+      title: "Vé Cáp Treo Khu Du Lịch Hồ Mây Park & Suối Khoáng Nóng Minera Bình Châu",
+      category: "Vé tham quan & Tour",
+      provider: "Klook",
+      badge: "Bán chạy nhất",
+      rating: "4.8",
+      reviewCount: "2.4k+ đã đặt",
+      price: "400.000đ",
+      originalPrice: "500.000đ",
+      discount: "-20%",
+      image: "/guide/vung-tau/beach-1-bai-truoc.jpg",
+      features: [
+        "Đi cáp treo ngắm toàn cảnh vịnh biển Vũng Tàu từ đỉnh Núi Lớn & vui chơi công viên nước",
+        "Trải nghiệm ngâm khoáng nóng thiên nhiên 82°C, tắm bùn khoáng tại Minera Bình Châu",
+        "Nhận mã QR điện tử qua cổng trực tiếp nhanh chóng, không cần xếp hàng mua vé",
+      ],
+      affiliateUrl: "https://shorten.asia/dnrxHHBM",
+      btnText: "Đặt vé ngay qua Klook",
+    },
+  ],
 };
 
 export function getProvinceAffiliates(slug) {

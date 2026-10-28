@@ -7,6 +7,15 @@ import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import HeaderSearch from "@/components/ui/HeaderSearch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import {
+  VUNGTAU_VIETNAM_AFFILIATE_DEALS,
+  HANOI_AFFILIATE_DEALS,
+  DANANG_HOIAN_AFFILIATE_DEALS,
+  NHATRANG_DALAT_AFFILIATE_DEALS,
+  HCMC_MEKONG_AFFILIATE_DEALS,
+  NORTH_HUE_AFFILIATE_DEALS,
+} from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Search,
@@ -1050,6 +1059,39 @@ export default function TwentyBestThingsPage() {
                   )}
                 </div>
               </div>
+              {item.num === 1 && (
+                <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.hoiAnMemories} isVi={isVi} />
+              )}
+              {item.num === 3 && (
+                <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={isVi} />
+              )}
+              {item.num === 4 && (
+                <AffiliateDealBox deal={HCMC_MEKONG_AFFILIATE_DEALS.canThoRiversideHotels} isVi={isVi} />
+              )}
+              {item.num === 5 && (
+                <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHills} isVi={isVi} />
+              )}
+              {item.num === 6 && (
+                <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.streetFoodTour} isVi={isVi} />
+              )}
+              {item.num === 7 && (
+                <AffiliateDealBox deal={HCMC_MEKONG_AFFILIATE_DEALS.cuChiMekongTour} isVi={isVi} />
+              )}
+              {item.num === 9 && (
+                <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.hueImperialAndDragonBoat} isVi={isVi} />
+              )}
+              {item.num === 13 && (
+                <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.fansipanCableCar} isVi={isVi} />
+              )}
+              {item.num === 17 && (
+                <AffiliateDealBox deal={NHATRANG_DALAT_AFFILIATE_DEALS.dalatPineResorts} isVi={isVi} />
+              )}
+              {item.num === 20 && (
+                <>
+                  <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamDomesticTransport} isVi={isVi} />
+                  <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.allVietnamHotels} isVi={isVi} />
+                </>
+              )}
             </article>
           ))}
         </div>

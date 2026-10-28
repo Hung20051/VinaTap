@@ -8,6 +8,13 @@ import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import NavbarAuthButton from "@/components/ui/NavbarAuthButton";
 import HeaderSearch from "@/components/ui/HeaderSearch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import {
+  VUNGTAU_VIETNAM_AFFILIATE_DEALS,
+  NORTH_HUE_AFFILIATE_DEALS,
+  DANANG_HOIAN_AFFILIATE_DEALS,
+  HCMC_MEKONG_AFFILIATE_DEALS,
+} from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   ChevronDown,
@@ -993,6 +1000,8 @@ export default function VietnamClimatePage() {
                   </span>
                 </div>
               </div>
+              <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={isVi} />
+              <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.sapaMountainResorts} isVi={isVi} />
             </article>
 
             {/* REGION 2: CENTRAL VIETNAM */}
@@ -1098,6 +1107,8 @@ export default function VietnamClimatePage() {
                   </span>
                 </div>
               </div>
+              <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.daNangBeachResorts} isVi={isVi} />
+              <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHills} isVi={isVi} />
             </article>
 
             {/* REGION 3: SOUTHERN VIETNAM */}
@@ -1203,6 +1214,8 @@ export default function VietnamClimatePage() {
                   </span>
                 </div>
               </div>
+              <AffiliateDealBox deal={HCMC_MEKONG_AFFILIATE_DEALS.hcmcCentralHotels} isVi={isVi} />
+              <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vungTauBeachResorts} isVi={isVi} />
             </article>
           </div>
         </section>
@@ -1305,6 +1318,8 @@ export default function VietnamClimatePage() {
               </p>
             </div>
           </div>
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamDomesticTransport} isVi={isVi} />
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.allVietnamHotels} isVi={isVi} />
         </section>
 
         {/* ─── SECTION: FREQUENTLY ASKED QUESTIONS (FAQ) ─── */}

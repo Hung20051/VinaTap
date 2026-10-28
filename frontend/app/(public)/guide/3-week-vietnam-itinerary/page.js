@@ -9,6 +9,12 @@ import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
 import VietnamItineraryMap from "@/components/itinerary/VietnamItineraryMap";
 import VietnamExtendedItineraryMap from "@/components/itinerary/VietnamExtendedItineraryMap";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import {
+  VUNGTAU_VIETNAM_AFFILIATE_DEALS,
+  DANANG_HOIAN_AFFILIATE_DEALS,
+  NORTH_HUE_AFFILIATE_DEALS,
+} from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Search,
@@ -913,6 +919,11 @@ export default function ThreeWeekVietnamItineraryPage() {
               </div>
             ))}
           </div>
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamDomesticTransport} isVi={lang === "vi"} />
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={lang === "vi"} />
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.ninhBinhDayTour} isVi={lang === "vi"} />
+          <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHills} isVi={lang === "vi"} />
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.allVietnamHotels} isVi={lang === "vi"} />
         </section>
 
         {/* ─── 7. NOTES (IMAGE 1) ─── */}

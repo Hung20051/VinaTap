@@ -6,6 +6,8 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { VUNGTAU_VIETNAM_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import { ChevronDown, Share2, ArrowLeft, Waves, Sun, Compass } from "lucide-react";
 import "@/styles/home.css";
@@ -309,6 +311,15 @@ export default function BestVungTauBeachesPage() {
                   </div>
                 </div>
               </div>
+              {beach.num === "2" && (
+                <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vungTauBeachResorts} isVi={isVi} />
+              )}
+              {beach.num === "5" && (
+                <>
+                  <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vungTauHoMayAndTours} isVi={isVi} />
+                  <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vungTauBeachResorts} isVi={isVi} />
+                </>
+              )}
             </article>
           ))}
         </div>

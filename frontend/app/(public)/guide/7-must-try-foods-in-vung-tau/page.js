@@ -6,6 +6,8 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import { VUNGTAU_VIETNAM_AFFILIATE_DEALS } from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import { ChevronDown, Sparkles } from "lucide-react";
 import "@/styles/home.css";
@@ -404,9 +406,15 @@ export default function VungTauFoodGuidePage() {
                   </div>
                 </div>
               </div>
+              {dish.index === 2 && (
+                <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vungTauBeachResorts} isVi={isVi} />
+              )}
             </article>
           ))}
         </div>
+
+        <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vungTauHoMayAndTours} isVi={isVi} />
+        <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vungTauBeachResorts} isVi={isVi} />
 
         {/* ── Closing Paragraph (Screenshot 4) ── */}
         <p style={{ fontSize: "15px", lineHeight: 1.7, color: "#334155", margin: "36px 0 24px" }}>

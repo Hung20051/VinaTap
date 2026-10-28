@@ -7,6 +7,15 @@ import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import {
+  VUNGTAU_VIETNAM_AFFILIATE_DEALS,
+  HANOI_AFFILIATE_DEALS,
+  DANANG_HOIAN_AFFILIATE_DEALS,
+  NHATRANG_DALAT_AFFILIATE_DEALS,
+  HCMC_MEKONG_AFFILIATE_DEALS,
+  NORTH_HUE_AFFILIATE_DEALS,
+} from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Search,
@@ -692,6 +701,42 @@ export default function BestPlaces2026Page() {
                   ))}
                 </div>
               </div>
+              {item.number === 1 && (
+                <AffiliateDealBox deal={HCMC_MEKONG_AFFILIATE_DEALS.hcmcCentralHotels} isVi={lang === "vi"} />
+              )}
+              {item.number === 2 && (
+                <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.hoiAnMemories} isVi={lang === "vi"} />
+              )}
+              {item.number === 3 && (
+                <AffiliateDealBox deal={HANOI_AFFILIATE_DEALS.oldQuarterHotels} isVi={lang === "vi"} />
+              )}
+              {item.number === 4 && (
+                <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHills} isVi={lang === "vi"} />
+              )}
+              {item.number === 5 && (
+                <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.ninhBinhDayTour} isVi={lang === "vi"} />
+              )}
+              {item.number === 6 && (
+                <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={lang === "vi"} />
+              )}
+              {item.number === 7 && (
+                <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.fansipanCableCar} isVi={lang === "vi"} />
+              )}
+              {item.number === 8 && (
+                <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.hueImperialAndDragonBoat} isVi={lang === "vi"} />
+              )}
+              {item.number === 9 && (
+                <AffiliateDealBox deal={NHATRANG_DALAT_AFFILIATE_DEALS.dalatPineResorts} isVi={lang === "vi"} />
+              )}
+              {item.number === 10 && (
+                <AffiliateDealBox deal={NHATRANG_DALAT_AFFILIATE_DEALS.vinWondersNhaTrang} isVi={lang === "vi"} />
+              )}
+              {item.number === 15 && (
+                <>
+                  <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamDomesticTransport} isVi={lang === "vi"} />
+                  <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.allVietnamHotels} isVi={lang === "vi"} />
+                </>
+              )}
             </article>
           ))}
         </div>

@@ -547,4 +547,92 @@ export const NORTH_HUE_AFFILIATE_DEALS = {
   },
 };
 
+export const VUNGTAU_VIETNAM_AFFILIATE_DEALS = {
+  // Link 1 (Batch 7): Khách sạn & Resort Biển Vũng Tàu – Hồ Tràm (Traveloka)
+  vungTauBeachResorts: {
+    url: "https://shorten.asia/z6X2NVgf",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Nghỉ Dưỡng Biển Vũng Tàu – Hồ Tràm",
+    badgeEn: "Vung Tau & Ho Tram Beach Stays",
+    title: "Top Khách Sạn 5 Sao, Resort Sát Biển Bãi Sau – Bãi Trước Vũng Tàu & Biệt Thự Hồ Tràm",
+    titleEn: "Top 5-Star Beachfront Hotels, Back Beach Resorts & Luxury Villas in Vung Tau & Ho Tram",
+    note: "Tầm nhìn trực diện đại dương và hoàng hôn Bãi Trước • Hồ bơi vô cực sát biển, bãi tắm riêng & ưu đãi cuối tuần",
+    noteEn: "Unobstructed ocean views along Back Beach & Front Beach • Infinity pools, private beach access & weekend getaway deals",
+    ctaText: "Xem Khách Sạn & Resort Vũng Tàu",
+    ctaTextEn: "Check Vung Tau Beach Resorts",
+  },
+  // Link 2 (Batch 7): Vé Hồ Mây Park / Suối Khoáng Nóng Minera Bình Châu / Tàu Cao Tốc Vũng Tàu (Klook)
+  vungTauHoMayAndTours: {
+    url: "https://shorten.asia/dnrxHHBM",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Trải Nghiệm Hot Nhất Vũng Tàu",
+    badgeEn: "Top Vung Tau Activities",
+    title: "Vé Cáp Treo Khu Du Lịch Hồ Mây Park, Suối Khoáng Nóng Minera Bình Châu & Tàu Cao Tốc Sài Gòn – Vũng Tàu",
+    titleEn: "Ho May Park Cable Car, Minera Binh Chau Hot Springs & Saigon – Vung Tau Hydrofoil Tickets",
+    note: "Ngắm toàn cảnh phố biển từ đỉnh Núi Lớn, ngâm khoáng nóng thiên nhiên 82°C phục hồi sức khỏe • Mã QR vào cổng ngay",
+    noteEn: "Panoramic coastal views from Big Mountain, natural 82°C mineral hot springs & fast hydrofoil transfers • Instant QR voucher",
+    ctaText: "Đặt Vé Vui Chơi & Tour Vũng Tàu",
+    ctaTextEn: "Book Vung Tau Tickets & Tours",
+  },
+  // Link 3 (Batch 7): Vé Máy Bay Nội Địa, Tàu Hỏa Bắc Nam & Xe Limousine Xuyên Việt (Traveloka)
+  vietnamDomesticTransport: {
+    url: "https://shorten.asia/MNhg6AP7",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Di Chuyển Xuyên Việt Tiết Kiệm",
+    badgeEn: "Nationwide Flights, Trains & Buses",
+    title: "Săn Vé Máy Bay Nội Địa (Vietnam Airlines, Vietjet, Bamboo), Vé Tàu Hỏa & Xe Limousine Toàn Quốc",
+    titleEn: "Book Domestic Flights (Vietnam Airlines, Vietjet, Bamboo), Express Trains & VIP Limousine Buses Across Vietnam",
+    note: "So sánh giá theo thời gian thực cho mọi chặng Hà Nội – Đà Nẵng – Nha Trang – Đà Lạt – TP.HCM – Phú Quốc • Xuất vé điện tử tức thì",
+    noteEn: "Real-time fare comparison across all major routes (Hanoi, Da Nang, Nha Trang, Dalat, HCMC, Phu Quoc) • Instant e-tickets",
+    ctaText: "Săn Vé Máy Bay & Xe Xuyên Việt",
+    ctaTextEn: "Search Flights, Trains & Buses",
+  },
+  // Link 4 (Batch 7): Dịch Vụ Đón Tiễn Sân Bay Quốc Tế & Fast-Track Nhập Cảnh (Klook)
+  vietnamAirportTransferFastTrack: {
+    url: "https://shorten.asia/9RC14K9z",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Đón Tiễn Sân Bay & Fast-Track",
+    badgeEn: "VIP Airport Transfer & Fast-Track",
+    title: "Xe Riêng Đón Tiễn Sân Bay Quốc Tế (Nội Bài / Tân Sơn Nhất / Đà Nẵng / Cam Ranh) & Dịch Vụ Fast-Track Nhập Cảnh",
+    titleEn: "Private Airport Transfers (Noi Bai, Tan Son Nhat, Da Nang, Cam Ranh) & VIP Immigration Fast-Track Service",
+    note: "Tài xế cầm bảng tên đón tận sảnh đến 24/7, giá trọn gói minh bạch không phụ phí • Hỗ trợ làm thủ tục nhập cảnh ưu tiên nhanh chóng",
+    noteEn: "24/7 meet-and-greet driver at arrivals with transparent fixed pricing • Optional VIP Fast-Track to skip long immigration lines",
+    ctaText: "Đặt Xe Đón Sân Bay & Fast-Track",
+    ctaTextEn: "Book Airport Transfer & Fast-Track",
+  },
+  // Reused: eSIM Du Lịch 4G/5G Việt Nam Không Giới Hạn Dung Lượng (Klook)
+  vietnamESim: {
+    url: "https://shorten.asia/w7NsRTjh",
+    partner: "Klook",
+    partnerType: "klook",
+    badge: "Internet Tốc Độ Cao Toàn Quốc",
+    badgeEn: "High-Speed 4G/5G Travel eSIM",
+    title: "SIM / eSIM Du Lịch 4G/5G Việt Nam Tốc Độ Cao Không Giới Hạn (Viettel / Vinaphone / Mobifone)",
+    titleEn: "Vietnam High-Speed 4G/5G Tourist SIM & Instant QR eSIM (Viettel / Vinaphone)",
+    note: "Kích hoạt mã QR ngay trên điện thoại hoặc nhận thẻ SIM vật lý tại Sân bay Nội Bài, Tân Sơn Nhất, Đà Nẵng • Phủ sóng 63 tỉnh thành",
+    noteEn: "Instant QR activation on your phone or airport pick-up at Noi Bai, Tan Son Nhat & Da Nang • Full nationwide coverage",
+    ctaText: "Mua eSIM 4G/5G Việt Nam",
+    ctaTextEn: "Get Vietnam 4G/5G eSIM",
+  },
+  // Reused: Săn Ưu Đãi Khách Sạn, Resort & Homestay Toàn Quốc (Traveloka)
+  allVietnamHotels: {
+    url: "https://shorten.asia/cAUanM3s",
+    partner: "Traveloka",
+    partnerType: "traveloka",
+    badge: "Lưu Trú Toàn Quốc Giá Tốt",
+    badgeEn: "Nationwide Hotel & Resort Deals",
+    title: "Săn Ưu Đãi Khách Sạn, Boutique Resort & Homestay Trên Khắp 34 Tỉnh Thành Việt Nam",
+    titleEn: "Exclusive Deals on Hotels, Boutique Resorts & Homestays Across All Regions of Vietnam",
+    note: "Hơn 15.000 chỗ nghỉ từ phố cổ, cao nguyên đến biển đảo • Đánh giá thực tế từ khách lưu trú & hỗ trợ đổi hủy linh hoạt",
+    noteEn: "Over 15,000 verified stays from historic quarters to tropical islands • Real guest reviews & flexible cancellation",
+    ctaText: "Tìm Khách Sạn & Resort Việt Nam",
+    ctaTextEn: "Explore Vietnam Hotel Deals",
+  },
+};
+
+
 

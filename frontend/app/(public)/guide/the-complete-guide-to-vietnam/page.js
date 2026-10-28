@@ -7,6 +7,13 @@ import PublicFooter from "@/components/layout/PublicFooter";
 import HeaderSearch from "@/components/ui/HeaderSearch";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
 import LanguageSwitch from "@/components/ui/LanguageSwitch";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import {
+  VUNGTAU_VIETNAM_AFFILIATE_DEALS,
+  NORTH_HUE_AFFILIATE_DEALS,
+  DANANG_HOIAN_AFFILIATE_DEALS,
+  HCMC_MEKONG_AFFILIATE_DEALS,
+} from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   Search,
@@ -695,6 +702,8 @@ export default function CompleteGuideToVietnamPage() {
               </p>
             </div>
           </div>
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={lang === "vi"} />
+          <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.ninhBinhDayTour} isVi={lang === "vi"} />
 
           {/* 2. MIỀN TRUNG (MATCHING SCREENSHOT 5) */}
           <h4 className="cg-region-heading">
@@ -760,6 +769,8 @@ export default function CompleteGuideToVietnamPage() {
               </p>
             </div>
           </div>
+          <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHills} isVi={lang === "vi"} />
+          <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.hoiAnMemories} isVi={lang === "vi"} />
 
           {/* 3. MIỀN NAM (MATCHING 2-COLUMN LAYOUT) */}
           <h4 className="cg-region-heading">
@@ -809,6 +820,8 @@ export default function CompleteGuideToVietnamPage() {
               </p>
             </div>
           </div>
+          <AffiliateDealBox deal={HCMC_MEKONG_AFFILIATE_DEALS.cuChiMekongTour} isVi={lang === "vi"} />
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vungTauBeachResorts} isVi={lang === "vi"} />
 
           {/* ─── PHẦN 2: THỜI ĐIỂM LÝ TƯỞNG NHẤT ─── */}
           <h2>
@@ -883,6 +896,7 @@ export default function CompleteGuideToVietnamPage() {
                 : "Travelers not eligible for visa exemptions can easily obtain a 90-day electronic visa (single-entry $25 USD or multiple-entry $50 USD) via the official government portal (evisa.gov.vn)."}
             </p>
           </div>
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamAirportTransferFastTrack} isVi={lang === "vi"} />
 
           {/* ─── PHẦN 4: TIỀN TỆ VÀ ĐỔI NGOẠI TỆ ─── */}
           <h2>{lang === "vi" ? "Tiền Tệ và Đổi Ngoại Tệ" : "Money and exchange"}</h2>
@@ -938,12 +952,15 @@ export default function CompleteGuideToVietnamPage() {
           </figure>
 
           {/* ─── PHẦN 6: INTERNET & SIM CARD ─── */}
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamDomesticTransport} isVi={lang === "vi"} />
           <h2>{lang === "vi" ? "Internet & Kết Nối Di Động" : "Internet and Connectivity"}</h2>
           <p>
             {lang === "vi"
               ? "Tại Việt Nam, sóng Wi-Fi miễn phí có mặt ở khắp mọi nơi — từ quán cà phê, nhà hàng, khách sạn cho đến các quán ăn đường phố. Bạn có thể dễ dàng mua SIM du lịch hoặc cài đặt eSIM tại sân bay với mức giá rất rẻ chỉ khoảng 150.000₫ - 200.000₫ (~$7 USD) cho gói data tốc độ cao 4GB - 6GB/ngày dùng trong 30 ngày."
               : "High-speed Wi-Fi is available free of charge across virtually all cafes, restaurants, and hotels. Purchasing a local 4G/5G physical SIM or eSIM at the airport is inexpensive (around $7 USD for 30 days of 4GB-6GB daily data with Viettel or Vinaphone)."}
           </p>
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamESim} isVi={lang === "vi"} />
+          <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.allVietnamHotels} isVi={lang === "vi"} />
 
           {/* ─── PHẦN 7: CHI PHÍ DU LỊCH ─── */}
           <h2>{lang === "vi" ? "Chi Phí Du Lịch Tại Việt Nam" : "Cost of traveling in Vietnam"}</h2>

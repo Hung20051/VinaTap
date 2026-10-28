@@ -6,6 +6,12 @@ import Logo from "@/components/layout/Logo";
 import PublicHeader from "@/components/layout/PublicHeader";
 import PublicFooter from "@/components/layout/PublicFooter";
 import ProvinceChatbot from "@/components/ui/ProvinceChatbot";
+import AffiliateDealBox from "@/components/ui/AffiliateDealBox";
+import {
+  VUNGTAU_VIETNAM_AFFILIATE_DEALS,
+  DANANG_HOIAN_AFFILIATE_DEALS,
+  NORTH_HUE_AFFILIATE_DEALS,
+} from "@/lib/affiliateDeals";
 import { getLang } from "@/lib/prefs";
 import {
   ChevronDown,
@@ -471,6 +477,12 @@ export default function TwoWeeksInVietnamPage() {
             </article>
           ))}
         </div>
+
+        <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.vietnamDomesticTransport} isVi={isVi} />
+        <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.ninhBinhDayTour} isVi={isVi} />
+        <AffiliateDealBox deal={NORTH_HUE_AFFILIATE_DEALS.halongLuxuryCruise} isVi={isVi} />
+        <AffiliateDealBox deal={DANANG_HOIAN_AFFILIATE_DEALS.baNaHills} isVi={isVi} />
+        <AffiliateDealBox deal={VUNGTAU_VIETNAM_AFFILIATE_DEALS.allVietnamHotels} isVi={isVi} />
 
         {/* ─── A FEW NOTES (SCREENSHOT 3 & 4) ─── */}
         <section className="omi-notes-box">
