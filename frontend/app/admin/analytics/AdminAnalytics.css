@@ -5,7 +5,8 @@
 
 .admin-analytics-container {
   padding: 0.5rem 0 2rem;
-  max-width: 1240px;
+  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -1006,8 +1007,20 @@
 
 .analytics-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.25rem;
+}
+
+@media (max-width: 1100px) {
+  .analytics-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .analytics-kpi-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .analytics-kpi-card {
@@ -1022,16 +1035,20 @@
 }
 
 .kpi-card-cyan {
-  border-left: 4px solid #00c2cb;
+  border-top: 3.5px solid #00c2cb;
+  border-left: 3.5px solid #00c2cb;
 }
 .kpi-card-blue {
-  border-left: 4px solid #2563eb;
+  border-top: 3.5px solid #2563eb;
+  border-left: 3.5px solid #2563eb;
 }
 .kpi-card-amber {
-  border-left: 4px solid #f59e0b;
+  border-top: 3.5px solid #f59e0b;
+  border-left: 3.5px solid #f59e0b;
 }
 .kpi-card-emerald {
-  border-left: 4px solid #10b981;
+  border-top: 3.5px solid #10b981;
+  border-left: 3.5px solid #10b981;
 }
 
 .kpi-card-header {

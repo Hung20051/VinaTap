@@ -1310,7 +1310,7 @@ export default function AdminDashboard() {
   );
 }
 
-function KpiCard({ icon, label, value, sub, accent = "blue", badge, href }) {
+function KpiCard({ icon, label, value, sub, accent = "blue", badge, href, onClick }) {
   const content = (
     <>
       <div className="kpi-stat-top">
@@ -1330,6 +1330,20 @@ function KpiCard({ icon, label, value, sub, accent = "blue", badge, href }) {
       <Link href={href} className={`card admin-kpi-stat-card kpi--${accent} kpi-stat-card--clickable`}>
         {content}
       </Link>
+    );
+  }
+
+  if (onClick) {
+    return (
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
+        className={`card admin-kpi-stat-card kpi--${accent} kpi-stat-card--clickable`}
+      >
+        {content}
+      </div>
     );
   }
 
