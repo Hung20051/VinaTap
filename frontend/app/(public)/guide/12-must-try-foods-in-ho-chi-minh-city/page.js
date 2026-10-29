@@ -26,7 +26,7 @@ const HCMC_12_DISHES = [
     desc: (
       <>
         <em>
-          <span className="vnn-link-highlight">Com tam</span>
+          <Link href="/guide/com-tam" className="vnn-link-highlight" style={{ color: "#00c2cb", textDecoration: "underline", textUnderlineOffset: "2px" }}>Com tam</Link>
         </em>
         , or broken rice, is the beating heart of Saigonese cuisine—a dish so
         iconic you simply can&apos;t leave the city without trying it. Whether
@@ -42,7 +42,7 @@ const HCMC_12_DISHES = [
     descVi: (
       <>
         <em>
-          <span className="vnn-link-highlight">Cơm tấm</span>
+          <Link href="/guide/com-tam" className="vnn-link-highlight" style={{ color: "#00c2cb", textDecoration: "underline", textUnderlineOffset: "2px" }}>Cơm tấm</Link>
         </em>
         , hay cơm nấu từ hạt gạo tấm vỡ, là nhịp đập của ẩm thực Sài Gòn — món
         ăn biểu tượng mà bạn nhất định không thể bỏ qua khi ghé thăm thành phố.
