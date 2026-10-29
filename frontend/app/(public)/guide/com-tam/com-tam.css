@@ -1,6 +1,6 @@
 /* ==========================================================================
    COM TAM - COMPLETE GUIDE ARTICLE CSS
-   Matching VietnamNomad Screenshots 2, 3, 4, 5
+   Matching VietnamNomad Screenshots 1, 2, 3, 4, 5
    ========================================================================== */
 
 .comtam-article-page {
@@ -112,6 +112,7 @@
   max-width: 960px;
   margin: 0 auto;
   padding: 36px 20px 80px;
+  position: relative;
 }
 
 /* ── Tripion Pill CTA ── */
@@ -145,13 +146,13 @@
   background: linear-gradient(135deg, #0096c7 0%, #023e8a 100%);
 }
 
-/* ── Section Titles ── */
+/* ── Section Titles (Teal #008080) ── */
 .comtam-section-title {
   font-size: 32px;
   font-weight: 700;
-  color: #008080; /* Teal color matching Screenshot 3 */
+  color: #008080; /* Teal color matching Screenshots 1, 2, 3, 4, 5 */
   text-align: center;
-  margin: 40px 0 28px;
+  margin: 42px 0 28px;
   line-height: 1.3;
 }
 
@@ -172,6 +173,19 @@
 
 .comtam-body-text em {
   font-style: italic;
+}
+
+/* In-text cyan links */
+.comtam-intext-link {
+  color: #00c2cb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.comtam-intext-link:hover {
+  color: #0096c7;
 }
 
 /* ── Table of Contents (Screenshot 3) ── */
@@ -237,7 +251,7 @@
   text-decoration: underline;
 }
 
-/* ── Content Figures (Screenshots 4 & 5) ── */
+/* ── Content Figures (Screenshots 2 & 4) ── */
 .comtam-figure {
   margin: 32px 0 28px;
   padding: 0;
@@ -263,7 +277,7 @@
   text-align: left;
 }
 
-/* ── Bullet Lists ── */
+/* ── Unordered / Ordered Bullet Lists (Screenshots 1 & 5) ── */
 .comtam-bullets {
   list-style-type: disc;
   padding-left: 24px;
@@ -271,13 +285,27 @@
 }
 
 .comtam-bullets li {
-  margin-bottom: 12px;
-  line-height: 1.7;
+  margin-bottom: 14px;
+  line-height: 1.75;
   color: #334155;
-  font-size: 15.5px;
+  font-size: 15px;
 }
 
-.comtam-bullets strong {
+.comtam-numbered-list {
+  list-style-type: decimal;
+  padding-left: 24px;
+  margin: 16px 0 28px;
+}
+
+.comtam-numbered-list li {
+  margin-bottom: 14px;
+  line-height: 1.75;
+  color: #334155;
+  font-size: 15px;
+}
+
+.comtam-bullets strong,
+.comtam-numbered-list strong {
   color: #0f172a;
 }
 
@@ -321,6 +349,33 @@
   color: #1e293b;
 }
 
+/* ── Floating Table of Contents Button (Screenshots 1, 2, 3, 4, 5) ── */
+.comtam-floating-toc-btn {
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  z-index: 998;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.comtam-floating-toc-btn:hover {
+  background: #00c2cb;
+  color: #ffffff;
+  border-color: #00c2cb;
+  transform: scale(1.06);
+}
+
 /* ── Back to 12 Foods Link ── */
 .comtam-back-link {
   display: inline-flex;
@@ -337,4 +392,3 @@
   transform: translateX(-4px);
   text-decoration: underline;
 }
-

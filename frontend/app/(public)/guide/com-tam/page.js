@@ -15,7 +15,6 @@ import {
   ChevronDown,
   ChevronUp,
   MapPin,
-  Clock,
   ArrowLeft,
 } from "lucide-react";
 import "@/styles/home.css";
@@ -34,12 +33,17 @@ export default function ComTamGuidePage() {
 
   const isVi = lang === "vi";
 
+  const scrollToToc = () => {
+    const el = document.getElementById("what-is-com-tam");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="comtam-article-page">
       {/* ── 1. Header with MegaMenu & AI companion ── */}
       <PublicHeader />
 
-      {/* ── 2. Full-bleed Hero Banner (Matching Screenshot 2) ── */}
+      {/* ── 2. Full-bleed Hero Banner ── */}
       <section
         className="comtam-hero"
         style={{
@@ -70,7 +74,7 @@ export default function ComTamGuidePage() {
         </div>
       </section>
 
-      {/* ── 3. Main Article Content Container (Matching Screenshots 2, 3, 4, 5) ── */}
+      {/* ── 3. Main Article Content Container ── */}
       <main className="comtam-container">
         {/* Back Link */}
         <Link
@@ -83,7 +87,7 @@ export default function ComTamGuidePage() {
             : "Back to 12 must-try foods in Ho Chi Minh City"}
         </Link>
 
-        {/* Pill CTA Button (Matching Screenshots 2 & 3) */}
+        {/* Pill CTA Button (Tripion) */}
         <div className="comtam-pill-cta-container">
           <a
             href="https://tripion.ai/"
@@ -98,12 +102,12 @@ export default function ComTamGuidePage() {
           </a>
         </div>
 
-        {/* ── Section: What is com tam? (Screenshot 3) ── */}
+        {/* ── Section: What is com tam? ── */}
         <h2 id="what-is-com-tam" className="comtam-section-title">
           {isVi ? "Cơm tấm là gì?" : "What is com tam?"}
         </h2>
 
-        {/* Table of Contents floating widget (Screenshot 3) */}
+        {/* Table of Contents floating widget */}
         <aside className="comtam-toc-box">
           <div
             className="comtam-toc-header"
@@ -146,7 +150,7 @@ export default function ComTamGuidePage() {
           )}
         </aside>
 
-        {/* Introductory text (Screenshot 3) */}
+        {/* Introductory text */}
         <p className="comtam-body-text">
           {isVi ? (
             <>
@@ -159,7 +163,7 @@ export default function ComTamGuidePage() {
           )}
         </p>
 
-        {/* Origin section (Screenshots 3 & 4) */}
+        {/* Origin section */}
         <h3 className="comtam-subhead">
           {isVi ? "Nguồn gốc của cơm tấm" : "The origin of com tam"}
         </h3>
@@ -179,11 +183,19 @@ export default function ComTamGuidePage() {
         <p className="comtam-body-text">
           {isVi ? (
             <>
-              Vào thập niên 1930, chính quyền thuộc địa Pháp triển khai kế hoạch biến Sài Gòn thành một trong những thương cảng bận rộn nhất thế giới. Để xây dựng các đại công trình cảng biển và cơ sở hạ tầng, hàng ngàn phu phen lao động được tuyển dụng. Lúc bấy giờ, một người phụ nữ tên Má Hai mở quán bán cơm hấp thịt kho và trứng. Dù đồ ăn chất lượng, Má Hai thường nhận được lời than phiền từ phu bến tàu vì giá cơm quá cao so với tiền công ít ỏi. Điều đó thôi thúc bà tìm cách giảm giá bán cho nhóm khách hàng bình dân này. Bà nảy ra sáng kiến dùng gạo tấm vỡ nấu cùng lá dứa trong xửng hấp. Ban đầu, bà dọn kèm những món bình dân: mỡ hành xanh mướt, tóp mỡ giòn rụm và nước mắm chua ngọt sánh đậm tỏi ớt. Giá rẻ bất ngờ cùng hương vị cuốn hút khiến quán đông nghịt, từ kỹ sư Pháp tới phu bến tàu. Để tri ân khách ủng hộ, bà tặng kèm <em>bì</em> heo thái chỉ. Sau đó, bà sáng chế thêm <em>chả trứng</em> hấp từ thịt xay, nấm mèo và trứng để phục vụ nhu cầu phong phú của thực khách.
+              Vào thập niên 1930, chính quyền thuộc địa Pháp triển khai kế hoạch biến{" "}
+              <Link href="/destination/ho-chi-minh" className="comtam-intext-link">
+                Sài Gòn
+              </Link>{" "}
+              thành một trong những thương cảng bận rộn nhất thế giới. Để xây dựng các đại công trình cảng biển và cơ sở hạ tầng, hàng ngàn phu phen lao động được tuyển dụng. Lúc bấy giờ, một người phụ nữ tên Má Hai mở quán bán cơm hấp thịt kho và trứng. Dù đồ ăn chất lượng, Má Hai thường nhận được lời than phiền từ phu bến tàu vì giá cơm quá cao so với tiền công ít ỏi. Điều đó thôi thúc bà tìm cách giảm giá bán cho nhóm khách hàng bình dân này. Bà nảy ra sáng kiến dùng gạo tấm vỡ nấu cùng lá dứa trong xửng hấp. Ban đầu, bà dọn kèm những món bình dân: mỡ hành xanh mướt, tóp mỡ giòn rụm và nước mắm chua ngọt sánh đậm tỏi ớt. Giá rẻ bất ngờ cùng hương vị cuốn hút khiến quán đông nghịt, từ kỹ sư Pháp tới phu bến tàu. Để tri ân khách ủng hộ, bà tặng kèm <em>bì</em> heo thái chỉ. Sau đó, bà sáng chế thêm <em>chả trứng</em> hấp từ thịt xay, nấm mèo và trứng để phục vụ nhu cầu phong phú của thực khách.
             </>
           ) : (
             <>
-              In the 1930s, the French colonies had a mission to make Saigon one of the world&apos;s busiest harbors. To accomplish this, they hired a large number of workers and builders to construct large-scale projects. During this time, a lady named Ma Hai was selling steamed rice with caramelized pork and eggs. Although her food was of good quality, she often received complaints about the high price, which was too expensive for blue-collar workers. This bothered her since these manual workers were her target customers. She then came up with the idea of using broken rice grains instead of whole grains to lower the price. Ma Hai cooked broken rice with pandan leaves and heated it in a steam pot. At first, she used cheap and simple ingredients such as scallion oil, crunchy deep-fried pork fat, and a thick sweet and spicy fish sauce mixed with minced garlic and chili. The affordable price and creative rice combination attracted even more customers, from French engineers to poor manual workers. As a gesture of appreciation for her customers&apos; support, she added <em>bi</em>, shredded pork skin, as a complimentary topping. Later on, to meet the demand of a wider range of customers, she created <em>cha</em>, a steamed combination of egg, minced pork, and other vegetable ingredients.
+              In the 1930s, the French colonies had a mission to make{" "}
+              <Link href="/destination/ho-chi-minh" className="comtam-intext-link">
+                Saigon
+              </Link>{" "}
+              one of the world&apos;s busiest harbors. To accomplish this, they hired a large number of workers and builders to construct large-scale projects. During this time, a lady named Ma Hai was selling steamed rice with caramelized pork and eggs. Although her food was of good quality, she often received complaints about the high price, which was too expensive for blue-collar workers. This bothered her since these manual workers were her target customers. She then came up with the idea of using broken rice grains instead of whole grains to lower the price. Ma Hai cooked broken rice with pandan leaves and heated it in a steam pot. At first, she used cheap and simple ingredients such as scallion oil, crunchy deep-fried pork fat, and a thick sweet and spicy fish sauce mixed with minced garlic and chili. The affordable price and creative rice combination attracted even more customers, from French engineers to poor manual workers. As a gesture of appreciation for her customers&apos; support, she added <em>bi</em>, shredded pork skin, as a complimentary topping. Later on, to meet the demand of a wider range of customers, she created <em>cha</em>, a steamed combination of egg, minced pork, and other vegetable ingredients.
             </>
           )}
         </p>
@@ -191,7 +203,7 @@ export default function ComTamGuidePage() {
         <p className="comtam-body-text">
           {isVi ? (
             <>
-              Tiếng lành đồn xa đến tai các giới chức Pháp, họ yêu cầu thêm miếng sườn cốt lết nướng than hoa tương tự như món bít-tết phương Tây. Đó chính là cách miếng sườn nướng xuất hiện trên đĩa cơm tấm. Điều này cũng lý giải vì sao người Việt ăn cơm tấm bằng muỗng và nĩa thay vì bằng đũa. Kể từ đó, mỗi khi nhắc tới cơm tấm, điều đầu tiên hiện lên trong tâm trí thực khách luôn là bộ ba huyền thoại <em>&ldquo;sườn – bì – chả&rdquo;</em>.
+              Tiếng lành đồn xa đến tai các giới chức Pháp, họ yêu cầu thêm miếng sườn cốt lết nướng than hoa tương tự như món bít-tết phương Tây. Đó chính là cách miếng sườn nướng xuất hiện trên đĩa cơm tấm. Điều này cũng lý giải vì sao người Việt ăn cơm tấm bằng muỗng và nĩa thay vì bằng đũa. Kể từ đó, mỗi khi nhắc tới cơm tấm, điều đầu tiên hiện lên trong tâm trí thực khách luôn là bộ ba huyền thoại <em>&ldquo;sườn – bì – chả&rdquo;</em>, tức đĩa cơm tấm phủ sườn nướng than hoa, bì heo thái chỉ bùi béo và chả trứng hấp mềm mọng.
             </>
           ) : (
             <>
@@ -200,7 +212,7 @@ export default function ComTamGuidePage() {
           )}
         </p>
 
-        {/* Sharp Image 1 (Matching Screenshot 4 & 5) */}
+        {/* Sharp Image 1 */}
         <figure className="comtam-figure">
           <img
             src="/guide/hcmc/what-is-com-tam.jpg"
@@ -219,7 +231,7 @@ export default function ComTamGuidePage() {
           </figcaption>
         </figure>
 
-        {/* ── Section: Com tam ingredients ── */}
+        {/* ── Section: Com tam ingredients (Screenshot 1) ── */}
         <h2 id="com-tam-ingredients" className="comtam-section-title">
           {isVi ? "Nguyên liệu cơm tấm" : "Com tam ingredients"}
         </h2>
@@ -227,73 +239,84 @@ export default function ComTamGuidePage() {
         <p className="comtam-body-text">
           {isVi ? (
             <>
-              Tuy là món ăn đường phố bình dân chiều lòng mọi thực khách từ hương vị đến giá cả, việc chuẩn bị trọn bộ các món ăn kèm cho một đĩa cơm tấm lại đòi hỏi sự kỳ công đáng kinh ngạc. Dù có vô số biến tấu, một đĩa cơm tấm kinh điển không thể thiếu những thành phần cốt lõi:
+              Tuy <em>cơm tấm</em> là món ăn bình dân chiều lòng đại chúng cả về hương vị lẫn giá tiền, việc chuẩn bị trọn bộ các món ăn kèm lại đòi hỏi sự kỳ công đáng nể. Bất chấp vô số biến tấu, một đĩa <em>cơm tấm</em> kinh điển bắt buộc phải có những thành phần cốt lõi:
             </>
           ) : (
             <>
-              Although com tam is a popular dish that appeals to the general public both in taste and price, assembling all its toppings requires a lot of preparation. Despite countless variations of this dish, a typical com tam plate must have its iconic elements, including:
+              Although <em>com tam</em> is a popular dish that appeals to the general public both in taste and price, assembling all its toppings requires a lot of preparation. Despite countless variations of this dish, a typical <em>com tam</em> plate must have its iconic elements, including:
             </>
           )}
         </p>
 
+        {/* Exact Bullet Points matching Screenshot 1 */}
         <ul className="comtam-bullets">
           <li>
-            <strong>{isVi ? "Cơm tấm (gạo tấm vỡ):" : "Com tam (broken rice):"}</strong>{" "}
+            <em>{isVi ? "Cơm tấm (gạo tấm vỡ):" : "Com tam (broken rice):"}</em>{" "}
             {isVi
-              ? "Linh hồn của món ăn. Đầu bếp vo rửa nhẹ nhàng để khử sạch mùi cám cũ, sau đó nấu cùng chút muối và lá dứa. Hạt cơm tấm sau khi hấp mềm xốp, khô ráo, không bết dính và luôn được ủ nóng hổi trong nồi hấp cả ngày."
+              ? "Đây là thành phần cốt lõi của món ăn. Người đầu bếp cẩn thận vo rửa các hạt gạo gãy vỡ để khử mùi cám cũ, sau đó nấu cùng một nhúm muối. Cơm tấm hấp chín tới mềm xốp, khô ráo, không hề bết dính và được ủ nóng hổi trong xửng hấp suốt cả ngày."
               : "This is the primary component of the dish. The chef carefully rinses the fractured grains to eliminate any musty smell and then cooks them with a pinch of salt. The steamed broken rice, after cooking, is soft, dry, and non-sticky, and it is kept warm in a food steamer throughout the day."}
           </li>
           <li>
-            <strong>{isVi ? "Sườn (sườn cốt lết nướng than hoa):" : "Suon (chargrilled pork chops):"}</strong>{" "}
+            <em>{isVi ? "Sườn (sườn cốt lết nướng than hoa):" : "Suon (chargrilled pork chops):"}</em>{" "}
             {isVi
-              ? "Miếng sườn được tẩm ướp cùng mật ong, nước mắm, hành tỏi và gia vị truyền thống. Sườn phải được nướng trên than hồng đỏ rực để tạo lớp xém vàng óng, đượm khói thơm lừng mà bên trong vẫn mọng nước mềm tan."
+              ? "Miếng sườn heo được tẩm ướp cùng gia vị bản địa mộc mạc. Một miếng sườn ngon chuẩn vị nhất định phải được nướng trực tiếp trên bếp than hồng để tạo màu xém vàng óng, thấm đượm mùi khói đặc trưng mà bên trong vẫn mềm ngọt mọng nước."
               : "The pork chop used for com tam is first marinated with simple local spices and seasonings. A successful piece of pork chop must be grilled over a charcoal fire to develop a golden char with a deeply smoky flavor while still remaining juicy and tender."}
           </li>
           <li>
-            <strong>{isVi ? "Bì (bì heo trộn thính gạo):" : "Bi (shredded pork skin):"}</strong>{" "}
+            <em>{isVi ? "Bì (bì heo thái sợi trộn thính):" : "Bi (shredded pork skin):"}</em>{" "}
             {isVi
-              ? "Da heo luộc chín tới, thái sợi mỏng như tơ tằm rồi trộn đều với thính gạo rang vàng thơm phức. Bì mang lại cảm giác giòn sần sật bùi béo khó quên."
+              ? "Da heo luộc chín, thái thành những sợi mảnh li ti, để nguội rồi trộn đều cùng thính gạo rang vàng thơm nức. Từng sợi bì mang kết cấu giòn sần sật bùi béo và thoảng hương men thơm đặc trưng."
               : "Boiled pork skin is thinly sliced into fine threads, cooled, and then mixed with roasted rice powder (or thinh, as it is called in Vietnamese). The pork skin threads have a powdery, crunchy texture and a hint of fermented aroma."}
           </li>
           <li>
-            <strong>{isVi ? "Chả (chả trứng hấp):" : "Cha (steamed egg meatloaf):"}</strong>{" "}
+            <em>{isVi ? "Chả (chả trứng hấp):" : "Cha (steamed egg meatloaf):"}</em>{" "}
             {isVi
-              ? "Món chả bùi ngậy được hấp từ thịt nạc xay, trứng, mộc nhĩ, bún tàu và phủ lớp lòng đỏ trứng vàng óng ả trên mặt. Một số quán còn biến tấu thêm thịt cua hoặc trứng muối đặc biệt."
+              ? "Món ăn kèm tưởng chừng bình thường này thực chất là một tuyệt phẩm. Miếng chả siêu mềm mọng, điểm xuyết độ giòn sần sật của nấm mèo (mộc nhĩ). Mặt trên được quét lớp lòng đỏ trứng gà vàng óng bóng bẩy. Một số nhà hàng còn bổ sung thịt cua hoặc trứng muối giúp hương vị nổi bật hơn hẳn."
               : "This seemingly ordinary side dish is actually a delicacy. The mince is super soft and moist, with crunchy highlights from the wood-ear mushrooms inside. The top is brushed with a shiny golden egg yolk glaze. Some restaurants add their signature ingredients, such as crab meat and salted egg yolks, to their meatloaf, making it stand out from competitors."}
           </li>
           <li>
-            <strong>{isVi ? "Trứng ốp la:" : "Trung op la (sunny-side-up eggs):"}</strong>{" "}
+            <em>{isVi ? "Trứng ốp la (trứng chiên lòng đào):" : "Trung op la (sunny-side-up eggs):"}</em>{" "}
             {isVi
-              ? "Trứng chiên lòng đào với viền ngoài giòn tan, lòng đỏ béo ngậy khi dầm chảy quyện vào hạt cơm nóng hổi."
+              ? "Khi đã có các kỹ thuật hấp, luộc và nướng, đã đến lúc cần thêm một chút vị ngậy chiên rán. Quả trứng ốp la không chỉ để trang trí bắt mắt mà còn cân bằng hoàn hảo các tầng hương vị trong đĩa cơm."
               : "We already had steaming, boiling, and grilling cooking methods, so it's time for something fried. The addition of a fried egg is not only for decoration but also for balancing the elements in the dish."}
           </li>
           <li>
-            <strong>{isVi ? "Mỡ hành & tóp mỡ:" : "Mo hanh (scallion oil):"}</strong>{" "}
-            {isVi
-              ? "Hành lá xắt nhuyễn chần dầu sôi cùng tóp mỡ giòn rụm, rưới lên đĩa cơm bóng bẩy ngát hương."
-              : "This garnish is used in many Vietnamese dishes, especially those with grilled meat. More often, scallion oil is mixed with top mo, which are crispy deep-fried pork fat cubes. The shiny green scallion oil not only adds the final touch to the dish but also creates a nice aroma and texture."}
+            <em>{isVi ? "Mỡ hành (hành lá tao dầu):" : "Mo hanh (scallion oil):"}</em>{" "}
+            {isVi ? (
+              <>
+                Loại đồ nêm này xuất hiện trong rất nhiều món ngon Việt Nam, đặc biệt là các món thịt nướng. Thường mỡ hành được trộn chung cùng <em>tóp mỡ</em> chiên giòn rụm. Lớp mỡ hành xanh mướt óng ả không chỉ tạo điểm nhấn sau cùng cho đĩa cơm mà còn mang lại hương thơm ngào ngạt và độ béo ngậy khó cưỡng.
+              </>
+            ) : (
+              <>
+                This garnish is used in many{" "}
+                <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="comtam-intext-link">
+                  Vietnamese dishes
+                </Link>
+                , especially those with grilled meat. More often, scallion oil is mixed with <em>top mo</em>, which are crispy deep-fried pork fat cubes. The shiny green scallion oil not only adds the final touch to the dish but also creates a nice aroma and texture.
+              </>
+            )}
           </li>
           <li>
-            <strong>{isVi ? "Đồ chua & rau dưa:" : "Do chua (vegetables and pickles):"}</strong>{" "}
+            <em>{isVi ? "Đồ chua (rau dưa & củ quả chua):" : "Do chua (vegetables and pickles):"}</em>{" "}
             {isVi
-              ? "Dưa leo, cà chua tươi mát ăn kèm đồ chua củ cải trắng và cà rốt ngâm giấm đường giúp cân bằng vị béo."
+              ? "Đĩa cơm tấm sẽ mất cân bằng dinh dưỡng nếu thiếu chúng. Cơm luôn được dọn kèm dưa leo và cà chua tươi thái lát. Để giải bớt độ béo ngậy của các món thịt nướng, đồ chua củ cải trắng và cà rốt ngâm giấm đường chua ngọt luôn được bổ sung."
               : "A plate of com tam is not nutritionally balanced without them. It is always served with sliced fresh cucumbers and tomatoes. To ease the richness of the cooked ingredients, pickled red and white carrots are also added."}
           </li>
           <li>
-            <strong>{isVi ? "Nước chấm (nước mắm kẹo tỏi ớt):" : "Nuoc cham (dipping sauce):"}</strong>{" "}
+            <em>{isVi ? "Nước chấm (nước mắm kẹo):" : "Nuoc cham (dipping sauce):"}</em>{" "}
             {isVi
-              ? "Nước mắm nấu kẹo sóng sánh tỏi ớt băm nhuyễn — chìa khóa liên kết mọi hương vị trên đĩa cơm."
-              : "This is an indispensable accompaniment to com tam, completing its explosive taste. The com tam made for Saigon people must be thick in texture and intense in flavor. Fish sauce is added with water, lime juice, and sugar, and the mixture is complemented with minced chili."}
+              ? "Thứ đồ chấm không thể thiếu, hoàn thiện sự bùng nổ hương vị của cơm tấm. Nước mắm dành cho người Sài Gòn phải sánh đặc kẹo và đậm đà nồng hậu. Nước mắm ngon pha cùng nước, nước cốt chanh, đường và ớt băm nhuyễn. Tùy theo khẩu vị, bạn có thể gia giảm để nước mắm ngọt hay mặn hơn."
+              : "This is an indispensable accompaniment to com tam, completing its explosive taste. The com tam made for Saigon people must be thick in texture and intense in flavor. Fish sauce is added with water, lime juice, and sugar, and the mixture is complemented with minced chili. Depending on personal preferences, the fish sauce can be made more salty or sweet."}
           </li>
         </ul>
 
-        {/* Sharp Image 2: Ingredients */}
+        {/* Sharp Image 2: Ingredients (Screenshot 2) */}
         <figure className="comtam-figure">
           <img
             src="/guide/hcmc/com-tam-ingredients.jpg"
             alt={
               isVi
-                ? "Topping phong phú trên đĩa cơm tấm"
+                ? "Các món ăn kèm phong phú trên đĩa cơm tấm"
                 : "Although com tam is a popular dish made to suit the general public in terms of both the taste and the price, the assembly of all the toppings requires a great deal of preparation."
             }
             className="comtam-figure__img"
@@ -301,12 +324,12 @@ export default function ComTamGuidePage() {
           />
           <figcaption className="comtam-figure__caption">
             {isVi
-              ? "Tuy là món ăn bình dân được đông đảo mọi người yêu thích, việc chuẩn bị tất cả các món ăn kèm cho đĩa cơm tấm đòi hỏi sự công phu rất lớn."
+              ? "Tuy cơm tấm là món ăn bình dân chiều lòng đại chúng cả về hương vị lẫn giá cả, việc chuẩn bị trọn bộ các món ăn kèm lại đòi hỏi sự kỳ công đáng nể."
               : "Although com tam is a popular dish made to suit the general public in terms of both the taste and the price, the assembly of all the toppings requires a great deal of preparation."}
           </figcaption>
         </figure>
 
-        {/* ── Section: Types of com tam ── */}
+        {/* ── Section: Types of com tam (Screenshots 2 & 3) ── */}
         <h2 id="types-of-com-tam" className="comtam-section-title">
           {isVi ? "Các biến thể cơm tấm" : "Types of com tam"}
         </h2>
@@ -314,48 +337,41 @@ export default function ComTamGuidePage() {
         <p className="comtam-body-text">
           {isVi ? (
             <>
-              Nhờ sự tiện lợi và hấp dẫn, cơm tấm là lựa chọn hoàn hảo cho mọi bữa ăn trong ngày. Nhiều thực khách ghé quán quen hầu như mỗi ngày, thúc đẩy các chủ quán đa dạng hóa thực đơn với sườn non, sườn cây, ba rọi nướng cùng hơn mười món mặn tự chọn kiểu cơm bình dân.
+              Nhờ tính tiện lợi, <em>cơm tấm</em> ngày nay là lựa chọn hàng đầu cho một bữa ăn vừa nhanh vừa ngon miệng ở bất kỳ thời điểm nào trong ngày. Các quán cơm tấm luôn tấp nập thực khách, bất kể bữa sáng, bữa trưa hay bữa tối. Rất nhiều khách quen ghé quán hầu như mỗi ngày, điều này khiến người đầu bếp không ngừng đa dạng hóa thực đơn với các món mặn thay thế topping truyền thống. Có thể kể đến các phần thịt heo khác như sườn non, sườn cây, ba rọi nướng, cùng tuyển tập hơn mười món mặn nấu chuẩn vị gia đình bao gồm rau xào, canh thanh mát, hải sản kho và cả các món chay.
             </>
           ) : (
             <>
-              Due to its convenience, com tam is now a popular choice for an easy and tasty meal throughout the day. Local com tam food stalls are always packed with people, regardless of whether it&apos;s breakfast, lunch, or dinner. Many customers visit their favorite place almost every day, which led the cook to diversify the food choices for them by offering various side dishes to alter the standard com tam toppings. This includes using different types of pork such as back ribs instead of rib chops or butterflied chops, and a selection of over ten home-cooked dishes, including stir-fried vegetables, soups, seafood, and vegetarian options.
+              Due to its convenience, <em>com tam</em> is now a popular choice for an easy and tasty meal throughout the day. Local <em>com tam</em> food stalls are always packed with people, regardless of whether it&apos;s breakfast, lunch, or dinner. Many customers visit their favorite place almost every day, which led the cook to diversify the food choices for them by offering various side dishes to alter the standard <em>com tam</em> toppings. This includes using different types of pork such as back ribs instead of rib chops or butterflied chops, and a selection of over ten home-cooked dishes, including stir-fried vegetables, soups, seafood, and vegetarian options.
             </>
           )}
         </p>
-
-        <h3 className="comtam-subhead">
-          {isVi ? "Cơm tấm Long Xuyên (Đặc sản miền Tây)" : "Com Tam Long Xuyen (Mekong Delta Specialty)"}
-        </h3>
 
         <p className="comtam-body-text">
           {isVi ? (
             <>
-              Một phiên bản nổi tiếng nức lòng du khách là <em>cơm tấm Long Xuyên</em> (An Giang). Gạo tấm ở đây được xay nhuyễn hạt mịn hơn. Thịt khìa và trứng vịt kho nước dừa được xắt nhuyễn hình que diêm rải đều khắp mặt đĩa cùng dưa chua rau muống giòn tan, tạo nên món cơm trộn hài hòa, thanh vị và ít ngấy hơn phong cách Sài Gòn.
+              Một biến thể nổi danh nức tiếng là <em>cơm tấm Long Xuyên</em>, mang thương hiệu độc đáo của riêng mình. Long Xuyên là một đô thị êm đềm tại Đồng bằng sông Cửu Long, nổi tiếng với đĩa cơm tấm thanh vị, ít dầu mỡ và bớt &ldquo;cầu kỳ&rdquo; hơn so với Sài Gòn. Ở Long Xuyên, hạt gạo tấm được xay nhuyễn hạt mịn màng hơn; điểm khác biệt rõ nét nhất là quả trứng vịt kho nước dừa thấm đẫm vị béo bùi thay vì trứng ốp la hay chả trứng hấp. Thịt khìa và trứng kho được xắt sợi que diêm nhỏ khi dọn, tạo nên món cơm trộn hài hòa tương tự cơm trộn. Món ăn còn được kèm đồ chua rau muống ngâm giòn tan và cà rốt bào.
             </>
           ) : (
             <>
-              One notable version of com tam is <em>com tam Long Xuyen</em>, which has gained its own reputation. Long Xuyen is a quiet town in the Mekong Delta and is known for its less greasy and &ldquo;complex&rdquo; version of com tam compared to Saigon. In Long Xuyen, even small rice fragments are used, and the most noticeable difference is that whole eggs are caramelized and braised in coconut water instead of a sunny-side-up egg or steamed egg meatloaf. The braised eggs and grilled pork are chopped into matchstick size when serving, creating a mixable dish similar to a mixed rice dish. Pickled carrots and pickled morning glory are also added.
+              One notable version of <em>com tam</em> is <em>com tam Long Xuyen</em>, which has gained its own reputation. Long Xuyen is a quiet town in the Mekong Delta and is known for its less greasy and &ldquo;complex&rdquo; version of <em>com tam</em> compared to Saigon. In Long Xuyen, even small rice fragments are used, and the most noticeable difference is that whole eggs are caramelized and braised in coconut water instead of a sunny-side-up egg or steamed egg meatloaf. The braised eggs and grilled pork are chopped into matchstick size when serving, creating a mixable dish similar to a mixed rice dish. Pickled carrots and pickled morning glory are also added.
             </>
           )}
         </p>
-
-        <h3 className="comtam-subhead">
-          {isVi ? "Cơm tấm chay thanh tịnh" : "Vegetarian Com Tam"}
-        </h3>
 
         <p className="comtam-body-text">
           {isVi ? (
             <>
-              Dành cho những người ăn chay, món cơm tấm chay sử dụng sườn lát đậu nành chiên giòn, bì bún tàu thơm thính và chả đậu hũ non nấm mèo mềm mịn, mang lại trải nghiệm ẩm thực trọn vẹn mà thanh đạm.
+              Với người ăn chay, hoàn toàn có thể tìm thấy phiên bản cơm tấm không thịt hoặc thậm chí là thuần chay (vegan). Sườn heo và bì được thay thế bằng đạm đậu nành thái lát và bún tàu thơm thính; các loại gia vị cũng được thay đổi phù hợp như dùng dầu hào chay và nước mắm chay. Tuy nhiên, hãy lưu ý khi gọi món vì một số nơi vẫn dùng trứng trong chả hấp. Khi đó, món <em>chả chay</em> làm từ đậu hũ non và tàu hũ ky sẽ là lựa chọn tuyệt vời, đảm bảo độ mềm mọng bùi béo chẳng kém phiên bản truyền thống.
             </>
           ) : (
             <>
-              For vegetarians, it is possible to find a meat-free or even vegan version of com tam. Pork chops and pork skin are replaced with textured soybean slices and glass noodles, and the seasonings are altered to accommodate a vegetarian diet, such as using vegan oyster sauce and fish sauce. However, be mindful when ordering as some places still use eggs in their steamed egg meatloaf. In this case, vegan cha is a great option, using young tofu and tofu skin to replace eggs and meat, ensuring a soft and moist texture not far from the original version.
+              For vegetarians, it is possible to find a meat-free or even{" "}
+              <span className="comtam-intext-link">vegan version</span> of <em>com tam</em>. Pork chops and pork skin are replaced with textured soybean slices and glass noodles, and the seasonings are altered to accommodate a vegetarian diet, such as using vegan oyster sauce and fish sauce. However, be mindful when ordering as some places still use eggs in their steamed egg meatloaf. In this case, vegan <em>cha</em> is a great option, using young tofu and tofu skin to replace eggs and meat, ensuring a soft and moist texture not far from the original version.
             </>
           )}
         </p>
 
-        {/* Sharp Image 3: Vegetarian Com Tam */}
+        {/* Sharp Image 3: Vegetarian Com Tam (Screenshots 3 & 4) */}
         <figure className="comtam-figure">
           <img
             src="/guide/hcmc/vegetarian-com-tam.jpg"
@@ -369,12 +385,12 @@ export default function ComTamGuidePage() {
           />
           <figcaption className="comtam-figure__caption">
             {isVi
-              ? "Với những người ăn thuần chay, hoàn toàn có thể thưởng thức phiên bản cơm tấm không thịt vô cùng hấp dẫn."
+              ? "Với những người ăn chay, hoàn toàn có thể tìm thấy phiên bản cơm tấm không thịt hoặc thuần chay vô cùng hấp dẫn."
               : "For vegetarians, it is possible to find a meat-free or even vegan version of com tam."}
           </figcaption>
         </figure>
 
-        {/* ── Section: The eating culture of com tam ── */}
+        {/* ── Section: The eating culture of com tam (Screenshots 4 & 5) ── */}
         <h2 id="the-eating-culture-of-com-tam" className="comtam-section-title">
           {isVi ? "Văn hóa thưởng thức cơm tấm" : "The eating culture of com tam"}
         </h2>
@@ -382,43 +398,68 @@ export default function ComTamGuidePage() {
         <p className="comtam-body-text">
           {isVi ? (
             <>
-              Không ngoa khi nói rằng các quán cơm tấm ở Sài Gòn nhiều chẳng kém gì quán cà phê. Bạn có thể dễ dàng tìm thấy một quán cơm tấm ngon chỉ bằng cách lần theo làn khói nướng sườn thơm phức bốc lên bên vệ đường. Dưới đây là những nét văn hóa đặc trưng thú vị:
+              Thành thật mà nói, không hề quá lời khi nhận xét các quán <em>cơm tấm</em> ở Sài Gòn phổ biến chẳng kém gì các{" "}
+              <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="comtam-intext-link">
+                quán cà phê
+              </Link>
+              . Tìm một quán <em>cơm tấm</em> vô cùng dễ dàng, bất kể bạn đang ở đâu hay vào lúc nào: chỉ cần nhìn thấy làn khói nướng sườn thơm phức bốc lên từ vỉa hè phía xa — đó chắc chắn là dấu hiệu của một quán ngon. Dưới đây là những nét thú vị về <em>cơm tấm</em> và văn hóa thưởng thức của người Việt:
             </>
           ) : (
             <>
-              Honestly, it&apos;s not an exaggeration to say that com tam food stalls are as prevalent as coffee shops in Saigon. Finding a com tam restaurant is easy, no matter where or when you are: just look for a distant, aromatic puff of smoke from the chargrilled pork chops on the sidestreets – that&apos;s a sign of a good place. Here are some interesting facts about com tam and its eating culture among Vietnamese people:
+              Honestly, it&apos;s not an exaggeration to say that <em>com tam</em> food stalls are as prevalent as{" "}
+              <Link href="/guide/12-must-try-foods-in-ho-chi-minh-city" className="comtam-intext-link">
+                coffee shops
+              </Link>{" "}
+              in Saigon. Finding a <em>com tam</em> restaurant is easy, no matter where or when you are: just look for a distant, aromatic puff of smoke from the chargrilled pork chops on the sidestreets – that&apos;s a sign of a good place. Here are some interesting facts about <em>com tam</em> and its eating culture among Vietnamese people:
             </>
           )}
         </p>
 
-        <ul className="comtam-bullets">
+        {/* Exact Numbered List 1 to 8 matching Screenshot 5 */}
+        <ol className="comtam-numbered-list">
           <li>
-            <strong>{isVi ? "Thưởng thức bằng muỗng & nĩa:" : "Eat with spoon and fork:"}</strong>{" "}
             {isVi
-              ? "Cơm tấm luôn được dọn trên đĩa phẳng và thưởng thức bằng muỗng nĩa, thuận tiện để xắn sườn và rưới nước mắm."
+              ? "Người Việt thường cố gắng tránh hoặc đứng xa luồng khói bốc ra từ lò nướng sườn, bởi mùi thơm nồng nàn của thịt ướp và than hoa bám dính cực kỳ dai dẳng vào quần áo, lấn át cả những loại nước hoa bền mùi nhất."
+              : "Vietnamese people often try to avoid or at least stay away from the smoke released from the grilling oven, as the smell of marinated meat and charcoal is so intense that it sticks to our clothing and lingers in the air for a long time, overpowering even the longest-lasting perfume."}
+          </li>
+          <li>
+            {isVi
+              ? "Việc ăn cơm tấm bằng muỗng và nĩa là điều hiển nhiên và thông thường, không hề có sự bất lịch sự nào (như đã giải thích trong nguồn gốc lịch sử)."
               : "It is common sense to eat com tam with a spoon and fork, with no offense (as explained in its origin)."}
           </li>
           <li>
-            <strong>{isVi ? "Cơm tấm đêm:" : "Cơm tấm đêm (Night broken rice):"}</strong>{" "}
             {isVi
-              ? "Ngoài bữa sáng và trưa, cơm tấm đêm mở cửa tới tận 1–2 giờ sáng phục vụ những người làm ca muộn hoặc đi chơi đêm."
-              : "Com tam is favored for breakfast and lunch. If you crave it for dinner, look for a sign reading &ldquo;cơm tấm đêm,&rdquo; meaning com tam at night. These food stalls typically open late, past midnight, so you can satisfy your hunger after working overtime or a night out."}
+              ? "Thông thường khi bạn gọi đĩa cơm tấm sườn bì chả đầy đủ, quán sẽ dọn kèm sườn nướng, bì và chả trứng. Tuy nhiên bạn có thể tùy chỉnh khẩu vị như xin thêm mỡ hành hoặc đồ chua. Trứng ốp la thường được gọi thêm với mức giá chỉ từ 5.000 – 7.000 VNĐ ($0.2 – $0.3), trong khi chén canh thanh ngọt luôn được phục vụ miễn phí."
+              : "Typically, when you order a full combo com tam (also called suon – bi – cha), it comes with grilled pork chops, shredded pork skin, and steamed egg meatloaf. However, you can adjust the ingredients to your preference by asking for extra scallion oil or pickles, for example. A sunny-side-up egg usually comes by request, with an extra charge of 5,000 – 7,000 VND ($0.2 – $0.3), while a small bowl of soup is offered for free."}
           </li>
           <li>
-            <strong>{isVi ? "Tủ kính cơm bình dân buổi trưa:" : "Glass display cabinet:"}</strong>{" "}
             {isVi
-              ? "Đồ ăn được bày biện trong khay kính bắt mắt, khách chỉ việc chỉ tay chọn món yêu thích."
-              : "To take advantage of steamed rice, com tam restaurants often transform into com binh dan, a local home-style eatery, during lunchtime with food showcased in large glass cabinets."}
+              ? "Cơm tấm rất được ưa chuộng cho bữa sáng và bữa trưa. Nếu bạn thèm cơm tấm cho bữa tối, hãy tìm biển hiệu “cơm tấm đêm”. Những quán này mở cửa rất khuya, quá nửa đêm, giúp bạn nạp năng lượng sau ca làm thêm muộn hay buổi dạo phố đêm."
+              : "Com tam is favored for breakfast and lunch. If you crave it for dinner, look for a sign reading “cơm tấm đêm,” meaning com tam at night. These food stalls typically open late, past midnight, so you can satisfy your hunger after working overtime or a night out."}
           </li>
           <li>
-            <strong>{isVi ? "MasterChef Season 3:" : "MasterChef global spotlight:"}</strong>{" "}
             {isVi
-              ? "Đầu bếp khiếm thị gốc Việt tài ba Christine Hà từng chinh phục ban giám khảo quốc tế Gordon Ramsay bằng món cơm tấm sườn bì chả để bước lên ngôi vị quán quân."
+              ? "Để tận dụng cơm tấm hấp nóng, các quán cơm tấm thường chuyển đổi thành cơm bình dân vào giờ trưa. Bên cạnh các món cơm tấm cơ bản, quán phục vụ phong phú các món mặn gia đình với mức giá rất mềm và khẩu phần no bụng."
+              : "To take advantage of steamed rice, com tam restaurants often transform into com binh dan, a local home-style eatery, during lunchtime. Besides the regular ingredients for com tam, these places offer a variety of home-cooked dishes, served at affordable prices and in generous portions. This is a fun and fast way to experience authentic local cuisine in Vietnam."}
+          </li>
+          <li>
+            {isVi
+              ? "Thức ăn tại các quán cơm tấm hay cơm bình dân được sắp xếp gọn gàng trong các khay inox đặt trong tủ kính lớn để khách dễ quan sát. Khi gọi món, bạn chỉ cần chỉ tay vào món mình thích."
+              : "The food at a com tam or com binh dan eatery is displayed in trays and showcased in a large glass cabinet for customers to see. To order, simply point to your desired dish from the selection."}
+          </li>
+          <li>
+            {isVi
+              ? "Trong chương trình MasterChef mùa 3 (Mỹ), món cơm tấm sườn bì chả truyền thống đã đóng vai trò quyết định giúp đầu bếp khiếm thị gốc Việt tài năng Christine Hà giành chiến thắng ngôi vị quán quân danh giá."
               : "In Season 3 of MasterChef, the creation of com tam played a key role in helping the blind but talented Vietnamese chef, Christine Ha, win the coveted title."}
           </li>
-        </ul>
+          <li>
+            {isVi
+              ? "Giá cơm tấm có thể chênh lệch khá nhiều tùy thuộc vào chất lượng món ăn kèm và danh tiếng của quán. Một đĩa cơm tấm bình dân thường có giá từ 25.000 – 30.000 VNĐ ($1 – $1.25). Tại các nhà hàng sang trọng hơn, mức giá bắt đầu từ 50.000 VNĐ và có thể lên tới hơn 100.000 VNĐ ($4.5) nếu gọi thêm sườn cây đặc biệt."
+              : "Com tam prices can vary greatly depending on the quality of the side dishes and the reputation of the eatery. Typically, basic com tam costs between 25,000 VND to 30,000 VND ($1 to $1.25). However, at a higher-end restaurant, prices can start at 50,000 VND and go higher, especially if you order a signature dish or additional side dishes, reaching over 100,000 VND ($4.5). Be sure to check the prices before placing your order."}
+          </li>
+        </ol>
 
-        {/* Sharp Image 4: Culture */}
+        {/* Sharp Image 4: Culture and Glass Display (Matching Screenshot 5) */}
         <figure className="comtam-figure">
           <img
             src="/guide/hcmc/the-eating-culture-of-com-tam.jpg"
@@ -454,11 +495,11 @@ export default function ComTamGuidePage() {
         <p className="comtam-body-text">
           {isVi ? (
             <>
-              Dưới đây là danh sách các quán cơm tấm nức tiếng được người dân địa phương và du khách đánh giá cao nhất:
+              Cơm tấm là niềm tự hào của người Sài Gòn, hội tụ tinh thần ẩm thực đường phố Việt Nam với hương vị đậm đà khó quên. Hãy thêm ngay cơm tấm vào danh sách nhất định phải thử khi bạn đến Việt Nam:
             </>
           ) : (
             <>
-              Com tam is a dish that people in Saigon take pride in. It embodies the quintessential street food spirit of Vietnamese cuisine by delivering an explosion of flavors. Make sure to add com tam to your must-try list when visiting Vietnam:
+              Com tam is a dish that people in Saigon take pride in. It embodies the quintessential street food spirit of Vietnamese cuisine by delivering an explosion of flavors. Make sure to add com tam to your must-try list when visiting Vietnam, and we guarantee you won&apos;t regret it:
             </>
           )}
         </p>
@@ -563,6 +604,17 @@ export default function ComTamGuidePage() {
         </div>
       </main>
 
+      {/* Floating TOC quick button */}
+      <button
+        type="button"
+        className="comtam-floating-toc-btn"
+        onClick={scrollToToc}
+        title={isVi ? "Xem mục lục" : "Table of contents"}
+        aria-label="Table of contents"
+      >
+        <List size={20} />
+      </button>
+
       {/* ── 4. Public Footer ── */}
       <PublicFooter />
 
@@ -571,4 +623,3 @@ export default function ComTamGuidePage() {
     </div>
   );
 }
-
