@@ -14,7 +14,7 @@
   overflow-x: hidden;
 }
 
-/* ── Hero Banner (Screenshot 2) ── */
+/* ── Hero Banner ── */
 .comtam-hero {
   position: relative;
   width: 100%;
@@ -107,11 +107,11 @@
   font-size: 13.5px;
 }
 
-/* ── Main Container (Screenshots 2 - 5) ── */
+/* ── Main Container ── */
 .comtam-container {
   max-width: 960px;
   margin: 0 auto;
-  padding: 36px 20px 80px;
+  padding: 36px 20px 60px;
   position: relative;
 }
 
@@ -188,7 +188,7 @@
   color: #0096c7;
 }
 
-/* ── Table of Contents (Screenshot 3) ── */
+/* ── Table of Contents ── */
 .comtam-toc-box {
   float: right;
   width: 250px;
@@ -251,7 +251,7 @@
   text-decoration: underline;
 }
 
-/* ── Content Figures (Screenshots 2 & 4) ── */
+/* ── Content Figures ── */
 .comtam-figure {
   margin: 32px 0 28px;
   padding: 0;
@@ -277,7 +277,7 @@
   text-align: left;
 }
 
-/* ── Unordered / Ordered Bullet Lists (Screenshots 1 & 5) ── */
+/* ── Unordered / Ordered Bullet Lists ── */
 .comtam-bullets {
   list-style-type: disc;
   padding-left: 24px;
@@ -304,49 +304,158 @@
   font-size: 15px;
 }
 
-.comtam-bullets strong,
-.comtam-numbered-list strong {
+/* ── City Eateries Bullet Lists (Screenshot 2, 3, 4) ── */
+.comtam-city-subhead {
+  font-size: 20px;
+  font-weight: 700;
+  color: #00c2cb;
+  margin: 28px 0 14px;
+}
+
+.comtam-city-subhead a {
+  color: #00c2cb;
+  text-decoration: none;
+}
+
+.comtam-city-subhead a:hover {
+  text-decoration: underline;
+}
+
+.comtam-eatery-bullets {
+  list-style-type: disc;
+  padding-left: 24px;
+  margin: 0 0 18px 0;
+}
+
+.comtam-eatery-bullets li {
+  margin-bottom: 16px;
+  line-height: 1.65;
+  color: #334155;
+  font-size: 15px;
+}
+
+.comtam-eatery-bullets strong {
+  font-size: 15.5px;
   color: #0f172a;
 }
 
-/* ── Eatery Cards Grid ── */
-.comtam-eateries-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin: 20px 0 36px;
+.comtam-eatery-detail {
+  display: block;
+  font-size: 14px;
+  color: #475569;
 }
 
-.comtam-eatery-card {
-  background: #f8fafc;
+/* ── TAGS PILL (Screenshot 4) ── */
+.comtam-tags-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 40px auto 48px;
+}
+
+.comtam-tag-label {
+  background: #00c2cb;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+}
+
+.comtam-tag-pill {
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 13px;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 16px 20px;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  text-decoration: none;
   transition: all 0.2s ease;
 }
 
-.comtam-eatery-card:hover {
-  background: #ffffff;
+.comtam-tag-pill:hover {
   border-color: #00c2cb;
-  box-shadow: 0 4px 12px rgba(0, 194, 203, 0.12);
+  color: #00c2cb;
 }
 
-.comtam-eatery-name {
-  font-size: 16.5px;
+/* ── RELATED ARTICLES (Screenshot 5) ── */
+.comtam-related-section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 40px;
+}
+
+.comtam-related-title {
+  font-size: 26px;
   font-weight: 700;
   color: #0f172a;
-  margin: 0 0 8px 0;
+  text-align: center;
+  margin: 0 0 32px 0;
 }
 
-.comtam-eatery-meta {
-  font-size: 14px;
-  color: #475569;
+.comtam-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .comtam-related-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.comtam-related-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comtam-related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.comtam-related-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.comtam-related-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 14px 0 8px 0;
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+
+.comtam-related-card:hover .comtam-related-name {
+  color: #00c2cb;
+}
+
+.comtam-related-desc {
+  font-size: 13.5px;
   line-height: 1.6;
-  margin-bottom: 4px;
-}
-
-.comtam-eatery-meta strong {
-  color: #1e293b;
+  color: #64748b;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ── Floating Table of Contents Button (Screenshots 1, 2, 3, 4, 5) ── */
